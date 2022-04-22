@@ -1,5 +1,9 @@
 package Service;
 
+import Domain.StoreModule.StorePermission;
+
+import java.util.LinkedList;
+
 public interface iService {
     void init_market();
     boolean payment(int price);
@@ -53,17 +57,17 @@ public interface iService {
     int add_manager();
     int delete_owner();
     int delete_manager();
-    //@TODO
-    void edit_manager_permissions();
-    void close_store();
-    void open_close_store(); // re-open
-    void view_store_management_information();
-    void view_store_questions();
-    void manager_answer_question();
-    void view_store_purchases_history(); // also admin method
+    // @TODO : Amit
+    void edit_manager_permissions(int user_id, int manager_id, int store_id, LinkedList<StorePermission> permissions);
+    boolean close_store_temporarily(int store_id, int user_id);
+    boolean open_close_store(int store_id, int user_id); // re-open
+    String view_store_management_information(int user_id, int store_id);
+    String view_store_questions(int store_id, int user_id);
+    boolean manager_answer_question(int store_id, int user_id, int question_id, String answer);
+    String view_store_purchases_history(int store_id, int user_id); // also admin method
 
     // admin
-    void close_store_permanently();
+    boolean close_store_permanently(int store_id, int user_id);
     double delete_user_from_system();
     double view_system_questions();
     double admin_answer_question();

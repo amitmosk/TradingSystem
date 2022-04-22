@@ -1,7 +1,10 @@
 package Domain;
 
-import Domain.StoreModule.StoreController;
+import Domain.StoreModule.*;
 import Service.iService;
+
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Market implements iService {
     private StoreController store_controller;
@@ -226,42 +229,121 @@ public class Market implements iService {
     }
 
     @Override
-    public void edit_manager_permissions() {
+    public void edit_manager_permissions(int user_id, int manager_id, int store_id, LinkedList<StorePermission> permissions) {
+        try
+        {
+            this.store_controller.edit_manager_specific_permissions(user_id, manager_id, store_id, permissions);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
 
     }
 
     @Override
-    public void close_store() {
+    public boolean close_store_temporarily(int store_id, int user_id) {
+        boolean answer = false;
+        try
+        {
+            answer = this.store_controller.close_store_temporarily(store_id, user_id);
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        return answer;
+    }
+
+    @Override
+    public boolean open_close_store(int store_id, int user_id) {
+        boolean answer = false;
+        try
+        {
+            answer = this.store_controller.open_close_store(store_id, user_id);
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        return answer;
 
     }
 
     @Override
-    public void open_close_store() {
+    public String view_store_management_information(int user_id, int store_id) {
+        String answer;
+        try
+        {
+            StoreManagersInfo info = this.store_controller.view_store_management_information(user_id, store_id);
+            answer = info.toString();
+        }
+        catch (Exception e)
+        {
+            return e.getMessage();
+        }
+        return answer;
+    }
+
+    @Override
+    public String view_store_questions(int store_id, int user_id) {
+        String answer;
+        try
+        {
+            HashMap<Integer, Question> questions = this.store_controller.view_store_questions(store_id, user_id);
+            answer = questions.toString();
+        }
+        catch (Exception e)
+        {
+            return e.getMessage();
+        }
+        return answer;
+    }
+
+    @Override
+    public boolean manager_answer_question(int store_id, int user_id, int question_id, String answer) {
+        try
+        {
+            this.store_controller.answer_question(store_id, user_id, question_id, answer);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
 
     }
 
     @Override
-    public void view_store_management_information() {
+    public String view_store_purchases_history(int store_id, int user_id) {
+        HashMap<Integer, Purchase> info;
+        String answer;
+        try
+        {
+            info = this.store_controller.view_store_purchases_history(store_id, user_id);
+            answer = info.toString();
+        }
+        catch (Exception e)
+        {
+            return e.getMessage();
+        }
+        return answer;
 
     }
 
     @Override
-    public void view_store_questions() {
-
-    }
-
-    @Override
-    public void manager_answer_question() {
-
-    }
-
-    @Override
-    public void view_store_purchases_history() {
-
-    }
-
-    @Override
-    public void close_store_permanently() {
+    public boolean close_store_permanently(int store_id, int user_id) {
+        boolean answer = false;
+        try
+        {
+            answer = this.store_controller.close_store_permanently(store_id, user_id);
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        return answer;
 
     }
 

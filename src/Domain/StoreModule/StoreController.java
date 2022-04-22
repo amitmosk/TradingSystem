@@ -155,11 +155,8 @@ public class StoreController {
     // tom
 
     public String find_store_information(int store_id) throws Exception {
-        if (!stores.containsKey(store_id))
-        {
-            throw new Exception("store does not exist");
-        }
-        return stores.get(store_id).get_information();
+        Store store = this.is_valid_store(store_id);
+        return store.get_information();
     }
 
     public String find_product_information(int product_id) throws Exception {
@@ -171,11 +168,12 @@ public class StoreController {
         return stores.get(store_id_of_the_product).get_product_information(product_id);
     }
 
+
     public int is_product_exist(int product_id)
     {
         // return store id of the product or -1 if the product does not exist
-        int store_id_of_the_product=-1;
-        for (Store s:stores.values()) {
+        int store_id_of_the_product = -1;
+        for (Store s : stores.values()) {
             if (s.is_product_exist(product_id))
             {
                 store_id_of_the_product = s.getStore_id();

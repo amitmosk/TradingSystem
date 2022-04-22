@@ -1,6 +1,6 @@
 package Domain.StoreModule;
 
-enum StorePermission
+public enum StorePermission
 {
     add_item,
     remove_item,
