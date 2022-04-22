@@ -2,16 +2,16 @@ package Service;
 
 public interface iService {
     void init_market();
-    boolean payment();
-    void supply();
+    boolean payment(int price);
+    boolean supply(int user_id, int purchase_id);
     // users
     double guest_login();
     double login(String username, String password);
     double logout(); // have to split according to user state
     double register();
     // guests
-    void find_store_information();
-    void find_product_information();
+    String find_store_information(int store_id);
+    String find_product_information(int product_id);
     void find_product_by_name();
     void find_product_by_category();
     void find_product_by_keyword();

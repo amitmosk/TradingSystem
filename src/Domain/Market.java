@@ -7,22 +7,27 @@ public class Market implements iService {
     private StoreController store_controller;
 
     public Market() {
-        this.store_controller = new StoreController();
+        this.store_controller = StoreController.get_instance();
     }
 
 
     @Override
     public void init_market() {
-
+        //Tom
+        //connect to payment service
+        //connect to supply service
     }
 
     @Override
-    public boolean payment() {
-        return false;
+    public boolean payment(int price) {
+        //Tom
+        return true;
     }
 
     @Override
-    public void supply() {
+    public boolean supply(int user_id, int purchase_id) {
+        //Tom
+        return true;
 
     }
 
@@ -47,28 +52,47 @@ public class Market implements iService {
     }
 
     @Override
-    public void find_store_information() {
+    public String find_store_information(int store_id) {
+        String info="";
+        try
+        {
+            info = this.store_controller.find_store_information(store_id);
+        }
+        catch (Exception e)
+        {
+            return e.getMessage();
+        }
+        return info;
 
     }
 
     @Override
-    public void find_product_information() {
-
+    public String find_product_information(int product_id) {
+        String info="";
+        try
+        {
+            info = this.store_controller.find_product_information(product_id);
+        }
+        catch (Exception e)
+        {
+            return e.getMessage();
+        }
+        return info;
     }
 
     @Override
     public void find_product_by_name() {
-
+        //Tom
     }
 
     @Override
     public void find_product_by_category() {
-
+        //Tom
     }
 
     @Override
     public void find_product_by_keyword() {
-
+        //Tom
     }
 
     @Override
@@ -148,37 +172,37 @@ public class Market implements iService {
 
     @Override
     public void add_product_to_store() {
-
+        //Tom
     }
 
     @Override
     public void delete_product_from_store() {
-
+        //Tom
     }
 
     @Override
     public void edit_product(int store_id, int product_id) {
-
+        //Tom
     }
 
     @Override
     public void add_discount_rule() {
-
+        //Tom
     }
 
     @Override
     public void delete_discount_rule() {
-
+        //Tom
     }
 
     @Override
     public void add_purchase_rule() {
-
+        //Tom
     }
 
     @Override
     public void delete_purchase_rule() {
-
+        //Tom
     }
 
     @Override
