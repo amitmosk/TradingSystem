@@ -5,7 +5,17 @@ import java.util.LinkedList;
 
 public class StoreController {
     private HashMap<Integer, Store> stores;
-    public StoreController() {
+    private int store_ids;
+    private static StoreController instance = null;
+
+    public static StoreController get_instance()
+    {
+        if (instance == null)
+            instance = new StoreController();
+        return instance;
+    }
+    private StoreController() {
+        this.store_ids = 0;
         this.stores = new HashMap<Integer, Store>();
     }
 
@@ -139,6 +149,40 @@ public class StoreController {
         if (this.stores.containsKey(store_id))
             return this.stores.get(store_id);
         throw new IllegalArgumentException("the store is not exist");
+    }
+
+
+    // tom
+
+    public String find_store_information(int store_id) throws Exception {
+        if (!stores.containsKey(store_id))
+        {
+            throw new Exception("store does not exist");
+        }
+        return stores.get(store_id).get_information();
+    }
+
+    public String find_product_information(int product_id) throws Exception {
+        int store_id_of_the_product = is_product_exist(product_id);
+        if (store_id_of_the_product == -1)
+        {
+            throw new Exception("Product does not exist");
+        }
+        return stores.get(store_id_of_the_product).get_product_information(product_id);
+    }
+
+    public int is_product_exist(int product_id)
+    {
+        // return store id of the product or -1 if the product does not exist
+        int store_id_of_the_product=-1;
+        for (Store s:stores.values()) {
+            if (s.is_product_exist(product_id))
+            {
+                store_id_of_the_product = s.getStore_id();
+                break;
+            }
+        }
+        return store_id_of_the_product;
     }
 
 }

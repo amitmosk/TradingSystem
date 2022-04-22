@@ -1,7 +1,10 @@
 package Domain.StoreModule;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Date;
 
 public class Store {
     // -- fields
@@ -10,7 +13,7 @@ public class Store {
     private HashMap<Integer, Permission> owner_ids;
     private HashMap<Integer, Permission> manager_ids;
     private String name;
-    private String foundation_date;
+    private Date foundation_date;
     private HashMap<Integer, Product> products;
     private boolean active;
     private PurchasePolicy purchasePolicy;
@@ -98,4 +101,118 @@ public class Store {
         if(!(this.manager_ids.get(user_id).has_permission(permission)))
             throw new IllegalAccessException("User has no permissions!");
     }
+
+
+
+    // tom
+
+    private String date_to_string(Date date)
+    {
+        String pattern = "MM/dd/yyyy HH:mm:ss";
+        DateFormat df = new SimpleDateFormat(pattern);
+        return df.format(date);
+    }
+
+    public String get_information() {
+        String founder_name = "----------------------";
+        StringBuilder info = new StringBuilder();
+        info.append("Store info: "+this.name+"\n");
+        info.append("\tStore founder: "+ founder_name +"\n");
+        info.append("\tStore owners: ");
+        for (Integer id : owner_ids.keySet())
+        {
+            String name = "";
+            info.append(name+", ");
+        }
+        info.append("\n");
+        info.append("\tStore managers: ");
+        for (Integer id : manager_ids.keySet())
+        {
+            String name = "";
+            info.append(name+", ");
+        }
+        info.append("\n");
+        info.append("\tfoundation date: "+ date_to_string(this.foundation_date)+"\n");
+
+
+        //products
+
+
+        String is_active;
+        if (active)
+            is_active="Yes";
+        else
+            is_active="No";
+
+        info.append("\tactive: "+ is_active+"\n");
+        info.append("\tpurchase policy: "+ this.purchasePolicy+"\n");
+        info.append("\tdiscount policy: "+ this.discountPolicy+"\n");
+
+        return info.toString();
+
+    }
+
+    public boolean is_product_exist(int product_id) {
+        return products.containsKey(product_id);
+    }
+    public String get_product_information(int product_id) {
+        //already check that product exists in the store
+        return this.products.get(product_id).toString();
+    }
+
+
+
+
+
+
+
+
+
+
+    //getters
+
+    public Date getFoundation_date() {
+        return foundation_date;
+    }
+
+    public DiscountPolicy getDiscount_policy() {
+        return discountPolicy;
+    }
+
+    public HashMap<Integer, Permission> getManager_ids() {
+        return manager_ids;
+    }
+
+    public HashMap<Integer, Permission> getOwner_ids() {
+        return owner_ids;
+    }
+
+    public HashMap<Integer, Product> getProducts() {
+        return products;
+    }
+
+    public HashMap<Integer, Purchase> getPurchase_history() {
+        return purchases_history;
+    }
+
+    public int getFounder_id() {
+        return founder_id;
+    }
+
+    public int getStore_id() {
+        return store_id;
+    }
+
+    public PurchasePolicy getPurchase_policy() {
+        return purchasePolicy;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+
 }
+
+
