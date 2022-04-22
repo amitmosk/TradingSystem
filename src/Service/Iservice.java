@@ -43,10 +43,17 @@ public interface iService {
     void delete_discount_rule();
     void add_purchase_rule();
     void delete_purchase_rule();
+
+
+
+
+
+
     int add_owner();
     int add_manager();
     int delete_owner();
     int delete_manager();
+    //@TODO
     void edit_manager_permissions();
     void close_store();
     void open_close_store(); // re-open
