@@ -61,9 +61,9 @@ public class Market implements iService {
         {
             info = this.store_controller.find_store_information(store_id);
         }
-        catch (Exception e)
+        catch (IllegalArgumentException e)
         {
-            return e.getMessage();
+            return "Store does not exist in the market";
         }
         return info;
 
@@ -76,26 +76,59 @@ public class Market implements iService {
         {
             info = this.store_controller.find_product_information(product_id);
         }
-        catch (Exception e)
+        catch (IllegalArgumentException e)
         {
-            return e.getMessage();
+            return "Product does not exist in the market";
         }
         return info;
     }
 
+    /**
+     *
+     * @param product_name
+     * @return Product if exist by the identifier
+     * @throws Product does not exist
+     */
     @Override
-    public void find_product_by_name() {
-        //Tom
+    public Product find_product_by_name(String product_name) throws IllegalArgumentException{
+        Product p = this.store_controller.find_product_by_name(product_name);
+        if (p==null)
+        {
+            throw new IllegalArgumentException("Product does not exist - product name: "+product_name);
+        }
+        return p;
     }
 
+    /**
+     *
+     * @param category
+     * @return Product if exist by the identifier
+     * @throws Product does not exist
+     */
     @Override
-    public void find_product_by_category() {
-        //Tom
+    public Product find_product_by_category(String category) throws IllegalArgumentException{
+        Product p = this.store_controller.find_product_by_category(category);
+        if (p==null)
+        {
+            throw new IllegalArgumentException("Product does not exist - product category: "+category);
+        }
+        return p;
     }
 
+    /**
+     *
+     * @param key_word
+     * @return Product if exist by the identifier
+     * @throws Product does not exist
+     */
     @Override
-    public void find_product_by_keyword() {
-        //Tom
+    public Product find_product_by_keyword(String key_word) throws IllegalArgumentException{
+        Product p = this.store_controller.find_product_by_keyword(key_word);
+        if (p==null)
+        {
+            throw new IllegalArgumentException("Product does not exist - product key word: "+key_word);
+        }
+        return p;
     }
 
     @Override
@@ -174,8 +207,8 @@ public class Market implements iService {
     }
 
     @Override
-    public void add_product_to_store() {
-        //Tom
+    public void add_product_to_store(Product product, int store_id) {
+        store_controller.add_product_to_store(product, store_id);
     }
 
     @Override

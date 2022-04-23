@@ -70,13 +70,19 @@ class MarketTest {
     }
 
 
-
     @org.junit.jupiter.api.Test
     void find_product_information() {
     }
 
     @org.junit.jupiter.api.Test
-    void find_product_by_name() {
+    void good_find_product_by_name() {
+    }
+
+    @org.junit.jupiter.api.Test
+    void bad_find_product_by_name() {
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            storeController.find_store_information(-3);
+        });
     }
 
     @org.junit.jupiter.api.Test

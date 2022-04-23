@@ -15,7 +15,7 @@ public class StoreController {
         return instance;
     }
     private StoreController() {
-        this.store_ids = 0;
+        this.store_ids = 1;
         this.stores = new HashMap<Integer, Store>();
     }
 
@@ -148,30 +148,45 @@ public class StoreController {
     private Store is_valid_store(int store_id) {
         if (this.stores.containsKey(store_id))
             return this.stores.get(store_id);
-        throw new IllegalArgumentException("the store is not exist");
+        throw new IllegalArgumentException("the store is not exist - store id: "+store_id);
     }
 
 
     // tom
 
-    public String find_store_information(int store_id) throws Exception {
+    /**
+     *
+     * @param store_id
+     * @return store information
+     * @throws if the store not exist
+     */
+    public String find_store_information(int store_id) throws IllegalArgumentException {
         Store store = this.is_valid_store(store_id);
         return store.get_information();
     }
 
-    public String find_product_information(int product_id) throws Exception {
+    /**
+     *
+     * @param product_id
+     * @return product information
+     * @throws if product does not exist
+     */
+    public String find_product_information(int product_id) throws IllegalArgumentException {
         int store_id_of_the_product = is_product_exist(product_id);
         if (store_id_of_the_product == -1)
         {
-            throw new Exception("Product does not exist");
+            throw new IllegalArgumentException("Product does not exist - product id: "+product_id);
         }
         return stores.get(store_id_of_the_product).get_product_information(product_id);
     }
 
-
-    public int is_product_exist(int product_id)
+    /**
+     *
+     * @param product_id
+     * @return store id of the product or -1 if the product does not exist
+     */
+    private int is_product_exist(int product_id)
     {
-        // return store id of the product or -1 if the product does not exist
         int store_id_of_the_product = -1;
         for (Store s : stores.values()) {
             if (s.is_product_exist(product_id))
@@ -182,6 +197,56 @@ public class StoreController {
         }
         return store_id_of_the_product;
     }
+    private int is_product_exist(Product product)
+    {
+        int store_id_of_the_product = -1;
+        for (Store s : stores.values()) {
+            if (s.is_product_exist(product))
+            {
+                store_id_of_the_product = s.getStore_id();
+                break;
+            }
+        }
+        return store_id_of_the_product;
+    }
 
+    //return the product named 'product_name' or null if such product does not exist
+    public Product find_product_by_name(String product_name) {
+        return find_product_by(product_name);
+
+    }
+
+    public Product find_product_by_category(String category) {
+        return find_product_by(category);
+    }
+    public Product find_product_by_keyword(String key_word) {
+        return find_product_by(key_word);
+    }
+
+    private Product find_product_by(String identify)
+    {
+        for (Store store:stores.values()) {
+            Product p = store.find_product_by(identify);
+            if (p!=null)
+            {
+                return p;
+            }
+
+        }
+        return null;
+
+    }
+
+
+    public void add_product_to_store(Product product, int store_id) {
+        Store s = is_valid_store(store_id);
+        //throw if store does not exist
+        int store_id_of_the_product = is_product_exist(product);
+        if (store_id_of_the_product != -1)
+        {
+            throw new IllegalArgumentException("Product already exist - product id: "+product.getProduct_id());
+        }
+        s.add_product(product);
+    }
 }
 

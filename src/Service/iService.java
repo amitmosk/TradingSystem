@@ -1,5 +1,6 @@
 package Service;
 
+import Domain.StoreModule.Product;
 import Domain.StoreModule.StorePermission;
 
 import java.util.LinkedList;
@@ -16,9 +17,9 @@ public interface iService {
     // guests
     String find_store_information(int store_id);
     String find_product_information(int product_id);
-    void find_product_by_name();
-    void find_product_by_category();
-    void find_product_by_keyword();
+    Product find_product_by_name(String name);
+    Product find_product_by_category(String category);
+    Product find_product_by_keyword(String key_word);
 
     double view_user_cart();
     double delete_product_from_cart();
@@ -39,8 +40,8 @@ public interface iService {
     // improve security
     double add_security_personal_question(); // add more methods like that
 
-    // store owner - have to write which of this methods is common to store founder & store manager
-    void add_product_to_store();
+    // store owner - have to write which of these methods is common to store founder & store manager
+    void add_product_to_store(Product product, int store_id);
     void delete_product_from_store();
     void edit_product(int store_id, int product_id);
     void add_discount_rule();

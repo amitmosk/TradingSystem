@@ -1,10 +1,13 @@
 package Domain.StoreModule;
 
+import Domain.Utils.Utils;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Date;
+
 
 public class Store {
     // -- fields
@@ -15,6 +18,7 @@ public class Store {
     private String name;
     private Date foundation_date;
     private HashMap<Integer, Product> products;
+    private int product_ids;
     private boolean active;
     private PurchasePolicy purchasePolicy;
     private DiscountPolicy discountPolicy;
@@ -27,6 +31,7 @@ public class Store {
         this.store_id = store_id;
         this.founder_id = founder_id;
         this.name = name;
+        this.product_ids = 1;
     }
 
     // -- methods
@@ -104,14 +109,8 @@ public class Store {
 
 
 
-    // tom
 
-    private String date_to_string(Date date)
-    {
-        String pattern = "MM/dd/yyyy HH:mm:ss";
-        DateFormat df = new SimpleDateFormat(pattern);
-        return df.format(date);
-    }
+
 
     public String get_information() {
         String founder_name = "----------------------";
@@ -132,7 +131,7 @@ public class Store {
             info.append(name+", ");
         }
         info.append("\n");
-        info.append("\tfoundation date: "+ date_to_string(this.foundation_date)+"\n");
+        info.append("\tfoundation date: "+ Utils.date_to_string(this.foundation_date)+"\n");
 
 
         //products
@@ -155,9 +154,26 @@ public class Store {
     public boolean is_product_exist(int product_id) {
         return products.containsKey(product_id);
     }
+    public boolean is_product_exist(Product product) {
+        return products.containsValue(product);
+    }
     public String get_product_information(int product_id) {
         //already check that product exists in the store
         return this.products.get(product_id).toString();
+    }
+    public Product find_product_by(String identify) {
+        for (Product p:products.values()) {
+            if (p.getName().equals(identify))
+            {
+                return p;
+            }
+        }
+        return  null;
+    }
+
+    public void add_product(Product product) {
+        products.put(product_ids, product);
+        this.product_ids++;
     }
 
 
@@ -168,8 +184,7 @@ public class Store {
 
 
 
-
-    //getters
+    //------------------------------------------------------Getters--------------------------------------------------------------------
 
     public Date getFoundation_date() {
         return foundation_date;
@@ -209,6 +224,58 @@ public class Store {
 
     public String getName() {
         return name;
+    }
+
+
+
+    //------------------------------------------------------Setters--------------------------------------------------------------------
+
+    public void setStore_id(int store_id) {
+        this.store_id = store_id;
+    }
+
+    public void setFounder_id(int founder_id) {
+        this.founder_id = founder_id;
+    }
+
+    public void setOwner_ids(HashMap<Integer, Permission> owner_ids) {
+        this.owner_ids = owner_ids;
+    }
+
+    public void setManager_ids(HashMap<Integer, Permission> manager_ids) {
+        this.manager_ids = manager_ids;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFoundation_date(Date foundation_date) {
+        this.foundation_date = foundation_date;
+    }
+
+    public void setProducts(HashMap<Integer, Product> products) {
+        this.products = products;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
+        this.purchasePolicy = purchasePolicy;
+    }
+
+    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy;
+    }
+
+    public void setUsers_questions(HashMap<Integer, Question> users_questions) {
+        this.users_questions = users_questions;
+    }
+
+    public void setPurchases_history(HashMap<Integer, Purchase> purchases_history) {
+        this.purchases_history = purchases_history;
     }
 
 
