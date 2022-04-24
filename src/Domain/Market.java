@@ -417,7 +417,7 @@ public class Market implements iService {
 
     @Override
     public String view_store_purchases_history(int store_id, int user_id) {
-        HashMap<Integer, StorePurchase> info;
+        String info;
         String answer;
         try
         {

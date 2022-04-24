@@ -123,7 +123,7 @@ public class StoreController {
      * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return a list with all the purchases history
      */
-    public HashMap<Integer, StorePurchase> view_store_purchases_history(int store_id, int user_id) throws IllegalAccessException {
+    public String view_store_purchases_history(int store_id, int user_id) throws IllegalAccessException {
         Store store = this.is_valid_store(store_id);
         return store.view_store_purchases_history(user_id);
         // TODO: 22/04/2022 : write to logger
@@ -208,21 +208,8 @@ public class StoreController {
 
     //return the product named 'product_name' or null if such product does not exist
     public Product find_product_by_name(String product_name) {
-        return find_product_by_name(product_name);
-
-    }
-// @TODO: TOM write specific methods
-    public Product find_product_by_category(String category) {
-        return find_product_by(category);
-    }
-    public Product find_product_by_keyword(String key_word) {
-        return find_product_by(key_word);
-    }
-
-    private Product find_product_by(String identify)
-    {
         for (Store store:stores.values()) {
-            Product p = store.find_product_by(identify);
+            Product p = store.find_product_by_name(product_name);
             if (p!=null)
             {
                 return p;
@@ -230,6 +217,35 @@ public class StoreController {
 
         }
         return null;
+
+    }
+// @TODO: TOM write specific methods
+    public Product find_product_by_category(String category) {
+        for (Store store:stores.values()) {
+            Product p = store.find_product_by_category(category);
+            if (p!=null)
+            {
+                return p;
+            }
+
+        }
+        return null;
+    }
+    public Product find_product_by_keyword(String key_word) {
+        for (Store store:stores.values()) {
+            Product p = store.find_product_by_keyword(key_word);
+            if (p!=null)
+            {
+                return p;
+            }
+
+        }
+        return null;
+    }
+
+    private Product find_product_by(String identify)
+    {
+
 
     }
 

@@ -163,6 +163,25 @@ public class Store {
         }
         return  null;
     }
+    public Product find_product_by_category(String category) {
+        for (Product p:inventory.keySet()) {
+            if (p.getCategory().equals(name))
+            {
+                return p;
+            }
+        }
+        return  null;
+    }
+
+    public Product find_product_by_keyword(String key_word) {
+        for (Product p:inventory.keySet()) {
+            if (p.getKey_words().equals(name))
+            {
+                return p;
+            }
+        }
+        return  null;
+    }
 
     public void add_product(Product product, int quantity) {
         inventory.put(product, quantity);
@@ -382,6 +401,8 @@ public class Store {
         //TODO :discount policy
         return product.getPrice() * quantity;
     }
+
+
 }
 
 
