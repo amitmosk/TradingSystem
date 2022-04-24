@@ -288,25 +288,6 @@ public class Market implements iService {
 
     }
 
-    @Override
-    public void add_discount_rule() {
-        //Tom
-    }
-
-    @Override
-    public void delete_discount_rule() {
-        //Tom
-    }
-
-    @Override
-    public void add_purchase_rule() {
-        //Tom
-    }
-
-    @Override
-    public void delete_purchase_rule() {
-        //Tom
-    }
 
     @Override
     public int add_owner() {

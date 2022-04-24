@@ -243,11 +243,6 @@ public class StoreController {
         return null;
     }
 
-    private Product find_product_by(String identify)
-    {
-
-
-    }
 
 
     public void add_product_to_store(Product product, int store_id, int quantity) throws IllegalArgumentException {

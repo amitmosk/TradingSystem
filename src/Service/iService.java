@@ -54,22 +54,6 @@ public interface iService {
     void edit_product_key_words(int product_id, List<String> key_words);
 
 
-
-
-
-
-
-
-    void add_discount_rule();
-    void delete_discount_rule();
-    void add_purchase_rule();
-    void delete_purchase_rule();
-
-
-
-
-
-
     int add_owner();
     int add_manager();
     int delete_owner();
