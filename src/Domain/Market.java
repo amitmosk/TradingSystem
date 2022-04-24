@@ -5,6 +5,7 @@ import Service.iService;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Market implements iService {
     private StoreController store_controller;
@@ -87,7 +88,7 @@ public class Market implements iService {
      *
      * @param product_name
      * @return Product if exist by the identifier
-     * @throws Product does not exist
+     * @throws if Product does not exist
      */
     @Override
     public Product find_product_by_name(String product_name) throws IllegalArgumentException{
@@ -103,7 +104,7 @@ public class Market implements iService {
      *
      * @param category
      * @return Product if exist by the identifier
-     * @throws Product does not exist
+     * @throws if Product does not exist
      */
     @Override
     public Product find_product_by_category(String category) throws IllegalArgumentException{
@@ -119,7 +120,7 @@ public class Market implements iService {
      *
      * @param key_word
      * @return Product if exist by the identifier
-     * @throws Product does not exist
+     * @throws if Product does not exist
      */
     @Override
     public Product find_product_by_keyword(String key_word) throws IllegalArgumentException{
@@ -206,19 +207,67 @@ public class Market implements iService {
         return 0;
     }
 
+    /**
+     *
+     * @param product
+     * @param store_id
+     *
+     */
     @Override
     public void add_product_to_store(Product product, int store_id) {
-        store_controller.add_product_to_store(product, store_id);
+        try {
+            store_controller.add_product_to_store(product, store_id);
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println("Product already exist");
+        }
+
+    }
+
+    /**
+     *
+     * @param product_id
+     */
+    @Override
+    //maybe return the deleted product
+    public void delete_product_from_store(int product_id) {
+        this.store_controller.delete_product_from_store(product_id);
     }
 
     @Override
-    public void delete_product_from_store() {
-        //Tom
+    public void edit_product_name(int product_id, String name) {
+        if (!this.store_controller.edit_product_name(product_id, name))
+        {
+            System.out.println();
+        }
     }
 
     @Override
-    public void edit_product(int store_id, int product_id) {
-        //Tom
+    public void edit_product_price(int product_id, double price) {
+        if (!this.store_controller.edit_product_price(product_id, price))
+        {
+            System.out.println();
+        }
+
+    }
+
+    @Override
+    public void edit_product_category(int product_id, String category) {
+        if (!this.store_controller.edit_product_category(product_id, category))
+        {
+            System.out.println();
+        }
+
+    }
+
+    @Override
+    public void edit_product_key_words(int product_id, List<String> key_words) {
+        if (!this.store_controller.edit_product_key_words(product_id, key_words))
+        {
+            System.out.println();
+        }
+
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Date;
+import java.util.List;
 
 
 public class Store {
@@ -154,9 +155,7 @@ public class Store {
     public boolean is_product_exist(int product_id) {
         return products.containsKey(product_id);
     }
-    public boolean is_product_exist(Product product) {
-        return products.containsValue(product);
-    }
+
     public String get_product_information(int product_id) {
         //already check that product exists in the store
         return this.products.get(product_id).toString();
@@ -279,7 +278,40 @@ public class Store {
     }
 
 
+    public void delete_product(int product_id) {
+        //already checks that product exist
+        products.remove(product_id);
+        //manage product ids after product deletion
+    }
 
+//    public void edit_product(int product_id) {
+//        Product to_edit = products.get(product_id);
+//
+//    }
+
+    public boolean edit_product_name(int product_id, String name) {
+        Product to_edit = products.get(product_id);
+        to_edit.setName(name);
+        return true;
+    }
+
+    public boolean edit_product_price(int product_id, double price) {
+        Product to_edit = products.get(product_id);
+        to_edit.setPrice(price);
+        return true;
+    }
+
+    public boolean edit_product_category(int product_id, String category) {
+        Product to_edit = products.get(product_id);
+        to_edit.setCategory(category);
+        return true;
+    }
+
+    public boolean edit_product_key_words(int product_id, List<String> key_words) {
+        Product to_edit = products.get(product_id);
+        to_edit.setKey_words(key_words);
+        return true;
+    }
 }
 
 

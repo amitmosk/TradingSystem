@@ -2,6 +2,7 @@ package Domain.StoreModule;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class StoreController {
     private HashMap<Integer, Store> stores;
@@ -197,18 +198,7 @@ public class StoreController {
         }
         return store_id_of_the_product;
     }
-    private int is_product_exist(Product product)
-    {
-        int store_id_of_the_product = -1;
-        for (Store s : stores.values()) {
-            if (s.is_product_exist(product))
-            {
-                store_id_of_the_product = s.getStore_id();
-                break;
-            }
-        }
-        return store_id_of_the_product;
-    }
+
 
     //return the product named 'product_name' or null if such product does not exist
     public Product find_product_by_name(String product_name) {
@@ -238,15 +228,64 @@ public class StoreController {
     }
 
 
-    public void add_product_to_store(Product product, int store_id) {
+    public void add_product_to_store(Product product, int store_id) throws IllegalArgumentException {
         Store s = is_valid_store(store_id);
         //throw if store does not exist
-        int store_id_of_the_product = is_product_exist(product);
+        int store_id_of_the_product = is_product_exist(product.getProduct_id());
         if (store_id_of_the_product != -1)
         {
             throw new IllegalArgumentException("Product already exist - product id: "+product.getProduct_id());
         }
         s.add_product(product);
+    }
+
+    public void delete_product_from_store(int product_id) {
+        int store_id_of_the_product = is_product_exist(product_id);
+        if (store_id_of_the_product == -1)
+        {
+            throw new IllegalArgumentException("Product does not exist - product id: "+ product_id);
+        }
+        stores.get(store_id_of_the_product).delete_product(product_id);
+    }
+
+    public boolean edit_product_name(int product_id, String name) {
+        int store_id_of_the_product = is_product_exist(product_id);
+        if (store_id_of_the_product == -1)
+        {
+            return false;
+            //throw new IllegalArgumentException("Product does not exist - product id: "+ product_id);
+        }
+        return stores.get(store_id_of_the_product).edit_product_name(product_id, name);
+    }
+
+    public boolean edit_product_price(int product_id, double price) {
+        int store_id_of_the_product = is_product_exist(product_id);
+        if (store_id_of_the_product == -1)
+        {
+            return false;
+            //throw new IllegalArgumentException("Product does not exist - product id: "+ product_id);
+        }
+        return stores.get(store_id_of_the_product).edit_product_price(product_id, price);
+    }
+
+    public boolean edit_product_category(int product_id, String category) {
+        int store_id_of_the_product = is_product_exist(product_id);
+        if (store_id_of_the_product == -1)
+        {
+            return false;
+            //throw new IllegalArgumentException("Product does not exist - product id: "+ product_id);
+        }
+        return stores.get(store_id_of_the_product).edit_product_category(product_id, category);
+    }
+
+    public boolean edit_product_key_words(int product_id, List<String> key_words) {
+        int store_id_of_the_product = is_product_exist(product_id);
+        if (store_id_of_the_product == -1)
+        {
+            return false;
+            //throw new IllegalArgumentException("Product does not exist - product id: "+ product_id);
+        }
+        return stores.get(store_id_of_the_product).edit_product_key_words(product_id, key_words);
     }
 }
 

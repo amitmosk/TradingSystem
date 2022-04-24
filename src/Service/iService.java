@@ -1,9 +1,11 @@
 package Service;
 
 import Domain.StoreModule.Product;
+import Domain.StoreModule.ProductReview;
 import Domain.StoreModule.StorePermission;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public interface iService {
     void init_market();
@@ -41,9 +43,23 @@ public interface iService {
     double add_security_personal_question(); // add more methods like that
 
     // store owner - have to write which of these methods is common to store founder & store manager
+    // @TODO : TOM
     void add_product_to_store(Product product, int store_id);
-    void delete_product_from_store();
-    void edit_product(int store_id, int product_id);
+    void delete_product_from_store(int product_id);
+
+    void edit_product_name(int product_id, String name);
+
+    void edit_product_price(int product_id, double price);
+    void edit_product_category(int product_id, String category);
+    void edit_product_key_words(int product_id, List<String> key_words);
+
+
+
+
+
+
+
+
     void add_discount_rule();
     void delete_discount_rule();
     void add_purchase_rule();
