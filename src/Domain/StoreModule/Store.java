@@ -2,8 +2,6 @@ package Domain.StoreModule;
 
 import Domain.Utils.Utils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Date;
@@ -14,8 +12,7 @@ public class Store {
     // -- fields
     private int store_id;
     private int founder_id;
-    private HashMap<Integer, Permission> owner_ids;
-    private HashMap<Integer, Permission> manager_ids;
+    private HashMap<Integer, Appointment> stuff_ids_and_appointments;
     private String name;
     private Date foundation_date;
     private HashMap<Integer, Product> products;
@@ -54,7 +51,7 @@ public class Store {
     }
     public StoreManagersInfo view_store_management_information(int user_id) throws IllegalAccessException {
         this.check_permission(user_id, StorePermission.view_permissions);
-        return new StoreManagersInfo(this.manager_ids);
+        return new StoreManagersInfo(this.stuff_ids_and_appointments);
     }
     public void set_permissions(int user_id, int manager_id, LinkedList<StorePermission> permissions) {
         // check that the manager appointed by the user
@@ -64,7 +61,7 @@ public class Store {
         if (manager_id == user_id)
             throw new IllegalArgumentException("User cant change himself permissions");
 
-        Permission manager_permission = this.owner_ids.get(manager_id);
+        Appointment manager_permission = this.stuff_ids_and_appointments.get(manager_id);
         manager_permission.set_permissions(permissions);
 
     }
@@ -72,7 +69,7 @@ public class Store {
         return this.active;
     }
     public int get_appointer(int manager_id) {
-        return this.manager_ids.get(manager_id).getAppointer_id();
+        return this.stuff_ids_and_appointments.get(manager_id).getAppointer_id();
     }
 
 
@@ -98,13 +95,13 @@ public class Store {
         this.active = false;
         // TODO: 22/04/2022 : send message to all of the managers & owners.
         this.founder_id = -1;
-        this.manager_ids = null;
+        this.stuff_ids_and_appointments = null;
         return true;
     }
 
     public void check_permission(int user_id, StorePermission permission) throws IllegalAccessException {
         // not just managers - FIX
-        if(!(this.manager_ids.get(user_id).has_permission(permission)))
+        if(!(this.stuff_ids_and_appointments.get(user_id).has_permission(permission)))
             throw new IllegalAccessException("User has no permissions!");
     }
 
@@ -119,14 +116,14 @@ public class Store {
         info.append("Store info: "+this.name+"\n");
         info.append("\tStore founder: "+ founder_name +"\n");
         info.append("\tStore owners: ");
-        for (Integer id : owner_ids.keySet())
+        for (Integer id : stuff_ids_and_appointments.keySet())
         {
             String name = "";
             info.append(name+", ");
         }
         info.append("\n");
         info.append("\tStore managers: ");
-        for (Integer id : manager_ids.keySet())
+        for (Integer id : stuff_ids_and_appointments.keySet())
         {
             String name = "";
             info.append(name+", ");
@@ -193,12 +190,12 @@ public class Store {
         return discountPolicy;
     }
 
-    public HashMap<Integer, Permission> getManager_ids() {
-        return manager_ids;
+    public HashMap<Integer, Appointment> getManager_ids() {
+        return stuff_ids_and_appointments;
     }
 
-    public HashMap<Integer, Permission> getOwner_ids() {
-        return owner_ids;
+    public HashMap<Integer, Appointment> getstuff_ids_and_appointments() {
+        return stuff_ids_and_appointments;
     }
 
     public HashMap<Integer, Product> getProducts() {
@@ -237,12 +234,12 @@ public class Store {
         this.founder_id = founder_id;
     }
 
-    public void setOwner_ids(HashMap<Integer, Permission> owner_ids) {
-        this.owner_ids = owner_ids;
+    public void setstuff_ids_and_appointments(HashMap<Integer, Appointment> stuff_ids_and_appointments) {
+        this.stuff_ids_and_appointments = stuff_ids_and_appointments;
     }
 
-    public void setManager_ids(HashMap<Integer, Permission> manager_ids) {
-        this.manager_ids = manager_ids;
+    public void setManager_ids(HashMap<Integer, Appointment> manager_ids) {
+        this.stuff_ids_and_appointments = manager_ids;
     }
 
     public void setName(String name) {

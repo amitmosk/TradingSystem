@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import static Domain.StoreModule.StoreManagerType.store_founder;
 import static Domain.StoreModule.StorePermission.*;
 
-public class Permission {
+public class Appointment {
     // -- fields
     private final int manager_id;
     private final int appointer_id;
@@ -15,7 +15,7 @@ public class Permission {
     private HashMap<StorePermission,Boolean> permissions;
 
     // -- constructors
-    public Permission(int manager_id, int appointer_id, int store_id, StoreManagerType type) {
+    public Appointment(int manager_id, int appointer_id, int store_id, StoreManagerType type) {
         this.manager_id = manager_id;
         this.appointer_id = appointer_id;
         this.store_id = store_id;

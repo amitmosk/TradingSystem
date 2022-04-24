@@ -20,6 +20,7 @@ public class Market implements iService {
         //Tom
         //connect to payment service
         //connect to supply service
+        // load
     }
 
     @Override
@@ -56,6 +57,7 @@ public class Market implements iService {
     }
 
     @Override
+
     public String find_store_information(int store_id) {
         String info="";
         try
@@ -71,6 +73,7 @@ public class Market implements iService {
     }
 
     @Override
+
     public String find_product_information(int product_id) {
         String info="";
         try
