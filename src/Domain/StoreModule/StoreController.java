@@ -1,5 +1,7 @@
 package Domain.StoreModule;
 
+import Domain.Utils.Utils;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +29,13 @@ public class StoreController {
         // TODO - incerment
         return this.purchase_ids++;
     }
+
+    private int getInc_store_id() {
+        // TODO: atomic integer
+        this.store_ids++;
+        return this.store_ids;
+    }
+
     /**
      *
      * @param store_id represent the store we asked to close
@@ -372,5 +381,16 @@ public class StoreController {
     }
 
 
+    public void open_store(int founder_id, String store_name) {
+        Utils.checkValidName(store_name);
+        int store_id = this.getInc_store_id();
+        Store store = new Store(store_id, founder_id, store_name);
+        this.stores.put(store_id, store);
+    }
+
+    public void add_review(int product_id, int user_id, String review) {
+        int store_id = this.is_product_exist(product_id);
+        this.stores.get(store_id).add_review(product_id, user_id, review);
+    }
 }
 

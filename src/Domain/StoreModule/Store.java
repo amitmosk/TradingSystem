@@ -27,6 +27,7 @@ public class Store {
         this.founder_id = founder_id;
         this.name = name;
         this.product_ids = 1;
+        this.active = true;
     }
 
     // -- methods
@@ -403,6 +404,9 @@ public class Store {
     }
 
 
+    public void add_review(int product_id, int user_id, String review) {
+        this.getProduct_by_product_id(product_id).add_review(user_id, review);
+    }
 }
 
 

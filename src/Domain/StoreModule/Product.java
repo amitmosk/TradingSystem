@@ -101,4 +101,8 @@ public class Product {
     public void setKey_words(List<String> key_words) {
         this.key_words = key_words;
     }
+
+    public void add_review(int user_id, String review) {
+        this.productReview.add_review(user_id, review);
+    }
 }

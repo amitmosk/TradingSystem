@@ -176,13 +176,13 @@ public class Market implements iService {
     }
 
     @Override
-    public int open_store() {
-        return 0;
+    public int open_store(int founder_id, String store_name) {
+        this.store_controller.open_store(founder_id, store_name);
     }
 
     @Override
-    public int add_review(int product_id) {
-        return 0;
+    public int add_review(int product_id, int user_id, String review) {
+        this.store_controller.add_review(product_id, user_id, review);
     }
 
     @Override
