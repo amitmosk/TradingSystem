@@ -3,10 +3,12 @@ package Domain.StoreModule;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class StoreController {
     private HashMap<Integer, Store> stores;
     private int store_ids;
+    private int purchase_ids;
     private static StoreController instance = null;
 
     public static StoreController get_instance()
@@ -17,10 +19,14 @@ public class StoreController {
     }
     private StoreController() {
         this.store_ids = 1;
+        this.purchase_ids = 1;
         this.stores = new HashMap<Integer, Store>();
     }
 
-
+    private int getInc_purchase_ids() {
+        // TODO - incerment
+        return this.purchase_ids++;
+    }
     /**
      *
      * @param store_id represent the store we asked to close
@@ -117,7 +123,7 @@ public class StoreController {
      * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return a list with all the purchases history
      */
-    public HashMap<Integer, Purchase> view_store_purchases_history(int store_id, int user_id) throws IllegalAccessException {
+    public HashMap<Integer, StorePurchase> view_store_purchases_history(int store_id, int user_id) throws IllegalAccessException {
         Store store = this.is_valid_store(store_id);
         return store.view_store_purchases_history(user_id);
         // TODO: 22/04/2022 : write to logger
@@ -202,10 +208,10 @@ public class StoreController {
 
     //return the product named 'product_name' or null if such product does not exist
     public Product find_product_by_name(String product_name) {
-        return find_product_by(product_name);
+        return find_product_by_name(product_name);
 
     }
-
+// @TODO: TOM write specific methods
     public Product find_product_by_category(String category) {
         return find_product_by(category);
     }
@@ -228,7 +234,7 @@ public class StoreController {
     }
 
 
-    public void add_product_to_store(Product product, int store_id) throws IllegalArgumentException {
+    public void add_product_to_store(Product product, int store_id, int quantity) throws IllegalArgumentException {
         Store s = is_valid_store(store_id);
         //throw if store does not exist
         int store_id_of_the_product = is_product_exist(product.getProduct_id());
@@ -236,7 +242,7 @@ public class StoreController {
         {
             throw new IllegalArgumentException("Product already exist - product id: "+product.getProduct_id());
         }
-        s.add_product(product);
+        s.add_product(product, quantity);
     }
 
     public void delete_product_from_store(int product_id) {
@@ -287,5 +293,73 @@ public class StoreController {
         }
         return stores.get(store_id_of_the_product).edit_product_key_words(product_id, key_words);
     }
+
+
+    public double check_cart_available_products_and_calc_price(Cart cart) {
+        HashMap<Integer, Basket> baskets_of_storesID = cart.get_baskets();
+        double cart_price=0;
+        for (Basket basket : baskets_of_storesID.values()){
+
+            int store_id = basket.getStore_id();
+            if(stores.containsKey(store_id))
+            {
+
+                double basket_price = stores.get(store_id).check_available_products_and_calc_price(basket); // throw if not available
+                cart_price += basket_price;
+            }
+            else
+            {
+                throw new IllegalArgumentException("Store does not exist - store id: "+ store_id);
+                //not suppose to happen
+            }
+
+        }
+        return cart_price;
+
+    }
+    public Product get_product_by_product_id(int product_id)
+    {
+        for (Store s:this.stores.values())
+        {
+            Product p = s.getProduct_by_product_id(product_id);
+            if (p!=null)
+            {
+                return p;
+            }
+
+        }
+        throw new IllegalArgumentException("StoreController:get_product_by_product_id - Product does not exist product_id: "+product_id);
+    }
+
+    public Product checkAvailablityAndGet(int store_id, int product_id, int quantity)
+    {
+        if(!stores.containsKey(store_id))
+        {
+            throw new IllegalArgumentException("StoreController:checkAvailablityAndGet - Store does not exist , store id: "+store_id);
+        }
+        return  stores.get(store_id).checkAvailablityAndGet(product_id, quantity);
+    }
+
+    // TODO: remove the items from store that were bought by the user
+    public void update_stores_inventory(Cart cart) {
+        HashMap<Integer, Basket> baskets_of_storesID = cart.get_baskets();
+        for (Basket basket : baskets_of_storesID.values())
+        {
+            int store_id = basket.getStore_id();
+            if(!stores.containsKey(store_id))
+            {
+                throw new IllegalArgumentException("Store does not exist - store id: "+ store_id);
+            }
+        }
+        for (Basket basket : baskets_of_storesID.values())
+        {
+            int store_id = basket.getStore_id();
+            this.stores.get(store_id).remove_basket_products_from_store(basket, this.getInc_purchase_ids());
+        }
+
+        // TODO: create StorePurchase add the purchase to StorePurchaseHistory
+    }
+
+
 }
 

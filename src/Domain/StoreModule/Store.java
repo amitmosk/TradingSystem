@@ -2,10 +2,7 @@ package Domain.StoreModule;
 
 import Domain.Utils.Utils;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 public class Store {
@@ -15,13 +12,13 @@ public class Store {
     private HashMap<Integer, Appointment> stuff_ids_and_appointments;
     private String name;
     private Date foundation_date;
-    private HashMap<Integer, Product> products;
+    private HashMap<Product, Integer> inventory; // product & quantity
     private int product_ids;
     private boolean active;
     private PurchasePolicy purchasePolicy;
     private DiscountPolicy discountPolicy;
     private HashMap<Integer, Question> users_questions; // question_id x question
-    private HashMap<Integer, Purchase> purchases_history;
+    private StorePurchaseHistory purchases_history;
 
     // -- constructor
 
@@ -84,9 +81,9 @@ public class Store {
         question.setAnswer(answer);
     }
 
-    public HashMap<Integer, Purchase> view_store_purchases_history(int user_id) throws IllegalAccessException {
+    public String view_store_purchases_history(int user_id) throws IllegalAccessException {
         this.check_permission(user_id, StorePermission.view_purchases_history);
-        return this.purchases_history;
+        return this.purchases_history.toString();
     }
 
     public boolean close_store_permanently(int user_id) {
@@ -109,7 +106,7 @@ public class Store {
 
 
 
-
+// @TODO : we changed a lot of fields, have to match the method
     public String get_information() {
         String founder_name = "----------------------";
         StringBuilder info = new StringBuilder();
@@ -150,16 +147,16 @@ public class Store {
     }
 
     public boolean is_product_exist(int product_id) {
-        return products.containsKey(product_id);
+        return this.getProduct_by_product_id(product_id) != null;
     }
 
     public String get_product_information(int product_id) {
         //already check that product exists in the store
-        return this.products.get(product_id).toString();
+        return this.getProduct_by_product_id(product_id).toString();
     }
-    public Product find_product_by(String identify) {
-        for (Product p:products.values()) {
-            if (p.getName().equals(identify))
+    public Product find_product_by_name(String name) {
+        for (Product p:inventory.keySet()) {
+            if (p.getName().equals(name))
             {
                 return p;
             }
@@ -167,12 +164,19 @@ public class Store {
         return  null;
     }
 
-    public void add_product(Product product) {
-        products.put(product_ids, product);
+    public void add_product(Product product, int quantity) {
+        inventory.put(product, quantity);
         this.product_ids++;
     }
 
-
+    public Product getProduct_by_product_id(int product_id)
+    {
+        for (Product product : this.inventory.keySet()){
+            if (product.getProduct_id() == product_id)
+                return product;
+        }
+        return null;
+    }
 
 
 
@@ -198,11 +202,11 @@ public class Store {
         return stuff_ids_and_appointments;
     }
 
-    public HashMap<Integer, Product> getProducts() {
-        return products;
+    public HashMap<Product, Integer> getInventory() {
+        return this.inventory;
     }
 
-    public HashMap<Integer, Purchase> getPurchase_history() {
+    public StorePurchaseHistory getPurchase_history() {
         return purchases_history;
     }
 
@@ -250,8 +254,8 @@ public class Store {
         this.foundation_date = foundation_date;
     }
 
-    public void setProducts(HashMap<Integer, Product> products) {
-        this.products = products;
+    public void setInventory(HashMap<Product, Integer> inventory) {
+        this.inventory = inventory;
     }
 
     public void setActive(boolean active) {
@@ -270,44 +274,113 @@ public class Store {
         this.users_questions = users_questions;
     }
 
-    public void setPurchases_history(HashMap<Integer, Purchase> purchases_history) {
-        this.purchases_history = purchases_history;
-    }
+
 
 
     public void delete_product(int product_id) {
         //already checks that product exist
-        products.remove(product_id);
+        Product product_to_remove = this.getProduct_by_product_id(product_id);
+        inventory.remove(product_to_remove);
         //manage product ids after product deletion
     }
 
-//    public void edit_product(int product_id) {
-//        Product to_edit = products.get(product_id);
-//
-//    }
+
 
     public boolean edit_product_name(int product_id, String name) {
-        Product to_edit = products.get(product_id);
+        Product to_edit = this.getProduct_by_product_id(product_id);
         to_edit.setName(name);
         return true;
     }
 
     public boolean edit_product_price(int product_id, double price) {
-        Product to_edit = products.get(product_id);
+        Product to_edit = this.getProduct_by_product_id(product_id);
         to_edit.setPrice(price);
         return true;
     }
 
     public boolean edit_product_category(int product_id, String category) {
-        Product to_edit = products.get(product_id);
+        Product to_edit = this.getProduct_by_product_id(product_id);
         to_edit.setCategory(category);
         return true;
     }
 
     public boolean edit_product_key_words(int product_id, List<String> key_words) {
-        Product to_edit = products.get(product_id);
+        Product to_edit = this.getProduct_by_product_id(product_id);
         to_edit.setKey_words(key_words);
         return true;
+    }
+
+
+
+
+
+
+    public double check_available_products_and_calc_price(Basket basket) {
+        Map<Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
+        for (Product p : products_and_quantities.keySet())
+        {
+            this.checkAvailablityAndGet(p.getProduct_id(), products_and_quantities.get(p));
+        }
+
+        return basket.getTotal_price();
+    }
+
+    public Product checkAvailablityAndGet(int product_id, int quantity) {
+        Product p = this.getProduct_by_product_id(product_id);
+        if (p == null)
+        {
+            throw new IllegalArgumentException("Store.checkAvailablityAndGet: Product is not exist , product id: "+product_id);
+            //not suppose to happen
+            //add to logger
+        }
+        int product_quantity = this.inventory.get(p);
+        if (quantity <= product_quantity)
+        {
+            return p;
+        }
+        throw new IllegalArgumentException("Store.checkAvailablityAndGet: Product is not available , product id: "+product_id+" quantity: "+quantity);
+    }
+
+
+    public void remove_basket_products_from_store(Basket basket, int purchase_id) {
+        Map<Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
+        for (Product p : products_and_quantities.keySet())
+        {
+            int first_quantity = this.inventory.get(p);
+            int quantity_to_remove = products_and_quantities.get(p);
+            if (first_quantity - quantity_to_remove < 0)
+                throw new IllegalArgumentException("Store.remove_basket_products_from_store: product quantity :" + quantity_to_remove + "" +
+                        " is more then available for product id :"+p.getProduct_id());
+        }
+        for (Product p : products_and_quantities.keySet())
+        {
+            int first_quantity = this.inventory.get(p);
+            int quantity_to_remove = products_and_quantities.get(p);
+            if (first_quantity - quantity_to_remove == 0)
+                this.inventory.remove(p);
+            else
+                this.inventory.put(p, first_quantity - quantity_to_remove);
+        }
+        StorePurchase purchase = new StorePurchase(basket.getBuyer_id(), purchase_id, basket.getTotal_price(),
+                basket.get_productsIds_and_quantity(), this.get_product_ids_and_total_price(basket));
+        this.purchases_history.insert(purchase);
+
+    }
+
+    private Map<Integer, Double> get_product_ids_and_total_price(Basket basket) {
+        Map<Integer, Double> productsIds_and_totalPrice = new HashMap<>();
+        Map <Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
+        for(Product p: products_and_quantities.keySet())
+        {
+            int quantity = products_and_quantities.get(p);
+            productsIds_and_totalPrice.put(p.getProduct_id(), this.calc_product_price(p, quantity));
+        }
+        return productsIds_and_totalPrice;
+    }
+
+    private Double calc_product_price(Product product, int quantity) {
+        //TODO :discount policy
+        return product.getPrice() * quantity;
     }
 }
 

@@ -7,15 +7,21 @@ public class Product {
     private int store_id;
     private int product_id;
     private double price;
-    private int quantity;
     private ProductReview productReview;
     private String category;
     private List<String> key_words;
 
-
-    public boolean is_avaliable() {
-        return quantity>0;
+    public Product(String name, int store_id, int product_id, double price,
+                   ProductReview productReview, String category, List<String> key_words) {
+        this.name = name;
+        this.store_id = store_id;
+        this.product_id = product_id;
+        this.price = price;
+        this.productReview = productReview;
+        this.category = category;
+        this.key_words = key_words;
     }
+
 
     @Override
     public String toString() {
@@ -24,7 +30,6 @@ public class Product {
         info.append("Product: "+ this.name+"\n");
         info.append("\tStore:  "+ store_name+"\n");
         info.append("\tPrice: "+ this.price+"\n");
-        info.append("\tquantity: "+ this.quantity+"\n");
         info.append("\tProduct Review: "+ this.productReview+"\n");
         info.append("\tCategory: "+ this.category+"\n");
         info.append("\tKey words: "+ this.key_words+"\n");
@@ -52,9 +57,6 @@ public class Product {
         return product_id;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
 
     public List<String> getKey_words() {
         return key_words;
@@ -87,9 +89,6 @@ public class Product {
         this.price = price;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
     public void setProductReview(ProductReview productReview) {
         this.productReview = productReview;

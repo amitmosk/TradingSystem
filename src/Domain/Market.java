@@ -14,7 +14,9 @@ public class Market implements iService {
         this.store_controller = StoreController.get_instance();
     }
 
-
+    //@TODO : all the exceptions in form: Basket.RemoveProduct: (class.method) - with specific data
+    // TODO: before get store check that the store is open
+    // TODO: all the Controllers ids counters -> AtomicIntegers - getInc
     @Override
     public void init_market() {
         //Tom
@@ -151,13 +153,26 @@ public class Market implements iService {
     }
 
     @Override
-    public double edit_product_from_cart() {
+    public double change_product_quantity_in_cart() {
         return 0;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int buy_cart() {
-        return 0;
+        // get information about the payment & supply
+        Cart cart = this.user_controller.get_cart(this.user_id);
+        double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
+        this.payment(total_price, paymentInfo);
+        this.supply(supplyInfo);
+        // success
+        // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
+        int purchase_id = this.user_controller.clear_cart(this.user_id);
+        this.store_controller.update_stores_inventory(cart, purchase_id);
+        // failed
     }
 
     @Override
@@ -217,9 +232,9 @@ public class Market implements iService {
      *
      */
     @Override
-    public void add_product_to_store(Product product, int store_id) {
+    public void add_product_to_store(Product product, int store_id, int quantity) {
         try {
-            store_controller.add_product_to_store(product, store_id);
+            store_controller.add_product_to_store(product, store_id, quantity);
         }
         catch (IllegalArgumentException e)
         {
@@ -402,7 +417,7 @@ public class Market implements iService {
 
     @Override
     public String view_store_purchases_history(int store_id, int user_id) {
-        HashMap<Integer, Purchase> info;
+        HashMap<Integer, StorePurchase> info;
         String answer;
         try
         {

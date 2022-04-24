@@ -44,7 +44,7 @@ public interface iService {
 
     // store owner - have to write which of these methods is common to store founder & store manager
     // @TODO : TOM
-    void add_product_to_store(Product product, int store_id);
+    void add_product_to_store(Product product, int store_id, int quantity);
     void delete_product_from_store(int product_id);
 
     void edit_product_name(int product_id, String name);

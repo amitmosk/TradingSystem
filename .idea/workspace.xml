@@ -2,11 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/PurchaseHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StorePurchase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StorePurchaseHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/UserPurchase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/UserPurchaseHistory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Market.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Permission.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Basket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Basket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreManagersInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreManagersInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/iService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/iService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +25,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="JavaFXApplication" />
         <option value="Class" />
       </list>
     </option>
@@ -38,9 +47,10 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RunManager">
     <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -74,14 +84,19 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="71" key="#Project_Structure/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1650555538560" />
-    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1650620240837">
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1650820437227">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1650620240837" />
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1650820437227" />
     <state x="241" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1650798250472">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="241" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1650798250472" />
+    <state x="473" y="154" key="FileChooserDialogImpl" timestamp="1650801578152">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="473" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1650801578151" />
     <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1650555660059">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -98,25 +113,38 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="210" key="GridCell.Tab.0.right/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1650555660059" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1650646635841">
+    <state x="249" y="0" key="SettingsEditor" timestamp="1650801913703">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1650801913703" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1650801478348">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1650646635841" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1650801478348" />
     <state x="498" y="306" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1650619789761">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="498" y="306" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1650619789761" />
+    <state x="463" y="144" width="609" height="536" key="find.popup" timestamp="1650815622875">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="463" y="144" width="609" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1650815622875" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1650622239366">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" key="run.anything.popup/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1650622239366" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1650806852775">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1650806852775" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java</url>
-          <line>175</line>
+          <line>181</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
