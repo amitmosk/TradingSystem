@@ -1,14 +1,16 @@
 package Service;
 
+import java.util.Map;
+
 public class Market //implements IMarket{
 {
     private UserController uc;
     private int loggedUser;                  //id or email
-    private boolean isLogged;
+    private boolean isGuest;                 //
 //    @Override
     public void init_market() {
         this.uc = UserController.getInstance();
-        isLogged = false;
+        isGuest = true;
     }
 
 //    @Override
@@ -31,19 +33,22 @@ public class Market //implements IMarket{
 //    @Override
     public double login(String Email, String password) {
         boolean logRes = uc.login(loggedUser, Email, password);
-        if(logRes) isLogged = true;
+        if(logRes) isGuest = false;
         return 1;
     }
 
 //    @Override
+
     public void logout() {
-        //todo check if logged in user is guest
+        if(isGuest) return; //todo throw error
+        this.isGuest = true;
         this.loggedUser = -1;
     }
 
 //    @Override
-    public double register(String Email, String pw, String name, String lastName) {
-        uc.register(Email,pw,name,lastName);
+    public double register(String Email, String pw, String name, String lastName) throws IllegalAccessException {
+        if(!isGuest) return 1; //todo throw error
+        uc.register(loggedUser,Email,pw,name,lastName);
         return 1;
     }
 
@@ -72,28 +77,65 @@ public class Market //implements IMarket{
 
     }
 
+    public void add_product_to_cart(int storeID,int productID, int quantity) {
+        Product p = null;
+        Basket storeBasket = null;
+        try{
+            storeBasket = uc.getBasketByStoreID(loggedUser,storeID);
+//             p = sc.checkAvailabilityAndGet(storeID,productID,quantity);
+//             basket.addProduct(p,quantity);
+            uc.addBasket(loggedUser, storeID, storeBasket);
+        }
+        catch (Exception e){
+
+        }
+    }
+
+    public void edit_product_quantity_in_cart(int storeID,int productID, int quantity) {
+        Product p = null;
+        Basket storeBasket = null;
+        try{
+            storeBasket = uc.getBasketByStoreID(loggedUser,storeID);
+//             p = sc.checkAvailabilityAndGet(storeID,productID,quantity);
+//             basket.changeQuantity(p,quantity);
+        }
+        catch (Exception e){
+
+        }
+    }
+
+    public void remove_product_from_cart(int storeID,int productID) {
+        Product p = null;
+        Basket storeBasket = null;
+        try{
+            storeBasket = uc.getBasketByStoreID(loggedUser,storeID);
+//             basket.removeProduct(p);
+            uc.removeBasketIfNeeded(loggedUser, storeID, storeBasket);
+        }
+        catch (Exception e){
+
+        }
+    }
+
 //    @Override
-    public double view_user_cart() {
-        uc.view_user_cart(loggedUser);
-        return 1;
+    public Map<Integer,Basket> view_user_cart() {
+        return uc.getBaskets(loggedUser);
+    }
+
+    public int buy_cart() {
+        // get information about the payment & supply
+        Cart cart = this.uc.getCart(this.loggedUser);
+//        double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
+//        this.payment(total_price, paymentInfo);
+//        this.supply(supplyInfo);
+        // success
+        // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
+        this.uc.buyCart(this.loggedUser);
+//        this.store_controller.update_stores_inventory(cart, purchase_id);
+        // failed
+        return 0;
     }
 /*
-
-    @Override
-    public double delete_product_from_cart() {
-        return 0;
-    }
-
-    @Override
-    public double add_product_to_cart() {
-        return 0;
-    }
-
-    @Override
-    public double edit_product_from_cart() {
-        return 0;
-    }
-
     @Override
     public int buy_cart() {
         return 0;
