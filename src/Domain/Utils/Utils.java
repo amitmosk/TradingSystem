@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Utils {
 
-    public static String DateToString(Date d){
+    public static String DateToString(LocalDate d){
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
         return formatter.format(d);

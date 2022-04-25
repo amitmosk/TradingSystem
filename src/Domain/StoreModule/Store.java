@@ -2,6 +2,7 @@ package Domain.StoreModule;
 
 import Domain.Utils.Utils;
 
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -11,7 +12,7 @@ public class Store {
     private int founder_id;
     private HashMap<Integer, Appointment> stuff_ids_and_appointments;
     private String name;
-    private Date foundation_date;
+    private LocalDate foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
     private int product_ids;
     private boolean active;
@@ -28,6 +29,8 @@ public class Store {
         this.name = name;
         this.product_ids = 1;
         this.active = true;
+        this.foundation_date = LocalDate.now();
+        this.users_questions = new HashMap<>();
     }
 
     // -- methods
@@ -108,7 +111,7 @@ public class Store {
 
 
 // @TODO : we changed a lot of fields, have to match the method
-    public String get_information() {
+    public String toString() {
         String founder_name = "----------------------";
         StringBuilder info = new StringBuilder();
         info.append("Store info: "+this.name+"\n");
@@ -127,7 +130,7 @@ public class Store {
             info.append(name+", ");
         }
         info.append("\n");
-        info.append("\tfoundation date: "+ Utils.date_to_string(this.foundation_date)+"\n");
+        info.append("\tfoundation date: "+ Utils.DateToString(this.foundation_date)+"\n");
 
 
         //products
@@ -147,51 +150,59 @@ public class Store {
 
     }
 
-    public boolean is_product_exist(int product_id) {
-        return this.getProduct_by_product_id(product_id) != null;
+    public boolean is_product_exist(int product_id, int store_id) {
+        for(Product p: this.inventory.keySet())
+        {
+            if(p.getProduct_id() == product_id)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
+    //------------------------------------------------find product by - Start ----------------------------------------------------
     public String get_product_information(int product_id) {
-        Product p = this.getProduct_by_product_id(product_id);
-        if (p==null)
-        {
-            thr
-        }
-        return this.getProduct_by_product_id(product_id).toString();
+        Product p = this.getProduct_by_product_id(product_id); //throws exception
+        return p.toString();
     }
-    public Product find_product_by_name(String name) {
+
+
+    public List<Product> find_products_by_name(String product_name) {
+        List<Product> products = new ArrayList<>();
         for (Product p:inventory.keySet()) {
             if (p.getName().equals(name))
             {
-                return p;
+                products.add(p);
             }
         }
-        return  null;
-    }
-    public Product find_product_by_category(String category) {
-        for (Product p:inventory.keySet()) {
-            if (p.getCategory().equals(name))
-            {
-                return p;
-            }
-        }
-        return  null;
+        return products;
+
     }
 
-    public Product find_product_by_keyword(String key_word) {
+    public List<Product> find_products_by_category(String category) {
+        List<Product> products = new ArrayList<>();
         for (Product p:inventory.keySet()) {
-            if (p.getKey_words().equals(name))
+            if (p.getCategory().equals(category))
             {
-                return p;
+                products.add(p);
             }
         }
-        return  null;
+        return products;
     }
 
-    public void add_product(Product product, int quantity) {
-        inventory.put(product, quantity);
-        this.product_ids++;
+    public List<Product> find_products_by_key_words(String key_words) {
+        List<Product> products = new ArrayList<>();
+        for (Product p:inventory.keySet()) {
+            if (p.getKey_words().equals(key_words))
+            {
+                products.add(p);
+            }
+        }
+        return products;
     }
+//------------------------------------------------find product by - End ----------------------------------------------------
+
 
     public Product getProduct_by_product_id(int product_id)
     {
@@ -199,7 +210,7 @@ public class Store {
             if (product.getProduct_id() == product_id)
                 return product;
         }
-        throw new IllegalArgumentException("StoreController:  ");
+        throw new IllegalArgumentException("StoreController:getProduct_by_product_id Product is not exist - product id ");
     }
 
 
@@ -210,7 +221,7 @@ public class Store {
 
     //------------------------------------------------------Getters--------------------------------------------------------------------
 
-    public Date getFoundation_date() {
+    public LocalDate getFoundation_date() {
         return foundation_date;
     }
 
@@ -274,7 +285,7 @@ public class Store {
         this.name = name;
     }
 
-    public void setFoundation_date(Date foundation_date) {
+    public void setFoundation_date(LocalDate foundation_date) {
         this.foundation_date = foundation_date;
     }
 
@@ -294,44 +305,45 @@ public class Store {
         this.discountPolicy = discountPolicy;
     }
 
-    public void setUsers_questions(HashMap<Integer, Question> users_questions) {
-        this.users_questions = users_questions;
+
+
+
+    public void add_product(int user_id, String name, double price, String category, List<String> key_words, int quantity) throws IllegalAccessException {
+        this.check_permission(user_id, StorePermission.add_item);
+        int product_id = this.getInc_product_id();
+        Product product = new Product(name, this.store_id, product_id, price, category, key_words);
+        inventory.put(product, quantity);
     }
 
-
-
-
-    public void delete_product(int product_id) {
-        //already checks that product exist
+    public void delete_product(int product_id, int user_id) throws IllegalAccessException {
         Product product_to_remove = this.getProduct_by_product_id(product_id);
+        this.check_permission(user_id, StorePermission.remove_item);
         inventory.remove(product_to_remove);
-        //manage product ids after product deletion
     }
 
 
-
-    public boolean edit_product_name(int product_id, String name) {
+    public void edit_product_name(int product_id, String name, int user_id) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
+        this.check_permission(user_id, StorePermission.edit_item_keywords);
         to_edit.setName(name);
-        return true;
     }
 
-    public boolean edit_product_price(int product_id, double price) {
+    public void edit_product_price(int product_id, double price, int user_id) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
+        this.check_permission(user_id, StorePermission.edit_item_price);
         to_edit.setPrice(price);
-        return true;
     }
 
-    public boolean edit_product_category(int product_id, String category) {
+    public void edit_product_category(int product_id, String category, int user_id) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
+        this.check_permission(user_id, StorePermission.edit_item_category);
         to_edit.setCategory(category);
-        return true;
     }
 
-    public boolean edit_product_key_words(int product_id, List<String> key_words) {
+    public void edit_product_key_words(int product_id, List<String> key_words, int user_id) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
+        this.check_permission(user_id, StorePermission.edit_item_keywords);
         to_edit.setKey_words(key_words);
-        return true;
     }
 
 
@@ -410,6 +422,12 @@ public class Store {
 
     public void add_review(int product_id, int user_id, String review) {
         this.getProduct_by_product_id(product_id).add_review(user_id, review);
+    }
+
+
+
+    private int getInc_product_id() {
+        return this.product_ids++;
     }
 }
 

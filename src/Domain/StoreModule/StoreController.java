@@ -2,6 +2,7 @@ package Domain.StoreModule;
 
 import Domain.Utils.Utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -157,24 +158,22 @@ public class StoreController {
     /**
      *
      * @param store_id
-     * @throws if the store not exist OR store is not active
-     * @return the store
+     * @throws IllegalArgumentException if the store not exist
+     * @throws IllegalArgumentException if store is not active
+     * @return The store
      */
     private Store get_store_by_store_id(int store_id) {
         if (!this.stores.containsKey(store_id))
         {
-            throw new IllegalArgumentException("the store is not exist - store id: "+store_id);
+            throw new IllegalArgumentException("The store is not exist - store id: "+store_id);
         }
         else if (!this.stores.get(store_id).is_active())
         {
-            throw new IllegalArgumentException("the store is not active - store id: "+store_id);
+            throw new IllegalArgumentException("The store is not active - store id: "+store_id);
         }
         return this.stores.get(store_id);
 
     }
-
-
-    // tom
 
     /**
      *
@@ -184,7 +183,7 @@ public class StoreController {
      */
     public String find_store_information(int store_id) throws IllegalArgumentException {
         Store store = this.get_store_by_store_id(store_id);
-        return store.get_information();
+        return store.toString();
     }
 
     /**
@@ -203,124 +202,82 @@ public class StoreController {
 
     }
 
-    /**
-     *
-     * @param product_id
-     * @return store id of the product or -1 if the product does not exist
-     */
+
     private boolean is_product_exist(int product_id, int store_id)
     {
-
-
-        int store_id_of_the_product = -1;
-        for (Store s : stores.values()) {
-            if (s.is_product_exist(product_id))
-            {
-                store_id_of_the_product = s.getStore_id();
-                break;
-            }
-        }
-        return store_id_of_the_product;
+        Store s = get_store_by_store_id(store_id); //throws exception
+        return s.is_product_exist(product_id, store_id);
     }
 
 
-    //return the product named 'product_name' or null if such product does not exist
-    public Product find_product_by_name(String product_name) {
+    //------------------------------------------------find product by - Start ----------------------------------------------------
+    public List<Product> find_products_by_name(String product_name) {
+        List<Product> to_return = new ArrayList<>();
         for (Store store:stores.values()) {
-            Product p = store.find_product_by_name(product_name);
-            if (p!=null)
+            if (store.is_active())
             {
-                return p;
-            }
+                List<Product> products_from_store = store.find_products_by_name(product_name);
+                to_return.addAll(products_from_store);
 
+            }
         }
-        return null;
+        return to_return;
 
     }
-// @TODO: TOM write specific methods
-    public Product find_product_by_category(String category) {
+    public List<Product> find_products_by_category(String category) {
+        List<Product> to_return = new ArrayList<>();
         for (Store store:stores.values()) {
-            Product p = store.find_product_by_category(category);
-            if (p!=null)
+            if (store.is_active())
             {
-                return p;
+                List<Product> products_from_store = store.find_products_by_category(category);
+                to_return.addAll(products_from_store);
             }
-
         }
-        return null;
+        return to_return;
     }
-    public Product find_product_by_keyword(String key_word) {
+    public List<Product> find_products_by_key_words(String key_words) {
+        List<Product> to_return = new ArrayList<>();
         for (Store store:stores.values()) {
-            Product p = store.find_product_by_keyword(key_word);
-            if (p!=null)
+            if (store.is_active())
             {
-                return p;
+                List<Product> products_from_store = store.find_products_by_key_words(key_words);
+                to_return.addAll(products_from_store);
             }
-
         }
-        return null;
+        return to_return;
+    }
+    //------------------------------------------------find product by - End ----------------------------------------------------
+
+
+    public void add_product_to_store(int user_id, int store_id, int quantity, String name, double price, String category, List<String> key_words)
+            throws IllegalArgumentException, IllegalAccessException {
+        Store store = get_store_by_store_id(store_id);
+        store.add_product(user_id, name, price, category, key_words, quantity);
     }
 
-
-
-    public void add_product_to_store(Product product, int store_id, int quantity) throws IllegalArgumentException {
-        Store s = get_store_by_store_id(store_id);
-        //throw if store does not exist
-        int store_id_of_the_product = is_product_exist(product.getProduct_id());
-        if (store_id_of_the_product != -1)
-        {
-            throw new IllegalArgumentException("Product already exist - product id: "+product.getProduct_id());
-        }
-        s.add_product(product, quantity);
+    public void delete_product_from_store(int user_id, int product_id, int store_id) throws IllegalAccessException {
+        Store store = get_store_by_store_id(store_id);
+        store.delete_product(product_id, user_id);
     }
 
-    public void delete_product_from_store(int product_id) {
-        int store_id_of_the_product = is_product_exist(product_id);
-        if (store_id_of_the_product == -1)
-        {
-            throw new IllegalArgumentException("Product does not exist - product id: "+ product_id);
-        }
-        stores.get(store_id_of_the_product).delete_product(product_id);
+    public void edit_product_name(int product_id, String name, int user_id, int store_id) throws IllegalAccessException {
+        Store store = get_store_by_store_id(store_id);
+        store.edit_product_name(product_id, name, user_id);
     }
 
-    public boolean edit_product_name(int product_id, String name) {
-        int store_id_of_the_product = is_product_exist(product_id);
-        if (store_id_of_the_product == -1)
-        {
-            return false;
-            //throw new IllegalArgumentException("Product does not exist - product id: "+ product_id);
-        }
-        return stores.get(store_id_of_the_product).edit_product_name(product_id, name);
+    public void edit_product_price(int product_id, double price, int user_id, int store_id) throws IllegalAccessException {
+        Store store = get_store_by_store_id(store_id);
+        store.edit_product_price(product_id, price, user_id);
     }
 
-    public boolean edit_product_price(int product_id, double price) {
-        int store_id_of_the_product = is_product_exist(product_id);
-        if (store_id_of_the_product == -1)
-        {
-            return false;
-            //throw new IllegalArgumentException("Product does not exist - product id: "+ product_id);
-        }
-        return stores.get(store_id_of_the_product).edit_product_price(product_id, price);
+    public void edit_product_category(int product_id, String category, int user_id, int store_id) throws IllegalAccessException {
+        Store store = get_store_by_store_id(store_id);
+        store.edit_product_category(product_id, category, user_id);
     }
 
-    public boolean edit_product_category(int product_id, String category) {
-        int store_id_of_the_product = is_product_exist(product_id);
-        if (store_id_of_the_product == -1)
-        {
-            return false;
-            //throw new IllegalArgumentException("Product does not exist - product id: "+ product_id);
-        }
-        return stores.get(store_id_of_the_product).edit_product_category(product_id, category);
-    }
-
-    public boolean edit_product_key_words(int product_id, List<String> key_words) {
-        int store_id_of_the_product = is_product_exist(product_id);
-        if (store_id_of_the_product == -1)
-        {
-            return false;
-            //throw new IllegalArgumentException("Product does not exist - product id: "+ product_id);
-        }
-        return stores.get(store_id_of_the_product).edit_product_key_words(product_id, key_words);
+    public void edit_product_key_words(int product_id, List<String> key_words, int user_id, int store_id) throws IllegalAccessException {
+        Store store = get_store_by_store_id(store_id);
+        store.edit_product_key_words(product_id, key_words, user_id);
     }
 
 
@@ -388,15 +345,13 @@ public class StoreController {
 
 
     public void open_store(int founder_id, String store_name) {
-        Utils.checkValidName(store_name);
         int store_id = this.getInc_store_id();
         Store store = new Store(store_id, founder_id, store_name);
         this.stores.put(store_id, store);
     }
 
     public void add_review(int product_id, int user_id, String review) {
-        int store_id = this.is_product_exist(product_id);
-        this.stores.get(store_id).add_review(product_id, user_id, review);
+
     }
 }
 

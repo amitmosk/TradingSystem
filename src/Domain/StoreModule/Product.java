@@ -11,8 +11,7 @@ public class Product {
     private String category;
     private List<String> key_words;
 
-    public Product(String name, int store_id, int product_id, double price,
-                   ProductReview productReview, String category, List<String> key_words) {
+    public Product(String name, int store_id, int product_id, double price, String category, List<String> key_words) {
         this.name = name;
         this.store_id = store_id;
         this.product_id = product_id;
