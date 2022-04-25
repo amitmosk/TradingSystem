@@ -355,5 +355,14 @@ public class StoreController {
         Product p = this.get_product_by_product_id(product_id, store_id);//throws exceptions
         p.add_review(user_id, review);
     }
+
+    public void rate_product(int product_id, int store_id, int rate) {
+        // @TODO TOM
+    }
+
+    public void rate_store(int store_id, int rate) {
+        // @TODO TOM
+
+    }
 }
 
