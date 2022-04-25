@@ -17,49 +17,62 @@ public class Market implements iService {
     //@TODO : all the exceptions in form: Basket.RemoveProduct: (class.method) - with specific data
     // TODO: before get store check that the store is open
     // TODO: all the Controllers ids counters -> AtomicIntegers - getInc
+    //TODO: put check validity methods in all set methods
     @Override
+
+    //Requirement 1.1
     public void init_market() {
         //Tom
         //connect to payment service
         //connect to supply service
         // load
     }
-
+    //Requirement 1.3
     @Override
     public boolean payment(int price) {
         //Tom
         return true;
     }
-
+    //Requirement 1.4
     @Override
     public boolean supply(int user_id, int purchase_id) {
         //Tom
         return true;
 
     }
-
+    //Requirement 2.1.1
     @Override
     public double guest_login() {
         return 0;
     }
 
-    @Override
-    public double login(String username, String password) {
-        return 0;
-    }
 
+    //Requirement 2.1.2 & 2.3.1
     @Override
     public double logout() {
         return 0;
     }
-
+    //Requirement 2.1.3
     @Override
     public double register() {
         return 0;
     }
 
+    //Requirement 2.1.4
     @Override
+    public double login(String username, String password) {
+        return 0;
+    }
 
+    //Requirement 2.2.1 - Store
+
+    /**
+     *
+     * @param store_id
+     * @return store information
+     * @throws IllegalArgumentException if store does not exist
+     */
+    @Override
     public String find_store_information(int store_id) {
         String info="";
         try
@@ -68,12 +81,13 @@ public class Market implements iService {
         }
         catch (IllegalArgumentException e)
         {
-            return "Store does not exist in the market";
+            //return "Store does not exist in the market";
         }
         return info;
 
     }
 
+    //Requirement 2.2.1 - Product
     @Override
     public String find_product_information(int product_id, int store_id) {
         String info="";
@@ -87,12 +101,14 @@ public class Market implements iService {
         }
         return info;
     }
+
 //------------------------------------------------find product by - Start ----------------------------------------------------
     /**
      *
      * @param product_name
      * @return List of Products with the specific name
      */
+    //Requirement 2.2.2 - Name
     @Override
     public List<Product> find_products_by_name(String product_name)
     {
@@ -104,6 +120,7 @@ public class Market implements iService {
      * @param category
      * @return List of Products with the specific category
      */
+    //Requirement 2.2.2 - Category
     @Override
     public List<Product> find_products_by_category(String category)
     {
@@ -115,6 +132,7 @@ public class Market implements iService {
      * @param key_words
      * @return List of Products with the specific key_word
      */
+    //Requirement 2.2.2 - Key_words
     @Override
     public List<Product> find_products_by_keywords(String key_words)
     {
@@ -122,32 +140,30 @@ public class Market implements iService {
     }
     //------------------------------------------------find product by - End ----------------------------------------------------
 
-
-
+    //Requirement 2.2.3 - Add
     @Override
-    public double view_user_cart() {
+    public double add_product_to_cart() {
         return 0;
     }
-
+    //Requirement 2.2.3 - Remove
     @Override
     public double delete_product_from_cart() {
         return 0;
     }
 
+    //Requirement 2.2.4
     @Override
-    public double add_product_to_cart() {
+    public double view_user_cart() {
         return 0;
     }
 
+    //Requirement 2.2.4
     @Override
     public double change_product_quantity_in_cart() {
         return 0;
     }
 
-    /**
-     *
-     * @return
-     */
+    //Requirement 2.2.5
     @Override
     public int buy_cart() {
         // get information about the payment & supply
@@ -160,6 +176,7 @@ public class Market implements iService {
         int purchase_id = this.user_controller.clear_cart(this.user_id);
         this.store_controller.update_stores_inventory(cart, purchase_id);
         // failed
+        return 0;
     }
 
 
@@ -168,62 +185,79 @@ public class Market implements iService {
      * @param store_name
      * @precondition : GUI check store name is valid
      */
+    //Requirement 2.3.2
     @Override
     public void open_store(String store_name) {
         this.store_controller.open_store(this.user_id, store_name);
     }
 
+    /**
+     *
+     * @param product_id
+     * @param store_id
+     * @param review
+     * throws if Product does not exist
+     */
+    //Requirement 2.3.3
     @Override
-    public int add_review(int product_id, int user_id, String review) {
-        this.store_controller.add_review(product_id, user_id, review);
+    public void add_review(int product_id, int store_id, String review)  {
+        this.store_controller.add_review(this.user_id, product_id, store_id, review);
     }
 
+    //Requirement 2.3.4 - Product
     @Override
     public int rate_product(int product_id) {
         return 0;
     }
 
+    //Requirement 2.3.4 - Store
     @Override
     public int rate_store(int store_id) {
         return 0;
     }
 
+    //Requirement 2.3.5
     @Override
     public int send_request_to_store(int store_id, String request) {
         return 0;
     }
 
+    //Requirement 2.3.6
     @Override
     public double send_complain() {
         return 0;
     }
 
+    //Requirement 2.3.7
     @Override
     public double view_user_purchase_history() {
         return 0;
     }
 
+    //Requirement 2.3.8 - View
     @Override
     public double view_account_details() {
         return 0;
     }
 
+    //Requirement 2.3.8 - Edit
     @Override
     public double edit_account_details() {
         return 0;
     }
 
+    //Requirement 2.3.9 - Personal question
     @Override
     public double add_security_personal_question() {
         return 0;
     }
 
-    /**
-     *
-     * @param product
-     * @param store_id
-     *
-     */
+
+
+
+
+
+    //Requirement 2.4.1 - Add
     @Override
     public void add_product_to_store(int store_id, int quantity,
                                      String name, double price, String category, List<String> key_words) {
@@ -241,68 +275,103 @@ public class Market implements iService {
      *
      * @param product_id
      */
+    //Requirement 2.4.1 - Delete
     @Override
     //maybe return the deleted product
     public void delete_product_from_store(int product_id) {
         this.store_controller.delete_product_from_store(product_id);
     }
 
+
+
+
+    //------------------------------------------------ edit product - Start ----------------------------------------------
+    /**
+     *
+     * @param product_id
+     * @param store_id
+     * @param name
+     * throws IllegalArgumentException if Product does not exist
+     * throws IllegalArgumentException if user does not have permission to this operation
+     */
+    //Requirement 2.4.1 - Edit name
     @Override
-    public void edit_product_name(int product_id, String name) {
-        if (!this.store_controller.edit_product_name(product_id, name))
-        {
-            System.out.println();
-        }
+    public void edit_product_name(int product_id, int store_id, String name)  {
+        this.store_controller.edit_product_name(this.user_id, product_id, store_id, name);
     }
 
+    /**
+     *
+     * @param product_id
+     * @param store_id
+     * @param price
+     * throws IllegalArgumentException if Product does not exist
+     * throws IllegalArgumentException if user does not have permission to this operation
+     */
+    //Requirement 2.4.1 - Edit Price
     @Override
-    public void edit_product_price(int product_id, double price) {
-        if (!this.store_controller.edit_product_price(product_id, price))
-        {
-            System.out.println();
-        }
+    public void edit_product_price(int product_id, int store_id, double price)  {
+        this.store_controller.edit_product_price(this.user_id, product_id, store_id, price);
+    }
+
+    /**
+     *
+     * @param product_id
+     * @param store_id
+     * @param category
+     * throws IllegalArgumentException if Product does not exist
+     * throws IllegalArgumentException if user does not have permission to this operation
+     */
+    //Requirement 2.4.1 - Edit category
+    @Override
+    public void edit_product_category(int product_id, int store_id, String category)  {
+        this.store_controller.edit_product_category(this.user_id, product_id, store_id, category);
+    }
+
+    /**
+     *
+     * @param product_id
+     * @param store_id
+     * @param key_words
+     * throws IllegalArgumentException if Product does not exist
+     * throws IllegalArgumentException if user does not have permission to this operation
+     */
+    //Requirement 2.4.1 - Edit key words
+    @Override
+    public void edit_product_key_words(int product_id, int store_id, List<String> key_words)  {
+        this.store_controller.edit_product_key_words(this.user_id, product_id, store_id, key_words);
+    }
+    //------------------------------------------------ edit product - End ----------------------------------------------
+
+    //Requirement 2.4.2 Cancelled
+
+
+
+    //Requirement 2.4.3
+    @Override
+    public void set_store_purchase_rules(int store_id)  {
 
     }
 
-    @Override
-    public void edit_product_category(int product_id, String category) {
-        if (!this.store_controller.edit_product_category(product_id, category))
-        {
-            System.out.println();
-        }
-
-    }
-
-    @Override
-    public void edit_product_key_words(int product_id, List<String> key_words) {
-        if (!this.store_controller.edit_product_key_words(product_id, key_words))
-        {
-            System.out.println();
-        }
-
-    }
 
 
+    //Requirement 2.4.4
     @Override
     public int add_owner() {
         return 0;
     }
-
+    //Requirement 2.4.5
+    @Override
+    public int delete_owner() {
+        return 0;
+    }
+    //Requirement 2.4.6
     @Override
     public int add_manager() {
         return 0;
     }
 
-    @Override
-    public int delete_owner() {
-        return 0;
-    }
-
-    @Override
-    public int delete_manager() {
-        return 0;
-    }
-
+    //Requirement 2.4.7
     @Override
     public void edit_manager_permissions(int user_id, int manager_id, int store_id, LinkedList<StorePermission> permissions) {
         try
@@ -316,6 +385,14 @@ public class Market implements iService {
 
     }
 
+
+    //Requirement 2.4.8
+    @Override
+    public int delete_manager() {
+        return 0;
+    }
+
+    //Requirement 2.4.9
     @Override
     public boolean close_store_temporarily(int store_id, int user_id) {
         boolean answer = false;
@@ -330,6 +407,7 @@ public class Market implements iService {
         return answer;
     }
 
+    //Requirement 2.4.10
     @Override
     public boolean open_close_store(int store_id, int user_id) {
         boolean answer = false;
@@ -345,6 +423,7 @@ public class Market implements iService {
 
     }
 
+    //Requirement 2.4.11
     @Override
     public String view_store_management_information(int user_id, int store_id) {
         String answer;
@@ -360,6 +439,7 @@ public class Market implements iService {
         return answer;
     }
 
+    //Requirement 2.4.12 - View
     @Override
     public String view_store_questions(int store_id, int user_id) {
         String answer;
@@ -375,6 +455,7 @@ public class Market implements iService {
         return answer;
     }
 
+    //Requirement 2.4.12 - Responses
     @Override
     public boolean manager_answer_question(int store_id, int user_id, int question_id, String answer) {
         try
@@ -390,6 +471,7 @@ public class Market implements iService {
 
     }
 
+    //Requirement 2.4.13 & 2.6.4
     @Override
     public String view_store_purchases_history(int store_id, int user_id) {
         String info;
@@ -407,6 +489,7 @@ public class Market implements iService {
 
     }
 
+    //Requirement 2.6.1
     @Override
     public boolean close_store_permanently(int store_id, int user_id) {
         boolean answer = false;
@@ -422,21 +505,25 @@ public class Market implements iService {
 
     }
 
+    //Requirement 2.6.2
     @Override
     public double delete_user_from_system() {
         return 0;
     }
 
+    //Requirement 2.6.3 - View
     @Override
     public double view_system_questions() {
         return 0;
     }
 
+    //Requirement 2.6.3 - Response by Admin
     @Override
     public double admin_answer_question() {
         return 0;
     }
 
+    //Requirement 2.6.5
     @Override
     public int get_system_statistics() {
         return 0;

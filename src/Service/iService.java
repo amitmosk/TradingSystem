@@ -29,7 +29,7 @@ public interface iService {
 
     // assign user
     void open_store(String store_name); // first opening
-    int add_review(int product_id);
+    void add_review(int product_id, int store_id, String review);
     int rate_product(int product_id);
     int rate_store(int store_id);
     int send_request_to_store(int store_id, String request);
@@ -45,13 +45,15 @@ public interface iService {
     void add_product_to_store(int store_id, int quantity, String name, double price, String category, List<String> key_words);
     void delete_product_from_store(int product_id);
 
-    void edit_product_name(int product_id, String name);
+    //------------------------------------------------ edit product - Start ----------------------------------------------
 
-    void edit_product_price(int product_id, double price);
-    void edit_product_category(int product_id, String category);
-    void edit_product_key_words(int product_id, List<String> key_words);
+    void edit_product_name(int product_id, int store_id, String name);
+    void edit_product_price(int product_id, int store_id, double price);
+    void edit_product_category(int product_id,int store_id, String category);
+    void edit_product_key_words(int product_id,int store_id, List<String> key_words);
+    //------------------------------------------------ edit product - End ----------------------------------------------
 
-
+    void set_store_purchase_rules(int store_id);
     int add_owner();
     int add_manager();
     int delete_owner();

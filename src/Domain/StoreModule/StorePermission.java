@@ -4,6 +4,7 @@ public enum StorePermission
 {
     add_item,
     remove_item,
+    edit_item_name,
     edit_item_price,
     edit_item_category,
     edit_item_keywords,

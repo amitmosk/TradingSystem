@@ -259,27 +259,28 @@ public class StoreController {
         Store store = get_store_by_store_id(store_id);
         store.delete_product(product_id, user_id);
     }
-
-    public void edit_product_name(int product_id, String name, int user_id, int store_id) throws IllegalAccessException {
-        Store store = get_store_by_store_id(store_id);
-        store.edit_product_name(product_id, name, user_id);
+    //------------------------------------------------ edit product - Start ----------------------------------------------
+    public void edit_product_name(int user_id, int product_id, int store_id, String name) throws IllegalAccessException {
+        Store store = get_store_by_store_id(store_id); //trows exceptions
+        store.edit_product_name(user_id, product_id, name);
     }
 
-    public void edit_product_price(int product_id, double price, int user_id, int store_id) throws IllegalAccessException {
+    public void edit_product_price(int user_id, int product_id, int store_id, double price) throws IllegalAccessException {
         Store store = get_store_by_store_id(store_id);
-        store.edit_product_price(product_id, price, user_id);
+        store.edit_product_price(user_id, product_id, price);
     }
 
-    public void edit_product_category(int product_id, String category, int user_id, int store_id) throws IllegalAccessException {
+    public void edit_product_category(int user_id, int product_id, int store_id, String category) throws IllegalAccessException {
         Store store = get_store_by_store_id(store_id);
-        store.edit_product_category(product_id, category, user_id);
+        store.edit_product_category(user_id, product_id, category);
     }
 
-    public void edit_product_key_words(int product_id, List<String> key_words, int user_id, int store_id) throws IllegalAccessException {
+    public void edit_product_key_words(int user_id, int product_id, int store_id, List<String> key_words) throws IllegalAccessException {
         Store store = get_store_by_store_id(store_id);
-        store.edit_product_key_words(product_id, key_words, user_id);
+        store.edit_product_key_words(user_id, product_id, key_words);
     }
 
+    //------------------------------------------------ edit product - End ----------------------------------------------
 
     public double check_cart_available_products_and_calc_price(Cart cart) {
         HashMap<Integer, Basket> baskets_of_storesID = cart.get_baskets();
@@ -350,8 +351,9 @@ public class StoreController {
         this.stores.put(store_id, store);
     }
 
-    public void add_review(int product_id, int user_id, String review) {
-
+    public void add_review(int user_id, int product_id, int store_id, String review) {
+        Product p = this.get_product_by_product_id(product_id, store_id);//throws exceptions
+        p.add_review(user_id, review);
     }
 }
 

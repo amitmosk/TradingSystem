@@ -36,6 +36,7 @@ public class Appointment {
     private void set_manager_permissions(){
         this.permissions.put(add_item, true);
         this.permissions.put(remove_item, true);
+        this.permissions.put(edit_item_name, true);
         this.permissions.put(edit_item_price, true);
         this.permissions.put(edit_item_category, true);
         this.permissions.put(edit_item_keywords, true);

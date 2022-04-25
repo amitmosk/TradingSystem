@@ -213,101 +213,6 @@ public class Store {
         throw new IllegalArgumentException("StoreController:getProduct_by_product_id Product is not exist - product id ");
     }
 
-
-
-
-
-
-
-    //------------------------------------------------------Getters--------------------------------------------------------------------
-
-    public LocalDate getFoundation_date() {
-        return foundation_date;
-    }
-
-    public DiscountPolicy getDiscount_policy() {
-        return discountPolicy;
-    }
-
-    public HashMap<Integer, Appointment> getManager_ids() {
-        return stuff_ids_and_appointments;
-    }
-
-    public HashMap<Integer, Appointment> getstuff_ids_and_appointments() {
-        return stuff_ids_and_appointments;
-    }
-
-    public HashMap<Product, Integer> getInventory() {
-        return this.inventory;
-    }
-
-    public StorePurchaseHistory getPurchase_history() {
-        return purchases_history;
-    }
-
-    public int getFounder_id() {
-        return founder_id;
-    }
-
-    public int getStore_id() {
-        return store_id;
-    }
-
-    public PurchasePolicy getPurchase_policy() {
-        return purchasePolicy;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-
-
-    //------------------------------------------------------Setters--------------------------------------------------------------------
-
-    public void setStore_id(int store_id) {
-        this.store_id = store_id;
-    }
-
-    public void setFounder_id(int founder_id) {
-        this.founder_id = founder_id;
-    }
-
-    public void setstuff_ids_and_appointments(HashMap<Integer, Appointment> stuff_ids_and_appointments) {
-        this.stuff_ids_and_appointments = stuff_ids_and_appointments;
-    }
-
-    public void setManager_ids(HashMap<Integer, Appointment> manager_ids) {
-        this.stuff_ids_and_appointments = manager_ids;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setFoundation_date(LocalDate foundation_date) {
-        this.foundation_date = foundation_date;
-    }
-
-    public void setInventory(HashMap<Product, Integer> inventory) {
-        this.inventory = inventory;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
-        this.purchasePolicy = purchasePolicy;
-    }
-
-    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
-        this.discountPolicy = discountPolicy;
-    }
-
-
-
-
     public void add_product(int user_id, String name, double price, String category, List<String> key_words, int quantity) throws IllegalAccessException {
         this.check_permission(user_id, StorePermission.add_item);
         int product_id = this.getInc_product_id();
@@ -321,31 +226,33 @@ public class Store {
         inventory.remove(product_to_remove);
     }
 
+    //------------------------------------------------ edit product - Start ----------------------------------------------
 
-    public void edit_product_name(int product_id, String name, int user_id) throws IllegalAccessException {
+    public void edit_product_name(int user_id, int product_id, String name) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
-        this.check_permission(user_id, StorePermission.edit_item_keywords);
+        this.check_permission(user_id, StorePermission.edit_item_name);
         to_edit.setName(name);
     }
 
-    public void edit_product_price(int product_id, double price, int user_id) throws IllegalAccessException {
+    public void edit_product_price(int user_id, int product_id, double price) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(user_id, StorePermission.edit_item_price);
         to_edit.setPrice(price);
     }
 
-    public void edit_product_category(int product_id, String category, int user_id) throws IllegalAccessException {
+    public void edit_product_category(int user_id, int product_id, String category) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(user_id, StorePermission.edit_item_category);
         to_edit.setCategory(category);
     }
 
-    public void edit_product_key_words(int product_id, List<String> key_words, int user_id) throws IllegalAccessException {
+    public void edit_product_key_words(int user_id, int product_id, List<String> key_words) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(user_id, StorePermission.edit_item_keywords);
         to_edit.setKey_words(key_words);
     }
 
+    //------------------------------------------------ edit product - End ----------------------------------------------
 
 
 
@@ -429,6 +336,119 @@ public class Store {
     private int getInc_product_id() {
         return this.product_ids++;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//---------------------------------------------------------------------- Getters - Start ------------------------------------------------------------------------------------
+
+    public LocalDate getFoundation_date() {
+        return foundation_date;
+    }
+
+    public DiscountPolicy getDiscount_policy() {
+        return discountPolicy;
+    }
+
+    public HashMap<Integer, Appointment> getManager_ids() {
+        return stuff_ids_and_appointments;
+    }
+
+    public HashMap<Integer, Appointment> getstuff_ids_and_appointments() {
+        return stuff_ids_and_appointments;
+    }
+
+    public HashMap<Product, Integer> getInventory() {
+        return this.inventory;
+    }
+
+    public StorePurchaseHistory getPurchase_history() {
+        return purchases_history;
+    }
+
+    public int getFounder_id() {
+        return founder_id;
+    }
+
+    public int getStore_id() {
+        return store_id;
+    }
+
+    public PurchasePolicy getPurchase_policy() {
+        return purchasePolicy;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+//---------------------------------------------------------------------- Getters - End ------------------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------- Setters - Start ------------------------------------------------------------------------------------
+
+    public void setStore_id(int store_id) {
+        this.store_id = store_id;
+    }
+
+    public void setFounder_id(int founder_id) {
+        this.founder_id = founder_id;
+    }
+
+    public void setstuff_ids_and_appointments(HashMap<Integer, Appointment> stuff_ids_and_appointments) {
+        this.stuff_ids_and_appointments = stuff_ids_and_appointments;
+    }
+
+    public void setManager_ids(HashMap<Integer, Appointment> manager_ids) {
+        this.stuff_ids_and_appointments = manager_ids;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFoundation_date(LocalDate foundation_date) {
+        this.foundation_date = foundation_date;
+    }
+
+    public void setInventory(HashMap<Product, Integer> inventory) {
+        this.inventory = inventory;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
+        this.purchasePolicy = purchasePolicy;
+    }
+
+    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy;
+    }
+
+
+//---------------------------------------------------------------------- Setters - End ------------------------------------------------------------------------------------
+
+
 }
 
 

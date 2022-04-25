@@ -20,6 +20,9 @@ public class Product {
         this.category = category;
         this.key_words = key_words;
     }
+    public void add_review(int user_id, String review) {
+        this.productReview.add_review(user_id, review);
+    }
 
 
     @Override
@@ -38,7 +41,7 @@ public class Product {
     }
 
 
-    //Getters
+//---------------------------------------------------------------------- Getters - Start ------------------------------------------------------------------------------------
 
     public String getName() {
         return name;
@@ -56,7 +59,6 @@ public class Product {
         return product_id;
     }
 
-
     public List<String> getKey_words() {
         return key_words;
     }
@@ -69,10 +71,12 @@ public class Product {
         return category;
     }
 
+//---------------------------------------------------------------------- Getters - End ------------------------------------------------------------------------------------
 
-    //Setters
+//---------------------------------------------------------------------- Setters - Start ------------------------------------------------------------------------------------
 
     public void setName(String name) {
+        //check validity
         this.name = name;
     }
 
@@ -88,7 +92,6 @@ public class Product {
         this.price = price;
     }
 
-
     public void setProductReview(ProductReview productReview) {
         this.productReview = productReview;
     }
@@ -100,8 +103,8 @@ public class Product {
     public void setKey_words(List<String> key_words) {
         this.key_words = key_words;
     }
+    //---------------------------------------------------------------------- Setters - End ------------------------------------------------------------------------------------
 
-    public void add_review(int user_id, String review) {
-        this.productReview.add_review(user_id, review);
-    }
+
+
 }
