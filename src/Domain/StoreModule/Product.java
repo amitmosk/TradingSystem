@@ -20,11 +20,11 @@ public class Product {
         this.category = category;
         this.key_words = key_words;
     }
-    public void add_review(int user_id, String review) {
-        this.productReview.add_review(user_id, review);
+    public void add_review(String user_email, String review) {
+        this.productReview.add_review(user_email, review);
     }
-    public void add_rating(int user_id, int rating) {
-        this.productReview.add_rating(user_id, rating);
+    public void add_rating(String user_email, int rating) {
+        this.productReview.add_rating(user_email, rating);
     }
 
 

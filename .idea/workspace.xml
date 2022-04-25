@@ -4,6 +4,13 @@
     <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Market.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/ProductReview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/ProductReview.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreReview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreReview.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/iService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/iService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,11 +80,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="71" key="#Project_Structure/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1650555538560" />
-    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1650820437227">
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1650912114528">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1650620240837" />
-    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1650820437227" />
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1650912114528" />
     <state x="566" y="297" width="403" height="236" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1650907231628">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -138,12 +145,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Domain/Market.java</url>
-          <line>649</line>
+          <line>666</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Domain/Market.java</url>
-          <line>579</line>
+          <line>594</line>
           <properties class="Domain.Market" method="view_store_questions">
             <option name="EMULATED" value="true" />
           </properties>

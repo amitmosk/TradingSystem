@@ -4,17 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductReview {
-    private Map<Integer, String> reviews; // user_id & review
-    private Map<Integer, Integer> rating; // user_id & rating
+    private Map<String, String> reviews; // user_email & review
+    private Map<String, Integer> rating; // user_email & rating
     public ProductReview()
     {
         reviews = new HashMap<>();
         rating = new HashMap<>();
     }
-    public void add_review(int user_id, String review) {
-        this.reviews.put(user_id, review);
+    public void add_review(String user_email, String review) {
+        this.reviews.put(user_email, review);
     }
-    public void add_rating(int user_id, int rating) {
-        this.rating.put(user_id, rating);
+    public void add_rating(String user_email, int rating) {
+        this.rating.put(user_email, rating);
     }
 }

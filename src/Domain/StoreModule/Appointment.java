@@ -8,16 +8,16 @@ import static Domain.StoreModule.StorePermission.*;
 
 public class Appointment {
     // -- fields
-    private final int manager_id;
-    private final int appointer_id;
+    private final String manager_email;
+    private final String appointer_email;
     private final int store_id;
     private StoreManagerType type;
     private HashMap<StorePermission,Boolean> permissions;
 
     // -- constructors
-    public Appointment(int manager_id, int appointer_id, int store_id, StoreManagerType type) {
-        this.manager_id = manager_id;
-        this.appointer_id = appointer_id;
+    public Appointment(String manager_email, String appointer_email, int store_id, StoreManagerType type) {
+        this.manager_email = manager_email;
+        this.appointer_email = appointer_email;
         this.store_id = store_id;
         this.permissions = new HashMap<StorePermission, Boolean>();
         this.type = type;
@@ -83,14 +83,18 @@ public class Appointment {
     }
 
     // -- getters
-    public int getManager_id() {
-        return manager_id;
-    }
+
+
     public int getStore_id() {
         return store_id;
     }
-    public int getAppointer_id() {
-        return appointer_id;
+
+    public String getAppointer_email() {
+        return appointer_email;
+    }
+
+    public String getManager_email() {
+        return manager_email;
     }
 
     // -- setters
@@ -120,5 +124,17 @@ public class Appointment {
         for (StorePermission myVar : permissions){
             this.set_permission(myVar, true);
         }
+    }
+
+    public boolean is_owner() {
+        switch (this.type){
+            case store_founder:
+                return true;
+            case store_owner:
+                return true;
+            case store_manager:
+                return false;
+        }
+        throw new IllegalArgumentException("Not suppose to happen");
     }
 }

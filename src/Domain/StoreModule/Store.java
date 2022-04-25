@@ -9,8 +9,8 @@ import java.util.*;
 public class Store {
     // -- fields
     private int store_id;
-    private int founder_id;
-    private HashMap<Integer, Appointment> stuff_ids_and_appointments;
+    private String founder_email;
+    private HashMap<String, Appointment> stuff_emails_and_appointments;
     private String name;
     private LocalDate foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
@@ -24,9 +24,9 @@ public class Store {
     private int question_ids_counter;
 
 
-    public Store(int store_id, int founder_id, String name) {
+    public Store(int store_id, String founder_email, String name) {
         this.store_id = store_id;
-        this.founder_id = founder_id;
+        this.founder_email = founder_email;
         this.name = name;
         this.product_ids_counter = 1;
         this.question_ids_counter = 1;
@@ -36,32 +36,32 @@ public class Store {
         this.storeReview = new StoreReview();
         this.purchases_history = new StorePurchaseHistory();
     }
-    public void add_review(int user_id, String review) {
-        this.storeReview.add_review(user_id, review);
+    public void add_review(String user_email, String review) {
+        this.storeReview.add_review(user_email, review);
     }
-    public void add_rating(int user_id, int rating) {
-        this.storeReview.add_rating(user_id, rating);
+    public void add_rating(String user_email, int rating) {
+        this.storeReview.add_rating(user_email, rating);
     }
-    public void add_product_rating(int user_id, int product_id, int rate) {
+    public void add_product_rating(String user_email, int product_id, int rate) {
         Product p = this.getProduct_by_product_id(product_id);//throws
-        p.add_rating(user_id, rate);
+        p.add_rating(user_email, rate);
     }
 
     // -- methods
-    public void close_store_temporarily(int user_id) throws IllegalAccessException {
-        this.check_permission(user_id, StorePermission.close_store_temporarily);
+    public void close_store_temporarily(String user_email) throws IllegalAccessException {
+        this.check_permission(user_email, StorePermission.close_store_temporarily);
         this.active = false;
         // TODO:  send message to all of the managers & owners.
     }
-    public void open_close_store(int user_id) throws IllegalAccessException {
-        this.check_permission(user_id, StorePermission.open_close_store);
+    public void open_close_store(String user_email) throws IllegalAccessException {
+        this.check_permission(user_email, StorePermission.open_close_store);
         if (this.is_active())
             throw new IllegalArgumentException("The store is already open");
         this.active = true;
         // TODO: send message to all of the managers & owners.
     }
-    public String view_store_management_information(int user_id) throws IllegalAccessException {
-        this.check_permission(user_id, StorePermission.view_permissions);
+    public String view_store_management_information(String user_email) throws IllegalAccessException {
+        this.check_permission(user_email, StorePermission.view_permissions);
         return this.view_management_information();
     }
 
@@ -70,28 +70,28 @@ public class Store {
         return "";
     }
 
-    public void set_permissions(int user_id, int manager_id, LinkedList<StorePermission> permissions) {
+    public void set_permissions(String user_email, String manager_email, LinkedList<StorePermission> permissions) {
         // check that the manager appointed by the user
-        if (this.get_appointer(manager_id) != user_id)
+        if (this.get_appointer(manager_email).equals(user_email))
             throw new IllegalArgumentException("The manager is not appointed by user");
         // check that the user is not trying to change his permissions
-        if (manager_id == user_id)
+        if (manager_email == user_email)
             throw new IllegalArgumentException("User cant change himself permissions");
 
-        Appointment manager_permission = this.stuff_ids_and_appointments.get(manager_id);
+        Appointment manager_permission = this.stuff_emails_and_appointments.get(manager_email);
         manager_permission.set_permissions(permissions);
 
     }
     public boolean is_active() {
         return this.active;
     }
-    public int get_appointer(int manager_id) {
-        return this.stuff_ids_and_appointments.get(manager_id).getAppointer_id();
+    public String get_appointer(String manager_email) {
+        return this.stuff_emails_and_appointments.get(manager_email).getAppointer_email();
     }
 
 
-    public String view_store_questions(int user_id) throws IllegalAccessException {
-        this.check_permission(user_id, StorePermission.view_users_questions);
+    public String view_store_questions(String user_email) throws IllegalAccessException {
+        this.check_permission(user_email, StorePermission.view_users_questions);
         return this.view_questions(this.users_questions);
     }
 
@@ -100,8 +100,8 @@ public class Store {
         return "";
     }
 
-    public void answer_question(int user_id, int question_id, String answer) throws IllegalAccessException {
-        this.check_permission(user_id, StorePermission.view_users_questions);
+    public void answer_question(String user_email, int question_id, String answer) throws IllegalAccessException {
+        this.check_permission(user_email, StorePermission.view_users_questions);
         if (!this.users_questions.containsKey(question_id))
         {
             throw new IllegalArgumentException("Question does not exist");
@@ -110,24 +110,24 @@ public class Store {
         question.setAnswer(answer);
     }
 
-    public String view_store_purchases_history(int user_id) throws IllegalAccessException {
-        this.check_permission(user_id, StorePermission.view_purchases_history);
+    public String view_store_purchases_history(String user_email) throws IllegalAccessException {
+        this.check_permission(user_email, StorePermission.view_purchases_history);
         return this.purchases_history.toString();
     }
 
-    public boolean close_store_permanently(int user_id) {
+    public boolean close_store_permanently() {
         if (!this.is_active())
             return false;
         this.active = false;
         // TODO: send message to all of the managers & owners.
-        this.founder_id = -1;
-        this.stuff_ids_and_appointments = null;
+        this.founder_email = null;
+        this.stuff_emails_and_appointments = null;
         return true;
     }
 
-    public void check_permission(int user_id, StorePermission permission) throws IllegalAccessException {
+    public void check_permission(String user_email, StorePermission permission) throws IllegalAccessException {
         // not just managers - FIX
-        if(!(this.stuff_ids_and_appointments.get(user_id).has_permission(permission)))
+        if(!(this.stuff_emails_and_appointments.get(user_email).has_permission(permission)))
             throw new IllegalAccessException("User has no permissions!");
     }
 
@@ -142,14 +142,14 @@ public class Store {
         info.append("Store info: "+this.name+"\n");
         info.append("\tStore founder: "+ founder_name +"\n");
         info.append("\tStore owners: ");
-        for (Integer id : stuff_ids_and_appointments.keySet())
+        for (String email : stuff_emails_and_appointments.keySet())
         {
             String name = "";
             info.append(name+", ");
         }
         info.append("\n");
         info.append("\tStore managers: ");
-        for (Integer id : stuff_ids_and_appointments.keySet())
+        for (String email : stuff_emails_and_appointments.keySet())
         {
             String name = "";
             info.append(name+", ");
@@ -238,42 +238,42 @@ public class Store {
         throw new IllegalArgumentException("StoreController:getProduct_by_product_id Product is not exist - product id ");
     }
 
-    public void add_product(int user_id, String name, double price, String category, List<String> key_words, int quantity) throws IllegalAccessException {
-        this.check_permission(user_id, StorePermission.add_item);
+    public void add_product(String user_email, String name, double price, String category, List<String> key_words, int quantity) throws IllegalAccessException {
+        this.check_permission(user_email, StorePermission.add_item);
         int product_id = this.getInc_product_id();
         Product product = new Product(name, this.store_id, product_id, price, category, key_words);
         inventory.put(product, quantity);
     }
 
-    public void delete_product(int product_id, int user_id) throws IllegalAccessException {
+    public void delete_product(int product_id, String user_email) throws IllegalAccessException {
         Product product_to_remove = this.getProduct_by_product_id(product_id);
-        this.check_permission(user_id, StorePermission.remove_item);
+        this.check_permission(user_email, StorePermission.remove_item);
         inventory.remove(product_to_remove);
     }
 
     //------------------------------------------------ edit product - Start ----------------------------------------------
 
-    public void edit_product_name(int user_id, int product_id, String name) throws IllegalAccessException {
+    public void edit_product_name(String user_email, int product_id, String name) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
-        this.check_permission(user_id, StorePermission.edit_item_name);
+        this.check_permission(user_email, StorePermission.edit_item_name);
         to_edit.setName(name);
     }
 
-    public void edit_product_price(int user_id, int product_id, double price) throws IllegalAccessException {
+    public void edit_product_price(String user_email, int product_id, double price) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
-        this.check_permission(user_id, StorePermission.edit_item_price);
+        this.check_permission(user_email, StorePermission.edit_item_price);
         to_edit.setPrice(price);
     }
 
-    public void edit_product_category(int user_id, int product_id, String category) throws IllegalAccessException {
+    public void edit_product_category(String user_email, int product_id, String category) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
-        this.check_permission(user_id, StorePermission.edit_item_category);
+        this.check_permission(user_email, StorePermission.edit_item_category);
         to_edit.setCategory(category);
     }
 
-    public void edit_product_key_words(int user_id, int product_id, List<String> key_words) throws IllegalAccessException {
+    public void edit_product_key_words(String user_email, int product_id, List<String> key_words) throws IllegalAccessException {
         Product to_edit = this.getProduct_by_product_id(product_id);
-        this.check_permission(user_id, StorePermission.edit_item_keywords);
+        this.check_permission(user_email, StorePermission.edit_item_keywords);
         to_edit.setKey_words(key_words);
     }
 
@@ -353,9 +353,9 @@ public class Store {
     }
 
 
-    public void add_review(int product_id, int user_id, String review) {
+    public void add_review(int product_id, String user_email, String review) {
         Product p = this.getProduct_by_product_id(product_id); //throws
-        p.add_review(user_id, review);
+        p.add_review(user_email, review);
     }
 
 
@@ -363,6 +363,21 @@ public class Store {
     private int getInc_product_id() {
         return this.product_ids_counter++;
     }
+
+    public void add_owner(String user_email, String user_email_to_appoint) {
+        if(!this.stuff_emails_and_appointments.containsKey(user_email))
+        {
+            throw new IllegalArgumentException("User is not stuff member of this store");
+        }
+        if (!this.stuff_emails_and_appointments.get(user_email).is_owner())
+        {
+            throw new IllegalArgumentException("User is not owner of this store");
+        }
+        Appointment appointment = new Appointment(user_email, user_email_to_appoint, this.store_id, StoreManagerType.store_owner);
+        this.stuff_emails_and_appointments.put(user_email, appointment);
+    }
+
+
 
 
 
@@ -395,13 +410,9 @@ public class Store {
         return discountPolicy;
     }
 
-    public HashMap<Integer, Appointment> getManager_ids() {
-        return stuff_ids_and_appointments;
-    }
 
-    public HashMap<Integer, Appointment> getstuff_ids_and_appointments() {
-        return stuff_ids_and_appointments;
-    }
+
+
 
     public HashMap<Product, Integer> getInventory() {
         return this.inventory;
@@ -411,8 +422,8 @@ public class Store {
         return purchases_history;
     }
 
-    public int getFounder_id() {
-        return founder_id;
+    public String getFounder_email() {
+        return founder_email;
     }
 
     public int getStore_id() {
@@ -436,17 +447,11 @@ public class Store {
         this.store_id = store_id;
     }
 
-    public void setFounder_id(int founder_id) {
-        this.founder_id = founder_id;
+    public void setFounder_email(String founder_email) {
+        this.founder_email = founder_email;
     }
 
-    public void setstuff_ids_and_appointments(HashMap<Integer, Appointment> stuff_ids_and_appointments) {
-        this.stuff_ids_and_appointments = stuff_ids_and_appointments;
-    }
 
-    public void setManager_ids(HashMap<Integer, Appointment> manager_ids) {
-        this.stuff_ids_and_appointments = manager_ids;
-    }
 
     public void setName(String name) {
         this.name = name;

@@ -54,7 +54,7 @@ public interface iService {
     //------------------------------------------------ edit product - End ----------------------------------------------
 
     void set_store_purchase_rules(int store_id);
-    int add_owner();
+    void add_owner(String user_email, int store_id);
     int add_manager();
     int delete_owner();
     int delete_manager();

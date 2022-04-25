@@ -213,15 +213,17 @@ public class Market implements iService {
     //Requirement 2.3.2
     @Override
     public void open_store(String store_name) {
-        if (!this.isGuest)
-            try
-            {
-                this.store_controller.open_store(this.user_id, store_name);
-            }
-            catch (Exception e)
-            {
+        try
+        {
+            // @TODO: GAL get_email throws if the user is a guest
+            String email = this.user_controller.get_email(this.user_id);
+            // @TODO: AMIT change user id to email
+            this.store_controller.open_store(email, store_name);
+        }
+        catch (Exception e)
+        {
 
-            }
+        }
     }
 
     /**
@@ -234,9 +236,10 @@ public class Market implements iService {
     //Requirement 2.3.3
     @Override
     public void add_review(int product_id, int store_id, String review)  {
-        // @TODO GAL : throws if user isnt a buyer
+        // @TODO GAL : throws if user isn't a buyer
         this.user_controller.check_if_user_buy_this_product(this.user_id, product_id, store_id);
-        this.store_controller.add_review(this.user_id, product_id, store_id, review);
+        String user_email = this.user_controller.get_email(this.user_id);
+        this.store_controller.add_review(user_email, product_id, store_id, review);
     }
 
     //Requirement 2.3.4 - Product
@@ -251,7 +254,8 @@ public class Market implements iService {
     @Override
     public void rate_product(int product_id, int store_id, int rate) {
         this.user_controller.check_if_user_buy_this_product(this.user_id, product_id, store_id);
-        this.store_controller.rate_product(this.user_id, product_id, store_id, rate);
+        String user_email = this.user_controller.get_email(this.user_id);
+        this.store_controller.rate_product(user_email, product_id, store_id, rate);
     }
 
     //Requirement 2.3.4 - Store
@@ -259,7 +263,8 @@ public class Market implements iService {
     public void rate_store(int store_id, int rate) {
         // @TODO GAL : throws if user isnt a buyer
         this.user_controller.check_if_user_buy_from_this_store(this.user_id, store_id);
-        this.store_controller.rate_store(this.user_id, store_id, rate);
+        String user_email = this.user_controller.get_email(this.user_id);
+        this.store_controller.rate_store(user_email, store_id, rate);
     }
 
     //Requirement 2.3.5
@@ -321,9 +326,10 @@ public class Market implements iService {
     public void add_product_to_store(int store_id, int quantity,
                                      String name, double price, String category, List<String> key_words) {
         try {
-            store_controller.add_product_to_store(this.user_id, store_id, quantity, name, price, category, key_words);
+            String user_email = this.user_controller.get_email(this.user_id);
+            store_controller.add_product_to_store(user_email, store_id, quantity, name, price, category, key_words);
         }
-        catch (IllegalArgumentException e)
+        catch (IllegalArgumentException | IllegalAccessException e)
         {
             System.out.println("Product already exist");
         }
@@ -340,7 +346,8 @@ public class Market implements iService {
     public void delete_product_from_store(int product_id, int store_id) {
         try
         {
-            this.store_controller.delete_product_from_store(this.user_id, product_id, store_id);
+            String user_email = this.user_controller.get_email(this.user_id);
+            this.store_controller.delete_product_from_store(user_email, product_id, store_id);
         }
         catch (Exception e)
         {
@@ -365,7 +372,8 @@ public class Market implements iService {
     public void edit_product_name(int product_id, int store_id, String name)  {
         try
         {
-            this.store_controller.edit_product_name(this.user_id, product_id, store_id, name);
+            String user_email = this.user_controller.get_email(this.user_id);
+            this.store_controller.edit_product_name(user_email, product_id, store_id, name);
         }
         catch (Exception e)
         {
@@ -386,7 +394,8 @@ public class Market implements iService {
     public void edit_product_price(int product_id, int store_id, double price)  {
         try
         {
-            this.store_controller.edit_product_price(this.user_id, product_id, store_id, price);
+            String user_email = this.user_controller.get_email(this.user_id);
+            this.store_controller.edit_product_price(user_email, product_id, store_id, price);
         }
         catch (Exception e)
         {
@@ -407,7 +416,8 @@ public class Market implements iService {
     public void edit_product_category(int product_id, int store_id, String category)  {
         try
         {
-            this.store_controller.edit_product_category(this.user_id, product_id, store_id, category);
+            String user_email = this.user_controller.get_email(this.user_id);
+            this.store_controller.edit_product_category(user_email, product_id, store_id, category);
         }
         catch (Exception e)
         {
@@ -428,7 +438,8 @@ public class Market implements iService {
     public void edit_product_key_words(int product_id, int store_id, List<String> key_words)  {
         try
         {
-            this.store_controller.edit_product_key_words(this.user_id, product_id, store_id, key_words);
+            String user_email = this.user_controller.get_email(this.user_id);
+            this.store_controller.edit_product_key_words(user_email, product_id, store_id, key_words);
         }
         catch (Exception e)
         {
@@ -451,10 +462,10 @@ public class Market implements iService {
 
 
     //Requirement 2.4.4
-    @Override
-    // @TODO : have to check that there is at least one owner of each store
-    public int add_owner() {
-        return 0;
+// @TODO : have to check that there is at least one owner of each store
+    public void add_owner(String user_email_to_appoint, int store_id) {
+        String user_email = this.user_controller.get_email(this.user_id);
+        this.store_controller.add_owner(user_email, user_email_to_appoint, store_id);
     }
     //Requirement 2.4.5
     @Override
@@ -483,7 +494,8 @@ public class Market implements iService {
     public void edit_manager_permissions(int manager_id, int store_id, LinkedList<StorePermission> permissions) {
         try
         {
-            this.store_controller.edit_manager_specific_permissions(this.user_id, manager_id, store_id, permissions);
+            String user_email = this.user_controller.get_email(this.user_id);
+            this.store_controller.edit_manager_specific_permissions(user_email, manager_id, store_id, permissions);
         }
         catch (Exception e)
         {
@@ -512,7 +524,8 @@ public class Market implements iService {
     public void close_store_temporarily(int store_id) {
         try
         {
-            answer = this.store_controller.close_store_temporarily(this.user_id, store_id);
+            String user_email = this.user_controller.get_email(this.user_id);
+            this.store_controller.close_store_temporarily(user_email, store_id);
         }
         catch (Exception e)
         {
@@ -533,7 +546,8 @@ public class Market implements iService {
     public void open_close_store(int store_id) {
         try
         {
-            this.store_controller.open_close_store(this.user_id, store_id);
+            String user_email = this.user_controller.get_email(this.user_id);
+            this.store_controller.open_close_store(user_email, store_id);
         }
         catch (Exception e)
         {
@@ -557,7 +571,8 @@ public class Market implements iService {
         String answer;
         try
         {
-            answer = this.store_controller.view_store_management_information(this.user_id, store_id);
+            String user_email = this.user_controller.get_email(this.user_id);
+            answer = this.store_controller.view_store_management_information(user_email, store_id);
         }
         catch (Exception e)
         {
@@ -581,7 +596,8 @@ public class Market implements iService {
         String answer;
         try
         {
-            answer = this.store_controller.view_store_questions(this.user_id, store_id);
+            String user_email = this.user_controller.get_email(this.user_id);
+            answer = this.store_controller.view_store_questions(user_email, store_id);
         }
         catch (Exception e)
         {
@@ -606,7 +622,8 @@ public class Market implements iService {
     public void manager_answer_question(int store_id, int question_id, String answer) {
         try
         {
-            this.store_controller.answer_question(this.user_id, store_id, question_id, answer);
+            String user_email = this.user_controller.get_email(this.user_id);
+            this.store_controller.answer_question(user_email, store_id, question_id, answer);
         }
         catch (Exception e)
         {
