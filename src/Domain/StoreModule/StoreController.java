@@ -356,12 +356,14 @@ public class StoreController {
         p.add_review(user_id, review);
     }
 
-    public void rate_product(int product_id, int store_id, int rate) {
-        // @TODO TOM
+    public void rate_product(int user_id, int product_id, int store_id, int rate) {
+        Product to_rate = this.get_product_by_product_id(product_id, store_id);//throw exceptions
+        to_rate.add_rating(user_id, rate);
     }
 
-    public void rate_store(int store_id, int rate) {
-        // @TODO TOM
+    public void rate_store(int user_id, int store_id, int rate) {
+        Store to_rate = this.get_store_by_store_id(store_id);//throw exceptions
+        to_rate.add_rating(user_id, rate);
 
     }
 }

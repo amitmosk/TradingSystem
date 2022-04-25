@@ -37,6 +37,9 @@ public class Store {
     public void add_review(int user_id, String review) {
         this.storeReview.add_review(user_id, review);
     }
+    public void add_rating(int user_id, int rating) {
+        this.storeReview.add_rating(user_id, rating);
+    }
 
     // -- methods
     public boolean close_store_temporarily(int user_id) throws IllegalAccessException {

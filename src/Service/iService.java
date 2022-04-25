@@ -41,7 +41,7 @@ public interface iService {
     double add_security_personal_question(); // add more methods like that
 
     // store owner - have to write which of these methods is common to store founder & store manager
-    // @TODO : TOM
+
     void add_product_to_store(int store_id, int quantity, String name, double price, String category, List<String> key_words);
     void delete_product_from_store(int product_id);
 
