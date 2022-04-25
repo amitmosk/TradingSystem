@@ -16,12 +16,15 @@ public class Product {
         this.store_id = store_id;
         this.product_id = product_id;
         this.price = price;
-        this.productReview = productReview;
+        this.productReview = new ProductReview();
         this.category = category;
         this.key_words = key_words;
     }
     public void add_review(int user_id, String review) {
         this.productReview.add_review(user_id, review);
+    }
+    public void add_rating(int user_id, int rating) {
+        this.productReview.add_rating(user_id, rating);
     }
 
 

@@ -20,6 +20,7 @@ public class Store {
     private DiscountPolicy discountPolicy;
     private HashMap<Integer, Question> users_questions; // question_id x question
     private StorePurchaseHistory purchases_history;
+    private StoreReview storeReview;
 
     // -- constructor
 
@@ -31,6 +32,10 @@ public class Store {
         this.active = true;
         this.foundation_date = LocalDate.now();
         this.users_questions = new HashMap<>();
+        this.storeReview = new StoreReview();
+    }
+    public void add_review(int user_id, String review) {
+        this.storeReview.add_review(user_id, review);
     }
 
     // -- methods

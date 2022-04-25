@@ -3,10 +3,10 @@ package Domain.StoreModule;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProductReview {
+public class StoreReview {
     private Map<Integer, String> reviews; // user_id & review
     private Map<Integer, Integer> rating; // user_id & rating
-    public ProductReview()
+    public StoreReview()
     {
         reviews = new HashMap<>();
         rating = new HashMap<>();
