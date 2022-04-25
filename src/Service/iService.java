@@ -1,8 +1,6 @@
 package Service;
 
-import Domain.StoreModule.Product;
-import Domain.StoreModule.ProductReview;
-import Domain.StoreModule.StorePermission;
+import Domain.StoreModule.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,10 +16,10 @@ public interface iService {
     double register();
     // guests
     String find_store_information(int store_id);
-    String find_product_information(int product_id);
-    Product find_product_by_name(String name);
-    Product find_product_by_category(String category);
-    Product find_product_by_keyword(String key_word);
+    String find_product_information(int product_id, int store_id);
+    List<Product> find_products_by_name(String name);
+    List<Product> find_products_by_category(String category);
+    List<Product> find_products_by_keywords(String key_words);
 
     double view_user_cart();
     double delete_product_from_cart();
@@ -30,7 +28,7 @@ public interface iService {
     int buy_cart(); // calculate price, call payment, supply, add to history, reset cart..
 
     // assign user
-    int open_store(); // first opening
+    void open_store(String store_name); // first opening
     int add_review(int product_id);
     int rate_product(int product_id);
     int rate_store(int store_id);
@@ -44,7 +42,7 @@ public interface iService {
 
     // store owner - have to write which of these methods is common to store founder & store manager
     // @TODO : TOM
-    void add_product_to_store(Product product, int store_id, int quantity);
+    void add_product_to_store(int store_id, int quantity, String name, double price, String category, List<String> key_words);
     void delete_product_from_store(int product_id);
 
     void edit_product_name(int product_id, String name);

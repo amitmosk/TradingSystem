@@ -75,12 +75,11 @@ public class Market implements iService {
     }
 
     @Override
-
-    public String find_product_information(int product_id) {
+    public String find_product_information(int product_id, int store_id) {
         String info="";
         try
         {
-            info = this.store_controller.find_product_information(product_id);
+            info = this.store_controller.find_product_information(product_id, store_id);
         }
         catch (IllegalArgumentException e)
         {
@@ -88,54 +87,42 @@ public class Market implements iService {
         }
         return info;
     }
-
+//------------------------------------------------find product by - Start ----------------------------------------------------
     /**
      *
      * @param product_name
-     * @return Product if exist by the identifier
-     * @throws if Product does not exist
+     * @return List of Products with the specific name
      */
     @Override
-    public Product find_product_by_name(String product_name) throws IllegalArgumentException{
-        Product p = this.store_controller.find_product_by_name(product_name);
-        if (p==null)
-        {
-            throw new IllegalArgumentException("Product does not exist - product name: "+product_name);
-        }
-        return p;
+    public List<Product> find_products_by_name(String product_name)
+    {
+        return this.store_controller.find_products_by_name(product_name);
     }
 
     /**
      *
      * @param category
-     * @return Product if exist by the identifier
-     * @throws if Product does not exist
+     * @return List of Products with the specific category
      */
     @Override
-    public Product find_product_by_category(String category) throws IllegalArgumentException{
-        Product p = this.store_controller.find_product_by_category(category);
-        if (p==null)
-        {
-            throw new IllegalArgumentException("Product does not exist - product category: "+category);
-        }
-        return p;
+    public List<Product> find_products_by_category(String category)
+    {
+        return this.store_controller.find_products_by_category(category);
     }
 
     /**
      *
-     * @param key_word
-     * @return Product if exist by the identifier
-     * @throws if Product does not exist
+     * @param key_words
+     * @return List of Products with the specific key_word
      */
     @Override
-    public Product find_product_by_keyword(String key_word) throws IllegalArgumentException{
-        Product p = this.store_controller.find_product_by_keyword(key_word);
-        if (p==null)
-        {
-            throw new IllegalArgumentException("Product does not exist - product key word: "+key_word);
-        }
-        return p;
+    public List<Product> find_products_by_keywords(String key_words)
+    {
+        return this.store_controller.find_products_by_key_words(key_words);
     }
+    //------------------------------------------------find product by - End ----------------------------------------------------
+
+
 
     @Override
     public double view_user_cart() {
@@ -175,9 +162,15 @@ public class Market implements iService {
         // failed
     }
 
+
+    /**
+     *
+     * @param store_name
+     * @precondition : GUI check store name is valid
+     */
     @Override
-    public int open_store(int founder_id, String store_name) {
-        this.store_controller.open_store(founder_id, store_name);
+    public void open_store(String store_name) {
+        this.store_controller.open_store(this.user_id, store_name);
     }
 
     @Override
@@ -232,9 +225,10 @@ public class Market implements iService {
      *
      */
     @Override
-    public void add_product_to_store(Product product, int store_id, int quantity) {
+    public void add_product_to_store(int store_id, int quantity,
+                                     String name, double price, String category, List<String> key_words) {
         try {
-            store_controller.add_product_to_store(product, store_id, quantity);
+            store_controller.add_product_to_store(this.user_id, store_id, quantity, name, price, category, key_words);
         }
         catch (IllegalArgumentException e)
         {
