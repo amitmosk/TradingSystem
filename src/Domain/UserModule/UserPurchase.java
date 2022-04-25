@@ -1,8 +1,8 @@
-package Service;
+package Domain.UserModule;
 
-import java.time.LocalDate;
+import Domain.Basket;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
 class UserPurchase extends Purchase {
     private Map<Integer, List<Integer>> storeId_productsIDS;        // amit and tom method in basket
 
-    public UserPurchase(Map<Integer,Basket> cart, int purchaseID) {
+    public UserPurchase(Map<Integer, Basket> cart, int purchaseID) {
         this.purchase_id = purchaseID;
         this.transaction_date = LocalDateTime.now();
         this.totalPrice = calculateTotalPrice();
@@ -38,6 +38,15 @@ class UserPurchase extends Purchase {
             product_and_totalPrice.put(productID,basket.getPrice(productID,quantity));
             product_and_name.put(productID,basket.getName(productID));
         }
+    }
+
+    public boolean bought_from_store(int storeID){
+        return this.storeId_productsIDS.containsKey(storeID);
+    }
+
+    public boolean bought_product(int storeID,int productID){
+        if(!bought_from_store(storeID)) return false;
+        return this.storeId_productsIDS.get(storeID).contains(productID);
     }
 }
 

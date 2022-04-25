@@ -1,4 +1,4 @@
-package Service;
+package Domain;
 
 public class Appointment {
 }

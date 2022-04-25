@@ -1,4 +1,4 @@
-package Service;
+package Domain.UserModule;
 
 import java.time.LocalDateTime;
 import java.util.Date;

@@ -1,4 +1,6 @@
-package Service;
+package Domain.UserModule;
+
+import Domain.Basket;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -64,10 +66,30 @@ public class User {
 
     public void buyCart(int purchaseID) {
         //make purchase
-        Purchase purchase = new UserPurchase(cart.getBaskets(),purchaseID);
+        UserPurchase purchase = new UserPurchase(cart.getBaskets(),purchaseID);
         //add to purchaseHistory
         this.state.addPurchase(purchase);
         //clear
         cart.clear();
+    }
+
+    public void check_if_user_buy_from_this_store(int store_id) throws Exception {
+        this.state.check_if_user_buy_from_this_store(store_id);
+    }
+
+    public void check_if_user_buy_this_product(int storeID, int productID) throws Exception {
+        this.state.check_if_user_buy_this_product(storeID, productID);
+    }
+
+    public UserHistory view_user_purchase_history() throws Exception {
+        return this.state.view_user_purchase_history();
+    }
+
+    public String get_user_name() throws Exception {
+        return state.get_user_name();
+    }
+
+    public String get_user_last_name() throws Exception {
+        return state.get_user_last_name();
     }
 }

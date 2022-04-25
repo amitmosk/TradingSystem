@@ -1,4 +1,6 @@
-package Service;
+package Domain;
+
+import Domain.UserModule.User;
 
 public interface IMarket {
     void init_market();

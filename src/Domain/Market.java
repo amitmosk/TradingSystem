@@ -1,4 +1,8 @@
-package Service;
+package Domain;
+
+import Domain.UserModule.Cart;
+import Domain.UserModule.UserController;
+import Domain.UserModule.UserHistory;
 
 import java.util.Map;
 
@@ -6,38 +10,33 @@ public class Market //implements IMarket{
 {
     private UserController uc;
     private int loggedUser;                  //id or email
-    private boolean isGuest;                 //
-//    @Override
+    private boolean isGuest;                 //represents the state
+
     public void init_market() {
         this.uc = UserController.getInstance();
         isGuest = true;
     }
 
-//    @Override
     public boolean payment(int price) {
         return false;
     }
 
-//    @Override
     public boolean supply(int user_id, int purchase_id) {
         return false;
     }
 
-//    @Override
     public int guest_login() {
         int logged = uc.guest_login();
         this.loggedUser = logged;
         return logged;
     }
 
-//    @Override
     public double login(String Email, String password) {
         boolean logRes = uc.login(loggedUser, Email, password);
         if(logRes) isGuest = false;
         return 1;
     }
 
-//    @Override
 
     public void logout() {
         if(isGuest) return; //todo throw error
@@ -45,36 +44,10 @@ public class Market //implements IMarket{
         this.loggedUser = -1;
     }
 
-//    @Override
     public double register(String Email, String pw, String name, String lastName) throws IllegalAccessException {
         if(!isGuest) return 1; //todo throw error
         uc.register(loggedUser,Email,pw,name,lastName);
         return 1;
-    }
-
-//    @Override
-    public String find_store_information(int store_id) {
-        return null;
-    }
-
-//    @Override
-    public String find_product_information(int product_id) {
-        return null;
-    }
-
-//    @Override
-    public void find_product_by_name() {
-
-    }
-
-//    @Override
-    public void find_product_by_category() {
-
-    }
-
-//    @Override
-    public void find_product_by_keyword() {
-
     }
 
     public void add_product_to_cart(int storeID,int productID, int quantity) {
@@ -117,7 +90,6 @@ public class Market //implements IMarket{
         }
     }
 
-//    @Override
     public Map<Integer,Basket> view_user_cart() {
         return uc.getBaskets(loggedUser);
     }
@@ -135,17 +107,36 @@ public class Market //implements IMarket{
         // failed
         return 0;
     }
+
+    public double send_complain() {
+        //todo implement request handler
+        return 0;
+    }
+
+    public UserHistory view_user_purchase_history() throws Exception { //todo remove throws and catch exception
+        return uc.view_user_purchase_history(loggedUser);
+    }
+
+    public double view_account_details() {
+        return 0;
+    }
+
+    public String get_user_name() throws Exception { //todo handle exception in try catch
+        return this.uc.get_user_name(loggedUser);
+    }
+
+    public String get_user_last_name() throws Exception { //todo handle exception in try catch
+        return this.uc.get_user_last_name(loggedUser);
+    }
 /*
-    @Override
-    public int buy_cart() {
-        return 0;
-    }
-
-    @Override
+//    @Override
     public int open_store() {
-        return 0;
+//        sc.open_store();
+        uc.open_store();
+        return 1;
     }
-
+*/
+/*
     @Override
     public int add_review(int product_id) {
         return 0;
@@ -163,16 +154,6 @@ public class Market //implements IMarket{
 
     @Override
     public int send_request_to_store(int store_id, String request) {
-        return 0;
-    }
-
-    @Override
-    public double send_complain() {
-        return 0;
-    }
-
-    @Override
-    public double view_user_purchase_history() {
         return 0;
     }
 

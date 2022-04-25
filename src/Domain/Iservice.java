@@ -1,4 +1,4 @@
-package Service;
+package Domain;
 
 interface iService {
 

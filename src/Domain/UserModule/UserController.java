@@ -1,4 +1,6 @@
-package Service;
+package Domain.UserModule;
+
+import Domain.Basket;
 
 import java.util.HashMap;
 import java.util.*;
@@ -14,7 +16,6 @@ public class UserController {
     private Object usersLock;
     private Object onlineUsersLock;
     private Object idLock;
-
 
     // ------------------- singleton class ----------------------------
     private static class SingletonHolder{
@@ -119,7 +120,7 @@ public class UserController {
      * @param storeID represents the store id
      * @return the store basket from the user's cart
      */
-    public Basket getBasketByStoreID(int userID ,int storeID) {
+    public Basket getBasketByStoreID(int userID , int storeID) {
         User user = onlineUsers.get(userID);
         return user.getBasketByStoreID(storeID);
     }
@@ -158,18 +159,48 @@ public class UserController {
     }
 
 
+    /**
+     * function that returns the logged user cart
+     * @param loggedUser represents the user ID
+     * @return the user's cart
+     */
     public Cart getCart(int loggedUser) {
         User user = onlineUsers.get(loggedUser);
         return user.getCart();
     }
 
+    /**
+     * function that makes a new purchase and add it to the history & clears the cart
+     * @param loggedUser
+     */
     public void buyCart(int loggedUser) {
         User user = onlineUsers.get(loggedUser);
         user.buyCart(purchaseID.getAndIncrement());
     }
 
 
-    //todo check with amit and tom about policies and add requirments 2.5
-    
-    
+    public void check_if_user_buy_from_this_store(int loggedUser,int store_id) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        user.check_if_user_buy_from_this_store(store_id);
+    }
+
+    public void check_if_user_buy_this_product(int loggedUser,int productID, int storeID) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        user.check_if_user_buy_this_product(storeID,productID);
+    }
+
+    public UserHistory view_user_purchase_history(int loggedUser) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        return user.view_user_purchase_history();
+    }
+
+    public String get_user_name(int loggedUser) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        return user.get_user_name();
+    }
+
+    public String get_user_last_name(int loggedUser) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        return user.get_user_last_name();
+    }
 }

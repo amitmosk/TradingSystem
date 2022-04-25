@@ -1,10 +1,11 @@
-package Service;
+package Domain.UserModule;
 
-import java.util.HashMap;
+import Domain.Basket;
+
 import java.util.Map;
 
 public class Cart {
-    private Map<Integer,Basket> baskets;                // storeID,Basket
+    private Map<Integer, Basket> baskets;                // storeID,Basket
 
     public Basket getBasket(int storeID) {
         if(!baskets.containsKey(storeID))
