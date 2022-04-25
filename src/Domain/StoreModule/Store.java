@@ -152,7 +152,11 @@ public class Store {
     }
 
     public String get_product_information(int product_id) {
-        //already check that product exists in the store
+        Product p = this.getProduct_by_product_id(product_id);
+        if (p==null)
+        {
+            thr
+        }
         return this.getProduct_by_product_id(product_id).toString();
     }
     public Product find_product_by_name(String name) {
@@ -195,7 +199,7 @@ public class Store {
             if (product.getProduct_id() == product_id)
                 return product;
         }
-        return null;
+        throw new IllegalArgumentException("StoreController:  ");
     }
 
 
