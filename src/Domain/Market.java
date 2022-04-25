@@ -199,8 +199,15 @@ public class Market implements iService {
     //Requirement 2.3.2
     @Override
     public void open_store(String store_name) {
-        this.user_controller.is_a_member();
-        this.store_controller.open_store(this.user_id, store_name);
+        if (!this.isGuest)
+            try
+            {
+                this.store_controller.open_store(this.user_id, store_name);
+            }
+            catch (Exception e)
+            {
+
+            }
     }
 
     /**
@@ -230,7 +237,7 @@ public class Market implements iService {
     @Override
     public void rate_product(int product_id, int store_id, int rate) {
         this.user_controller.check_if_user_buy_this_product(this.user_id, product_id, store_id);
-        this.store_controller.rate_product(product_id, store_id, rate);
+        this.store_controller.rate_product(this.user_id, product_id, store_id, rate);
     }
 
     //Requirement 2.3.4 - Store
@@ -238,12 +245,13 @@ public class Market implements iService {
     public void rate_store(int store_id, int rate) {
         // @TODO GAL : throws if user isnt a buyer
         this.user_controller.check_if_user_buy_from_this_store(this.user_id, store_id);
-        this.store_controller.rate_store(store_id, rate);
+        this.store_controller.rate_store(this.user_id, store_id, rate);
     }
 
     //Requirement 2.3.5
     @Override
-    public int send_request_to_store(int store_id, String request) {
+    // @TODO : AMIT implement
+    public int send_question_to_store(int store_id, String request) {
         return 0;
     }
 
@@ -341,7 +349,14 @@ public class Market implements iService {
     //Requirement 2.4.1 - Edit name
     @Override
     public void edit_product_name(int product_id, int store_id, String name)  {
-        this.store_controller.edit_product_name(this.user_id, product_id, store_id, name);
+        try
+        {
+            this.store_controller.edit_product_name(this.user_id, product_id, store_id, name);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     /**
@@ -355,7 +370,14 @@ public class Market implements iService {
     //Requirement 2.4.1 - Edit Price
     @Override
     public void edit_product_price(int product_id, int store_id, double price)  {
-        this.store_controller.edit_product_price(this.user_id, product_id, store_id, price);
+        try
+        {
+            this.store_controller.edit_product_price(this.user_id, product_id, store_id, price);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     /**
@@ -369,7 +391,14 @@ public class Market implements iService {
     //Requirement 2.4.1 - Edit category
     @Override
     public void edit_product_category(int product_id, int store_id, String category)  {
-        this.store_controller.edit_product_category(this.user_id, product_id, store_id, category);
+        try
+        {
+            this.store_controller.edit_product_category(this.user_id, product_id, store_id, category);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     /**
@@ -383,7 +412,15 @@ public class Market implements iService {
     //Requirement 2.4.1 - Edit key words
     @Override
     public void edit_product_key_words(int product_id, int store_id, List<String> key_words)  {
-        this.store_controller.edit_product_key_words(this.user_id, product_id, store_id, key_words);
+        try
+        {
+            this.store_controller.edit_product_key_words(this.user_id, product_id, store_id, key_words);
+        }
+        catch (Exception e)
+        {
+
+        }
+
     }
     //------------------------------------------------ edit product - End ----------------------------------------------
 
@@ -401,6 +438,7 @@ public class Market implements iService {
 
     //Requirement 2.4.4
     @Override
+    // @TODO : have to check that there is at least one owner of each store
     public int add_owner() {
         return 0;
     }
@@ -416,11 +454,22 @@ public class Market implements iService {
     }
 
     //Requirement 2.4.7
+
+    /**
+     *
+     * @param manager_id - the user we want to change his permission
+     * @param store_id
+     * @param permissions
+     * @throws IllegalArgumentException if the store doesn't exist
+     * @throws IllegalArgumentException if the store isn't active
+     * @throws IllegalArgumentException if the manager doesnt appointed by user
+     * @throws IllegalArgumentException user cant change himself permissions
+     */
     @Override
-    public void edit_manager_permissions(int user_id, int manager_id, int store_id, LinkedList<StorePermission> permissions) {
+    public void edit_manager_permissions(int manager_id, int store_id, LinkedList<StorePermission> permissions) {
         try
         {
-            this.store_controller.edit_manager_specific_permissions(user_id, manager_id, store_id, permissions);
+            this.store_controller.edit_manager_specific_permissions(this.user_id, manager_id, store_id, permissions);
         }
         catch (Exception e)
         {
@@ -437,44 +486,64 @@ public class Market implements iService {
     }
 
     //Requirement 2.4.9
+
+    /**
+     *
+     * @param store_id
+     * @throws IllegalArgumentException if the store isn't exist
+     * @throws IllegalAccessException if the user hasn't permission for close store
+     * @throws IllegalArgumentException if the store is already close
+     */
     @Override
-    public void close_store_temporarily(int store_id, int user_id) {
-        boolean answer = false;
+    public void close_store_temporarily(int store_id) {
         try
         {
-            answer = this.store_controller.close_store_temporarily(store_id, user_id);
+            answer = this.store_controller.close_store_temporarily(this.user_id, store_id);
         }
         catch (Exception e)
         {
-            return false;
+            System.out.println("as");
         }
-        return answer;
     }
 
     //Requirement 2.4.10
+
+    /**
+     *
+     * @param store_id
+     * @throws IllegalArgumentException if the store isn't exist
+     * @throws IllegalAccessException if the user hasn't permission for open store
+     * @throws IllegalArgumentException if the store is already open
+     */
     @Override
-    public boolean open_close_store(int store_id, int user_id) {
-        boolean answer = false;
+    public void open_close_store(int store_id) {
         try
         {
-            answer = this.store_controller.open_close_store(store_id, user_id);
+            this.store_controller.open_close_store(this.user_id, store_id);
         }
         catch (Exception e)
         {
-            return false;
+            System.out.println(e.getMessage());
         }
-        return answer;
-
     }
 
     //Requirement 2.4.11
+
+    /**
+     *
+     * @param store_id
+     * @return String with all the information
+     * @throws IllegalArgumentException if the store isn't exist
+     * @throws IllegalArgumentException if the store isn't active
+     * @throws IllegalAccessException if the user hasn't permission for view store managment information
+     *
+     */
     @Override
-    public String view_store_management_information(int user_id, int store_id) {
+    public String view_store_management_information(int store_id) {
         String answer;
         try
         {
-            StoreManagersInfo info = this.store_controller.view_store_management_information(user_id, store_id);
-            answer = info.toString();
+            answer = this.store_controller.view_store_management_information(this.user_id, store_id);
         }
         catch (Exception e)
         {
@@ -484,13 +553,21 @@ public class Market implements iService {
     }
 
     //Requirement 2.4.12 - View
+
+    /**
+     *
+     * @param store_id
+     * @throws IllegalArgumentException if the store isn't exist
+     * @throws IllegalArgumentException if the store isn't active
+     * @throws IllegalAccessException if the user hasn't permission for view store questions
+     * @return all the questions
+     */
     @Override
-    public String view_store_questions(int store_id, int user_id) {
+    public String view_store_questions(int store_id) {
         String answer;
         try
         {
-            HashMap<Integer, Question> questions = this.store_controller.view_store_questions(store_id, user_id);
-            answer = questions.toString();
+            answer = this.store_controller.view_store_questions(this.user_id, store_id);
         }
         catch (Exception e)
         {
@@ -500,30 +577,46 @@ public class Market implements iService {
     }
 
     //Requirement 2.4.12 - Responses
+
+    /**
+     *
+     * @param store_id
+     * @param question_id
+     * @param answer
+     * @throws IllegalArgumentException if the store isn't exist
+     * @throws IllegalArgumentException if the store isn't active
+     * @throws IllegalAccessException if the user hasn't permission for answer questions
+     * @throws IllegalArgumentException if the question is not exist
+     */
     @Override
-    public boolean manager_answer_question(int store_id, int user_id, int question_id, String answer) {
+    public void manager_answer_question(int store_id, int question_id, String answer) {
         try
         {
-            this.store_controller.answer_question(store_id, user_id, question_id, answer);
+            this.store_controller.answer_question(this.user_id, store_id, question_id, answer);
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            return false;
         }
-        return true;
 
     }
 
     //Requirement 2.4.13 & 2.6.4
+
+    /**
+     *
+     * @param store_id
+     * @throws IllegalArgumentException if the store isn't exist
+     * @throws IllegalArgumentException if the store isn't active
+     * @throws IllegalAccessException if the user hasn't permission for view store purchases history
+     * @return
+     */
     @Override
-    public String view_store_purchases_history(int store_id, int user_id) {
-        String info;
+    public String view_store_purchases_history(int store_id) {
         String answer;
         try
         {
-            info = this.store_controller.view_store_purchases_history(store_id, user_id);
-            answer = info.toString();
+            answer = this.store_controller.view_store_purchases_history(this.user_id, store_id);
         }
         catch (Exception e)
         {
@@ -535,11 +628,12 @@ public class Market implements iService {
 
     //Requirement 2.6.1
     @Override
-    public boolean close_store_permanently(int store_id, int user_id) {
-        boolean answer = false;
+    public boolean close_store_permanently(int store_id) {
         try
         {
-            answer = this.store_controller.close_store_permanently(store_id, user_id);
+            // @TODO : GAL
+            this.user_controller.is_admin();
+            this.store_controller.close_store_permanently(this.user_id, store_id);
         }
         catch (Exception e)
         {

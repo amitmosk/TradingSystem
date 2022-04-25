@@ -15,9 +15,9 @@ public interface iService {
     double logout(); // have to split according to user state
     double register();
     // guests
-    String find_store_information(int store_id);
+    String (int store_id);
     String find_product_information(int product_id, int store_id);
-    List<Product> find_products_by_name(String name);
+    List<Product> find_products_by_name(String name);find_store_information
     List<Product> find_products_by_category(String category);
     List<Product> find_products_by_keywords(String key_words);
 
