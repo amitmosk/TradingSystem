@@ -43,10 +43,10 @@ public class StoreController {
      * @throws if the user is not store founder OR the store or the user are not exist.
      * @return false if the store was already close, and true if we close the store temporarily
      */
-    public boolean close_store_temporarily(int store_id, int user_id) throws IllegalAccessException {
+    public void close_store_temporarily(int user_id, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
-        return store.close_store_temporarily(user_id);
-        // TODO: 22/04/2022 : update DB @ write to logger
+        store.close_store_temporarily(user_id);
+        // TODO : update DB @ write to logger
     }
 
     /**
@@ -56,9 +56,13 @@ public class StoreController {
      * @throws if the user is not store founder OR the store or the user are not exist.
      * @return false if the store was already open, and true if the store were re-open
      */
-    public boolean open_close_store(int store_id, int user_id) throws IllegalAccessException {
-        Store store = this.get_store_by_store_id(store_id);
-        return store.open_close_store(user_id);
+    public void open_close_store(int user_id, int store_id) throws IllegalAccessException {
+        if (!this.stores.containsKey(store_id))
+        {
+            throw new IllegalArgumentException("The store is not exist - store id: "+store_id);
+        }
+        Store store = this.stores.get(store_id);
+        store.open_close_store(user_id);
         // TODO: 22/04/2022 : update DB @ write to logger
     }
 
@@ -87,7 +91,7 @@ public class StoreController {
      * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return an object with managers & permissions data.
      */
-    public StoreManagersInfo view_store_management_information(int user_id, int store_id) throws IllegalAccessException {
+    public String view_store_management_information(int user_id, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         return store.view_store_management_information(user_id);
         // TODO: 22/04/2022 : write to logger
@@ -102,7 +106,7 @@ public class StoreController {
      * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return an object with store's questions.
      */
-    public HashMap<Integer, Question> view_store_questions(int store_id, int user_id) throws IllegalAccessException {
+    public String view_store_questions(int user_id, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         return store.view_store_questions(user_id);
         // TODO: 22/04/2022 : write to logger
@@ -118,10 +122,10 @@ public class StoreController {
      * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @param answer the answer of the store manager to the user question.
      */
-    public void answer_question(int store_id, int user_id, int question_id, String answer) throws IllegalAccessException {
+    public void answer_question(int user_id, int store_id, int question_id, String answer) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
-        store.answer_question(store_id, user_id, question_id, answer);
-        // TODO: 22/04/2022 : write to logger & DB
+        store.answer_question(user_id, question_id, answer);
+        // TODO: write to logger & DB
     }
 
     /**
@@ -132,10 +136,10 @@ public class StoreController {
      * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return a list with all the purchases history
      */
-    public String view_store_purchases_history(int store_id, int user_id) throws IllegalAccessException {
+    public String view_store_purchases_history(int user_id, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         return store.view_store_purchases_history(user_id);
-        // TODO: 22/04/2022 : write to logger
+        // TODO: write to logger
 
     }
 
@@ -147,12 +151,12 @@ public class StoreController {
      * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return true if the store was open and now we close it
      */
-    public boolean close_store_permanently(int store_id, int user_id)
+    public boolean close_store_permanently(int user_id, int store_id)
     {
         // TODO: have to check that the user is admin
         Store store = this.get_store_by_store_id(store_id);
         return store.close_store_permanently(user_id);
-        // TODO: 22/04/2022 : update DB @ write to logger
+        // TODO: update DB @ write to logger
     }
 
     /**
@@ -304,17 +308,6 @@ public class StoreController {
         return cart_price;
 
     }
-    public Product get_product_by_product_id(int product_id, int store_id)
-    {
-        Store s = this.get_store_by_store_id(store_id); // throws exception if store does not exist
-        Product p = s.getProduct_by_product_id(product_id);
-        if (p!=null)
-        {
-            return p;
-        }
-        throw new IllegalArgumentException("StoreController:get_product_by_product_id - Product does not exist product_id: "+product_id);
-    }
-
     public Product checkAvailablityAndGet(int store_id, int product_id, int quantity)
     {
         if(!stores.containsKey(store_id))
@@ -324,7 +317,6 @@ public class StoreController {
         return  stores.get(store_id).checkAvailablityAndGet(product_id, quantity);
     }
 
-    // TODO: remove the items from store that were bought by the user
     public void update_stores_inventory(Cart cart) {
         HashMap<Integer, Basket> baskets_of_storesID = cart.get_baskets();
         for (Basket basket : baskets_of_storesID.values())
@@ -341,7 +333,6 @@ public class StoreController {
             this.stores.get(store_id).remove_basket_products_from_store(basket, this.getInc_purchase_ids());
         }
 
-        // TODO: create StorePurchase add the purchase to StorePurchaseHistory
     }
 
 
@@ -352,13 +343,14 @@ public class StoreController {
     }
 
     public void add_review(int user_id, int product_id, int store_id, String review) {
-        Product p = this.get_product_by_product_id(product_id, store_id);//throws exceptions
-        p.add_review(user_id, review);
+        Store s = this.get_store_by_store_id(store_id);//throws
+        s.add_review(user_id, product_id, review);
+
     }
 
     public void rate_product(int user_id, int product_id, int store_id, int rate) {
-        Product to_rate = this.get_product_by_product_id(product_id, store_id);//throw exceptions
-        to_rate.add_rating(user_id, rate);
+        Store s = this.get_store_by_store_id(store_id); //throws
+        s.add_product_rating(user_id, product_id, rate);
     }
 
     public void rate_store(int user_id, int store_id, int rate) {

@@ -14,25 +14,27 @@ public class Store {
     private String name;
     private LocalDate foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
-    private int product_ids;
+    private int product_ids_counter;
     private boolean active;
     private PurchasePolicy purchasePolicy;
     private DiscountPolicy discountPolicy;
     private HashMap<Integer, Question> users_questions; // question_id x question
     private StorePurchaseHistory purchases_history;
     private StoreReview storeReview;
+    private int question_ids_counter;
 
-    // -- constructor
 
     public Store(int store_id, int founder_id, String name) {
         this.store_id = store_id;
         this.founder_id = founder_id;
         this.name = name;
-        this.product_ids = 1;
+        this.product_ids_counter = 1;
+        this.question_ids_counter = 1;
         this.active = true;
         this.foundation_date = LocalDate.now();
         this.users_questions = new HashMap<>();
         this.storeReview = new StoreReview();
+        this.purchases_history = new StorePurchaseHistory();
     }
     public void add_review(int user_id, String review) {
         this.storeReview.add_review(user_id, review);
@@ -40,28 +42,34 @@ public class Store {
     public void add_rating(int user_id, int rating) {
         this.storeReview.add_rating(user_id, rating);
     }
+    public void add_product_rating(int user_id, int product_id, int rate) {
+        Product p = this.getProduct_by_product_id(product_id);//throws
+        p.add_rating(user_id, rate);
+    }
 
     // -- methods
-    public boolean close_store_temporarily(int user_id) throws IllegalAccessException {
+    public void close_store_temporarily(int user_id) throws IllegalAccessException {
         this.check_permission(user_id, StorePermission.close_store_temporarily);
-        if (!this.is_active())
-            return false;
         this.active = false;
-        // TODO: 22/04/2022 : send message to all of the managers & owners.
-        return true;
+        // TODO:  send message to all of the managers & owners.
     }
-    public boolean open_close_store(int user_id) throws IllegalAccessException {
+    public void open_close_store(int user_id) throws IllegalAccessException {
         this.check_permission(user_id, StorePermission.open_close_store);
         if (this.is_active())
-            return false;
+            throw new IllegalArgumentException("The store is already open");
         this.active = true;
-        // TODO: 22/04/2022 : send message to all of the managers & owners.
-        return true;
+        // TODO: send message to all of the managers & owners.
     }
-    public StoreManagersInfo view_store_management_information(int user_id) throws IllegalAccessException {
+    public String view_store_management_information(int user_id) throws IllegalAccessException {
         this.check_permission(user_id, StorePermission.view_permissions);
-        return new StoreManagersInfo(this.stuff_ids_and_appointments);
+        return this.view_management_information();
     }
+
+    private String view_management_information() {
+        //@TODO: string builder informatoin
+        return "";
+    }
+
     public void set_permissions(int user_id, int manager_id, LinkedList<StorePermission> permissions) {
         // check that the manager appointed by the user
         if (this.get_appointer(manager_id) != user_id)
@@ -82,13 +90,22 @@ public class Store {
     }
 
 
-    public HashMap<Integer, Question> view_store_questions(int user_id) throws IllegalAccessException {
+    public String view_store_questions(int user_id) throws IllegalAccessException {
         this.check_permission(user_id, StorePermission.view_users_questions);
-        return this.users_questions;
+        return this.view_questions(this.users_questions);
     }
 
-    public void answer_question(int store_id, int user_id, int question_id, String answer) throws IllegalAccessException {
+    private String view_questions(HashMap<Integer, Question> users_questions) {
+        //@TODO: string builder questions
+        return "";
+    }
+
+    public void answer_question(int user_id, int question_id, String answer) throws IllegalAccessException {
         this.check_permission(user_id, StorePermission.view_users_questions);
+        if (!this.users_questions.containsKey(question_id))
+        {
+            throw new IllegalArgumentException("Question does not exist");
+        }
         Question question = this.users_questions.get(question_id);
         question.setAnswer(answer);
     }
@@ -102,7 +119,7 @@ public class Store {
         if (!this.is_active())
             return false;
         this.active = false;
-        // TODO: 22/04/2022 : send message to all of the managers & owners.
+        // TODO: send message to all of the managers & owners.
         this.founder_id = -1;
         this.stuff_ids_and_appointments = null;
         return true;
@@ -295,6 +312,7 @@ public class Store {
 
     public void remove_basket_products_from_store(Basket basket, int purchase_id) {
         Map<Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
+
         for (Product p : products_and_quantities.keySet())
         {
             int first_quantity = this.inventory.get(p);
@@ -336,13 +354,14 @@ public class Store {
 
 
     public void add_review(int product_id, int user_id, String review) {
-        this.getProduct_by_product_id(product_id).add_review(user_id, review);
+        Product p = this.getProduct_by_product_id(product_id); //throws
+        p.add_review(user_id, review);
     }
 
 
 
     private int getInc_product_id() {
-        return this.product_ids++;
+        return this.product_ids_counter++;
     }
 
 
@@ -452,6 +471,8 @@ public class Store {
     public void setDiscountPolicy(DiscountPolicy discountPolicy) {
         this.discountPolicy = discountPolicy;
     }
+
+
 
 
 //---------------------------------------------------------------------- Setters - End ------------------------------------------------------------------------------------

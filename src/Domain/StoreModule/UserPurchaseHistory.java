@@ -7,7 +7,7 @@ public class UserPurchaseHistory extends PurchaseHistory {
 
     @Override
     public String toString() {
-        // TODO
-        return super.toString();
+        // TODO : string builder
+        return "";
     }
 }
