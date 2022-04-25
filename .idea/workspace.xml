@@ -4,8 +4,6 @@
     <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Market.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/iService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/iService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,12 +138,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Domain/Market.java</url>
-          <line>635</line>
+          <line>649</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Domain/Market.java</url>
-          <line>565</line>
+          <line>579</line>
           <properties class="Domain.Market" method="view_store_questions">
             <option name="EMULATED" value="true" />
           </properties>

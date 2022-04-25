@@ -18,6 +18,20 @@ public class Market implements iService {
     // TODO: before get store check that the store is open
     // TODO: all the Controllers ids counters -> AtomicIntegers - getInc
     //TODO: put check validity methods in all set methods
+    //TODO: all the Controllers ids counters -> AtomicIntegers - getInc
+    //TODO: put check validity methods in all set methods
+    //TODO: add error logger - before any exceptions
+    //TODO: add logger for all updates in the market
+    //TODO: change all exceptions messages to Client messages
+    //TODO: view_management_information - string builder informatoin : store
+    //TODO: view_questions - string builder questions : store
+    // TODO : string builder in storePurchase history
+    // TODO : string builder in userPurchase history
+    //TODO: implement storePurchase history and userPurchase history
+    //TODO: manage Admin permission function
+    //TODO: toString in Response
+    //TODO: the controllers returns Response
+    //TODO: the market returns Response.toString()
     @Override
 
     //Requirement 1.1
