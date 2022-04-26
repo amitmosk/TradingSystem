@@ -1,36 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="updated alot">
-      <change afterPath="$PROJECT_DIR$/src/Domain/Request.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Domain/RequestHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Domain/UserModule/History.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserHistory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/AssignState.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/AssignUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Basket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Basket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/Cart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Guest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/Guest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/History.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/IMarket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/IMarket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Iservice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Iservice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Market.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/NotificationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/NotificationHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/PaymentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/PaymentAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Purchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/Purchase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Request.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/RequestHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/SupplyAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/SupplyAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UserHistory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UserPurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" afterDir="false" />
-    </list>
+    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="updated alot" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,6 +14,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
