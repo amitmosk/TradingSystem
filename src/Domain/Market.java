@@ -14,17 +14,13 @@ public class Market  {
         this.store_controller = StoreController.get_instance();
     }
 
-    //@TODO : all the exceptions in form: Basket.RemoveProduct: (class.method) - with specific data
     // TODO: before get store check that the store is open
     // TODO: all the Controllers ids counters -> AtomicIntegers - getInc
-    //TODO: put check validity methods in all set methods
-    //TODO: all the Controllers ids counters -> AtomicIntegers - getInc
     //TODO: put check validity methods in all set methods
     //TODO: add error logger - before any exceptions
     //TODO: add logger for all updates in the market
     //TODO: change all exceptions messages to Client messages
-    //TODO: view_management_information - string builder informatoin : store
-    //TODO: view_questions - string builder questions : store
+    //TODO: view_management_information - string builder information : store
     // TODO : string builder in storePurchase history
     // TODO : string builder in userPurchase history
     //TODO: implement storePurchase history and userPurchase history
