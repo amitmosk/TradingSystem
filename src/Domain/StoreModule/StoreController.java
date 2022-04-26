@@ -362,10 +362,16 @@ public class StoreController {
         Store store = this.get_store_by_store_id(store_id);//throws
         store.add_owner(user_email, user_email_to_appiont);
     }
+    public void remove_owner(String user_email, String user_email_to_delete_appointment, int store_id) {
+        Store store = this.get_store_by_store_id(store_id);//throws
+        store.remove_owner(user_email, user_email_to_delete_appointment);
+    }
 
     public void add_question(String user_email, int store_id, String question) {
         Store store = this.get_store_by_store_id(store_id);
         store.add_question(user_email, question);
     }
+
+
 }
 
