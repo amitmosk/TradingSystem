@@ -17,28 +17,29 @@ public class User {
         this.isLogged = new AtomicBoolean(false);
     }
 
-    private boolean emailCheck(String email){
+    //TODO: implement
+    private boolean emailCheck(String email) throws Exception{
         return false;
     }
 
-    private boolean passwordCheck(String pw){
-        return false;
+    private boolean passwordCheck(String pw)throws Exception{ return false;
     }
 
-    private boolean nameCheck(String name){
-        return false;
+    private boolean nameCheck(String name) throws Exception{return false;
     }
 
-    public boolean register(String email, String pw, String name, String lastName) {
+    public boolean register(String email, String pw, String name, String lastName) throws Exception {
         if(!isGuest.get()) return false;
         if(!emailCheck(email) || !passwordCheck(pw) || !nameCheck(name) || !nameCheck(lastName)) return false;
-        this.state = new AssignUser(email,pw,name,lastName);
         boolean res = this.isLogged.compareAndSet(false,true);
-        if(res) isGuest.set(false);
+        if(res) {
+            this.state = new AssignUser(email, pw, name, lastName);
+            isGuest.set(false);
+        }
         return res;
     }
 
-    public synchronized boolean login(String password) {
+    public synchronized boolean login(String password) throws Exception {
         boolean res = this.state.login(password);
         this.isLogged.set(true);
         return res;
@@ -64,13 +65,14 @@ public class User {
         return cart.getBaskets();
     }
 
-    public void buyCart(int purchaseID) {
+    public UserPurchase buyCart(int purchaseID) {
         //make purchase
         UserPurchase purchase = new UserPurchase(cart.getBaskets(),purchaseID);
         //add to purchaseHistory
         this.state.addPurchase(purchase);
         //clear
         cart.clear();
+        return purchase;
     }
 
     public void check_if_user_buy_from_this_store(int store_id) throws Exception {

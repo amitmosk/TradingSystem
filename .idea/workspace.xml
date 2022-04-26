@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="updated alot" />
+    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="updated alot">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradingSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TradingSystem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/META-INF/TradingSystem.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Market.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/UserPurchase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserHistory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,13 +56,18 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../שולחן העבודה/gson-2.8.2.jar" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
