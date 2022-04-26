@@ -9,21 +9,16 @@ import com.google.gson.Gson;
 
 import java.util.Map;
 
-// TODO: before get store check that the store is open
 // TODO: all the Controllers ids counters -> AtomicIntegers - getInc
 // TODO: put check validity methods in all set methods
 // TODO: add error logger - before any exceptions
 // TODO: add logger for all updates in the market
 // TODO: change all exceptions messages to Client messages
-// TODO: view_management_information - string builder information : store
-// TODO : string builder in storePurchase history
-// TODO : string builder in userPurchase history
-// TODO: implement storePurchase history and userPurchase history
 // TODO: manage Admin permission function
-// TODO: toString in Response
-// TODO: the controllers returns Response
-// TODO: the market returns Response.toString()
-
+// TODO: move all method comments from user controller to market
+// TODO: manage alerts
+// TODO: replace all toString calls to return the objects itself which will be converted to json
+// TODO: add FacadeProduct that holds only the fields client wont to see - and to all other objects (userPurchase, storePurchase)
 public class Market
 {
     private UserController user_controller;
@@ -71,21 +66,24 @@ public class Market
 
     }
 
+
     //Requirement 2.1.1
     public String guest_login() {
+        Response response = null;
         try
         {
             int logged = user_controller.guest_login();
             this.loggedUser = logged;
+            response = new Response<>(null, "Hey guest, Welcome to the trading system market!");
         }
         catch (Exception e)
         {
-            Response error_response = new Response(e);
-            return this.toJson(error_response);
-        }
+            response = new Response(e);
 
-        Response response = new Response<>(null, "Hey guest, Welcome to the trading system market!");
+        }
         return this.toJson(response);
+
+
     }
 
     //Requirement 2.1.4
@@ -107,6 +105,8 @@ public class Market
 
     //Requirement 2.1.2 & 2.3.1
     public void logout() {
+        Response response = null;
+
         if(isGuest) return; //todo throw error
         this.isGuest = true;
         this.loggedUser = -1;
@@ -129,17 +129,19 @@ public class Market
      * @throws IllegalArgumentException if store isn't active
      */
     public String find_store_information(int store_id) {
-        String info="";
+        Response<FacadeStore> response = null;
         try
         {
-            info = this.store_controller.find_store_information(store_id);
+            Store store = this.store_controller.find_store_information(store_id);
+            FacadeStore s = new FacadeStore(store);
+            response = new Response<>(s, "Store information received successfully");
         }
-        catch (IllegalArgumentException e)
+        catch (Exception e)
         {
-            //return "Store does not exist in the market";
-        }
-        return info;
+            response = new Response(e);
 
+        }
+        return this.toJson(response);
     }
 
     //Requirement 2.2.1 - Product
@@ -151,19 +153,19 @@ public class Market
      * @throws IllegalArgumentException if store does not exist
      * @throws IllegalArgumentException if store isn't active
      */
-
-
     public String find_product_information(int product_id, int store_id) {
-        String info = "";
+        Response<String> response = null;
         try
         {
-            info = this.store_controller.find_product_information(product_id, store_id);
+            String info = this.store_controller.find_product_information(product_id, store_id);
+            response = new Response<>(info, "Product information received successfully");
         }
-        catch (IllegalArgumentException e)
+        catch (Exception e)
         {
-            return "Product does not exist in the market";
+            response = new Response(e);
+
         }
-        return info;
+        return this.toJson(response);
     }
 
 //------------------------------------------------find product by - Start ----------------------------------------------------
@@ -173,11 +175,20 @@ public class Market
      * @return List of Products with the specific name
      */
     //Requirement 2.2.2 - Name
-
-
-    public List<Product> find_products_by_name(String product_name)
+    public String find_products_by_name(String product_name)
     {
-        return this.store_controller.find_products_by_name(product_name);
+        Response<List<Product>> response = null;
+        try
+        {
+            List<Product> products = this.store_controller.find_products_by_name(product_name);
+            response = new Response<List<Product>>(products, "Products received successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+
+        }
+        return this.toJson(response);
     }
 
     /**
@@ -186,11 +197,20 @@ public class Market
      * @return List of Products with the specific category
      */
     //Requirement 2.2.2 - Category
-
-
-    public List<Product> find_products_by_category(String category)
+    public String find_products_by_category(String category)
     {
-        return this.store_controller.find_products_by_category(category);
+        Response<List<Product>> response = null;
+        try
+        {
+            List<Product> products = this.store_controller.find_products_by_category(category);
+            response = new Response<>(products, "Products received successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+
+        }
+        return this.toJson(response);
     }
 
     /**
@@ -199,36 +219,45 @@ public class Market
      * @return List of Products with the specific key_word
      */
     //Requirement 2.2.2 - Key_words
-
-
-    public List<Product> find_products_by_keywords(String key_words)
+    public String find_products_by_keywords(String key_words)
     {
-        return this.store_controller.find_products_by_key_words(key_words);
+        Response<List<Product>> response = null;
+        try
+        {
+            List<Product> products = this.store_controller.find_products_by_key_words(key_words);
+            response = new Response<>(products, "Products received successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+
+        }
+        return this.toJson(response);
     }
     //------------------------------------------------find product by - End ----------------------------------------------------
 
 
     /**
      *
-     * @param store_name
+     * @param store_name name of the store to be opened
      * precondition : GUI check store name is valid
      * throws if the user is a guest
      */
     //Requirement 2.3.2
-
-
-    public void open_store(String store_name) {
+    public String open_store(String store_name) {
+        Response response = null;
         try
         {
-            // @TODO: GAL get_email throws if the user is a guest
             String email = this.user_controller.get_email(this.loggedUser);
-            // @TODO: AMIT change user id to email
             this.store_controller.open_store(email, store_name);
+            response = new Response<>(null, "Store opens successfully");
         }
         catch (Exception e)
         {
+            response = new Response(e);
 
         }
+        return this.toJson(response);
     }
 
     /**
@@ -237,71 +266,81 @@ public class Market
      * @param store_id
      * @param review
      * throws if Product does not exist
-     * @throws if the user is a guest
+     * throws if the user is a guest
+     * throws if user isn't a buyer
      */
     //Requirement 2.3.3
-
-
-    public void add_review(int product_id, int store_id, String review)  {
-        // @TODO GAL : throws if user isn't a buyer
+    public String add_review(int product_id, int store_id, String review)  {
+        Response response = null;
         try
         {
             this.user_controller.check_if_user_buy_this_product(this.loggedUser, product_id, store_id);
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.add_review(user_email, product_id, store_id, review);
+            response = new Response<>(null, "Review added successfully");
         }
         catch (Exception e)
         {
+            response = new Response(e);
 
         }
-
+        return this.toJson(response);
     }
 
     //Requirement 2.3.4 - Product
-
     /**
      *
      * @param product_id
      * @param store_id
      * @param rate
-     * @throws if the product isn't in the store
-     * @throws if the user is a guest
+     * throws if the product isn't in the store
+     * throws if the user is a guest
+     * throws if user isn't a buyer
      */
-
-
-    public void rate_product(int product_id, int store_id, int rate) {
+    public String rate_product(int product_id, int store_id, int rate) {
+        Response response = null;
         try
         {
             this.user_controller.check_if_user_buy_this_product(this.loggedUser, product_id, store_id);
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.rate_product(user_email, product_id, store_id, rate);
+            response = new Response<>(null, "Rating added successfully to the product");
         }
         catch (Exception e)
         {
+            response = new Response(e);
 
         }
-
+        return this.toJson(response);
     }
 
+
+    /**
+     *
+     * @param store_id id of the store
+     * @param rate the rating enter by the user
+     * throws if the product isn't in the store
+     * throws if the user is a guest
+     * throws if user isn't a buyer
+     */
     //Requirement 2.3.4 - Store
-
-
-    public void rate_store(int store_id, int rate) {
-        // @TODO GAL : throws if user isnt a buyer
+    public String rate_store(int store_id, int rate) {
+        Response response = null;
         try
         {
             this.user_controller.check_if_user_buy_from_this_store(this.loggedUser, store_id);
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.rate_store(user_email, store_id, rate);
+            response = new Response<>(null, "Rating added successfully to the store");
         }
         catch (Exception e)
         {
-
+            response = new Response(e);
         }
+        return this.toJson(response);
     }
 
     //Requirement 2.3.5
-
     /**
      *
      * @param store_id - the question is for a specific store
@@ -311,24 +350,22 @@ public class Market
      * @throws if the store isn't exist
      *
      */
-
-    // @TODO : AMIT implement
-
-    public void send_question_to_store(int store_id, String question) {
+    public String send_question_to_store(int store_id, String question) {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.add_question(user_email, store_id, question);
+            response = new Response<>(null, "Question send to the store successfully");
         }
         catch (Exception e)
         {
-
+            response = new Response(e);
         }
-
+        return this.toJson(response);
     }
 
     //Requirement 2.4.1 - Add
-
     /**
      *
      * @param store_id
@@ -340,19 +377,20 @@ public class Market
      * @throws if store doesnt exist
      * @throws if there is no permission for the user
      */
-
-
-    public void add_product_to_store(int store_id, int quantity,
+    public String add_product_to_store(int store_id, int quantity,
                                      String name, double price, String category, List<String> key_words) {
-        try {
+        Response response = null;
+        try
+        {
             String user_email = this.user_controller.get_email(this.loggedUser);
             store_controller.add_product_to_store(user_email, store_id, quantity, name, price, category, key_words);
+            response = new Response<>(null, "Product added successfully");
         }
-        catch (Exception e ) //IllegalArgumentException | IllegalAccessException todo changed
+        catch (Exception e)
         {
-            System.out.println("Product already exist");
+            response = new Response(e);
         }
-
+        return this.toJson(response);
     }
 
     /**
@@ -360,19 +398,19 @@ public class Market
      * @param product_id
      */
     //Requirement 2.4.1 - Delete
-
-    //maybe return the deleted product
-
-    public void delete_product_from_store(int product_id, int store_id) {
+    public String delete_product_from_store(int product_id, int store_id) {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.delete_product_from_store(user_email, product_id, store_id);
+            response = new Response<>(null, "Product deleted successfully");
         }
         catch (Exception e)
         {
-            System.out.println("amit");
+            response = new Response(e);
         }
+        return this.toJson(response);
     }
 
 
@@ -388,18 +426,19 @@ public class Market
      * throws IllegalArgumentException if user does not have permission to this operation
      */
     //Requirement 2.4.1 - Edit name
-
-
-    public void edit_product_name(int product_id, int store_id, String name)  {
+    public String edit_product_name(int product_id, int store_id, String name)  {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.edit_product_name(user_email, product_id, store_id, name);
+            response = new Response<>(null, "Product name edit successfully");
         }
         catch (Exception e)
         {
-
+            response = new Response(e);
         }
+        return this.toJson(response);
     }
 
     /**
@@ -413,16 +452,19 @@ public class Market
     //Requirement 2.4.1 - Edit Price
 
 
-    public void edit_product_price(int product_id, int store_id, double price)  {
+    public String edit_product_price(int product_id, int store_id, double price)  {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.edit_product_price(user_email, product_id, store_id, price);
+            response = new Response<>(null, "Product price edit successfully");
         }
         catch (Exception e)
         {
-
+            response = new Response(e);
         }
+        return this.toJson(response);
     }
 
     /**
@@ -436,16 +478,19 @@ public class Market
     //Requirement 2.4.1 - Edit category
 
 
-    public void edit_product_category(int product_id, int store_id, String category)  {
+    public String edit_product_category(int product_id, int store_id, String category)  {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.edit_product_category(user_email, product_id, store_id, category);
+            response = new Response<>(null, "Product category edit successfully");
         }
         catch (Exception e)
         {
-
+            response = new Response(e);
         }
+        return this.toJson(response);
     }
 
     /**
@@ -459,17 +504,19 @@ public class Market
     //Requirement 2.4.1 - Edit key words
 
 
-    public void edit_product_key_words(int product_id, int store_id, List<String> key_words)  {
+    public String edit_product_key_words(int product_id, int store_id, List<String> key_words)  {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.edit_product_key_words(user_email, product_id, store_id, key_words);
+            response = new Response<>(null, "Product key_words edit successfully");
         }
         catch (Exception e)
         {
-
+            response = new Response(e);
         }
-
+        return this.toJson(response);
     }
     //------------------------------------------------ edit product - End ----------------------------------------------
 
@@ -478,16 +525,23 @@ public class Market
 
 
     //Requirement 2.4.3
-
-
-    public void set_store_purchase_rules(int store_id)  {
-
+    public String set_store_purchase_rules(int store_id)  {
+        Response response = null;
+        try
+        {
+            //TODO: implement method
+            response = new Response<>(null, "Store purchase rules set successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
     }
 
 
 
     //Requirement 2.4.4
-
     /**
      *
      * @param user_email_to_appoint - the user to appoint
@@ -500,19 +554,19 @@ public class Market
      * @throws IllegalArgumentException User is already owner/founder
      *
      */
-// @TODO : have to check that there is at least one owner of each store
-
-    public void add_owner(String user_email_to_appoint, int store_id) {
+    public String add_owner(String user_email_to_appoint, int store_id) {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.add_owner(user_email, user_email_to_appoint, store_id);
+            response = new Response<>(null, "Owner added successfully");
         }
         catch (Exception e)
         {
-
+            response = new Response(e);
         }
-
+        return this.toJson(response);
     }
 
 
@@ -534,26 +588,50 @@ public class Market
      * @throws IllegalArgumentException User can not remove stuff member that is not appoint by him
      */
     //Requirement 2.4.5
-    public void delete_owner(String user_email_to_delete_appointment, int store_id) {
+    public String delete_owner(String user_email_to_delete_appointment, int store_id) {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.remove_owner(user_email, user_email_to_delete_appointment, store_id);
+            response = new Response<>(null, "Owner removed successfully");
         }
         catch (Exception e)
         {
-
+            response = new Response(e);
         }
+        return this.toJson(response);
     }
 
-    //Requirement 2.4.6
 
-    public int add_manager() {
-        return 0;
+    /**
+     *
+     * @param user_email_to_appoint
+     * @param store_id
+     * @throws IllegalArgumentException if the user is a guest
+     * @throws IllegalArgumentException if the store doesn't exist
+     * @throws IllegalArgumentException if the store is not active
+     * @throws IllegalArgumentException User is not stuff member of this store
+     * @throws IllegalArgumentException User is not owner of this store
+     * @throws IllegalArgumentException User is already stuff member of this store
+     */
+    //Requirement 2.4.6
+    public String add_manager(String user_email_to_appoint, int store_id) {
+        Response response = null;
+        try
+        {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            this.store_controller.add_manager(user_email, user_email_to_appoint, store_id);
+            response = new Response<>(null, "Manager added successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
     }
 
     //Requirement 2.4.7
-
     /**
      *
      * @param manager_email - the user we want to change his permission
@@ -564,31 +642,53 @@ public class Market
      * @throws IllegalArgumentException if the manager doesnt appointed by user
      * @throws IllegalArgumentException user cant change himself permissions
      */
-
-
-    public void edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions) {
+    public String edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions) {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.edit_manager_specific_permissions(user_email, manager_email, store_id, permissions);
+            response = new Response<>(null, "Manager permission edit successfully");
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            response = new Response(e);
         }
-
+        return this.toJson(response);
     }
 
 
+    /**
+     *
+     * @param user_email_to_delete_appointment email of user manager to remove
+     * @param store_id id of the store
+     * @throws IllegalArgumentException if the user is a guest
+     * @throws IllegalArgumentException if the store doesn't exist
+     * @throws IllegalArgumentException if the store is not active
+     * @throws IllegalArgumentException Can not removed this owner - store must have at least one owner
+     * @throws IllegalArgumentException User is not stuff member of this store
+     * @throws IllegalArgumentException User is not owner of this store
+     * @throws IllegalArgumentException User to be removed is not stuff member of this store
+     * @throws IllegalArgumentException User to be removed is not manager
+     * @throws IllegalArgumentException User can not remove stuff member that is not appoint by him
+     */
     //Requirement 2.4.8
-
-
-    public int delete_manager() {
-        return 0;
+    public String delete_manager(String user_email_to_delete_appointment, int store_id) {
+        Response response = null;
+        try
+        {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            this.store_controller.remove_manager(user_email, user_email_to_delete_appointment, store_id);
+            response = new Response<>(null, "Manager removed successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
     }
 
     //Requirement 2.4.9
-
     /**
      *
      * @param store_id
@@ -596,22 +696,22 @@ public class Market
      * @throws IllegalAccessException if the user hasn't permission for close store
      * @throws IllegalArgumentException if the store is already close
      */
-
-
-    public void close_store_temporarily(int store_id) {
+    public String close_store_temporarily(int store_id) {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.close_store_temporarily(user_email, store_id);
+            response = new Response<>(null, "Store closed temporarily");
         }
         catch (Exception e)
         {
-            System.out.println("as");
+            response = new Response(e);
         }
+        return this.toJson(response);
     }
 
     //Requirement 2.4.10
-
     /**
      *
      * @param store_id
@@ -619,22 +719,22 @@ public class Market
      * @throws IllegalAccessException if the user hasn't permission for open store
      * @throws IllegalArgumentException if the store is already open
      */
-
-
-    public void open_close_store(int store_id) {
+    public String open_close_store(int store_id) {
+        Response response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.open_close_store(user_email, store_id);
+            response = new Response<>(null, "Store reopen successfully");
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            response = new Response(e);
         }
+        return this.toJson(response);
     }
 
     //Requirement 2.4.11
-
     /**
      *
      * @param store_id
@@ -644,23 +744,21 @@ public class Market
      * @throws IllegalAccessException if the user hasn't permission for view store managment information
      *
      */
-
-
     public String view_store_management_information(int store_id) {
-        String answer;
+        Response<String> response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
-            answer = this.store_controller.view_store_management_information(user_email, store_id);
+            String answer = this.store_controller.view_store_management_information(user_email, store_id);
+            response = new Response<>(answer, "Store information received successfully");
         }
         catch (Exception e)
         {
-            return e.getMessage();
+            response = new Response(e);
         }
-        return answer;
+        return this.toJson(response);
     }
 
-    //Requirement 2.4.12 - View
 
     /**
      *
@@ -671,26 +769,23 @@ public class Market
      * @return all the questions
      */
 
-
+    //Requirement 2.4.12 - View
     public String view_store_questions(int store_id) {
-        String answer;
+        Response<List<String>> response = null;
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             List<String> store_questions = this.store_controller.view_store_questions(user_email, store_id);
-            // @TODO : implement builder -> List of questions to string
-            answer = store_questions.toString();
+            response = new Response<>(store_questions, "Store questions received successfully");
         }
         catch (Exception e)
         {
-            return e.getMessage();
+            response = new Response(e);
         }
-        return answer;
+        return this.toJson(response);
     }
 
     //Requirement 2.2.3 - Add
-
-
     public void add_product_to_cart(int storeID, int productID, int quantity) {
         Product p = null;
         Basket storeBasket = null;
@@ -786,7 +881,22 @@ public class Market
 
 
     public String get_user_last_name() throws Exception { //todo handle exception in try catch
-        return this.user_controller.get_user_last_name(loggedUser);
+
+        Response response = null;
+        try
+        {
+            String last_name = this.user_controller.get_user_last_name(loggedUser);
+            response = new Response<>(last_name, "Last name received successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+
+        }
+        return this.toJson(response);
+
+
+
     }
 }
 /*
