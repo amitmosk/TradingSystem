@@ -1,11 +1,9 @@
 package Domain.StoreModule;
 
+import Domain.UserModule.Cart;
 import Domain.Utils.Utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class StoreController {
     private HashMap<Integer, Store> stores;
@@ -287,7 +285,7 @@ public class StoreController {
     //------------------------------------------------ edit product - End ----------------------------------------------
 
     public double check_cart_available_products_and_calc_price(Cart cart) {
-        HashMap<Integer, Basket> baskets_of_storesID = cart.get_baskets();
+        Map<Integer, Basket> baskets_of_storesID = cart.getBaskets();
         double cart_price=0;
         for (Basket basket : baskets_of_storesID.values()){
 
@@ -318,7 +316,7 @@ public class StoreController {
     }
 
     public void update_stores_inventory(Cart cart) {
-        HashMap<Integer, Basket> baskets_of_storesID = cart.get_baskets();
+        Map<Integer, Basket> baskets_of_storesID = cart.getBaskets();
         for (Basket basket : baskets_of_storesID.values())
         {
             int store_id = basket.getStore_id();
