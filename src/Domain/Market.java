@@ -5,6 +5,8 @@ import java.util.List;
 
 import Domain.UserModule.*;
 import Domain.StoreModule.*;
+import com.google.gson.Gson;
+
 import java.util.Map;
 
 // TODO: before get store check that the store is open
@@ -22,62 +24,88 @@ import java.util.Map;
 // TODO: the controllers returns Response
 // TODO: the market returns Response.toString()
 
-public class Market implements IMarket {
+public class Market
+{
     private UserController user_controller;
     private StoreController store_controller;
     private int loggedUser;                  //id or email
     private boolean isGuest;                 //represents the state
 
 
+    public Market()
+    {
+        this.init_market();
+    }
+
+
+    private String toJson(Response r)
+    {
+        return new Gson().toJson(r);
+    }
+
     //Requirement 1.1
-    @Override
-    public void init_market() {
+    public String init_market() {
         this.isGuest = true;
         this.user_controller = UserController.getInstance();
         this.store_controller = StoreController.get_instance();
         this.loggedUser = -1;
 
+
         //Tom
         //connect to payment service
         //connect to supply service
         // load
+        return "";
     }
     
     //Requirement 1.3
-    @Override
-    public boolean payment(int price) {
+    public String payment(int price) {
         //Tom
-        return true;
+        return "";
     }
+
     //Requirement 1.4
-
-    @Override
-    public boolean supply(int user_id, int purchase_id) {
+    public String supply(int user_id, int purchase_id) {
         //Tom
-        return true;
+        return "";
 
     }
-    //Requirement 2.1.1
 
-    @Override
-    public int guest_login() {
-        int logged = user_controller.guest_login();
-        this.loggedUser = logged;
-        return logged;
+    //Requirement 2.1.1
+    public String guest_login() {
+        try
+        {
+            int logged = user_controller.guest_login();
+            this.loggedUser = logged;
+        }
+        catch (Exception e)
+        {
+            Response error_response = new Response(e);
+            return this.toJson(error_response);
+        }
+
+        Response response = new Response<>(null, "Hey guest, Welcome to the trading system market!");
+        return this.toJson(response);
     }
 
     //Requirement 2.1.4
+    public String login(String Email, String password) {
+        Response response = null;
+        try
+        {
+            boolean logRes = user_controller.login(loggedUser, Email, password);
+            String user_name = this.user_controller.get_user_name(loggedUser) +" "+ this.user_controller.get_user_last_name(loggedUser);
+            response = new Response<>(null, "Hey +"+user_name+", Welcome to the trading system market!");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
 
-    @Override
-    public double login(String Email, String password) {
-        boolean logRes = user_controller.login(loggedUser, Email, password);
-        if(logRes) isGuest = false;
-        return 1;
+        }
+        return this.toJson(response);
     }
 
     //Requirement 2.1.2 & 2.3.1
-
-    @Override
     public void logout() {
         if(isGuest) return; //todo throw error
         this.isGuest = true;
@@ -86,8 +114,6 @@ public class Market implements IMarket {
 
 
     //Requirement 2.1.3
-
-    @Override
     public double register(String Email, String pw, String name, String lastName) throws IllegalAccessException {
         if(!isGuest) return 1; //todo throw error
         user_controller.register(loggedUser,Email,pw,name,lastName);
@@ -102,8 +128,6 @@ public class Market implements IMarket {
      * @throws IllegalArgumentException if store does not exist
      * @throws IllegalArgumentException if store isn't active
      */
-
-    @Override
     public String find_store_information(int store_id) {
         String info="";
         try
@@ -128,7 +152,7 @@ public class Market implements IMarket {
      * @throws IllegalArgumentException if store isn't active
      */
 
-    @Override
+
     public String find_product_information(int product_id, int store_id) {
         String info = "";
         try
@@ -150,7 +174,7 @@ public class Market implements IMarket {
      */
     //Requirement 2.2.2 - Name
 
-    @Override
+
     public List<Product> find_products_by_name(String product_name)
     {
         return this.store_controller.find_products_by_name(product_name);
@@ -163,7 +187,7 @@ public class Market implements IMarket {
      */
     //Requirement 2.2.2 - Category
 
-    @Override
+
     public List<Product> find_products_by_category(String category)
     {
         return this.store_controller.find_products_by_category(category);
@@ -176,7 +200,7 @@ public class Market implements IMarket {
      */
     //Requirement 2.2.2 - Key_words
 
-    @Override
+
     public List<Product> find_products_by_keywords(String key_words)
     {
         return this.store_controller.find_products_by_key_words(key_words);
@@ -192,7 +216,7 @@ public class Market implements IMarket {
      */
     //Requirement 2.3.2
 
-    @Override
+
     public void open_store(String store_name) {
         try
         {
@@ -217,7 +241,7 @@ public class Market implements IMarket {
      */
     //Requirement 2.3.3
 
-    @Override
+
     public void add_review(int product_id, int store_id, String review)  {
         // @TODO GAL : throws if user isn't a buyer
         try
@@ -244,7 +268,7 @@ public class Market implements IMarket {
      * @throws if the user is a guest
      */
 
-    @Override
+
     public void rate_product(int product_id, int store_id, int rate) {
         try
         {
@@ -261,7 +285,7 @@ public class Market implements IMarket {
 
     //Requirement 2.3.4 - Store
 
-    @Override
+
     public void rate_store(int store_id, int rate) {
         // @TODO GAL : throws if user isnt a buyer
         try
@@ -289,7 +313,7 @@ public class Market implements IMarket {
      */
 
     // @TODO : AMIT implement
-    @Override
+
     public void send_question_to_store(int store_id, String question) {
         try
         {
@@ -317,7 +341,7 @@ public class Market implements IMarket {
      * @throws if there is no permission for the user
      */
 
-    @Override
+
     public void add_product_to_store(int store_id, int quantity,
                                      String name, double price, String category, List<String> key_words) {
         try {
@@ -338,7 +362,7 @@ public class Market implements IMarket {
     //Requirement 2.4.1 - Delete
 
     //maybe return the deleted product
-    @Override
+
     public void delete_product_from_store(int product_id, int store_id) {
         try
         {
@@ -365,7 +389,7 @@ public class Market implements IMarket {
      */
     //Requirement 2.4.1 - Edit name
 
-    @Override
+
     public void edit_product_name(int product_id, int store_id, String name)  {
         try
         {
@@ -388,7 +412,7 @@ public class Market implements IMarket {
      */
     //Requirement 2.4.1 - Edit Price
 
-    @Override
+
     public void edit_product_price(int product_id, int store_id, double price)  {
         try
         {
@@ -411,7 +435,7 @@ public class Market implements IMarket {
      */
     //Requirement 2.4.1 - Edit category
 
-    @Override
+
     public void edit_product_category(int product_id, int store_id, String category)  {
         try
         {
@@ -434,7 +458,7 @@ public class Market implements IMarket {
      */
     //Requirement 2.4.1 - Edit key words
 
-    @Override
+
     public void edit_product_key_words(int product_id, int store_id, List<String> key_words)  {
         try
         {
@@ -455,7 +479,7 @@ public class Market implements IMarket {
 
     //Requirement 2.4.3
 
-    @Override
+
     public void set_store_purchase_rules(int store_id)  {
 
     }
@@ -468,14 +492,17 @@ public class Market implements IMarket {
      *
      * @param user_email_to_appoint - the user to appoint
      * @param store_id - the relevant store for the appointment
-     * @throws if the store doesn't exist
-     * @throws if the appointer has no permission
-     * TODO : @throws if we cant appoint the user (already manager or something like that)
+     * @throws IllegalArgumentException if the user is a guest
+     * @throws IllegalArgumentException if the store doesn't exist
+     * @throws IllegalArgumentException if the store is not active
+     * @throws IllegalArgumentException User is not stuff member of this store
+     * @throws IllegalArgumentException User is not owner of this store
+     * @throws IllegalArgumentException User is already owner/founder
+     *
      */
 // @TODO : have to check that there is at least one owner of each store
-    @Override
+
     public void add_owner(String user_email_to_appoint, int store_id) {
-        // this.user_id - the connected user who ask to appoint some user.
         try
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
@@ -487,15 +514,40 @@ public class Market implements IMarket {
         }
 
     }
-    //Requirement 2.4.5
 
-    @Override
-    public int delete_owner() {
-        return 0;
+
+
+
+
+    /**
+     *
+     * @param user_email_to_delete_appointment the email of the user to be remove his appointment
+     * @param store_id the id of the store to removed the appoitment from
+     * @throws IllegalArgumentException if the user is a guest
+     * @throws IllegalArgumentException if the store doesn't exist
+     * @throws IllegalArgumentException if the store is not active
+     * @throws IllegalArgumentException Can not removed this owner - store must have at least one owner
+     * @throws IllegalArgumentException User is not stuff member of this store
+     * @throws IllegalArgumentException User is not owner of this store
+     * @throws IllegalArgumentException User to be removed is not stuff member of this store
+     * @throws IllegalArgumentException User to be removed is not owner/founder
+     * @throws IllegalArgumentException User can not remove stuff member that is not appoint by him
+     */
+    //Requirement 2.4.5
+    public void delete_owner(String user_email_to_delete_appointment, int store_id) {
+        try
+        {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            this.store_controller.remove_owner(user_email, user_email_to_delete_appointment, store_id);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
+
     //Requirement 2.4.6
 
-    @Override
     public int add_manager() {
         return 0;
     }
@@ -513,7 +565,7 @@ public class Market implements IMarket {
      * @throws IllegalArgumentException user cant change himself permissions
      */
 
-    @Override
+
     public void edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions) {
         try
         {
@@ -530,7 +582,7 @@ public class Market implements IMarket {
 
     //Requirement 2.4.8
 
-    @Override
+
     public int delete_manager() {
         return 0;
     }
@@ -545,7 +597,7 @@ public class Market implements IMarket {
      * @throws IllegalArgumentException if the store is already close
      */
 
-    @Override
+
     public void close_store_temporarily(int store_id) {
         try
         {
@@ -568,7 +620,7 @@ public class Market implements IMarket {
      * @throws IllegalArgumentException if the store is already open
      */
 
-    @Override
+
     public void open_close_store(int store_id) {
         try
         {
@@ -593,7 +645,7 @@ public class Market implements IMarket {
      *
      */
 
-    @Override
+
     public String view_store_management_information(int store_id) {
         String answer;
         try
@@ -619,7 +671,7 @@ public class Market implements IMarket {
      * @return all the questions
      */
 
-    @Override
+
     public String view_store_questions(int store_id) {
         String answer;
         try
@@ -638,7 +690,7 @@ public class Market implements IMarket {
 
     //Requirement 2.2.3 - Add
 
-    @Override
+
     public void add_product_to_cart(int storeID, int productID, int quantity) {
         Product p = null;
         Basket storeBasket = null;
@@ -653,27 +705,27 @@ public class Market implements IMarket {
         }
     }
 
-    @Override
+    //Requirement 2.2.4
     public void edit_product_quantity_in_cart(int storeID, int productID, int quantity) {
         Product p = null;
         Basket storeBasket = null;
         try{
             storeBasket = user_controller.getBasketByStoreID(loggedUser,storeID);
-//             p = sc.checkAvailabilityAndGet(storeID,productID,quantity);
-//             basket.changeQuantity(p,quantity);
+        // p = sc.checkAvailabilityAndGet(storeID,productID,quantity);
+        // basket.changeQuantity(p,quantity);
         }
         catch (Exception e){
 
         }
     }
 
-    @Override
+    //Requirement 2.2.3 - Remove
     public void remove_product_from_cart(int storeID, int productID) {
         Product p = null;
         Basket storeBasket = null;
         try{
             storeBasket = user_controller.getBasketByStoreID(loggedUser,storeID);
-//             basket.removeProduct(p);
+            //basket.removeProduct(p);
             user_controller.removeBasketIfNeeded(loggedUser, storeID, storeBasket);
         }
         catch (Exception e){
@@ -681,7 +733,8 @@ public class Market implements IMarket {
         }
     }
 
-    @Override
+
+    //Requirement 2.2.4
     public Map<Integer,Basket> view_user_cart() {
         return user_controller.getBaskets(loggedUser);
     }
@@ -689,7 +742,7 @@ public class Market implements IMarket {
 
     //Requirement 2.2.5
 
-    @Override
+
     public int buy_cart() {
         // get information about the payment & supply
         Cart cart = this.user_controller.getCart(this.loggedUser);
@@ -705,84 +758,49 @@ public class Market implements IMarket {
     }
 
 
-    @Override
+    //Requirement 2.3.6
     public double send_complain() {
         //todo implement request handler
         return 0;
     }
 
-    @Override
+    //Requirement 2.3.7
     public UserHistory view_user_purchase_history() throws Exception { //todo remove throws and catch exception
         return user_controller.view_user_purchase_history(loggedUser);
     }
 
-    @Override
+    //Requirement 2.3.8 - View
     public double view_account_details() {
         return 0;
     }
 
-    @Override
+
     public String get_user_email() throws Exception{ //todo handle exception
         return this.user_controller.get_email(loggedUser);
     }
 
-    @Override
+
     public String get_user_name() throws Exception { //todo handle exception in try catch
         return this.user_controller.get_user_name(loggedUser);
     }
 
-    @Override
+
     public String get_user_last_name() throws Exception { //todo handle exception in try catch
         return this.user_controller.get_user_last_name(loggedUser);
     }
 }
 /*
-    //Requirement 2.3.6
 
-    public double send_complain() {
-        return 0;
-    }
 
-    //Requirement 2.3.7
 
-    public double view_user_purchase_history() {
-        return 0;
-    }
 
-    //Requirement 2.3.8 - View
 
-    public double view_account_details() {
-        return 0;
-    }
-
-    //Requirement 2.3.8 - Edit
-
-    public double edit_account_details() {
-        return 0;
-    }
 
     //Requirement 2.3.9 - Personal question
-
     public double add_security_personal_question() {
         return 0;
     }
 
-        //Requirement 2.2.3 - Remove
 
-    public double delete_product_from_cart() {
-        return 0;
-    }
-
-    //Requirement 2.2.4
-
-    public double view_user_cart() {
-        return 0;
-    }
-
-    //Requirement 2.2.4
-
-    public double change_product_quantity_in_cart() {
-        return 0;
-    }
 
 */
