@@ -107,7 +107,7 @@ public class StoreController {
      * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return an object with store's questions.
      */
-    public String view_store_questions(String user_email, int store_id) throws IllegalAccessException {
+    public List<String> view_store_questions(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         return store.view_store_questions(user_email);
         // TODO: 22/04/2022 : write to logger
@@ -349,8 +349,8 @@ public class StoreController {
     }
 
     public void rate_product(String user_email, int product_id, int store_id, int rate) {
-        Store s = this.get_store_by_store_id(store_id); //throws
-        s.add_product_rating(user_email, product_id, rate);
+        Store store = this.get_store_by_store_id(store_id); //throws
+        store.add_product_rating(user_email, product_id, rate);
     }
 
     public void rate_store(String user_email, int store_id, int rate) {
@@ -361,8 +361,13 @@ public class StoreController {
 
     public void add_owner(String user_email, String user_email_to_appiont, int store_id)
     {
-        Store s = this.get_store_by_store_id(store_id);//throws
-        s.add_owner(user_email, user_email_to_appiont);
+        Store store = this.get_store_by_store_id(store_id);//throws
+        store.add_owner(user_email, user_email_to_appiont);
+    }
+
+    public void add_question(String user_email, int store_id, String question) {
+        Store store = this.get_store_by_store_id(store_id);
+        store.add_question(user_email, question);
     }
 }
 

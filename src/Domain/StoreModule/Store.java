@@ -36,6 +36,22 @@ public class Store {
         this.storeReview = new StoreReview();
         this.purchases_history = new StorePurchaseHistory();
     }
+
+
+    private int getInc_product_id() {
+        return this.product_ids_counter++;
+    }
+
+    private int getInc_question_id() {
+        return this.question_ids_counter++;
+    }
+
+
+
+
+
+    // -- methods
+
     public void add_review(String user_email, String review) {
         this.storeReview.add_review(user_email, review);
     }
@@ -47,7 +63,7 @@ public class Store {
         p.add_rating(user_email, rate);
     }
 
-    // -- methods
+
     public void close_store_temporarily(String user_email) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.close_store_temporarily);
         this.active = false;
@@ -90,15 +106,26 @@ public class Store {
     }
 
 
-    public String view_store_questions(String user_email) throws IllegalAccessException {
+    public List<String> view_store_questions(String user_email) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.view_users_questions);
-        return this.view_questions(this.users_questions);
+        List<String> questionsList_to_return = new LinkedList<String>();
+        for (Question question : this.users_questions.values())
+        {
+            String temp = question.toString();
+            questionsList_to_return.add(temp);
+        }
+        return questionsList_to_return;
     }
 
-    private String view_questions(HashMap<Integer, Question> users_questions) {
-        //@TODO: string builder questions
-        return "";
+
+
+    public void add_question(String user_email, String question_message) {
+        int question_id = this.getInc_question_id();
+        Question question_to_add = new Question(question_id, this.store_id, user_email, question_message);
+        this.users_questions.put(question_id, question_to_add);
     }
+
+
 
     public void answer_question(String user_email, int question_id, String answer) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.view_users_questions);
@@ -360,9 +387,6 @@ public class Store {
 
 
 
-    private int getInc_product_id() {
-        return this.product_ids_counter++;
-    }
 
     public void add_owner(String user_email, String user_email_to_appoint) {
         if(!this.stuff_emails_and_appointments.containsKey(user_email))
@@ -373,6 +397,7 @@ public class Store {
         {
             throw new IllegalArgumentException("User is not owner of this store");
         }
+        // @TODO : check that the user_to_appoint isnot already a manager/owner/founder
         Appointment appointment = new Appointment(user_email, user_email_to_appoint, this.store_id, StoreManagerType.store_owner);
         this.stuff_emails_and_appointments.put(user_email, appointment);
     }
