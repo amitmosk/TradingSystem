@@ -397,7 +397,7 @@ public class Store {
         {
             throw new IllegalArgumentException("User is not owner of this store");
         }
-        if (this.stuff_emails_and_appointments.get(user_email_to_appoint).is_owner())
+        if (this.stuff_emails_and_appointments.get(user_email_to_appoint).is_owner() || this.stuff_emails_and_appointments.get(user_email_to_appoint).is_founder())
         {
             throw new IllegalArgumentException("User is already owner/founder");
 
@@ -405,8 +405,23 @@ public class Store {
         Appointment appointment = new Appointment(user_email, user_email_to_appoint, this.store_id, StoreManagerType.store_owner);
         this.stuff_emails_and_appointments.put(user_email, appointment);
     }
-
-    public void remove_owner(String user_email, String user_email_to_delete_appointment) {
+    public void add_manager(String user_email, String user_email_to_appoint) {
+        if(!this.stuff_emails_and_appointments.containsKey(user_email))
+        {
+            throw new IllegalArgumentException("User is not stuff member of this store");
+        }
+        if (!this.stuff_emails_and_appointments.get(user_email).is_owner())
+        {
+            throw new IllegalArgumentException("User is not owner of this store");
+        }
+        if (this.stuff_emails_and_appointments.get(user_email_to_appoint).is_manager())
+        {
+            throw new IllegalArgumentException("User is already stuff member of this store");
+        }
+        Appointment appointment = new Appointment(user_email, user_email_to_appoint, this.store_id, StoreManagerType.store_manager);
+        this.stuff_emails_and_appointments.put(user_email, appointment);
+    }
+    public void remove_manager(String user_email, String user_email_to_delete_appointment) {
         if (this.get_number_of_owners() <= 1)
         {
             throw new IllegalArgumentException("Can not removed this owner - store must have at least one owner");
@@ -434,12 +449,36 @@ public class Store {
         }
     }
 
+    public void remove_owner(String user_email, String user_email_to_delete_appointment) {
+        if(!this.stuff_emails_and_appointments.containsKey(user_email))
+        {
+            throw new IllegalArgumentException("User is not stuff member of this store");
+        }
+        if (!this.stuff_emails_and_appointments.get(user_email).is_owner() || !this.stuff_emails_and_appointments.get(user_email).is_owner())
+        {
+            throw new IllegalArgumentException("User is not owner/founder of this store");
+        }
+        if (!this.stuff_emails_and_appointments.containsKey(user_email_to_delete_appointment))
+        {
+            throw new IllegalArgumentException("User to be removed is not stuff member of this store");
+        }
+        if (!this.stuff_emails_and_appointments.get(user_email_to_delete_appointment).is_manager())
+        {
+            throw new IllegalArgumentException("User to be removed is not manager");
+        }
+        Appointment appointment = this.stuff_emails_and_appointments.get(user_email_to_delete_appointment);
+        if (!appointment.getAppointer_email().equals(user_email))
+        {
+            throw new IllegalArgumentException("User can not remove stuff member that is not appoint by him");
+        }
+    }
+
     private int get_number_of_owners()
     {
         int num = 0;
         for (Appointment appointment:this.stuff_emails_and_appointments.values())
         {
-            if (appointment.is_owner()) {
+            if (appointment.is_owner() || appointment.is_founder()) {
                 num++;
             }
         }

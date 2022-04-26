@@ -93,7 +93,7 @@ public class StoreController {
     public String view_store_management_information(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         return store.view_store_management_information(user_email);
-        // TODO: 22/04/2022 : write to logger
+        // TODO: write to logger
 
     }
 
@@ -183,9 +183,9 @@ public class StoreController {
      * @return store information
      * @throws if the store not exist
      */
-    public String find_store_information(int store_id) throws IllegalArgumentException {
+    public Store find_store_information(int store_id) throws IllegalArgumentException {
         Store store = this.get_store_by_store_id(store_id);
-        return store.toString();
+        return store;
     }
 
     /**
@@ -288,11 +288,9 @@ public class StoreController {
         Map<Integer, Basket> baskets_of_storesID = cart.getBaskets();
         double cart_price=0;
         for (Basket basket : baskets_of_storesID.values()){
-
             int store_id = basket.getStore_id();
             if(stores.containsKey(store_id))
             {
-
                 double basket_price = stores.get(store_id).check_available_products_and_calc_price(basket); // throw if not available
                 cart_price += basket_price;
             }
@@ -357,11 +355,20 @@ public class StoreController {
 
     }
 
-    public void add_owner(String user_email, String user_email_to_appiont, int store_id)
+    public void add_owner(String user_email, String user_email_to_appoint, int store_id)
     {
         Store store = this.get_store_by_store_id(store_id);//throws
-        store.add_owner(user_email, user_email_to_appiont);
+        store.add_owner(user_email, user_email_to_appoint);
     }
+    public void add_manager(String user_email, String user_email_to_appoint, int store_id) {
+        Store store = this.get_store_by_store_id(store_id);//throws
+        store.add_manager(user_email, user_email_to_appoint);
+    }
+    public void remove_manager(String user_email, String user_email_to_delete_appointment, int store_id) {
+        Store store = this.get_store_by_store_id(store_id);//throws
+        store.remove_manager(user_email, user_email_to_delete_appointment);
+    }
+
     public void remove_owner(String user_email, String user_email_to_delete_appointment, int store_id) {
         Store store = this.get_store_by_store_id(store_id);//throws
         store.remove_owner(user_email, user_email_to_delete_appointment);

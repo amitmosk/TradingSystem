@@ -129,11 +129,35 @@ public class Appointment {
     public boolean is_owner() {
         switch (this.type){
             case store_founder:
-                return true;
+                return false;
             case store_owner:
                 return true;
             case store_manager:
                 return false;
+        }
+        throw new IllegalArgumentException("Not suppose to happen");
+    }
+
+    public boolean is_founder() {
+        switch (this.type){
+            case store_founder:
+                return true;
+            case store_owner:
+                return false;
+            case store_manager:
+                return false;
+        }
+        throw new IllegalArgumentException("Not suppose to happen");
+    }
+
+    public boolean is_manager() {
+        switch (this.type){
+            case store_founder:
+                return false;
+            case store_owner:
+                return false;
+            case store_manager:
+                return true;
         }
         throw new IllegalArgumentException("Not suppose to happen");
     }

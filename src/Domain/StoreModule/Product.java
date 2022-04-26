@@ -28,21 +28,6 @@ public class Product {
     }
 
 
-    @Override
-    public String toString() {
-        String store_name = "----";
-        StringBuilder info = new StringBuilder();
-        info.append("Product: "+ this.name+"\n");
-        info.append("\tStore:  "+ store_name+"\n");
-        info.append("\tPrice: "+ this.price+"\n");
-        info.append("\tProduct Review: "+ this.productReview+"\n");
-        info.append("\tCategory: "+ this.category+"\n");
-        info.append("\tKey words: "+ this.key_words+"\n");
-
-        return info.toString();
-
-    }
-
 
 //---------------------------------------------------------------------- Getters - Start ------------------------------------------------------------------------------------
 
