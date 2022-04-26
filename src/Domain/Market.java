@@ -1,37 +1,40 @@
 package Domain;
 
-import Domain.StoreModule.*;
-import Service.iService;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import Domain.UserModule.*;
+import Domain.StoreModule.*;
+import Service.iService;
 
-public class Market  {
+import java.util.Map;
+// TODO: before get store check that the store is open
+// TODO: all the Controllers ids counters -> AtomicIntegers - getInc
+//TODO: put check validity methods in all set methods
+//TODO: add error logger - before any exceptions
+//TODO: add logger for all updates in the market
+//TODO: change all exceptions messages to Client messages
+//TODO: view_management_information - string builder information : store
+// TODO : string builder in storePurchase history
+// TODO : string builder in userPurchase history
+//TODO: implement storePurchase history and userPurchase history
+//TODO: manage Admin permission function
+//TODO: toString in Response
+//TODO: the controllers returns Response
+//TODO: the market returns Response.toString()
+public class Market //implements IMarket{
+{
+    private UserController uc;
     private StoreController store_controller;
+    private int loggedUser;                  //id or email
+    private boolean isGuest;                 //represents the state
+    private int user_id;
 
-    public Market() {
-        this.store_controller = StoreController.get_instance();
-    }
-
-    // TODO: before get store check that the store is open
-    // TODO: all the Controllers ids counters -> AtomicIntegers - getInc
-    //TODO: put check validity methods in all set methods
-    //TODO: add error logger - before any exceptions
-    //TODO: add logger for all updates in the market
-    //TODO: change all exceptions messages to Client messages
-    //TODO: view_management_information - string builder information : store
-    // TODO : string builder in storePurchase history
-    // TODO : string builder in userPurchase history
-    //TODO: implement storePurchase history and userPurchase history
-    //TODO: manage Admin permission function
-    //TODO: toString in Response
-    //TODO: the controllers returns Response
-    //TODO: the market returns Response.toString()
     // @Override
-
     //Requirement 1.1
     public void init_market() {
+        this.isGuest = true;
         //Tom
         //connect to payment service
         //connect to supply service
@@ -52,30 +55,38 @@ public class Market  {
     }
     //Requirement 2.1.1
     // @Override
-    public double guest_login() {
-        return 0;
-    }
-
-
-    //Requirement 2.1.2 & 2.3.1
-    // @Override
-    public double logout() {
-        return 0;
-    }
-    //Requirement 2.1.3
-    // @Override
-    public double register() {
-        return 0;
+    public int guest_login() {
+        int logged = uc.guest_login();
+        this.loggedUser = logged;
+        return logged;
     }
 
     //Requirement 2.1.4
     // @Override
-    public double login(String username, String password) {
-        return 0;
+    public double login(String Email, String password) {
+        boolean logRes = uc.login(loggedUser, Email, password);
+        if(logRes) isGuest = false;
+        return 1;
+    }
+
+    //Requirement 2.1.2 & 2.3.1
+    // @Override
+    public void logout() {
+        if(isGuest) return; //todo throw error
+        this.isGuest = true;
+        this.loggedUser = -1;
+    }
+
+
+    //Requirement 2.1.3
+    // @Override
+    public double register(String Email, String pw, String name, String lastName) throws IllegalAccessException {
+        if(!isGuest) return 1; //todo throw error
+        uc.register(loggedUser,Email,pw,name,lastName);
+        return 1;
     }
 
     //Requirement 2.2.1 - Store
-
     /**
      *
      * @param store_id
@@ -99,7 +110,6 @@ public class Market  {
     }
 
     //Requirement 2.2.1 - Product
-
     /**
      *
      * @param product_id
@@ -160,40 +170,19 @@ public class Market  {
     }
     //------------------------------------------------find product by - End ----------------------------------------------------
 
-    //Requirement 2.2.3 - Add
-    // @Override
-    public double add_product_to_cart() {
-        return 0;
-    }
-    //Requirement 2.2.3 - Remove
-    // @Override
-    public double delete_product_from_cart() {
-        return 0;
-    }
 
-    //Requirement 2.2.4
-    // @Override
-    public double view_user_cart() {
-        return 0;
-    }
-
-    //Requirement 2.2.4
-    // @Override
-    public double change_product_quantity_in_cart() {
-        return 0;
-    }
 
     //Requirement 2.2.5
     // @Override
     public int buy_cart() {
         // get information about the payment & supply
-        Cart cart = this.user_controller.get_cart(this.user_id);
+        Cart cart = this.uc.get_cart(this.user_id);
         double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
         this.payment(total_price, paymentInfo);
         this.supply(supplyInfo);
         // success
         // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
-        int purchase_id = this.user_controller.clear_cart(this.user_id);
+        int purchase_id = this.uc.clear_cart(this.user_id);
         this.store_controller.update_stores_inventory(cart, purchase_id);
         // failed
         return 0;
@@ -212,7 +201,7 @@ public class Market  {
         try
         {
             // @TODO: GAL get_email throws if the user is a guest
-            String email = this.user_controller.get_email(this.user_id);
+            String email = this.uc.get_email(this.user_id);
             // @TODO: AMIT change user id to email
             this.store_controller.open_store(email, store_name);
         }
@@ -236,8 +225,8 @@ public class Market  {
         // @TODO GAL : throws if user isn't a buyer
         try
         {
-            this.user_controller.check_if_user_buy_this_product(this.user_id, product_id, store_id);
-            String user_email = this.user_controller.get_email(this.user_id);
+            this.uc.check_if_user_buy_this_product(this.user_id, product_id, store_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.add_review(user_email, product_id, store_id, review);
         }
         catch (Exception e)
@@ -261,8 +250,8 @@ public class Market  {
     public void rate_product(int product_id, int store_id, int rate) {
         try
         {
-            this.user_controller.check_if_user_buy_this_product(this.user_id, product_id, store_id);
-            String user_email = this.user_controller.get_email(this.user_id);
+            this.uc.check_if_user_buy_this_product(this.user_id, product_id, store_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.rate_product(user_email, product_id, store_id, rate);
         }
         catch (Exception e)
@@ -278,8 +267,8 @@ public class Market  {
         // @TODO GAL : throws if user isnt a buyer
         try
         {
-            this.user_controller.check_if_user_buy_from_this_store(this.user_id, store_id);
-            String user_email = this.user_controller.get_email(this.user_id);
+            this.uc.check_if_user_buy_from_this_store(this.user_id, store_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.rate_store(user_email, store_id, rate);
         }
         catch (Exception e)
@@ -304,7 +293,7 @@ public class Market  {
     public void send_question_to_store(int store_id, String question) {
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.add_question(user_email, store_id, question);
         }
         catch (Exception e)
@@ -313,41 +302,6 @@ public class Market  {
         }
 
     }
-
-    //Requirement 2.3.6
-    // @Override
-    public double send_complain() {
-        return 0;
-    }
-
-    //Requirement 2.3.7
-    // @Override
-    public double view_user_purchase_history() {
-        return 0;
-    }
-
-    //Requirement 2.3.8 - View
-    // @Override
-    public double view_account_details() {
-        return 0;
-    }
-
-    //Requirement 2.3.8 - Edit
-    // @Override
-    public double edit_account_details() {
-        return 0;
-    }
-
-    //Requirement 2.3.9 - Personal question
-    // @Override
-    public double add_security_personal_question() {
-        return 0;
-    }
-
-
-
-
-
 
     //Requirement 2.4.1 - Add
 
@@ -366,7 +320,7 @@ public class Market  {
     public void add_product_to_store(int store_id, int quantity,
                                      String name, double price, String category, List<String> key_words) {
         try {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             store_controller.add_product_to_store(user_email, store_id, quantity, name, price, category, key_words);
         }
         catch (IllegalArgumentException | IllegalAccessException e)
@@ -386,7 +340,7 @@ public class Market  {
     public void delete_product_from_store(int product_id, int store_id) {
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.delete_product_from_store(user_email, product_id, store_id);
         }
         catch (Exception e)
@@ -412,7 +366,7 @@ public class Market  {
     public void edit_product_name(int product_id, int store_id, String name)  {
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.edit_product_name(user_email, product_id, store_id, name);
         }
         catch (Exception e)
@@ -434,7 +388,7 @@ public class Market  {
     public void edit_product_price(int product_id, int store_id, double price)  {
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.edit_product_price(user_email, product_id, store_id, price);
         }
         catch (Exception e)
@@ -456,7 +410,7 @@ public class Market  {
     public void edit_product_category(int product_id, int store_id, String category)  {
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.edit_product_category(user_email, product_id, store_id, category);
         }
         catch (Exception e)
@@ -478,7 +432,7 @@ public class Market  {
     public void edit_product_key_words(int product_id, int store_id, List<String> key_words)  {
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.edit_product_key_words(user_email, product_id, store_id, key_words);
         }
         catch (Exception e)
@@ -516,7 +470,7 @@ public class Market  {
         // this.user_id - the connected user who ask to appoint some user.
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.add_owner(user_email, user_email_to_appoint, store_id);
         }
         catch (Exception e)
@@ -552,7 +506,7 @@ public class Market  {
     public void edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions) {
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.edit_manager_specific_permissions(user_email, manager_email, store_id, permissions);
         }
         catch (Exception e)
@@ -582,7 +536,7 @@ public class Market  {
     public void close_store_temporarily(int store_id) {
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.close_store_temporarily(user_email, store_id);
         }
         catch (Exception e)
@@ -604,7 +558,7 @@ public class Market  {
     public void open_close_store(int store_id) {
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             this.store_controller.open_close_store(user_email, store_id);
         }
         catch (Exception e)
@@ -629,7 +583,7 @@ public class Market  {
         String answer;
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             answer = this.store_controller.view_store_management_information(user_email, store_id);
         }
         catch (Exception e)
@@ -654,7 +608,7 @@ public class Market  {
         String answer;
         try
         {
-            String user_email = this.user_controller.get_email(this.user_id);
+            String user_email = this.uc.get_email(this.user_id);
             List<String> store_questions = this.store_controller.view_store_questions(user_email, store_id);
             // @TODO : implement builder -> List of questions to string
             answer = store_questions.toString();
@@ -666,95 +620,134 @@ public class Market  {
         return answer;
     }
 
-    //Requirement 2.4.12 - Responses
-
-    /**
-     *
-     * @param store_id
-     * @param question_id
-     * @param answer
-     * @throws IllegalArgumentException if the store isn't exist
-     * @throws IllegalArgumentException if the store isn't active
-     * @throws IllegalAccessException if the user hasn't permission for answer questions
-     * @throws IllegalArgumentException if the question is not exist
-     */
+    //Requirement 2.2.3 - Add
     // @Override
-    public void manager_answer_question(int store_id, int question_id, String answer) {
-        try
-        {
-            String user_email = this.user_controller.get_email(this.user_id);
-            this.store_controller.answer_question(user_email, store_id, question_id, answer);
+    public void add_product_to_cart(int storeID,int productID, int quantity) {
+        Product p = null;
+        Basket storeBasket = null;
+        try{
+            storeBasket = uc.getBasketByStoreID(loggedUser,storeID);
+//             p = sc.checkAvailabilityAndGet(storeID,productID,quantity);
+//             basket.addProduct(p,quantity);
+            uc.addBasket(loggedUser, storeID, storeBasket);
         }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+        catch (Exception e){
 
+        }
     }
 
-    //Requirement 2.4.13 & 2.6.4
-
-    /**
-     *
-     * @param store_id
-     * @throws IllegalArgumentException if the store isn't exist
-     * @throws IllegalArgumentException if the store isn't active
-     * @throws IllegalAccessException if the user hasn't permission for view store purchases history
-     * @return
-     */
-    // @Override
-    public String view_store_purchases_history(int store_id) {
-        String answer;
-        try
-        {
-            answer = this.store_controller.view_store_purchases_history(this.user_id, store_id);
+    public void edit_product_quantity_in_cart(int storeID,int productID, int quantity) {
+        Product p = null;
+        Basket storeBasket = null;
+        try{
+            storeBasket = uc.getBasketByStoreID(loggedUser,storeID);
+//             p = sc.checkAvailabilityAndGet(storeID,productID,quantity);
+//             basket.changeQuantity(p,quantity);
         }
-        catch (Exception e)
-        {
-            return e.getMessage();
-        }
-        return answer;
+        catch (Exception e){
 
+        }
     }
 
-    //Requirement 2.6.1
-    // @Override
-    public boolean close_store_permanently(int store_id) {
-        try
-        {
-            // @TODO : GAL
-            this.user_controller.is_admin();
-            this.store_controller.close_store_permanently(this.user_id, store_id);
+    public void remove_product_from_cart(int storeID,int productID) {
+        Product p = null;
+        Basket storeBasket = null;
+        try{
+            storeBasket = uc.getBasketByStoreID(loggedUser,storeID);
+//             basket.removeProduct(p);
+            uc.removeBasketIfNeeded(loggedUser, storeID, storeBasket);
         }
-        catch (Exception e)
-        {
-            return false;
-        }
-        return answer;
+        catch (Exception e){
 
+        }
     }
 
-    //Requirement 2.6.2
-    // @Override
-    public double delete_user_from_system() {
+    public Map<Integer,Basket> view_user_cart() {
+        return uc.getBaskets(loggedUser);
+    }
+
+    public int buy_cart() {
+        // get information about the payment & supply
+        Cart cart = this.uc.getCart(this.loggedUser);
+//        double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
+//        this.payment(total_price, paymentInfo);
+//        this.supply(supplyInfo);
+        // success
+        // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
+        this.uc.buyCart(this.loggedUser);
+//        this.store_controller.update_stores_inventory(cart, purchase_id);
+        // failed
         return 0;
     }
 
-    //Requirement 2.6.3 - View
-    // @Override
-    public double view_system_questions() {
+    public double send_complain() {
+        //todo implement request handler
         return 0;
     }
 
-    //Requirement 2.6.3 - Response by Admin
-    // @Override
-    public double admin_answer_question() {
+    public UserHistory view_user_purchase_history() throws Exception { //todo remove throws and catch exception
+        return uc.view_user_purchase_history(loggedUser);
+    }
+
+    public double view_account_details() {
         return 0;
     }
 
-    //Requirement 2.6.5
-    // @Override
-    public int get_system_statistics() {
-        return 0;
+    public String get_user_name() throws Exception { //todo handle exception in try catch
+        return this.uc.get_user_name(loggedUser);
+    }
+
+    public String get_user_last_name() throws Exception { //todo handle exception in try catch
+        return this.uc.get_user_last_name(loggedUser);
     }
 }
+/*
+    //Requirement 2.3.6
+    // @Override
+    public double send_complain() {
+        return 0;
+    }
+
+    //Requirement 2.3.7
+    // @Override
+    public double view_user_purchase_history() {
+        return 0;
+    }
+
+    //Requirement 2.3.8 - View
+    // @Override
+    public double view_account_details() {
+        return 0;
+    }
+
+    //Requirement 2.3.8 - Edit
+    // @Override
+    public double edit_account_details() {
+        return 0;
+    }
+
+    //Requirement 2.3.9 - Personal question
+    // @Override
+    public double add_security_personal_question() {
+        return 0;
+    }
+
+        //Requirement 2.2.3 - Remove
+    // @Override
+    public double delete_product_from_cart() {
+        return 0;
+    }
+
+    //Requirement 2.2.4
+    // @Override
+    public double view_user_cart() {
+        return 0;
+    }
+
+    //Requirement 2.2.4
+    // @Override
+    public double change_product_quantity_in_cart() {
+        return 0;
+    }
+
+*/
