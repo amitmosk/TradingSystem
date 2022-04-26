@@ -380,6 +380,9 @@ public class StoreController {
     }
 
 
-
+    public Product getProduct_by_product_id(int storeID, int productID) {
+        Store store = this.get_store_by_store_id(storeID);
+        return store.getProduct_by_product_id(productID);
+    }
 }
 

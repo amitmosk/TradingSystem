@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class UserPurchase extends Purchase {
+public class UserPurchase extends Purchase {
     private Map<Integer, List<Integer>> storeId_productsIDS;        // amit and tom method in basket
 
     public UserPurchase(Map<Integer, Basket> cart, int purchaseID) {

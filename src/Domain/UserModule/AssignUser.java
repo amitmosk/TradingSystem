@@ -34,7 +34,7 @@ public class AssignUser extends AssignState {
     }
 
     @Override
-    public UserHistory view_user_purchase_history() throws Exception {
+    public UserHistory view_user_purchase_history(){
         return this.userHistory;
     }
 }

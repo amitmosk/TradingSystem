@@ -1,9 +1,7 @@
 package Domain.UserModule;
 
 public abstract class AssignState{
-    public boolean login(String pw){
-        return false;
-    }
+    public boolean login(String pw) throws Exception {throw new Exception("Assign user cannot log in");}
 
     public void addPurchase(UserPurchase purchase) { }
 

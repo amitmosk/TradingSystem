@@ -81,7 +81,7 @@ public class UserController {
      * @param name  the user's name
      * @param lastName the user's last name
      */
-    public void register(int ID, String email, String pw, String name, String lastName) throws IllegalAccessException {
+    public void register(int ID, String email, String pw, String name, String lastName) throws Exception {
         synchronized (usersLock) {
             if (isRegistered(email))
                 throw new IllegalAccessException("user email already exists in the system"); //todo cannot notify about existing email
@@ -97,13 +97,13 @@ public class UserController {
      * @param password the user password
      * @return the status if log-in succeed
      */
-    public boolean login(int ID,String email, String password) {
+    public boolean login(int ID,String email, String password) throws Exception {
         if(isRegistered(email) && users.get(email).login(password)){
             User user = users.get(email);
             onlineUsers.put(ID, user);
             return true;
         }
-        return false;
+        throw new Exception("User email does not match to the password");
     }
 
     /**
@@ -174,9 +174,9 @@ public class UserController {
      * function that makes a new purchase and add it to the history & clears the cart
      * @param loggedUser
      */
-    public void buyCart(int loggedUser) {
+    public UserPurchase buyCart(int loggedUser) {
         User user = onlineUsers.get(loggedUser);
-        user.buyCart(purchaseID.getAndIncrement());
+        return user.buyCart(purchaseID.getAndIncrement());
     }
 
 
