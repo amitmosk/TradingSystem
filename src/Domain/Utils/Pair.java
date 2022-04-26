@@ -8,8 +8,8 @@ import java.util.Set;
 // Pair class
 public class Pair<U, V>
 {
-    private final U first;       // the first field of a pair
-    private final V second;      // the second field of a pair
+    public final U first;       // the first field of a pair
+    public final V second;      // the second field of a pair
 
     // Constructs a new pair with specified values
     private Pair(U first, V second)
@@ -52,6 +52,13 @@ public class Pair<U, V>
         return "(" + first + ", " + second + ")";
     }
 
+    // Factory method for creating a typed Pair immutable instance
+    public static <U, V> Pair <U, V> of(U a, V b)
+    {
+        // calls private constructor
+        return new Pair<>(a, b);
+    }
+
     public U getFirst()
     {
         return this.first;
@@ -60,12 +67,5 @@ public class Pair<U, V>
     public V getSecond()
     {
         return this.second;
-    }
-
-    // Factory method for creating a typed Pair immutable instance
-    public static <U, V> Pair <U, V> of(U a, V b)
-    {
-        // calls private constructor
-        return new Pair<>(a, b);
     }
 }
