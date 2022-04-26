@@ -3,8 +3,8 @@ package Domain;
 import java.util.LinkedList;
 import java.util.List;
 
-import Domain.UserModule.*;
 import Domain.StoreModule.*;
+import Domain.UserModule.*;
 import com.google.gson.Gson;
 
 import java.util.Map;
@@ -73,19 +73,19 @@ public class Market
 
     //Requirement 2.1.1
     public String guest_login() {
+        //TODO: handle bugs with exception
+        Response response = null;
         try
         {
             int logged = user_controller.guest_login();
             this.loggedUser = logged;
+            response = new Response<>(null, "Hey guest, Welcome to the trading system market!");
         }
         catch (Exception e)
         {
-            Response error_response = new Response(e);
-            return this.toJson(error_response);
+            response = new Response(e);
         }
-
-        Response response = new Response<>(null, "Hey guest, Welcome to the trading system market!");
-        return this.toJson(response);
+        return toJson(response);
     }
 
     //Requirement 2.1.4
@@ -106,18 +106,30 @@ public class Market
     }
 
     //Requirement 2.1.2 & 2.3.1
-    public void logout() {
-        if(isGuest) return; //todo throw error
+    public String logout() {
+        Response response = null;
+        if(isGuest) response = new Response(new Exception("guest cannot logout from the system"));
+        else response = new Response(true,"Bye Bye");
         this.isGuest = true;
         this.loggedUser = -1;
+        return toJson(response);
     }
 
 
     //Requirement 2.1.3
-    public double register(String Email, String pw, String name, String lastName) throws IllegalAccessException {
-        if(!isGuest) return 1; //todo throw error
-        user_controller.register(loggedUser,Email,pw,name,lastName);
-        return 1;
+    public String register(String Email, String pw, String name, String lastName) {
+        Response response = null;
+        try
+        {
+            if(!isGuest) throw new Exception("Assign User cannot register");
+            user_controller.register(loggedUser,Email,pw,name,lastName);
+            response = new Response<>(null, "registration has done successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
     }
 
     //Requirement 2.2.1 - Store
@@ -691,70 +703,82 @@ public class Market
     //Requirement 2.2.3 - Add
 
 
-    public void add_product_to_cart(int storeID, int productID, int quantity) {
-        Product p = null;
-        Basket storeBasket = null;
+    public String add_product_to_cart(int storeID, int productID, int quantity) {
+        Response response = null;
         try{
-            storeBasket = user_controller.getBasketByStoreID(loggedUser,storeID);
-//             p = sc.checkAvailabilityAndGet(storeID,productID,quantity);
-//             basket.addProduct(p,quantity);
-            user_controller.addBasket(loggedUser, storeID, storeBasket);
+             Basket storeBasket = user_controller.getBasketByStoreID(loggedUser,storeID);
+             Product p = store_controller.checkAvailablityAndGet(storeID,productID,quantity);
+             storeBasket.addProduct(p,quantity);
+             user_controller.addBasket(loggedUser, storeID, storeBasket);
+             response = new Response("","product "+ productID + " added to cart");
         }
         catch (Exception e){
-
+            response = new Response(e);
         }
+        return toJson(response);
     }
 
     //Requirement 2.2.4
-    public void edit_product_quantity_in_cart(int storeID, int productID, int quantity) {
-        Product p = null;
-        Basket storeBasket = null;
+    public String edit_product_quantity_in_cart(int storeID, int productID, int quantity) {
+        Response response = null;
         try{
-            storeBasket = user_controller.getBasketByStoreID(loggedUser,storeID);
-        // p = sc.checkAvailabilityAndGet(storeID,productID,quantity);
-        // basket.changeQuantity(p,quantity);
+            Basket storeBasket = user_controller.getBasketByStoreID(loggedUser,storeID);
+            Product p = store_controller.checkAvailablityAndGet(storeID,productID,quantity);
+            storeBasket.changeQuantity(p,quantity);
+            response = new Response("","product "+ productID + " quantity has changed to "+ quantity);
         }
         catch (Exception e){
-
+            response = new Response(e);
         }
+        return toJson(response);
     }
 
     //Requirement 2.2.3 - Remove
-    public void remove_product_from_cart(int storeID, int productID) {
-        Product p = null;
-        Basket storeBasket = null;
+    public String remove_product_from_cart(int storeID, int productID) {
+        Response response = null;
         try{
-            storeBasket = user_controller.getBasketByStoreID(loggedUser,storeID);
-            //basket.removeProduct(p);
+            Product p = store_controller.getProduct_by_product_id(storeID,productID);
+            Basket storeBasket = user_controller.getBasketByStoreID(loggedUser,storeID);
+            storeBasket.removeProduct(p);
             user_controller.removeBasketIfNeeded(loggedUser, storeID, storeBasket);
+            response = new Response("","product "+ productID + " has removed from cart");
         }
         catch (Exception e){
-
+            response = new Response(e);
         }
+        return toJson(response);
     }
 
 
     //Requirement 2.2.4
-    public Map<Integer,Basket> view_user_cart() {
-        return user_controller.getBaskets(loggedUser);
+    public String view_user_cart() {
+        Map<Integer,Basket> cart = user_controller.getBaskets(loggedUser);
+        Response<Map<Integer,Basket>> response = new Response<>(cart,"successfully received user's cart");
+        return toJson(response);
     }
 
 
     //Requirement 2.2.5
-
-
-    public int buy_cart() {
-        // get information about the payment & supply
-        Cart cart = this.user_controller.getCart(this.loggedUser);
-        double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
+    public String buy_cart() {
+        Response<UserPurchase> response = null;
+        try
+        {
+            // get information about the payment & supply
+            Cart cart = this.user_controller.getCart(this.loggedUser);
+            double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
 //        this.payment(total_price, paymentInfo);
 //        this.supply(supplyInfo);
-        // success
-        // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
-        this.user_controller.buyCart(this.loggedUser);
-        this.store_controller.update_stores_inventory(cart);
-        // failed
-        return 0;
+            // success
+            // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
+            this.store_controller.update_stores_inventory(cart);
+            UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser);
+            // failed
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
     }
 
 
@@ -765,8 +789,18 @@ public class Market
     }
 
     //Requirement 2.3.7
-    public UserHistory view_user_purchase_history() throws Exception { //todo remove throws and catch exception
-        return user_controller.view_user_purchase_history(loggedUser);
+    public String view_user_purchase_history(){
+        Response<UserHistory> response = null;
+        try
+        {
+            UserHistory userHistory = user_controller.view_user_purchase_history(loggedUser);
+            response = new Response<>(userHistory, "successfully received user's product history");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
     }
 
     //Requirement 2.3.8 - View
@@ -775,13 +809,37 @@ public class Market
     }
 
 
-    public String get_user_email() throws Exception{ //todo handle exception
-        return this.user_controller.get_email(loggedUser);
+    public String get_user_email(){
+        Response response = null;
+        try
+        {
+            int logged = user_controller.guest_login();
+            this.loggedUser = logged;
+            String email = user_controller.get_email(loggedUser);
+            response = new Response<>(email, "successfully received user's email");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
     }
 
 
-    public String get_user_name() throws Exception { //todo handle exception in try catch
-        return this.user_controller.get_user_name(loggedUser);
+    public String get_user_name(){
+        Response response = null;
+        try
+        {
+            int logged = user_controller.guest_login();
+            this.loggedUser = logged;
+            String name = user_controller.get_user_name(loggedUser);
+            response = new Response<>(name, "successfully received user's name");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
     }
 
 
