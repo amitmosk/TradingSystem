@@ -1,6 +1,6 @@
 package Domain.UserModule;
 
-import Domain.Basket;
+import Domain.StoreModule.Basket;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -91,5 +91,9 @@ public class User {
 
     public String get_user_last_name() throws Exception {
         return state.get_user_last_name();
+    }
+
+    public String get_user_last_email() throws Exception {
+        return state.get_user_email();
     }
 }
