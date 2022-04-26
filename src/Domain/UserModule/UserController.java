@@ -1,6 +1,6 @@
 package Domain.UserModule;
 
-import Domain.Basket;
+import Domain.StoreModule.Basket;
 
 import java.util.HashMap;
 import java.util.*;
@@ -16,6 +16,7 @@ public class UserController {
     private Object usersLock;
     private Object onlineUsersLock;
     private Object idLock;
+
 
     // ------------------- singleton class ----------------------------
     private static class SingletonHolder{
@@ -202,5 +203,10 @@ public class UserController {
     public String get_user_last_name(int loggedUser) throws Exception {
         User user = onlineUsers.get(loggedUser);
         return user.get_user_last_name();
+    }
+
+    public String get_email(int loggedUser) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        return user.get_user_last_email();
     }
 }

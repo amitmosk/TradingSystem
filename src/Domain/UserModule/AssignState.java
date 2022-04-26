@@ -16,4 +16,6 @@ public abstract class AssignState{
     public String get_user_name() throws Exception {throw new Exception("Guest doesnt have name.");}
 
     public String get_user_last_name() throws Exception {throw new Exception("Guest doesnt have last name.");}
+
+    public String get_user_email() throws Exception {throw new Exception("Guest doesnt have last name.");}
 }

@@ -1,6 +1,6 @@
 package Domain.UserModule;
 
-import Domain.Basket;
+import Domain.StoreModule.Basket;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ public class Cart {
 
     public Basket getBasket(int storeID) {
         if(!baskets.containsKey(storeID))
-            return new Basket();
+            return new Basket(storeID,0); //todo check about buyer email/id fix
         return baskets.get(storeID);
     }
 

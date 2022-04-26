@@ -1,6 +1,6 @@
 package Domain.UserModule;
 
-import Domain.Basket;
+import Domain.StoreModule.Basket;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
