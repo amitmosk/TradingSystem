@@ -5,9 +5,4 @@ public class StorePurchaseHistory extends PurchaseHistory {
         super();
     }
 
-    @Override
-    public String toString() {
-        // TODO : string builder
-        return "";
-    }
 }

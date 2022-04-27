@@ -3,9 +3,9 @@ package Domain.StoreModule;
 import java.time.LocalDate;
 
 public class Question {
-    private int question_id;
-    private String user_email;
-    private LocalDate message_date;
+    private final int question_id;
+    private final String user_email;
+    private final LocalDate message_date;
     private LocalDate answer_date;
     private String message;
     private String answer;
@@ -27,7 +27,6 @@ public class Question {
     }
     public String toString() {
         return "Question{" +
-                "question_id=" + question_id +
                 ", user_email='" + user_email + '\'' +
                 ", message_date=" + message_date +
                 ", answer_date=" + answer_date +

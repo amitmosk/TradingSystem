@@ -56,7 +56,7 @@ public interface iFacade {
     /**
      * Requirment 2.2.5
      */
-    // @TODO : paymentInfo, supplyInfo
+
     String buy_cart(String paymentInfo, String supplyInfo);
 
     /**
@@ -167,7 +167,7 @@ public interface iFacade {
     * Requirment 2.4.12
      */
     String manager_view_store_questions(int store_id);
-    void manager_answer_question(int store_id, int question_id, String answer);
+    String manager_answer_question(int store_id, int question_id, String answer);
     /**
      * Requirment 2.4.13 + 2.6.4
      */
