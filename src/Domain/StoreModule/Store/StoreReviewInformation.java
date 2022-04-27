@@ -1,6 +1,4 @@
-package Domain;
-
-import Domain.StoreModule.StoreReview;
+package Domain.StoreModule.Store;
 
 import java.util.Map;
 
@@ -10,7 +8,6 @@ public class StoreReviewInformation {
 
     public StoreReviewInformation(StoreReview storeReview)
     {
-        this.reviews = storeReview.getReviews();
         this.rating = storeReview.getRating();
     }
 }

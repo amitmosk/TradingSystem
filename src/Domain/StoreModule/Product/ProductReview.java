@@ -1,18 +1,17 @@
-package Domain.StoreModule;
+package Domain.StoreModule.Product;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class StoreReview {
+public class ProductReview {
     private Map<String, String> reviews; // user_email & review
     private Map<String, Integer> rating; // user_email & rating
-    public StoreReview()
+    public ProductReview()
     {
         reviews = new HashMap<>();
         rating = new HashMap<>();
     }
-    public void add_review(String user_email, String review)
-    {
+    public void add_review(String user_email, String review) {
         this.reviews.put(user_email, review);
     }
     public void add_rating(String user_email, int rating) {

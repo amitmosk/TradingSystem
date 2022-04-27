@@ -1,15 +1,15 @@
-package Domain.StoreModule;
+package Domain.StoreModule.Product;
 
 import java.util.List;
 
 public class Product {
+    private final int store_id;
+    private final int product_id;
     private String name;
-    private int store_id;
-    private int product_id;
-    private double price;
-    private ProductReview productReview;
     private String category;
     private List<String> key_words;
+    private double price;
+    private ProductReview productReview;
 
     public Product(String name, int store_id, int product_id, double price, String category, List<String> key_words) {
         this.name = name;
@@ -20,6 +20,9 @@ public class Product {
         this.category = category;
         this.key_words = key_words;
     }
+
+    // -- Public Methods
+
     public void add_review(String user_email, String review) {
         this.productReview.add_review(user_email, review);
     }
@@ -29,7 +32,7 @@ public class Product {
 
 
 
-//---------------------------------------------------------------------- Getters - Start ------------------------------------------------------------------------------------
+    // -- Getters
 
     public String getName() {
         return name;
@@ -59,18 +62,7 @@ public class Product {
         return category;
     }
 
-//---------------------------------------------------------------------- Getters - End ------------------------------------------------------------------------------------
-
-//---------------------------------------------------------------------- Setters - Start ------------------------------------------------------------------------------------
-
-    public void setName(String name) {
-        //check validity
-        this.name = name;
-    }
-
-    public void setStore_id(int store_id) {
-        this.store_id = store_id;
-    }
+    // -- Setters
 
     public void setPrice(double price) {
         this.price = price;
@@ -87,8 +79,8 @@ public class Product {
     public void setKey_words(List<String> key_words) {
         this.key_words = key_words;
     }
-    //---------------------------------------------------------------------- Setters - End ------------------------------------------------------------------------------------
 
-
-
+    public void setName(String name) {
+        this.name = name;
+    }
 }

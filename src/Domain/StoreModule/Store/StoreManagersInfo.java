@@ -1,4 +1,6 @@
-package Domain.StoreModule;
+package Domain.StoreModule.Store;
+
+import Domain.StoreModule.Appointment;
 
 import java.util.HashMap;
 
@@ -12,11 +14,11 @@ public class StoreManagersInfo {
     }
 
     public String get_management_information() {
-        String answer = "Store name :" + this.store_name + "\n";
+        StringBuilder answer = new StringBuilder("Store name :" + this.store_name + "\n");
         for (Appointment appointment : this.managers.values())
         {
-            answer = answer + appointment.toString() + "\n";
+            answer.append(appointment.toString()).append("\n");
         }
-        return answer;
+        return answer.toString();
     }
 }

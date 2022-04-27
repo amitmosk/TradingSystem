@@ -1,4 +1,4 @@
-package Domain.StoreModule;
+package Domain.StoreModule.Purchase;
 
 public class StorePurchaseHistory extends PurchaseHistory {
     public StorePurchaseHistory() {

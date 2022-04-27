@@ -1,8 +1,14 @@
-package Domain;
+package Domain.Facade;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import Domain.Utils.Response;
+import Domain.StoreModule.Product.Product;
+import Domain.StoreModule.Product.ProductInformation;
+import Domain.StoreModule.Store.Store;
+import Domain.StoreModule.Store.StoreInformation;
+import Domain.SupplyAdapter;
 import Domain.UserModule.*;
 import Domain.StoreModule.*;
 import com.google.gson.Gson;
@@ -253,15 +259,15 @@ public class MarketFacade implements iFacade {
 
     /**
      * Requirement 2.3.3
-     * @param product_id
-     * @param store_id
-     * @param review
+     * @param product_id - the product to review
+     * @param store_id - the store who has this product
+     * @param review - user message about the product
      * throws if Product does not exist
      * throws if the user is a guest
      * throws if user isn't a buyer of this product
      */
     @Override
-    public String add_review(int product_id, int store_id, String review)  {
+    public String add_product_review(int product_id, int store_id, String review)  {
         Response response = null;
         try
         {

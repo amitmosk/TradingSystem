@@ -1,4 +1,4 @@
-package Domain.StoreModule;
+package Domain.StoreModule.Store;
 
 public enum StoreManagerType {
     store_founder,

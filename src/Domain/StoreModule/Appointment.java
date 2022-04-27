@@ -1,9 +1,11 @@
 package Domain.StoreModule;
 
+import Domain.StoreModule.Store.StoreManagerType;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import static Domain.StoreModule.StoreManagerType.*;
+import static Domain.StoreModule.Store.StoreManagerType.*;
 import static Domain.StoreModule.StorePermission.*;
 
 public class Appointment {
@@ -52,6 +54,7 @@ public class Appointment {
         this.permissions.put(remove_manager, false);
         this.permissions.put(add_owner, false);
         this.permissions.put(remove_owner, false);
+        this.permissions.put(edit_permissions, false);
     }
     private void set_owner_permissions(){
         this.permissions.put(add_item, true);
@@ -72,6 +75,7 @@ public class Appointment {
         this.permissions.put(remove_manager, true);
         this.permissions.put(add_owner, true);
         this.permissions.put(remove_owner, true);
+        this.permissions.put(edit_permissions, true);
     }
     private void set_founder_permissions(){
         this.permissions.put(add_item, true);
@@ -92,6 +96,7 @@ public class Appointment {
         this.permissions.put(remove_manager, true);
         this.permissions.put(add_owner, true);
         this.permissions.put(remove_owner, true);
+        this.permissions.put(edit_permissions, true);
     }
 
     // -- getters

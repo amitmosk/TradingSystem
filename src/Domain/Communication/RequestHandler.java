@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Communication;
 
 import java.util.List;
 

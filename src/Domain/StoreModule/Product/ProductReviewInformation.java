@@ -1,6 +1,6 @@
-package Domain;
+package Domain.StoreModule.Product;
 
-import Domain.StoreModule.ProductReview;
+import Domain.StoreModule.Product.ProductReview;
 
 import java.util.Map;
 

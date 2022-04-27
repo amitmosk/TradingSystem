@@ -1,5 +1,6 @@
 package Domain.StoreModule;
 
+import Domain.StoreModule.Product.Product;
 import Domain.Utils.Pair;
 
 import java.util.ArrayList;

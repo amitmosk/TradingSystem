@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Utils;
 
 public class Response<T> {
     private T value;

@@ -1,7 +1,4 @@
-package Domain;
-
-import Domain.StoreModule.Product;
-import Domain.StoreModule.ProductReview;
+package Domain.StoreModule.Product;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package Domain.StoreModule;
+package Domain.Communication;
 
 import java.time.LocalDate;
 

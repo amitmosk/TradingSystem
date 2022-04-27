@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Facade;
 
 import Domain.StoreModule.StorePermission;
 
@@ -68,7 +68,7 @@ public interface iFacade {
     /**
      * Requirment 2.3.3
      */
-    String add_review(int product_id, int store_id, String review);
+    String add_product_review(int product_id, int store_id, String review);
 
     /**
      * Requirment 2.3.4

@@ -1,4 +1,4 @@
-package Domain.StoreModule;
+package Domain.StoreModule.Policy;
 
 public class DiscountPolicy {
     private String type;
