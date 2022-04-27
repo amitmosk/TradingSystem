@@ -17,4 +17,12 @@ public class ProductReview {
     public void add_rating(String user_email, int rating) {
         this.rating.put(user_email, rating);
     }
+
+    public Map<String, Integer> getRating() {
+        return rating;
+    }
+
+    public Map<String, String> getReviews() {
+        return reviews;
+    }
 }
