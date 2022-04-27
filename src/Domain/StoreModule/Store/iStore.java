@@ -15,7 +15,7 @@ public interface iStore {
 
     void add_product_rating(String user_email, int product_id, int rate);
 
-    void open_store();
+    void appoint_founder();
 
     void close_store_permanently();
 

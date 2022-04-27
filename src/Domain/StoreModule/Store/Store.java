@@ -55,6 +55,10 @@ public class Store implements iStore {
 
     // -- public methods
 
+
+    public int get_store_rating(){
+        return this.storeReview.getAvgRating();
+    }
     @Override
     public void add_product_review(int product_id, String user_email, String review) {
         Product p = this.getProduct_by_product_id(product_id); //throws
@@ -62,7 +66,8 @@ public class Store implements iStore {
     }
     @Override
     public void add_store_rating(String user_email, int rating) {
-
+        if (this.stuff_emails_and_appointments.containsKey(user_email))
+                throw new IllegalArgumentException("store members can't rate their store");
         this.storeReview.add_rating(user_email, rating);
     }
     @Override
@@ -71,7 +76,7 @@ public class Store implements iStore {
         p.add_rating(user_email, rate);
     }
     @Override
-    public void open_store(){
+    public void appoint_founder(){
         Appointment founder = new Appointment(founder_email, founder_email, store_id, StoreManagerType.store_founder);
         this.stuff_emails_and_appointments.put(founder_email, founder);
     }
@@ -415,7 +420,8 @@ public class Store implements iStore {
     private void check_permission(String user_email, StorePermission permission) throws IllegalAccessException {
         if (!this.stuff_emails_and_appointments.containsKey(user_email))
             throw new IllegalAccessException("user is no a store member");
-        if(!(this.stuff_emails_and_appointments.get(user_email).has_permission(permission)))
+        boolean flag = this.stuff_emails_and_appointments.get(user_email).has_permission(permission);
+        if(!flag)
             throw new IllegalAccessException("User has no permissions!");
     }
     private Map<Integer, Double> get_product_ids_and_total_price(Basket basket) {

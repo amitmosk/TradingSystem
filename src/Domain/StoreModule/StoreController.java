@@ -328,7 +328,7 @@ public class StoreController {
     public void open_store(String founder_email, String store_name) {
         int store_id = this.store_ids_counter.getAndIncrement();
         Store store = new Store(store_id, founder_email, store_name);
-        store.open_store();
+        store.appoint_founder();
         this.stores.put(store_id, store);
     }
 

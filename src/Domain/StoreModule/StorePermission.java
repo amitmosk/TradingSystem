@@ -20,6 +20,6 @@ public enum StorePermission
     remove_manager,
     add_owner,
     remove_owner,
-    edit_permissions
+    edit_permissions,
 
 }
