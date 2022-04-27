@@ -19,17 +19,19 @@ import java.util.Map;
 // TODO: manage alerts
 // TODO: replace all toString calls to return the objects itself which will be converted to json
 // TODO: add FacadeProduct that holds only the fields client wont to see - and to all other objects (userPurchase, storePurchase)
-public class Market
-{
+public class MarketFacade implements iFacade {
     private UserController user_controller;
     private StoreController store_controller;
     private int loggedUser;                  //id or email
     private boolean isGuest;                 //represents the state
 
 
-    public Market()
+    public MarketFacade()
     {
-        this.init_market();
+        this.isGuest = true;
+        this.user_controller = UserController.getInstance();
+        this.store_controller = StoreController.get_instance();
+        this.loggedUser = -1;
     }
 
 
@@ -38,21 +40,7 @@ public class Market
         return new Gson().toJson(r);
     }
 
-    //Requirement 1.1
-    public String init_market() {
-        this.isGuest = true;
-        this.user_controller = UserController.getInstance();
-        this.store_controller = StoreController.get_instance();
-        this.loggedUser = -1;
 
-
-        //Tom
-        //connect to payment service
-        //connect to supply service
-        // load
-        return "";
-    }
-    
     //Requirement 1.3
     public String payment(int price) {
         //Tom
@@ -68,6 +56,7 @@ public class Market
 
 
     //Requirement 2.1.1
+    @Override
     public String guest_login() {
         //TODO: handle bugs with exception
         Response response = null;
@@ -85,6 +74,7 @@ public class Market
     }
 
     //Requirement 2.1.4
+    @Override
     public String login(String Email, String password) {
         Response response = null;
         try
@@ -102,6 +92,7 @@ public class Market
     }
 
     //Requirement 2.1.2 & 2.3.1
+    @Override
     public String logout() {
         Response response = null;
         if(isGuest) response = new Response(new Exception("guest cannot logout from the system"));
@@ -113,6 +104,7 @@ public class Market
 
 
     //Requirement 2.1.3
+    @Override
     public String register(String Email, String pw, String name, String lastName) {
         Response response = null;
         try
@@ -136,6 +128,7 @@ public class Market
      * @throws IllegalArgumentException if store does not exist
      * @throws IllegalArgumentException if store isn't active
      */
+    @Override
     public String find_store_information(int store_id) {
         Response<FacadeStore> response = null;
         try
@@ -161,6 +154,7 @@ public class Market
      * @throws IllegalArgumentException if store does not exist
      * @throws IllegalArgumentException if store isn't active
      */
+    @Override
     public String find_product_information(int product_id, int store_id) {
         Response<String> response = null;
         try
@@ -183,6 +177,7 @@ public class Market
      * @return List of Products with the specific name
      */
     //Requirement 2.2.2 - Name
+    @Override
     public String find_products_by_name(String product_name)
     {
         Response<List<Product>> response = null;
@@ -205,6 +200,7 @@ public class Market
      * @return List of Products with the specific category
      */
     //Requirement 2.2.2 - Category
+    @Override
     public String find_products_by_category(String category)
     {
         Response<List<Product>> response = null;
@@ -227,6 +223,7 @@ public class Market
      * @return List of Products with the specific key_word
      */
     //Requirement 2.2.2 - Key_words
+    @Override
     public String find_products_by_keywords(String key_words)
     {
         Response<List<Product>> response = null;
@@ -252,6 +249,7 @@ public class Market
      * throws if the user is a guest
      */
     //Requirement 2.3.2
+    @Override
     public String open_store(String store_name) {
         Response response = null;
         try
@@ -278,6 +276,7 @@ public class Market
      * throws if user isn't a buyer
      */
     //Requirement 2.3.3
+    @Override
     public String add_review(int product_id, int store_id, String review)  {
         Response response = null;
         try
@@ -305,6 +304,7 @@ public class Market
      * throws if the user is a guest
      * throws if user isn't a buyer
      */
+    @Override
     public String rate_product(int product_id, int store_id, int rate) {
         Response response = null;
         try
@@ -332,6 +332,7 @@ public class Market
      * throws if user isn't a buyer
      */
     //Requirement 2.3.4 - Store
+    @Override
     public String rate_store(int store_id, int rate) {
         Response response = null;
         try
@@ -358,6 +359,7 @@ public class Market
      * @throws if the store isn't exist
      *
      */
+    @Override
     public String send_question_to_store(int store_id, String question) {
         Response response = null;
         try
@@ -385,8 +387,9 @@ public class Market
      * @throws if store doesnt exist
      * @throws if there is no permission for the user
      */
+    @Override
     public String add_product_to_store(int store_id, int quantity,
-                                     String name, double price, String category, List<String> key_words) {
+                                       String name, double price, String category, List<String> key_words) {
         Response response = null;
         try
         {
@@ -406,6 +409,7 @@ public class Market
      * @param product_id
      */
     //Requirement 2.4.1 - Delete
+    @Override
     public String delete_product_from_store(int product_id, int store_id) {
         Response response = null;
         try
@@ -434,6 +438,7 @@ public class Market
      * throws IllegalArgumentException if user does not have permission to this operation
      */
     //Requirement 2.4.1 - Edit name
+    @Override
     public String edit_product_name(int product_id, int store_id, String name)  {
         Response response = null;
         try
@@ -460,6 +465,7 @@ public class Market
     //Requirement 2.4.1 - Edit Price
 
 
+    @Override
     public String edit_product_price(int product_id, int store_id, double price)  {
         Response response = null;
         try
@@ -486,6 +492,7 @@ public class Market
     //Requirement 2.4.1 - Edit category
 
 
+    @Override
     public String edit_product_category(int product_id, int store_id, String category)  {
         Response response = null;
         try
@@ -512,6 +519,7 @@ public class Market
     //Requirement 2.4.1 - Edit key words
 
 
+    @Override
     public String edit_product_key_words(int product_id, int store_id, List<String> key_words)  {
         Response response = null;
         try
@@ -533,6 +541,7 @@ public class Market
 
 
     //Requirement 2.4.3
+    @Override
     public String set_store_purchase_rules(int store_id)  {
         Response response = null;
         try
@@ -562,6 +571,7 @@ public class Market
      * @throws IllegalArgumentException User is already owner/founder
      *
      */
+    @Override
     public String add_owner(String user_email_to_appoint, int store_id) {
         Response response = null;
         try
@@ -596,6 +606,7 @@ public class Market
      * @throws IllegalArgumentException User can not remove stuff member that is not appoint by him
      */
     //Requirement 2.4.5
+    @Override
     public String delete_owner(String user_email_to_delete_appointment, int store_id) {
         Response response = null;
         try
@@ -624,6 +635,7 @@ public class Market
      * @throws IllegalArgumentException User is already stuff member of this store
      */
     //Requirement 2.4.6
+    @Override
     public String add_manager(String user_email_to_appoint, int store_id) {
         Response response = null;
         try
@@ -650,6 +662,7 @@ public class Market
      * @throws IllegalArgumentException if the manager doesnt appointed by user
      * @throws IllegalArgumentException user cant change himself permissions
      */
+    @Override
     public String edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions) {
         Response response = null;
         try
@@ -681,6 +694,7 @@ public class Market
      * @throws IllegalArgumentException User can not remove stuff member that is not appoint by him
      */
     //Requirement 2.4.8
+    @Override
     public String delete_manager(String user_email_to_delete_appointment, int store_id) {
         Response response = null;
         try
@@ -704,6 +718,7 @@ public class Market
      * @throws IllegalAccessException if the user hasn't permission for close store
      * @throws IllegalArgumentException if the store is already close
      */
+    @Override
     public String close_store_temporarily(int store_id) {
         Response response = null;
         try
@@ -727,6 +742,7 @@ public class Market
      * @throws IllegalAccessException if the user hasn't permission for open store
      * @throws IllegalArgumentException if the store is already open
      */
+    @Override
     public String open_close_store(int store_id) {
         Response response = null;
         try
@@ -752,6 +768,7 @@ public class Market
      * @throws IllegalAccessException if the user hasn't permission for view store managment information
      *
      */
+    @Override
     public String view_store_management_information(int store_id) {
         Response<String> response = null;
         try
@@ -778,6 +795,7 @@ public class Market
      */
 
     //Requirement 2.4.12 - View
+    @Override
     public String view_store_questions(int store_id) {
         Response<List<String>> response = null;
         try
@@ -796,6 +814,7 @@ public class Market
     //Requirement 2.2.3 - Add
 
 
+    @Override
     public String add_product_to_cart(int storeID, int productID, int quantity) {
         Response response = null;
         try{
@@ -812,6 +831,7 @@ public class Market
     }
 
     //Requirement 2.2.4
+    @Override
     public String edit_product_quantity_in_cart(int storeID, int productID, int quantity) {
         Response response = null;
         try{
@@ -827,6 +847,7 @@ public class Market
     }
 
     //Requirement 2.2.3 - Remove
+    @Override
     public String remove_product_from_cart(int storeID, int productID) {
         Response response = null;
         try{
@@ -844,6 +865,7 @@ public class Market
 
 
     //Requirement 2.2.4
+    @Override
     public String view_user_cart() {
         Map<Integer,Basket> cart = user_controller.getBaskets(loggedUser);
         Response<Map<Integer,Basket>> response = new Response<>(cart,"successfully received user's cart");
@@ -852,6 +874,7 @@ public class Market
 
 
     //Requirement 2.2.5
+    @Override
     public String buy_cart() {
         Response<UserPurchase> response = null;
         try
@@ -876,12 +899,14 @@ public class Market
 
 
     //Requirement 2.3.6
+    @Override
     public double send_complain() {
         //todo implement request handler
         return 0;
     }
 
     //Requirement 2.3.7
+    @Override
     public String view_user_purchase_history(){
         Response<UserHistory> response = null;
         try
@@ -897,6 +922,7 @@ public class Market
     }
 
     //Requirement 2.3.8 - View
+    @Override
     public double view_account_details() {
         return 0;
     }

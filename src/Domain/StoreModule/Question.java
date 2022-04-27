@@ -27,6 +27,17 @@ public class Question {
         this.has_answer = true;
         this.answer_date = LocalDate.now();
     }
-
+    public String toString() {
+        return "Question{" +
+                "question_id=" + question_id +
+                ", store_id=" + store_id +
+                ", user_email='" + user_email + '\'' +
+                ", message_date=" + message_date +
+                ", answer_date=" + answer_date +
+                ", message='" + message + '\'' +
+                ", answer='" + answer + '\'' +
+                ", has_answer=" + has_answer +
+                '}';
+    }
 
 }
