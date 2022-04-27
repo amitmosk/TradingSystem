@@ -17,6 +17,10 @@ public class UserController {
     private Object onlineUsersLock;
     private Object idLock;
 
+    public static void load() {
+        // no for this version
+    }
+
 
     // ------------------- singleton class ----------------------------
     private static class SingletonHolder{

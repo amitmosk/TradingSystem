@@ -2,13 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="updated alot">
-      <change afterPath="$PROJECT_DIR$/src/Domain/iFacade.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/MarketSystem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/MarketFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Question.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/MarketFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/SupplyAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/SupplyAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/PaymentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/PaymentAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/iFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/MarketSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MarketSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -155,17 +158,25 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651049173381" />
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1651053794204">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651053794204" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1651051744392">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" key="run.anything.popup/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651051744392" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1651054532991">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651054532991" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Domain/iFacade.java</url>
-          <line>85</line>
+          <line>86</line>
           <properties class="Domain.iFacade" method="send_complain">
             <option name="EMULATED" value="true" />
           </properties>
@@ -173,7 +184,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Domain/iFacade.java</url>
-          <line>95</line>
+          <line>96</line>
           <properties class="Domain.iFacade" method="view_account_details">
             <option name="EMULATED" value="true" />
           </properties>

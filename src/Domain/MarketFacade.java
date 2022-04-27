@@ -24,14 +24,18 @@ public class MarketFacade implements iFacade {
     private StoreController store_controller;
     private int loggedUser;                  //id or email
     private boolean isGuest;                 //represents the state
+    private PaymentAdapter payment_adapter;
+    private SupplyAdapter supply_adapter;
 
 
-    public MarketFacade()
+    public MarketFacade(PaymentAdapter payment_adapter, SupplyAdapter supply_adapter)
     {
         this.isGuest = true;
         this.user_controller = UserController.getInstance();
         this.store_controller = StoreController.get_instance();
         this.loggedUser = -1;
+        this.payment_adapter = payment_adapter;
+        this.supply_adapter = supply_adapter;
     }
 
 
@@ -41,18 +45,6 @@ public class MarketFacade implements iFacade {
     }
 
 
-    //Requirement 1.3
-    public String payment(int price) {
-        //Tom
-        return "";
-    }
-
-    //Requirement 1.4
-    public String supply(int user_id, int purchase_id) {
-        //Tom
-        return "";
-
-    }
 
 
     //Requirement 2.1.1
@@ -796,7 +788,7 @@ public class MarketFacade implements iFacade {
 
     //Requirement 2.4.12 - View
     @Override
-    public String view_store_questions(int store_id) {
+    public String manager_view_store_questions(int store_id) {
         Response<List<String>> response = null;
         try
         {
@@ -882,8 +874,8 @@ public class MarketFacade implements iFacade {
             // get information about the payment & supply
             Cart cart = this.user_controller.getCart(this.loggedUser);
             double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
-//        this.payment(total_price, paymentInfo);
-//        this.supply(supplyInfo);
+            this.payment_adapter.payment(total_price, paymentInfo);
+            this.supply_adapter.supply(supplyInfo);
             // success
             // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             this.store_controller.update_stores_inventory(cart);

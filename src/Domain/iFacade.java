@@ -56,6 +56,7 @@ public interface iFacade {
     /**
      * Requirment 2.2.5
      */
+    // @TODO : paymentInfo, supplyInfo
     String buy_cart();
 
     /**

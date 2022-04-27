@@ -23,6 +23,10 @@ public class StoreController {
         this.stores = new HashMap<Integer, Store>();
     }
 
+    public static void load() {
+        // not for this version
+    }
+
     private int getInc_purchase_ids() {
         // TODO - incerment
         return this.purchase_ids++;
