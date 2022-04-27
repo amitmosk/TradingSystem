@@ -4,6 +4,7 @@ import Domain.Utils.Utils;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Store {
@@ -14,22 +15,22 @@ public class Store {
     private String name;
     private LocalDate foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
-    private int product_ids_counter;
     private boolean active;
     private PurchasePolicy purchasePolicy;
     private DiscountPolicy discountPolicy;
     private HashMap<Integer, Question> users_questions; // question_id x question
     private StorePurchaseHistory purchases_history;
     private StoreReview storeReview;
-    private int question_ids_counter;
+    private AtomicInteger question_ids_counter;
+    private AtomicInteger product_ids_counter;
 
 
     public Store(int store_id, String founder_email, String name) {
         this.store_id = store_id;
         this.founder_email = founder_email;
         this.name = name;
-        this.product_ids_counter = 1;
-        this.question_ids_counter = 1;
+        this.product_ids_counter = new AtomicInteger(1);
+        this.question_ids_counter = new AtomicInteger(1);
         this.active = true;
         this.foundation_date = LocalDate.now();
         this.users_questions = new HashMap<>();
@@ -38,13 +39,6 @@ public class Store {
     }
 
 
-    private int getInc_product_id() {
-        return this.product_ids_counter++;
-    }
-
-    private int getInc_question_id() {
-        return this.question_ids_counter++;
-    }
 
 
 
@@ -120,7 +114,7 @@ public class Store {
 
 
     public void add_question(String user_email, String question_message) {
-        int question_id = this.getInc_question_id();
+        int question_id = this.question_ids_counter.getAndIncrement();
         Question question_to_add = new Question(question_id, this.store_id, user_email, question_message);
         this.users_questions.put(question_id, question_to_add);
     }
@@ -267,7 +261,7 @@ public class Store {
 
     public void add_product(String user_email, String name, double price, String category, List<String> key_words, int quantity) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.add_item);
-        int product_id = this.getInc_product_id();
+        int product_id = this.product_ids_counter.getAndIncrement();
         Product product = new Product(name, this.store_id, product_id, price, category, key_words);
         inventory.put(product, quantity);
     }
