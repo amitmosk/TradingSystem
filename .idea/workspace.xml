@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="updated alot">
-      <change afterPath="$PROJECT_DIR$/src/Service/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/MarketFacade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/SupplyAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/SupplyAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/PaymentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/PaymentAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/iFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/MarketSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MarketSystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -4,11 +4,12 @@ import Domain.UserModule.Cart;
 import Domain.Utils.Utils;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class StoreController {
     private HashMap<Integer, Store> stores;
-    private int store_ids;
-    private int purchase_ids;
+    private AtomicInteger store_ids_counter;
+    private AtomicInteger purchase_ids;
     private static StoreController instance = null;
 
     public static StoreController get_instance()
@@ -18,7 +19,7 @@ public class StoreController {
         return instance;
     }
     private StoreController() {
-        this.store_ids = 1;
+        this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids = 1;
         this.stores = new HashMap<Integer, Store>();
     }
@@ -32,11 +33,7 @@ public class StoreController {
         return this.purchase_ids++;
     }
 
-    private int getInc_store_id() {
-        // TODO: atomic integer
-        this.store_ids++;
-        return this.store_ids;
-    }
+
 
     /**
      *
@@ -337,7 +334,7 @@ public class StoreController {
 
 
     public void open_store(String founder_email, String store_name) {
-        int store_id = this.getInc_store_id();
+        int store_id = this.store_ids_counter.getAndIncrement();
         Store store = new Store(store_id, founder_email, store_name);
         this.stores.put(store_id, store);
     }
