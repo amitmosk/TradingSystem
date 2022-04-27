@@ -9,7 +9,7 @@ public class PaymentAdapter {
 
 
     //Requirement 1.3
-    public String payment(int price, int paymentInfo) {
+    public String payment(double price, String paymentInfo) {
         //Tom
         return "";
     }

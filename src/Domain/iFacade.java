@@ -57,7 +57,7 @@ public interface iFacade {
      * Requirment 2.2.5
      */
     // @TODO : paymentInfo, supplyInfo
-    String buy_cart();
+    String buy_cart(String paymentInfo, String supplyInfo);
 
     /**
      * Requirment 2.3.2
@@ -94,7 +94,10 @@ public interface iFacade {
     /**
      * Requirment 2.3.8
      */
-    double view_account_details(); // wrong signature, missing method to this requirment
+    String get_user_email();
+    String get_user_name();
+    String get_user_last_name();
+
 
 
     /**

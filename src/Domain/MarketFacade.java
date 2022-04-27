@@ -22,7 +22,7 @@ import java.util.Map;
 public class MarketFacade implements iFacade {
     private UserController user_controller;
     private StoreController store_controller;
-    private int loggedUser;                  //id or email
+    private int loggedUser;                  //id
     private boolean isGuest;                 //represents the state
     private PaymentAdapter payment_adapter;
     private SupplyAdapter supply_adapter;
@@ -126,6 +126,7 @@ public class MarketFacade implements iFacade {
         try
         {
             Store store = this.store_controller.find_store_information(store_id);
+            // @TODO - StoreInformation object
             FacadeStore s = new FacadeStore(store);
             response = new Response<>(s, "Store information received successfully");
         }
@@ -259,7 +260,7 @@ public class MarketFacade implements iFacade {
     }
 
     /**
-     *
+     * Requirement 2.3.3
      * @param product_id
      * @param store_id
      * @param review
@@ -267,7 +268,6 @@ public class MarketFacade implements iFacade {
      * throws if the user is a guest
      * throws if user isn't a buyer
      */
-    //Requirement 2.3.3
     @Override
     public String add_review(int product_id, int store_id, String review)  {
         Response response = null;
@@ -803,6 +803,46 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
+    @Override
+    public void manager_answer_question(int store_id, int question_id, String answer) {
+
+    }
+
+    @Override
+    public String view_store_purchases_history(int store_id) {
+        return null;
+    }
+
+    @Override
+    public String close_store_permanently(int store_id) {
+        return null;
+    }
+
+    @Override
+    public String remove_user(String email) {
+        return null;
+    }
+
+    @Override
+    public String admin_view_users_complains() {
+        return null;
+    }
+
+    @Override
+    public void admin_answer_user_complain(String user_email, int question_id, String answer) {
+
+    }
+
+    @Override
+    public String view_user_purchases_history(String user_email) {
+        return null;
+    }
+
+    @Override
+    public String get_market_stats() {
+        return null;
+    }
+
     //Requirement 2.2.3 - Add
 
 
@@ -838,6 +878,8 @@ public class MarketFacade implements iFacade {
         return toJson(response);
     }
 
+
+
     //Requirement 2.2.3 - Remove
     @Override
     public String remove_product_from_cart(int storeID, int productID) {
@@ -867,7 +909,7 @@ public class MarketFacade implements iFacade {
 
     //Requirement 2.2.5
     @Override
-    public String buy_cart() {
+    public String buy_cart(String paymentInfo, String SupplyInfo) {
         Response<UserPurchase> response = null;
         try
         {
@@ -875,7 +917,7 @@ public class MarketFacade implements iFacade {
             Cart cart = this.user_controller.getCart(this.loggedUser);
             double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
             this.payment_adapter.payment(total_price, paymentInfo);
-            this.supply_adapter.supply(supplyInfo);
+            this.supply_adapter.supply(SupplyInfo);
             // success
             // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             this.store_controller.update_stores_inventory(cart);
@@ -914,10 +956,7 @@ public class MarketFacade implements iFacade {
     }
 
     //Requirement 2.3.8 - View
-    @Override
-    public double view_account_details() {
-        return 0;
-    }
+
 
 
     public String get_user_email(){
@@ -954,7 +993,7 @@ public class MarketFacade implements iFacade {
     }
 
 
-    public String get_user_last_name() throws Exception { //todo handle exception in try catch
+    public String get_user_last_name() {
 
         Response response = null;
         try

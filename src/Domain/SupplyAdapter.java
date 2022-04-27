@@ -5,7 +5,7 @@ public class SupplyAdapter {
     }
 
     //Requirement 1.4
-    public String supply(int user_id, int purchase_id) {
+    public String supply(String supplyInfo) {
         //Tom
         return "";
 

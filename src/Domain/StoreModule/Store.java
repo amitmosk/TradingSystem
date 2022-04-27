@@ -115,7 +115,7 @@ public class Store {
 
     public void add_question(String user_email, String question_message) {
         int question_id = this.question_ids_counter.getAndIncrement();
-        Question question_to_add = new Question(question_id, this.store_id, user_email, question_message);
+        Question question_to_add = new Question(this.store_id, user_email, question_message);
         this.users_questions.put(question_id, question_to_add);
     }
 

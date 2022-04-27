@@ -3,12 +3,12 @@ package Domain.StoreModule;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import static Domain.StoreModule.StoreManagerType.store_founder;
+import static Domain.StoreModule.StoreManagerType.*;
 import static Domain.StoreModule.StorePermission.*;
 
 public class Appointment {
     // -- fields
-    private final String manager_email;
+    private final String member_email;
     private final String appointer_email;
     private final int store_id;
     private StoreManagerType type;
@@ -16,7 +16,7 @@ public class Appointment {
 
     // -- constructors
     public Appointment(String manager_email, String appointer_email, int store_id, StoreManagerType type) {
-        this.manager_email = manager_email;
+        this.member_email = manager_email;
         this.appointer_email = appointer_email;
         this.store_id = store_id;
         this.permissions = new HashMap<StorePermission, Boolean>();
@@ -94,7 +94,7 @@ public class Appointment {
     }
 
     public String getManager_email() {
-        return manager_email;
+        return member_email;
     }
 
     // -- setters
@@ -127,38 +127,14 @@ public class Appointment {
     }
 
     public boolean is_owner() {
-        switch (this.type){
-            case store_founder:
-                return false;
-            case store_owner:
-                return true;
-            case store_manager:
-                return false;
-        }
-        throw new IllegalArgumentException("Not suppose to happen");
+        return this.type == store_owner;
     }
 
     public boolean is_founder() {
-        switch (this.type){
-            case store_founder:
-                return true;
-            case store_owner:
-                return false;
-            case store_manager:
-                return false;
-        }
-        throw new IllegalArgumentException("Not suppose to happen");
+        return this.type == store_founder;
     }
 
     public boolean is_manager() {
-        switch (this.type){
-            case store_founder:
-                return false;
-            case store_owner:
-                return false;
-            case store_manager:
-                return true;
-        }
-        throw new IllegalArgumentException("Not suppose to happen");
+        return this.type == store_manager;
     }
 }
