@@ -6,12 +6,12 @@ public class Response<T> {
     private String message;
 
     public Response(Exception exception){
-        wasException=true;
-        message=exception.getMessage();
+        wasException = true;
+        message = exception.getMessage();
     }
 
     public Response(T value, String message){
-        this.value=value;
+        this.value = value;
         this.wasException = false;
         this.message = message;
     }

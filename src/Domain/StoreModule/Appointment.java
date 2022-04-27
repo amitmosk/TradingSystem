@@ -48,6 +48,10 @@ public class Appointment {
         this.permissions.put(view_purchases_history, false);
         this.permissions.put(close_store_temporarily, false);
         this.permissions.put(open_close_store, false);
+        this.permissions.put(add_manager, false);
+        this.permissions.put(remove_manager, false);
+        this.permissions.put(add_owner, false);
+        this.permissions.put(remove_owner, false);
     }
     private void set_owner_permissions(){
         this.permissions.put(add_item, true);
@@ -64,6 +68,10 @@ public class Appointment {
         this.permissions.put(view_purchases_history, true);
         this.permissions.put(close_store_temporarily, false);
         this.permissions.put(open_close_store, false);
+        this.permissions.put(add_manager, true);
+        this.permissions.put(remove_manager, true);
+        this.permissions.put(add_owner, true);
+        this.permissions.put(remove_owner, true);
     }
     private void set_founder_permissions(){
         this.permissions.put(add_item, true);
@@ -80,6 +88,10 @@ public class Appointment {
         this.permissions.put(view_purchases_history, true);
         this.permissions.put(close_store_temporarily, true);
         this.permissions.put(open_close_store, true);
+        this.permissions.put(add_manager, true);
+        this.permissions.put(remove_manager, true);
+        this.permissions.put(add_owner, true);
+        this.permissions.put(remove_owner, true);
     }
 
     // -- getters
@@ -93,18 +105,13 @@ public class Appointment {
         return appointer_email;
     }
 
-    public String getManager_email() {
+    public String getMember_email() {
         return member_email;
     }
 
     // -- setters
     private void set_permission(StorePermission key, boolean value){
         this.permissions.put(key, value);
-    }
-    public void setType(StoreManagerType type) {
-        if (type == store_founder)
-            throw new IllegalArgumentException("Cant appoint founder");
-        this.type = type;
     }
 
     // -- methods
@@ -137,4 +144,14 @@ public class Appointment {
     public boolean is_manager() {
         return this.type == store_manager;
     }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "member_email='" + member_email + '\'' +
+                ", appointer_email='" + appointer_email + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }
+

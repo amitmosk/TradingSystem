@@ -40,7 +40,6 @@ public class StoreController {
      */
     public void close_store_temporarily(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
-
         store.close_store_temporarily(user_email);
         // TODO : update DB @ write to logger
     }
@@ -72,7 +71,7 @@ public class StoreController {
      * @throws IllegalArgumentException the manager isn't appointed by user,
      * @throws IllegalArgumentException if the user asking change his own permissions.
      */
-    public void edit_manager_specific_permissions(String user_email, String manager_email, int store_id, LinkedList<StorePermission> permissions){
+    public void edit_manager_specific_permissions(String user_email, String manager_email, int store_id, LinkedList<StorePermission> permissions) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         store.set_permissions(user_email, manager_email, permissions);
         // TODO: 22/04/2022 : update DB @ write to logger
@@ -89,7 +88,8 @@ public class StoreController {
      */
     public String view_store_management_information(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
-        return store.view_store_management_information(user_email);
+        StoreManagersInfo info = store.view_store_management_information(user_email);
+        return info.get_management_information();
         // TODO: write to logger
 
     }
@@ -146,10 +146,10 @@ public class StoreController {
      * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return true if the store was open and now we close it
      */
-    public boolean close_store_permanently(int store_id)
+    public void close_store_permanently(int store_id)
     {
         Store store = this.get_store_by_store_id(store_id);
-        return store.close_store_permanently();
+        store.close_store_permanently();
         // TODO: update DB @ write to logger
     }
 
@@ -192,20 +192,15 @@ public class StoreController {
      * @throws IllegalArgumentException if store is not exist
      * @throws IllegalArgumentException if store is not active
      */
-    public String find_product_information(int product_id, int store_id) throws IllegalArgumentException {
+    public Product find_product_information(int product_id, int store_id) throws IllegalArgumentException {
         Store s = get_store_by_store_id(store_id); //throws exception
-        return s.get_product_information(product_id);
+        return s.getProduct_by_product_id(product_id);
 
 
 
     }
 
 
-    private boolean is_product_exist(int product_id, int store_id)
-    {
-        Store s = get_store_by_store_id(store_id); //throws exception
-        return s.is_product_exist(product_id, store_id);
-    }
 
 
     //------------------------------------------------find product by - Start ----------------------------------------------------
@@ -282,7 +277,7 @@ public class StoreController {
 
     public double check_cart_available_products_and_calc_price(Cart cart) {
         Map<Integer, Basket> baskets_of_storesID = cart.getBaskets();
-        double cart_price=0;
+        double cart_price = 0;
         for (Basket basket : baskets_of_storesID.values()){
             int store_id = basket.getStore_id();
             if(stores.containsKey(store_id))
@@ -292,7 +287,7 @@ public class StoreController {
             }
             else
             {
-                throw new IllegalArgumentException("Store does not exist - store id: "+ store_id);
+                throw new IllegalArgumentException("Store does not exist");
                 //not suppose to happen
             }
 
@@ -351,21 +346,20 @@ public class StoreController {
 
     }
 
-    public void add_owner(String user_email, String user_email_to_appoint, int store_id)
-    {
+    public void add_owner(String user_email, String user_email_to_appoint, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);//throws
         store.add_owner(user_email, user_email_to_appoint);
     }
-    public void add_manager(String user_email, String user_email_to_appoint, int store_id) {
+    public void add_manager(String user_email, String user_email_to_appoint, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);//throws
         store.add_manager(user_email, user_email_to_appoint);
     }
-    public void remove_manager(String user_email, String user_email_to_delete_appointment, int store_id) {
+    public void remove_manager(String user_email, String user_email_to_delete_appointment, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);//throws
         store.remove_manager(user_email, user_email_to_delete_appointment);
     }
 
-    public void remove_owner(String user_email, String user_email_to_delete_appointment, int store_id) {
+    public void remove_owner(String user_email, String user_email_to_delete_appointment, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);//throws
         store.remove_owner(user_email, user_email_to_delete_appointment);
     }

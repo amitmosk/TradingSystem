@@ -10,4 +10,15 @@ public abstract class PurchaseHistory {
         this.purchaseID_purchases.put(purchase.get_purchase_id(), purchase);
     }
 
+    @Override
+    public String toString() {
+        String ans = "";
+        for (Purchase p : this.purchaseID_purchases.values())
+        {
+            ans = ans + p.toString();
+        }
+        return "PurchaseHistory{" +
+                "purchaseID_purchases=" + ans +
+                '}';
+    }
 }

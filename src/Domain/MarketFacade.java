@@ -112,9 +112,8 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
-    //Requirement 2.2.1 - Store
     /**
-     *
+     * Requirement 2.2.1 - Store
      * @param store_id represents the store id
      * @return store information
      * @throws IllegalArgumentException if store does not exist
@@ -122,13 +121,12 @@ public class MarketFacade implements iFacade {
      */
     @Override
     public String find_store_information(int store_id) {
-        Response<FacadeStore> response = null;
+        Response<StoreInformation> response = null;
         try
         {
             Store store = this.store_controller.find_store_information(store_id);
-            // @TODO - StoreInformation object
-            FacadeStore s = new FacadeStore(store);
-            response = new Response<>(s, "Store information received successfully");
+            StoreInformation storeInformation = new StoreInformation(store);
+            response = new Response<>(storeInformation, "Store information received successfully");
         }
         catch (Exception e)
         {
@@ -138,9 +136,8 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
-    //Requirement 2.2.1 - Product
     /**
-     *
+     * Requirement 2.2.1 - Product
      * @param product_id
      * @param store_id
      * @return product information
@@ -149,11 +146,12 @@ public class MarketFacade implements iFacade {
      */
     @Override
     public String find_product_information(int product_id, int store_id) {
-        Response<String> response = null;
+        Response<ProductInformation> response = null;
         try
         {
-            String info = this.store_controller.find_product_information(product_id, store_id);
-            response = new Response<>(info, "Product information received successfully");
+            Product product = this.store_controller.find_product_information(product_id, store_id);
+            ProductInformation productInformation = new ProductInformation(product);
+            response = new Response<>(productInformation, "Product information received successfully");
         }
         catch (Exception e)
         {
@@ -165,11 +163,10 @@ public class MarketFacade implements iFacade {
 
 //------------------------------------------------find product by - Start ----------------------------------------------------
     /**
-     *
-     * @param product_name
+     * Requirement 2.2.2 - Name
+     * @param product_name the name of the desired product
      * @return List of Products with the specific name
      */
-    //Requirement 2.2.2 - Name
     @Override
     public String find_products_by_name(String product_name)
     {
@@ -177,7 +174,7 @@ public class MarketFacade implements iFacade {
         try
         {
             List<Product> products = this.store_controller.find_products_by_name(product_name);
-            response = new Response<List<Product>>(products, "Products received successfully");
+            response = new Response<>(products, "Products received successfully");
         }
         catch (Exception e)
         {
@@ -186,13 +183,11 @@ public class MarketFacade implements iFacade {
         }
         return this.toJson(response);
     }
-
     /**
-     *
-     * @param category
+     * Requirement 2.2.2 - Category
+     * @param category the category of the desired product
      * @return List of Products with the specific category
      */
-    //Requirement 2.2.2 - Category
     @Override
     public String find_products_by_category(String category)
     {
@@ -209,13 +204,11 @@ public class MarketFacade implements iFacade {
         }
         return this.toJson(response);
     }
-
     /**
-     *
-     * @param key_words
+     * Requirement 2.2.2 - Key_words
+     * @param key_words the keywords of the desired product
      * @return List of Products with the specific key_word
      */
-    //Requirement 2.2.2 - Key_words
     @Override
     public String find_products_by_keywords(String key_words)
     {
@@ -236,12 +229,11 @@ public class MarketFacade implements iFacade {
 
 
     /**
-     *
+     * Requirement 2.3.2
      * @param store_name name of the store to be opened
      * precondition : GUI check store name is valid
      * throws if the user is a guest
      */
-    //Requirement 2.3.2
     @Override
     public String open_store(String store_name) {
         Response response = null;
@@ -266,7 +258,7 @@ public class MarketFacade implements iFacade {
      * @param review
      * throws if Product does not exist
      * throws if the user is a guest
-     * throws if user isn't a buyer
+     * throws if user isn't a buyer of this product
      */
     @Override
     public String add_review(int product_id, int store_id, String review)  {
@@ -286,9 +278,9 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
-    //Requirement 2.3.4 - Product
+
     /**
-     *
+     * Requirement 2.3.4 - Product
      * @param product_id
      * @param store_id
      * @param rate
@@ -316,14 +308,14 @@ public class MarketFacade implements iFacade {
 
 
     /**
-     *
+     * Requirement 2.3.4 - Store
      * @param store_id id of the store
      * @param rate the rating enter by the user
      * throws if the product isn't in the store
      * throws if the user is a guest
-     * throws if user isn't a buyer
+     * throws if user isn't a buyer of this store
      */
-    //Requirement 2.3.4 - Store
+
     @Override
     public String rate_store(int store_id, int rate) {
         Response response = null;
@@ -341,9 +333,9 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
-    //Requirement 2.3.5
+
     /**
-     *
+     * Requirement 2.3.5
      * @param store_id - the question is for a specific store
      * @param question - member question
      * @return
@@ -726,12 +718,11 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
-    //Requirement 2.4.10
     /**
-     *
-     * @param store_id
+     * Requirement 2.4.10
+     * @param store_id - the store we want to re-open
      * @throws IllegalArgumentException if the store isn't exist
-     * @throws IllegalAccessException if the user hasn't permission for open store
+     * @throws IllegalAccessException if the user hasn't permission for re-open store
      * @throws IllegalArgumentException if the store is already open
      */
     @Override
@@ -741,7 +732,7 @@ public class MarketFacade implements iFacade {
         {
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.open_close_store(user_email, store_id);
-            response = new Response<>(null, "Store reopen successfully");
+            response = new Response<>(null, "Store re-open successfully");
         }
         catch (Exception e)
         {
@@ -750,14 +741,13 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
-    //Requirement 2.4.11
     /**
-     *
-     * @param store_id
+     * Requirement 2.4.11
+     * @param store_id - the store we want to get information about
      * @return String with all the information
-     * @throws IllegalArgumentException if the store isn't exist
+     * @throws IllegalArgumentException if the store doesn't exist
      * @throws IllegalArgumentException if the store isn't active
-     * @throws IllegalAccessException if the user hasn't permission for view store managment information
+     * @throws IllegalAccessException if the user hasn't permission for view store management information
      *
      */
     @Override
@@ -778,15 +768,13 @@ public class MarketFacade implements iFacade {
 
 
     /**
-     *
-     * @param store_id
+     * Requirement 2.4.12
+     * @param store_id - the store we want to get information about
      * @throws IllegalArgumentException if the store isn't exist
      * @throws IllegalArgumentException if the store isn't active
      * @throws IllegalAccessException if the user hasn't permission for view store questions
      * @return all the questions
      */
-
-    //Requirement 2.4.12 - View
     @Override
     public String manager_view_store_questions(int store_id) {
         Response<List<String>> response = null;
@@ -803,20 +791,28 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
+    /**
+     * Requirement 2.4.12
+     * @param store_id - each question is related to store
+     * @param question_id - each time the manager answer one question only
+     * @param answer - manager answer
+     * @return
+     */
     @Override
-    public void manager_answer_question(int store_id, int question_id, String answer) {
-
+    public String manager_answer_question(int store_id, int question_id, String answer) {
+        Response response = null;
+        try
+        {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            this.store_controller.answer_question(user_email, store_id, question_id, answer);
+            response = new Response("","manager answer the question successfully");
+        }
+        catch (Exception e){
+            response = new Response(e);
+        }
+        return this.toJson(response);
     }
 
-    @Override
-    public String view_store_purchases_history(int store_id) {
-        return null;
-    }
-
-    @Override
-    public String close_store_permanently(int store_id) {
-        return null;
-    }
 
     @Override
     public String remove_user(String email) {
@@ -907,7 +903,15 @@ public class MarketFacade implements iFacade {
     }
 
 
-    //Requirement 2.2.5
+    /**
+     * Requirement 2.2.5
+     * @param paymentInfo info of payment
+     * @param SupplyInfo info of supply
+     * throws if Store does not exist
+     * throws if Product is not exist
+     * throws if a Product from the cart is not available
+     * @return
+     */
     @Override
     public String buy_cart(String paymentInfo, String SupplyInfo) {
         Response<UserPurchase> response = null;
@@ -918,11 +922,10 @@ public class MarketFacade implements iFacade {
             double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
             this.payment_adapter.payment(total_price, paymentInfo);
             this.supply_adapter.supply(SupplyInfo);
-            // success
             // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             this.store_controller.update_stores_inventory(cart);
             UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser);
-            // failed
+            response = new Response(userPurchase,"Purchase done successfully");
         }
         catch (Exception e)
         {
@@ -930,7 +933,6 @@ public class MarketFacade implements iFacade {
         }
         return this.toJson(response);
     }
-
 
     //Requirement 2.3.6
     @Override
@@ -1007,11 +1009,74 @@ public class MarketFacade implements iFacade {
 
         }
         return this.toJson(response);
+    }
+
+    /**
+     * Requirement 2.6.1
+     * @param store_id
+     * @throws IllegalArgumentException if the store isn't exist
+     * @throws IllegalAccessException if the user isn't Admin
+     * @throws IllegalArgumentException if the store is already close
+     */
+
+    public String close_store_permanently(int store_id)
+    {
+        Response response = null;
+        try
+        {
+            this.checkAdminPermission(loggedUser); // throws
+            this.store_controller.close_store_permanently(store_id);
+            response = new Response<>(null, "Store closed permanently");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
 
 
 
+
+    /**
+     * Requirement 2.4.13
+     * @param store_id
+     * @return
+     */
+    @Override
+    public String view_store_purchases_history(int store_id) {
+        // TODO: add admin to permissions & stores should know who is the admin of the system
+        Response<String> response = null;
+        try
+        {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            String answer = this.store_controller.view_store_purchases_history(user_email, store_id);
+            response = new Response<>(answer, "Store purchases history received successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+
+
+
+
+
+
+
+
+
+    private void checkAdminPermission(int loggedUser) {
+        // TODO: GAL EYLON
     }
 }
+
+
+
+
 /*
 
 

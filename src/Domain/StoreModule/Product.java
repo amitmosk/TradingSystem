@@ -72,10 +72,6 @@ public class Product {
         this.store_id = store_id;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
-    }
-
     public void setPrice(double price) {
         this.price = price;
     }
