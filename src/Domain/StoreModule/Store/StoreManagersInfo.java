@@ -21,4 +21,8 @@ public class StoreManagersInfo {
         }
         return answer.toString();
     }
+
+    public Appointment getMemberAppopintment(String email){
+        return this.managers.get(email);
+    }
 }

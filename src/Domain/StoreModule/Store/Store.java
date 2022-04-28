@@ -200,6 +200,8 @@ public class Store implements iStore {
     @Override
     public void add_product(String user_email, String name, double price, String category, List<String> key_words, int quantity) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.add_item);
+        if (quantity < 0)
+            throw new IllegalArgumentException("quantity must be more then zero");
         int product_id = this.product_ids_counter.getAndIncrement();
         Product product = new Product(name, this.store_id, product_id, price, category, key_words);
         inventory.put(product, quantity);
@@ -251,6 +253,8 @@ public class Store implements iStore {
 
         return basket.getTotal_price();
     }
+
+    // check product is available - throws if no.
     public Product checkAvailablityAndGet(int product_id, int quantity) {
         Product p = this.getProduct_by_product_id(product_id);
         if (p == null)
@@ -302,8 +306,8 @@ public class Store implements iStore {
             throw new IllegalArgumentException("User to appoint is already store member");
         }
 
-        Appointment appointment_to_add = new Appointment(user_email, user_email_to_appoint, this.store_id, StoreManagerType.store_owner);
-        this.stuff_emails_and_appointments.put(user_email, appointment_to_add);
+        Appointment appointment_to_add = new Appointment(user_email_to_appoint, user_email, this.store_id, StoreManagerType.store_owner);
+        this.stuff_emails_and_appointments.put(user_email_to_appoint, appointment_to_add);
     }
     @Override
     public void add_manager(String user_email, String user_email_to_appoint) throws IllegalAccessException {
@@ -313,8 +317,8 @@ public class Store implements iStore {
         {
             throw new IllegalArgumentException("User to appoint is already store member");
         }
-        Appointment appointment_to_add = new Appointment(user_email, user_email_to_appoint, this.store_id, StoreManagerType.store_manager);
-        this.stuff_emails_and_appointments.put(user_email, appointment_to_add);
+        Appointment appointment_to_add = new Appointment(user_email_to_appoint, user_email, this.store_id, StoreManagerType.store_manager);
+        this.stuff_emails_and_appointments.put(user_email_to_appoint, appointment_to_add);
     }
     @Override
     public void remove_manager(String user_email, String user_email_to_delete_appointment) throws IllegalAccessException {

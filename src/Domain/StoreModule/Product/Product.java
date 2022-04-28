@@ -15,6 +15,8 @@ public class Product {
         this.name = name;
         this.store_id = store_id;
         this.product_id = product_id;
+        if (price < 1)
+            throw new IllegalArgumentException("price must be more then 1");
         this.price = price;
         this.productReview = new ProductReview();
         this.category = category;

@@ -1083,18 +1083,3 @@ public class MarketFacade implements iFacade {
 
 
 
-/*
-
-
-
-
-
-
-    //Requirement 2.3.9 - Personal question
-    public double add_security_personal_question() {
-        return 0;
-    }
-
-
-
-*/
