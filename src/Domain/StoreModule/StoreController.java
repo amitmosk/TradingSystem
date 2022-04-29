@@ -4,11 +4,12 @@ import Domain.UserModule.Cart;
 import Domain.Utils.Utils;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class StoreController {
     private HashMap<Integer, Store> stores;
-    private int store_ids;
-    private int purchase_ids;
+    private AtomicInteger store_ids_counter;
+    private AtomicInteger purchase_ids_counter;
     private static StoreController instance = null;
 
     public static StoreController get_instance()
@@ -18,21 +19,17 @@ public class StoreController {
         return instance;
     }
     private StoreController() {
-        this.store_ids = 1;
-        this.purchase_ids = 1;
+        this.store_ids_counter = new AtomicInteger(1);
+        this.purchase_ids_counter = new AtomicInteger(1);
         this.stores = new HashMap<Integer, Store>();
     }
 
-    private int getInc_purchase_ids() {
-        // TODO - incerment
-        return this.purchase_ids++;
+    public static void load() {
+        // not for this version
     }
 
-    private int getInc_store_id() {
-        // TODO: atomic integer
-        this.store_ids++;
-        return this.store_ids;
-    }
+
+
 
     /**
      *
@@ -93,7 +90,7 @@ public class StoreController {
     public String view_store_management_information(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         return store.view_store_management_information(user_email);
-        // TODO: 22/04/2022 : write to logger
+        // TODO: write to logger
 
     }
 
@@ -151,7 +148,6 @@ public class StoreController {
      */
     public boolean close_store_permanently(int store_id)
     {
-        // TODO: have to check that the user is admin
         Store store = this.get_store_by_store_id(store_id);
         return store.close_store_permanently();
         // TODO: update DB @ write to logger
@@ -183,9 +179,9 @@ public class StoreController {
      * @return store information
      * @throws if the store not exist
      */
-    public String find_store_information(int store_id) throws IllegalArgumentException {
+    public Store find_store_information(int store_id) throws IllegalArgumentException {
         Store store = this.get_store_by_store_id(store_id);
-        return store.toString();
+        return store;
     }
 
     /**
@@ -288,11 +284,9 @@ public class StoreController {
         Map<Integer, Basket> baskets_of_storesID = cart.getBaskets();
         double cart_price=0;
         for (Basket basket : baskets_of_storesID.values()){
-
             int store_id = basket.getStore_id();
             if(stores.containsKey(store_id))
             {
-
                 double basket_price = stores.get(store_id).check_available_products_and_calc_price(basket); // throw if not available
                 cart_price += basket_price;
             }
@@ -328,21 +322,21 @@ public class StoreController {
         for (Basket basket : baskets_of_storesID.values())
         {
             int store_id = basket.getStore_id();
-            this.stores.get(store_id).remove_basket_products_from_store(basket, this.getInc_purchase_ids());
+            this.stores.get(store_id).remove_basket_products_from_store(basket, this.purchase_ids_counter.getAndIncrement());
         }
 
     }
 
 
     public void open_store(String founder_email, String store_name) {
-        int store_id = this.getInc_store_id();
+        int store_id = this.store_ids_counter.getAndIncrement();
         Store store = new Store(store_id, founder_email, store_name);
         this.stores.put(store_id, store);
     }
 
     public void add_review(String user_email, int product_id, int store_id, String review) {
-        Store s = this.get_store_by_store_id(store_id);//throws
-        s.add_review(product_id, user_email, review);
+        Store store = this.get_store_by_store_id(store_id);//throws
+        store.add_review(product_id, user_email, review);
 
     }
 
@@ -357,15 +351,34 @@ public class StoreController {
 
     }
 
-    public void add_owner(String user_email, String user_email_to_appiont, int store_id)
+    public void add_owner(String user_email, String user_email_to_appoint, int store_id)
     {
         Store store = this.get_store_by_store_id(store_id);//throws
-        store.add_owner(user_email, user_email_to_appiont);
+        store.add_owner(user_email, user_email_to_appoint);
+    }
+    public void add_manager(String user_email, String user_email_to_appoint, int store_id) {
+        Store store = this.get_store_by_store_id(store_id);//throws
+        store.add_manager(user_email, user_email_to_appoint);
+    }
+    public void remove_manager(String user_email, String user_email_to_delete_appointment, int store_id) {
+        Store store = this.get_store_by_store_id(store_id);//throws
+        store.remove_manager(user_email, user_email_to_delete_appointment);
+    }
+
+    public void remove_owner(String user_email, String user_email_to_delete_appointment, int store_id) {
+        Store store = this.get_store_by_store_id(store_id);//throws
+        store.remove_owner(user_email, user_email_to_delete_appointment);
     }
 
     public void add_question(String user_email, int store_id, String question) {
         Store store = this.get_store_by_store_id(store_id);
         store.add_question(user_email, question);
+    }
+
+
+    public Product getProduct_by_product_id(int storeID, int productID) {
+        Store store = this.get_store_by_store_id(storeID);
+        return store.getProduct_by_product_id(productID);
     }
 }
 

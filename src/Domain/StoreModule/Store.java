@@ -4,6 +4,7 @@ import Domain.Utils.Utils;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Store {
@@ -14,22 +15,22 @@ public class Store {
     private String name;
     private LocalDate foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
-    private int product_ids_counter;
     private boolean active;
     private PurchasePolicy purchasePolicy;
     private DiscountPolicy discountPolicy;
     private HashMap<Integer, Question> users_questions; // question_id x question
     private StorePurchaseHistory purchases_history;
     private StoreReview storeReview;
-    private int question_ids_counter;
+    private AtomicInteger question_ids_counter;
+    private AtomicInteger product_ids_counter;
 
 
     public Store(int store_id, String founder_email, String name) {
         this.store_id = store_id;
         this.founder_email = founder_email;
         this.name = name;
-        this.product_ids_counter = 1;
-        this.question_ids_counter = 1;
+        this.product_ids_counter = new AtomicInteger(1);
+        this.question_ids_counter = new AtomicInteger(1);
         this.active = true;
         this.foundation_date = LocalDate.now();
         this.users_questions = new HashMap<>();
@@ -38,13 +39,6 @@ public class Store {
     }
 
 
-    private int getInc_product_id() {
-        return this.product_ids_counter++;
-    }
-
-    private int getInc_question_id() {
-        return this.question_ids_counter++;
-    }
 
 
 
@@ -120,8 +114,8 @@ public class Store {
 
 
     public void add_question(String user_email, String question_message) {
-        int question_id = this.getInc_question_id();
-        Question question_to_add = new Question(question_id, this.store_id, user_email, question_message);
+        int question_id = this.question_ids_counter.getAndIncrement();
+        Question question_to_add = new Question(this.store_id, user_email, question_message);
         this.users_questions.put(question_id, question_to_add);
     }
 
@@ -267,7 +261,7 @@ public class Store {
 
     public void add_product(String user_email, String name, double price, String category, List<String> key_words, int quantity) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.add_item);
-        int product_id = this.getInc_product_id();
+        int product_id = this.product_ids_counter.getAndIncrement();
         Product product = new Product(name, this.store_id, product_id, price, category, key_words);
         inventory.put(product, quantity);
     }
@@ -397,9 +391,92 @@ public class Store {
         {
             throw new IllegalArgumentException("User is not owner of this store");
         }
-        // @TODO : check that the user_to_appoint isnot already a manager/owner/founder
+        if (this.stuff_emails_and_appointments.get(user_email_to_appoint).is_owner() || this.stuff_emails_and_appointments.get(user_email_to_appoint).is_founder())
+        {
+            throw new IllegalArgumentException("User is already owner/founder");
+
+        }
         Appointment appointment = new Appointment(user_email, user_email_to_appoint, this.store_id, StoreManagerType.store_owner);
         this.stuff_emails_and_appointments.put(user_email, appointment);
+    }
+    public void add_manager(String user_email, String user_email_to_appoint) {
+        if(!this.stuff_emails_and_appointments.containsKey(user_email))
+        {
+            throw new IllegalArgumentException("User is not stuff member of this store");
+        }
+        if (!this.stuff_emails_and_appointments.get(user_email).is_owner())
+        {
+            throw new IllegalArgumentException("User is not owner of this store");
+        }
+        if (this.stuff_emails_and_appointments.get(user_email_to_appoint).is_manager())
+        {
+            throw new IllegalArgumentException("User is already stuff member of this store");
+        }
+        Appointment appointment = new Appointment(user_email, user_email_to_appoint, this.store_id, StoreManagerType.store_manager);
+        this.stuff_emails_and_appointments.put(user_email, appointment);
+    }
+    public void remove_manager(String user_email, String user_email_to_delete_appointment) {
+        if (this.get_number_of_owners() <= 1)
+        {
+            throw new IllegalArgumentException("Can not removed this owner - store must have at least one owner");
+        }
+        if(!this.stuff_emails_and_appointments.containsKey(user_email))
+        {
+            throw new IllegalArgumentException("User is not stuff member of this store");
+        }
+        if (!this.stuff_emails_and_appointments.get(user_email).is_owner())
+        {
+            throw new IllegalArgumentException("User is not owner of this store");
+        }
+        if (!this.stuff_emails_and_appointments.containsKey(user_email_to_delete_appointment))
+        {
+            throw new IllegalArgumentException("User to be removed is not stuff member of this store");
+        }
+        if (!this.stuff_emails_and_appointments.get(user_email_to_delete_appointment).is_owner())
+        {
+            throw new IllegalArgumentException("User to be removed is not owner/founder");
+        }
+        Appointment appointment = this.stuff_emails_and_appointments.get(user_email_to_delete_appointment);
+        if (!appointment.getAppointer_email().equals(user_email))
+        {
+            throw new IllegalArgumentException("User can not remove stuff member that is not appoint by him");
+        }
+    }
+
+    public void remove_owner(String user_email, String user_email_to_delete_appointment) {
+        if(!this.stuff_emails_and_appointments.containsKey(user_email))
+        {
+            throw new IllegalArgumentException("User is not stuff member of this store");
+        }
+        if (!this.stuff_emails_and_appointments.get(user_email).is_owner() || !this.stuff_emails_and_appointments.get(user_email).is_owner())
+        {
+            throw new IllegalArgumentException("User is not owner/founder of this store");
+        }
+        if (!this.stuff_emails_and_appointments.containsKey(user_email_to_delete_appointment))
+        {
+            throw new IllegalArgumentException("User to be removed is not stuff member of this store");
+        }
+        if (!this.stuff_emails_and_appointments.get(user_email_to_delete_appointment).is_manager())
+        {
+            throw new IllegalArgumentException("User to be removed is not manager");
+        }
+        Appointment appointment = this.stuff_emails_and_appointments.get(user_email_to_delete_appointment);
+        if (!appointment.getAppointer_email().equals(user_email))
+        {
+            throw new IllegalArgumentException("User can not remove stuff member that is not appoint by him");
+        }
+    }
+
+    private int get_number_of_owners()
+    {
+        int num = 0;
+        for (Appointment appointment:this.stuff_emails_and_appointments.values())
+        {
+            if (appointment.is_owner() || appointment.is_founder()) {
+                num++;
+            }
+        }
+        return num;
     }
 
 

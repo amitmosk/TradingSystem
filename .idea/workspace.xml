@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="finished with adapters &amp; added connect method">
+    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="updated alot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapterImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/Proxy/ExternPaymentSystemProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/Proxy/ExternPaymentSystemProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/Proxy/ExternSupplySystemProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/Proxy/ExternSupplySystemProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TradingSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TradingSystem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/MarketFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Question.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/SupplyAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/SupplyAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/PaymentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/PaymentAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/iFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tests/MarketTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +24,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -29,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="UserModule" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -49,28 +54,37 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="create.test.in.the.same.root" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../gson-2.8.2.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="Domain.StoreModule" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="Domain" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="CreateClassDialog.RecentsKey">
-      <recent name="Domain.ExternSystems" />
       <recent name="Service" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main" />
-      <module name="TradingSystem" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -84,14 +98,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Service.main" />
+      <module name="TradingSystem" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.main" />
         <item itemvalue="Application.main" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -120,21 +140,7 @@
       <option name="project" value="LOCAL" />
       <updated>1650823162108</updated>
     </task>
-    <task id="LOCAL-00003" summary="added adapters">
-      <created>1650983642409</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1650983642409</updated>
-    </task>
-    <task id="LOCAL-00004" summary="finished with adapters &amp; added connect method">
-      <created>1651220898892</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1651220898892</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,18 +151,61 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added some classes" />
     <MESSAGE value="updated alot" />
-    <MESSAGE value="added adapters" />
-    <MESSAGE value="finished with adapters &amp; added connect method" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished with adapters &amp; added connect method" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated alot" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="499" y="167" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1651049173381">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="167" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651049173381" />
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1651061529078">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651061529078" />
+    <state x="672" y="262" key="FileChooserDialogImpl" timestamp="1651061474211">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="672" y="262" key="FileChooserDialogImpl/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651061474211" />
+    <state x="325" y="62" width="1038" height="643" key="SettingsEditor" timestamp="1651061484627">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="325" y="62" width="1038" height="643" key="SettingsEditor/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651061484627" />
+    <state x="533" y="131" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1651064250754">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="533" y="131" key="com.intellij.testIntegration.createTest.CreateTestDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651064250754" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1651051744392">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" key="run.anything.popup/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651051744392" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1651054532991">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651054532991" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Domain/iFacade.java</url>
+          <line>86</line>
+          <properties class="Domain.iFacade" method="send_complain">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

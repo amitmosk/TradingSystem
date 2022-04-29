@@ -5,14 +5,15 @@ public class Response<T> {
     private boolean wasException=false;
     private String message;
 
-    public Response(Exception exception, String message){
+    public Response(Exception exception){
         wasException=true;
-        this.message=message;
+        message=exception.getMessage();
     }
 
     public Response(T value, String message){
         this.value=value;
-        this.message=message;
+        this.wasException = false;
+        this.message = message;
     }
 
     public T getValue() {
