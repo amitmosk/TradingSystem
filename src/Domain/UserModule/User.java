@@ -41,7 +41,7 @@ public class User {
 
     public synchronized boolean login(String password) throws Exception {
         boolean res = this.state.login(password);
-        this.isLogged.set(true);
+        this.isLogged.set(res);
         return res;
     }
 
