@@ -1,6 +1,6 @@
 package Domain.ExternSystems;
 
 public interface PaymentAdapter {
-    boolean pay();
+    boolean payment(double total_price, String paymentInfo);
     boolean connect();
 }

@@ -1,6 +1,6 @@
 package Domain.ExternSystems;
 
 public interface SupplyAdapter {
-    boolean supply();
+    boolean supply(String supplyInfo);
     boolean connect();
 }

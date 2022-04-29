@@ -10,8 +10,8 @@ public class PaymentAdapterImpl implements PaymentAdapter {
     }
 
     @Override
-    public boolean pay() {
-        return externPaymentSystemProxy.pay();
+    public boolean payment(double total_price, String paymentInfo) {
+        return externPaymentSystemProxy.payment(total_price,paymentInfo);
     }
 
     @Override

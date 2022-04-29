@@ -8,8 +8,8 @@ public class SupplyAdapterImpl implements SupplyAdapter {
     // TODO: logger
 
     @Override
-    public boolean supply() {
-        return this.externSupplySystemProxy.supply();
+    public boolean supply(String supplyInfo) {
+        return this.externSupplySystemProxy.supply(supplyInfo);
     }
 
     @Override
