@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="added adapters">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/Proxy/ExternPaymentSystemProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/Proxy/ExternPaymentSystemProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/Proxy/ExternSupplySystemProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/Proxy/ExternSupplySystemProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapterImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="UserModule" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -81,6 +86,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.main" />
         <item itemvalue="Application.main" />
       </list>
     </recent_temporary>
