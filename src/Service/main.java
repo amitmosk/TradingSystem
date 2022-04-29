@@ -1,10 +1,7 @@
 package Service;
 
-
-
-import Domain.SupplyAdapter;
-import Domain.UserModule.PaymentAdapter;
-
+import Domain.ExternSystems.PaymentAdapter;
+import Domain.ExternSystems.SupplyAdapter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

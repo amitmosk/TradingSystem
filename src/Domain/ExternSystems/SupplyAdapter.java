@@ -2,5 +2,5 @@ package Domain.ExternSystems;
 
 public interface SupplyAdapter {
     boolean supply(String supplyInfo);
-    boolean connect();
+    boolean connect_to_supply_system();
 }

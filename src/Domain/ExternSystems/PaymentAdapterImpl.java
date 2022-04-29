@@ -15,7 +15,7 @@ public class PaymentAdapterImpl implements PaymentAdapter {
     }
 
     @Override
-    public boolean connect() {
+    public boolean connect_to_payment_system() {
         return externPaymentSystemProxy.connect();
     }
 }

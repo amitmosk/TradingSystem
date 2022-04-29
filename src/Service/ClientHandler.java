@@ -1,8 +1,8 @@
 package Service;
 
+import Domain.ExternSystems.PaymentAdapter;
+import Domain.ExternSystems.SupplyAdapter;
 import Domain.MarketFacade;
-import Domain.SupplyAdapter;
-import Domain.UserModule.PaymentAdapter;
 import Domain.iFacade;
 
 import java.io.DataInputStream;

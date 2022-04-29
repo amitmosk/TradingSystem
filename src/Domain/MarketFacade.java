@@ -3,6 +3,8 @@ package Domain;
 import java.util.LinkedList;
 import java.util.List;
 
+import Domain.ExternSystems.PaymentAdapter;
+import Domain.ExternSystems.SupplyAdapter;
 import Domain.UserModule.*;
 import Domain.StoreModule.*;
 import com.google.gson.Gson;

@@ -13,7 +13,7 @@ public class SupplyAdapterImpl implements SupplyAdapter {
     }
 
     @Override
-    public boolean connect() {
+    public boolean connect_to_supply_system() {
         return this.externSupplySystemProxy.connect();
     }
 }
