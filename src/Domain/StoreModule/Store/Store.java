@@ -291,13 +291,13 @@ public class Store implements iStore {
             else
                 this.inventory.put(p, first_quantity - quantity_to_remove);
         }
-        int buyer_id = basket.getBuyer_id();
+        String buyer_email = basket.get_buyer_email();
         double price = basket.getTotal_price();
         Map<Integer,Integer> p_ids_quantity = basket.get_productsIds_and_quantity();
         Map<Integer,Double> p_ids_price = this.get_product_ids_and_total_price(basket);
 
 
-        StorePurchase purchase = new StorePurchase(buyer_id, purchase_id, price,
+        StorePurchase purchase = new StorePurchase(buyer_email, purchase_id, price,
                 p_ids_quantity, p_ids_price);
         this.purchases_history.insert(purchase);
 
@@ -454,7 +454,7 @@ public class Store implements iStore {
 
 
     private Double calc_product_price(Product product, int quantity) {
-        //TODO :discount policy
+        //TODO :discount policy - version 2
         return product.getPrice() * quantity;
     }
 

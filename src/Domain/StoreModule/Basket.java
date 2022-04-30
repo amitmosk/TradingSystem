@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 public class Basket {
-    private Pair<Integer, Integer> basket_id; // <user_id, store_id>
+    private Pair<String, Integer> basket_id; // <user_email, store_id>
     private Map<Product, Integer> products_and_quantities; //  product & quantity
     private double total_price;
 
-    public Basket(int store_id, int buyer_id) {
-        this.basket_id = new Pair<>(buyer_id, store_id);
+    public Basket(int store_id, String buyer_email) {
+        this.basket_id = new Pair<>(buyer_email, store_id);
         products_and_quantities = new HashMap<>();
         this.total_price=0;
     }
@@ -66,7 +66,7 @@ public class Basket {
     public double getPrice(int product_id, int quantity) {
         Product p = this.get_product_by_product_id(product_id);
         return p.getPrice() * quantity;
-        //TODO we return price without discount policy
+        //TODO we return price without discount policy - version 2
     }
     public String getName(int product_id) {
         Product p = this.get_product_by_product_id(product_id);
@@ -93,7 +93,7 @@ public class Basket {
     public int getStore_id() {
         return basket_id.getSecond();
     }
-    public int getBuyer_id() {
+    public String get_buyer_email() {
         return basket_id.getFirst();
     }
     public Map<Product, Integer> getProducts_and_quantities() {

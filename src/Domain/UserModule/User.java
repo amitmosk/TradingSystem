@@ -102,7 +102,10 @@ public class User {
     }
 
     public Basket getBasketByStoreID(int storeID) {
-        return cart.getBasket(storeID);
+        String email = "guest";
+        try{ email = get_user_email(); }
+        catch (Exception e){ }
+        return cart.getBasket(storeID,email);
     }
 
     public void addBasket(int storeID, Basket basket) {

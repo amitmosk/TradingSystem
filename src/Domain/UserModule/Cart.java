@@ -7,9 +7,9 @@ import java.util.Map;
 public class Cart {
     private Map<Integer, Basket> baskets;                // storeID,Basket
 
-    public Basket getBasket(int storeID) {
+    public Basket getBasket(int storeID, String email){
         if(!baskets.containsKey(storeID))
-            return new Basket(storeID,0); //todo check about buyer email/id fix
+            return new Basket(storeID,email);
         return baskets.get(storeID);
     }
 

@@ -54,7 +54,6 @@ public class StatisticsManager {
         this.logout_count.incrementAndGet();
     }
 
-    // TODO: add when connecting system will be implemented
     public void inc_connect_system_count() {
         this.connect_system_count.incrementAndGet();
     }
