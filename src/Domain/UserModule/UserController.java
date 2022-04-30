@@ -59,6 +59,7 @@ public class UserController {
         int cur_guest_id = ID.getAndIncrement();    // synchronized
         User newUser = new User();
         onlineUsers.put(cur_guest_id, newUser);
+        statisticsManager.inc_connect_system_count();
         return cur_guest_id;
     }
 
