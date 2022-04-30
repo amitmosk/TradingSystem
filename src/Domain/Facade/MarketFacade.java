@@ -543,7 +543,7 @@ public class MarketFacade implements iFacade {
     public String add_owner(String user_email_to_appoint, int store_id) {
         Response response = null;
         try {
-            String user_email = this.user_controller.get_email(this.g
+            String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.add_owner(user_email, user_email_to_appoint, store_id);
             response = new Response<>(null, "Owner added successfully");
             system_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") owner");
