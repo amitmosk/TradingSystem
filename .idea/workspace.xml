@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="user module for merging">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_29_2022_12_21__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_29_2022_12_21__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_16__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_16__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_23__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_23__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapterImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapterImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Facade/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/iFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Basket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Basket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/Purchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/Purchase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/StorePurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/StorePurchase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Store/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/Store.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/Cart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ClientHandler.java" afterDir="false" />
+    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="Handled todos">
+      <change afterPath="$PROJECT_DIR$/src/Domain/Utils/ErrorLogger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/Utils/SystemLogger.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650823162108</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Handled todos">
+      <created>1651330078715</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1651330078715</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -249,6 +240,7 @@
     <MESSAGE value="added some classes" />
     <MESSAGE value="updated alot" />
     <MESSAGE value="merged Store module into statistics branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="merged Store module into statistics branch" />
+    <MESSAGE value="Handled todos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Handled todos" />
   </component>
 </project>
