@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="updated alot">
-      <change afterPath="$PROJECT_DIR$/src/Domain/Statistics/Statistic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" afterDir="false" />
+    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="changed Adapters connect function name &amp; fixed calls in other classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Market.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/MarketFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/iFacade.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,16 +21,17 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/Adapters" />
+    <option name="BRANCH" value="origin/main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="UserModule" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -54,7 +59,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../שולחן העבודה/gson-2.8.2.jar" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="create.test.in.the.same.root" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../gson-2.8.2.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -63,28 +71,27 @@
     <key name="CreateClassDialog.RecentsKey">
       <recent name="Service" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="Domain" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="Domain.StoreModule" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main" />
+      <option name="MAIN_CLASS_NAME" value="Service.main" />
       <module name="TradingSystem" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.main" />
         <item itemvalue="Application.main" />
       </list>
     </recent_temporary>
@@ -103,6 +110,7 @@
       <workItem from="1650556436963" duration="595000" />
       <workItem from="1650698294469" duration="36663000" />
       <workItem from="1650898959641" duration="10674000" />
+      <workItem from="1651300197142" duration="4139000" />
     </task>
     <task id="LOCAL-00001" summary="added some classes">
       <created>1650707993931</created>
@@ -118,7 +126,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650823162108</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="changed Adapters connect function name &amp; fixed calls in other classes">
+      <created>1651224650608</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1651224650608</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,6 +154,21 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added some classes" />
     <MESSAGE value="updated alot" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated alot" />
+    <MESSAGE value="changed Adapters connect function name &amp; fixed calls in other classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed Adapters connect function name &amp; fixed calls in other classes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Domain/iFacade.java</url>
+          <line>86</line>
+          <properties class="Domain.iFacade" method="send_complain">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

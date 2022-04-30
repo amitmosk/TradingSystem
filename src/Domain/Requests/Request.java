@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Requests;
 
 public class Request {
     int storeID;

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class Question {
     private int question_id;
-    private int store_id;
     private String user_email;
     private LocalDate message_date;
     private LocalDate answer_date;
@@ -12,9 +11,8 @@ public class Question {
     private String answer;
     private boolean has_answer;
 
-    public Question(int question_id, int store_id, String user_email, String message) {
+    public Question(int question_id, String user_email, String message) {
         this.question_id = question_id;
-        this.store_id = store_id;
         this.user_email = user_email;
         this.message = message;
         this.has_answer = false;
@@ -27,6 +25,16 @@ public class Question {
         this.has_answer = true;
         this.answer_date = LocalDate.now();
     }
-
+    public String toString() {
+        return "Question{" +
+                "question_id=" + question_id +
+                ", user_email='" + user_email + '\'' +
+                ", message_date=" + message_date +
+                ", answer_date=" + answer_date +
+                ", message='" + message + '\'' +
+                ", answer='" + answer + '\'' +
+                ", has_answer=" + has_answer +
+                '}';
+    }
 
 }

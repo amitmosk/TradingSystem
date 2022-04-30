@@ -3,6 +3,8 @@ package Domain;
 import java.util.LinkedList;
 import java.util.List;
 
+import Domain.ExternSystems.PaymentAdapter;
+import Domain.ExternSystems.SupplyAdapter;
 import Domain.UserModule.*;
 import Domain.StoreModule.*;
 import com.google.gson.Gson;
@@ -19,17 +21,26 @@ import java.util.Map;
 // TODO: manage alerts
 // TODO: replace all toString calls to return the objects itself which will be converted to json
 // TODO: add FacadeProduct that holds only the fields client wont to see - and to all other objects (userPurchase, storePurchase)
-public class Market
-{
+// TODO: on edit user details functions we should call privacy when implemented
+// TODO: implement disconnect system
+
+public class MarketFacade implements iFacade {
     private UserController user_controller;
     private StoreController store_controller;
-    private int loggedUser;                  //id or email
+    private int loggedUser;                  //id
     private boolean isGuest;                 //represents the state
+    private PaymentAdapter payment_adapter;
+    private SupplyAdapter supply_adapter;
 
 
-    public Market()
+    public MarketFacade(PaymentAdapter payment_adapter, SupplyAdapter supply_adapter)
     {
-        this.init_market();
+        this.isGuest = true;
+        this.user_controller = UserController.getInstance();
+        this.store_controller = StoreController.get_instance();
+        this.loggedUser = -1;
+        this.payment_adapter = payment_adapter;
+        this.supply_adapter = supply_adapter;
     }
 
 
@@ -38,36 +49,11 @@ public class Market
         return new Gson().toJson(r);
     }
 
-    //Requirement 1.1
-    public String init_market() {
-        this.isGuest = true;
-        this.user_controller = UserController.getInstance();
-        this.store_controller = StoreController.get_instance();
-        this.loggedUser = -1;
 
-
-        //Tom
-        //connect to payment service
-        //connect to supply service
-        // load
-        return "";
-    }
-    
-    //Requirement 1.3
-    public String payment(int price) {
-        //Tom
-        return "";
-    }
-
-    //Requirement 1.4
-    public String supply(int user_id, int purchase_id) {
-        //Tom
-        return "";
-
-    }
 
 
     //Requirement 2.1.1
+    @Override
     public String guest_login() {
         //TODO: handle bugs with exception
         Response response = null;
@@ -85,6 +71,7 @@ public class Market
     }
 
     //Requirement 2.1.4
+    @Override
     public String login(String Email, String password) {
         Response response = null;
         try
@@ -101,18 +88,20 @@ public class Market
         return this.toJson(response);
     }
 
+    //TODO: change
     //Requirement 2.1.2 & 2.3.1
+    @Override
     public String logout() {
         Response response = null;
         if(isGuest) response = new Response(new Exception("guest cannot logout from the system"));
-        else response = new Response(true,"Bye Bye");
+        user_controller.logout(loggedUser);
         this.isGuest = true;
-        this.loggedUser = -1;
         return toJson(response);
     }
 
 
     //Requirement 2.1.3
+    @Override
     public String register(String Email, String pw, String name, String lastName) {
         Response response = null;
         try
@@ -136,11 +125,13 @@ public class Market
      * @throws IllegalArgumentException if store does not exist
      * @throws IllegalArgumentException if store isn't active
      */
+    @Override
     public String find_store_information(int store_id) {
         Response<FacadeStore> response = null;
         try
         {
             Store store = this.store_controller.find_store_information(store_id);
+            // @TODO - StoreInformation object
             FacadeStore s = new FacadeStore(store);
             response = new Response<>(s, "Store information received successfully");
         }
@@ -161,6 +152,7 @@ public class Market
      * @throws IllegalArgumentException if store does not exist
      * @throws IllegalArgumentException if store isn't active
      */
+    @Override
     public String find_product_information(int product_id, int store_id) {
         Response<String> response = null;
         try
@@ -183,6 +175,7 @@ public class Market
      * @return List of Products with the specific name
      */
     //Requirement 2.2.2 - Name
+    @Override
     public String find_products_by_name(String product_name)
     {
         Response<List<Product>> response = null;
@@ -205,6 +198,7 @@ public class Market
      * @return List of Products with the specific category
      */
     //Requirement 2.2.2 - Category
+    @Override
     public String find_products_by_category(String category)
     {
         Response<List<Product>> response = null;
@@ -227,6 +221,7 @@ public class Market
      * @return List of Products with the specific key_word
      */
     //Requirement 2.2.2 - Key_words
+    @Override
     public String find_products_by_keywords(String key_words)
     {
         Response<List<Product>> response = null;
@@ -252,6 +247,7 @@ public class Market
      * throws if the user is a guest
      */
     //Requirement 2.3.2
+    @Override
     public String open_store(String store_name) {
         Response response = null;
         try
@@ -269,7 +265,7 @@ public class Market
     }
 
     /**
-     *
+     * Requirement 2.3.3
      * @param product_id
      * @param store_id
      * @param review
@@ -277,7 +273,7 @@ public class Market
      * throws if the user is a guest
      * throws if user isn't a buyer
      */
-    //Requirement 2.3.3
+    @Override
     public String add_review(int product_id, int store_id, String review)  {
         Response response = null;
         try
@@ -305,6 +301,7 @@ public class Market
      * throws if the user is a guest
      * throws if user isn't a buyer
      */
+    @Override
     public String rate_product(int product_id, int store_id, int rate) {
         Response response = null;
         try
@@ -332,6 +329,7 @@ public class Market
      * throws if user isn't a buyer
      */
     //Requirement 2.3.4 - Store
+    @Override
     public String rate_store(int store_id, int rate) {
         Response response = null;
         try
@@ -358,6 +356,7 @@ public class Market
      * @throws if the store isn't exist
      *
      */
+    @Override
     public String send_question_to_store(int store_id, String question) {
         Response response = null;
         try
@@ -385,8 +384,9 @@ public class Market
      * @throws if store doesnt exist
      * @throws if there is no permission for the user
      */
+    @Override
     public String add_product_to_store(int store_id, int quantity,
-                                     String name, double price, String category, List<String> key_words) {
+                                       String name, double price, String category, List<String> key_words) {
         Response response = null;
         try
         {
@@ -406,6 +406,7 @@ public class Market
      * @param product_id
      */
     //Requirement 2.4.1 - Delete
+    @Override
     public String delete_product_from_store(int product_id, int store_id) {
         Response response = null;
         try
@@ -434,6 +435,7 @@ public class Market
      * throws IllegalArgumentException if user does not have permission to this operation
      */
     //Requirement 2.4.1 - Edit name
+    @Override
     public String edit_product_name(int product_id, int store_id, String name)  {
         Response response = null;
         try
@@ -460,6 +462,7 @@ public class Market
     //Requirement 2.4.1 - Edit Price
 
 
+    @Override
     public String edit_product_price(int product_id, int store_id, double price)  {
         Response response = null;
         try
@@ -486,6 +489,7 @@ public class Market
     //Requirement 2.4.1 - Edit category
 
 
+    @Override
     public String edit_product_category(int product_id, int store_id, String category)  {
         Response response = null;
         try
@@ -512,6 +516,7 @@ public class Market
     //Requirement 2.4.1 - Edit key words
 
 
+    @Override
     public String edit_product_key_words(int product_id, int store_id, List<String> key_words)  {
         Response response = null;
         try
@@ -533,6 +538,7 @@ public class Market
 
 
     //Requirement 2.4.3
+    @Override
     public String set_store_purchase_rules(int store_id)  {
         Response response = null;
         try
@@ -562,6 +568,7 @@ public class Market
      * @throws IllegalArgumentException User is already owner/founder
      *
      */
+    @Override
     public String add_owner(String user_email_to_appoint, int store_id) {
         Response response = null;
         try
@@ -596,6 +603,7 @@ public class Market
      * @throws IllegalArgumentException User can not remove stuff member that is not appoint by him
      */
     //Requirement 2.4.5
+    @Override
     public String delete_owner(String user_email_to_delete_appointment, int store_id) {
         Response response = null;
         try
@@ -624,6 +632,7 @@ public class Market
      * @throws IllegalArgumentException User is already stuff member of this store
      */
     //Requirement 2.4.6
+    @Override
     public String add_manager(String user_email_to_appoint, int store_id) {
         Response response = null;
         try
@@ -650,6 +659,7 @@ public class Market
      * @throws IllegalArgumentException if the manager doesnt appointed by user
      * @throws IllegalArgumentException user cant change himself permissions
      */
+    @Override
     public String edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions) {
         Response response = null;
         try
@@ -681,6 +691,7 @@ public class Market
      * @throws IllegalArgumentException User can not remove stuff member that is not appoint by him
      */
     //Requirement 2.4.8
+    @Override
     public String delete_manager(String user_email_to_delete_appointment, int store_id) {
         Response response = null;
         try
@@ -704,6 +715,7 @@ public class Market
      * @throws IllegalAccessException if the user hasn't permission for close store
      * @throws IllegalArgumentException if the store is already close
      */
+    @Override
     public String close_store_temporarily(int store_id) {
         Response response = null;
         try
@@ -727,6 +739,7 @@ public class Market
      * @throws IllegalAccessException if the user hasn't permission for open store
      * @throws IllegalArgumentException if the store is already open
      */
+    @Override
     public String open_close_store(int store_id) {
         Response response = null;
         try
@@ -752,6 +765,7 @@ public class Market
      * @throws IllegalAccessException if the user hasn't permission for view store managment information
      *
      */
+    @Override
     public String view_store_management_information(int store_id) {
         Response<String> response = null;
         try
@@ -778,7 +792,8 @@ public class Market
      */
 
     //Requirement 2.4.12 - View
-    public String view_store_questions(int store_id) {
+    @Override
+    public String manager_view_store_questions(int store_id) {
         Response<List<String>> response = null;
         try
         {
@@ -793,9 +808,15 @@ public class Market
         return this.toJson(response);
     }
 
+    @Override
+    public void manager_answer_question(int store_id, int question_id, String answer) {
+
+    }
+
     //Requirement 2.2.3 - Add
 
 
+    @Override
     public String add_product_to_cart(int storeID, int productID, int quantity) {
         Response response = null;
         try{
@@ -812,6 +833,7 @@ public class Market
     }
 
     //Requirement 2.2.4
+    @Override
     public String edit_product_quantity_in_cart(int storeID, int productID, int quantity) {
         Response response = null;
         try{
@@ -826,7 +848,10 @@ public class Market
         return toJson(response);
     }
 
+
+
     //Requirement 2.2.3 - Remove
+    @Override
     public String remove_product_from_cart(int storeID, int productID) {
         Response response = null;
         try{
@@ -844,6 +869,7 @@ public class Market
 
 
     //Requirement 2.2.4
+    @Override
     public String view_user_cart() {
         Map<Integer,Basket> cart = user_controller.getBaskets(loggedUser);
         Response<Map<Integer,Basket>> response = new Response<>(cart,"successfully received user's cart");
@@ -852,15 +878,16 @@ public class Market
 
 
     //Requirement 2.2.5
-    public String buy_cart() {
+    @Override
+    public String buy_cart(String paymentInfo, String SupplyInfo) {
         Response<UserPurchase> response = null;
         try
         {
             // get information about the payment & supply
             Cart cart = this.user_controller.getCart(this.loggedUser);
             double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
-//        this.payment(total_price, paymentInfo);
-//        this.supply(supplyInfo);
+            this.payment_adapter.payment(total_price, paymentInfo);
+            this.supply_adapter.supply(SupplyInfo);
             // success
             // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             this.store_controller.update_stores_inventory(cart);
@@ -876,12 +903,14 @@ public class Market
 
 
     //Requirement 2.3.6
+    @Override
     public double send_complain() {
         //todo implement request handler
         return 0;
     }
 
     //Requirement 2.3.7
+    @Override
     public String view_user_purchase_history(){
         Response<UserHistory> response = null;
         try
@@ -897,9 +926,7 @@ public class Market
     }
 
     //Requirement 2.3.8 - View
-    public double view_account_details() {
-        return 0;
-    }
+
 
 
     public String get_user_email(){
@@ -936,7 +963,7 @@ public class Market
     }
 
 
-    public String get_user_last_name() throws Exception { //todo handle exception in try catch
+    public String get_user_last_name() {
 
         Response response = null;
         try
@@ -950,6 +977,152 @@ public class Market
 
         }
         return this.toJson(response);
+    }
+
+    @Override
+    public String view_store_purchases_history(int store_id) {
+        return null;
+    }
+
+    @Override
+    public String close_store_permanently(int store_id) {
+        return null;
+    }
+
+    @Override
+    public String remove_user(String email) {
+        Response response = null;
+        try
+        {
+            user_controller.check_admin_permission(loggedUser);
+            user_controller.remove_user(loggedUser,email);
+            // TODO:
+            // remove all users history purchases from store ?
+            // remove all users complains & questions
+            // remove all users stores ?
+            response = new Response<>(email, email + "Has been removed successfully from the system");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String admin_view_users_complains() {
+        return null;
+    }
+
+    @Override
+    public void admin_answer_user_complain(String user_email, int question_id, String answer) {
+    }
+
+    @Override
+    public String view_user_purchases_history(String user_email) {
+        Response response = null;
+        try
+        {
+            UserHistory userHistory = user_controller.view_user_purchase_history(loggedUser);
+            response = new Response(userHistory,"received user's history successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String admin_view_user_purchases_history(String user_email) {
+        Response response = null;
+        try
+        {
+            user_controller.check_admin_permission(loggedUser);
+            UserHistory userHistory = user_controller.admin_view_user_purchase_history(user_email);
+            response = new Response(userHistory,"received user's history successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String get_market_stats() {
+        return null;
+    }
+
+    @Override
+    public String unregister(String password) {
+        Response response = null;
+        try
+        {
+            String email = user_controller.unregister(loggedUser,password);
+            // TODO:
+            // remove all users history purchases from store ?
+            // remove all users complains & questions
+            // remove all users stores ?
+            response = new Response(email,email + " unregistered successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_name(String pw, String new_name) {
+        Response response = null;
+        try
+        {
+            String email = user_controller.edit_name(loggedUser,pw,new_name);
+            response = new Response(new_name,email+" name changed to "+new_name);
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_last_name(String pw, String new_last_name) {
+        Response response = null;
+        try
+        {
+            String email = user_controller.edit_last_name(loggedUser,pw,new_last_name);
+            response = new Response(new_last_name,email+" last name changed to "+new_last_name);
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_password(String pw, String password) {
+        Response response = null;
+        try
+        {
+            String email = user_controller.edit_password(loggedUser,pw,password);
+            response = new Response(password,email+" password has been changed");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String disconnect_system() {
+        return null;
     }
 }
 /*
