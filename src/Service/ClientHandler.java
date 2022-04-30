@@ -77,6 +77,7 @@ public class ClientHandler extends Thread {
         switch (opcode) {
             case 1:
                 marketFacade.login(received, received);
+                marketFacade.logout();
                 break;
         }
         return "JSON";

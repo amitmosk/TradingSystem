@@ -177,7 +177,6 @@ public class Store implements iStore {
     }
     @Override
     public List<Product> find_products_by_key_words(String key_words) {
-        // TODO : String keywords -> List<String>
         List<Product> products = new ArrayList<>();
         for (Product p:inventory.keySet()) {
             if (p.getKey_words().contains(key_words))
