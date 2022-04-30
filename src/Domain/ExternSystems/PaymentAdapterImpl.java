@@ -1,7 +1,8 @@
 package Domain.ExternSystems;
 
 import Domain.ExternSystems.Proxy.ExternPaymentSystemProxy;
-// TODO: logger
+import Domain.Utils.SystemLogger;
+
 public class PaymentAdapterImpl implements PaymentAdapter {
     private ExternPaymentSystemProxy externPaymentSystemProxy;
 
@@ -16,6 +17,7 @@ public class PaymentAdapterImpl implements PaymentAdapter {
 
     @Override
     public boolean connect_to_payment_system() {
+        SystemLogger.getInstance().add_log("system connected to the payment system");
         return externPaymentSystemProxy.connect();
     }
 }

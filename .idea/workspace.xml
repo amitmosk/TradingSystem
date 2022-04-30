@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="changed Adapters connect function name &amp; fixed calls in other classes" />
+    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="user module for merging">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_29_2022_12_21__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_29_2022_12_21__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_16__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_16__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_23__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_23__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/PaymentAdapterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/ExternSystems/SupplyAdapterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Facade/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/iFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Basket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Basket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/Purchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/Purchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/StorePurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/StorePurchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Store/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/Store.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/Cart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ClientHandler.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +36,7 @@
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/Loggers" />
+    <option name="BRANCH" value="UserModule" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -34,6 +53,11 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="CREATE_PULL_REQUEST_DEFAULT_BRANCH" value="main" />
+    <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_USER" value="amitmosk" />
+    <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="TradingSystem" />
   </component>
   <component name="ProjectId" id="2876xWdKrdR4kdJdW37QpDIoSiU" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -75,6 +99,17 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.StoreTest2.find_products_by_name_ADD_Product">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="StoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TradingSystem" />
       <extension name="coverage">

@@ -34,8 +34,8 @@ public class UserController {
     public UserController() {
         this.ID = new AtomicInteger(0);
         this.purchaseID = new AtomicInteger(0);
-        this.users = Collections.synchronizedMap(new HashMap<>()) ;        //thread safe
-        this.onlineUsers = Collections.synchronizedMap(new HashMap<>()) ;  //thread safe
+        this.users = new ConcurrentHashMap<>() ;        //thread safe
+        this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
         this.usersLock = new Object();
         this.onlineUsersLock = new Object();
         this.idLock = new Object();
@@ -93,7 +93,7 @@ public class UserController {
     public void register(int ID, String email, String pw, String name, String lastName) throws Exception {
         synchronized (usersLock) {
             if (isRegistered(email))
-                throw new IllegalAccessException("user email already exists in the system"); //todo cannot notify about existing email
+                throw new IllegalAccessException("user email "+email+" already exists in the system");
             User user = onlineUsers.get(ID);
             user.register(email, pw, name, lastName);
             users.put(email, user);

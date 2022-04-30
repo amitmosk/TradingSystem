@@ -7,7 +7,6 @@ import java.util.Map;
 public abstract class Purchase {
     private int purchase_id;
     private double totalPrice;
-    // TODO: GAL
     private LocalDate transaction_date;
     private Map<Integer, Integer> product_and_quantity;
     private Map<Integer, Double> product_and_totalPrice;

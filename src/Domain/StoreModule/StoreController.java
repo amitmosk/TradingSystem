@@ -47,7 +47,6 @@ public class StoreController {
     public void close_store_temporarily(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         store.close_store_temporarily(user_email);
-        // TODO : update DB @ write to logger
     }
 
     /**
@@ -64,7 +63,6 @@ public class StoreController {
         }
         Store store = this.stores.get(store_id);
         store.open_close_store(user_email);
-        // TODO: 22/04/2022 : update DB @ write to logger
     }
 
     /**
@@ -80,8 +78,6 @@ public class StoreController {
     public void edit_manager_specific_permissions(String user_email, String manager_email, int store_id, LinkedList<StorePermission> permissions) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         store.set_permissions(user_email, manager_email, permissions);
-        // TODO: 22/04/2022 : update DB @ write to logger
-
     }
 
     /**
@@ -96,8 +92,6 @@ public class StoreController {
         Store store = this.get_store_by_store_id(store_id);
         StoreManagersInfo info = store.view_store_management_information(user_email);
         return info.get_management_information();
-        // TODO: write to logger
-
     }
 
     /**
@@ -111,8 +105,6 @@ public class StoreController {
     public List<String> view_store_questions(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         return store.view_store_questions(user_email);
-        // TODO: 22/04/2022 : write to logger
-
     }
 
     /**
@@ -127,7 +119,6 @@ public class StoreController {
     public void answer_question(String user_email, int store_id, int question_id, String answer) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         store.answer_question(user_email, question_id, answer);
-        // TODO: write to logger & DB
     }
 
     /**
@@ -141,8 +132,6 @@ public class StoreController {
     public String view_store_purchases_history(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
         return store.view_store_purchases_history(user_email);
-        // TODO: write to logger
-
     }
 
     /**
@@ -156,7 +145,6 @@ public class StoreController {
     {
         Store store = this.get_store_by_store_id(store_id);
         store.close_store_permanently();
-        // TODO: update DB @ write to logger
     }
 
     /**
