@@ -1,13 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="added statistics update statistics on functions">
+    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="merged Store module into statistics branch">
+      <change afterPath="$PROJECT_DIR$/docs/SystemArchitecture.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Communication/NotificationHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Communication/Question.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Communication/Request.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Communication/RequestHandler$SingletonHolder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Communication/RequestHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Facade/MarketFacade.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Facade/iFacade.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Appointment$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Appointment.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Basket.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Policy/DiscountPolicy.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Policy/PurchasePolicy.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Policy/Rule.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Product/Product.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Product/ProductInformation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Product/ProductReview.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Product/ProductReviewInformation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Purchase/Purchase.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Purchase/PurchaseHistory.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Purchase/StorePurchase.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Purchase/StorePurchaseHistory.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Store/MockStore.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Store/Store.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Store/StoreInformation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Store/StoreManagerType.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Store/StoreManagersInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Store/StoreReview.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Store/StoreReviewInformation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Store/iStore.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/StoreController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/StorePermission.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/SupplyAdapter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/Admin.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/AssignState.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/AssignUser.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/Cart.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/Guest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/History.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/PaymentAdapter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/Purchase.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/User.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/UserController$SingletonHolder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/UserController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/UserHistory.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/UserModule/UserPurchase.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Utils/Pair.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Utils/Response.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Utils/Utils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/META-INF/TradingSystem.kotlin_module" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Service/ClientHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Service/MarketSystem.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Service/main.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Tests/StoreTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/TradingSystem/Tests/StoreTest2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Policy/Rule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Product/ProductInformation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Product/ProductReviewInformation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/PurchaseHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/StorePurchaseHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/StoreInformation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/StoreManagersInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/StoreReview.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/StoreReviewInformation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/iStore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/MarketFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/iFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Use-cases.docx" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Use-cases.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Use-cases.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/whiteDiagram.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/whiteDiagram.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/FacadeStore.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/NotificationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Communication/NotificationHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/RequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Requests/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Communication/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Requests/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Communication/RequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Utils/Response.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Basket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Basket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/DiscountPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Policy/DiscountPolicy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Product/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/ProductReview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Product/ProductReview.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/Purchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/PurchaseHistory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/PurchasePolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Policy/PurchasePolicy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Communication/Question.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Rule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/Store.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreManagerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/StoreManagerType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreManagersInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StorePermission.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StorePermission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StorePurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/StorePurchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StorePurchaseHistory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreReview.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Utils/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Utils/Pair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Utils/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/iFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ClientHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,12 +117,12 @@
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/main" />
+    <option name="BRANCH" value="module-store1" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="UserModule" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -61,40 +154,116 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../gson-2.8.2.jar!/" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="Service" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="Domain.StoreModule.Store" />
+      <recent name="Domain.StoreModule" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="Domain" />
     </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="Domain.StoreModule" />
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="Service" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Service.main" />
+  <component name="RunManager" selected="JUnit.StoreTest2.find_products_by_name_ADD_Product">
+    <configuration name="StoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TradingSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Tests" />
+      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StoreTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TradingSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Tests" />
+      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest2" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StoreTest2.edit_product_category" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TradingSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Tests" />
+      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest2" />
+      <option name="METHOD_NAME" value="edit_product_category" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StoreTest2.find_products_by_name_ADD_Product" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TradingSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Tests" />
+      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest2" />
+      <option name="METHOD_NAME" value="find_products_by_name_ADD_Product" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StoreTest2.remove_basket_products_from_store" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TradingSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Tests" />
+      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest2" />
+      <option name="METHOD_NAME" value="remove_basket_products_from_store" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.main" />
-        <item itemvalue="Application.main" />
+        <item itemvalue="JUnit.StoreTest2.find_products_by_name_ADD_Product" />
+        <item itemvalue="JUnit.StoreTest2.edit_product_category" />
+        <item itemvalue="JUnit.StoreTest2.remove_basket_products_from_store" />
+        <item itemvalue="JUnit.StoreTest2" />
+        <item itemvalue="JUnit.StoreTest" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -108,8 +277,6 @@
       <workItem from="1650556436963" duration="595000" />
       <workItem from="1650698294469" duration="36663000" />
       <workItem from="1650898959641" duration="10674000" />
-      <workItem from="1651300197142" duration="4139000" />
-      <workItem from="1651318887418" duration="1750000" />
     </task>
     <task id="LOCAL-00001" summary="added some classes">
       <created>1650707993931</created>
@@ -125,21 +292,7 @@
       <option name="project" value="LOCAL" />
       <updated>1650823162108</updated>
     </task>
-    <task id="LOCAL-00003" summary="changed Adapters connect function name &amp; fixed calls in other classes">
-      <created>1651224650608</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1651224650608</updated>
-    </task>
-    <task id="LOCAL-00004" summary="added statistics update statistics on functions">
-      <created>1651316963766</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1651316963766</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,22 +313,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added some classes" />
     <MESSAGE value="updated alot" />
-    <MESSAGE value="changed Adapters connect function name &amp; fixed calls in other classes" />
-    <MESSAGE value="added statistics update statistics on functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="added statistics update statistics on functions" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Domain/iFacade.java</url>
-          <line>86</line>
-          <properties class="Domain.iFacade">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="merged Store module into statistics branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="merged Store module into statistics branch" />
   </component>
 </project>

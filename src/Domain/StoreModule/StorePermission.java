@@ -15,6 +15,11 @@ public enum StorePermission
     edit_purchase_policy,
     view_purchases_history,
     close_store_temporarily,
-    open_close_store
+    open_close_store,
+    add_manager,
+    remove_manager,
+    add_owner,
+    remove_owner,
+    edit_permissions,
 
 }

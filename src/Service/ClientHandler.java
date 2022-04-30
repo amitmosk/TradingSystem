@@ -2,8 +2,8 @@ package Service;
 
 import Domain.ExternSystems.PaymentAdapter;
 import Domain.ExternSystems.SupplyAdapter;
-import Domain.MarketFacade;
-import Domain.iFacade;
+import Domain.Facade.MarketFacade;
+import Domain.Facade.iFacade;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -77,6 +77,7 @@ public class ClientHandler extends Thread {
         switch (opcode) {
             case 1:
                 marketFacade.login(received, received);
+                break;
         }
         return "JSON";
     }
