@@ -84,7 +84,7 @@ public interface iFacade {
     /**
      * Requirment 2.3.6
      */
-    double send_complain(); // wrong signature
+    String send_question_to_admin(String question); // wrong signature
 
     /**
      * Requirment 2.3.7
@@ -186,8 +186,8 @@ public interface iFacade {
     /**
      * Requirment 2.6.3
      */
-    String admin_view_users_complains();
-    void admin_answer_user_complain(String user_email, int question_id, String answer);
+    String admin_view_users_questions();
+    String admin_answer_user_question(int question_id, String answer);
     /**
      * Requirment 2.6.4
      */

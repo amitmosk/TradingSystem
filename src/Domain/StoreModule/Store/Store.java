@@ -1,6 +1,7 @@
 package Domain.StoreModule.Store;
 
 import Domain.Communication.Question;
+import Domain.Communication.QuestionHandler;
 import Domain.StoreModule.*;
 import Domain.StoreModule.Policy.DiscountPolicy;
 import Domain.StoreModule.Policy.PurchasePolicy;
@@ -27,10 +28,8 @@ public class Store implements iStore {
     private boolean active;
     private PurchasePolicy purchasePolicy;
     private DiscountPolicy discountPolicy;
-    private HashMap<Integer, Question> users_questions; // question_id x question
     private StorePurchaseHistory purchases_history;
     private StoreReview storeReview;
-    private AtomicInteger question_ids_counter;
     private AtomicInteger product_ids_counter;
 
 
@@ -41,10 +40,8 @@ public class Store implements iStore {
         this.founder_email = founder_email;
         this.name = name;
         this.product_ids_counter = new AtomicInteger(1);
-        this.question_ids_counter = new AtomicInteger(1);
         this.active = true;
         this.foundation_date = LocalDate.now();
-        this.users_questions = new HashMap<>();
         this.storeReview = new StoreReview();
         this.purchases_history = new StorePurchaseHistory();
         this.inventory = new HashMap<>();
@@ -83,15 +80,21 @@ public class Store implements iStore {
     @Override
     public void close_store_permanently() {
         this.active = false;
-        // TODO: send message to all of the managers & owners.
+        String message = "Store was closed permanently at " + LocalDate.now().toString();
+        this.send_message_to_the_store_stuff(message);
+
 //        this.founder_email = null;
         this.stuff_emails_and_appointments = null;
     }
+
+
+
     @Override
     public void close_store_temporarily(String user_email) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.close_store_temporarily);
         this.active = false;
-        // TODO:  send message to all of the managers & owners.
+        String message = "Store was closed close_store_temporarily at " + LocalDate.now().toString();
+        this.send_message_to_the_store_stuff(message);
     }
     @Override
     public void open_close_store(String user_email) throws IllegalAccessException {
@@ -99,8 +102,10 @@ public class Store implements iStore {
         if (this.is_active())
             throw new IllegalArgumentException("The store is already open");
         this.active = true;
-        // TODO: send message to all of the managers & owners.
+        String message = "Store was re-open at " + LocalDate.now().toString();
+        this.send_message_to_the_store_stuff(message);
     }
+
     @Override
     public StoreManagersInfo view_store_management_information(String user_email) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.view_permissions);
@@ -127,29 +132,17 @@ public class Store implements iStore {
     @Override
     public List<String> view_store_questions(String user_email) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.view_users_questions);
-        List<String> questionsList_to_return = new LinkedList<String>();
-        for (Question question : this.users_questions.values())
-        {
-            String temp = question.toString();
-            questionsList_to_return.add(temp);
-        }
-        return questionsList_to_return;
+        return QuestionHandler.getInstance().view_store_questions(store_id);
     }
     @Override
     public void add_question(String user_email, String question_message) {
-        int question_id = this.question_ids_counter.getAndIncrement();
-        Question question_to_add = new Question(this.store_id, user_email, question_message);
-        this.users_questions.put(question_id, question_to_add);
+        QuestionHandler.getInstance().add_buyer_question(question_message, user_email, store_id);
     }
     @Override
     public void answer_question(String user_email, int question_id, String answer) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.view_users_questions);
-        if (!this.users_questions.containsKey(question_id))
-        {
-            throw new IllegalArgumentException("Question does not exist");
-        }
-        Question question = this.users_questions.get(question_id);
-        question.setAnswer(answer);
+        QuestionHandler.getInstance().answer_buyer_question(question_id, answer);
+
     }
     @Override
     public String view_store_purchases_history(String user_email) throws IllegalAccessException {
@@ -375,45 +368,7 @@ public class Store implements iStore {
     }
 
 
-    // @TODO : we changed a lot of fields, have to match the method
-    public String toString() {
-        String founder_name = "----------------------";
-        StringBuilder info = new StringBuilder();
-        info.append("Store info: "+this.name+"\n");
-        info.append("\tStore founder: "+ founder_name +"\n");
-        info.append("\tStore owners: ");
-        for (String email : stuff_emails_and_appointments.keySet())
-        {
-            String name = "";
-            info.append(name+", ");
-        }
-        info.append("\n");
-        info.append("\tStore managers: ");
-        for (String email : stuff_emails_and_appointments.keySet())
-        {
-            String name = "";
-            info.append(name+", ");
-        }
-        info.append("\n");
-        info.append("\tfoundation date: "+ Utils.DateToString(this.foundation_date)+"\n");
 
-
-        //products
-
-
-        String is_active;
-        if (active)
-            is_active="Yes";
-        else
-            is_active="No";
-
-        info.append("\tactive: "+ is_active+"\n");
-        info.append("\tpurchase policy: "+ this.purchasePolicy+"\n");
-        info.append("\tdiscount policy: "+ this.discountPolicy+"\n");
-
-        return info.toString();
-
-    }
     @Override
     public Product getProduct_by_product_id(int product_id) {
         for (Product product : this.inventory.keySet()){
@@ -456,6 +411,13 @@ public class Store implements iStore {
     private Double calc_product_price(Product product, int quantity) {
         //TODO :discount policy - version 2
         return product.getPrice() * quantity;
+    }
+
+    private void send_message_to_the_store_stuff(String message) {
+        for (String email : this.stuff_emails_and_appointments.keySet()) {
+            if (!email.equals(founder_email))
+                QuestionHandler.getInstance().add_system_question(message, email);
+        }
     }
 
 
