@@ -2,14 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="updated alot">
-      <change afterPath="$PROJECT_DIR$/src/Tests/StoreTest2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Product/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Product/Product.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Basket.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Basket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Purchase/Purchase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Purchase/Purchase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Purchase/PurchaseHistory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Purchase/PurchaseHistory.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Store/Store.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/StoreModule/Store/Store.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Product/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Product/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Utils/Pair.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Utils/Pair.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Tests/StoreTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TradingSystem/Tests/StoreTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Tests/StoreTest2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TradingSystem/Tests/StoreTest2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Basket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Basket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/Purchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/Purchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/PurchaseHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Purchase/PurchaseHistory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Store/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/Store.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/Store/StoreManagersInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/Store/StoreManagersInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/StoreModule/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Utils/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Utils/Pair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/MarketSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MarketSystem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +89,7 @@
       <recent name="Service" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.StoreTest">
+  <component name="RunManager" selected="JUnit.StoreTest2.find_products_by_name_ADD_Product">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -111,7 +118,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StoreTest.fail_remove_owner_AppointBySomeoneElse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="StoreTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TradingSystem" />
       <extension name="coverage">
         <pattern>
@@ -120,14 +127,29 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="Tests" />
-      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest" />
-      <option name="METHOD_NAME" value="fail_remove_owner_AppointBySomeoneElse" />
+      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest2" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StoreTest2.edit_product_category" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TradingSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Tests" />
+      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest2" />
+      <option name="METHOD_NAME" value="edit_product_category" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StoreTest.fail_view_store_management_information_NoPermission" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="StoreTest2.find_products_by_name_ADD_Product" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TradingSystem" />
       <extension name="coverage">
         <pattern>
@@ -136,14 +158,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="Tests" />
-      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest" />
-      <option name="METHOD_NAME" value="fail_view_store_management_information_NoPermission" />
+      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest2" />
+      <option name="METHOD_NAME" value="find_products_by_name_ADD_Product" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StoreTest.set_permissions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="StoreTest2.remove_basket_products_from_store" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TradingSystem" />
       <extension name="coverage">
         <pattern>
@@ -152,24 +174,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="Tests" />
-      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest" />
-      <option name="METHOD_NAME" value="set_permissions" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="StoreTest.success_view_store_management_information" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="TradingSystem" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Tests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Tests" />
-      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest" />
-      <option name="METHOD_NAME" value="success_view_store_management_information" />
+      <option name="MAIN_CLASS_NAME" value="Tests.StoreTest2" />
+      <option name="METHOD_NAME" value="remove_basket_products_from_store" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -177,11 +183,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.StoreTest2.find_products_by_name_ADD_Product" />
+        <item itemvalue="JUnit.StoreTest2.edit_product_category" />
+        <item itemvalue="JUnit.StoreTest2.remove_basket_products_from_store" />
+        <item itemvalue="JUnit.StoreTest2" />
         <item itemvalue="JUnit.StoreTest" />
-        <item itemvalue="JUnit.StoreTest.set_permissions" />
-        <item itemvalue="JUnit.StoreTest.fail_view_store_management_information_NoPermission" />
-        <item itemvalue="JUnit.StoreTest.success_view_store_management_information" />
-        <item itemvalue="JUnit.StoreTest.fail_remove_owner_AppointBySomeoneElse" />
       </list>
     </recent_temporary>
   </component>
@@ -243,54 +249,58 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651049173381" />
-    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1651088888158">
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1651215604676">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651088888158" />
+    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651215604676" />
     <state x="672" y="262" key="FileChooserDialogImpl" timestamp="1651061474211">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="672" y="262" key="FileChooserDialogImpl/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651061474211" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1651148443231">
+    <state width="1493" height="261" key="GridCell.Tab.0.bottom" timestamp="1651218884161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651148443231" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1651148443231">
+    <state width="1493" height="261" key="GridCell.Tab.0.bottom/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651218884161" />
+    <state width="1493" height="261" key="GridCell.Tab.0.center" timestamp="1651218884161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651148443231" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1651148443231">
+    <state width="1493" height="261" key="GridCell.Tab.0.center/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651218884161" />
+    <state width="1493" height="261" key="GridCell.Tab.0.left" timestamp="1651218884161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651148443231" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1651148443231">
+    <state width="1493" height="261" key="GridCell.Tab.0.left/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651218884161" />
+    <state width="1493" height="261" key="GridCell.Tab.0.right" timestamp="1651218884161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651148443231" />
-    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1651146691706">
+    <state width="1493" height="261" key="GridCell.Tab.0.right/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651218884161" />
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1651218884162">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.bottom/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651146691706" />
-    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1651146691706">
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651218884162" />
+    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1651218884161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.center/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651146691706" />
-    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1651146691706">
+    <state width="1493" height="261" key="GridCell.Tab.1.center/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651218884161" />
+    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1651218884161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.left/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651146691706" />
-    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1651146691706">
+    <state width="1493" height="261" key="GridCell.Tab.1.left/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651218884161" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1651218884162">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.right/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651146691706" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651218884162" />
     <state x="325" y="62" width="1038" height="643" key="SettingsEditor" timestamp="1651061484627">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="325" y="62" width="1038" height="643" key="SettingsEditor/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651061484627" />
-    <state x="533" y="131" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1651128080726">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1651223509680">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="533" y="131" key="com.intellij.testIntegration.createTest.CreateTestDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651128080726" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651223509680" />
+    <state x="533" y="131" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1651224375761">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="533" y="131" key="com.intellij.testIntegration.createTest.CreateTestDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651224375761" />
     <state x="463" y="144" width="609" height="536" key="find.popup" timestamp="1651091072994">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

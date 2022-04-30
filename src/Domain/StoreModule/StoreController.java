@@ -6,12 +6,15 @@ import Domain.StoreModule.Store.StoreManagersInfo;
 import Domain.UserModule.Cart;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StoreController {
-    private HashMap<Integer, Store> stores;
+    private ConcurrentHashMap<Integer, Store> stores;
     private AtomicInteger store_ids_counter;
     private AtomicInteger purchase_ids_counter;
+    private Object storesLock;
+
     private static StoreController instance = null;
 
     public static StoreController get_instance()
@@ -23,7 +26,8 @@ public class StoreController {
     private StoreController() {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
-        this.stores = new HashMap<Integer, Store>();
+        this.stores = new ConcurrentHashMap<>();
+        this.storesLock = new Object();
     }
 
     public static void load() {

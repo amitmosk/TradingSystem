@@ -291,8 +291,14 @@ public class Store implements iStore {
             else
                 this.inventory.put(p, first_quantity - quantity_to_remove);
         }
-        StorePurchase purchase = new StorePurchase(basket.getBuyer_id(), purchase_id, basket.getTotal_price(),
-                basket.get_productsIds_and_quantity(), this.get_product_ids_and_total_price(basket));
+        int buyer_id = basket.getBuyer_id();
+        double price = basket.getTotal_price();
+        Map<Integer,Integer> p_ids_quantity = basket.get_productsIds_and_quantity();
+        Map<Integer,Double> p_ids_price = this.get_product_ids_and_total_price(basket);
+
+
+        StorePurchase purchase = new StorePurchase(buyer_id, purchase_id, price,
+                p_ids_quantity, p_ids_price);
         this.purchases_history.insert(purchase);
 
     }

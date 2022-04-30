@@ -1,9 +1,14 @@
 package Domain.StoreModule.Purchase;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class PurchaseHistory {
     private Map<Integer, Purchase> purchaseID_purchases;
+
+    public PurchaseHistory() {
+        this.purchaseID_purchases = new HashMap<Integer, Purchase>();
+    }
 
     public void insert(Purchase purchase)
     {
