@@ -37,4 +37,24 @@ public class AssignUser extends AssignState {
     public UserHistory view_user_purchase_history(){
         return this.userHistory;
     }
+
+    @Override
+    public void unregister(String password) throws Exception {
+        if(!password.equals(this.pw)) throw new Exception("cannot sign out from system due to wrong password inserted");
+    }
+
+    public void edit_name(String pw, String new_name) throws Exception {
+        if(!pw.equals(this.pw)) throw new Exception("password does not match to current password");
+        this.name = new_name;
+    }
+
+    public void edit_password(String pw, String password) throws Exception {
+        if(!pw.equals(this.pw)) throw new Exception("password does not match to current password");
+        this.pw = password;
+    }
+
+    public void edit_last_name(String pw, String new_last_name) throws Exception {
+        if(!pw.equals(this.pw)) throw new Exception("password does not match to current password");
+        this.name = new_last_name;
+    }
 }

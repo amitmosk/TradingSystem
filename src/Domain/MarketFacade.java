@@ -21,6 +21,9 @@ import java.util.Map;
 // TODO: manage alerts
 // TODO: replace all toString calls to return the objects itself which will be converted to json
 // TODO: add FacadeProduct that holds only the fields client wont to see - and to all other objects (userPurchase, storePurchase)
+// TODO: on edit user details functions we should call privacy when implemented
+// TODO: implement disconnect system
+
 public class MarketFacade implements iFacade {
     private UserController user_controller;
     private StoreController store_controller;
@@ -85,14 +88,14 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
+    //TODO: change
     //Requirement 2.1.2 & 2.3.1
     @Override
     public String logout() {
         Response response = null;
         if(isGuest) response = new Response(new Exception("guest cannot logout from the system"));
-        else response = new Response(true,"Bye Bye");
+        user_controller.logout(loggedUser);
         this.isGuest = true;
-        this.loggedUser = -1;
         return toJson(response);
     }
 
@@ -810,41 +813,6 @@ public class MarketFacade implements iFacade {
 
     }
 
-    @Override
-    public String view_store_purchases_history(int store_id) {
-        return null;
-    }
-
-    @Override
-    public String close_store_permanently(int store_id) {
-        return null;
-    }
-
-    @Override
-    public String remove_user(String email) {
-        return null;
-    }
-
-    @Override
-    public String admin_view_users_complains() {
-        return null;
-    }
-
-    @Override
-    public void admin_answer_user_complain(String user_email, int question_id, String answer) {
-
-    }
-
-    @Override
-    public String view_user_purchases_history(String user_email) {
-        return null;
-    }
-
-    @Override
-    public String get_market_stats() {
-        return null;
-    }
-
     //Requirement 2.2.3 - Add
 
 
@@ -1009,9 +977,152 @@ public class MarketFacade implements iFacade {
 
         }
         return this.toJson(response);
+    }
 
+    @Override
+    public String view_store_purchases_history(int store_id) {
+        return null;
+    }
 
+    @Override
+    public String close_store_permanently(int store_id) {
+        return null;
+    }
 
+    @Override
+    public String remove_user(String email) {
+        Response response = null;
+        try
+        {
+            user_controller.check_admin_permission(loggedUser);
+            user_controller.remove_user(loggedUser,email);
+            // TODO:
+            // remove all users history purchases from store ?
+            // remove all users complains & questions
+            // remove all users stores ?
+            response = new Response<>(email, email + "Has been removed successfully from the system");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String admin_view_users_complains() {
+        return null;
+    }
+
+    @Override
+    public void admin_answer_user_complain(String user_email, int question_id, String answer) {
+    }
+
+    @Override
+    public String view_user_purchases_history(String user_email) {
+        Response response = null;
+        try
+        {
+            UserHistory userHistory = user_controller.view_user_purchase_history(loggedUser);
+            response = new Response(userHistory,"received user's history successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String admin_view_user_purchases_history(String user_email) {
+        Response response = null;
+        try
+        {
+            user_controller.check_admin_permission(loggedUser);
+            UserHistory userHistory = user_controller.admin_view_user_purchase_history(user_email);
+            response = new Response(userHistory,"received user's history successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String get_market_stats() {
+        return null;
+    }
+
+    @Override
+    public String unregister(String password) {
+        Response response = null;
+        try
+        {
+            String email = user_controller.unregister(loggedUser,password);
+            // TODO:
+            // remove all users history purchases from store ?
+            // remove all users complains & questions
+            // remove all users stores ?
+            response = new Response(email,email + " unregistered successfully");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_name(String pw, String new_name) {
+        Response response = null;
+        try
+        {
+            String email = user_controller.edit_name(loggedUser,pw,new_name);
+            response = new Response(new_name,email+" name changed to "+new_name);
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_last_name(String pw, String new_last_name) {
+        Response response = null;
+        try
+        {
+            String email = user_controller.edit_last_name(loggedUser,pw,new_last_name);
+            response = new Response(new_last_name,email+" last name changed to "+new_last_name);
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_password(String pw, String password) {
+        Response response = null;
+        try
+        {
+            String email = user_controller.edit_password(loggedUser,pw,password);
+            response = new Response(password,email+" password has been changed");
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String disconnect_system() {
+        return null;
     }
 }
 /*

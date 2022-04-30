@@ -198,4 +198,14 @@ public interface iFacade {
      */
     String get_market_stats();
 
+    // ---------------- added functions ------------------------------------------
+    String unregister(String password); // TODO:  add security functions
+    String edit_name(String pw, String new_name);
+    String edit_last_name(String pw, String new_last_name);
+    String edit_password(String pw, String password);
+    String admin_view_user_purchases_history(String user_email);
+    String disconnect_system();
+
+    //TODO: privacy features
+
 }
