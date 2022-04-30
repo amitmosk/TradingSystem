@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="changed Adapters connect function name &amp; fixed calls in other classes">
+    <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="added statistics update statistics on functions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/MarketFacade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/iFacade.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +109,7 @@
       <workItem from="1650698294469" duration="36663000" />
       <workItem from="1650898959641" duration="10674000" />
       <workItem from="1651300197142" duration="4139000" />
+      <workItem from="1651318887418" duration="1750000" />
     </task>
     <task id="LOCAL-00001" summary="added some classes">
       <created>1650707993931</created>
@@ -129,7 +132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651224650608</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added statistics update statistics on functions">
+      <created>1651316963766</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1651316963766</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,7 +161,8 @@
     <MESSAGE value="added some classes" />
     <MESSAGE value="updated alot" />
     <MESSAGE value="changed Adapters connect function name &amp; fixed calls in other classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed Adapters connect function name &amp; fixed calls in other classes" />
+    <MESSAGE value="added statistics update statistics on functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="added statistics update statistics on functions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

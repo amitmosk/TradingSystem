@@ -39,7 +39,8 @@ public class MarketFacade implements iFacade {
         this.isGuest = true;
         this.user_controller = UserController.getInstance();
         this.store_controller = StoreController.get_instance();
-        this.loggedUser = -1;
+        //Requirement 2.1.1 - guest log in
+        this.loggedUser = user_controller.guest_login();
         this.payment_adapter = payment_adapter;
         this.supply_adapter = supply_adapter;
     }
@@ -48,27 +49,6 @@ public class MarketFacade implements iFacade {
     private String toJson(Response r)
     {
         return new Gson().toJson(r);
-    }
-
-
-
-
-    //Requirement 2.1.1
-    @Override
-    public String guest_login() {
-        //TODO: handle bugs with exception
-        Response response = null;
-        try
-        {
-            int logged = user_controller.guest_login();
-            this.loggedUser = logged;
-            response = new Response<>(null, "Hey guest, Welcome to the trading system market!");
-        }
-        catch (Exception e)
-        {
-            response = new Response(e);
-        }
-        return toJson(response);
     }
 
     //Requirement 2.1.4

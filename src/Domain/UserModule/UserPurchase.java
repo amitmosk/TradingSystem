@@ -49,8 +49,3 @@ public class UserPurchase extends Purchase {
         return this.storeId_productsIDS.get(storeID).contains(productID);
     }
 }
-
-// getQuantity(productID) - gets product quantity by id
-// getPrice(productID,quantity) - get product price by quantity and id
-// getName(productID) - get products name by id
-// getProductsIdByStore(storeID) - get list of all products id

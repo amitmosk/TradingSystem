@@ -11,7 +11,7 @@ public interface iFacade {
     /**
      * Requirment 2.1.1
      */
-    String guest_login();
+//    String guest_login();
 
     /**
      * Requirment 2.1.2
