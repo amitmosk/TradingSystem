@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="Handled todos">
+
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ClientHandler.java" afterDir="false" />
@@ -63,6 +64,12 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../gson-2.8.2.jar!/" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -84,17 +91,6 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.StoreTest2.find_products_by_name_ADD_Product">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="StoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TradingSystem" />
       <extension name="coverage">
@@ -197,6 +193,7 @@
       <workItem from="1650556436963" duration="595000" />
       <workItem from="1650698294469" duration="36663000" />
       <workItem from="1650898959641" duration="10674000" />
+      <workItem from="1651342340568" duration="5535000" />
     </task>
     <task id="LOCAL-00001" summary="added some classes">
       <created>1650707993931</created>
@@ -223,7 +220,7 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -246,6 +243,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="Handled todos" />
   </component>
   <component name="WindowStateProjectService">
+
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1651331895218">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
