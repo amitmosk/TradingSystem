@@ -1,15 +1,14 @@
 package Domain.UserModule;
 
 import Domain.StoreModule.Basket;
+import Domain.Utils.Utils;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
+
 public class User {
-    private final int MaxNamesLength = 10;
-    private final int MinPasswordLength = 6;
-    private final int MaxPasswordLength = 12;
     private AssignState state;
     private Cart cart;
     private AtomicBoolean isGuest;
@@ -21,59 +20,13 @@ public class User {
         this.isLogged = new AtomicBoolean(false);
     }
 
-    private void emailCheck(String email) throws Exception {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
-                "[a-zA-Z0-9_+&*-]+)*@" +
-                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                "A-Z]{2,7}$";
 
-        Pattern pat = Pattern.compile(emailRegex);
-        if (email == null)
-            throw new Exception("Email cannot be null");
-        if (!pat.matcher(email).matches())
-            throw new Exception("Invalid email");
-    }
-
-    private void passwordCheck(String pw)throws Exception{
-        boolean containsNum = false;
-        boolean containsUpper = false;
-        boolean containsLower = false;
-        if(pw.length() < MinPasswordLength || pw.length() > MaxPasswordLength)
-            throw new Exception("password length should be in range of 6-12");
-        char[] pwArray = pw.toCharArray();
-        for (char c : pwArray) {
-            if (c >= '0' || c <= '9')
-                containsNum = true;
-            else if (c >= 'a' || c <= 'z')
-                containsLower = true;
-            else if (c >= 'A' || c <= 'Z')
-                containsUpper = true;
-            else
-                throw new Exception("password should only upper & lower letter and digit");
-        }
-        if(!(containsLower && containsUpper && containsNum))
-            throw new Exception("password should contain at least one upper & lower letter, and digit");
-    }
-
-    private void nameCheck(String name) throws Exception {
-        if (name == null || name.equals(""))
-            throw new Exception("Name cannot be null or empty spaces");
-        //checks length of the name
-        if (name.length() > MaxNamesLength)
-            throw new Exception("Name length is too long");
-        //check if contains only letters
-        char[] arrayName = name.toLowerCase().toCharArray();
-        for (char c : arrayName) {
-            if (c < 'a' || c > 'z')
-                throw new Exception("The name must contain letters only");
-        }
-    }
 
     private void checkDetails(String email, String pw, String name, String lastName) throws Exception {
-        emailCheck(email);
-        nameCheck(name);
-        nameCheck(lastName);
-        passwordCheck(pw);
+        Utils.emailCheck(email);
+        Utils.nameCheck(name);
+        Utils.nameCheck(lastName);
+        Utils.passwordCheck(pw);
     }
 
     public boolean register(String email, String pw, String name, String lastName) throws Exception {
@@ -163,17 +116,17 @@ public class User {
     }
 
     public void edit_name(String pw, String new_name) throws Exception {
-        nameCheck(new_name);
+        Utils.nameCheck(new_name);
         state.edit_name(pw,new_name);
     }
 
     public void edit_password(String pw, String password) throws Exception {
-        passwordCheck(password);
+        Utils.passwordCheck(password);
         state.edit_password(pw,password);
     }
 
     public void edit_last_name(String pw, String new_last_name) throws Exception {
-        nameCheck(new_last_name);
+        Utils.nameCheck(new_last_name);
         state.edit_last_name(pw,new_last_name);
     }
 }

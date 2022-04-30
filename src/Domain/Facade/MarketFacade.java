@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 
 import java.util.Map;
 
-// TODO: change all exceptions messages to Client messages - Amit Grumet
+// TODO: change all exceptions messages to Client messages - Eylon
 // TODO: move all method comments from user controller to market - Amit Grumet
 // TODO: on edit user details functions we should call privacy when implemented - Gal & Eylon
 // TODO: check all purchases
@@ -343,6 +343,7 @@ public class MarketFacade implements iFacade {
         Response response = null;
         try {
             String user_email = this.user_controller.get_email(this.loggedUser);
+            this.user_controller.check_if_user_buy_from_this_store(this.loggedUser, store_id);
             this.store_controller.add_question(user_email, store_id, question);
             response = new Response<>(null, "Question send to the store successfully");
             system_logger.add_log("New question sent to store (" + store_id + ")");
@@ -542,7 +543,7 @@ public class MarketFacade implements iFacade {
     public String add_owner(String user_email_to_appoint, int store_id) {
         Response response = null;
         try {
-            String user_email = this.user_controller.get_email(this.loggedUser);
+            String user_email = this.user_controller.get_email(this.g
             this.store_controller.add_owner(user_email, user_email_to_appoint, store_id);
             response = new Response<>(null, "Owner added successfully");
             system_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") owner");
@@ -905,9 +906,20 @@ public class MarketFacade implements iFacade {
 
     //Requirement 2.3.6
     @Override
-    public double send_complain() {
-        // TODO: amit implemets
-        return 0;
+    public String send_question_to_admin(String question) {
+        Response response = null;
+        try {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            this.user_controller.send_question_to_admin(user_email, question);
+            response = new Response<>(null, "Question send to the admin successfully");
+            system_logger.add_log("New question sent to admin");
+
+        } catch (Exception e) {
+            response = new Response(e);
+            error_logger.add_log(e);
+
+        }
+        return this.toJson(response);
     }
 
     //Requirement 2.3.7
@@ -1151,12 +1163,14 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
-    @Override
-    public String admin_view_users_complains() {
-        // TODO: Amit implements
-        // todo: after function is written check if there is anything to edit in responses & loggers
+
+
+    public String admin_view_users_questions() {
         Response response = null;
         try {
+            user_controller.check_admin_permission(loggedUser); // throws
+            this.user_controller.view_users_questions();
+            List<String> users_questions = this.user_controller.view_users_questions();
             response = new Response( null, "Admin received users complains successfully.");
             system_logger.add_log("Admin viewed users complains successfully.");
         } catch (Exception e) {
@@ -1164,21 +1178,22 @@ public class MarketFacade implements iFacade {
             error_logger.add_log(e);
         }
         return this.toJson(response);
+
     }
 
     @Override
-    public void admin_answer_user_complain(String user_email, int question_id, String answer) {
-        // TODO: Amit implements
-        // todo: after function is written check if there is anything to edit in Responses & loggers and check if need return statement for that
+    public String admin_answer_user_question(int question_id, String answer) {
         Response response = null;
         try {
-            response = new Response( null, "Admin answered user complaint successfully.");
+            user_controller.check_admin_permission(loggedUser); // throws
+            this.user_controller.answer_user_question(question_id, answer);
+           response = new Response( null, "Admin answered user complaint successfully.");
             system_logger.add_log("Admin answered user's complaint successfully.");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to answer user's complaint."));
             error_logger.add_log(e);
         }
-        // return this.toJson(response);
+         return this.toJson(response);
 
     }
 }

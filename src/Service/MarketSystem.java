@@ -5,6 +5,8 @@ import Domain.ExternSystems.PaymentAdapterImpl;
 import Domain.ExternSystems.SupplyAdapter;
 import Domain.ExternSystems.SupplyAdapterImpl;
 import Domain.StoreModule.StoreController;
+import Domain.UserModule.Admin;
+import Domain.UserModule.User;
 import Domain.UserModule.UserController;
 
 public class MarketSystem {
@@ -30,6 +32,8 @@ public class MarketSystem {
         {
             System.out.println(e.getMessage());
         }
+
+//        Admin admin = UserController.getInstance().add_admin("barak_bahar@haifa.com", "12345678", "Barak", "Bahar");
         // load DB
         UserController.load();
         StoreController.load();
