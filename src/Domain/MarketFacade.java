@@ -5,6 +5,7 @@ import java.util.List;
 
 import Domain.ExternSystems.PaymentAdapter;
 import Domain.ExternSystems.SupplyAdapter;
+import Domain.Statistics.Statistic;
 import Domain.UserModule.*;
 import Domain.StoreModule.*;
 import com.google.gson.Gson;
@@ -1053,7 +1054,18 @@ public class MarketFacade implements iFacade {
 
     @Override
     public String get_market_stats() {
-        return null;
+        Response response = null;
+        try
+        {
+            user_controller.check_admin_permission(loggedUser);
+            Statistic stats = user_controller.get_statistics();
+
+        }
+        catch (Exception e)
+        {
+            response = new Response(e);
+        }
+        return this.toJson(response);
     }
 
     @Override

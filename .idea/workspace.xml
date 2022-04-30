@@ -4,12 +4,8 @@
     <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="changed Adapters connect function name &amp; fixed calls in other classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/MarketFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Statistics/StatisticsManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Domain/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/iFacade.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +159,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Domain/iFacade.java</url>
           <line>86</line>
-          <properties class="Domain.iFacade" method="send_complain">
+          <properties class="Domain.iFacade">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="1" />

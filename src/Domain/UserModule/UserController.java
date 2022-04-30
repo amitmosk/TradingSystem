@@ -1,5 +1,7 @@
 package Domain.UserModule;
 
+import Domain.Statistics.Statistic;
+import Domain.Statistics.StatisticsManager;
 import Domain.StoreModule.Basket;
 
 import java.util.HashMap;
@@ -17,6 +19,7 @@ public class UserController {
     private Object usersLock;
     private Object onlineUsersLock;
     private Object idLock;
+    private StatisticsManager statisticsManager;
 
     public static void load() {
         // no for this version
@@ -36,6 +39,7 @@ public class UserController {
         this.usersLock = new Object();
         this.onlineUsersLock = new Object();
         this.idLock = new Object();
+        this.statisticsManager = new StatisticsManager();
     }
 
     
@@ -93,6 +97,7 @@ public class UserController {
             user.register(email, pw, name, lastName);
             users.put(email, user);
         }
+        statisticsManager.inc_register_count();
     }
 
     /**
@@ -105,6 +110,7 @@ public class UserController {
         if(isRegistered(email) && users.get(email).login(password)){
             User user = users.get(email);
             onlineUsers.put(ID, user);
+            statisticsManager.inc_login_count();
             return true;
         }
         throw new Exception("User email does not match to the password");
@@ -118,6 +124,7 @@ public class UserController {
         User user = onlineUsers.get(ID);
         user.logout();
         onlineUsers.put(ID,new User());
+        statisticsManager.inc_logout_count();
     }
 
     /**
@@ -190,7 +197,9 @@ public class UserController {
      */
     public UserPurchase buyCart(int loggedUser) {
         User user = onlineUsers.get(loggedUser);
-        return user.buyCart(purchaseID.getAndIncrement());
+        UserPurchase userPurchase = user.buyCart(purchaseID.getAndIncrement());
+        statisticsManager.inc_buy_cart_count();
+        return userPurchase;
     }
 
 
@@ -281,5 +290,9 @@ public class UserController {
         User user = onlineUsers.get(loggedUser);
         user.edit_last_name(pw,new_last_name);
         return get_email(loggedUser);
+    }
+
+    public Statistic get_statistics() {
+        return statisticsManager.get_system_statistics();
     }
 }
