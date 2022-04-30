@@ -2,8 +2,8 @@ package Service;
 
 import Domain.ExternSystems.PaymentAdapter;
 import Domain.ExternSystems.SupplyAdapter;
-import Domain.Facade.MarketFacade;
 import Domain.Facade.iFacade;
+import Domain.MarketFacade;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -22,7 +22,7 @@ public class ClientHandler extends Thread {
         this.s = s;
         this.dis = dis;
         this.dos = dos;
-        this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
+        this.marketFacade = (iFacade) new MarketFacade(paymentAdapter, supplyAdapter);
     }
 
     @Override
