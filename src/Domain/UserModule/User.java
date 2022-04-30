@@ -4,8 +4,12 @@ import Domain.StoreModule.Basket;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Pattern;
 
 public class User {
+    private final int MaxNamesLength = 10;
+    private final int MinPasswordLength = 6;
+    private final int MaxPasswordLength = 12;
     private AssignState state;
     private Cart cart;
     private AtomicBoolean isGuest;
@@ -17,20 +21,64 @@ public class User {
         this.isLogged = new AtomicBoolean(false);
     }
 
-    //TODO: implement
-    private boolean emailCheck(String email) throws Exception{
-        return false;
+    private void emailCheck(String email) throws Exception {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            throw new Exception("Email cannot be null");
+        if (!pat.matcher(email).matches())
+            throw new Exception("Invalid email");
     }
 
-    private boolean passwordCheck(String pw)throws Exception{ return false;
+    private void passwordCheck(String pw)throws Exception{
+        boolean containsNum = false;
+        boolean containsUpper = false;
+        boolean containsLower = false;
+        if(pw.length() < MinPasswordLength || pw.length() > MaxPasswordLength)
+            throw new Exception("password length should be in range of 6-12");
+        char[] pwArray = pw.toCharArray();
+        for (char c : pwArray) {
+            if (c >= '0' || c <= '9')
+                containsNum = true;
+            else if (c >= 'a' || c <= 'z')
+                containsLower = true;
+            else if (c >= 'A' || c <= 'Z')
+                containsUpper = true;
+            else
+                throw new Exception("password should only upper & lower letter and digit");
+        }
+        if(!(containsLower && containsUpper && containsNum))
+            throw new Exception("password should contain at least one upper & lower letter, and digit");
     }
 
-    private boolean nameCheck(String name) throws Exception{return false;
+    private void nameCheck(String name) throws Exception {
+        if (name == null || name.equals(""))
+            throw new Exception("Name cannot be null or empty spaces");
+        //checks length of the name
+        if (name.length() > MaxNamesLength)
+            throw new Exception("Name length is too long");
+        //check if contains only letters
+        char[] arrayName = name.toLowerCase().toCharArray();
+        for (char c : arrayName) {
+            if (c < 'a' || c > 'z')
+                throw new Exception("The name must contain letters only");
+        }
+    }
+
+    private void checkDetails(String email, String pw, String name, String lastName) throws Exception {
+        emailCheck(email);
+        nameCheck(name);
+        nameCheck(lastName);
+        passwordCheck(pw);
     }
 
     public boolean register(String email, String pw, String name, String lastName) throws Exception {
         if(!isGuest.get()) return false;
-        if(!emailCheck(email) || !passwordCheck(pw) || !nameCheck(name) || !nameCheck(lastName)) return false;
+        checkDetails(email,pw,name,lastName);
         boolean res = this.isLogged.compareAndSet(false,true);
         if(res) {
             this.state = new AssignUser(email, pw, name, lastName);
@@ -41,8 +89,12 @@ public class User {
 
     public synchronized boolean login(String password) throws Exception {
         boolean res = this.state.login(password);
-        this.isLogged.set(true);
+        this.isLogged.compareAndSet(false,true);
         return res;
+    }
+
+    public void logout(){
+        this.isLogged.compareAndSet(true,false);
     }
 
     public Cart getCart() {
@@ -95,7 +147,30 @@ public class User {
         return state.get_user_last_name();
     }
 
-    public String get_user_last_email() throws Exception {
+    public String get_user_email() throws Exception {
         return state.get_user_email();
+    }
+
+    public void check_admin_permission() throws Exception {
+        state.check_admin_permission();
+    }
+
+    public void unregister(String password) throws Exception {
+        state.unregister(password);
+    }
+
+    public void edit_name(String pw, String new_name) throws Exception {
+        nameCheck(new_name);
+        state.edit_name(pw,new_name);
+    }
+
+    public void edit_password(String pw, String password) throws Exception {
+        passwordCheck(password);
+        state.edit_password(pw,password);
+    }
+
+    public void edit_last_name(String pw, String new_last_name) throws Exception {
+        nameCheck(new_last_name);
+        state.edit_last_name(pw,new_last_name);
     }
 }

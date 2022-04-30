@@ -16,4 +16,14 @@ public abstract class AssignState{
     public String get_user_last_name() throws Exception {throw new Exception("Guest doesnt have last name.");}
 
     public String get_user_email() throws Exception {throw new Exception("Guest doesnt have last name.");}
+
+    public void check_admin_permission() throws Exception { throw new Exception("only admin have permissions for this operation.");}
+
+    public void unregister(String password) throws Exception { throw new Exception("guest cant unregister from the system");}
+
+    public void edit_name(String pw, String new_name) throws Exception { throw new Exception("guest cant change is name");}
+
+    public void edit_password(String pw, String password) throws Exception { throw new Exception("guest cant change is password");}
+
+    public void edit_last_name(String pw, String new_last_name) throws Exception { throw new Exception("guest cant change his last name");}
 }

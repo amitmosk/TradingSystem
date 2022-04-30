@@ -1,8 +1,10 @@
 package Service;
 
+import Domain.ExternSystems.PaymentAdapter;
+import Domain.ExternSystems.PaymentAdapterImpl;
+import Domain.ExternSystems.SupplyAdapter;
+import Domain.ExternSystems.SupplyAdapterImpl;
 import Domain.StoreModule.StoreController;
-import Domain.SupplyAdapter;
-import Domain.UserModule.PaymentAdapter;
 import Domain.UserModule.UserController;
 
 public class MarketSystem {
@@ -17,12 +19,12 @@ public class MarketSystem {
     //Requirement 1.1
     public void init_market(){
         System.out.println("start init market");
-        this.payment_adapter = new PaymentAdapter();
-        this.supply_adapter = new SupplyAdapter();
+        this.payment_adapter = new PaymentAdapterImpl();
+        this.supply_adapter = new SupplyAdapterImpl();
         try
         {
-            PaymentAdapter.connect_to_payment_system();
-            SupplyAdapter.connect_to_supply_system();
+            payment_adapter.connect_to_payment_system();
+            supply_adapter.connect_to_supply_system();
         }
         catch (Exception e)
         {

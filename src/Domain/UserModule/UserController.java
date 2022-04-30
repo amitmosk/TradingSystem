@@ -1,9 +1,12 @@
 package Domain.UserModule;
 
+import Domain.Statistics.Statistic;
+import Domain.Statistics.StatisticsManager;
 import Domain.StoreModule.Basket;
 
 import java.util.HashMap;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserController {
@@ -16,11 +19,11 @@ public class UserController {
     private Object usersLock;
     private Object onlineUsersLock;
     private Object idLock;
+    private StatisticsManager statisticsManager;
 
     public static void load() {
         // no for this version
     }
-
 
     // ------------------- singleton class ----------------------------
     private static class SingletonHolder{
@@ -36,6 +39,7 @@ public class UserController {
         this.usersLock = new Object();
         this.onlineUsersLock = new Object();
         this.idLock = new Object();
+        this.statisticsManager = new StatisticsManager();
     }
 
     
@@ -55,6 +59,7 @@ public class UserController {
         int cur_guest_id = ID.getAndIncrement();    // synchronized
         User newUser = new User();
         onlineUsers.put(cur_guest_id, newUser);
+        statisticsManager.inc_connect_system_count();
         return cur_guest_id;
     }
 
@@ -93,6 +98,7 @@ public class UserController {
             user.register(email, pw, name, lastName);
             users.put(email, user);
         }
+        statisticsManager.inc_register_count();
     }
 
     /**
@@ -105,9 +111,21 @@ public class UserController {
         if(isRegistered(email) && users.get(email).login(password)){
             User user = users.get(email);
             onlineUsers.put(ID, user);
+            statisticsManager.inc_login_count();
             return true;
         }
         throw new Exception("User email does not match to the password");
+    }
+
+
+    /**
+     * @param ID online user's id to logout
+     */
+    public void logout(int ID){
+        User user = onlineUsers.get(ID);
+        user.logout();
+        onlineUsers.put(ID,new User());
+        statisticsManager.inc_logout_count();
     }
 
     /**
@@ -180,7 +198,9 @@ public class UserController {
      */
     public UserPurchase buyCart(int loggedUser) {
         User user = onlineUsers.get(loggedUser);
-        return user.buyCart(purchaseID.getAndIncrement());
+        UserPurchase userPurchase = user.buyCart(purchaseID.getAndIncrement());
+        statisticsManager.inc_buy_cart_count();
+        return userPurchase;
     }
 
 
@@ -194,7 +214,7 @@ public class UserController {
         user.check_if_user_buy_this_product(storeID,productID);
     }
 
-    public UserHistory view_user_purchase_history(int loggedUser) throws Exception {
+    public UserHistory view_user_purchase_history(int loggedUser) throws Exception { //admin
         User user = onlineUsers.get(loggedUser);
         return user.view_user_purchase_history();
     }
@@ -211,6 +231,69 @@ public class UserController {
 
     public String get_email(int loggedUser) throws Exception {
         User user = onlineUsers.get(loggedUser);
-        return user.get_user_last_email();
+        return user.get_user_email();
+    }
+
+    public void check_admin_permission(int loggedUser) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        user.check_admin_permission();
+    }
+
+    public UserHistory admin_view_user_purchase_history(String email) throws Exception { //admin
+        if(!isRegistered(email)) throw new Exception("user "+email+"is not registered to the system.");
+        User user = users.get(email);
+        return user.view_user_purchase_history();
+    }
+
+    private void remove_email_from_online_users(String email){ //if exists
+        for(Map.Entry<Integer,User> entry : onlineUsers.entrySet()){
+            try{
+                if(entry.getValue().get_user_email().equals(email)) {
+                    onlineUsers.remove(entry.getKey());
+                    return;
+                }
+            }
+            catch (Exception e){
+
+            }
+        }
+    }
+
+    public void remove_user(int ID,String email) throws Exception {
+        if(!isRegistered(email)) throw new Exception("failed to remove due to the reason "+email+" is not registered in the system.");
+        if(email.equals(get_email(ID))) throw new Exception("failed to remove admin from the system.");
+        remove_email_from_online_users(email);
+        synchronized (usersLock){ users.remove(email);}
+    }
+
+    public String unregister(int ID ,String password) throws Exception {
+        String email = get_email(ID);
+        User user = onlineUsers.get(ID);
+        user.unregister(password); //TODO: add more privacy ?
+        synchronized (usersLock) { users.remove(email); }
+        onlineUsers.put(ID,new User());
+        return email;
+    }
+
+    public String edit_name(int loggedUser, String pw, String new_name) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        user.edit_name(pw,new_name);
+        return get_email(loggedUser);
+    }
+
+    public String edit_password(int loggedUser, String pw, String password) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        user.edit_password(pw,password);
+        return get_email(loggedUser);
+    }
+
+    public String edit_last_name(int loggedUser, String pw, String new_last_name) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        user.edit_last_name(pw,new_last_name);
+        return get_email(loggedUser);
+    }
+
+    public Statistic get_statistics() {
+        return statisticsManager.get_system_statistics();
     }
 }

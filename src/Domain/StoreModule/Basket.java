@@ -1,5 +1,6 @@
 package Domain.StoreModule;
 
+import Domain.StoreModule.Product.Product;
 import Domain.Utils.Pair;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class Basket {
     private double total_price;
 
     public Basket(int store_id, int buyer_id) {
+        this.basket_id = new Pair<>(buyer_id, store_id);
         products_and_quantities = new HashMap<>();
         this.total_price=0;
     }
@@ -39,8 +41,7 @@ public class Basket {
         this.products_and_quantities.remove(product);
     }
 
-    public void addProduct(Product p, int quantity)
-    {
+    public void addProduct(Product p, int quantity) {
         if(this.products_and_quantities.containsKey(p))
         {
             throw new IllegalArgumentException("Product already in the basket - product id: "+p.getProduct_id());
@@ -48,8 +49,9 @@ public class Basket {
         this.products_and_quantities.put(p, quantity);
     }
 
-    public Map<Integer, Integer> get_productsIds_and_quantity()
-    {
+    //----------------------------------------Getters--------------------------------------------------
+
+    public Map<Integer, Integer> get_productsIds_and_quantity() {
         Map<Integer, Integer> productsIds_and_quantity = new HashMap<>();
         for(Product p: this.products_and_quantities.keySet())
         {
@@ -57,26 +59,21 @@ public class Basket {
         }
         return productsIds_and_quantity;
     }
-
-    public int getQuantity(int product_id)
-    {
+    public int getQuantity(int product_id) {
         Product p = this.get_product_by_product_id(product_id);
         return  this.products_and_quantities.get(p);
     }
-    public double getPrice(int product_id, int quantity)
-    {
+    public double getPrice(int product_id, int quantity) {
         Product p = this.get_product_by_product_id(product_id);
         return p.getPrice() * quantity;
         //TODO we return price without discount policy
     }
-    public String getName(int product_id)
-    {
+    public String getName(int product_id) {
         Product p = this.get_product_by_product_id(product_id);
         return p.getName();
 
     }
-    public List<Integer> getProductsId()
-    {
+    public List<Integer> getProductsId() {
         List<Integer> product_ids = new ArrayList<>();
         for (Product p:this.products_and_quantities.keySet())
         {
@@ -85,7 +82,6 @@ public class Basket {
         return product_ids;
 
     }
-
     private Product get_product_by_product_id(int product_id) {
         for (Product product : this.products_and_quantities.keySet()){
             if (product.getProduct_id() == product_id)
@@ -94,9 +90,6 @@ public class Basket {
         throw new IllegalArgumentException("Basket.get_product_by_product_id: " +
                 "Product does not exist in the basket - basket id: "+basket_id+"  , product id: "+product_id);
     }
-
-
-    //----------------------------------------Getters--------------------------------------------------
     public int getStore_id() {
         return basket_id.getSecond();
     }
@@ -116,12 +109,7 @@ public class Basket {
 
     }
 
-    //----------------------------------------Setters------------------------------------------------
 
-
-    public void setProducts_and_quantities(HashMap<Product, Integer> products_and_quantities) {
-        this.products_and_quantities = products_and_quantities;
-    }
 
 
 

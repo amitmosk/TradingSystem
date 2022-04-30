@@ -1,15 +1,20 @@
 package Domain.StoreModule;
 
+import Domain.StoreModule.Product.Product;
+import Domain.StoreModule.Store.Store;
+import Domain.StoreModule.Store.StoreManagersInfo;
 import Domain.UserModule.Cart;
-import Domain.Utils.Utils;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StoreController {
-    private HashMap<Integer, Store> stores;
+    private ConcurrentHashMap<Integer, Store> stores;
     private AtomicInteger store_ids_counter;
     private AtomicInteger purchase_ids_counter;
+    private Object storesLock;
+
     private static StoreController instance = null;
 
     public static StoreController get_instance()
@@ -21,7 +26,8 @@ public class StoreController {
     private StoreController() {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
-        this.stores = new HashMap<Integer, Store>();
+        this.stores = new ConcurrentHashMap<>();
+        this.storesLock = new Object();
     }
 
     public static void load() {
@@ -326,12 +332,13 @@ public class StoreController {
     public void open_store(String founder_email, String store_name) {
         int store_id = this.store_ids_counter.getAndIncrement();
         Store store = new Store(store_id, founder_email, store_name);
+        store.appoint_founder();
         this.stores.put(store_id, store);
     }
 
     public void add_review(String user_email, int product_id, int store_id, String review) {
         Store store = this.get_store_by_store_id(store_id);//throws
-        store.add_review(product_id, user_email, review);
+        store.add_product_review(product_id, user_email, review);
 
     }
 
@@ -342,7 +349,7 @@ public class StoreController {
 
     public void rate_store(String user_email, int store_id, int rate) {
         Store to_rate = this.get_store_by_store_id(store_id);//throw exceptions
-        to_rate.add_rating(user_email, rate);
+        to_rate.add_store_rating(user_email, rate);
 
     }
 
