@@ -950,9 +950,6 @@ public class Market
 
         }
         return this.toJson(response);
-
-
-
     }
 }
 /*
