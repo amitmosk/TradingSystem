@@ -1,5 +1,7 @@
 package Domain.UserModule;
 
+import Domain.Communication.Question;
+import Domain.Communication.QuestionHandler;
 import Domain.Statistics.Statistic;
 import Domain.Statistics.StatisticsManager;
 import Domain.StoreModule.Basket;
@@ -23,6 +25,18 @@ public class UserController {
 
     public static void load() {
         // no for this version
+    }
+
+    public void send_question_to_admin(String user_email, String question) {
+        QuestionHandler.getInstance().add_user_question(question, user_email);
+    }
+
+    public void answer_user_question(int question_id, String answer) {
+        QuestionHandler.getInstance().answer_user_question(question_id, answer);
+    }
+
+    public List<String> view_users_questions() {
+        return QuestionHandler.getInstance().view_admin_questions();
     }
 
     // ------------------- singleton class ----------------------------
