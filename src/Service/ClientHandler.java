@@ -160,7 +160,8 @@ public class ClientHandler extends Thread {
                 answer = marketFacade.edit_product_key_words(1,1, new LinkedList<>());
                 break;
             case 30:
-                answer = marketFacade.set_store_purchase_rules(1);
+                // TODO ask about the idea
+                //answer = marketFacade.set_store_purchase_rules(1);
                 break;
             case 31:
                 answer = marketFacade.add_owner("amit@gmail,com", 1);

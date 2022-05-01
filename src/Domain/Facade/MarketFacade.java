@@ -1,8 +1,12 @@
 package Domain.Facade;
 
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
+import Domain.StoreModule.Policy.DiscountPolicy;
+import Domain.StoreModule.Policy.PurchasePolicy;
+import Domain.StoreModule.Policy.Rule;
 import Domain.Utils.ErrorLogger;
 import Domain.Utils.Response;
 import Domain.StoreModule.Product.Product;
@@ -76,7 +80,7 @@ public class MarketFacade implements iFacade {
         if (isGuest) {
             response = new Response(new Exception("guest cannot logout from the system"));
             error_logger.add_log(new Exception("Guests cannot logout, action failed."));
-        }else {
+        } else {
             system_logger.add_log("User logged out from the system.");
             user_controller.logout(loggedUser);
             this.isGuest = true;
@@ -95,7 +99,7 @@ public class MarketFacade implements iFacade {
             }
             user_controller.register(loggedUser, Email, pw, name, lastName);
             response = new Response<>(null, "Registration done successfully");
-            system_logger.add_log(name + " "+ lastName + " has registered to the system");
+            system_logger.add_log(name + " " + lastName + " has registered to the system");
         } catch (Exception e) {
             response = new Response(e);
             error_logger.add_log(e);
@@ -508,14 +512,39 @@ public class MarketFacade implements iFacade {
     //------------------------------------------------ edit product - End ----------------------------------------------
 
     //Requirement 2.4.2 Cancelled
+    @Override
+    public String set_store_purchase_policy(int store_id, PurchasePolicy policy) {
+        Response response = null;
+        try {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            store_controller.set_store_purchase_policy(store_id, user_email, policy);
+            response = new Response<>(null, "Store purchase rules set successfully");
+        } catch (Exception e) {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String set_store_discount_policy(int store_id, DiscountPolicy policy) {
+        Response response = null;
+        try {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            store_controller.set_store_discount_policy(store_id, user_email, policy);
+            response = new Response<>(null, "Store discount rules set successfully");
+        } catch (Exception e) {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
 
 
     //Requirement 2.4.3
     @Override
-    public String set_store_purchase_rules(int store_id) {
+    public String set_store_purchase_rules(int store_id, Rule rule) {
         Response response = null;
         try {
-            //TODO: Amit Grumet implements
+            store_controller.set_store_purchase_rules(store_id, rule);
             response = new Response<>(null, "Store purchase rules set successfully");
             system_logger.add_log("Store's (" + store_id + ") purchase rules have been set");
 
@@ -617,6 +646,7 @@ public class MarketFacade implements iFacade {
         }
         return this.toJson(response);
     }
+
 
     //Requirement 2.4.7
 
@@ -1070,7 +1100,7 @@ public class MarketFacade implements iFacade {
             // remove user from all owners and managers
             // remove all users complains & questions
             response = new Response(email, email + " unregistered successfully"); // todo question: are you sure that you want to add the email in the response message ?
-            system_logger.add_log("User (" + email +") has been successfully unregistered from the system.");
+            system_logger.add_log("User (" + email + ") has been successfully unregistered from the system.");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to unregister user."));
             error_logger.add_log(e);
@@ -1084,7 +1114,7 @@ public class MarketFacade implements iFacade {
         try {
             String email = user_controller.edit_name(loggedUser, pw, new_name);
             response = new Response(new_name, email + " name changed to " + new_name); // todo question: are you sure that you want to add the email in the response message ?
-            system_logger.add_log("User's (" + email +") name has been successfully changed to " + new_name + ".");
+            system_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
 
         } catch (Exception e) {
             response = new Response(new Exception("Failed to change name."));
@@ -1113,7 +1143,7 @@ public class MarketFacade implements iFacade {
         try {
             String email = user_controller.edit_last_name(loggedUser, pw, new_last_name);
             response = new Response(new_last_name, email + " last name changed to " + new_last_name); // todo question: are you sure that you want to add the email in the response message ?
-            system_logger.add_log("User's (" + email +") last name has been successfully changed to " + new_last_name + ".");
+            system_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
 
         } catch (Exception e) {
             response = new Response(new Exception("Failed to change user's last name."));
@@ -1164,14 +1194,13 @@ public class MarketFacade implements iFacade {
     }
 
 
-
     public String admin_view_users_questions() {
         Response response = null;
         try {
             user_controller.check_admin_permission(loggedUser); // throws
             this.user_controller.view_users_questions();
             List<String> users_questions = this.user_controller.view_users_questions();
-            response = new Response( null, "Admin received users complains successfully.");
+            response = new Response(null, "Admin received users complains successfully.");
             system_logger.add_log("Admin viewed users complains successfully.");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to get users complains."));
@@ -1187,13 +1216,13 @@ public class MarketFacade implements iFacade {
         try {
             user_controller.check_admin_permission(loggedUser); // throws
             this.user_controller.answer_user_question(question_id, answer);
-           response = new Response( null, "Admin answered user complaint successfully.");
+            response = new Response(null, "Admin answered user complaint successfully.");
             system_logger.add_log("Admin answered user's complaint successfully.");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to answer user's complaint."));
             error_logger.add_log(e);
         }
-         return this.toJson(response);
+        return this.toJson(response);
 
     }
 }
