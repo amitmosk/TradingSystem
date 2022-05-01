@@ -6,6 +6,10 @@ import Domain.Utils.SystemLogger;
 public class SupplyAdapterImpl implements SupplyAdapter {
     private ExternSupplySystemProxy externSupplySystemProxy;
 
+    public SupplyAdapterImpl() {
+        this.externSupplySystemProxy = new ExternSupplySystemProxy();
+    }
+
     @Override
     public boolean supply(String supplyInfo) {
         return this.externSupplySystemProxy.supply(supplyInfo);

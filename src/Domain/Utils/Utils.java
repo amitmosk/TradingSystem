@@ -109,11 +109,11 @@ public class Utils {
             throw new Exception("password length should be in range of 6-12");
         char[] pwArray = pw.toCharArray();
         for (char c : pwArray) {
-            if (c >= '0' || c <= '9')
+            if (c >= '0' & c <= '9')
                 containsNum = true;
-            else if (c >= 'a' || c <= 'z')
+            else if (c >= 'a' & c <= 'z')
                 containsLower = true;
-            else if (c >= 'A' || c <= 'Z')
+            else if (c >= 'A' & c <= 'Z')
                 containsUpper = true;
             else
                 throw new Exception("password should only upper & lower letter and digit");

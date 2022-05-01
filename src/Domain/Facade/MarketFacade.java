@@ -63,6 +63,7 @@ public class MarketFacade implements iFacade {
         try {
             boolean logRes = user_controller.login(loggedUser, Email, password);
             String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
+            isGuest = false;
             response = new Response<>(null, "Hey +" + user_name + ", Welcome to the trading system market!");
             system_logger.add_log("User " + user_name + " logged-in");
         } catch (Exception e) {
@@ -513,6 +514,14 @@ public class MarketFacade implements iFacade {
 
     //Requirement 2.4.2 Cancelled
     @Override
+    /**
+     * @param user_email to check if the user allowed to change policiy
+     * @param store_id   id for the store
+     * @param policy     the rules to set
+     * @return string that says if the setting worked
+     * @throws IllegalArgumentException if the store not exist,
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
+     */
     public String set_store_purchase_policy(int store_id, PurchasePolicy policy) {
         Response response = null;
         try {
@@ -526,6 +535,14 @@ public class MarketFacade implements iFacade {
     }
 
     @Override
+    /**
+     * @param user_email to check if the user allowed to change policiy
+     * @param store_id   id for the store
+     * @param policy     the rules to set
+     * @return string that says if the setting worked
+     * @throws IllegalArgumentException if the store not exist,
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
+     */
     public String set_store_discount_policy(int store_id, DiscountPolicy policy) {
         Response response = null;
         try {
@@ -899,7 +916,7 @@ public class MarketFacade implements iFacade {
         Map<Integer, Basket> cart = user_controller.getBaskets(loggedUser);
         Response<Map<Integer, Basket>> response = new Response<>(cart, "successfully received user's cart");
         system_logger.add_log("User viewed his cart successfully");
-        return toJson(response); // todo no chance for exception?
+        return toJson(response); // TODO no chance for exception?
     }
 
 
@@ -975,8 +992,6 @@ public class MarketFacade implements iFacade {
     public String get_user_email() {
         Response response = null;
         try {
-            int logged = user_controller.guest_login();
-            this.loggedUser = logged;
             String email = user_controller.get_email(loggedUser);
             response = new Response<>(email, "successfully received user's email");
             system_logger.add_log("Got user's email successfully");
@@ -993,12 +1008,9 @@ public class MarketFacade implements iFacade {
     public String get_user_name() {
         Response response = null;
         try {
-            int logged = user_controller.guest_login();
-            this.loggedUser = logged;
             String name = user_controller.get_user_name(loggedUser);
             response = new Response<>(name, "successfully received user's name");
             system_logger.add_log("Got user's name successfully");
-
         } catch (Exception e) {
             response = new Response(new Exception("Failed to get user's name."));
             error_logger.add_log(e);
@@ -1009,7 +1021,6 @@ public class MarketFacade implements iFacade {
 
 
     public String get_user_last_name() {
-
         Response response = null;
         try {
             String last_name = this.user_controller.get_user_last_name(loggedUser);
