@@ -1,7 +1,7 @@
 package Domain.UserModule;
 
-import Domain.Purchase.UserPurchase;
-import Domain.Purchase.UserPurchaseHistory;
+import Domain.StoreModule.Purchase.UserPurchase;
+import Domain.StoreModule.Purchase.UserPurchaseHistory;
 
 public abstract class AssignState{
     public boolean login(String pw) throws Exception {throw new Exception("Assign user cannot log in");}

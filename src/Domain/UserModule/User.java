@@ -1,9 +1,9 @@
 package Domain.UserModule;
 
 import Domain.StoreModule.Basket;
-import Domain.Purchase.Purchase;
-import Domain.Purchase.UserPurchase;
-import Domain.Purchase.UserPurchaseHistory;
+import Domain.StoreModule.Purchase.Purchase;
+import Domain.StoreModule.Purchase.UserPurchase;
+import Domain.StoreModule.Purchase.UserPurchaseHistory;
 import Domain.Utils.Utils;
 
 import java.util.Map;

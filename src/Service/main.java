@@ -2,6 +2,8 @@ package Service;
 
 import Domain.ExternSystems.PaymentAdapter;
 import Domain.ExternSystems.SupplyAdapter;
+import Domain.Utils.SystemLogger;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import java.net.Socket;
 
 public class main {
     public static void main(String[] args) throws IOException {
-        System.out.println("amit");
+        SystemLogger.getInstance().add_log("System start");
         MarketSystem market = new MarketSystem();
         PaymentAdapter payment_adapter = null;
         SupplyAdapter supply_adapter = null;
@@ -22,7 +24,7 @@ public class main {
         }
         catch (Exception e)
         {
-            // @TODO : cant continue
+            // cant continue
         }
 
         ServerSocket serverSocket = new ServerSocket(5056);
@@ -32,6 +34,7 @@ public class main {
             try
             {
                 socket = serverSocket.accept();
+                SystemLogger.getInstance().add_log("new client connected");
                 // new client connect to the server
                 DataInputStream dis = new DataInputStream(socket.getInputStream());
                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());

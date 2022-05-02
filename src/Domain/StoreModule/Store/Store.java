@@ -6,9 +6,9 @@ import Domain.StoreModule.Policy.DiscountPolicy;
 import Domain.StoreModule.Policy.PurchasePolicy;
 import Domain.StoreModule.Policy.Rule;
 import Domain.StoreModule.Product.Product;
-import Domain.Purchase.Purchase;
-import Domain.Purchase.StorePurchase;
-import Domain.Purchase.StorePurchaseHistory;
+import Domain.StoreModule.Purchase.Purchase;
+import Domain.StoreModule.Purchase.StorePurchase;
+import Domain.StoreModule.Purchase.StorePurchaseHistory;
 
 import java.time.LocalDate;
 import java.util.*;
