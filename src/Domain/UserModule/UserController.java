@@ -306,7 +306,7 @@ public class UserController {
     }
 
     public List<String> view_users_questions() {
-        return QuestionHandler.getInstance().view_admin_questions();
+        return QuestionHandler.getInstance().view_users_to_admin_questions();
     }
 
     public User add_admin(String email, String pw, String name, String lastName) throws Exception {

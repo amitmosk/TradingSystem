@@ -144,7 +144,7 @@ public class Store implements iStore {
     @Override
     public List<String> view_store_questions(String user_email) throws IllegalAccessException {
         this.check_permission(user_email, StorePermission.view_users_questions);
-        return QuestionHandler.getInstance().view_store_questions(store_id);
+        return QuestionHandler.getInstance().view_buyers_to_store_questions(store_id);
     }
 
     @Override
