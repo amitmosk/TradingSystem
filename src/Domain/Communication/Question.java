@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public abstract class Question {
     private final int question_id;
-    private final LocalDate message_date;
-    private LocalDate answer_date;
+    public LocalDate message_date;
+    public LocalDate answer_date;
     private String message;
     private String answer;
     private boolean has_answer;

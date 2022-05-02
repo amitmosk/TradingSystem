@@ -21,16 +21,7 @@ class StoreMoudleTests {
     String Email = "amit@gmail.com";
     String Name = "amit";
 
-    @BeforeEach
-    void SetUp() {
-        SupplyAdapter supply = new SupplyAdapterImpl();
-        PaymentAdapter payment = new PaymentAdapterImpl();
-        marketFacade = new MarketFacade(payment, supply);
-        marketFacade.register("amit@gmail.com", "Aa123456", "amit", "grumet");
-        marketFacade.login("amit@gmail.com", "Aa123456");
-        marketFacade.open_store("amit store");
-    }
-
+    //helper functions
     private void check_equal_msg(String msg, String r) {
         Response response = new Gson().fromJson(r, Response.class);
         Assertions.assertEquals(msg, response.getMessage());
@@ -42,9 +33,33 @@ class StoreMoudleTests {
         Assertions.assertTrue(response.WasException());
     }
 
+    private void add_product() {
+        ArrayList<String> arraylist = new ArrayList<>();
+        arraylist.add("fruits");
+        Product p = new Product("apple", 1, 1, 100, "fruits", arraylist);
+        String r = marketFacade.add_product_to_store(1, 50, "apple", 100, "fruits", arraylist);
+    }
+
+    private void buy_product() {
+        marketFacade.add_product_to_cart(1, 1, 20);
+        marketFacade.buy_cart("", "");
+    }
+    //end of helper functions
+
+    @BeforeEach
+    void SetUp() {
+        SupplyAdapter supply = new SupplyAdapterImpl();
+        PaymentAdapter payment = new PaymentAdapterImpl();
+        marketFacade = new MarketFacade(payment, supply);
+        marketFacade.register("amit@gmail.com", "Aa123456", "amit", "grumet");
+        marketFacade.login("amit@gmail.com", "Aa123456");
+        marketFacade.open_store("amit store");
+    }
+
+
 
     @org.junit.jupiter.api.Test
-    void get_user_email() throws Exception {
+    void get_user_email() {
         //happy
         String s = marketFacade.get_user_email();
         check_equal_msg("successfully received user's email", s);
@@ -65,14 +80,6 @@ class StoreMoudleTests {
         check_was_exception(sBad);//dosent no
     }
 
-    private void add_and_buy_product() {
-        ArrayList<String> arraylist = new ArrayList<>();
-        arraylist.add("fruits");
-        Product p = new Product("apple", 1, 1, 100, "fruits", arraylist);
-        String r = marketFacade.add_product_to_store(1, 50, "apple", 100, "fruits", arraylist);
-        marketFacade.add_product_to_cart(1, 1, 20);
-        marketFacade.buy_cart("", "");
-    }
 
     @org.junit.jupiter.api.Test
     void add_product_to_store_test() {
@@ -90,7 +97,7 @@ class StoreMoudleTests {
     @org.junit.jupiter.api.Test
     void delete_product_from_store() {
         //happy
-        add_and_buy_product();
+        add_product();
         String r = marketFacade.delete_product_from_store(1, 1);
         check_equal_msg("Product deleted successfully", r);
         //sad-no product
@@ -102,7 +109,7 @@ class StoreMoudleTests {
     @org.junit.jupiter.api.Test
     void edit_product_name() {
         //happy
-        add_and_buy_product();
+        add_product();
         String r = marketFacade.edit_product_name(1, 1, "orange");
         check_equal_msg("Product name edit successfully", r);
         //sad-no product
@@ -113,7 +120,7 @@ class StoreMoudleTests {
     @org.junit.jupiter.api.Test
     void edit_product_price() {
         //happy
-        add_and_buy_product();
+        add_product();
         String r = marketFacade.edit_product_price(1, 1, 90);
         check_equal_msg("Product price edit successfully", r);
         //sad
@@ -125,7 +132,7 @@ class StoreMoudleTests {
     @org.junit.jupiter.api.Test
     void edit_product_category() {
         //happy
-        add_and_buy_product();
+        add_product();
         String r = marketFacade.edit_product_category(1, 1, "food");
         check_equal_msg("Product category edit successfully", r);
         //sad
@@ -146,7 +153,7 @@ class StoreMoudleTests {
     @Test
     void find_product_information() {
         //happy
-        add_and_buy_product();
+        add_product();
         String r = marketFacade.find_product_information(1, 1);
         check_equal_msg("Product information received successfully", r);
         //sad
@@ -157,7 +164,7 @@ class StoreMoudleTests {
     @Test
     void find_products_by_name() {
         //happy
-        add_and_buy_product();
+        add_product();
         String r = marketFacade.find_products_by_name("apple");
         check_equal_msg("Products found successfully", r);
         //sad
@@ -168,7 +175,7 @@ class StoreMoudleTests {
     @Test
     void find_products_by_category() {
         //happy
-        add_and_buy_product();
+        add_product();
         String r = marketFacade.find_products_by_category("fruits");
         check_equal_msg("Products received successfully", r);
         //sad
@@ -179,7 +186,7 @@ class StoreMoudleTests {
     @Test
     void find_products_by_keywords() {
         //happy
-        add_and_buy_product();
+        add_product();
         String r = marketFacade.find_products_by_keywords("fruits");
         check_equal_msg("Products received successfully", r);
         //sad
@@ -191,7 +198,8 @@ class StoreMoudleTests {
     @Test
     void add_product_review() {
         //happy
-        add_and_buy_product();
+        add_product();
+        buy_product();
         String r = marketFacade.add_product_review(1, 1, "great product");
         check_equal_msg("Review added successfully", r);
         //sad
@@ -202,7 +210,8 @@ class StoreMoudleTests {
     @Test
     void rate_product() {
         //happy
-        add_and_buy_product();
+        add_product();
+        buy_product();
         String r = marketFacade.rate_product(1, 1, 5);
         check_equal_msg("Rating added successfully to the product", r);
         //sad
@@ -213,7 +222,8 @@ class StoreMoudleTests {
     @Test
     void rate_store() {
         //happy
-        add_and_buy_product();
+        add_product();
+        buy_product();
         String r = marketFacade.rate_store(1, 5);
         check_equal_msg("Rating added successfully to the store", r);
         //sad
@@ -224,7 +234,8 @@ class StoreMoudleTests {
     @Test
     void send_question_to_store() {
         //happy
-        add_and_buy_product();
+        add_product();
+        buy_product();
         String r = marketFacade.send_question_to_store(1, "how can i control the world");
         check_equal_msg("Question send to the store successfully", r);
         //sad
@@ -235,7 +246,7 @@ class StoreMoudleTests {
     @Test
     void edit_product_key_words() {
         //happy
-        add_and_buy_product();
+        add_product();
         ArrayList arrayList = new ArrayList();
         arrayList.add("Food");
         String r = marketFacade.edit_product_key_words(1, 1, arrayList);
@@ -251,7 +262,6 @@ class StoreMoudleTests {
         PurchasePolicy p = new PurchasePolicy();
         String r = marketFacade.set_store_purchase_policy(1, p);
         check_equal_msg("Store purchase rules set successfully", r);
-        //sad
     }
 
     @Test
@@ -260,22 +270,51 @@ class StoreMoudleTests {
         DiscountPolicy p = new DiscountPolicy();
         String r = marketFacade.set_store_discount_policy(1, p);
         check_equal_msg("Store discount rules set successfully", r);
-        //sad
     }
 
 
     @Test
     void two_users_buying_the_same_product() {
-
+        //happy
+        SupplyAdapter supply = new SupplyAdapterImpl();
+        PaymentAdapter payment = new PaymentAdapterImpl();
+        marketFacade.add_product_to_cart(1, 1, 30);
+        MarketFacade tmpMarket = new MarketFacade(payment, supply);
+        tmpMarket.register("amit1@gmail.com", "Aa123456", "amit", "mosko");
+        tmpMarket.login("amit1@gmail.com", "Aa123456");
+        tmpMarket.add_product_to_cart(1, 1, 20);
+        String goodR = marketFacade.buy_cart("", "");
+        String BadR = tmpMarket.buy_cart("", "");
+        check_equal_msg("Purchase done successfully", goodR);
+        check_was_exception(BadR);
     }
 
     @Test
     void user_buys_products_after_delete() {
-
+        //happy
+        add_product();
+        marketFacade.add_product_to_cart(1, 1, 20);
+        marketFacade.delete_product_from_store(1, 1);
+        String s = marketFacade.buy_cart("", "");
+        check_was_exception(s);
     }
 
     @Test
     void adding_the_same_user_to_mangment() {
+        SupplyAdapter supply = new SupplyAdapterImpl();
+        PaymentAdapter payment = new PaymentAdapterImpl();
+        MarketFacade owner = new MarketFacade(payment, supply);
+        owner.register("amit1@gmail.com", "Aa123456", "amit", "mosko");
+        owner.login("amit1@gmail.com", "Aa123456");
+        MarketFacade manger = new MarketFacade(payment, supply);
+        manger.register("amit2@gmail.com", "Aa123456", "gal", "grumet");
+        manger.login("amit2@gmail.com", "Aa123456");
+        marketFacade.add_owner("amit1@gmail.com", 1);
+
+        String good = marketFacade.add_manager("amit2@gmail.com", 1);
+        String bad = owner.add_manager("amit2@gmail.com", 1);
+        check_equal_msg("Manager added successfully", good);
+        check_was_exception(bad);
 
     }
 }

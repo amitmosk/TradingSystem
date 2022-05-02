@@ -5,7 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StatisticsManager {
-    private LocalDateTime init_time;
+    public LocalDateTime init_time;
     private AtomicInteger login_count;
     private AtomicInteger logout_count;
     private AtomicInteger connect_system_count;

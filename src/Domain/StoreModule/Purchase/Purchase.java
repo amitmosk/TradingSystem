@@ -7,7 +7,7 @@ import java.util.Map;
 public abstract class Purchase {
     private int purchase_id;
     private double totalPrice;
-    private LocalDate transaction_date;
+    public LocalDate transaction_date;
     private Map<Integer, Integer> product_and_quantity;
     private Map<Integer, Double> product_and_totalPrice;
 
@@ -19,8 +19,7 @@ public abstract class Purchase {
         this.product_and_totalPrice = product_and_totalPrice;
     }
 
-    public Integer get_purchase_id()
-    {
+    public Integer get_purchase_id() {
         return this.purchase_id;
     }
 }

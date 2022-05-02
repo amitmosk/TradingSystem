@@ -11,8 +11,6 @@ import Domain.StoreModule.Purchase.StorePurchase;
 import Domain.StoreModule.Purchase.StorePurchaseHistory;
 import Domain.Utils.Utils;
 
-import java.lang.reflect.Member;
-import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -26,7 +24,7 @@ public class Store implements iStore {
     private final String founder_email;
     private HashMap<String, Appointment> stuff_emails_and_appointments;
     private String name;
-    private final LocalDate foundation_date;
+    public LocalDate foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
     private boolean active;
     private PurchasePolicy purchasePolicy;

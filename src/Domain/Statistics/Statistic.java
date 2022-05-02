@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Statistic {
-    private LocalDateTime init_system_time;
+    public LocalDateTime init_system_time;
     private long login_per_minutes;
     private long logout_per_minutes;
     private long connect_per_minutes;
