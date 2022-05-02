@@ -1,7 +1,6 @@
 package Domain.UserModule;
 
 import Domain.StoreModule.Basket;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +12,12 @@ public class UserPurchase extends Purchase {
     public UserPurchase(Map<Integer, Basket> cart, int purchaseID) {
         this.purchase_id = purchaseID;
         this.transaction_date = LocalDateTime.now();
-        this.totalPrice = calculateTotalPrice();
         this.storeId_productsIDS = new HashMap<>();
         this.product_and_quantity = new HashMap<>();
         this.product_and_totalPrice = new HashMap<>();
         this.product_and_name = new HashMap<>();
         setMaps(cart);
+        this.totalPrice = calculateTotalPrice();
     }
 
     private void setMaps(Map<Integer,Basket> cart){

@@ -2,9 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68e1b6e7-01e7-44ee-9d92-eef6d098060b" name="Default Changelist" comment="Handled todos">
+      <change afterPath="$PROJECT_DIR$/src/Domain/UserModule/PremiumSecurity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/UserModule/Security.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_29_2022_12_21__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_29_2022_12_21__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_16__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_16__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_23__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_23__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Facade/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/iFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/Purchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/Purchase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="Statistics" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -90,6 +101,19 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.StoreTest2.find_products_by_name_ADD_Product">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="StoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TradingSystem" />
       <extension name="coverage">
@@ -178,7 +202,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -226,13 +250,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added some classes" />
@@ -240,32 +263,5 @@
     <MESSAGE value="merged Store module into statistics branch" />
     <MESSAGE value="Handled todos" />
     <option name="LAST_COMMIT_MESSAGE" value="Handled todos" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1651331895218">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651331895218" />
-    <state x="618" y="301" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1651331037478">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="618" y="301" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651331037478" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1651349065742">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651335056280" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1651349065741" />
-    <state x="398" y="109" width="740" height="606" key="find.popup" timestamp="1651339070921">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="398" y="109" width="740" height="606" key="find.popup/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651339070921" />
-    <state x="425" y="187" width="672" height="677" key="run.anything.popup" timestamp="1651339074379">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="425" y="187" width="672" height="677" key="run.anything.popup/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651339074379" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1651331975651">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/-1920.0.1536.824/0.0.1536.824@0.0.1536.824" timestamp="1651331975651" />
   </component>
 </project>

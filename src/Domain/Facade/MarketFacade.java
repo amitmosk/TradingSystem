@@ -1,6 +1,5 @@
 package Domain.Facade;
 
-import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -1191,10 +1190,10 @@ public class MarketFacade implements iFacade {
 
 
     @Override
-    public String edit_password(String pw, String password) {
+    public String edit_password(String old_password, String password) {
         Response response = null;
         try {
-            String email = user_controller.edit_password(loggedUser, pw, password);
+            String email = user_controller.edit_password(loggedUser, old_password, password);
             response = new Response(password, email + " password has been changed successfully"); // todo question: are you sure that you want to add the email in the response message ?
             system_logger.add_log("User's (" + email + ")  password has been changed successfully.");
         } catch (Exception e) {
@@ -1234,21 +1233,80 @@ public class MarketFacade implements iFacade {
             error_logger.add_log(e);
         }
         return this.toJson(response);
+    }
 
+    @Override
+    public String get_user_security_question() {
+        Response response = null;
+        try {
+            String question = user_controller.get_user_security_question(loggedUser);
+            response = new Response<>(question, "successfully received security question");
+            system_logger.add_log("Got user's security question successfully");
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed to get user's security question."));
+            error_logger.add_log(e);
+
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_name_premium(String pw, String new_name, String answer) {
+        Response response = null;
+        try {
+            String email = user_controller.edit_name_premium(loggedUser, pw, new_name,answer);
+            response = new Response(new_name, email + " name changed to " + new_name); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
+
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed to change name."));
+            error_logger.add_log(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_last_name_premium(String pw, String new_last_name, String answer) {
+        Response response = null;
+        try {
+            String email = user_controller.edit_last_name_premium(loggedUser, pw, new_last_name,answer);
+            response = new Response(new_last_name, email + " last name changed to " + new_last_name); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
+
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed to change last name."));
+            error_logger.add_log(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_password_premium(String old_password, String new_password, String answer) {
+        Response response = null;
+        try {
+            String email = user_controller.edit_passsword_premium(loggedUser, old_password, new_password,answer);
+            response = new Response(null, email + " password changed"); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User's (" + email + ") password has been successfully changed.");
+
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed to change password."));
+            error_logger.add_log(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String improve_security(String password, String question, String answer) {
+        Response response = null;
+        try {
+            String email = user_controller.improve_security(loggedUser,password,question,answer);
+            response = new Response(null, email + " improved security"); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User's (" + email + ") security has been successfully improved.");
+
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed to improve security."));
+            error_logger.add_log(e);
+        }
+        return this.toJson(response);
     }
 }
-/*
-
-
-
-
-
-
-    //Requirement 2.3.9 - Personal question
-    public double add_security_personal_question() {
-        return 0;
-    }
-
-
-
-*/

@@ -2,14 +2,14 @@ package Domain.UserModule;
 
 public class AssignUser extends AssignState {
     private String email;
-    private String pw;
+    private Security security;
     private String name;
     private String lastName;
     private UserHistory userHistory;
 
     public AssignUser(String email, String pw, String name, String lastName) {
         this.email = email;
-        this.pw = pw;
+        this.security = new Security(pw);
         this.name = name;
         this.lastName = lastName;
         this.userHistory = new UserHistory();
@@ -17,7 +17,7 @@ public class AssignUser extends AssignState {
 
     @Override
     public boolean login(String pw) {
-        return pw.equals(this.pw);
+        return pw.equals(this.security);
     }
 
     @Override
@@ -55,22 +55,35 @@ public class AssignUser extends AssignState {
 
     @Override
     public void unregister(String password) throws Exception {
-        if (!password.equals(this.pw))
+        if (!password.equals(this.security))
             throw new Exception("cannot sign out from system due to wrong password inserted");
     }
 
     public void edit_name(String pw, String new_name) throws Exception {
-        if (!pw.equals(this.pw)) throw new Exception("password does not match to current password");
+        if (!pw.equals(this.security)) throw new Exception("password does not match to current password");
         this.name = new_name;
     }
 
-    public void edit_password(String pw, String password) throws Exception {
-        if (!pw.equals(this.pw)) throw new Exception("password does not match to current password");
-        this.pw = password;
+    public void edit_password(String old_password, String password) throws Exception {
+        this.security.edit_password(old_password,password);
     }
 
     public void edit_last_name(String pw, String new_last_name) throws Exception {
-        if (!pw.equals(this.pw)) throw new Exception("password does not match to current password");
+        if (!pw.equals(this.security)) throw new Exception("password does not match to current password");
         this.name = new_last_name;
+    }
+
+    public String get_sequrity_question() throws Exception {
+        return security.get_question();
+    }
+
+    public void verify_answer(String answer) throws Exception {
+        security.verify_answer(answer);
+    }
+
+    public void improve_security(String password, String question, String answer) throws Exception {
+        security.check_password(password);
+        security.check_improvable();
+        security = new PremiumSecurity(password, question, answer);
     }
 }

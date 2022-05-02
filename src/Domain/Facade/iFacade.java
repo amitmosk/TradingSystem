@@ -233,4 +233,13 @@ public interface iFacade {
 
     String admin_view_user_purchases_history(String user_email);
 
-}
+    String get_user_security_question();
+
+    String edit_name_premium(String pw, String new_name, String answer);
+
+    String edit_last_name_premium(String pw, String new_last_name, String answer);
+
+    String edit_password_premium(String pw, String password, String answer);
+
+    String improve_security(String password,String question, String answer);
+    }

@@ -1,9 +1,6 @@
 package Domain.UserModule;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 abstract class Purchase {
@@ -15,6 +12,18 @@ abstract class Purchase {
     protected Map<Integer, String> product_and_name;
 
     protected double calculateTotalPrice(){
-        return 0;
+        double t_price = 0;
+        for(double price : product_and_totalPrice.values()){
+            t_price+=price;
+        }
+        return t_price;
+    }
+
+    public int getPurchase_id() {
+        return purchase_id;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
     }
 }

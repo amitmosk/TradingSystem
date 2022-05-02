@@ -23,7 +23,13 @@ public abstract class AssignState{
 
     public void edit_name(String pw, String new_name) throws Exception { throw new Exception("guest cant change is name");}
 
-    public void edit_password(String pw, String password) throws Exception { throw new Exception("guest cant change is password");}
+    public void edit_password(String old_password, String password) throws Exception { throw new Exception("guest cant change is password");}
 
     public void edit_last_name(String pw, String new_last_name) throws Exception { throw new Exception("guest cant change his last name");}
+
+    public String get_sequrity_question() throws Exception { throw new Exception("guest does not have privacy question");}
+
+    public void verify_answer(String answer) throws Exception { throw new Exception("guest does not have privacy question");}
+
+    public void improve_security(String password, String question, String answer) throws Exception {throw new Exception("guest cannot improve security");}
 }

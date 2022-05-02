@@ -120,13 +120,45 @@ public class User {
         state.edit_name(pw,new_name);
     }
 
-    public void edit_password(String pw, String password) throws Exception {
+    public void edit_password(String old_password, String password) throws Exception {
         Utils.passwordCheck(password);
-        state.edit_password(pw,password);
+        state.edit_password(old_password,password);
     }
 
     public void edit_last_name(String pw, String new_last_name) throws Exception {
         Utils.nameCheck(new_last_name);
         state.edit_last_name(pw,new_last_name);
+    }
+
+    public void set_admin(String email, String pw, String name, String lastName) throws Exception {
+        checkDetails(email,pw,name,lastName);
+        this.state = new Admin(email,pw,name,lastName);
+    }
+
+    public String get_user_sequrity_question() throws Exception {
+        return this.state.get_sequrity_question();
+    }
+
+    private void verify_answer(String answer) throws Exception {
+        this.state.verify_answer(answer);
+    }
+
+    public void edit_name_premium(String pw, String new_name, String answer) throws Exception {
+        verify_answer(answer);
+        edit_name(pw,new_name);
+    }
+
+    public void edit_last_name_premium(String pw, String new_last_name, String answer) throws Exception {
+        verify_answer(answer);
+        edit_last_name(pw,new_last_name);
+    }
+
+    public void edit_password_premium(String old_password, String new_password, String answer) throws Exception {
+        verify_answer(answer);
+        edit_password(old_password,new_password);
+    }
+
+    public void improve_security(String password, String question, String answer) throws Exception {
+        this.state.improve_security(password,question,answer);
     }
 }
