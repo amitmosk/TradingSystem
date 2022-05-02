@@ -9,12 +9,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class QuestionHandler {
-    private Map<Integer, BuyerQuestion> buyer_to_store = new ConcurrentHashMap<>();
-    private Map<Integer, UserQuestion> user_to_admin = new ConcurrentHashMap<>();
-    private Map<Integer, SystemQuestion> system_to_user = new ConcurrentHashMap<>();
+    private Map<Integer, BuyerQuestion> buyer_to_store;
+    private Map<Integer, UserQuestion> user_to_admin;
+    private Map<Integer, SystemQuestion> system_to_user;
     private AtomicInteger question_ids_counter;
-
-
 
 
     private static class SingletonHolder{
@@ -69,7 +67,7 @@ public class QuestionHandler {
         question.setAnswer(answer);
     }
 
-    public List<String> view_store_questions(int store_id) {
+    public List<String> view_buyers_to_store_questions(int store_id) {
         List<String> questionsList_to_return = new LinkedList<String>();
         for (BuyerQuestion question : this.buyer_to_store.values())
         {
@@ -82,7 +80,7 @@ public class QuestionHandler {
         return questionsList_to_return;
     }
 
-    public List<String> view_admin_questions() {
+    public List<String> view_users_to_admin_questions() {
         List<String> questionsList_to_return = new LinkedList<String>();
         for (UserQuestion question : this.user_to_admin.values())
         {
@@ -97,16 +95,6 @@ public class QuestionHandler {
 
 
 }
-
-/*
-buyer -> store
-store -> buyer
-user -> admin
-admin -> user
-system -> user
- */
-
-
 
 
 
