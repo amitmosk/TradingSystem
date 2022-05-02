@@ -3,6 +3,9 @@ package Domain.Facade;
 import java.util.LinkedList;
 import java.util.List;
 
+import Domain.StoreModule.Policy.DiscountPolicy;
+import Domain.StoreModule.Policy.PurchasePolicy;
+import Domain.StoreModule.Policy.Rule;
 import Domain.Purchase.Purchase;
 import Domain.Purchase.UserPurchase;
 import Domain.Purchase.UserPurchaseHistory;
@@ -61,6 +64,7 @@ public class MarketFacade implements iFacade {
         try {
             boolean logRes = user_controller.login(loggedUser, Email, password);
             String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
+            isGuest = false;
             response = new Response<>(null, "Hey +" + user_name + ", Welcome to the trading system market!");
             system_logger.add_log("User " + user_name + " logged-in");
         } catch (Exception e) {
@@ -78,7 +82,7 @@ public class MarketFacade implements iFacade {
         if (isGuest) {
             response = new Response(new Exception("guest cannot logout from the system"));
             error_logger.add_log(new Exception("Guests cannot logout, action failed."));
-        }else {
+        } else {
             system_logger.add_log("User logged out from the system.");
             user_controller.logout(loggedUser);
             this.isGuest = true;
@@ -97,7 +101,7 @@ public class MarketFacade implements iFacade {
             }
             user_controller.register(loggedUser, Email, pw, name, lastName);
             response = new Response<>(null, "Registration done successfully");
-            system_logger.add_log(name + " "+ lastName + " has registered to the system");
+            system_logger.add_log(name + " " + lastName + " has registered to the system");
         } catch (Exception e) {
             response = new Response(e);
             error_logger.add_log(e);
@@ -510,14 +514,55 @@ public class MarketFacade implements iFacade {
     //------------------------------------------------ edit product - End ----------------------------------------------
 
     //Requirement 2.4.2 Cancelled
+    @Override
+    /**
+     * @param user_email to check if the user allowed to change policiy
+     * @param store_id   id for the store
+     * @param policy     the rules to set
+     * @return string that says if the setting worked
+     * @throws IllegalArgumentException if the store not exist,
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
+     */
+    public String set_store_purchase_policy(int store_id, PurchasePolicy policy) {
+        Response response = null;
+        try {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            store_controller.set_store_purchase_policy(store_id, user_email, policy);
+            response = new Response<>(null, "Store purchase rules set successfully");
+        } catch (Exception e) {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    /**
+     * @param user_email to check if the user allowed to change policiy
+     * @param store_id   id for the store
+     * @param policy     the rules to set
+     * @return string that says if the setting worked
+     * @throws IllegalArgumentException if the store not exist,
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
+     */
+    public String set_store_discount_policy(int store_id, DiscountPolicy policy) {
+        Response response = null;
+        try {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            store_controller.set_store_discount_policy(store_id, user_email, policy);
+            response = new Response<>(null, "Store discount rules set successfully");
+        } catch (Exception e) {
+            response = new Response(e);
+        }
+        return this.toJson(response);
+    }
 
 
     //Requirement 2.4.3
     @Override
-    public String set_store_purchase_rules(int store_id) {
+    public String set_store_purchase_rules(int store_id, Rule rule) {
         Response response = null;
         try {
-            //TODO: Amit Grumet implements
+            store_controller.set_store_purchase_rules(store_id, rule);
             response = new Response<>(null, "Store purchase rules set successfully");
             system_logger.add_log("Store's (" + store_id + ") purchase rules have been set");
 
@@ -619,6 +664,7 @@ public class MarketFacade implements iFacade {
         }
         return this.toJson(response);
     }
+
 
     //Requirement 2.4.7
 
@@ -871,7 +917,7 @@ public class MarketFacade implements iFacade {
         Map<Integer, Basket> cart = user_controller.getBaskets(loggedUser);
         Response<Map<Integer, Basket>> response = new Response<>(cart, "successfully received user's cart");
         system_logger.add_log("User viewed his cart successfully");
-        return toJson(response);
+        return toJson(response); // TODO no chance for exception?
     }
 
 
@@ -947,8 +993,6 @@ public class MarketFacade implements iFacade {
     public String get_user_email() {
         Response response = null;
         try {
-            int logged = user_controller.guest_login();
-            this.loggedUser = logged;
             String email = user_controller.get_email(loggedUser);
             response = new Response<>(email, "successfully received user's email");
             system_logger.add_log("Got user's email successfully");
@@ -965,12 +1009,9 @@ public class MarketFacade implements iFacade {
     public String get_user_name() {
         Response response = null;
         try {
-            int logged = user_controller.guest_login();
-            this.loggedUser = logged;
             String name = user_controller.get_user_name(loggedUser);
             response = new Response<>(name, "successfully received user's name");
             system_logger.add_log("Got user's name successfully");
-
         } catch (Exception e) {
             response = new Response(new Exception("Failed to get user's name."));
             error_logger.add_log(e);
@@ -981,7 +1022,6 @@ public class MarketFacade implements iFacade {
 
 
     public String get_user_last_name() {
-
         Response response = null;
         try {
             String last_name = this.user_controller.get_user_last_name(loggedUser);
@@ -1071,8 +1111,8 @@ public class MarketFacade implements iFacade {
             String email = user_controller.unregister(loggedUser, password);
             // remove user from all owners and managers
             // remove all users complains & questions
-            response = new Response(email, email + " unregistered successfully"); // TODO question: are you sure that you want to add the email in the response message ?
-            system_logger.add_log("User (" + email +") has been successfully unregistered from the system.");
+            response = new Response(email, email + " unregistered successfully"); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User (" + email + ") has been successfully unregistered from the system.");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to unregister user."));
             error_logger.add_log(e);
@@ -1085,8 +1125,8 @@ public class MarketFacade implements iFacade {
         Response response = null;
         try {
             String email = user_controller.edit_name(loggedUser, pw, new_name);
-            response = new Response(new_name, email + " name changed to " + new_name); // TODO question: are you sure that you want to add the email in the response message ?
-            system_logger.add_log("User's (" + email +") name has been successfully changed to " + new_name + ".");
+            response = new Response(new_name, email + " name changed to " + new_name); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
 
         } catch (Exception e) {
             response = new Response(new Exception("Failed to change name."));
@@ -1114,8 +1154,8 @@ public class MarketFacade implements iFacade {
         Response response = null;
         try {
             String email = user_controller.edit_last_name(loggedUser, pw, new_last_name);
-            response = new Response(new_last_name, email + " last name changed to " + new_last_name); // TODO question: are you sure that you want to add the email in the response message ?
-            system_logger.add_log("User's (" + email +") last name has been successfully changed to " + new_last_name + ".");
+            response = new Response(new_last_name, email + " last name changed to " + new_last_name); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
 
         } catch (Exception e) {
             response = new Response(new Exception("Failed to change user's last name."));
@@ -1167,11 +1207,11 @@ public class MarketFacade implements iFacade {
     }
 
     @Override
-    public String edit_password(String pw, String password) {
+    public String edit_password(String old_password, String password) {
         Response response = null;
         try {
-            String email = user_controller.edit_password(loggedUser, pw, password);
-            response = new Response(password, email + " password has been changed successfully"); // TODO question: are you sure that you want to add the email in the response message ?
+            String email = user_controller.edit_password(loggedUser, old_password, password);
+            response = new Response(password, email + " password has been changed successfully"); // todo question: are you sure that you want to add the email in the response message ?
             system_logger.add_log("User's (" + email + ")  password has been changed successfully.");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to change password."));
@@ -1181,14 +1221,13 @@ public class MarketFacade implements iFacade {
     }
 
 
-
     public String admin_view_users_questions() {
         Response response = null;
         try {
             user_controller.check_admin_permission(loggedUser); // throws
             this.user_controller.view_users_questions();
             List<String> users_questions = this.user_controller.view_users_questions();
-            response = new Response( null, "Admin received users complains successfully.");
+            response = new Response(null, "Admin received users complains successfully.");
             system_logger.add_log("Admin viewed users complains successfully.");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to get users complains."));
@@ -1204,28 +1243,87 @@ public class MarketFacade implements iFacade {
         try {
             user_controller.check_admin_permission(loggedUser); // throws
             this.user_controller.answer_user_question(question_id, answer);
-           response = new Response( null, "Admin answered user complaint successfully.");
+            response = new Response(null, "Admin answered user complaint successfully.");
             system_logger.add_log("Admin answered user's complaint successfully.");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to answer user's complaint."));
             error_logger.add_log(e);
         }
-         return this.toJson(response);
+        return this.toJson(response);
+    }
 
+    @Override
+    public String get_user_security_question() {
+        Response response = null;
+        try {
+            String question = user_controller.get_user_security_question(loggedUser);
+            response = new Response<>(question, "successfully received security question");
+            system_logger.add_log("Got user's security question successfully");
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed to get user's security question."));
+            error_logger.add_log(e);
+
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_name_premium(String pw, String new_name, String answer) {
+        Response response = null;
+        try {
+            String email = user_controller.edit_name_premium(loggedUser, pw, new_name,answer);
+            response = new Response(new_name, email + " name changed to " + new_name); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
+
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed to change name."));
+            error_logger.add_log(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_last_name_premium(String pw, String new_last_name, String answer) {
+        Response response = null;
+        try {
+            String email = user_controller.edit_last_name_premium(loggedUser, pw, new_last_name,answer);
+            response = new Response(new_last_name, email + " last name changed to " + new_last_name); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
+
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed to change last name."));
+            error_logger.add_log(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String edit_password_premium(String old_password, String new_password, String answer) {
+        Response response = null;
+        try {
+            String email = user_controller.edit_passsword_premium(loggedUser, old_password, new_password,answer);
+            response = new Response(null, email + " password changed"); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User's (" + email + ") password has been successfully changed.");
+
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed to change password."));
+            error_logger.add_log(e);
+        }
+        return this.toJson(response);
+    }
+
+    @Override
+    public String improve_security(String password, String question, String answer) {
+        Response response = null;
+        try {
+            String email = user_controller.improve_security(loggedUser,password,question,answer);
+            response = new Response(null, email + " improved security"); // todo question: are you sure that you want to add the email in the response message ?
+            system_logger.add_log("User's (" + email + ") security has been successfully improved.");
+
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed to improve security."));
+            error_logger.add_log(e);
+        }
+        return this.toJson(response);
     }
 }
-/*
-
-
-
-
-
-
-    //Requirement 2.3.9 - Personal question
-    public double add_security_personal_question() {
-        return 0;
-    }
-
-
-
-*/

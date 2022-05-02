@@ -5,7 +5,17 @@
       <change afterPath="$PROJECT_DIR$/src/Domain/Statistics/iStatisticsManager.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Tests/StoreTest.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Tests/StoreTest2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/UserModule/PremiumSecurity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Domain/UserModule/Security.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_29_2022_12_21__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_29_2022_12_21__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_16__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_16__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_23__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_30_2022_15_23__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/MarketFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Facade/iFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Facade/iFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/AssignUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/Purchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/Purchase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Communication/Question.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Communication/Question.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Communication/Request.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TradingSystem/Domain/Communication/RequestHandler$SingletonHolder.class" beforeDir="false" />
@@ -54,6 +64,8 @@
       <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/Purchase.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserHistory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/UserModule/UserPurchase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Domain/Utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Utils/Utils.java" afterDir="false" />
@@ -80,7 +92,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="Statistics" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -151,6 +163,21 @@
   <component name="RunManager" selected="JUnit.StoreTest">
     <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Service.main" />
+  <component name="RunManager" selected="JUnit.StoreTest2.find_products_by_name_ADD_Product">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="TradingSystem" />
       <extension name="coverage">
         <pattern>
@@ -234,7 +261,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -282,13 +309,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

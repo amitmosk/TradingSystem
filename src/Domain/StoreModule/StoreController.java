@@ -1,5 +1,8 @@
 package Domain.StoreModule;
 
+import Domain.StoreModule.Policy.DiscountPolicy;
+import Domain.StoreModule.Policy.PurchasePolicy;
+import Domain.StoreModule.Policy.Rule;
 import Domain.StoreModule.Product.Product;
 import Domain.Purchase.Purchase;
 import Domain.StoreModule.Store.Store;
@@ -18,12 +21,12 @@ public class StoreController {
 
     private static StoreController instance = null;
 
-    public static StoreController get_instance()
-    {
+    public static StoreController get_instance() {
         if (instance == null)
             instance = new StoreController();
         return instance;
     }
+
     private StoreController() {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
@@ -36,14 +39,37 @@ public class StoreController {
     }
 
 
-
+    /**
+     * @param user_email to check if the user allowed to change policiy
+     * @param store_id   id for the store
+     * @param policy     the rules to set
+     * @return string that says if the setting worked
+     * @throws IllegalArgumentException if the store not exist,
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
+     */
+    public void set_store_purchase_policy(int store_id, String user_email, PurchasePolicy policy) throws IllegalAccessException {
+        Store store = get_store_by_store_id(store_id);
+        store.setPurchasePolicy(user_email, policy);
+    }
 
     /**
-     *
-     * @param store_id represent the store we asked to close
+     * @param user_email to check if the user allowed to change policiy
+     * @param store_id   id for the store
+     * @param policy     the rules to set
+     * @return string that says if the setting worked
+     * @throws IllegalArgumentException if the store not exist,
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
+     */
+    public void set_store_discount_policy(int store_id, String user_email, DiscountPolicy policy) throws IllegalAccessException {
+        Store store = get_store_by_store_id(store_id);
+        store.setDiscountPolicy(user_email, policy);
+    }
+
+    /**
+     * @param store_id   represent the store we asked to close
      * @param user_email the user who asked to close the store
-     * @throws if the user is not store founder OR the store or the user are not exist.
      * @return false if the store was already close, and true if we close the store temporarily
+     * @throws if the user is not store founder OR the store or the user are not exist.
      */
     public void close_store_temporarily(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
@@ -51,27 +77,39 @@ public class StoreController {
     }
 
     /**
-     *
-     * @param store_id represent the store we asked to re-open
-     * @param user_email the user who asked to re-open the store
-     * @throws if the user is not store founder OR the store or the user are not exist.
+     * @param store_id represent the store we want to set new rule for
+     * @param rule   the method you need to enforce
      * @return false if the store was already open, and true if the store were re-open
+     * @throws if the user is not store founder OR the store or the user are not exist.
+     */
+
+    public void set_store_purchase_rules(int store_id, Rule rule) {
+        if (!this.stores.containsKey(store_id)) {
+            throw new IllegalArgumentException("The store is not exist - store id: " + store_id);
+        }
+        Store store = this.stores.get(store_id);
+        store.set_store_purchase_rules(rule);
+    }
+
+    /**
+     * @param store_id   represent the store we asked to re-open
+     * @param user_email the user who asked to re-open the store
+     * @return false if the store was already open, and true if the store were re-open
+     * @throws if the user is not store founder OR the store or the user are not exist.
      */
     public void open_close_store(String user_email, int store_id) throws IllegalAccessException {
-        if (!this.stores.containsKey(store_id))
-        {
-            throw new IllegalArgumentException("The store is not exist - store id: "+store_id);
+        if (!this.stores.containsKey(store_id)) {
+            throw new IllegalArgumentException("The store is not exist - store id: " + store_id);
         }
         Store store = this.stores.get(store_id);
         store.open_close_store(user_email);
     }
 
     /**
-     *
-     * @param user_email the user who ask to change the permissions.
+     * @param user_email    the user who ask to change the permissions.
      * @param manager_email the user who we ask to change his permissions.
-     * @param store_id this method is according specific store.
-     * @param permissions a list with all the permissions that we would like give the user.
+     * @param store_id      this method is according specific store.
+     * @param permissions   a list with all the permissions that we would like give the user.
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalArgumentException the manager isn't appointed by user,
      * @throws IllegalArgumentException if the user asking change his own permissions.
@@ -82,12 +120,11 @@ public class StoreController {
     }
 
     /**
-     *
      * @param user_email who ask to view store information,
-     * @param store_id information of a specific store,
-     * @throws IllegalArgumentException if the store not exist,
-     * @throws IllegalAccessException the user doesn't have the relevant permission.
+     * @param store_id   information of a specific store,
      * @return an object with managers & permissions data.
+     * @throws IllegalArgumentException if the store not exist,
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
     public String view_store_management_information(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
@@ -96,12 +133,11 @@ public class StoreController {
     }
 
     /**
-     *
-     * @param store_id questions from a specific store,
+     * @param store_id   questions from a specific store,
      * @param user_email who ask to view store questions,
-     * @throws IllegalArgumentException if the store not exist,
-     * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return an object with store's questions.
+     * @throws IllegalArgumentException if the store not exist,
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
     public List<String> view_store_questions(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
@@ -109,13 +145,12 @@ public class StoreController {
     }
 
     /**
-     *
      * @param store_id
-     * @param user_email the manager who wants to answer the question
+     * @param user_email  the manager who wants to answer the question
      * @param question_id a specific question that the user get from view_store_questions
+     * @param answer      the answer of the store manager to the user question.
      * @throws IllegalArgumentException if the store not exist,
-     * @throws IllegalAccessException the user doesn't have the relevant permission.
-     * @param answer the answer of the store manager to the user question.
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
     public void answer_question(String user_email, int store_id, int question_id, String answer) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
@@ -123,12 +158,11 @@ public class StoreController {
     }
 
     /**
-     *
-     * @param store_id the store that we want to get all the purchases history
+     * @param store_id   the store that we want to get all the purchases history
      * @param user_email the manager
-     * @throws IllegalArgumentException if the store not exist,
-     * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return a list with all the purchases history
+     * @throws IllegalArgumentException if the store not exist,
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
     public String view_store_purchases_history(String user_email, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);
@@ -136,40 +170,33 @@ public class StoreController {
     }
 
     /**
-     *
      * @param store_id the store who have to close permanently
-     * @throws IllegalArgumentException if the store not exist,
-     * @throws IllegalAccessException the user doesn't have the relevant permission.
      * @return true if the store was open and now we close it
+     * @throws IllegalArgumentException if the store not exist,
+     * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
-    public void close_store_permanently(int store_id)
-    {
+    public void close_store_permanently(int store_id) {
         Store store = this.get_store_by_store_id(store_id);
         store.close_store_permanently();
     }
 
     /**
-     *
      * @param store_id
+     * @return The store
      * @throws IllegalArgumentException if the store not exist
      * @throws IllegalArgumentException if store is not active
-     * @return The store
      */
     private Store get_store_by_store_id(int store_id) {
-        if (!this.stores.containsKey(store_id))
-        {
-            throw new IllegalArgumentException("The store is not exist - store id: "+store_id);
-        }
-        else if (!this.stores.get(store_id).is_active())
-        {
-            throw new IllegalArgumentException("The store is not active - store id: "+store_id);
+        if (!this.stores.containsKey(store_id)) {
+            throw new IllegalArgumentException("The store is not exist - store id: " + store_id);
+        } else if (!this.stores.get(store_id).is_active()) {
+            throw new IllegalArgumentException("The store is not active - store id: " + store_id);
         }
         return this.stores.get(store_id);
 
     }
 
     /**
-     *
      * @param store_id
      * @return store information
      * @throws if the store not exist
@@ -180,7 +207,6 @@ public class StoreController {
     }
 
     /**
-     *
      * @param product_id
      * @param store_id
      * @return product information
@@ -192,18 +218,14 @@ public class StoreController {
         return s.getProduct_by_product_id(product_id);
 
 
-
     }
-
-
 
 
     //------------------------------------------------find product by - Start ----------------------------------------------------
     public List<Product> find_products_by_name(String product_name) {
         List<Product> to_return = new ArrayList<>();
-        for (Store store:stores.values()) {
-            if (store.is_active())
-            {
+        for (Store store : stores.values()) {
+            if (store.is_active()) {
                 List<Product> products_from_store = store.find_products_by_name(product_name);
                 to_return.addAll(products_from_store);
 
@@ -212,22 +234,22 @@ public class StoreController {
         return to_return;
 
     }
+
     public List<Product> find_products_by_category(String category) {
         List<Product> to_return = new ArrayList<>();
-        for (Store store:stores.values()) {
-            if (store.is_active())
-            {
+        for (Store store : stores.values()) {
+            if (store.is_active()) {
                 List<Product> products_from_store = store.find_products_by_category(category);
                 to_return.addAll(products_from_store);
             }
         }
         return to_return;
     }
+
     public List<Product> find_products_by_key_words(String key_words) {
         List<Product> to_return = new ArrayList<>();
-        for (Store store:stores.values()) {
-            if (store.is_active())
-            {
+        for (Store store : stores.values()) {
+            if (store.is_active()) {
                 List<Product> products_from_store = store.find_products_by_key_words(key_words);
                 to_return.addAll(products_from_store);
             }
@@ -247,6 +269,7 @@ public class StoreController {
         Store store = get_store_by_store_id(store_id);
         store.delete_product(product_id, user_email);
     }
+
     //------------------------------------------------ edit product - Start ----------------------------------------------
     public void edit_product_name(String user_email, int product_id, int store_id, String name) throws IllegalAccessException {
         Store store = get_store_by_store_id(store_id); //trows exceptions
@@ -273,15 +296,12 @@ public class StoreController {
     public double check_cart_available_products_and_calc_price(Cart cart) {
         Map<Integer, Basket> baskets_of_storesID = cart.getBaskets();
         double cart_price = 0;
-        for (Basket basket : baskets_of_storesID.values()){
+        for (Basket basket : baskets_of_storesID.values()) {
             int store_id = basket.getStore_id();
-            if(stores.containsKey(store_id))
-            {
+            if (stores.containsKey(store_id)) {
                 double basket_price = stores.get(store_id).check_available_products_and_calc_price(basket); // throw if not available
                 cart_price += basket_price;
-            }
-            else
-            {
+            } else {
                 throw new IllegalArgumentException("Store does not exist");
                 //not suppose to happen
             }
@@ -290,13 +310,12 @@ public class StoreController {
         return cart_price;
 
     }
-    public Product checkAvailablityAndGet(int store_id, int product_id, int quantity)
-    {
-        if(!stores.containsKey(store_id))
-        {
-            throw new IllegalArgumentException("StoreController:checkAvailablityAndGet - Store does not exist , store id: "+store_id);
+
+    public Product checkAvailablityAndGet(int store_id, int product_id, int quantity) {
+        if (!stores.containsKey(store_id)) {
+            throw new IllegalArgumentException("StoreController:checkAvailablityAndGet - Store does not exist , store id: " + store_id);
         }
-        return  stores.get(store_id).checkAvailablityAndGet(product_id, quantity);
+        return stores.get(store_id).checkAvailablityAndGet(product_id, quantity);
     }
 
 
@@ -309,16 +328,13 @@ public class StoreController {
     public Map<Integer, Purchase> update_stores_inventory(Cart cart) {
         Map<Integer, Purchase> store_id_purchase = new HashMap<>();
         Map<Integer, Basket> baskets_of_storesID = cart.getBaskets();
-        for (Basket basket : baskets_of_storesID.values())
-        {
+        for (Basket basket : baskets_of_storesID.values()) {
             int store_id = basket.getStore_id();
-            if(!stores.containsKey(store_id))
-            {
-                throw new IllegalArgumentException("Store does not exist - store id: "+ store_id);
+            if (!stores.containsKey(store_id)) {
+                throw new IllegalArgumentException("Store does not exist - store id: " + store_id);
             }
         }
-        for (Basket basket : baskets_of_storesID.values())
-        {
+        for (Basket basket : baskets_of_storesID.values()) {
             int store_id = basket.getStore_id();
            Purchase purchase = this.stores.get(store_id).remove_basket_products_from_store(basket, this.purchase_ids_counter.getAndIncrement());
            store_id_purchase.put(store_id, purchase);
@@ -361,10 +377,12 @@ public class StoreController {
         Store store = this.get_store_by_store_id(store_id);//throws
         store.add_owner(user_email, user_email_to_appoint);
     }
+
     public void add_manager(String user_email, String user_email_to_appoint, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);//throws
         store.add_manager(user_email, user_email_to_appoint);
     }
+
     public void remove_manager(String user_email, String user_email_to_delete_appointment, int store_id) throws IllegalAccessException {
         Store store = this.get_store_by_store_id(store_id);//throws
         store.remove_manager(user_email, user_email_to_delete_appointment);

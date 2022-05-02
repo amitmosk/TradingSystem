@@ -6,13 +6,17 @@ import Domain.Utils.SystemLogger;
 public class PaymentAdapterImpl implements PaymentAdapter {
     private ExternPaymentSystemProxy externPaymentSystemProxy;
 
+    public PaymentAdapterImpl() {
+        externPaymentSystemProxy = new ExternPaymentSystemProxy();
+    }
+
     public void setExternPaymentSystemProxy(ExternPaymentSystemProxy externPaymentSystemProxy) {
         this.externPaymentSystemProxy = externPaymentSystemProxy;
     }
 
     @Override
     public boolean payment(double total_price, String paymentInfo) {
-        return externPaymentSystemProxy.payment(total_price,paymentInfo);
+        return externPaymentSystemProxy.payment(total_price, paymentInfo);
     }
 
     @Override

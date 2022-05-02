@@ -20,14 +20,11 @@ public class UserController {
     private AtomicInteger ID;
     private AtomicInteger purchaseID;
     private Object usersLock;
-    private Object onlineUsersLock;
-    private Object idLock;
     private StatisticsManager statisticsManager;
 
     public static void load() {
         // no for this version
     }
-
 
     // ------------------- singleton class ----------------------------
     private static class SingletonHolder{
@@ -41,8 +38,6 @@ public class UserController {
         this.users = new ConcurrentHashMap<>() ;        //thread safe
         this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
         this.usersLock = new Object();
-        this.onlineUsersLock = new Object();
-        this.idLock = new Object();
         this.statisticsManager = new StatisticsManager();
     }
 
@@ -285,9 +280,9 @@ public class UserController {
         return get_email(loggedUser);
     }
 
-    public String edit_password(int loggedUser, String pw, String password) throws Exception {
+    public String edit_password(int loggedUser, String old_password, String password) throws Exception {
         User user = onlineUsers.get(loggedUser);
-        user.edit_password(pw,password);
+        user.edit_password(old_password,password);
         return get_email(loggedUser);
     }
 
@@ -314,5 +309,41 @@ public class UserController {
         return QuestionHandler.getInstance().view_admin_questions();
     }
 
+    public User add_admin(String email, String pw, String name, String lastName) throws Exception {
+        User admin = new User();
+        admin.set_admin(email,pw,name,lastName);
+        synchronized (usersLock){
+            users.put(email,admin);
+        }
+        return admin;
+    }
 
+    public String get_user_security_question(int loggedUser) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        return user.get_user_sequrity_question();
+    }
+
+    public String edit_name_premium(int loggedUser, String pw, String new_name, String answer) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        user.edit_name_premium(pw,new_name,answer);
+        return get_email(loggedUser);
+    }
+
+    public String edit_last_name_premium(int loggedUser, String pw, String new_last_name, String answer) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        user.edit_last_name_premium(pw,new_last_name,answer);
+        return get_email(loggedUser);
+    }
+
+    public String edit_passsword_premium(int loggedUser, String old_password, String new_password, String answer) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        user.edit_password_premium(old_password,new_password,answer);
+        return get_email(loggedUser);
+    }
+
+    public String improve_security(int loggedUser, String password, String question, String answer) throws Exception {
+        User user = onlineUsers.get(loggedUser);
+        user.improve_security(password,question,answer);
+        return get_email(loggedUser);
+    }
 }

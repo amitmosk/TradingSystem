@@ -1,4 +1,9 @@
 package Domain.StoreModule.Policy;
 
-public class Rule {
+import Domain.StoreModule.Product.Product;
+
+import java.util.List;
+
+public interface Rule {
+    boolean rule(List<Product> products);
 }
