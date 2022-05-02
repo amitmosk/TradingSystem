@@ -263,27 +263,19 @@ class StoreMoudleTests {
         //sad
     }
 
+
     @Test
-    void check_cart_available_products_and_calc_price() {
+    void two_users_buying_the_same_product() {
 
     }
 
     @Test
-    void checkAvailablityAndGet() {
+    void user_buys_products_after_delete() {
 
     }
 
     @Test
-    void update_stores_inventory() {
+    void adding_the_same_user_to_mangment() {
 
-    }
-
-    @Test
-    void open_store() {
-
-    }
-
-    @Test
-    void add_review() {
     }
 }
