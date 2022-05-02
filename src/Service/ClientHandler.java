@@ -4,6 +4,7 @@ import Domain.ExternSystems.PaymentAdapter;
 import Domain.ExternSystems.SupplyAdapter;
 import Domain.Facade.MarketFacade;
 import Domain.Facade.iFacade;
+import Domain.Utils.Utils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -71,15 +72,18 @@ public class ClientHandler extends Thread {
 
     private String handle_query(int opcode, String received) {
         String answer = "";
+        String password = "";
         switch (opcode) {
             case 1:
-                answer = marketFacade.login(received, received);
+                password = Utils.gen_pass(password);
+                answer = marketFacade.login(received, password);
                 break;
             case 2:
                 answer = marketFacade.logout();
                 break;
             case 3:
-                answer = marketFacade.register(received, received, received, received);
+                password = Utils.gen_pass(password);
+                answer = marketFacade.register(received, password, received, received);
                 break;
             case 4:
                 answer = marketFacade.find_store_information(1);
@@ -219,8 +223,21 @@ public class ClientHandler extends Thread {
                 break;
             case 49:
                 answer = marketFacade.edit_last_name("amit@gmail,com", "tom");
+                break;
             case 50:
-                answer = marketFacade.edit_password("amit@gmail,com", "tom");
+                String pw = Utils.gen_pass("old_password");
+                String password123 = Utils.gen_pass("new_password");
+                answer = marketFacade.edit_password(pw, password123);
+                break;
+            case 51:
+                password = Utils.gen_pass(password);
+                answer = marketFacade.unregister(password);
+                break;
+            case 52:
+                answer = marketFacade.admin_view_user_purchases_history("amit");
+                break;
+            case 53:
+                answer = marketFacade.admin_view_store_purchases_history(5);
         }
         return answer;
     }

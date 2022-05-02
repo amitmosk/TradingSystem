@@ -1,15 +1,14 @@
 package Domain.StoreModule.Store;
 
-import Domain.Communication.Question;
 import Domain.Communication.QuestionHandler;
 import Domain.StoreModule.*;
 import Domain.StoreModule.Policy.DiscountPolicy;
 import Domain.StoreModule.Policy.PurchasePolicy;
 import Domain.StoreModule.Policy.Rule;
 import Domain.StoreModule.Product.Product;
-import Domain.StoreModule.Purchase.StorePurchase;
-import Domain.StoreModule.Purchase.StorePurchaseHistory;
-import Domain.Utils.Utils;
+import Domain.Purchase.Purchase;
+import Domain.Purchase.StorePurchase;
+import Domain.Purchase.StorePurchaseHistory;
 
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
@@ -46,7 +45,7 @@ public class Store implements iStore {
         this.active = true;
         this.foundation_date = LocalDate.now();
         this.storeReview = new StoreReview();
-        this.purchases_history = new StorePurchaseHistory();
+        this.purchases_history = new StorePurchaseHistory(this.name);
         this.inventory = new HashMap<>();
         this.stuff_emails_and_appointments = new HashMap<>();
         this.rules = new LinkedList<Rule>();
@@ -168,6 +167,11 @@ public class Store implements iStore {
         return this.purchases_history.toString();
     }
 
+    @Override
+    public String admin_view_store_purchases_history()  {
+        return this.purchases_history.toString();
+    }
+
     // -- find product by ----------------------------------------------------------------------------------
 
     @Override
@@ -281,8 +285,14 @@ public class Store implements iStore {
         throw new IllegalArgumentException("Store.checkAvailablityAndGet: Product is not available");
     }
 
+    /**
+     *
+     * @param basket we call this method with all the basket of a single cart
+     * @param purchase_id the index from store controller
+     * @return
+     */
     @Override
-    public void remove_basket_products_from_store(Basket basket, int purchase_id) {
+    public Purchase remove_basket_products_from_store(Basket basket, int purchase_id) {
         Map<Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
 
         for (Product p : products_and_quantities.keySet()) {
@@ -301,15 +311,14 @@ public class Store implements iStore {
                 this.inventory.put(p, first_quantity - quantity_to_remove);
         }
         String buyer_email = basket.get_buyer_email();
-        double price = basket.getTotal_price();
-        Map<Integer, Integer> p_ids_quantity = basket.get_productsIds_and_quantity();
-        Map<Integer, Double> p_ids_price = this.get_product_ids_and_total_price(basket);
+        Map<Integer,Integer> p_ids_quantity = basket.get_productsIds_and_quantity();
+        Map<Integer,Double> p_ids_price = this.get_product_ids_and_total_price(basket);
+        Map<Integer,String> p_ids_name = basket.getProducts_and_names();
 
-
-        StorePurchase purchase = new StorePurchase(buyer_email, purchase_id, price,
-                p_ids_quantity, p_ids_price);
-        this.purchases_history.insert(purchase);
-
+        Purchase purchase = new Purchase(p_ids_quantity, p_ids_price, p_ids_name);
+        StorePurchase purchase_to_add = new StorePurchase(purchase, buyer_email, purchase_id);
+        this.purchases_history.insert(purchase_to_add);
+        return purchase;
     }
 
     @Override

@@ -1,12 +1,12 @@
-package Domain.UserModule;
+package Domain.Purchase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserHistory extends History {
-    protected List<UserPurchase> historyList;
+public class UserPurchaseHistory {
+    private List<UserPurchase> historyList;
 
-    public UserHistory() {
+    public UserPurchaseHistory() {
         this.historyList = new ArrayList<>();
     }
 

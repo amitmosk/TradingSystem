@@ -4,6 +4,10 @@ import Domain.Communication.QuestionHandler;
 import Domain.Statistics.Statistic;
 import Domain.Statistics.StatisticsManager;
 import Domain.StoreModule.Basket;
+import Domain.Purchase.Purchase;
+import Domain.Purchase.UserPurchase;
+import Domain.Purchase.UserPurchaseHistory;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -191,9 +195,9 @@ public class UserController {
      * function that makes a new purchase and add it to the history & clears the cart
      * @param loggedUser
      */
-    public UserPurchase buyCart(int loggedUser) {
+    public UserPurchase buyCart(int loggedUser, Map<Integer, Purchase> store_id_purchase, double cart_total_price) {
         User user = onlineUsers.get(loggedUser);
-        UserPurchase userPurchase = user.buyCart(purchaseID.getAndIncrement());
+        UserPurchase userPurchase = user.buyCart(purchaseID.getAndIncrement(), store_id_purchase, cart_total_price);
         statisticsManager.inc_buy_cart_count();
         return userPurchase;
     }
@@ -209,7 +213,7 @@ public class UserController {
         user.check_if_user_buy_this_product(storeID,productID);
     }
 
-    public UserHistory view_user_purchase_history(int loggedUser) throws Exception { //admin
+    public UserPurchaseHistory view_user_purchase_history(int loggedUser) throws Exception { //admin
         User user = onlineUsers.get(loggedUser);
         return user.view_user_purchase_history();
     }
@@ -234,7 +238,7 @@ public class UserController {
         user.check_admin_permission();
     }
 
-    public UserHistory admin_view_user_purchase_history(String email) throws Exception { //admin
+    public UserPurchaseHistory admin_view_user_purchase_history(String email) throws Exception { //admin
         if(!isRegistered(email)) throw new Exception("user "+email+"is not registered to the system.");
         User user = users.get(email);
         return user.view_user_purchase_history();

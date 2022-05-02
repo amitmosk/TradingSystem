@@ -6,6 +6,9 @@ import java.util.List;
 import Domain.StoreModule.Policy.DiscountPolicy;
 import Domain.StoreModule.Policy.PurchasePolicy;
 import Domain.StoreModule.Policy.Rule;
+import Domain.Purchase.Purchase;
+import Domain.Purchase.UserPurchase;
+import Domain.Purchase.UserPurchaseHistory;
 import Domain.Utils.ErrorLogger;
 import Domain.Utils.Response;
 import Domain.StoreModule.Product.Product;
@@ -26,7 +29,6 @@ import java.util.Map;
 // TODO: move all method comments from user controller to market - Amit Grumet
 // TODO: on edit user details functions we should call privacy when implemented - Gal & Eylon
 // TODO: check all purchases
-// TODO: when init system we should create new admin.
 // TODO: when we leave the system - should call logout()
 
 public class MarketFacade implements iFacade {
@@ -935,12 +937,12 @@ public class MarketFacade implements iFacade {
         try {
             // get information about the payment & supply
             Cart cart = this.user_controller.getCart(this.loggedUser);
-            double total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
-            this.payment_adapter.payment(total_price, paymentInfo);
+            double cart_total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
+            this.payment_adapter.payment(cart_total_price, paymentInfo);
             this.supply_adapter.supply(SupplyInfo);
             // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
-            this.store_controller.update_stores_inventory(cart);
-            UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser);
+            Map<Integer, Purchase> store_id_purchase = this.store_controller.update_stores_inventory(cart);
+            UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser, store_id_purchase, cart_total_price);
             response = new Response(userPurchase, "Purchase done successfully");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to purchase cart."));
@@ -971,10 +973,10 @@ public class MarketFacade implements iFacade {
     //Requirement 2.3.7
     @Override
     public String view_user_purchase_history() {
-        Response<UserHistory> response = null;
+        Response<UserPurchaseHistory> response = null;
         try {
-            UserHistory userHistory = user_controller.view_user_purchase_history(loggedUser);
-            response = new Response<>(userHistory, "successfully received user's product history");
+            UserPurchaseHistory userPurchaseHistory = user_controller.view_user_purchase_history(loggedUser);
+            response = new Response<>(userPurchaseHistory, "successfully received user's product history");
             system_logger.add_log("User viewed his purchase history successfully");
 
         } catch (Exception e) {
@@ -1058,8 +1060,8 @@ public class MarketFacade implements iFacade {
     public String view_user_purchases_history(String user_email) {
         Response response = null;
         try {
-            UserHistory userHistory = user_controller.view_user_purchase_history(loggedUser);
-            response = new Response(userHistory, "received user's purchase history successfully");
+            UserPurchaseHistory userPurchaseHistory = user_controller.view_user_purchase_history(loggedUser);
+            response = new Response(userPurchaseHistory, "received user's purchase history successfully");
             system_logger.add_log("User received his purchase history successfully");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to get user's purchase history."));
@@ -1074,8 +1076,8 @@ public class MarketFacade implements iFacade {
         Response response = null;
         try {
             user_controller.check_admin_permission(loggedUser);
-            UserHistory userHistory = user_controller.admin_view_user_purchase_history(user_email);
-            response = new Response(userHistory, "received user's purchase history successfully");
+            UserPurchaseHistory userPurchaseHistory = user_controller.admin_view_user_purchase_history(user_email);
+            response = new Response(userPurchaseHistory, "received user's purchase history successfully");
             system_logger.add_log("Admin received user's (" + user_email + ") purchase history successfully.");
         } catch (Exception e) {
             response = new Response(new Exception("Failed to get user's purchase history."));
@@ -1172,7 +1174,6 @@ public class MarketFacade implements iFacade {
 
     @Override
     public String view_store_purchases_history(int store_id) {
-        // TODO: add admin to permissions & stores should know who is the admin of the system
         Response<String> response = null;
         try {
             String user_email = this.user_controller.get_email(this.loggedUser);
@@ -1188,6 +1189,22 @@ public class MarketFacade implements iFacade {
         return this.toJson(response);
     }
 
+    @Override
+    public String admin_view_store_purchases_history(int store_id) {
+        Response<String> response = null;
+        try {
+            user_controller.check_admin_permission(loggedUser); // throws
+            String answer = this.store_controller.admin_view_store_purchases_history(store_id);
+            response = new Response<>(answer, "Store purchases history received successfully");
+            system_logger.add_log("Admin received store's (" + store_id + ") purchase history successfully.");
+
+        } catch (Exception e) {
+            response = new Response(new Exception("Failed get stores purchase history."));
+            error_logger.add_log(e);
+
+        }
+        return this.toJson(response);
+    }
 
     @Override
     public String edit_password(String old_password, String password) {

@@ -1,13 +1,21 @@
 package Domain.Utils;
 
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
+import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 public class Utils {
 
@@ -136,6 +144,40 @@ public class Utils {
                 throw new Exception("The name must contain letters only");
         }
     }
+
+/**
+ * one-way encryption technique
+ */
+    public static String gen_pass(String password)
+    {
+        /* Plain-text password initialization. */
+        String encryptedpassword = null;
+        try
+        {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            /* Add plain-text password bytes to digest using MD5 update() method. */
+            m.update(password.getBytes());
+            /* Convert the hash value into bytes */
+            byte[] bytes = m.digest();
+            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */
+            StringBuilder s = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            /* Complete hashed password in hexadecimal format */
+            encryptedpassword = s.toString();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+
+        /* Display the unencrypted and encrypted passwords. */
+        return encryptedpassword;
+    }
+
 
 
 
