@@ -19,7 +19,7 @@ public class MarketSystem {
     }
 
     //Requirement 1.1
-    public void init_market(){
+    public void init_market()  {
         System.out.println("start init market");
         this.payment_adapter = new PaymentAdapterImpl();
         this.supply_adapter = new SupplyAdapterImpl();
@@ -36,8 +36,14 @@ public class MarketSystem {
         // load DB
         UserController.load();
         StoreController.load();
-        // TODO: when init system we should create new admin.
-//        UserController.getInstance().add_admin("barak_bahar@haifa.com", "12345678", "Barak", "Bahar");
+        try {
+            this.add_admins();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public PaymentAdapter getPayment_adapter() {
@@ -46,5 +52,11 @@ public class MarketSystem {
 
     public SupplyAdapter getSupply_adapter() {
         return supply_adapter;
+    }
+
+    public void add_admins() throws Exception{
+        UserController.getInstance().add_admin("barak_bahar@haifa.com", "12345678", "Barak", "Bahar");
+
+
     }
 }
