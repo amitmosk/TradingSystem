@@ -1,6 +1,7 @@
 package Domain.StoreModule;
 
 import Domain.StoreModule.Product.Product;
+import Domain.Purchase.Purchase;
 import Domain.StoreModule.Store.Store;
 import Domain.StoreModule.Store.StoreManagersInfo;
 import Domain.UserModule.Cart;
@@ -298,7 +299,15 @@ public class StoreController {
         return  stores.get(store_id).checkAvailablityAndGet(product_id, quantity);
     }
 
-    public void update_stores_inventory(Cart cart) {
+
+    /**
+     *
+     * @param cart with all the items we should remove from inventory
+     * @param total_price of all the baskets in the cart - calculate in check_cart_available_products_and_calc_price
+     * @return Map with stores id and purchase - for adding to user purchase history
+     */
+    public Map<Integer, Purchase> update_stores_inventory(Cart cart) {
+        Map<Integer, Purchase> store_id_purchase = new HashMap<>();
         Map<Integer, Basket> baskets_of_storesID = cart.getBaskets();
         for (Basket basket : baskets_of_storesID.values())
         {
@@ -311,8 +320,10 @@ public class StoreController {
         for (Basket basket : baskets_of_storesID.values())
         {
             int store_id = basket.getStore_id();
-            this.stores.get(store_id).remove_basket_products_from_store(basket, this.purchase_ids_counter.getAndIncrement());
+           Purchase purchase = this.stores.get(store_id).remove_basket_products_from_store(basket, this.purchase_ids_counter.getAndIncrement());
+           store_id_purchase.put(store_id, purchase);
         }
+        return store_id_purchase;
 
     }
 
@@ -339,6 +350,11 @@ public class StoreController {
         Store to_rate = this.get_store_by_store_id(store_id);//throw exceptions
         to_rate.add_store_rating(user_email, rate);
 
+    }
+
+    public String admin_view_store_purchases_history(int store_id) throws IllegalAccessException {
+        Store store = this.get_store_by_store_id(store_id);
+        return store.admin_view_store_purchases_history();
     }
 
     public void add_owner(String user_email, String user_email_to_appoint, int store_id) throws IllegalAccessException {
@@ -369,5 +385,6 @@ public class StoreController {
         Store store = this.get_store_by_store_id(storeID);
         return store.getProduct_by_product_id(productID);
     }
+
 }
 

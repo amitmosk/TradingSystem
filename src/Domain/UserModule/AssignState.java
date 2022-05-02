@@ -1,5 +1,8 @@
 package Domain.UserModule;
 
+import Domain.Purchase.UserPurchase;
+import Domain.Purchase.UserPurchaseHistory;
+
 public abstract class AssignState{
     public boolean login(String pw) throws Exception {throw new Exception("Assign user cannot log in");}
 
@@ -9,7 +12,7 @@ public abstract class AssignState{
 
     public void check_if_user_buy_this_product(int storeID, int productID) throws Exception {throw new Exception("Guest Hasn't made any purchases yet.");}
 
-    public UserHistory view_user_purchase_history() throws Exception {throw new Exception("Guest Hasn't made any purchases yet.");}
+    public UserPurchaseHistory view_user_purchase_history() throws Exception {throw new Exception("Guest Hasn't made any purchases yet.");}
 
     public String get_user_name() throws Exception {throw new Exception("Guest doesnt have name.");}
 

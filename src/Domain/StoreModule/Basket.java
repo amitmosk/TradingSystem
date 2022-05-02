@@ -110,7 +110,12 @@ public class Basket {
     }
 
 
-
-
-
+    public Map<Integer, String> getProducts_and_names() {
+        Map<Integer, String> productsIds_and_names = new HashMap<>();
+        for(Product p: this.products_and_quantities.keySet())
+        {
+            productsIds_and_names.put(p.getProduct_id(), p.getName());
+        }
+        return productsIds_and_names;
+    }
 }

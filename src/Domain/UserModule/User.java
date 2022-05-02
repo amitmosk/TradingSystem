@@ -1,11 +1,13 @@
 package Domain.UserModule;
 
 import Domain.StoreModule.Basket;
+import Domain.Purchase.Purchase;
+import Domain.Purchase.UserPurchase;
+import Domain.Purchase.UserPurchaseHistory;
 import Domain.Utils.Utils;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.regex.Pattern;
 
 
 public class User {
@@ -73,9 +75,9 @@ public class User {
         return cart.getBaskets();
     }
 
-    public UserPurchase buyCart(int purchaseID) {
+    public UserPurchase buyCart(int purchaseID, Map<Integer, Purchase> store_id_purchase, double cart_total_price) {
         //make purchase
-        UserPurchase purchase = new UserPurchase(cart.getBaskets(),purchaseID);
+        UserPurchase purchase = new UserPurchase(purchaseID, store_id_purchase, cart_total_price);
         //add to purchaseHistory
         this.state.addPurchase(purchase);
         //clear
@@ -91,7 +93,7 @@ public class User {
         this.state.check_if_user_buy_this_product(storeID, productID);
     }
 
-    public UserHistory view_user_purchase_history() throws Exception {
+    public UserPurchaseHistory view_user_purchase_history() throws Exception {
         return this.state.view_user_purchase_history();
     }
 

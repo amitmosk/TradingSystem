@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class StatisticsManager {
+public class StatisticsManager implements iStatisticsManager {
     private LocalDateTime init_time;
     private AtomicInteger login_count;
     private AtomicInteger logout_count;

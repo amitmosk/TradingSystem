@@ -1,8 +1,8 @@
 package Domain.StoreModule.Store;
 
-import Domain.StoreModule.Appointment;
 import Domain.StoreModule.Basket;
 import Domain.StoreModule.Product.Product;
+import Domain.Purchase.Purchase;
 import Domain.StoreModule.StorePermission;
 
 import java.util.LinkedList;
@@ -37,6 +37,8 @@ public interface iStore {
 
     String view_store_purchases_history(String user_email) throws IllegalAccessException;
 
+    String admin_view_store_purchases_history();
+
     // -- find product by ----------------------------------------------------------------------------------
 
     List<Product> find_products_by_name(String product_name);
@@ -59,7 +61,7 @@ public interface iStore {
 
     double check_available_products_and_calc_price(Basket basket);
 
-    void remove_basket_products_from_store(Basket basket, int purchase_id);
+    Purchase remove_basket_products_from_store(Basket basket, int purchase_id);
 
     void add_owner(String user_email, String user_email_to_appoint) throws IllegalAccessException;
 

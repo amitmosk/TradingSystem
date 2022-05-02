@@ -169,7 +169,7 @@ public interface iFacade {
     String manager_view_store_questions(int store_id);
     String manager_answer_question(int store_id, int question_id, String answer);
     /**
-     * Requirment 2.4.13 + 2.6.4
+     * Requirment 2.4.13
      */
     String view_store_purchases_history(int store_id);
     /**
@@ -192,6 +192,7 @@ public interface iFacade {
      * Requirment 2.6.4
      */
     String view_user_purchases_history(String user_email);
+    String admin_view_store_purchases_history(int store_id);
 
     /**
      * Requirment 2.6.5

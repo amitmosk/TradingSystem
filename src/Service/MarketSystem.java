@@ -33,10 +33,11 @@ public class MarketSystem {
             System.out.println(e.getMessage());
         }
 
-//        Admin admin = UserController.getInstance().add_admin("barak_bahar@haifa.com", "12345678", "Barak", "Bahar");
         // load DB
         UserController.load();
         StoreController.load();
+        // TODO: when init system we should create new admin.
+//        UserController.getInstance().add_admin("barak_bahar@haifa.com", "12345678", "Barak", "Bahar");
     }
 
     public PaymentAdapter getPayment_adapter() {
