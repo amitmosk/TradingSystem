@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class QuestionHandler {
+public class QuestionHandler implements iQuestionHandler {
     private Map<Integer, BuyerQuestion> buyer_to_store;
     private Map<Integer, UserQuestion> user_to_admin;
     private Map<Integer, SystemQuestion> system_to_user;
@@ -31,24 +31,28 @@ public class QuestionHandler {
         return QuestionHandler.SingletonHolder.instance;
     }
 
+    @Override
     public void add_buyer_question(String message, String buyer_email, int store_id){
         int question_id = this.question_ids_counter.getAndIncrement();
         BuyerQuestion question_to_add = new BuyerQuestion(question_id, message, buyer_email, store_id);
         this.buyer_to_store.put(question_id, question_to_add);
     }
 
+    @Override
     public void add_user_question(String message, String buyer_email){
         int question_id = this.question_ids_counter.getAndIncrement();
         UserQuestion question_to_add = new UserQuestion(question_id, message, buyer_email);
         this.user_to_admin.put(question_id, question_to_add);
     }
 
+    @Override
     public void add_system_question(String message, String user_email){
         int question_id = this.question_ids_counter.getAndIncrement();
         SystemQuestion question_to_add = new SystemQuestion(question_id, message, user_email);
         this.system_to_user.put(question_id, question_to_add);
     }
 
+    @Override
     public void answer_buyer_question(int question_id, String answer) {
         if (!this.buyer_to_store.containsKey(question_id))
         {
@@ -58,6 +62,7 @@ public class QuestionHandler {
         question.setAnswer(answer);
     }
 
+    @Override
     public void answer_user_question(int question_id, String answer) {
         if (!this.user_to_admin.containsKey(question_id))
         {
@@ -67,6 +72,7 @@ public class QuestionHandler {
         question.setAnswer(answer);
     }
 
+    @Override
     public List<String> view_buyers_to_store_questions(int store_id) {
         List<String> questionsList_to_return = new LinkedList<String>();
         for (BuyerQuestion question : this.buyer_to_store.values())
@@ -80,6 +86,7 @@ public class QuestionHandler {
         return questionsList_to_return;
     }
 
+    @Override
     public List<String> view_users_to_admin_questions() {
         List<String> questionsList_to_return = new LinkedList<String>();
         for (UserQuestion question : this.user_to_admin.values())

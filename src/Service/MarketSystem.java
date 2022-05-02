@@ -8,6 +8,7 @@ import Domain.StoreModule.StoreController;
 import Domain.UserModule.Admin;
 import Domain.UserModule.User;
 import Domain.UserModule.UserController;
+import Domain.Utils.SystemLogger;
 
 public class MarketSystem {
     private Object stats;
@@ -20,7 +21,7 @@ public class MarketSystem {
 
     //Requirement 1.1
     public void init_market()  {
-        System.out.println("start init market");
+        SystemLogger.getInstance().add_log("start init market");
         this.payment_adapter = new PaymentAdapterImpl();
         this.supply_adapter = new SupplyAdapterImpl();
         try
@@ -55,7 +56,8 @@ public class MarketSystem {
     }
 
     public void add_admins() throws Exception{
-        UserController.getInstance().add_admin("barak_bahar@haifa.com", "12345678", "Barak", "Bahar");
+        UserController.getInstance().add_admin("barak_bahar@haifa.com", "aA12345678", "Barak", "Bahar");
+        SystemLogger.getInstance().add_log("admin added");
 
 
     }

@@ -1,7 +1,7 @@
 package Domain.UserModule;
 
-import Domain.Purchase.UserPurchase;
-import Domain.Purchase.UserPurchaseHistory;
+import Domain.StoreModule.Purchase.UserPurchase;
+import Domain.StoreModule.Purchase.UserPurchaseHistory;
 
 public class AssignUser extends AssignState {
     private String email;
@@ -19,8 +19,9 @@ public class AssignUser extends AssignState {
     }
 
     @Override
-    public boolean login(String pw) {
-        return pw.equals(this.security);
+    public boolean login(String pw) throws Exception {
+        security.check_password(pw);
+        return true;
     }
 
     @Override
@@ -58,12 +59,11 @@ public class AssignUser extends AssignState {
 
     @Override
     public void unregister(String password) throws Exception {
-        if (!password.equals(this.security))
-            throw new Exception("cannot sign out from system due to wrong password inserted");
+        security.check_password(password);
     }
 
     public void edit_name(String pw, String new_name) throws Exception {
-        if (!pw.equals(this.security)) throw new Exception("password does not match to current password");
+        security.check_password(pw);
         this.name = new_name;
     }
 
@@ -72,7 +72,7 @@ public class AssignUser extends AssignState {
     }
 
     public void edit_last_name(String pw, String new_last_name) throws Exception {
-        if (!pw.equals(this.security)) throw new Exception("password does not match to current password");
+        security.check_password(pw);
         this.name = new_last_name;
     }
 

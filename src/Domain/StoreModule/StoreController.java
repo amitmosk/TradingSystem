@@ -4,10 +4,11 @@ import Domain.StoreModule.Policy.DiscountPolicy;
 import Domain.StoreModule.Policy.PurchasePolicy;
 import Domain.StoreModule.Policy.Rule;
 import Domain.StoreModule.Product.Product;
-import Domain.Purchase.Purchase;
+import Domain.StoreModule.Purchase.Purchase;
 import Domain.StoreModule.Store.Store;
 import Domain.StoreModule.Store.StoreManagersInfo;
 import Domain.UserModule.Cart;
+import Domain.Utils.SystemLogger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,7 +36,7 @@ public class StoreController {
     }
 
     public static void load() {
-        // not for this version
+        SystemLogger.getInstance().add_log("store controller load");
     }
 
 
@@ -181,8 +182,8 @@ public class StoreController {
     }
 
     /**
-     * @param store_id
-     * @return The store
+     * @param store_id - for one store
+     * @return The store object
      * @throws IllegalArgumentException if the store not exist
      * @throws IllegalArgumentException if store is not active
      */
@@ -200,6 +201,8 @@ public class StoreController {
      * @param store_id
      * @return store information
      * @throws if the store not exist
+     * @throws IllegalArgumentException if store does not exist
+     * @throws IllegalArgumentException if store isn't active
      */
     public Store find_store_information(int store_id) throws IllegalArgumentException {
         Store store = this.get_store_by_store_id(store_id);
@@ -322,7 +325,6 @@ public class StoreController {
     /**
      *
      * @param cart with all the items we should remove from inventory
-     * @param total_price of all the baskets in the cart - calculate in check_cart_available_products_and_calc_price
      * @return Map with stores id and purchase - for adding to user purchase history
      */
     public Map<Integer, Purchase> update_stores_inventory(Cart cart) {
@@ -344,11 +346,12 @@ public class StoreController {
     }
 
 
-    public void open_store(String founder_email, String store_name) {
+    public int open_store(String founder_email, String store_name) {
         int store_id = this.store_ids_counter.getAndIncrement();
         Store store = new Store(store_id, founder_email, store_name);
         store.appoint_founder();
         this.stores.put(store_id, store);
+        return store_id;
     }
 
     public void add_review(String user_email, int product_id, int store_id, String review) {

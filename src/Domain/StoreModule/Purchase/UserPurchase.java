@@ -1,4 +1,4 @@
-package Domain.Purchase;
+package Domain.StoreModule.Purchase;
 
 import java.util.Map;
 

@@ -4,9 +4,10 @@ import Domain.Communication.QuestionHandler;
 import Domain.Statistics.Statistic;
 import Domain.Statistics.StatisticsManager;
 import Domain.StoreModule.Basket;
-import Domain.Purchase.Purchase;
-import Domain.Purchase.UserPurchase;
-import Domain.Purchase.UserPurchaseHistory;
+import Domain.StoreModule.Purchase.Purchase;
+import Domain.StoreModule.Purchase.UserPurchase;
+import Domain.StoreModule.Purchase.UserPurchaseHistory;
+import Domain.Utils.SystemLogger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,7 +24,8 @@ public class UserController {
     private StatisticsManager statisticsManager;
 
     public static void load() {
-        // no for this version
+        SystemLogger.getInstance().add_log("user controller load");
+
     }
 
     // ------------------- singleton class ----------------------------
@@ -268,7 +270,7 @@ public class UserController {
     public String unregister(int ID ,String password) throws Exception {
         String email = get_email(ID);
         User user = onlineUsers.get(ID);
-        user.unregister(password); //TODO: add more privacy ?
+        user.unregister(password);
         synchronized (usersLock) { users.remove(email); }
         onlineUsers.put(ID,new User());
         return email;

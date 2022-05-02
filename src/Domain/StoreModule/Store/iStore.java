@@ -2,7 +2,7 @@ package Domain.StoreModule.Store;
 
 import Domain.StoreModule.Basket;
 import Domain.StoreModule.Product.Product;
-import Domain.Purchase.Purchase;
+import Domain.StoreModule.Purchase.Purchase;
 import Domain.StoreModule.StorePermission;
 
 import java.util.LinkedList;

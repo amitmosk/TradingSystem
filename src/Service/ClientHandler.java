@@ -24,7 +24,7 @@ public class ClientHandler extends Thread {
         this.s = s;
         this.dis = dis;
         this.dos = dos;
-        this.marketFacade = (iFacade) new MarketFacade(paymentAdapter, supplyAdapter);
+        this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
     }
 
     @Override
@@ -164,7 +164,6 @@ public class ClientHandler extends Thread {
                 answer = marketFacade.edit_product_key_words(1,1, new LinkedList<>());
                 break;
             case 30:
-                // TODO ask about the idea
                 //answer = marketFacade.set_store_purchase_rules(1);
                 break;
             case 31:
@@ -213,7 +212,7 @@ public class ClientHandler extends Thread {
                 answer = marketFacade.admin_answer_user_question(1,"amit");
                 break;
             case 46:
-                answer = marketFacade.view_user_purchases_history("amit");
+                answer = marketFacade.view_user_purchase_history();
                 break;
             case 47:
                 answer = marketFacade.get_market_stats();
@@ -238,6 +237,8 @@ public class ClientHandler extends Thread {
                 break;
             case 53:
                 answer = marketFacade.admin_view_store_purchases_history(5);
+                break;
+
         }
         return answer;
     }

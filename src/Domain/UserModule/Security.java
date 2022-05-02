@@ -7,7 +7,6 @@ public class Security {
         this.password = password;
     }
 
-    // TODO: add logger
 
     public void check_password(String password) throws Exception {
         if (!password.equals(this.password)) throw new Exception("password does not match to current password");
