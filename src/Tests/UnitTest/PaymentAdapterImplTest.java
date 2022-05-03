@@ -1,4 +1,4 @@
-package Tests;
+package Tests.UnitTest;
 
 import Domain.ExternSystems.PaymentAdapterImpl;
 import Domain.ExternSystems.Proxy.ExternPaymentSystemProxy;

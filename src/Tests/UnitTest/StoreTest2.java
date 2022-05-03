@@ -1,4 +1,4 @@
-package Tests;
+package Tests.UnitTest;
 
 import Domain.StoreModule.Basket;
 import Domain.StoreModule.Product.Product;

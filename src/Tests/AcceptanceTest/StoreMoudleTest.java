@@ -1,4 +1,4 @@
-package Tests;
+package Tests.AcceptanceTest;
 
 import Domain.ExternSystems.PaymentAdapter;
 import Domain.ExternSystems.PaymentAdapterImpl;

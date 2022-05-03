@@ -1,4 +1,4 @@
-package Tests;
+package Tests.UnitTest;
 
 import Domain.StoreModule.Appointment;
 import Domain.StoreModule.Store.Store;

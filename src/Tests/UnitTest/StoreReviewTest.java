@@ -1,4 +1,4 @@
-package Tests;
+package Tests.UnitTest;
 
 import Domain.StoreModule.Store.StoreReview;
 import org.junit.Assert;
