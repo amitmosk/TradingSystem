@@ -1,5 +1,4 @@
 package Domain.UserModule;
-// TODO: add logger
 public class PremiumSecurity extends Security{
     private String question;
     private String answer;
