@@ -114,11 +114,18 @@ public class MarketFacade implements iFacade {
     public String login(String Email, String password) {
         Response response = null;
         try {
-            user_controller.login(loggedUser, Email, password);
-            String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
-            isGuest = false;
-            response = new Response<>(null, "Hey +" + user_name + ", Welcome to the trading system market!");
-            system_logger.add_log("User " + Email + " logged-in");
+            if(!isGuest){
+                Exception e = new Exception("You are already logged in!");
+                error_logger.add_log(e);
+                response = new Response(e);
+            }
+            else{
+                user_controller.login(loggedUser, Email, password);
+                String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
+                isGuest = false;
+                response = new Response<>(null, "Hey +" + user_name + ", Welcome to the trading system market!");
+                system_logger.add_log("User " + Email + " logged-in");
+            }
         } catch (Exception e) {
             response = new Response(new Exception("Incorrect email or password, please try again."));
             error_logger.add_log(e);

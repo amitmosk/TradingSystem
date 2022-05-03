@@ -43,8 +43,7 @@ public class User {
     }
 
     public synchronized boolean login(String password) throws Exception {
-        boolean res = this.state.login(password);
-        this.isLogged.compareAndSet(false,true);
+        boolean res = this.state.login(password) && this.isLogged.compareAndSet(false,true);
         return res;
     }
 
