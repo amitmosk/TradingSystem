@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class StoreMoudleTests {
+class StoreMoudleTest {
     int productId = 0;
     MarketFacade marketFacade;
     String Email = "amit@gmail.com";

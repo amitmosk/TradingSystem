@@ -37,7 +37,7 @@ public class StorePurchase {
         return purchase.getTotalPrice();
     }
 
-    public LocalDate getTransaction_date() {
+    public String getTransaction_date() {
         return this.purchase.getTransaction_date();
     }
 

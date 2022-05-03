@@ -23,7 +23,7 @@ public class Store implements iStore {
     private final String founder_email;
     private HashMap<String, Appointment> stuff_emails_and_appointments;
     private String name;
-    public LocalDate foundation_date;
+    public String foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
     private boolean active;
     private PurchasePolicy purchasePolicy;
@@ -41,7 +41,7 @@ public class Store implements iStore {
         this.name = name;
         this.product_ids_counter = new AtomicInteger(1);
         this.active = true;
-        this.foundation_date = LocalDate.now();
+        this.foundation_date = LocalDate.now().toString();
         this.storeReview = new StoreReview();
         this.purchases_history = new StorePurchaseHistory(this.name);
         this.inventory = new HashMap<>();
@@ -166,7 +166,7 @@ public class Store implements iStore {
     }
 
     @Override
-    public String admin_view_store_purchases_history()  {
+    public String admin_view_store_purchases_history() {
         return this.purchases_history.toString();
     }
 
@@ -284,8 +284,7 @@ public class Store implements iStore {
     }
 
     /**
-     *
-     * @param basket we call this method with all the basket of a single cart
+     * @param basket      we call this method with all the basket of a single cart
      * @param purchase_id the index from store controller
      * @return
      */
@@ -309,9 +308,9 @@ public class Store implements iStore {
                 this.inventory.put(p, first_quantity - quantity_to_remove);
         }
         String buyer_email = basket.get_buyer_email();
-        Map<Integer,Integer> p_ids_quantity = basket.get_productsIds_and_quantity();
-        Map<Integer,Double> p_ids_price = this.get_product_ids_and_total_price(basket);
-        Map<Integer,String> p_ids_name = basket.getProducts_and_names();
+        Map<Integer, Integer> p_ids_quantity = basket.get_productsIds_and_quantity();
+        Map<Integer, Double> p_ids_price = this.get_product_ids_and_total_price(basket);
+        Map<Integer, String> p_ids_name = basket.getProducts_and_names();
 
         Purchase purchase = new Purchase(p_ids_quantity, p_ids_price, p_ids_name);
         StorePurchase purchase_to_add = new StorePurchase(purchase, buyer_email, purchase_id);
@@ -437,7 +436,7 @@ public class Store implements iStore {
 
     // -- Getters ------------------------------------------------------------------------
 
-    public LocalDate getFoundation_date() {
+    public String getFoundation_date() {
         return foundation_date;
     }
 

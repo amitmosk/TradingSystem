@@ -5,7 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StatisticsManager implements iStatisticsManager {
-    private LocalDateTime init_time;
+    private String init_time;
     private AtomicInteger login_count;
     private AtomicInteger logout_count;
     private AtomicInteger connect_system_count;
@@ -13,7 +13,7 @@ public class StatisticsManager implements iStatisticsManager {
     private AtomicInteger buy_cart_count;
 
     public StatisticsManager() {
-        this.init_time = LocalDateTime.now();
+        this.init_time = LocalDateTime.now().toString();
         this.login_count = new AtomicInteger(0);
         this.logout_count = new AtomicInteger(0);
         this.connect_system_count = new AtomicInteger(0);
@@ -21,29 +21,33 @@ public class StatisticsManager implements iStatisticsManager {
         this.buy_cart_count = new AtomicInteger(0);
     }
 
-    private long get_total_minutes_system_on(){
-        return ChronoUnit.MINUTES.between(init_time, LocalDateTime.now());
+    private long get_total_minutes_system_on() {
+        return ChronoUnit.MINUTES.between(LocalDateTime.parse(init_time), LocalDateTime.now());
     }
 
-    private long get_login_statistics(){
+    private long get_login_statistics() {
         long mins = get_total_minutes_system_on();
-        return mins/login_count.get();
+        return mins / login_count.get();
     }
-    private long get_logout_statistics(){
+
+    private long get_logout_statistics() {
         long mins = get_total_minutes_system_on();
-        return mins/logout_count.get();
+        return mins / logout_count.get();
     }
-    private long get_connect_system_statistics(){
+
+    private long get_connect_system_statistics() {
         long mins = get_total_minutes_system_on();
-        return mins/connect_system_count.get();
+        return mins / connect_system_count.get();
     }
-    private long get_register_statistics(){
+
+    private long get_register_statistics() {
         long mins = get_total_minutes_system_on();
-        return mins/register_count.get();
+        return mins / register_count.get();
     }
-    private long get_buy_cart_statistics(){
+
+    private long get_buy_cart_statistics() {
         long mins = get_total_minutes_system_on();
-        return mins/buy_cart_count.get();
+        return mins / buy_cart_count.get();
     }
 
     public void inc_login_count() {
@@ -66,13 +70,13 @@ public class StatisticsManager implements iStatisticsManager {
         this.buy_cart_count.incrementAndGet();
     }
 
-    public Statistic get_system_statistics(){
-        LocalDateTime init_system_time = init_time;
+    public Statistic get_system_statistics() {
+        LocalDateTime init_system_time = LocalDateTime.parse(init_time);
         long login_per_minutes = get_login_statistics();
         long logout_per_minutes = get_logout_statistics();
         long connect_per_minutes = get_connect_system_statistics();
         long register_per_minutes = get_register_statistics();
         long buy_cart__per_minutes = get_buy_cart_statistics();
-        return new Statistic(init_system_time,login_per_minutes,logout_per_minutes,connect_per_minutes,register_per_minutes,buy_cart__per_minutes);
+        return new Statistic(init_system_time, login_per_minutes, logout_per_minutes, connect_per_minutes, register_per_minutes, buy_cart__per_minutes);
     }
 }
