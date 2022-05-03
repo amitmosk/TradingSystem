@@ -1,0 +1,2 @@
+May 03, 2022 11:01:11 AM Domain.Utils.SystemLogger add_log
+INFO: amit grumet has registered to the system
