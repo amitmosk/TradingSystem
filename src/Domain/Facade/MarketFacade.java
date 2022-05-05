@@ -1406,7 +1406,8 @@ public class MarketFacade implements iFacade {
     }
 
 
-
-
-
+    // TODO: testing functions
+    public boolean is_logged(){
+        return !isGuest;
+    }
 }

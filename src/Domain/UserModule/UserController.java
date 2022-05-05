@@ -348,4 +348,9 @@ public class UserController {
         user.improve_security(password,question,answer);
         return get_email(loggedUser);
     }
+
+    // TODO: added functions for testing :
+    public boolean contains_user_email(String email){
+        return this.users.containsKey(email);
+    }
 }
