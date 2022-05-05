@@ -1,8 +1,11 @@
 package Tests.AcceptanceTest;
 
+import Domain.ExternSystems.PaymentAdapter;
 import Domain.ExternSystems.PaymentAdapterImpl;
+import Domain.ExternSystems.SupplyAdapter;
 import Domain.ExternSystems.SupplyAdapterImpl;
 import Domain.Facade.MarketFacade;
+import Domain.UserModule.UserController;
 import Domain.Utils.Response;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.*;
@@ -11,6 +14,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +25,11 @@ class MarketFacadeTest {
 
     private MarketFacade facade1;
     private MarketFacade facade2;
+    private UserController uc;
+    private PaymentAdapter pa;
+    private SupplyAdapter sa;
+    private String email;
+    private String password;
 
     private boolean check_was_exception(String r) {
         Response response = new Gson().fromJson(r, Response.class);
@@ -45,6 +55,11 @@ class MarketFacadeTest {
         facade1.register("check123457@email.com", "pass3Chec", "name","last");
         facade1.logout();
 
+        uc = UserController.getInstance();
+        pa = new PaymentAdapterImpl();
+        sa = new SupplyAdapterImpl();
+        email = "somthing@gmail.com";
+        password = "aA12345";
     }
 
     /*
@@ -407,4 +422,126 @@ class MarketFacadeTest {
         facade1.logout();
     }
 
+    private void start_threads(List<Thread> threads){
+        for(Thread t : threads){ t.start(); } // running all the threads parallel
+    }
+
+    private void join_threads(List<Thread> threads){
+        try {
+            for (Thread t : threads) {
+                t.join();
+            }
+        }catch (Exception e){
+            assertTrue(false,"there was error while running the threads");
+        }
+    }
+
+    /**
+     * trying to register num_of_threads with same email:
+     * 1. make sure the email is not registered already.
+     * 2. creating num_of_threads threads
+     * 3. running all the threads in parallel
+     * 4. make sure that the email is registered & there was num_of_threads-1 exceptions
+     */
+    @Test
+    void parallel_registration_same_user() {
+        //arrange
+        int num_of_threads = 100;
+        List<Thread> threads = new ArrayList<>();
+        AtomicInteger num_of_exceptions = new AtomicInteger(0);
+
+        //1
+        assertFalse(uc.contains_user_email(email)); //make sure that the user is not already registered
+        //2
+        for(int i = 0 ; i < num_of_threads ; i ++){ //initializing all the threads
+            MarketFacade mf = new MarketFacade(pa,sa);
+            threads.add(new Thread(() -> {
+               String res = mf.register(email,password,"gal","brown");
+               if(check_was_exception(res)) num_of_exceptions.getAndIncrement();
+            }));
+        }
+        //3
+        start_threads(threads);
+        join_threads(threads);
+        //4+5
+        assertTrue(uc.contains_user_email(email),"failed to register user");
+        assertTrue(num_of_exceptions.get() == num_of_threads-1,"parallel bug");
+    }
+
+
+    /**
+     * trying to register num_of_threads with different email:
+     * 1. make sure the email is not registered already.
+     * 2. creating num_of_threads threads
+     * 3. running all the threads in parallel
+     * 4. make sure that all the emails is registered & there was 0 exceptions
+     */
+    @Test
+    void parallel_registration_different_users() {
+        // arrange
+        int num_of_threads = 100;
+        String ending = "@gmail.com";
+        String starting = "somthing";
+        List<Thread> threads = new ArrayList<>();
+        AtomicInteger num_of_exceptions = new AtomicInteger(0);
+
+        //1 + 2
+        for(int i = 0, num = 3 ; i < num_of_threads ; i ++,num++){ //initializing all the threads
+            MarketFacade mf = new MarketFacade(pa,sa);
+            String email = starting+num+ending;
+            assertFalse(uc.contains_user_email(email)); //make sure that the user is not already registered
+            threads.add(new Thread(() -> {
+                String res = mf.register(email,password,"gal","brown");
+                if(check_was_exception(res)) num_of_exceptions.getAndIncrement();
+            }));
+        }
+
+        //3
+        start_threads(threads);
+        join_threads(threads);
+
+        //4
+        for(int i = 0, num = 3 ; i < num_of_threads ; i++, num++){ assertTrue(uc.contains_user_email(starting+num+ending),"failed to register user"); }
+        assertTrue(num_of_exceptions.get() == 0,"parallel bug");
+    }
+
+
+    /**
+     * trying to login num_of_threads with same email:
+     * 1. make sure the email is not registered already.
+     * 2. creating num_of_threads threads
+     * 3. running all the threads in parallel
+     * 4. make sure that the email is registered & there was num_of_threads-1 exceptions
+     */
+    @Test
+    void parallel_logging_same_user() {
+        //arrange
+        int num_of_threads = 100;
+        List<Thread> threads = new ArrayList<>();
+        AtomicInteger num_of_exceptions = new AtomicInteger(0);
+        AtomicInteger num_of_logged_after_operation = new AtomicInteger(0);
+        MarketFacade mf = new MarketFacade(pa,sa);
+        String reg_email = "loginsame@gmail.com";
+        mf.register(reg_email,password,"gal","brown");
+        assertTrue(uc.contains_user_email(reg_email),"failed to register user");
+        mf.logout();
+        assertFalse(mf.is_logged(),"user is logged in before operation");
+
+        //initializing all the threads
+        for(int i = 0 ; i < num_of_threads ; i ++){
+            MarketFacade mf1 = new MarketFacade(pa,sa);
+            threads.add(new Thread(() -> {
+                if(mf1.is_logged()) assertTrue(false,"account already logged in before operation");
+                String res = mf1.login(reg_email,password);
+                if(check_was_exception(res)) num_of_exceptions.getAndIncrement();
+                if(mf1.is_logged()) num_of_logged_after_operation.incrementAndGet();
+            }));
+        }
+        //3
+        start_threads(threads);
+        join_threads(threads);
+        //4+5
+        assertTrue(num_of_exceptions.get() == num_of_threads-1,"parallel bug");
+        assertTrue(num_of_logged_after_operation.get() == 1, num_of_logged_after_operation.get() +" logging operation succeed");
+    }
 }
