@@ -123,7 +123,7 @@ public final class PasswordManagerImpl implements iPasswordManager {
      * <p>Passwords should be stored in a {@code char[]} so that it can be filled
      * with zeros after use instead of lingering on the heap and elsewhere.
      *
-     * @deprecated Use {@link #hash(char[])} instead
+     *  Use {@link #hash(char[])} instead
      */
     @Override
     public String hash(String password)
@@ -135,7 +135,7 @@ public final class PasswordManagerImpl implements iPasswordManager {
      * Authenticate with a password in an immutable {@code String} and a stored
      * password token.
      *
-     * @deprecated Use {@link #authenticate(char[],String)} instead.
+     *  Use {@link #authenticate(char[],String)} instead.
      * @see #hash(String)
      */
     @Override
