@@ -17,12 +17,12 @@ public class Security {
     }
 
 
-    public void check_password(String password) throws Exception {
+    public void check_correct_password(String password) throws Exception {
         if (!passwordManager.authenticate(password, this.token)) throw new Exception("password does not match to current password");
     }
 
     public void edit_password(String old_password, String password) throws Exception {
-        this.check_password(old_password);
+        this.check_correct_password(old_password);
         this.token = this.passwordManager.hash(password);
     }
 

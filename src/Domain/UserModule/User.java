@@ -25,10 +25,10 @@ public class User {
 
 
     private void checkDetails(String email, String pw, String name, String lastName) throws Exception {
-        Utils.emailCheck(email);
-        Utils.nameCheck(name);
-        Utils.nameCheck(lastName);
-        Utils.passwordCheck(pw);
+        Utils.emailValidCheck(email);
+        Utils.nameValidCheck(name);
+        Utils.nameValidCheck(lastName);
+        Utils.passwordValidCheck(pw);
     }
 
     public boolean register(String email, String pw, String name, String lastName) throws Exception {
@@ -117,17 +117,17 @@ public class User {
     }
 
     public void edit_name(String pw, String new_name) throws Exception {
-        Utils.nameCheck(new_name);
+        Utils.nameValidCheck(new_name);
         state.edit_name(pw,new_name);
     }
 
     public void edit_password(String old_password, String password) throws Exception {
-        Utils.passwordCheck(password);
+        Utils.passwordValidCheck(password);
         state.edit_password(old_password,password);
     }
 
     public void edit_last_name(String pw, String new_last_name) throws Exception {
-        Utils.nameCheck(new_last_name);
+        Utils.nameValidCheck(new_last_name);
         state.edit_last_name(pw,new_last_name);
     }
 

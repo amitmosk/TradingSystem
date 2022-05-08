@@ -94,7 +94,7 @@ public class Utils {
     }
 
 
-    public static void emailCheck(String email) throws Exception {
+    public static void emailValidCheck(String email) throws Exception {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
@@ -107,7 +107,7 @@ public class Utils {
             throw new Exception("Invalid email");
     }
 
-    public static void passwordCheck(String pw)throws Exception{
+    public static void passwordValidCheck(String pw)throws Exception{
         final int MinPasswordLength = 6;
         final int MaxPasswordLength = 12;
         boolean containsNum = false;
@@ -130,7 +130,7 @@ public class Utils {
             throw new Exception("password should contain at least one upper & lower letter, and digit");
     }
 
-    public static void nameCheck(String name) throws Exception {
+    public static void nameValidCheck(String name) throws Exception {
         final int MaxNamesLength = 10;
         if (name == null || name.equals(""))
             throw new Exception("Name cannot be null or empty spaces");
@@ -144,14 +144,4 @@ public class Utils {
                 throw new Exception("The name must contain letters only");
         }
     }
-
-/**
- * one-way encryption technique
- */
-
-
-
-
-
-
 }
