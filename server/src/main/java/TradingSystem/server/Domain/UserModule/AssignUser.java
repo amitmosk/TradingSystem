@@ -105,7 +105,7 @@ public class AssignUser extends AssignState {
         security = new PremiumSecurity(password, question, answer);
     }
 
-    public void add_founder(Store store,Appointment appointment) throws Exception {
+    public void add_founder(Store store,Appointment appointment) throws MarketException {
         this.founder.put(store,appointment);
     }
 }

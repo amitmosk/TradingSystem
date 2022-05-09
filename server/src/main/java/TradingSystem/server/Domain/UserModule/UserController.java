@@ -115,8 +115,8 @@ public class UserController {
      * @param password the user password
      * @return the status if log-in succeed
      */
-    public void login(int ID,String email, String password) throws MarketException {
-        if(isRegistered(email)){
+    public void login(int ID, String email, String password) throws MarketException {
+        if (isRegistered(email)) {
             User user = users.get(email);
             user.login(password); //verifies if the user is logged and password & changes state.
             onlineUsers.put(ID, user);
@@ -129,7 +129,7 @@ public class UserController {
     /**
      * @param ID online user's id to logout
      */
-    public void logout(int ID) throws Exception {
+    public void logout(int ID) throws MarketException {
         User user = onlineUsers.get(ID);
         user.logout();
         onlineUsers.put(ID, new User());
@@ -157,7 +157,7 @@ public class UserController {
         return user.getBasketByStoreID(storeID);
     }
 
-/*    *//**
+    /*    *//**
      * function that add basket to the cart
      *
      * @param userID  the online user ID.
@@ -255,7 +255,8 @@ public class UserController {
 
     public UserPurchaseHistory admin_view_user_purchase_history(int loggedUser, String email) throws MarketException { //admin
         check_admin_permission(loggedUser);
-        if(!isRegistered(email)) throw new NoUserRegisterdException("user " + email + "is not registered to the system.");
+        if (!isRegistered(email))
+            throw new NoUserRegisterdException("user " + email + "is not registered to the system.");
         User user = users.get(email);
         return user.view_user_purchase_history();
     }
@@ -273,7 +274,7 @@ public class UserController {
         }
     }
 
-    public void remove_user(int ID,String email) throws MarketException {
+    public void remove_user(int ID, String email) throws MarketException {
         check_admin_permission(ID);
         if (!isRegistered(email))
             throw new NoUserRegisterdException("failed to remove due to the reason " + email + " is not registered in the system.");
@@ -314,7 +315,7 @@ public class UserController {
         return get_email(loggedUser);
     }
 
-    public Statistic get_statistics(int logged_user) throws Exception {
+    public Statistic get_statistics(int logged_user) throws MarketException {
         check_admin_permission(logged_user);
         return statisticsManager.get_system_statistics();
     }
@@ -329,7 +330,7 @@ public class UserController {
         QuestionHandler.getInstance().answer_user_question(question_id, answer);
     }
 
-    public List<String> view_users_questions(int loggedUser) throws Exception {
+    public List<String> view_users_questions(int loggedUser) throws MarketException {
         check_admin_permission(loggedUser);
         return QuestionHandler.getInstance().view_users_to_admin_questions();
     }
@@ -373,29 +374,29 @@ public class UserController {
     }
 
     //TODO: new functions
-    public void remove_product_from_cart(int loggedUser, Store store, Product p) throws Exception {
+    public void remove_product_from_cart(int loggedUser, Store store, Product p) throws MarketException {
         User user = onlineUsers.get(loggedUser);
         user.remove_product_from_cart(store, p);
     }
 
 
-    public void add_product_to_cart(int loggedUser, Store store, Product p, int quantity) {
+    public void add_product_to_cart(int loggedUser, Store store, Product p, int quantity) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        user.add_product_to_cart(store, p,quantity);
+        user.add_product_to_cart(store, p, quantity);
     }
 
-    public void edit_product_quantity_in_cart(int loggedUser, Store store, Product p, int quantity) throws Exception {
+    public void edit_product_quantity_in_cart(int loggedUser, Store store, Product p, int quantity) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        user.edit_product_quantity_in_cart(store, p,quantity);
+        user.edit_product_quantity_in_cart(store, p, quantity);
     }
 
     public User get_user(int loggedUser) {
         return onlineUsers.get(loggedUser);
     }
 
-    public User get_user_by_email(String email) throws Exception {
-        if(!users.containsKey(email))
-            throw new Exception("user does not exists in the system.");
+    public User get_user_by_email(String email) throws MarketException {
+        if (!users.containsKey(email))
+            throw new ObjectDoesntExsitException("user does not exists in the system.");
         return users.get(email);
     }
 

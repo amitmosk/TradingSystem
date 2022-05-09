@@ -70,5 +70,5 @@ public abstract class AssignState {
         throw new NoUserRegisterdException("guest cannot improve security");
     }
 
-    public void add_founder(Store store, Appointment appointment) throws Exception {throw new Exception("guest cannot be a founder");}
+    public void add_founder(Store store, Appointment appointment) throws MarketException {throw new NoUserRegisterdException("guest cannot be a founder");}
 }

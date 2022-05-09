@@ -44,9 +44,9 @@ public class StoreController {
 
 
     /**
-     * @param user to check if the user allowed to change policiy
-     * @param store_id   id for the store
-     * @param policy     the rules to set
+     * @param user     to check if the user allowed to change policiy
+     * @param store_id id for the store
+     * @param policy   the rules to set
      * @return string that says if the setting worked
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
@@ -57,9 +57,9 @@ public class StoreController {
     }
 
     /**
-     * @param user to check if the user allowed to change policiy
-     * @param store_id   id for the store
-     * @param policy     the rules to set
+     * @param user     to check if the user allowed to change policiy
+     * @param store_id id for the store
+     * @param policy   the rules to set
      * @return string that says if the setting worked
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
@@ -70,8 +70,8 @@ public class StoreController {
     }
 
     /**
-     * @param store_id   represent the store we asked to close
-     * @param user the user who asked to close the store
+     * @param store_id represent the store we asked to close
+     * @param user     the user who asked to close the store
      * @return false if the store was already close, and true if we close the store temporarily
      * @throws if the user is not store founder OR the store or the user are not exist.
      */
@@ -96,12 +96,12 @@ public class StoreController {
     }
 
     /**
-     * @param store_id   represent the store we asked to re-open
-     * @param user the user who asked to re-open the store
+     * @param store_id represent the store we asked to re-open
+     * @param user     the user who asked to re-open the store
      * @return false if the store was already open, and true if the store were re-open
      * @throws if the user is not store founder OR the store or the user are not exist.
      */
-    public void open_close_store(User user, int store_id) throws Exception {
+    public void open_close_store(User user, int store_id) throws MarketException {
         if (!this.stores.containsKey(store_id)) {
             throw new ObjectDoesntExsitException("The store is not exist - store id: " + store_id);
         }
@@ -110,10 +110,10 @@ public class StoreController {
     }
 
     /**
-     * @param user    the user who ask to change the permissions.
-     * @param manager the user who we ask to change his permissions.
-     * @param store_id      this method is according specific store.
-     * @param permissions   a list with all the permissions that we would like give the user.
+     * @param user        the user who ask to change the permissions.
+     * @param manager     the user who we ask to change his permissions.
+     * @param store_id    this method is according specific store.
+     * @param permissions a list with all the permissions that we would like give the user.
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalArgumentException the manager isn't appointed by user,
      * @throws IllegalArgumentException if the user asking change his own permissions.
@@ -124,21 +124,21 @@ public class StoreController {
     }
 
     /**
-     * @param user who ask to view store information,
-     * @param store_id   information of a specific store,
+     * @param user     who ask to view store information,
+     * @param store_id information of a specific store,
      * @return an object with managers & permissions data.
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
-    public String view_store_management_information(User user, int store_id) throws MarketException, IllegalAccessException {
+    public String view_store_management_information(User user, int store_id) throws MarketException {
         Store store = this.get_store_by_store_id(store_id);
         StoreManagersInfo info = store.view_store_management_information(user);
         return info.get_management_information();
     }
 
     /**
-     * @param store_id   questions from a specific store,
-     * @param user who ask to view store questions,
+     * @param store_id questions from a specific store,
+     * @param user     who ask to view store questions,
      * @return an object with store's questions.
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
@@ -150,7 +150,7 @@ public class StoreController {
 
     /**
      * @param store_id
-     * @param user  the manager who wants to answer the question
+     * @param user        the manager who wants to answer the question
      * @param question_id a specific question that the user get from view_store_questions
      * @param answer      the answer of the store manager to the user question.
      * @throws IllegalArgumentException if the store not exist,
@@ -162,8 +162,8 @@ public class StoreController {
     }
 
     /**
-     * @param store_id   the store that we want to get all the purchases history
-     * @param user the manager
+     * @param store_id the store that we want to get all the purchases history
+     * @param user     the manager
      * @return a list with all the purchases history
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
@@ -179,7 +179,7 @@ public class StoreController {
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
-    public void close_store_permanently(int store_id) throws Exception {
+    public void close_store_permanently(int store_id) throws MarketException {
         Store store = this.get_store_by_store_id(store_id);
         store.close_store_permanently();
     }
@@ -220,7 +220,7 @@ public class StoreController {
      * @throws IllegalArgumentException if store is not active
      */
     public Product find_product_information(int product_id, int store_id) throws MarketException {
-        Store s = get_store_by_store_id(store_id); //throws exception
+        Store s = get_store_by_store_id(store_id);
         return s.getProduct_by_product_id(product_id);
 
 
@@ -299,7 +299,7 @@ public class StoreController {
 
     //------------------------------------------------ edit product - End ----------------------------------------------
 
-    public double check_cart_available_products_and_calc_price(Cart cart) throws MarketException{
+    public double check_cart_available_products_and_calc_price(Cart cart) throws MarketException {
         Map<Store, Basket> baskets_of_storesID = cart.getBaskets();
         double cart_price = 0;
         for (Basket basket : baskets_of_storesID.values()) {
@@ -349,7 +349,7 @@ public class StoreController {
         int store_id = this.store_ids_counter.getAndIncrement();
         Store store = new Store(store_id, store_name, founder);
         Appointment appointment = store.appoint_founder();
-        founder.add_founder(store,appointment);
+        founder.add_founder(store, appointment);
         this.stores.put(store_id, store);
         return store_id;
     }
@@ -365,12 +365,12 @@ public class StoreController {
         store.add_product_rating(user_email, product_id, rate);
     }
 
-    public void rate_store(User user, int store_id, int rate) throws Exception {
+    public void rate_store(User user, int store_id, int rate) throws MarketException {
         Store to_rate = this.get_store_by_store_id(store_id);//throw exceptions
         to_rate.add_store_rating(user, rate);
     }
 
-    public StorePurchaseHistory admin_view_store_purchases_history(int store_id) throws MarketException{
+    public StorePurchaseHistory admin_view_store_purchases_history(int store_id) throws MarketException {
         Store store = this.get_store_by_store_id(store_id);
         return store.admin_view_store_purchases_history();
     }
@@ -400,14 +400,14 @@ public class StoreController {
         store.add_question(user_email, question);
     }
 
-    public Product getProduct_by_product_id(int storeID, int productID) throws ObjectDoesntExsitException, StoreException {
+    public Product getProduct_by_product_id(int storeID, int productID) throws MarketException {
         Store store = this.get_store_by_store_id(storeID);
         return store.getProduct_by_product_id(productID);
     }
 
-    public Store get_store(int store_id) throws Exception {
-        if(!this.stores.containsKey(store_id))
-            throw new Exception("there is no such store");
+    public Store get_store(int store_id) throws MarketException {
+        if (!this.stores.containsKey(store_id))
+            throw new ObjectDoesntExsitException("there is no such store");
         return stores.get(store_id);
     }
 }

@@ -1,8 +1,9 @@
-package Domain.Facade;
+package TradingSystem.server.Domain.Facade;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Policy.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.PurchasePolicy;
@@ -10,6 +11,9 @@ import TradingSystem.server.Domain.StoreModule.Policy.Rule;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
+import TradingSystem.server.Domain.StoreModule.StorePermission;
+import TradingSystem.server.Domain.UserModule.Cart;
+import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.ErrorLogger;
 import TradingSystem.server.Domain.Utils.Exception.AlreadyRegisterdException;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
@@ -23,7 +27,6 @@ import TradingSystem.server.Domain.Statistics.Statistic;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.SystemLogger;
 import TradingSystem.server.Domain.Utils.Utils;
-import TradingSystem.server.Domain.Utils.Utils.*;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;

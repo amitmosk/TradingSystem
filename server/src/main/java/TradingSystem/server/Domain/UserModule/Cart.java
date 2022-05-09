@@ -3,8 +3,7 @@ package TradingSystem.server.Domain.UserModule;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
-import TradingSystem.server.Domain.Utils.Exception.MarketException;
-
+import TradingSystem.server.Domain.Utils.Exception.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +23,7 @@ public class Cart {
     public void addBasket(Store store, Basket basket) {
         this.baskets.put(store, basket);
     }
-    
+
     public void removeBasketIfNeeded(int storeID, Basket storeBasket) {
         if (storeBasket.isEmpty())
             baskets.remove(storeID);
@@ -38,9 +37,9 @@ public class Cart {
         baskets.clear();
     }
 
-    public void remove_product_from_cart(Store store, Product p) throws Exception {
+    public void remove_product_from_cart(Store store, Product p) throws MarketException {
         if(!this.baskets.containsKey(store))
-            throw new Exception("user dont have item's from specified store");
+            throw new BasketException("user dont have item's from specified store");
         Basket basket = baskets.get(store);
         basket.removeProduct(p);
         if(basket.isEmpty()) baskets.remove(store);
@@ -52,9 +51,9 @@ public class Cart {
         this.baskets.put(store,basket);
     }
 
-    public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws Exception {
+    public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws MarketException {
         if(!baskets.containsKey(store))
-            throw new Exception("user havn't bought product from this store.");
+            throw new NoUserRegisterdException("user havn't bought product from this store.");
         baskets.get(store).changeQuantity(p,quantity);
 
     }

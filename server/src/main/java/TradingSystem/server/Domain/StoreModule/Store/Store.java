@@ -25,7 +25,7 @@ public class Store {
     // -- fields
     private final int store_id;
     private final User founder;
-    private Map<User,Appointment> stuffs_and_appointments;
+    private Map<User, Appointment> stuffs_and_appointments;
     private String name;
     public String foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
@@ -68,7 +68,7 @@ public class Store {
         p.add_review(user_email, review);
     }
 
-    public void add_store_rating(User user, int rating) throws Exception {
+    public void add_store_rating(User user, int rating) throws MarketException {
         if (this.stuffs_and_appointments.containsKey(user))
             throw new NoPremssionException("store members can't rate their store");
         this.storeReview.add_rating(user.get_user_email(), rating);
@@ -79,7 +79,7 @@ public class Store {
     }
 
 
-    public void add_product_rating(String user_email, int product_id, int rate) throws ObjectDoesntExsitException {
+    public void add_product_rating(String user_email, int product_id, int rate) throws MarketException {
         Product p = this.getProduct_by_product_id(product_id);//throws
         p.add_rating(user_email, rate);
     }
@@ -91,7 +91,7 @@ public class Store {
         return appointment;
     }
 
-    public void close_store_permanently() throws Exception {
+    public void close_store_permanently() throws MarketException {
         this.active = false;
         String message = "Store was closed permanently at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message);
@@ -99,7 +99,7 @@ public class Store {
     }
 
 
-    public void close_store_temporarily(User user) throws Exception {
+    public void close_store_temporarily(User user) throws MarketException {
         this.check_permission(user, StorePermission.close_store_temporarily);
         this.active = false;
         String message = "Store was closed close_store_temporarily at " + LocalDate.now().toString();
@@ -107,7 +107,7 @@ public class Store {
     }
 
 
-    public void open_close_store(User user) throws Exception {
+    public void open_close_store(User user) throws MarketException {
         this.check_permission(user, StorePermission.open_close_store);
         if (this.is_active())
             throw new StoreMethodException("The store is already open");
@@ -116,16 +116,17 @@ public class Store {
         this.send_message_to_the_store_stuff(message);
     }
 
-    public StoreManagersInfo view_store_management_information(User user) throws MarketException, IllegalAccessException {
+    public StoreManagersInfo view_store_management_information(User user) throws MarketException {
         this.check_permission(user, StorePermission.view_permissions);
         //TODO: added parse to emails - appointment map
         HashMap<String, Appointment> emails_appointmets = new HashMap<>();
-        for(Map.Entry<User,Appointment> en : stuffs_and_appointments.entrySet()){
-            emails_appointmets.put(en.getKey().get_user_email(),en.getValue());
+        for (Map.Entry<User, Appointment> en : stuffs_and_appointments.entrySet()) {
+            emails_appointmets.put(en.getKey().get_user_email(), en.getValue());
         }
         //end
         return new StoreManagersInfo(this.name, emails_appointmets);
     }
+
     public boolean is_active() {
         return this.active;
     }
@@ -247,10 +248,11 @@ public class Store {
     // -----------------------------------------------------------------------------------------------------
 
 
-    public double check_available_products_and_calc_price(Basket basket) {
+    public double check_available_products_and_calc_price(Basket basket) throws MarketException {
         Map<Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
         for (Product p : products_and_quantities.keySet()) {
-            this.checkAvailablityAndGet(p.getProduct_id(), products_and_quantities.get(p)); }
+            this.checkAvailablityAndGet(p.getProduct_id(), products_and_quantities.get(p));
+        }
         return basket.getTotal_price();
     }
 
@@ -274,7 +276,7 @@ public class Store {
      * @param purchase_id the index from store controller
      * @return
      */
-    public Purchase remove_basket_products_from_store(Basket basket, int purchase_id) throws MarketException{
+    public Purchase remove_basket_products_from_store(Basket basket, int purchase_id) throws MarketException {
         Map<Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
 
         for (Product p : products_and_quantities.keySet()) {
@@ -364,7 +366,7 @@ public class Store {
     }
 
 
-    public Product getProduct_by_product_id(int product_id) throws ObjectDoesntExsitException{
+    public Product getProduct_by_product_id(int product_id) throws ObjectDoesntExsitException {
         for (Product product : this.inventory.keySet()) {
             if (product.getProduct_id() == product_id)
                 return product;
@@ -436,12 +438,12 @@ public class Store {
     }
 
 
-    public void check_permission(User user, StorePermission permission) throws IllegalAccessException {
+    public void check_permission(User user, StorePermission permission) throws NoPremssionException {
         if (!this.stuffs_and_appointments.containsKey(user))
-            throw new IllegalAccessException("user is no a store member");
+            throw new NoPremssionException("user is no a store member");
         boolean flag = this.stuffs_and_appointments.get(user).has_permission(permission);
         if (!flag)
-            throw new IllegalAccessException("User has no permissions!");
+            throw new NoPremssionException("User has no permissions!");
     }
 
     public Map<Integer, Double> get_product_ids_and_total_price(Basket basket) {
@@ -467,7 +469,7 @@ public class Store {
         return product.getPrice() * quantity;
     }
 
-    public void send_message_to_the_store_stuff(String message) throws Exception {
+    public void send_message_to_the_store_stuff(String message) throws MarketException {
         for (User user : this.stuffs_and_appointments.keySet()) {
             if (!user.equals(founder))
                 QuestionHandler.getInstance().add_system_question(message, user.get_user_email());
@@ -475,5 +477,3 @@ public class Store {
     }
 
 }
-
-

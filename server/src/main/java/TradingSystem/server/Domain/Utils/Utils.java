@@ -29,15 +29,15 @@ public class Utils {
 
     public static Response CreateResponse(Exception e) {
         if (e instanceof AdminException)
-            return new Response(e, "this action wont work because of admin rules. ");
+            return new Response(e, "this action wont work because of admin rules.");
         if (e instanceof AlreadyRegisterdException)
             return new Response(e, "there is a user who is register to the system from this network right now.");
         if (e instanceof AppointmentException)
             return new Response(e, "this action wont work because of appointment rules");
         if (e instanceof BasketException)
-            return new Response(e, "cant preform this action on the shopping basket.");
+            return new Response(e, "the system cant preform this action on the shopping basket.");
         if (e instanceof LoginException)
-            return new Response(e, "cant login.");
+            return new Response(e, "the system cant preform login.");
         if (e instanceof NoPremssionException)
             return new Response(e, "you dont have permission to do this action.");
         if (e instanceof NoUserRegisterdException)
