@@ -1,0 +1,200 @@
+package TradingSystem.server.Domain.UserModule;
+
+import TradingSystem.server.Domain.StoreModule.Appointment;
+import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
+import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
+import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
+import TradingSystem.server.Domain.StoreModule.Store.Store;
+import TradingSystem.server.Domain.Utils.Exception.LoginException;
+import TradingSystem.server.Domain.Utils.Exception.MarketException;
+import TradingSystem.server.Domain.Utils.Utils;
+
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+
+public class User {
+    private AssignState state;
+    private Cart cart;
+    private AtomicBoolean isGuest;
+    private AtomicBoolean isLogged;
+    public User() { // new login guest
+        this.state = new Guest();
+        this.cart = new Cart();
+        isGuest = new AtomicBoolean(true);
+        this.isLogged = new AtomicBoolean(false);
+    }
+
+
+
+    private void checkDetails(String email, String pw, String name, String lastName) throws MarketException {
+        Utils.emailCheck(email);
+        Utils.nameCheck(name);
+        Utils.nameCheck(lastName);
+        Utils.passwordCheck(pw);
+    }
+
+    public void register(String email, String pw, String name, String lastName) throws Exception {
+        if(!isGuest.get())
+            throw new Exception("Assigned User cannot register");
+        checkDetails(email,pw,name,lastName);
+        boolean res = this.isLogged.compareAndSet(false,true);
+        if(!res)
+            throw new Exception("concurrency problem - register method");
+        this.state = new AssignUser(email, pw, name, lastName);
+        isGuest.set(false);
+    }
+
+    public synchronized void login(String password) throws Exception {
+        if(isLogged.get())
+            throw new Exception("User already logged in.");
+        this.state.login(password); //verifies password
+        boolean res = this.isLogged.compareAndSet(false,true);
+        if(!res)
+            throw new Exception("User already logged in - concurrency");
+    }
+
+    public void logout() throws Exception {
+        if(isGuest.get()) throw new Exception("failed to logout from guest");
+        if(this.isLogged.compareAndSet(true,false))
+            throw new Exception("failed to logout user - concurrency problem");
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public Basket getBasketByStoreID(int storeID) {
+        String email = "guest";
+        try{ email = get_user_email(); }
+        catch (Exception e){ }
+        return cart.getBasket(storeID,email);
+    }
+
+/*    public void addBasket(int storeID, Basket basket) {
+        cart.addBasket(storeID,basket);
+    }*/
+
+    public void removeBasketIfNeeded(int storeID, Basket storeBasket) {
+        cart.removeBasketIfNeeded(storeID, storeBasket);
+    }
+
+    public Map<Store,Basket> getBaskets() {
+        return cart.getBaskets();
+    }
+
+    public UserPurchase buyCart(int purchaseID, Map<Integer, Purchase> store_id_purchase, double cart_total_price) {
+        //make purchase
+        UserPurchase purchase = new UserPurchase(purchaseID, store_id_purchase, cart_total_price);
+        //add to purchaseHistory
+        this.state.addPurchase(purchase);
+        //clear
+        cart.clear();
+        return purchase;
+    }
+
+    public void check_if_user_buy_from_this_store(int store_id) throws MarketException {
+        this.state.check_if_user_buy_from_this_store(store_id);
+    }
+
+    public void check_if_user_buy_this_product(int storeID, int productID) throws MarketException {
+        this.state.check_if_user_buy_this_product(storeID, productID);
+    }
+
+    public UserPurchaseHistory view_user_purchase_history() throws MarketException {
+        return this.state.view_user_purchase_history();
+    }
+
+    public String get_user_name() throws MarketException {
+        return state.get_user_name();
+    }
+
+    public String get_user_last_name() throws MarketException {
+        return state.get_user_last_name();
+    }
+
+    public String get_user_email() throws MarketException {
+        return state.get_user_email();
+    }
+
+    public void check_admin_permission() throws MarketException {
+        state.check_admin_permission();
+    }
+
+    public void unregister(String password) throws MarketException {
+        state.unregister(password);
+    }
+
+    public void edit_name(String pw, String new_name) throws MarketException {
+        Utils.nameCheck(new_name);
+        state.edit_name(pw,new_name);
+    }
+
+    public void edit_password(String old_password, String password) throws MarketException {
+        Utils.passwordCheck(password);
+        state.edit_password(old_password,password);
+    }
+
+    public void edit_last_name(String pw, String new_last_name) throws MarketException {
+        Utils.nameCheck(new_last_name);
+        state.edit_last_name(pw,new_last_name);
+    }
+
+    public void set_admin(String email, String pw, String name, String lastName) throws MarketException {
+        checkDetails(email,pw,name,lastName);
+        this.state = new Admin(email,pw,name,lastName);
+    }
+
+    public String get_user_sequrity_question() throws MarketException {
+        return this.state.get_sequrity_question();
+    }
+
+    private void verify_answer(String answer) throws MarketException {
+        this.state.verify_answer(answer);
+    }
+
+    public void edit_name_premium(String pw, String new_name, String answer) throws MarketException {
+        verify_answer(answer);
+        edit_name(pw,new_name);
+    }
+
+    public void edit_last_name_premium(String pw, String new_last_name, String answer) throws MarketException {
+        verify_answer(answer);
+        edit_last_name(pw,new_last_name);
+    }
+
+    public void edit_password_premium(String old_password, String new_password, String answer) throws MarketException {
+        verify_answer(answer);
+        edit_password(old_password,new_password);
+    }
+
+    public void improve_security(String password, String question, String answer) throws MarketException {
+        this.state.improve_security(password,question,answer);
+    }
+
+    public void remove_product_from_cart(Store store, Product p) throws Exception {
+        this.cart.remove_product_from_cart(store, p);
+    }
+
+    private String get_identifier_for_basket(){
+        String identifier = "guest";
+        try{ identifier = get_user_email(); }
+        catch (Exception e){ }
+        return identifier;
+    }
+
+    public void add_product_to_cart(Store store, Product p, int quantity) throws MarketException {
+        String basket_identifer = get_identifier_for_basket();
+        this.cart.add_product_to_cart(store,p,quantity,basket_identifer);
+    }
+
+    public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws Exception {
+        this.cart.edit_product_quantity_in_cart(store,p,quantity);
+    }
+
+    public void add_founder(Store store, Appointment appointment) throws Exception {
+        this.state.add_founder(store, appointment);
+    }
+}
