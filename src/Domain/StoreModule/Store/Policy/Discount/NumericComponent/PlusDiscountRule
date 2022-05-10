@@ -1,0 +1,15 @@
+public class PlusDiscountRule {
+    SimpleDiscountRule simple1;
+    SimpleDiscountRule simple2;
+
+    public MaxDiscountRule(SimpleDiscountRule simple1, SimpleDiscountRule simple2) {
+        this.simple1 = simple1;
+        this.simple2 = simple2;
+    }
+
+    public double CalculatePriceAfterDiscount(Basket basket) {
+        double discount1 = p1.CalculatePriceAfterDiscount(basket);
+        double discount2 = p2.CalculatePriceAfterDiscount(basket);
+        return basket.getTotalPrice() - discount1 - discount2;
+    }
+}
