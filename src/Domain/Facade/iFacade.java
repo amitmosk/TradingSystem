@@ -1,9 +1,6 @@
 package Domain.Facade;
 
 import Domain.StoreModule.Policy.DiscountPolicy;
-import Domain.StoreModule.Policy.PurchasePolicy;
-import Domain.StoreModule.Policy.Rule;
-import Domain.StoreModule.Product.Product;
 import Domain.StoreModule.StorePermission;
 
 import java.util.LinkedList;

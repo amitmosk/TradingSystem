@@ -5,8 +5,6 @@ import java.util.List;
 
 import Domain.StoreModule.Purchase.Purchase;
 import Domain.StoreModule.Policy.DiscountPolicy;
-import Domain.StoreModule.Policy.PurchasePolicy;
-import Domain.StoreModule.Policy.Rule;
 import Domain.StoreModule.Purchase.UserPurchase;
 import Domain.StoreModule.Purchase.UserPurchaseHistory;
 import Domain.Utils.ErrorLogger;

@@ -6,7 +6,6 @@ import Domain.ExternSystems.SupplyAdapter;
 import Domain.ExternSystems.SupplyAdapterImpl;
 import Domain.Facade.MarketFacade;
 import Domain.StoreModule.Policy.DiscountPolicy;
-import Domain.StoreModule.Policy.PurchasePolicy;
 import Domain.Utils.Response;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.*;

@@ -1,8 +1,6 @@
 package Domain.StoreModule;
 
 import Domain.StoreModule.Policy.DiscountPolicy;
-import Domain.StoreModule.Policy.PurchasePolicy;
-import Domain.StoreModule.Policy.Rule;
 import Domain.StoreModule.Product.Product;
 import Domain.StoreModule.Purchase.Purchase;
 import Domain.StoreModule.Store.Store;
