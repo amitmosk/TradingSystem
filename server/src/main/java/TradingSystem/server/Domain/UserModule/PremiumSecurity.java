@@ -1,7 +1,7 @@
 package TradingSystem.server.Domain.UserModule;
 
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
-import TradingSystem.server.Domain.Utils.Exception.SecuirtyException;
+import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
 
 public class PremiumSecurity extends Security{
     private String question;
@@ -21,9 +21,9 @@ public class PremiumSecurity extends Security{
         return question;
     }
 
-    public void verify_answer(String answer) throws SecuirtyException {
-        if(this.answer.equals(answer)) throw new SecuirtyException("Incorrect answer for the security question");
+    public void verify_answer(String answer) throws MarketSecuirtyException {
+        if(this.answer.equals(answer)) throw new MarketSecuirtyException("Incorrect answer for the security question");
     }
 
-    public void check_improvable() throws SecuirtyException { throw new SecuirtyException("Cannot improve premium security");}
+    public void check_improvable() throws MarketSecuirtyException { throw new MarketSecuirtyException("Cannot improve premium security");}
 }

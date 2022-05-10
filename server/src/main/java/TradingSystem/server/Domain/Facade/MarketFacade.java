@@ -16,6 +16,7 @@ import TradingSystem.server.Domain.UserModule.Cart;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.ErrorLogger;
 import TradingSystem.server.Domain.Utils.Exception.AlreadyRegisterdException;
+import TradingSystem.server.Domain.Utils.Exception.LoginException;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.RegisterException;
 import TradingSystem.server.Domain.Utils.Response;
@@ -71,9 +72,8 @@ public class MarketFacade{
             this.isGuest = true;
             system_logger.add_log("User logged out from the system.");
             response = new Response(null, "Logout Successfully");
-        } catch (Exception e) {
-            //TODO: seperate 2 exceptions user failed because not logged / guest
-            response = new Response(e);
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
         return response;
@@ -118,7 +118,7 @@ public class MarketFacade{
             response = new Response<>(null, "Hey +" + user_name + ", Welcome to the trading system market!");
             system_logger.add_log("User " + Email + " logged-in");
         } catch (Exception e) {
-            response = new Response(new Exception("Incorrect email or password, please try again."));
+            response = Utils.CreateResponse(new LoginException(" "));
             error_logger.add_log(e);
         }
         return response;
@@ -1363,5 +1363,9 @@ public class MarketFacade{
     // TODO: testing functions
     public boolean is_logged() {
         return !isGuest;
+    }
+
+    public User get_user_for_tests() {
+        return user_controller.get_user_for_tests(loggedUser);
     }
 }

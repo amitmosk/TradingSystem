@@ -46,7 +46,7 @@ public class Cart {
     }
 
     public void add_product_to_cart(Store store, Product p, int quantity, String email) throws MarketException {
-        Basket basket = baskets.getOrDefault(baskets.get(store),new Basket(store.getStore_id(),email));
+        Basket basket = baskets.getOrDefault(store,new Basket(store.getStore_id(),email));
         basket.addProduct(p,quantity);
         this.baskets.put(store,basket);
     }

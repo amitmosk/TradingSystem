@@ -1,14 +1,17 @@
 package TradingSystem.server.Domain.Utils;
 
 
+import TradingSystem.server.Domain.Utils.Exception.MarketException;
+
 public class Response<T> {
     private T value;
     private boolean wasException=false;
     private String message;
 
-    public Response(Exception exception){
+    public Response(String message, Exception e){
+        this.value = (T) e;
         wasException = true;
-        message = exception.getMessage();
+        this.message = message;
     }
 
     public Response(T value, String message){

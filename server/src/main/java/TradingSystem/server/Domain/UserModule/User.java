@@ -57,7 +57,7 @@ public class User {
 
     public void logout() throws MarketException {
         if (isGuest.get()) throw new NoUserRegisterdException("failed to logout from guest");
-        if (this.isLogged.compareAndSet(true, false))
+        if (!this.isLogged.compareAndSet(true, false))
             throw new NoUserRegisterdException("failed to logout user - concurrency problem");
     }
 
@@ -200,4 +200,11 @@ public class User {
     public void add_founder(Store store, Appointment appointment) throws MarketException {
         this.state.add_founder(store, appointment);
     }
+
+    //TODO: method for testing
+    public boolean isRegistered() {
+        return !isGuest.get();
+    }
+
+    public boolean isLogged(){return this.isLogged.get();}
 }

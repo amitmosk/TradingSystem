@@ -335,7 +335,7 @@ public class Store {
         if (!appointment.is_manager()) {
             throw new AppointmentException("User to be removed is not owner/founder");
         }
-        if (!appointment.getAppointer().equals(user_to_delete_appointment)) {
+        if (!appointment.getAppointer().equals(remover)) {
             throw new AppointmentException("User can not remove stuff member that is not appoint by him");
         }
         this.stuffs_and_appointments.remove(user_to_delete_appointment);
@@ -474,6 +474,11 @@ public class Store {
             if (!user.equals(founder))
                 QuestionHandler.getInstance().add_system_question(message, user.get_user_email());
         }
+    }
+
+    //TODO: testing method
+    public boolean has_appointment(User founder){
+        return stuffs_and_appointments.containsKey(founder);
     }
 
 }

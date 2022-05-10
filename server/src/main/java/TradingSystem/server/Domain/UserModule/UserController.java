@@ -31,6 +31,10 @@ public class UserController {
 
     }
 
+    public User get_user_for_tests(int id) {
+        return onlineUsers.get(id);
+    }
+
     // ------------------- singleton class ----------------------------
     private static class SingletonHolder {
         private static UserController instance = new UserController();
@@ -117,12 +121,15 @@ public class UserController {
      */
     public void login(int ID, String email, String password) throws MarketException {
         if (isRegistered(email)) {
+            User cur_user = onlineUsers.get(ID);
             User user = users.get(email);
+            if(cur_user.isLogged())
+                throw new LoginException("cannot log in from logged in user");
             user.login(password); //verifies if the user is logged and password & changes state.
             onlineUsers.put(ID, user);
             statisticsManager.inc_login_count();
-        }
-        throw new LoginException("User email does not match to the password");
+        } else
+            throw new LoginException("User email does not match to the password");
     }
 
 

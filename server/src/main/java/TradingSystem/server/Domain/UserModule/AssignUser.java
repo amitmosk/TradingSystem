@@ -4,7 +4,7 @@ import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
-import TradingSystem.server.Domain.Utils.Exception.SecuirtyException;
+import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 
 import java.util.HashMap;
@@ -99,7 +99,7 @@ public class AssignUser extends AssignState {
         security.verify_answer(answer);
     }
 
-    public void improve_security(String password, String question, String answer) throws SecuirtyException {
+    public void improve_security(String password, String question, String answer) throws MarketSecuirtyException {
         security.check_password(password);
         security.check_improvable();
         security = new PremiumSecurity(password, question, answer);

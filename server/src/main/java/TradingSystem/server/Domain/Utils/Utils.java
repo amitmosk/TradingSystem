@@ -9,15 +9,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
-import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 public class Utils {
 
@@ -29,44 +23,44 @@ public class Utils {
 
     public static Response CreateResponse(Exception e) {
         if (e instanceof AdminException)
-            return new Response(e, "this action wont work because of admin rules.");
+            return new Response<>("this action wont work because of admin rules.", e);
         if (e instanceof AlreadyRegisterdException)
-            return new Response(e, "there is a user who is register to the system from this network right now.");
+            return new Response<>("there is a user who is register to the system from this network right now.", e);
         if (e instanceof AppointmentException)
-            return new Response(e, "this action wont work because of appointment rules");
+            return new Response<>("this action wont work because of appointment rules", e);
         if (e instanceof BasketException)
-            return new Response(e, "the system cant preform this action on the shopping basket.");
+            return new Response<>("the system cant preform this action on the shopping basket.", e);
         if (e instanceof LoginException)
-            return new Response(e, "the system cant preform login.");
+            return new Response<>("the system cant preform login.", e);
         if (e instanceof NoPremssionException)
-            return new Response(e, "you dont have permission to do this action.");
+            return new Response<>("you dont have permission to do this action.", e);
         if (e instanceof NoUserRegisterdException)
-            return new Response(e, "there is no user currently connected to the system.");
+            return new Response<>("there is no user currently connected to the system.", e);
         if (e instanceof ObjectDoesntExsitException)
-            return new Response(e, "the object doesnt Exists.");
+            return new Response<>("the object doesnt Exists.", e);
         if (e instanceof ProductAddingException)
-            return new Response(e, "cant add the product.");
+            return new Response<>("cant add the product.", e);
         if (e instanceof ProductCreatingException)
-            return new Response(e, "cant create the product.");
+            return new Response<>("cant create the product.", e);
         if (e instanceof PurchaseException)
-            return new Response(e, "cant preform the purchase.");
+            return new Response<>("cant preform the purchase.", e);
         if (e instanceof RegisterException)
-            return new Response(e, "cant register to the system.");
-        if (e instanceof SecuirtyException)
-            return new Response(e, "this action violate our security protocols please try again.");
+            return new Response<>("cant register to the system.", e);
+        if (e instanceof MarketSecuirtyException)
+            return new Response<>("this action violate our security protocols please try again.", e);
         if (e instanceof ShippingException)
-            return new Response(e, "cant ship to the desired address");
+            return new Response<>("cant ship to the desired address", e);
         if (e instanceof StoreException)
-            return new Response(e, "this action wont work because of appointment rules");
+            return new Response<>("this action wont work because of appointment rules", e);
         if (e instanceof StoreMethodException)
-            return new Response(e, "this action wont work because of store rules");
+            return new Response<>("this action wont work because of store rules", e);
         if (e instanceof UserExcpetion)
-            return new Response(e, "this action wont work because of user ruels");
+            return new Response<>("this action wont work because of user ruels", e);
         if (e instanceof UserNeverBoughtInTheStoreException)
-            return new Response(e, "the user never bought from the store");
+            return new Response<>("the user never bought from the store", e);
         if (e instanceof WrongPermterException)
-            return new Response(e, "wrong parameter entered. ");
-        return new Response(e, "the action didnt worked,try again");
+            return new Response<>("wrong parameter entered. ", e);
+        return new Response<>("the action didnt worked,try again", e);
     }
 
     public static Date StringToDate(String s) {
@@ -161,7 +155,7 @@ public class Utils {
         boolean containsUpper = false;
         boolean containsLower = false;
         if (pw.length() < MinPasswordLength || pw.length() > MaxPasswordLength)
-            throw new SecuirtyException("password length should be in range of 6-12");
+            throw new MarketSecuirtyException("password length should be in range of 6-12");
         char[] pwArray = pw.toCharArray();
         for (char c : pwArray) {
             if (c >= '0' & c <= '9')
@@ -171,10 +165,10 @@ public class Utils {
             else if (c >= 'A' & c <= 'Z')
                 containsUpper = true;
             else
-                throw new SecuirtyException("password should only upper & lower letter and digit");
+                throw new MarketSecuirtyException("password should only upper & lower letter and digit");
         }
         if (!(containsLower && containsUpper && containsNum))
-            throw new SecuirtyException("password should contain at least one upper & lower letter, and digit");
+            throw new MarketSecuirtyException("password should contain at least one upper & lower letter, and digit");
     }
 
     public static void nameCheck(String name) throws MarketException {
