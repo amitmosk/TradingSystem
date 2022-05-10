@@ -248,7 +248,7 @@ public class Store {
     // -----------------------------------------------------------------------------------------------------
 
 
-    public double check_available_products_and_calc_price(Basket basket) throws MarketException {
+    public synchronized double check_available_products_and_calc_price(Basket basket) throws MarketException {
         Map<Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
         for (Product p : products_and_quantities.keySet()) {
             this.checkAvailablityAndGet(p.getProduct_id(), products_and_quantities.get(p));
@@ -256,8 +256,9 @@ public class Store {
         return basket.getTotal_price();
     }
 
+    //TODO: policies
     // check product is available - throws if no.
-    public Product checkAvailablityAndGet(int product_id, int quantity) throws MarketException {
+    public synchronized Product checkAvailablityAndGet(int product_id, int quantity) throws MarketException {
         Product p = this.getProduct_by_product_id(product_id);
         if (p == null) {
             throw new ProductAddingException("checkAvailablityAndGet: Product is not exist");
@@ -276,7 +277,7 @@ public class Store {
      * @param purchase_id the index from store controller
      * @return
      */
-    public Purchase remove_basket_products_from_store(Basket basket, int purchase_id) throws MarketException {
+    public synchronized Purchase remove_basket_products_from_store(Basket basket, int purchase_id) throws MarketException {
         Map<Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
 
         for (Product p : products_and_quantities.keySet()) {

@@ -16,7 +16,13 @@ public class PaymentAdapterImpl implements PaymentAdapter {
 
     @Override
     public boolean payment(double total_price, String paymentInfo) {
+
         return externPaymentSystemProxy.payment(total_price, paymentInfo);
+    }
+
+    @Override
+    public boolean can_pay(double total_price, String paymentInfo) {
+        return externPaymentSystemProxy.can_pay(total_price, paymentInfo);
     }
 
     @Override

@@ -2,6 +2,7 @@ package TradingSystem.server.Domain.StoreModule.Purchase;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class StorePurchaseHistory {
     private Map<Integer, StorePurchase> purchaseID_purchases;
@@ -9,7 +10,7 @@ public class StorePurchaseHistory {
 
     public StorePurchaseHistory(String store_name) {
         this.store_name = store_name;
-        this.purchaseID_purchases = new HashMap<>();
+        this.purchaseID_purchases = new ConcurrentHashMap<>();
     }
 
     public void insert(StorePurchase purchase)

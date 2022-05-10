@@ -3,14 +3,14 @@ package TradingSystem.server.Domain.StoreModule.Purchase;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.UserNeverBoughtInTheStoreException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class UserPurchaseHistory {
     private List<UserPurchase> historyList;
 
     public UserPurchaseHistory() {
-        this.historyList = new ArrayList<>();
+        this.historyList = new CopyOnWriteArrayList<>();
     }
 
     public void addPurchase(UserPurchase purchase) {

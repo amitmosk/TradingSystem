@@ -16,6 +16,11 @@ public class SupplyAdapterImpl implements SupplyAdapter {
     }
 
     @Override
+    public boolean can_supply(String supplyInfo) {
+        return this.externSupplySystemProxy.can_supply(supplyInfo);
+    }
+
+    @Override
     public boolean connect_to_supply_system() {
         SystemLogger.getInstance().add_log("system connected to the supply system");
         return this.externSupplySystemProxy.connect();

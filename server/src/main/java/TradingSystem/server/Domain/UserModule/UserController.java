@@ -102,12 +102,12 @@ public class UserController {
      * @param name     the user's name
      * @param lastName the user's last name
      */
-    public void register(int ID, String email, String pw, String name, String lastName) throws MarketException {
+    public void register(int ID, String email, String pw, String name, String lastName, String birth_date) throws MarketException {
         synchronized (usersLock) {
             if (isRegistered(email))
                 throw new RegisterException("user email " + email + " already exists in the system");
             User user = onlineUsers.get(ID);
-            user.register(email, pw, name, lastName);
+            user.register(email, pw, name, lastName,birth_date);
             users.put(email, user);
         }
         statisticsManager.inc_register_count();
@@ -217,9 +217,9 @@ public class UserController {
      *
      * @param loggedUser
      */
-    public UserPurchase buyCart(int loggedUser, Map<Integer, Purchase> store_id_purchase, double cart_total_price) {
+    public UserPurchase buyCart(int loggedUser) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        UserPurchase userPurchase = user.buyCart(purchaseID.getAndIncrement(), store_id_purchase, cart_total_price);
+        UserPurchase userPurchase = user.buyCart(purchaseID.getAndIncrement());
         statisticsManager.inc_buy_cart_count();
         return userPurchase;
     }

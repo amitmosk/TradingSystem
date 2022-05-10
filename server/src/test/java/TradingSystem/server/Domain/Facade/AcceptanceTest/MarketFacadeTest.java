@@ -7,6 +7,8 @@ import TradingSystem.server.Domain.ExternSystems.SupplyAdapterImpl;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Response;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -28,30 +31,32 @@ class MarketFacadeTest {
     private SupplyAdapter sa;
     private String email;
     private String password;
+    private String birth_date;
 
     private boolean check_was_exception(Response response) {
         return response.WasException();
     }
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
+        birth_date =  LocalDateTime.now().minusYears(30).toString();
         PaymentAdapter paymentAdapter = new PaymentAdapterImpl();
         SupplyAdapter supplyAdapter = new SupplyAdapterImpl();
         this.facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         this.facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
-        facade1.register("check1234@email.com", "pass3Chec", "name","last");
+        facade1.register("check1234@email.com", "pass3Chec", "name", "last",birth_date);
         facade1.open_store("Checker Store");
         ArrayList<String> arraylist = new ArrayList<>();
         arraylist.add("check_check");
         facade1.add_product_to_store(1, 20, "CheckItem", 10.0, "checker", arraylist);
         facade1.logout();
-        facade1.register("check12345@email.com", "pass3Chec", "name","last");
-        facade1.add_product_to_cart(1,1,1);
+        facade1.register("check12345@email.com", "pass3Chec", "name", "last",birth_date);
+        facade1.add_product_to_cart(1, 1, 1);
         facade1.buy_cart("credit", "address");
         facade1.logout();
-        facade1.register("check123456@email.com", "pass3Chec", "name","last");
+        facade1.register("check123456@email.com", "pass3Chec", "name", "last",birth_date);
         facade1.logout();
-        facade1.register("check123457@email.com", "pass3Chec", "name","last");
+        facade1.register("check123457@email.com", "pass3Chec", "name", "last",birth_date);
         facade1.logout();
 
         uc = UserController.getInstance();
@@ -70,23 +75,24 @@ class MarketFacadeTest {
      */
     static Stream<Arguments> user_info_provider1() {
         return Stream.of(
-                arguments("check1@email.com", "pass3Chec", "name","last"),
-                arguments("check2@email.com", "pass1Chec", "name","last"),
+                arguments("check1@email.com", "pass3Chec", "name", "last"),
+                arguments("check2@email.com", "pass1Chec", "name", "last"),
                 arguments("check3@email.com", "Ch3ckPsw0rd", "checker", "checkcheck")
         );
     }
+
     @ParameterizedTest
     @MethodSource("user_info_provider1")
     void register(String email, String pw, String name, String lastName) {
-        boolean result = check_was_exception(facade1.register(email, pw, name, lastName)); // regular register
+        boolean result = check_was_exception(facade1.register(email, pw, name, lastName, birth_date)); // regular register
         assertFalse(result);
-        result = check_was_exception(facade2.register(email, pw, name, lastName)); // register with registered user from different facade
+        result = check_was_exception(facade2.register(email, pw, name, lastName, birth_date)); // register with registered user from different facade
         assertTrue(result);
         facade1.logout();
-        result = check_was_exception(facade1.register("check1@email.com", "pass3Chec", "name","last")); // register with registered user from same facade
+        result = check_was_exception(facade1.register("check1@email.com", "pass3Chec", "name", "last", birth_date)); // register with registered user from same facade
         assertTrue(result);
-        facade1.register("check12@email.com", "pass123Chec", "name","last");
-        result = check_was_exception(facade1.register("check12@email.com", "pass123Chec", "name","last")); // register with registered user from same facade while logged in
+        facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date);
+        result = check_was_exception(facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date)); // register with registered user from same facade while logged in
         assertTrue(result);
         facade1.logout();
     }
@@ -104,6 +110,7 @@ class MarketFacadeTest {
                 arguments("check3@email.com", "Ch3ckPsw0rd")
         );
     }
+
     @ParameterizedTest
     @MethodSource("user_info_provider2")
     void login(String email, String pw) {
@@ -271,7 +278,7 @@ class MarketFacadeTest {
         assertTrue(result);
         result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 5, 11)); // edit to zero quantity
         assertTrue(result);
-        facade1.remove_product_from_cart(1,1);
+        facade1.remove_product_from_cart(1, 1);
         facade1.logout();
     }
 
@@ -327,7 +334,7 @@ class MarketFacadeTest {
         boolean result;
         result = check_was_exception(facade1.view_user_purchase_history()); // view purchase history with guest user no purchases
         assertTrue(result);
-        facade1.add_product_to_cart(1,1,1);
+        facade1.add_product_to_cart(1, 1, 1);
         facade1.buy_cart("credit", "address");
         result = check_was_exception(facade1.view_user_purchase_history()); // view purchase history with guest user that had purchased
         assertTrue(result);
@@ -356,7 +363,7 @@ class MarketFacadeTest {
         assertFalse(result);
         result = check_was_exception(facade1.unregister("pass3Chec")); // unregister guest user after assigned user unregistered
         assertTrue(result);
-        facade1.register("check123456@email.com", "pass3Chec", "name","last");
+        facade1.register("check123456@email.com", "pass3Chec", "name", "last", birth_date);
         facade1.logout();
 
     }
@@ -421,17 +428,19 @@ class MarketFacadeTest {
         facade1.logout();
     }
 
-    private void start_threads(List<Thread> threads){
-        for(Thread t : threads){ t.start(); } // running all the threads parallel
+    private void start_threads(List<Thread> threads) {
+        for (Thread t : threads) {
+            t.start();
+        } // running all the threads parallel
     }
 
-    private void join_threads(List<Thread> threads){
+    private void join_threads(List<Thread> threads) {
         try {
             for (Thread t : threads) {
                 t.join();
             }
-        }catch (Exception e){
-            assertTrue(false,"there was error while running the threads");
+        } catch (Exception e) {
+            assertTrue(false, "there was error while running the threads");
         }
     }
 
@@ -452,19 +461,19 @@ class MarketFacadeTest {
         //1
         assertFalse(uc.contains_user_email(email)); //make sure that the user is not already registered
         //2
-        for(int i = 0 ; i < num_of_threads ; i ++){ //initializing all the threads
-            MarketFacade mf = new MarketFacade(pa,sa);
+        for (int i = 0; i < num_of_threads; i++) { //initializing all the threads
             threads.add(new Thread(() -> {
-               Response res = mf.register(email,password,"gal","brown");
-               if(check_was_exception(res)) num_of_exceptions.getAndIncrement();
+                MarketFacade mf = new MarketFacade(pa, sa);
+                Response res = mf.register(email, password, "gal", "brown", birth_date);
+                if (check_was_exception(res)) num_of_exceptions.getAndIncrement();
             }));
         }
         //3
         start_threads(threads);
         join_threads(threads);
         //4+5
-        assertTrue(uc.contains_user_email(email),"failed to register user");
-        assertTrue(num_of_exceptions.get() == num_of_threads-1,"parallel bug");
+        assertTrue(uc.contains_user_email(email), "failed to register user");
+        assertTrue(num_of_exceptions.get() == num_of_threads - 1, "parallel bug");
     }
 
 
@@ -485,13 +494,13 @@ class MarketFacadeTest {
         AtomicInteger num_of_exceptions = new AtomicInteger(0);
 
         //1 + 2
-        for(int i = 0, num = 3 ; i < num_of_threads ; i ++,num++){ //initializing all the threads
-            MarketFacade mf = new MarketFacade(pa,sa);
-            String email = starting+num+ending;
-            assertFalse(uc.contains_user_email(email)); //make sure that the user is not already registered
+        for (int i = 0, num = 3; i < num_of_threads; i++, num++) { //initializing all the threads
+            String email = starting + num + ending;
             threads.add(new Thread(() -> {
-                Response res = mf.register(email,password,"gal","brown");
-                if(check_was_exception(res)) num_of_exceptions.getAndIncrement();
+                MarketFacade mf = new MarketFacade(pa, sa);
+                assertFalse(uc.contains_user_email(email)); //make sure that the user is not already registered
+                Response res = mf.register(email, password, "gal", "brown", birth_date);
+                if (check_was_exception(res)) num_of_exceptions.getAndIncrement();
             }));
         }
 
@@ -500,8 +509,10 @@ class MarketFacadeTest {
         join_threads(threads);
 
         //4
-        for(int i = 0, num = 3 ; i < num_of_threads ; i++, num++){ assertTrue(uc.contains_user_email(starting+num+ending),"failed to register user"); }
-        assertTrue(num_of_exceptions.get() == 0,"parallel bug");
+        for (int i = 0, num = 3; i < num_of_threads; i++, num++) {
+            assertTrue(uc.contains_user_email(starting + num + ending), "failed to register user");
+        }
+        assertTrue(num_of_exceptions.get() == 0, "parallel bug");
     }
 
 
@@ -519,28 +530,28 @@ class MarketFacadeTest {
         List<Thread> threads = new ArrayList<>();
         AtomicInteger num_of_exceptions = new AtomicInteger(0);
         AtomicInteger num_of_logged_after_operation = new AtomicInteger(0);
-        MarketFacade mf = new MarketFacade(pa,sa);
+        MarketFacade mf = new MarketFacade(pa, sa);
         String reg_email = "loginsame@gmail.com";
-        mf.register(reg_email,password,"gal","brown");
-        assertTrue(uc.contains_user_email(reg_email),"failed to register user");
+        mf.register(reg_email, password, "gal", "brown", birth_date);
+        assertTrue(uc.contains_user_email(reg_email), "failed to register user");
         mf.logout();
-        assertFalse(mf.is_logged(),"user is logged in before operation");
+        assertFalse(mf.is_logged(), "user is logged in before operation");
 
         //initializing all the threads
-        for(int i = 0 ; i < num_of_threads ; i ++){
-            MarketFacade mf1 = new MarketFacade(pa,sa);
+        for (int i = 0; i < num_of_threads; i++) {
             threads.add(new Thread(() -> {
-                if(mf1.is_logged()) assertTrue(false,"account already logged in before operation");
-                Response res = mf1.login(reg_email,password);
-                if(check_was_exception(res)) num_of_exceptions.getAndIncrement();
-                if(mf1.is_logged()) num_of_logged_after_operation.incrementAndGet();
+                MarketFacade mf1 = new MarketFacade(pa, sa);
+                if (mf1.is_logged()) assertTrue(false, "account already logged in before operation");
+                Response res = mf1.login(reg_email, password);
+                if (check_was_exception(res)) num_of_exceptions.getAndIncrement();
+                if (mf1.is_logged()) num_of_logged_after_operation.incrementAndGet();
             }));
         }
         //3
         start_threads(threads);
         join_threads(threads);
         //4+5
-        assertTrue(num_of_exceptions.get() == num_of_threads-1,"parallel bug");
-        assertTrue(num_of_logged_after_operation.get() == 1, num_of_logged_after_operation.get() +" logging operation succeed");
+        assertTrue(num_of_exceptions.get() == num_of_threads - 1, "parallel bug");
+        assertTrue(num_of_logged_after_operation.get() == 1, num_of_logged_after_operation.get() + " logging operation succeed");
     }
 }

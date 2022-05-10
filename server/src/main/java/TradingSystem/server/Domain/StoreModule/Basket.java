@@ -15,12 +15,10 @@ import java.util.prefs.BackingStoreException;
 public class Basket {
     private Pair<String, Integer> basket_id; // <user_email, store_id>
     private Map<Product, Integer> products_and_quantities; //  product & quantity
-    private double total_price;
 
     public Basket(int store_id, String buyer_email) {
         this.basket_id = new Pair<>(buyer_email, store_id);
         products_and_quantities = new HashMap<>();
-        this.total_price=0;
     }
 
     public void changeQuantity(Product product, int quantity) throws MarketException {
@@ -110,7 +108,6 @@ public class Basket {
             price += p.getPrice() * this.products_and_quantities.get(p);
         }
         return price;
-
     }
 
 

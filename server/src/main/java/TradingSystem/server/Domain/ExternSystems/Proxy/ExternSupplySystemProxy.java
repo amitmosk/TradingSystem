@@ -9,4 +9,6 @@ public class ExternSupplySystemProxy {
     public boolean connect(){
         return true;
     }
+
+    public boolean can_supply(String supplyInfo) {return true;}
 }

@@ -10,6 +10,7 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Utils;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -19,12 +20,14 @@ public class User {
     private Cart cart;
     private AtomicBoolean isGuest;
     private AtomicBoolean isLogged;
+    private String birth_date;
 
     public User() { // new login guest
         this.state = new Guest();
         this.cart = new Cart();
         isGuest = new AtomicBoolean(true);
         this.isLogged = new AtomicBoolean(false);
+        this.birth_date = LocalDateTime.now().toString();
     }
 
 
@@ -35,7 +38,7 @@ public class User {
         Utils.passwordCheck(pw);
     }
 
-    public void register(String email, String pw, String name, String lastName) throws MarketException {
+    public void register(String email, String pw, String name, String lastName, String birth_date) throws MarketException {
         if (!isGuest.get())
             throw new AlreadyRegisterdException("Assigned User cannot register");
         checkDetails(email, pw, name, lastName);
@@ -43,6 +46,7 @@ public class User {
         if (!res)
             throw new AlreadyRegisterdException("concurrency problem - register method");
         this.state = new AssignUser(email, pw, name, lastName);
+        this.birth_date = birth_date;
         isGuest.set(false);
     }
 
@@ -86,9 +90,13 @@ public class User {
         return cart.getBaskets();
     }
 
-    public UserPurchase buyCart(int purchaseID, Map<Integer, Purchase> store_id_purchase, double cart_total_price) {
+    public UserPurchase buyCart(int purchaseID) throws MarketException {
+        //check availability
+        double price = this.cart.check_cart_available_products_and_calc_price();
+        //update stores inventory
+        Map<Integer,Purchase> store_id_purchase = cart.update_stores_inventory(purchaseID);
         //make purchase
-        UserPurchase purchase = new UserPurchase(purchaseID, store_id_purchase, cart_total_price);
+        UserPurchase purchase = new UserPurchase(purchaseID, store_id_purchase, price);
         //add to purchaseHistory
         this.state.addPurchase(purchase);
         //clear

@@ -21,11 +21,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
 class StoreTest {
-
+    private String birth_date;
     private Store store;
     private final String founder_start = "founder";
     private final String general_start = "general";
@@ -41,6 +42,7 @@ class StoreTest {
 
     @BeforeEach
     void setUp() {
+        this.birth_date = LocalDateTime.now().minusYears(30).toString();
         counter++;
         this.founder = generate_user(founder_start);
         this.general_user = generate_user(general_start);
@@ -61,7 +63,7 @@ class StoreTest {
         return user;*/
         User user = new User();
         try {
-            user.register(starting + counter + ending, "aA123456", "gal", "brown");
+            user.register(starting + counter + ending, "aA123456", "gal", "brown", birth_date);
         }
         catch (Exception e){
             fail("failed to initialized tests - cannot register user - "+starting);

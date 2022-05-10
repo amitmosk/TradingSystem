@@ -33,10 +33,13 @@ import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.LockSupport;
 
 // TODO: when we leave the system - should call logout()
 
 public class MarketFacade{
+    public static final Object lock = new Object();
     private UserController user_controller;
     private StoreController store_controller;
     private int loggedUser;                  //id
@@ -88,10 +91,10 @@ public class MarketFacade{
      * @param lastName the last name of the new user
      * @return a string with informative of success/failure to client
      */
-    public Response<String> register(String Email, String pw, String name, String lastName) {
+    public Response<String> register(String Email, String pw, String name, String lastName, String birth_date) {
         Response<String> response = null;
         try {
-            user_controller.register(loggedUser, Email, pw, name, lastName);
+            user_controller.register(loggedUser, Email, pw, name, lastName, birth_date);
             this.isGuest = false;
             response = new Response<>(null, "Registration done successfully");
             system_logger.add_log(name + " " + lastName + " has registered to the system");
@@ -319,15 +322,17 @@ public class MarketFacade{
     public Response<UserPurchase> buy_cart(String paymentInfo, String SupplyInfo) {
         Response<UserPurchase> response = null;
         try {
-            // get information about the payment & supply
-            Cart cart = this.user_controller.getCart(this.loggedUser);
-            double cart_total_price = this.store_controller.check_cart_available_products_and_calc_price(cart);
-            this.payment_adapter.payment(cart_total_price, paymentInfo);
-            this.supply_adapter.supply(SupplyInfo);
-            // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
-            Map<Integer, Purchase> store_id_purchase = this.store_controller.update_stores_inventory(cart);
-            UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser, store_id_purchase, cart_total_price);
-            response = new Response<>(userPurchase, "Purchase done successfully");
+            //if can pay & can supply then ->
+            synchronized (lock) {
+                double cart_price = 0;
+                if (this.payment_adapter.can_pay(cart_price, paymentInfo) && this.supply_adapter.can_supply(SupplyInfo)) {
+                    // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
+                    UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser);
+                    this.payment_adapter.payment(userPurchase.getTotal_price(), paymentInfo);
+                    this.supply_adapter.supply(SupplyInfo);
+                    response = new Response<>(userPurchase, "Purchase done successfully");
+                }
+            }
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -785,12 +790,13 @@ public class MarketFacade{
     public Response<String> delete_product_from_store(int product_id, int store_id) {
         Response<String> response = null;
         try {
-            User user = user_controller.get_user(loggedUser);
-            String user_email = this.user_controller.get_email(this.loggedUser);
-            this.store_controller.delete_product_from_store(user, product_id, store_id);
-            response = new Response<>(null, "Product deleted successfully");
-            system_logger.add_log("Product (" + product_id + ") was deleted from store (" + store_id + ")");
-
+            synchronized (lock) {
+                User user = user_controller.get_user(loggedUser);
+                String user_email = this.user_controller.get_email(this.loggedUser);
+                this.store_controller.delete_product_from_store(user, product_id, store_id);
+                response = new Response<>(null, "Product deleted successfully");
+                system_logger.add_log("Product (" + product_id + ") was deleted from store (" + store_id + ")");
+            }
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -836,11 +842,12 @@ public class MarketFacade{
     public Response<String> edit_product_price(int product_id, int store_id, double price) {
         Response<String> response = null;
         try {
-            User user = user_controller.get_user(loggedUser);
-            this.store_controller.edit_product_price(user, product_id, store_id, price);
-            response = new Response<>(null, "Product price edit successfully");
-            system_logger.add_log("Product (" + product_id + ") price has been changed to " + price + " in store (" + store_id + ")");
-
+            synchronized (lock) {
+                User user = user_controller.get_user(loggedUser);
+                this.store_controller.edit_product_price(user, product_id, store_id, price);
+                response = new Response<>(null, "Product price edit successfully");
+                system_logger.add_log("Product (" + product_id + ") price has been changed to " + price + " in store (" + store_id + ")");
+            }
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -905,9 +912,11 @@ public class MarketFacade{
     public Response<String> set_store_purchase_policy(int store_id, PurchasePolicy policy) {
         Response<String> response = null;
         try {
-            User user = user_controller.get_user(loggedUser);
-            store_controller.set_store_purchase_policy(store_id, user, policy);
-            response = new Response<>(null, "Store purchase rules set successfully");
+            synchronized (lock) {
+                User user = user_controller.get_user(loggedUser);
+                store_controller.set_store_purchase_policy(store_id, user, policy);
+                response = new Response<>(null, "Store purchase rules set successfully");
+            }
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -925,9 +934,11 @@ public class MarketFacade{
     public Response<String> set_store_discount_policy(int store_id, DiscountPolicy policy) {
         Response<String> response = null;
         try {
-            User user = user_controller.get_user(loggedUser);
-            store_controller.set_store_discount_policy(store_id, user, policy);
-            response = new Response<>(null, "Store discount rules set successfully");
+            synchronized (lock) {
+                User user = user_controller.get_user(loggedUser);
+                store_controller.set_store_discount_policy(store_id, user, policy);
+                response = new Response<>(null, "Store discount rules set successfully");
+            }
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -945,9 +956,11 @@ public class MarketFacade{
     public Response<String> set_store_purchase_rules(int store_id, Rule rule) {
         Response<String> response = null;
         try {
-            store_controller.set_store_purchase_rules(store_id, rule);
-            response = new Response<>(null, "Store purchase rules set successfully");
-            system_logger.add_log("Store's (" + store_id + ") purchase rules have been set");
+            synchronized (lock) {
+                store_controller.set_store_purchase_rules(store_id, rule);
+                response = new Response<>(null, "Store purchase rules set successfully");
+                system_logger.add_log("Store's (" + store_id + ") purchase rules have been set");
+            }
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1090,11 +1103,13 @@ public class MarketFacade{
     public Response<String> close_store_temporarily(int store_id) {
         Response<String> response = null;
         try {
-            User user = user_controller.get_user(loggedUser);
-            String user_email = this.user_controller.get_email(this.loggedUser);
-            this.store_controller.close_store_temporarily(user, store_id);
-            response = new Response<>(null, "Store closed temporarily");
-            system_logger.add_log("Store (" + store_id + ") has been closed temporarily by user (" + user_email + ")");
+            synchronized (lock) {
+                User user = user_controller.get_user(loggedUser);
+                String user_email = this.user_controller.get_email(this.loggedUser);
+                this.store_controller.close_store_temporarily(user, store_id);
+                response = new Response<>(null, "Store closed temporarily");
+                system_logger.add_log("Store (" + store_id + ") has been closed temporarily by user (" + user_email + ")");
+            }
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1226,10 +1241,12 @@ public class MarketFacade{
     public Response<String> close_store_permanently(int store_id) {
         Response<String> response = null;
         try {
-            user_controller.check_admin_permission(loggedUser); // throws
-            this.store_controller.close_store_permanently(store_id);
-            response = new Response<>(null, "Store closed permanently");
-            system_logger.add_log("Store (" + store_id + ") closed permanently.");
+            synchronized (lock) {
+                user_controller.check_admin_permission(loggedUser); // throws
+                this.store_controller.close_store_permanently(store_id);
+                response = new Response<>(null, "Store closed permanently");
+                system_logger.add_log("Store (" + store_id + ") closed permanently.");
+            }
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);

@@ -33,6 +33,5 @@ public class Security {
         throw new SecurityException("Only premium security has security question");
     }
 
-    public void check_improvable() throws MarketSecuirtyException {
-    }
+    public void check_improvable() throws MarketSecuirtyException { }
 }
