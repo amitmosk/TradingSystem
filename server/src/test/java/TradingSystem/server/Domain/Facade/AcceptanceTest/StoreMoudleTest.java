@@ -7,7 +7,6 @@ import TradingSystem.server.Domain.StoreModule.Policy.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
-import TradingSystem.server.Domain.Utils.Exception.ProductAddingException;
 import TradingSystem.server.Domain.Utils.Response;
 import org.junit.jupiter.api.*;
 
@@ -18,20 +17,20 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StoreMoudleTest {
     final int num_of_threads = 100;
-    int productId = 0;
-    MarketFacade marketFacade;
+    int productId;
     String Email = "amit@gmail.com";
     String Name = "amit";
     SupplyAdapter supplyAdapter = new SupplyAdapterImpl();
     PaymentAdapter paymentAdapter = new PaymentAdapterImpl();
+    MarketFacade marketFacade = new MarketFacade(paymentAdapter,supplyAdapter);
     private String birth_date;
     //helper functions
+
     private void check_was_not_excption(String msg, Response response) {
         Assertions.assertFalse(response.WasException(), msg);
     }
@@ -45,14 +44,6 @@ class StoreMoudleTest {
         ArrayList<String> arraylist = new ArrayList<>();
         arraylist.add("fruits");
         Response r = marketFacade.add_product_to_store(1, 50, "apple", 100, "fruits", arraylist);
-        productId++;
-    }
-
-    private void add_product_concurrent(String name) {
-        ArrayList<String> arraylist = new ArrayList<>();
-        arraylist.add("fruits");
-        Response r = marketFacade.add_product_to_store(1, 50, name, 100, "fruits", arraylist);
-        productId++;
     }
 
     private void buy_product() {
@@ -61,11 +52,13 @@ class StoreMoudleTest {
     }
     //end of helper functions
 
-    @BeforeAll
+    @BeforeEach
     void SetUp() {
+        this.productId = 1;
         this.birth_date = LocalDateTime.now().minusYears(30).toString();
         SupplyAdapter supply = new SupplyAdapterImpl();
         PaymentAdapter payment = new PaymentAdapterImpl();
+        marketFacade.clear();
         marketFacade = new MarketFacade(payment, supply);
         marketFacade.register("amit@gmail.com", "Aa123456", "amit", "grumet", birth_date);
         marketFacade.open_store("amit store");
@@ -424,7 +417,6 @@ class StoreMoudleTest {
     @Test
     void concurrent_buy_same_product_one_user_success() {
         List<MarketFacade> marketFacadeList = createUsers("oneusersuccess");
-        add_product_concurrent("lemonade");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, 50);
             Map<Store, Basket> res = mf.view_user_cart().getValue();

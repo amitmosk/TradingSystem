@@ -84,16 +84,16 @@ class MarketFacadeTest {
     @ParameterizedTest
     @MethodSource("user_info_provider1")
     void register(String email, String pw, String name, String lastName) {
-        boolean result = check_was_exception(facade1.register(email, pw, name, lastName, birth_date)); // regular register
-        assertFalse(result);
-        result = check_was_exception(facade2.register(email, pw, name, lastName, birth_date)); // register with registered user from different facade
-        assertTrue(result);
+        boolean was_exception = check_was_exception(facade1.register(email, pw, name, lastName, birth_date)); // regular register
+        assertFalse(was_exception, "failed with regular register");
+        was_exception = check_was_exception(facade2.register(email, pw, name, lastName, birth_date)); // register with registered user from different facade
+        assertTrue(was_exception, "succeed to register with registered user from different facade");
         facade1.logout();
-        result = check_was_exception(facade1.register("check1@email.com", "pass3Chec", "name", "last", birth_date)); // register with registered user from same facade
-        assertTrue(result);
+        was_exception = check_was_exception(facade1.register("check1@email.com", "pass3Chec", "name", "last", birth_date)); // register with registered user from same facade
+        assertTrue(was_exception, "succeed to register with registered user from same facade");
         facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date);
-        result = check_was_exception(facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date)); // register with registered user from same facade while logged in
-        assertTrue(result);
+        was_exception = check_was_exception(facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date)); // register with registered user from same facade while logged in
+        assertTrue(was_exception,"succeed to register with registered user from same facade while logged in");
         facade1.logout();
     }
 
@@ -142,7 +142,6 @@ class MarketFacadeTest {
         facade1.login("checrr@email.com", "pass3hec"); // login will fail
         result = check_was_exception(facade1.logout()); // logout after login failed
         assertTrue(result);
-
     }
 
     /*

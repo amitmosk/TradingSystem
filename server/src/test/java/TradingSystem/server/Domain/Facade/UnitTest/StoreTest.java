@@ -12,6 +12,7 @@ import TradingSystem.server.Domain.StoreModule.StorePermission;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,14 +35,14 @@ class StoreTest {
     private final String manager_start = "manager";
     private final String ending = "@gmail.com";
     private int counter = 0;
-    private User founder;
-    private User general_user;
-    private User general_user2;
-    private User owner;
-    private User manager;
+    private AssignUser founder;
+    private AssignUser general_user;
+    private AssignUser general_user2;
+    private AssignUser owner;
+    private AssignUser manager;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws MarketException {
         this.birth_date = LocalDateTime.now().minusYears(30).toString();
         counter++;
         this.founder = generate_user(founder_start);
@@ -55,20 +56,21 @@ class StoreTest {
         store.appoint_founder();
     }
 
-    private User generate_user(String starting){
+    private AssignUser generate_user(String starting) {
 /*        MarketFacade marketFacade = new MarketFacade(new PaymentAdapterImpl(),new SupplyAdapterImpl());
         marketFacade.register(starting + counter + ending, "aA123456", "amit", "mosko");
         User user = marketFacade.get_user_for_tests();
         assertTrue(user.isRegistered(),"failed to initialized tests - cannot register user - "+starting);
         return user;*/
-        User user = new User();
+        AssignUser to_ret = null;
         try {
+            User user = new User();
             user.register(starting + counter + ending, "aA123456", "gal", "brown", birth_date);
+            to_ret = user.get_state_if_assigned();
+        } catch (Exception e) {
+            fail("failed to initialized tests - cannot register user - " + starting);
         }
-        catch (Exception e){
-            fail("failed to initialized tests - cannot register user - "+starting);
-        }
-        return user;
+        return to_ret;
     }
 
     @AfterEach
@@ -79,12 +81,11 @@ class StoreTest {
 
 
     @Test
-    void success_add_store_rating(){
+    void success_add_store_rating() {
         try {
             store.add_store_rating(general_user, 5);
             assertEquals(store.get_store_rating(), 5);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -131,11 +132,15 @@ class StoreTest {
 
     @Test
     void success_appoint_founer() {
-        store.appoint_founder();
-        this.founder = store.getFounder();
-        boolean has_appointment = store.has_appointment(founder);
-        assertEquals(this.founder, store.getFounder(), "store has different founder");
-        assertTrue(has_appointment, "founder does not have appointment");
+        try {
+            store.appoint_founder();
+            this.founder = store.getFounder();
+            boolean has_appointment = store.has_appointment(founder);
+            assertEquals(this.founder, store.getFounder(), "store has different founder");
+            assertTrue(has_appointment, "founder does not have appointment");
+        }catch (Exception e){
+            fail(e.getMessage());
+        }
     }
 
 
@@ -144,8 +149,7 @@ class StoreTest {
         try {
             store.close_store_permanently();
             assertFalse(store.is_active());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -169,7 +173,7 @@ class StoreTest {
             was_exception = true;
             System.out.println(e.getMessage());
         }
-        assertTrue(was_exception,"no permission");
+        assertTrue(was_exception, "no permission");
     }
 
     @Test
@@ -196,7 +200,7 @@ class StoreTest {
             was_exception = true;
             System.out.println(e.getMessage());
         }
-        assertTrue(was_exception,"the close was already open");
+        assertTrue(was_exception, "the close was already open");
     }
 
     @Test
@@ -417,7 +421,7 @@ class StoreTest {
             store.set_permissions(founder, owner, permissions);
 
             StoreManagersInfo info = store.view_store_management_information(founder);
-            Appointment a = info.getMemberAppopintment(owner_start+counter+ending);
+            Appointment a = info.getMemberAppopintment(owner_start + counter + ending);
             assertTrue(a.has_permission(StorePermission.add_manager));
             assertTrue(a.has_permission(StorePermission.add_item));
             assertTrue(a.has_permission(StorePermission.add_owner));
@@ -433,13 +437,10 @@ class StoreTest {
     @Test
     void find_products_by_name_ADD_Product() {
         List<String> keywords = new LinkedList<>();
-        try
-        {
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("add product fail");
         }
         List<Product> answer = store.find_products_by_name("phone");
@@ -457,13 +458,10 @@ class StoreTest {
     @Test
     void find_products_by_category_ADD_Product() {
         List<String> keywords = new LinkedList<>();
-        try
-        {
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("add product fail");
         }
         List<Product> answer = store.find_products_by_category("electronic");
@@ -481,13 +479,10 @@ class StoreTest {
     void find_products_by_keywords_ADD_Product() {
         List<String> keywords = new LinkedList<>();
         keywords.add("fine");
-        try
-        {
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("add product fail");
         }
         List<Product> answer = store.find_products_by_key_words("fine");
@@ -506,13 +501,10 @@ class StoreTest {
         boolean was_exception = false;
         List<String> keywords = new LinkedList<>();
         keywords.add("fine");
-        try
-        {
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, -6);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             was_exception = true;
             System.out.println(e.getMessage());
         }
@@ -524,13 +516,10 @@ class StoreTest {
         boolean was_exception = false;
         List<String> keywords = new LinkedList<>();
         keywords.add("fine");
-        try
-        {
+        try {
             store.add_product(founder, "phone", -1990.90, "electronic", keywords, 80);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             was_exception = true;
             System.out.println(e.getMessage());
         }
@@ -541,13 +530,10 @@ class StoreTest {
     void good_delete_product() {
         List<String> keywords = new LinkedList<>();
         keywords.add("fine");
-        try
-        {
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("add product fail");
         }
         List<Product> answer = store.find_products_by_name("phone");
@@ -564,19 +550,14 @@ class StoreTest {
     }
 
 
-
-
     @Test
     void edit_product_name() {
         List<String> keywords = new LinkedList<>();
-        try
-        {
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
             store.edit_product_name(founder, 1, "moko");
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("edit product fail");
         }
         List<Product> answer = store.find_products_by_name("moko");
@@ -589,9 +570,8 @@ class StoreTest {
     @Test
     void edit_product_price() {
         List<String> keywords = new LinkedList<>();
-        double price =0;
-        try
-        {
+        double price = 0;
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
             Product p = store.getProduct_by_product_id(1);
             store.edit_product_price(founder, 1, 600);
@@ -600,59 +580,50 @@ class StoreTest {
             price = store.check_available_products_and_calc_price(basket);
 
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("edit product fail");
         }
-        assertEquals(600, price,1);
+        assertEquals(600, price, 1);
     }
 
     @Test
     void check_available_products_and_calc_price_ZERO_ITEM() {
         List<String> keywords = new LinkedList<>();
-        double price =0;
-        try
-        {
+        double price = 0;
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
             Product p = store.getProduct_by_product_id(1);
             Basket basket = new Basket(1, "6");
             price = store.check_available_products_and_calc_price(basket);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("edit product fail");
         }
-        assertEquals(0, price,1);
+        assertEquals(0, price, 1);
 
     }
 
     @Test
     void check_available_products_and_calc_price_ONE_ITEM() {
         List<String> keywords = new LinkedList<>();
-        double price =0;
-        try
-        {
+        double price = 0;
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
             Product p = store.getProduct_by_product_id(1);
             Basket basket = new Basket(1, "6");
             basket.addProduct(p, 1);
             price = store.check_available_products_and_calc_price(basket);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("edit product fail");
         }
-        assertEquals(1991, price,1);
+        assertEquals(1991, price, 1);
 
     }
 
     @Test
     void check_available_products_and_calc_price_THREE_ITEMS() {
         List<String> keywords = new LinkedList<>();
-        double price =0 ;
-        try
-        {
+        double price = 0;
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 10);
             store.add_product(founder, "computer", 5000, "electronic", keywords, 6);
             store.add_product(founder, "hat", 85.50, "clothes", keywords, 60);
@@ -665,12 +636,10 @@ class StoreTest {
             basket.addProduct(p3, 1);
             price = store.check_available_products_and_calc_price(basket);
             System.out.println(price);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("edit product fail");
         }
-        assertEquals(16058.2, price,1);
+        assertEquals(16058.2, price, 1);
 
     }
 
@@ -678,18 +647,15 @@ class StoreTest {
     void fail_check_available_products_and_calc_price_noAvailableQuantity() {
         boolean was_exception = false;
         List<String> keywords = new LinkedList<>();
-        double price =0;
-        try
-        {
+        double price = 0;
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
             Product p = store.getProduct_by_product_id(1);
             store.edit_product_price(founder, 1, 600);
             Basket basket = new Basket(1, "6");
             basket.addProduct(p, 60);
             price = store.check_available_products_and_calc_price(basket);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             was_exception = true;
         }
         assertTrue(was_exception, "no available quantity");
@@ -700,16 +666,13 @@ class StoreTest {
     void checkAvailablityAndGet_1_exist_item() {
         List<String> keywords = new LinkedList<>();
         Product p = null;
-        try
-        {
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 10);
             p = store.checkAvailablityAndGet(1, 8);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("checkAvailablityAndGet_1_exist_item");
         }
-        assertEquals(p.getName(),"phone");
+        assertEquals(p.getName(), "phone");
     }
 
     @Test
@@ -717,13 +680,10 @@ class StoreTest {
         List<String> keywords = new LinkedList<>();
         Product p = null;
         boolean was_exception = false;
-        try
-        {
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 10);
             p = store.checkAvailablityAndGet(1, 12);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             was_exception = true;
         }
         assertTrue(was_exception);
@@ -755,14 +715,11 @@ class StoreTest {
     @Test
     void edit_product_category() {
         List<String> keywords = new LinkedList<>();
-        try
-        {
+        try {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
             store.edit_product_category(founder, 1, "sport");
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("edit product fail");
         }
         List<Product> answer = store.find_products_by_category("electronic");
@@ -773,13 +730,10 @@ class StoreTest {
     }
 
 
-
     @Test
     void view_store_purchases_history() {
         // @TODO
     }
-
-
 
 
 }

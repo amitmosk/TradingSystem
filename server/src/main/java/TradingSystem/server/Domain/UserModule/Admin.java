@@ -15,4 +15,7 @@ public class Admin extends AssignUser {
     public void unregister(String password) throws AdminException {
         throw new AdminException("admin cannot unregister from system.");
     }
+
+    public Admin is_admin(){ return this;}
+
 }

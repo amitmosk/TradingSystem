@@ -2,6 +2,7 @@ package TradingSystem.server.Domain.StoreModule;
 
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagerType;
+import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
 
 import java.util.HashMap;
@@ -12,15 +13,15 @@ import static TradingSystem.server.Domain.StoreModule.StorePermission.*;
 
 public class Appointment {
     // -- fields
-    private final User member;
-    private final User appointer;
+    private final AssignUser member;
+    private final AssignUser appointer;
     private final Store store;
 
     private StoreManagerType type;
     private HashMap<StorePermission,Integer> permissions;
 
     // -- constructors
-    public Appointment(User manager, User appointer, Store store, StoreManagerType type) {
+    public Appointment(AssignUser manager, AssignUser appointer, Store store, StoreManagerType type) {
         this.member = manager;
         this.appointer = appointer;
         this.store = store;
@@ -108,10 +109,10 @@ public class Appointment {
     // -- getters
 
 
-    public User getMember() {
+    public AssignUser getMember() {
         return member; }
 
-    public User getAppointer() {
+    public AssignUser getAppointer() {
         return appointer;
     }
 

@@ -407,8 +407,26 @@ public class UserController {
         return users.get(email);
     }
 
+    public List<Admin> get_admins(){
+        List<Admin> admins = new ArrayList<>();
+        for(User user : users.values()){
+            Admin user_state = null;
+            if(user_state != null)
+                admins.add(user_state);
+        }
+        return admins;
+    }
+
     // TODO: added functions for testing :
     public boolean contains_user_email(String email) {
         return this.users.containsKey(email);
+    }
+    public void clear() {
+        this.ID = new AtomicInteger(0);
+        this.purchaseID = new AtomicInteger(0);
+        this.users = new ConcurrentHashMap<>();        //thread safe
+        this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
+        this.usersLock = new Object();
+        this.statisticsManager = new StatisticsManager();
     }
 }

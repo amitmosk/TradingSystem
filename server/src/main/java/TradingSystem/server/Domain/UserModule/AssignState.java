@@ -71,4 +71,17 @@ public abstract class AssignState {
     }
 
     public void add_founder(Store store, Appointment appointment) throws MarketException {throw new NoUserRegisterdException("guest cannot be a founder");}
+
+    public AssignUser get_assign() throws NoUserRegisterdException {throw new NoUserRegisterdException("cannot get guest AssignUser");}
+
+    public void add_notification(String notification) throws NoUserRegisterdException { throw new NoUserRegisterdException("cannot add notification to guest");}
+
+    //returns admin if admin else null
+    public Admin is_admin(){ return null;}
+
+    public void add_owner(Store store, Appointment appointment_to_add) throws MarketException {throw new NoUserRegisterdException("guest cannot be appointed");}
+
+    public void add_manager(Store store, Appointment appointment_to_add) throws MarketException {throw new NoUserRegisterdException("guest cannot be appointed");}
+
+    public void remove_appointment(Store store) throws MarketException {throw new NoUserRegisterdException("guest cannot be appointed");}
 }

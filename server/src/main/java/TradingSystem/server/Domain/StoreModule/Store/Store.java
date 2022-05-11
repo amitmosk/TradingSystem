@@ -9,6 +9,7 @@ import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
+import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
 
@@ -24,8 +25,8 @@ public class Store {
 
     // -- fields
     private final int store_id;
-    private final User founder;
-    private Map<User, Appointment> stuffs_and_appointments;
+    private final AssignUser founder;
+    private Map<AssignUser, Appointment> stuffs_and_appointments;
     private String name;
     public String foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
@@ -38,7 +39,7 @@ public class Store {
     private LinkedList<Rule> rules;
 
     // -- constructors
-    public Store(int store_id, String name, User founder) {
+    public Store(int store_id, String name, AssignUser founder) {
         this.store_id = store_id;
         this.founder = founder;
         this.name = name;
@@ -55,7 +56,7 @@ public class Store {
 
     // -- public methods
 
-    public User getFounder() {
+    public AssignUser getFounder() {
         return founder;
     }
 
@@ -68,7 +69,7 @@ public class Store {
         p.add_review(user_email, review);
     }
 
-    public void add_store_rating(User user, int rating) throws MarketException {
+    public void add_store_rating(AssignUser user, int rating) throws MarketException {
         if (this.stuffs_and_appointments.containsKey(user))
             throw new NoPremssionException("store members can't rate their store");
         this.storeReview.add_rating(user.get_user_email(), rating);
@@ -85,9 +86,10 @@ public class Store {
     }
 
     //TODO: fixed to appoint user & store classes instead of ids
-    public Appointment appoint_founder() {
+    public Appointment appoint_founder() throws MarketException {
         Appointment appointment = new Appointment(this.founder, this.founder, this, StoreManagerType.store_founder);
         this.stuffs_and_appointments.put(founder, appointment);
+        this.founder.add_founder(this,appointment);
         return appointment;
     }
 
@@ -95,11 +97,14 @@ public class Store {
         this.active = false;
         String message = "Store was closed permanently at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message);
+        for (AssignUser user : stuffs_and_appointments.keySet()){
+            user.remove_appointment(this);
+        }
         this.stuffs_and_appointments = null;
     }
 
 
-    public void close_store_temporarily(User user) throws MarketException {
+    public void close_store_temporarily(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.close_store_temporarily);
         this.active = false;
         String message = "Store was closed close_store_temporarily at " + LocalDate.now().toString();
@@ -107,7 +112,7 @@ public class Store {
     }
 
 
-    public void open_close_store(User user) throws MarketException {
+    public void open_close_store(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.open_close_store);
         if (this.is_active())
             throw new StoreMethodException("The store is already open");
@@ -116,11 +121,11 @@ public class Store {
         this.send_message_to_the_store_stuff(message);
     }
 
-    public StoreManagersInfo view_store_management_information(User user) throws MarketException {
+    public StoreManagersInfo view_store_management_information(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.view_permissions);
         //TODO: added parse to emails - appointment map
         HashMap<String, Appointment> emails_appointmets = new HashMap<>();
-        for (Map.Entry<User, Appointment> en : stuffs_and_appointments.entrySet()) {
+        for (Map.Entry<AssignUser, Appointment> en : stuffs_and_appointments.entrySet()) {
             emails_appointmets.put(en.getKey().get_user_email(), en.getValue());
         }
         //end
@@ -132,7 +137,7 @@ public class Store {
     }
 
 
-    public void set_permissions(User user_who_set_permission, User manager, LinkedList<StorePermission> permissions) throws MarketException {
+    public void set_permissions(AssignUser user_who_set_permission, AssignUser manager, LinkedList<StorePermission> permissions) throws MarketException {
         // check that the manager appointed by the user
         this.check_permission(user_who_set_permission, StorePermission.edit_permissions); //TODO: verify
         if (!this.get_appointer(manager).equals(user_who_set_permission))
@@ -146,7 +151,7 @@ public class Store {
 
     }
 
-    public List<String> view_store_questions(User user) throws MarketException {
+    public List<String> view_store_questions(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.view_users_questions);
         return QuestionHandler.getInstance().view_buyers_to_store_questions(store_id);
     }
@@ -155,12 +160,12 @@ public class Store {
         QuestionHandler.getInstance().add_buyer_question(question_message, user, store_id);
     }
 
-    public void answer_question(User user, int question_id, String answer) throws MarketException {
+    public void answer_question(AssignUser user, int question_id, String answer) throws MarketException {
         this.check_permission(user, StorePermission.view_users_questions);
         QuestionHandler.getInstance().answer_buyer_question(question_id, answer);
     }
 
-    public StorePurchaseHistory view_store_purchases_history(User user) throws MarketException {
+    public StorePurchaseHistory view_store_purchases_history(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.view_purchases_history);
         return this.purchases_history;
     }
@@ -204,7 +209,7 @@ public class Store {
     // -----------------------------------------------------------------------------------------------------
 
 
-    public void add_product(User user, String name, double price, String category, List<String> key_words, int quantity) throws MarketException {
+    public void add_product(AssignUser user, String name, double price, String category, List<String> key_words, int quantity) throws MarketException {
         this.check_permission(user, StorePermission.add_item);
         if (quantity < 1)
             throw new ProductAddingException("quantity must be more then zero");
@@ -213,7 +218,7 @@ public class Store {
         inventory.put(product, quantity);
     }
 
-    public void delete_product(int product_id, User user) throws MarketException {
+    public void delete_product(int product_id, AssignUser user) throws MarketException {
         Product product_to_remove = this.getProduct_by_product_id(product_id);
         this.check_permission(user, StorePermission.remove_item);
         inventory.remove(product_to_remove);
@@ -221,25 +226,25 @@ public class Store {
 
     // -- edit product - Start ----------------------------------------------------------------------------------
 
-    public void edit_product_name(User user, int product_id, String name) throws MarketException {
+    public void edit_product_name(AssignUser user, int product_id, String name) throws MarketException {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(user, StorePermission.edit_item_name);
         to_edit.setName(name);
     }
 
-    public void edit_product_price(User user, int product_id, double price) throws MarketException {
+    public void edit_product_price(AssignUser user, int product_id, double price) throws MarketException {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(user, StorePermission.edit_item_price);
         to_edit.setPrice(price);
     }
 
-    public void edit_product_category(User user, int product_id, String category) throws MarketException {
+    public void edit_product_category(AssignUser user, int product_id, String category) throws MarketException {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(user, StorePermission.edit_item_category);
         to_edit.setCategory(category);
     }
 
-    public void edit_product_key_words(User user, int product_id, List<String> key_words) throws MarketException {
+    public void edit_product_key_words(AssignUser user, int product_id, List<String> key_words) throws MarketException {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(user, StorePermission.edit_item_keywords);
         to_edit.setKey_words(key_words);
@@ -306,7 +311,7 @@ public class Store {
         return purchase;
     }
 
-    public void add_owner(User appointer, User new_owner) throws MarketException {
+    public void add_owner(AssignUser appointer, AssignUser new_owner) throws MarketException {
         this.check_permission(appointer, StorePermission.add_owner);
         Appointment appointment = this.stuffs_and_appointments.get(new_owner);
         if (appointment != null) {
@@ -315,9 +320,10 @@ public class Store {
 
         Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner);
         this.stuffs_and_appointments.put(new_owner, appointment_to_add);
+        new_owner.add_owner(this,appointment_to_add);
     }
 
-    public void add_manager(User appointer, User new_manager) throws MarketException {
+    public void add_manager(AssignUser appointer, AssignUser new_manager) throws MarketException {
         this.check_permission(appointer, StorePermission.add_manager);
         Appointment appointment = this.stuffs_and_appointments.get(new_manager);
         if (appointment != null) {
@@ -325,9 +331,10 @@ public class Store {
         }
         Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager);
         this.stuffs_and_appointments.put(new_manager, appointment_to_add);
+        new_manager.add_manager(this,appointment_to_add);
     }
 
-    public void remove_manager(User remover, User user_to_delete_appointment) throws MarketException {
+    public void remove_manager(AssignUser remover, AssignUser user_to_delete_appointment) throws MarketException {
         this.check_permission(remover, StorePermission.add_manager);
         Appointment appointment = this.stuffs_and_appointments.get(user_to_delete_appointment);
         if (appointment == null) {
@@ -340,9 +347,19 @@ public class Store {
             throw new AppointmentException("User can not remove stuff member that is not appoint by him");
         }
         this.stuffs_and_appointments.remove(user_to_delete_appointment);
+        user_to_delete_appointment.remove_appointment(this);
     }
 
-    public void remove_owner(User remover, User user_to_delete_appointment) throws MarketException {
+    private void remove_all_appointments_by_user(AssignUser user_to_delete_appointment) throws MarketException {
+        for (Appointment appointment1 : this.stuffs_and_appointments.values()) {
+            if (appointment1.getAppointer().equals(user_to_delete_appointment)) {
+                this.remove_owner(user_to_delete_appointment, appointment1.getMember());
+                user_to_delete_appointment.remove_appointment(this);
+            }
+        }
+    }
+
+    public void remove_owner(AssignUser remover, AssignUser user_to_delete_appointment) throws MarketException {
         this.check_permission(remover, StorePermission.add_manager);
         Appointment appointment = this.stuffs_and_appointments.get(user_to_delete_appointment);
 
@@ -358,12 +375,9 @@ public class Store {
             throw new AppointmentException("User can not remove stuff member that is not appoint by him");
         }
 
-        for (Appointment appointment1 : this.stuffs_and_appointments.values()) {
-            if (appointment1.getAppointer().equals(user_to_delete_appointment)) {
-                this.remove_owner(user_to_delete_appointment, appointment1.getMember());
-            }
-        }
+        remove_all_appointments_by_user(user_to_delete_appointment);
         this.stuffs_and_appointments.remove(user_to_delete_appointment);
+        user_to_delete_appointment.remove_appointment(this);
     }
 
 
@@ -428,18 +442,18 @@ public class Store {
         this.active = active;
     }
 
-    public void setPurchasePolicy(User user, PurchasePolicy purchasePolicy) throws NoPremssionException {
+    public void setPurchasePolicy(AssignUser user, PurchasePolicy purchasePolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_purchase_policy);
         this.purchasePolicy = purchasePolicy;
     }
 
-    public void setDiscountPolicy(User user, DiscountPolicy discountPolicy) throws NoPremssionException {
+    public void setDiscountPolicy(AssignUser user, DiscountPolicy discountPolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_discount_policy);
         this.discountPolicy = discountPolicy;
     }
 
 
-    public void check_permission(User user, StorePermission permission) throws NoPremssionException {
+    public void check_permission(AssignUser user, StorePermission permission) throws NoPremssionException {
         if (!this.stuffs_and_appointments.containsKey(user))
             throw new NoPremssionException("user is no a store member");
         boolean flag = this.stuffs_and_appointments.get(user).has_permission(permission);
@@ -457,7 +471,7 @@ public class Store {
         return productsIds_and_totalPrice;
     }
 
-    public User get_appointer(User manager) {
+    public AssignUser get_appointer(AssignUser manager) {
         Appointment appointment = this.stuffs_and_appointments.get(manager);
         if (appointment == null)
             throw new IllegalArgumentException("is not a manager");
@@ -471,14 +485,14 @@ public class Store {
     }
 
     public void send_message_to_the_store_stuff(String message) throws MarketException {
-        for (User user : this.stuffs_and_appointments.keySet()) {
+        for (AssignUser user : this.stuffs_and_appointments.keySet()) {
             if (!user.equals(founder))
                 QuestionHandler.getInstance().add_system_question(message, user.get_user_email());
         }
     }
 
     //TODO: testing method
-    public boolean has_appointment(User founder){
+    public boolean has_appointment(AssignUser founder){
         return stuffs_and_appointments.containsKey(founder);
     }
 

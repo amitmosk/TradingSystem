@@ -209,6 +209,12 @@ public class User {
         this.state.add_founder(store, appointment);
     }
 
+    public AssignUser get_state_if_assigned() throws NoUserRegisterdException {
+        return this.state.get_assign();
+    }
+
+    public Admin is_admin(){ return state.is_admin();}
+
     //TODO: method for testing
     public boolean isRegistered() {
         return !isGuest.get();
