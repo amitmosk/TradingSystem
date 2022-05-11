@@ -221,4 +221,7 @@ public class User {
     }
 
     public boolean isLogged(){return this.isLogged.get();}
+
+    public void add_notification(String notification) {
+    }
 }

@@ -1,10 +1,7 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
-import TradingSystem.server.Domain.Communication.QuestionHandler;
+import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
-import TradingSystem.server.Domain.StoreModule.Policy.DiscountPolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.PurchasePolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.Rule;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
@@ -31,12 +28,12 @@ public class Store {
     public String foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
     private boolean active;
-    private PurchasePolicy purchasePolicy;
-    private DiscountPolicy discountPolicy;
+    private String purchasePolicy;
+    private String discountPolicy;
     private StorePurchaseHistory purchases_history;
     private StoreReview storeReview;
     private AtomicInteger product_ids_counter;
-    private LinkedList<Rule> rules;
+
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder) {
@@ -50,7 +47,8 @@ public class Store {
         this.purchases_history = new StorePurchaseHistory(this.name);
         this.inventory = new HashMap<>();
         this.stuffs_and_appointments = new HashMap<>();
-        this.rules = new LinkedList<Rule>();
+
+
     }
 
 
@@ -75,8 +73,9 @@ public class Store {
         this.storeReview.add_rating(user.get_user_email(), rating);
     }
 
-    public void set_store_purchase_rules(Rule rule) {
-        this.rules.add(rule);
+    public void set_store_purchase_rules(String rule) {
+        // TODO
+
     }
 
 
@@ -85,15 +84,14 @@ public class Store {
         p.add_rating(user_email, rate);
     }
 
-    //TODO: fixed to appoint user & store classes instead of ids
-    public Appointment appoint_founder() throws MarketException {
+    public Appointment appoint_founder() throws MarketException{
         Appointment appointment = new Appointment(this.founder, this.founder, this, StoreManagerType.store_founder);
         this.stuffs_and_appointments.put(founder, appointment);
         this.founder.add_founder(this,appointment);
         return appointment;
     }
 
-    public void close_store_permanently() throws MarketException {
+    public void close_store_permanently() {
         this.active = false;
         String message = "Store was closed permanently at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message);
@@ -153,16 +151,17 @@ public class Store {
 
     public List<String> view_store_questions(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.view_users_questions);
-        return QuestionHandler.getInstance().view_buyers_to_store_questions(store_id);
+        return QuestionController.getInstance().view_buyers_to_store_questions(store_id);
     }
 
-    public void add_question(String user, String question_message) {
-        QuestionHandler.getInstance().add_buyer_question(question_message, user, store_id);
+    public void add_question(AssignUser sender, String question_message) {
+        QuestionController.getInstance().add_buyer_question(question_message, sender, store_id);
+        this.send_message_to_the_store_stuff("new user question from :" + sender.get_user_email() + " in store " + name);
     }
 
     public void answer_question(AssignUser user, int question_id, String answer) throws MarketException {
         this.check_permission(user, StorePermission.view_users_questions);
-        QuestionHandler.getInstance().answer_buyer_question(question_id, answer);
+        QuestionController.getInstance().answer_buyer_question(question_id, answer);
     }
 
     public StorePurchaseHistory view_store_purchases_history(AssignUser user) throws MarketException {
@@ -308,6 +307,7 @@ public class Store {
         Purchase purchase = new Purchase(p_ids_quantity, p_ids_price, p_ids_name);
         StorePurchase purchase_to_add = new StorePurchase(purchase, buyer_email, purchase_id);
         this.purchases_history.insert(purchase_to_add);
+        this.send_message_to_the_store_stuff("new purchase, with id : " + purchase_id);
         return purchase;
     }
 
@@ -398,10 +398,6 @@ public class Store {
         return foundation_date;
     }
 
-    public DiscountPolicy getDiscount_policy() {
-        return discountPolicy;
-    }
-
     public StoreReview getStoreReview() {
         return storeReview;
     }
@@ -416,10 +412,6 @@ public class Store {
 
     public int getStore_id() {
         return store_id;
-    }
-
-    public PurchasePolicy getPurchase_policy() {
-        return purchasePolicy;
     }
 
     public String getName() {
@@ -442,12 +434,12 @@ public class Store {
         this.active = active;
     }
 
-    public void setPurchasePolicy(AssignUser user, PurchasePolicy purchasePolicy) throws NoPremssionException {
+    public void setPurchasePolicy(AssignUser user, String purchasePolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_purchase_policy);
         this.purchasePolicy = purchasePolicy;
     }
 
-    public void setDiscountPolicy(AssignUser user, DiscountPolicy discountPolicy) throws NoPremssionException {
+    public void setDiscountPolicy(AssignUser user, String discountPolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_discount_policy);
         this.discountPolicy = discountPolicy;
     }
@@ -484,10 +476,9 @@ public class Store {
         return product.getPrice() * quantity;
     }
 
-    public void send_message_to_the_store_stuff(String message) throws MarketException {
-        for (AssignUser user : this.stuffs_and_appointments.keySet()) {
-            if (!user.equals(founder))
-                QuestionHandler.getInstance().add_system_question(message, user.get_user_email());
+    public void send_message_to_the_store_stuff(String message) {
+        for (AssignUser stuff_member : this.stuffs_and_appointments.keySet()){
+            stuff_member.add_notification(message);
         }
     }
 

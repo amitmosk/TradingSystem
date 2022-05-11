@@ -1,8 +1,6 @@
 package TradingSystem.server.Domain.StoreModule;
 
-import TradingSystem.server.Domain.StoreModule.Policy.DiscountPolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.PurchasePolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.Rule;
+
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
@@ -52,7 +50,7 @@ public class StoreController {
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
-    public void set_store_purchase_policy(int store_id, User user, PurchasePolicy policy) throws MarketException {
+    public void set_store_purchase_policy(int store_id, User user, String policy) throws MarketException {
         AssignUser assignUser = user.get_state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         store.setPurchasePolicy(assignUser, policy);
@@ -66,7 +64,7 @@ public class StoreController {
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
-    public void set_store_discount_policy(int store_id, User user, DiscountPolicy policy) throws MarketException {
+    public void set_store_discount_policy(int store_id, User user, String policy) throws MarketException {
         AssignUser assignUser = user.get_state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         store.setDiscountPolicy(assignUser, policy);
@@ -91,7 +89,7 @@ public class StoreController {
      * @throws if the user is not store founder OR the store or the user are not exist.
      */
 
-    public void set_store_purchase_rules(int store_id, Rule rule) throws ObjectDoesntExsitException {
+    public void set_store_purchase_rules(int store_id, String rule) throws ObjectDoesntExsitException {
         if (!this.stores.containsKey(store_id)) {
             throw new ObjectDoesntExsitException("The store is not exist - store id: " + store_id);
         }
@@ -359,7 +357,6 @@ public class StoreController {
             store_id_purchase.put(store_id, purchase);
         }
         return store_id_purchase;
-
     }
 
     public int open_store(User founder, String store_name) throws MarketException {

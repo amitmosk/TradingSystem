@@ -84,4 +84,6 @@ public abstract class AssignState {
     public void add_manager(Store store, Appointment appointment_to_add) throws MarketException {throw new NoUserRegisterdException("guest cannot be appointed");}
 
     public void remove_appointment(Store store) throws MarketException {throw new NoUserRegisterdException("guest cannot be appointed");}
+
+
 }

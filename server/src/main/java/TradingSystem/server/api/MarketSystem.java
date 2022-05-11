@@ -32,13 +32,6 @@ public class MarketSystem {
 
     public MarketSystem() {
         this.init_market();
-        try {
-            this.run_market();
-        } catch (IOException e) {
-            ErrorLogger.getInstance().add_log(e);
-        }
-
-
     }
 
 
@@ -71,41 +64,6 @@ public class MarketSystem {
             System.out.println(e.getMessage());
         }
 
-    }
-
-    public void run_market() throws IOException {
-        try
-        {
-            this.init_market();
-            payment_adapter = this.getPayment_adapter();
-            supply_adapter = this.getSupply_adapter();
-        }
-        catch (Exception e)
-        {
-            ErrorLogger.getInstance().add_log(e);
-        }
-
-        ServerSocket serverSocket = new ServerSocket(5056);
-        while (true)
-        {
-            Socket socket = null;
-            try
-            {
-                socket = serverSocket.accept();
-                SystemLogger.getInstance().add_log("new client connected");
-                // new client connect to the server
-                DataInputStream dis = new DataInputStream(socket.getInputStream());
-                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-//                Thread thread = new ClientHandler(socket, dis, dos, payment_adapter, supply_adapter);
-//                thread.start();
-            }
-            catch (Exception e)
-            {
-                socket.close();
-                e.printStackTrace();
-            }
-
-        }
     }
 
     public PaymentAdapter getPayment_adapter() {

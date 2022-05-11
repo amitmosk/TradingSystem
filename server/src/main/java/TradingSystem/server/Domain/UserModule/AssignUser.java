@@ -55,6 +55,7 @@ public class AssignUser extends AssignState {
         this.userPurchaseHistory.check_if_user_buy_this_product(storeID, productID);
     }
 
+    //TODO: verify about removing throws and override
     @Override
     public String get_user_name(){
         return name;

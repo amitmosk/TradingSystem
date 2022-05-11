@@ -730,10 +730,7 @@ class StoreTest {
     }
 
 
-    @Test
-    void view_store_purchases_history() {
-        // @TODO
-    }
+
 
 
 }

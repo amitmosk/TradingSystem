@@ -7,6 +7,8 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Rule;
+import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
+
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -903,7 +905,7 @@ public class MarketFacade{
      * @param policy   the rules to set
      * @return success/failure message
      */
-    public Response<String> set_store_purchase_policy(int store_id, PurchasePolicy policy) {
+    public Response<String> set_store_purchase_policy(int store_id, String policy) {
         Response<String> response = null;
         try {
             synchronized (lock) {
@@ -925,7 +927,7 @@ public class MarketFacade{
      * @param policy   the rules to set
      * @return success/failure message
      */
-    public Response<String> set_store_discount_policy(int store_id, DiscountPolicy policy) {
+    public Response<String> set_store_discount_policy(int store_id, String policy) {
         Response<String> response = null;
         try {
             synchronized (lock) {
@@ -947,7 +949,7 @@ public class MarketFacade{
      * @param rule
      * @return success/failure message
      */
-    public Response<String> set_store_purchase_rules(int store_id, Rule rule) {
+    public Response<String> set_store_purchase_rules(int store_id, String rule) {
         Response<String> response = null;
         try {
             synchronized (lock) {
