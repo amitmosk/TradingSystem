@@ -63,37 +63,7 @@ public class Basket {
         }
         return productsIds_and_quantity;
     }
-    public int getQuantity(int product_id) throws MarketException {
-        Product p = this.get_product_by_product_id(product_id);
-        return  this.products_and_quantities.get(p);
-    }
-    public double getPrice(int product_id, int quantity) throws MarketException {
-        Product p = this.get_product_by_product_id(product_id);
-        return p.getPrice() * quantity;
-        //TODO we return price without discount policy - version 2
-    }
-    public String getName(int product_id) throws MarketException {
-        Product p = this.get_product_by_product_id(product_id);
-        return p.getName();
 
-    }
-    public List<Integer> getProductsId() {
-        List<Integer> product_ids = new ArrayList<>();
-        for (Product p:this.products_and_quantities.keySet())
-        {
-            product_ids.add(p.getProduct_id());
-        }
-        return product_ids;
-
-    }
-    private Product get_product_by_product_id(int product_id) throws MarketException{
-        for (Product product : this.products_and_quantities.keySet()){
-            if (product.getProduct_id() == product_id)
-                return product;
-        }
-        throw new BasketException("Basket.get_product_by_product_id: " +
-                "Product does not exist in the basket - basket id: "+basket_id+"  , product id: "+product_id);
-    }
     public int getStore_id() {
         return basket_id.getSecond();
     }
@@ -104,6 +74,7 @@ public class Basket {
         return products_and_quantities;
     }
     public double getTotal_price() {
+        // TODO : calculate according discount policy
         double price=0;
         for (Product p: this.products_and_quantities.keySet())
         {

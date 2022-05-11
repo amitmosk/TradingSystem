@@ -85,7 +85,6 @@ public class Store {
         p.add_rating(user_email, rate);
     }
 
-    //TODO: fixed to appoint user & store classes instead of ids
     public Appointment appoint_founder() {
         Appointment appointment = new Appointment(this.founder, this.founder, this, StoreManagerType.store_founder);
         this.stuffs_and_appointments.put(founder, appointment);
