@@ -16,7 +16,7 @@ public interface iService {
     /**
      * Requirement 2.1.3
      */
-    TradingSystem.server.Domain.Utils.Response register(String Email, String pw, String name, String lastName);
+    TradingSystem.server.Domain.Utils.Response register(String Email, String pw, String name, String lastName, String birth_date);
 
     /**
      * Requirement 2.1.4

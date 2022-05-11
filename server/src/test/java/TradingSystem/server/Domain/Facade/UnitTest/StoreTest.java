@@ -206,7 +206,7 @@ class StoreTest {
     @Test
     void add_question_AND_viewStoreQuestions() {
         try {
-            store.add_question("josh@gmail.com", "why the store is always close!?");
+            store.add_question(general_user, "why the store is always close!?");
             System.out.println(store.view_store_questions(founder));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -218,7 +218,7 @@ class StoreTest {
     @Test
     void good_answer_question() {
         try {
-            store.add_question("josh@gmail.com", "why the store is always close!?");
+            store.add_question(general_user, "why the store is always close!?");
             store.answer_question(founder, 1, "thank you for your question!");
             System.out.println(store.view_store_questions(founder));
 
@@ -232,7 +232,7 @@ class StoreTest {
     void fail_answer_question_NO_PERMISSION() {
         boolean was_exception = false;
         try {
-            store.add_question("josh@gmail.com", "why the store is always close!?");
+            store.add_question(general_user, "why the store is always close!?");
             store.answer_question(general_user, 1, "thank you for your question!");
             System.out.println(store.view_store_questions(founder));
         } catch (Exception e) {

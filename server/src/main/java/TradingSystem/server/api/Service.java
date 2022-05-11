@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -61,8 +62,8 @@ public class Service implements iService {
     @RequestMapping(value = "/register")
     @CrossOrigin
     @Override
-    public Response register(String email, String pw, String name, String lastName) {
-        Response answer = marketFacade.register(email, pw, name, lastName);
+    public Response register(String email, String pw, String name, String lastName, String birth_date) {
+        Response answer = marketFacade.register(email, pw, name, lastName, birth_date);
         return answer;
     }
 

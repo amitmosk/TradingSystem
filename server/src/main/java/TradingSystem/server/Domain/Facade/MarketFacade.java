@@ -4,10 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.DiscountPolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.PurchasePolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.Rule;
-import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
@@ -441,9 +437,9 @@ public class MarketFacade{
     public Response<String> send_question_to_store(int store_id, String question) {
         Response<String> response = null;
         try {
-            String user_email = this.user_controller.get_email(this.loggedUser);
+            User user = this.user_controller.get_user(this.loggedUser);
             this.user_controller.check_if_user_buy_from_this_store(this.loggedUser, store_id);
-            this.store_controller.add_question(user_email, store_id, question);
+            this.store_controller.add_question(user, store_id, question);
             response = new Response<>(null, "Question send to the store successfully");
             system_logger.add_log("New question sent to store (" + store_id + ")");
         } catch (MarketException e) {
@@ -462,8 +458,7 @@ public class MarketFacade{
     public Response send_question_to_admin(String question) {
         Response response = null;
         try {
-            String user_email = this.user_controller.get_email(this.loggedUser);
-            this.user_controller.send_question_to_admin(user_email, question);
+            this.user_controller.send_question_to_admin(loggedUser, question);
             response = new Response<>(null, "Question send to the admin successfully");
             system_logger.add_log("New question sent to admin");
         } catch (MarketException e) {

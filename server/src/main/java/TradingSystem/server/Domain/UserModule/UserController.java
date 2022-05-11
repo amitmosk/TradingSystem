@@ -328,12 +328,13 @@ public class UserController {
     }
 
 
-    public void send_question_to_admin(int loggedUser, String question) {
+    public void send_question_to_admin(int loggedUser, String question) throws NoUserRegisterdException {
         User user = onlineUsers.get(loggedUser);
-        QuestionController.getInstance().add_user_question(question, user);
+        AssignUser assignUser = user.get_state_if_assigned();
+        QuestionController.getInstance().add_user_question(question, assignUser);
         List<Admin> adminsList = this.get_admins();
         for (Admin admin : adminsList){
-            admin.add_notification("user : " + user.get_user_email() + " send new question");
+            admin.add_notification("user : " + assignUser.get_user_email() + " send new question");
         }
     }
 

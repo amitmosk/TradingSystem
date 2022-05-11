@@ -419,9 +419,10 @@ public class StoreController {
         store.remove_owner(remover_state, to_remove_state);
     }
 
-    public void add_question(String user_email, int store_id, String question) throws StoreException {
+    public void add_question(User user, int store_id, String question) throws MarketException {
+        AssignUser user_state = user.get_state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
-        store.add_question(user_email, question);
+        store.add_question(user_state, question);
     }
 
     public Product getProduct_by_product_id(int storeID, int productID) throws MarketException {

@@ -1,6 +1,5 @@
 package TradingSystem.server.Domain.UserModule;
 
-import TradingSystem.server.Domain.Communication.NotificationHandler;
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -8,7 +7,7 @@ import TradingSystem.server.Domain.Utils.Exception.AppointmentException;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
-import TradingSystem.server.Domain.Utils.Exception.NoUserRegisterdException;
+import TradingSystem.server.api.NotificationHandler;
 
 import java.util.HashMap;
 import java.util.Map;

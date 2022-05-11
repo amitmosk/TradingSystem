@@ -2,23 +2,35 @@ package TradingSystem.server.Domain.Facade.UnitTest;
 
 import TradingSystem.server.Domain.Questions.QuestionController;
 import static org.junit.jupiter.api.Assertions.*;
+
+import TradingSystem.server.Domain.UserModule.AssignUser;
+import TradingSystem.server.Domain.UserModule.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 class QuestionControllerTest {
     private QuestionController questionController;
+    private AssignUser assigned_user;
     private final String email = "amit@gmail.com";
 
     @BeforeEach
     void setUp() {
+        User new_user = new User();
+        try {
+            new_user.register(email, "aA123456", "gal", "brown", LocalDateTime.now().minusYears(30).toString());
+        }catch (Exception e){
+            fail("failed to initialized new user for question controller tests");
+        }
         questionController = new QuestionController();
     }
 
 
     @Test
     void add_buyer_question() {
-        questionController.add_buyer_question("why?", email, 1);
+        questionController.add_buyer_question("why?", assigned_user, 1);
         List<String> answer = questionController.view_buyers_to_store_questions(1);
         System.out.println(answer.get(0));
         assertEquals(answer.size(), 1);
@@ -26,7 +38,7 @@ class QuestionControllerTest {
 
     @Test
     void add_user_question() {
-        questionController.add_user_question("why?", email);
+        questionController.add_user_question("why?", assigned_user);
         List<String> answer = questionController.view_users_to_admin_questions();
         System.out.println(answer.get(0));
         assertEquals(answer.size(), 1);
@@ -35,7 +47,7 @@ class QuestionControllerTest {
     @Test
     void answer_buyer_question() {
         try {
-            questionController.add_buyer_question("why?", email, 1);
+            questionController.add_buyer_question("why?", assigned_user, 1);
             questionController.answer_buyer_question(1, "like this");
             List<String> answer = questionController.view_buyers_to_store_questions(1);
             System.out.println(answer.get(0));
@@ -48,7 +60,7 @@ class QuestionControllerTest {
     @Test
     void answer_user_question() {
         try {
-            questionController.add_user_question("why?", email);
+            questionController.add_user_question("why?", assigned_user);
             questionController.answer_user_question(1, "sorry");
             List<String> answer = questionController.view_users_to_admin_questions();
             System.out.println(answer.get(0));
@@ -60,11 +72,11 @@ class QuestionControllerTest {
 
     @Test
     void view_store_questions() {
-        questionController.add_buyer_question("why?", email, 1);
-        questionController.add_buyer_question("why2?", email, 1);
-        questionController.add_buyer_question("why3?", email, 1);
-        questionController.add_buyer_question("why4?", email, 1);
-        questionController.add_buyer_question("why5?", email, 1);
+        questionController.add_buyer_question("why?", assigned_user, 1);
+        questionController.add_buyer_question("why2?", assigned_user, 1);
+        questionController.add_buyer_question("why3?", assigned_user, 1);
+        questionController.add_buyer_question("why4?", assigned_user, 1);
+        questionController.add_buyer_question("why5?", assigned_user, 1);
         List<String> answer = questionController.view_buyers_to_store_questions(1);
         System.out.println(answer.size());
         assertEquals(answer.size(), 5);
@@ -72,11 +84,11 @@ class QuestionControllerTest {
 
     @Test
     void view_admin_questions() {
-        questionController.add_user_question("why?", email);
-        questionController.add_user_question("what?", email);
-        questionController.add_user_question("???", email);
-        questionController.add_user_question("who?", email);
-        questionController.add_user_question("whete?", email);
+        questionController.add_user_question("why?", assigned_user);
+        questionController.add_user_question("what?", assigned_user);
+        questionController.add_user_question("???", assigned_user);
+        questionController.add_user_question("who?", assigned_user);
+        questionController.add_user_question("whete?", assigned_user);
         List<String> answer = questionController.view_users_to_admin_questions();
         System.out.println(answer.size());
         assertEquals(answer.size(), 5);

@@ -91,7 +91,7 @@ public class Store {
         return appointment;
     }
 
-    public void close_store_permanently() {
+    public void close_store_permanently() throws MarketException {
         this.active = false;
         String message = "Store was closed permanently at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message);

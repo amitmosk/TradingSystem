@@ -3,8 +3,6 @@ package TradingSystem.server.Domain.Facade.AcceptanceTest;
 import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.DiscountPolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 import TradingSystem.server.Domain.Utils.Response;
@@ -332,6 +330,7 @@ class StoreMoudleTest {
         check_was_exception(rSad);
     }
 
+/*
     @Test
     void set_store_purchase_policy() {
         //happy
@@ -348,6 +347,7 @@ class StoreMoudleTest {
         check_was_not_excption("Store discount rules set successfully", r);
     }
 
+*/
 
     @Test
     void two_users_buying_the_same_product() {
