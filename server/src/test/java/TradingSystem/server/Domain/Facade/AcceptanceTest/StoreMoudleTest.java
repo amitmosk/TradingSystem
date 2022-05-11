@@ -29,28 +29,22 @@ class StoreMoudleTest {
     PaymentAdapter paymentAdapter = new PaymentAdapterImpl();
     MarketFacade marketFacade = new MarketFacade(paymentAdapter,supplyAdapter);
     private String birth_date;
-    //helper functions
 
-    private void check_was_not_excption(String msg, Response response) {
-        Assertions.assertFalse(response.WasException(), msg);
-    }
-
-
+    //------------------------------- helper functions ------------------------------
+    private void check_was_not_excption(String msg, Response response) { Assertions.assertFalse(response.WasException(), msg); }
     private boolean check_was_exception(Response response) {
         return response.WasException();
     }
-
     private void add_product() {
         ArrayList<String> arraylist = new ArrayList<>();
         arraylist.add("fruits");
         Response r = marketFacade.add_product_to_store(1, 50, "apple", 100, "fruits", arraylist);
     }
-
     private void buy_product() {
         marketFacade.add_product_to_cart(1, productId, 20);
         Response res = marketFacade.buy_cart("", "");
     }
-    //end of helper functions
+    //------------------------- end of helper functions ------------------------------
 
     @BeforeEach
     void SetUp() {
