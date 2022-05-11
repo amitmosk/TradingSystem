@@ -1,6 +1,5 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
-import TradingSystem.server.Domain.Events.Event;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
