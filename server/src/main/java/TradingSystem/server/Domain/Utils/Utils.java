@@ -135,7 +135,7 @@ public class Utils {
     }
 
 
-    public static void emailCheck(String email) throws MarketException {
+    public static void emailValidCheck(String email) throws MarketException {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
@@ -148,7 +148,7 @@ public class Utils {
             throw new WrongPermterException("Invalid email");
     }
 
-    public static void passwordCheck(String pw) throws MarketException {
+    public static void passwordValidCheck(String pw) throws MarketException {
         final int MinPasswordLength = 6;
         final int MaxPasswordLength = 12;
         boolean containsNum = false;
@@ -171,7 +171,7 @@ public class Utils {
             throw new MarketSecuirtyException("password should contain at least one upper & lower letter, and digit");
     }
 
-    public static void nameCheck(String name) throws MarketException {
+    public static void nameValidCheck(String name) throws MarketException {
         final int MaxNamesLength = 10;
         if (name == null || name.equals(""))
             throw new UserExcpetion("Name cannot be null or empty spaces");
@@ -184,34 +184,6 @@ public class Utils {
             if (c < 'a' || c > 'z')
                 throw new UserExcpetion("The name must contain letters only");
         }
-    }
-
-    /**
-     * one-way encryption technique
-     */
-    public static String gen_pass(String password) {
-        /* Plain-text password initialization. */
-        String encryptedpassword = null;
-        try {
-            MessageDigest m = MessageDigest.getInstance("MD5");
-            /* Add plain-text password bytes to digest using MD5 update() method. */
-            m.update(password.getBytes());
-            /* Convert the hash value into bytes */
-            byte[] bytes = m.digest();
-            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */
-            StringBuilder s = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-
-            /* Complete hashed password in hexadecimal format */
-            encryptedpassword = s.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        /* Display the unencrypted and encrypted passwords. */
-        return encryptedpassword;
     }
 
 

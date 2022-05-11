@@ -119,7 +119,7 @@ public class UserController {
      * @param password the user password
      * @return the status if log-in succeed
      */
-    public void login(int ID, String email, String password) throws MarketException {
+    public void login(int ID, String email, String password) throws Exception {
         if (isRegistered(email)) {
             User cur_user = onlineUsers.get(ID);
             User user = users.get(email);
@@ -293,7 +293,7 @@ public class UserController {
         }
     }
 
-    public String unregister(int ID, String password) throws MarketException {
+    public String unregister(int ID, String password) throws Exception {
         String email = get_email(ID);
         User user = onlineUsers.get(ID);
         user.unregister(password);
@@ -304,19 +304,19 @@ public class UserController {
         return email;
     }
 
-    public String edit_name(int loggedUser, String pw, String new_name) throws MarketException {
+    public String edit_name(int loggedUser, String pw, String new_name) throws Exception {
         User user = onlineUsers.get(loggedUser);
         user.edit_name(pw, new_name);
         return get_email(loggedUser);
     }
 
-    public String edit_password(int loggedUser, String old_password, String password) throws MarketException {
+    public String edit_password(int loggedUser, String old_password, String password) throws Exception {
         User user = onlineUsers.get(loggedUser);
         user.edit_password(old_password, password);
         return get_email(loggedUser);
     }
 
-    public String edit_last_name(int loggedUser, String pw, String new_last_name) throws MarketException {
+    public String edit_last_name(int loggedUser, String pw, String new_last_name) throws Exception {
         User user = onlineUsers.get(loggedUser);
         user.edit_last_name(pw, new_last_name);
         return get_email(loggedUser);
@@ -357,30 +357,30 @@ public class UserController {
         return admin;
     }
 
-    public String get_user_security_question(int loggedUser) throws MarketException {
+    public String get_user_security_question(int loggedUser) throws Exception {
         User user = onlineUsers.get(loggedUser);
         return user.get_user_sequrity_question();
     }
 
-    public String edit_name_premium(int loggedUser, String pw, String new_name, String answer) throws MarketException {
+    public String edit_name_premium(int loggedUser, String pw, String new_name, String answer) throws Exception {
         User user = onlineUsers.get(loggedUser);
         user.edit_name_premium(pw, new_name, answer);
         return get_email(loggedUser);
     }
 
-    public String edit_last_name_premium(int loggedUser, String pw, String new_last_name, String answer) throws MarketException {
+    public String edit_last_name_premium(int loggedUser, String pw, String new_last_name, String answer) throws Exception {
         User user = onlineUsers.get(loggedUser);
         user.edit_last_name_premium(pw, new_last_name, answer);
         return get_email(loggedUser);
     }
 
-    public String edit_passsword_premium(int loggedUser, String old_password, String new_password, String answer) throws MarketException {
+    public String edit_passsword_premium(int loggedUser, String old_password, String new_password, String answer) throws Exception {
         User user = onlineUsers.get(loggedUser);
         user.edit_password_premium(old_password, new_password, answer);
         return get_email(loggedUser);
     }
 
-    public String improve_security(int loggedUser, String password, String question, String answer) throws MarketException {
+    public String improve_security(int loggedUser, String password, String question, String answer) throws Exception {
         User user = onlineUsers.get(loggedUser);
         user.improve_security(password, question, answer);
         return get_email(loggedUser);

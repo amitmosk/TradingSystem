@@ -7,7 +7,7 @@ import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 
 public abstract class AssignState {
-    public boolean login(String pw) throws MarketException {
+    public boolean login(String pw) throws MarketException, Exception {
         throw new AlreadyRegisterdException("Assign user cannot log in");
     }
 
@@ -42,31 +42,31 @@ public abstract class AssignState {
         throw new NoPremssionException("only admin have permissions for this operation.");
     }
 
-    public void unregister(String password) throws MarketException {
+    public void unregister(String password) throws Exception {
         throw new NoUserRegisterdException("guest cant unregister from the system");
     }
 
-    public void edit_name(String pw, String new_name) throws MarketException {
+    public void edit_name(String pw, String new_name) throws MarketException, Exception {
         throw new NoUserRegisterdException("guest cant change is name");
     }
 
-    public void edit_password(String old_password, String password) throws MarketException {
+    public void edit_password(String old_password, String password) throws Exception {
         throw new NoUserRegisterdException("guest cant change is password");
     }
 
-    public void edit_last_name(String pw, String new_last_name) throws MarketException {
+    public void edit_last_name(String pw, String new_last_name) throws Exception {
         throw new NoUserRegisterdException("guest cant change his last name");
     }
 
-    public String get_sequrity_question() throws MarketException {
+    public String get_security_question() throws Exception {
         throw new NoUserRegisterdException("guest does not have privacy question");
     }
 
-    public void verify_answer(String answer) throws MarketException {
+    public void verify_answer(String answer) throws Exception {
         throw new NoUserRegisterdException("guest does not have privacy question");
     }
 
-    public void improve_security(String password, String question, String answer) throws MarketException {
+    public void improve_security(String password, String question, String answer) throws Exception {
         throw new NoUserRegisterdException("guest cannot improve security");
     }
 
