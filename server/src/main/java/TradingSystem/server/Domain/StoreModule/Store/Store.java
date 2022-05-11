@@ -1,14 +1,13 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
-import TradingSystem.server.Domain.Communication.QuestionHandler;
+import TradingSystem.server.Domain.Events.Event;
+import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
-import TradingSystem.server.Domain.StoreModule.Policy.DiscountPolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.PurchasePolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.Rule;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
+import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
 
@@ -30,12 +29,12 @@ public class Store {
     public String foundation_date;
     private HashMap<Product, Integer> inventory; // product & quantity
     private boolean active;
-    private PurchasePolicy purchasePolicy;
-    private DiscountPolicy discountPolicy;
+    private String purchasePolicy;
+    private String discountPolicy;
     private StorePurchaseHistory purchases_history;
     private StoreReview storeReview;
     private AtomicInteger product_ids_counter;
-    private LinkedList<Rule> rules;
+
 
     // -- constructors
     public Store(int store_id, String name, User founder) {
@@ -49,7 +48,8 @@ public class Store {
         this.purchases_history = new StorePurchaseHistory(this.name);
         this.inventory = new HashMap<>();
         this.stuffs_and_appointments = new HashMap<>();
-        this.rules = new LinkedList<Rule>();
+
+
     }
 
 
@@ -74,8 +74,9 @@ public class Store {
         this.storeReview.add_rating(user.get_user_email(), rating);
     }
 
-    public void set_store_purchase_rules(Rule rule) {
-        this.rules.add(rule);
+    public void set_store_purchase_rules(String rule) {
+        // TODO
+
     }
 
 
@@ -91,7 +92,7 @@ public class Store {
         return appointment;
     }
 
-    public void close_store_permanently() throws MarketException {
+    public void close_store_permanently() {
         this.active = false;
         String message = "Store was closed permanently at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message);
@@ -148,16 +149,17 @@ public class Store {
 
     public List<String> view_store_questions(User user) throws MarketException {
         this.check_permission(user, StorePermission.view_users_questions);
-        return QuestionHandler.getInstance().view_buyers_to_store_questions(store_id);
+        return QuestionController.getInstance().view_buyers_to_store_questions(store_id);
     }
 
-    public void add_question(String user, String question_message) {
-        QuestionHandler.getInstance().add_buyer_question(question_message, user, store_id);
+    public void add_question(AssignUser sender, String question_message) {
+        QuestionController.getInstance().add_buyer_question(question_message, sender, store_id);
+        this.send_message_to_the_store_stuff("new user question from :" + sender.get_user_email() + " in store " + name);
     }
 
     public void answer_question(User user, int question_id, String answer) throws MarketException {
         this.check_permission(user, StorePermission.view_users_questions);
-        QuestionHandler.getInstance().answer_buyer_question(question_id, answer);
+        QuestionController.getInstance().answer_buyer_question(question_id, answer);
     }
 
     public StorePurchaseHistory view_store_purchases_history(User user) throws MarketException {
@@ -302,6 +304,7 @@ public class Store {
         Purchase purchase = new Purchase(p_ids_quantity, p_ids_price, p_ids_name);
         StorePurchase purchase_to_add = new StorePurchase(purchase, buyer_email, purchase_id);
         this.purchases_history.insert(purchase_to_add);
+        this.send_message_to_the_store_stuff("new purchase, with id : " + purchase_id);
         return purchase;
     }
 
@@ -314,6 +317,7 @@ public class Store {
 
         Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner);
         this.stuffs_and_appointments.put(new_owner, appointment_to_add);
+
     }
 
     public void add_manager(User appointer, User new_manager) throws MarketException {
@@ -324,6 +328,7 @@ public class Store {
         }
         Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager);
         this.stuffs_and_appointments.put(new_manager, appointment_to_add);
+
     }
 
     public void remove_manager(User remover, User user_to_delete_appointment) throws MarketException {
@@ -383,10 +388,6 @@ public class Store {
         return foundation_date;
     }
 
-    public DiscountPolicy getDiscount_policy() {
-        return discountPolicy;
-    }
-
     public StoreReview getStoreReview() {
         return storeReview;
     }
@@ -401,10 +402,6 @@ public class Store {
 
     public int getStore_id() {
         return store_id;
-    }
-
-    public PurchasePolicy getPurchase_policy() {
-        return purchasePolicy;
     }
 
     public String getName() {
@@ -427,12 +424,12 @@ public class Store {
         this.active = active;
     }
 
-    public void setPurchasePolicy(User user, PurchasePolicy purchasePolicy) throws NoPremssionException {
+    public void setPurchasePolicy(User user, String purchasePolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_purchase_policy);
         this.purchasePolicy = purchasePolicy;
     }
 
-    public void setDiscountPolicy(User user, DiscountPolicy discountPolicy) throws NoPremssionException {
+    public void setDiscountPolicy(User user, String discountPolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_discount_policy);
         this.discountPolicy = discountPolicy;
     }
@@ -469,10 +466,9 @@ public class Store {
         return product.getPrice() * quantity;
     }
 
-    public void send_message_to_the_store_stuff(String message) throws MarketException {
-        for (User user : this.stuffs_and_appointments.keySet()) {
-            if (!user.equals(founder))
-                QuestionHandler.getInstance().add_system_question(message, user.get_user_email());
+    public void send_message_to_the_store_stuff(String message) {
+        for (User stuff_member : this.stuffs_and_appointments.keySet()){
+            stuff_member.add_notification(message);
         }
     }
 

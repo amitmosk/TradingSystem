@@ -6,6 +6,7 @@ import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
+import TradingSystem.server.api.NotificationHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,17 +54,17 @@ public class AssignUser extends AssignState {
     }
 
     @Override
-    public String get_user_name() throws MarketException {
+    public String get_user_name()  {
         return name;
     }
 
     @Override
-    public String get_user_last_name() throws MarketException {
+    public String get_user_last_name()  {
         return lastName;
     }
 
     @Override
-    public String get_user_email() throws MarketException {
+    public String get_user_email()  {
         return email;
     }
 
@@ -107,5 +108,8 @@ public class AssignUser extends AssignState {
 
     public void add_founder(Store store,Appointment appointment) throws MarketException {
         this.founder.put(store,appointment);
+    }
+    public void add_notification(String notification) {
+        NotificationHandler.getInstance().add_notification(this.email, notification);
     }
 }

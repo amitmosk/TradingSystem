@@ -1,15 +1,14 @@
-package TradingSystem.server.Domain.Communication;
+package TradingSystem.server.Domain.Questions;
 
+import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 
 import java.util.List;
 
-public interface iQuestionHandler {
-    void add_buyer_question(String message, String buyer_email, int store_id);
+public interface iQuestionController {
+    void add_buyer_question(String message, AssignUser sender, int store_id);
 
-    void add_user_question(String message, String buyer_email);
-
-    void add_system_question(String message, String user_email);
+    void add_user_question(String message, AssignUser sender);
 
     void answer_buyer_question(int question_id, String answer) throws ObjectDoesntExsitException;
 

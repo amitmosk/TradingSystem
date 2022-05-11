@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
-import TradingSystem.server.Domain.Communication.QuestionHandler;
+import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.Statistics.Statistic;
 import TradingSystem.server.Domain.Statistics.StatisticsManager;
 import TradingSystem.server.Domain.StoreModule.Basket;
@@ -328,18 +328,23 @@ public class UserController {
     }
 
 
-    public void send_question_to_admin(String user_email, String question) {
-        QuestionHandler.getInstance().add_user_question(question, user_email);
+    public void send_question_to_admin(int loggedUser, String question) {
+        User user = onlineUsers.get(loggedUser);
+        QuestionController.getInstance().add_user_question(question, user);
+        List<Admin> adminsList = this.get_admins();
+        for (Admin admin : adminsList){
+            admin.add_notification("user : " + user.get_user_email() + " send new question");
+        }
     }
 
     public void answer_user_question(int loggedUser, int question_id, String answer) throws MarketException {
         check_admin_permission(loggedUser);
-        QuestionHandler.getInstance().answer_user_question(question_id, answer);
+        QuestionController.getInstance().answer_user_question(question_id, answer);
     }
 
     public List<String> view_users_questions(int loggedUser) throws MarketException {
         check_admin_permission(loggedUser);
-        return QuestionHandler.getInstance().view_users_to_admin_questions();
+        return QuestionController.getInstance().view_users_to_admin_questions();
     }
 
     public User add_admin(String email, String pw, String name, String lastName) throws MarketException {

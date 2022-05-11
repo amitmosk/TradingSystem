@@ -1,6 +1,6 @@
-package TradingSystem.server.Domain.Communication;
+package TradingSystem.server.Domain.Questions;
 
-import TradingSystem.server.Domain.UserModule.User;
+import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 
 import java.util.LinkedList;
@@ -9,48 +9,39 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class QuestionHandler implements iQuestionHandler {
+public class QuestionController implements iQuestionController {
     private Map<Integer, BuyerQuestion> buyer_to_store;
     private Map<Integer, UserQuestion> user_to_admin;
-    private Map<Integer, SystemQuestion> system_to_user;
     private AtomicInteger question_ids_counter;
 
 
     private static class SingletonHolder{
-        private static QuestionHandler instance = new QuestionHandler();
+        private static QuestionController instance = new QuestionController();
     }
 
-    public QuestionHandler() {
+    public QuestionController() {
         this.buyer_to_store = new ConcurrentHashMap<>();
         this.user_to_admin = new ConcurrentHashMap<>();
-        this.system_to_user = new ConcurrentHashMap<>();
         this.question_ids_counter = new AtomicInteger(1);
 
     }
 
-    public static QuestionHandler getInstance(){
-        return QuestionHandler.SingletonHolder.instance;
+    public static QuestionController getInstance(){
+        return QuestionController.SingletonHolder.instance;
     }
 
     @Override
-    public void add_buyer_question(String message, String buyer_email, int store_id){
+    public void add_buyer_question(String message, AssignUser sender, int store_id){
         int question_id = this.question_ids_counter.getAndIncrement();
-        BuyerQuestion question_to_add = new BuyerQuestion(question_id, message, buyer_email, store_id);
+        BuyerQuestion question_to_add = new BuyerQuestion(question_id, message, sender, store_id);
         this.buyer_to_store.put(question_id, question_to_add);
     }
 
     @Override
-    public void add_user_question(String message, String buyer_email){
+    public void add_user_question(String message, AssignUser sender){
         int question_id = this.question_ids_counter.getAndIncrement();
-        UserQuestion question_to_add = new UserQuestion(question_id, message, buyer_email);
+        UserQuestion question_to_add = new UserQuestion(question_id, message, sender);
         this.user_to_admin.put(question_id, question_to_add);
-    }
-
-    @Override
-    public void add_system_question(String message, String user_email){
-        int question_id = this.question_ids_counter.getAndIncrement();
-        SystemQuestion question_to_add = new SystemQuestion(question_id, message, user_email);
-        this.system_to_user.put(question_id, question_to_add);
     }
 
     @Override
@@ -61,6 +52,8 @@ public class QuestionHandler implements iQuestionHandler {
         }
         Question question = this.buyer_to_store.get(question_id);
         question.setAnswer(answer);
+        question.getSender().add_notification("your question got answered");
+
     }
 
     @Override
@@ -71,6 +64,8 @@ public class QuestionHandler implements iQuestionHandler {
         }
         Question question = this.user_to_admin.get(question_id);
         question.setAnswer(answer);
+        question.getSender().add_notification("your question got answered");
+
     }
 
     @Override

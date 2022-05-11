@@ -1,19 +1,19 @@
-package TradingSystem.server.Domain.Communication;
+package TradingSystem.server.Domain.Questions;
 
+
+import TradingSystem.server.Domain.UserModule.AssignUser;
 
 public class UserQuestion extends Question {
-    private final String buyer_email;
 
     // user -> admin
-    public UserQuestion(int question_id, String message, String buyer_email) {
-        super(question_id, message);
-        this.buyer_email = buyer_email;
+    public UserQuestion(int question_id, String message, AssignUser sender) {
+        super(question_id, message, sender);
     }
 
     @Override
     public String toString() {
         return "UserQuestion{" +
-                "buyer_email='" + buyer_email + '\'' +
+                "buyer_email='" + sender.get_user_email() + '\'' +
                 ", question_id=" + question_id +
                 ", message_date=" + message_date +
                 ", answer_date=" + answer_date +

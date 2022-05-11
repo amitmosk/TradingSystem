@@ -71,4 +71,8 @@ public abstract class AssignState {
     }
 
     public void add_founder(Store store, Appointment appointment) throws MarketException {throw new NoUserRegisterdException("guest cannot be a founder");}
+
+    public void add_notification(String notification) throws Exception {
+        throw new NoUserRegisterdException("guest cannot get notification");
+    }
 }
