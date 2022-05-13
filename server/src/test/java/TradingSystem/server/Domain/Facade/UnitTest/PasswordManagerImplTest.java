@@ -1,7 +1,6 @@
-package Tests.UnitTest;
+package TradingSystem.server.Domain.Facade.UnitTest;
 
-import Domain.Utils.PasswordManagerImpl;
-import org.junit.Assert;
+import TradingSystem.server.Domain.Utils.PasswordManagerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +24,7 @@ class PasswordManagerImplTest {
     void hash_2samePassowrds_notEqualsTokens() {
         String pass1 = this.passwordManager.hash("12345678");
         String pass2 = this.passwordManager.hash("12345678");
-        Assert.assertNotEquals(pass1, pass2);
+        assertNotEquals(pass1, pass2);
     }
 
     static Stream<Arguments> passwords_to_check() {
@@ -44,7 +43,7 @@ class PasswordManagerImplTest {
     void hash_and_authenticate_passwords(String password) {
         String token = this.passwordManager.hash(password);
         boolean flag = this.passwordManager.authenticate(password, token);
-        Assert.assertTrue(flag);
+        assertTrue(flag);
     }
 
     @Test
@@ -63,8 +62,8 @@ class PasswordManagerImplTest {
     void caseSensetiveCheck() {
         String pass1 = this.passwordManager.hash("aA12345678");
         boolean flag1 = this.passwordManager.authenticate("aa12345678", pass1);
-        boolean flag2 = this.passwordManager.authenticate("AA12345678", pass2);
-        boolean flag3 = this.passwordManager.authenticate("Aa12345678", pass2);
+        boolean flag2 = this.passwordManager.authenticate("AA12345678", pass1);
+        boolean flag3 = this.passwordManager.authenticate("Aa12345678", pass1);
         assertFalse(flag1);
         assertFalse(flag2);
         assertFalse(flag3);

@@ -32,10 +32,10 @@ public class User {
 
 
     private void checkDetails(String email, String pw, String name, String lastName) throws MarketException {
-        Utils.emailCheck(email);
-        Utils.nameCheck(name);
-        Utils.nameCheck(lastName);
-        Utils.passwordCheck(pw);
+        Utils.emailValidCheck(email);
+        Utils.nameValidCheck(name);
+        Utils.nameValidCheck(lastName);
+        Utils.passwordValidCheck(pw);
     }
 
     public void register(String email, String pw, String name, String lastName, String birth_date) throws MarketException {
@@ -50,7 +50,7 @@ public class User {
         isGuest.set(false);
     }
 
-    public synchronized void login(String password) throws MarketException {
+    public synchronized void login(String password) throws Exception {
         if (isLogged.get())
             throw new LoginException("User already logged in.");
         this.state.login(password); //verifies password
@@ -134,22 +134,22 @@ public class User {
         state.check_admin_permission();
     }
 
-    public void unregister(String password) throws MarketException {
+    public void unregister(String password) throws Exception {
         state.unregister(password);
     }
 
-    public void edit_name(String pw, String new_name) throws MarketException {
-        Utils.nameCheck(new_name);
+    public void edit_name(String pw, String new_name) throws Exception {
+        Utils.nameValidCheck(new_name);
         state.edit_name(pw, new_name);
     }
 
-    public void edit_password(String old_password, String password) throws MarketException {
-        Utils.passwordCheck(password);
+    public void edit_password(String old_password, String password) throws Exception {
+        Utils.passwordValidCheck(password);
         state.edit_password(old_password, password);
     }
 
-    public void edit_last_name(String pw, String new_last_name) throws MarketException {
-        Utils.nameCheck(new_last_name);
+    public void edit_last_name(String pw, String new_last_name) throws Exception {
+        Utils.nameValidCheck(new_last_name);
         state.edit_last_name(pw, new_last_name);
     }
 
@@ -158,30 +158,30 @@ public class User {
         this.state = new Admin(email, pw, name, lastName);
     }
 
-    public String get_user_sequrity_question() throws MarketException {
-        return this.state.get_sequrity_question();
+    public String get_user_sequrity_question() throws Exception {
+        return this.state.get_security_question();
     }
 
-    private void verify_answer(String answer) throws MarketException {
+    private void verify_answer(String answer) throws Exception {
         this.state.verify_answer(answer);
     }
 
-    public void edit_name_premium(String pw, String new_name, String answer) throws MarketException {
+    public void edit_name_premium(String pw, String new_name, String answer) throws Exception {
         verify_answer(answer);
         edit_name(pw, new_name);
     }
 
-    public void edit_last_name_premium(String pw, String new_last_name, String answer) throws MarketException {
+    public void edit_last_name_premium(String pw, String new_last_name, String answer) throws Exception {
         verify_answer(answer);
         edit_last_name(pw, new_last_name);
     }
 
-    public void edit_password_premium(String old_password, String new_password, String answer) throws MarketException {
+    public void edit_password_premium(String old_password, String new_password, String answer) throws Exception {
         verify_answer(answer);
         edit_password(old_password, new_password);
     }
 
-    public void improve_security(String password, String question, String answer) throws MarketException {
+    public void improve_security(String password, String question, String answer) throws Exception {
         this.state.improve_security(password, question, answer);
     }
 

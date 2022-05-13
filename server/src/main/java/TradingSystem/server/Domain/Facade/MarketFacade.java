@@ -554,7 +554,7 @@ public class MarketFacade{
             String email = user_controller.edit_password(loggedUser, old_password, password);
             response = new Response<>(password, email + " password has been changed successfully");
             system_logger.add_log("User's (" + email + ")  password has been changed successfully.");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -575,7 +575,7 @@ public class MarketFacade{
             response = new Response<>(new_name, email + " name changed to " + new_name);
             system_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -596,7 +596,7 @@ public class MarketFacade{
             response = new Response<>(new_last_name, email + " last name changed to " + new_last_name);
             system_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -620,7 +620,7 @@ public class MarketFacade{
             // remove all users complains & questions
             response = new Response<>(email, email + " unregistered successfully");
             system_logger.add_log("User (" + email + ") has been successfully unregistered from the system.");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -644,7 +644,7 @@ public class MarketFacade{
             response = new Response<>(new_name, email + " name changed to " + new_name);
             system_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -667,7 +667,7 @@ public class MarketFacade{
             response = new Response<>(new_last_name, email + " last name changed to " + new_last_name);
             system_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -689,7 +689,7 @@ public class MarketFacade{
             response = new Response<>(null, email + " password changed");
             system_logger.add_log("User's (" + email + ") password has been successfully changed.");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -707,7 +707,7 @@ public class MarketFacade{
             String question = user_controller.get_user_security_question(loggedUser);
             response = new Response<>(question, "successfully received security question");
             system_logger.add_log("Got user's security question successfully");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -729,7 +729,7 @@ public class MarketFacade{
             String email = user_controller.improve_security(loggedUser, password, question, answer);
             response = new Response<>(null, email + " improved security");
             system_logger.add_log("User's (" + email + ") security has been successfully improved.");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }

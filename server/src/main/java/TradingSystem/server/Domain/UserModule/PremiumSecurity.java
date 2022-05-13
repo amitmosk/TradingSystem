@@ -22,7 +22,7 @@ public class PremiumSecurity extends Security{
     }
 
     public void verify_answer(String answer) throws MarketSecuirtyException {
-        if(this.answer.equals(answer)) throw new MarketSecuirtyException("Incorrect answer for the security question");
+        if(!this.answer.equals(answer)) throw new MarketSecuirtyException("Incorrect answer for the security question");
     }
 
     public void check_improvable() throws MarketSecuirtyException { throw new MarketSecuirtyException("Cannot improve premium security");}
