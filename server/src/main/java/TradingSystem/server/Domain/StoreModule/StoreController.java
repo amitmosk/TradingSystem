@@ -121,7 +121,7 @@ public class StoreController {
      * @throws IllegalArgumentException the manager isn't appointed by user,
      * @throws IllegalArgumentException if the user asking change his own permissions.
      */
-    public void edit_manager_specific_permissions(User user, User manager, int store_id, LinkedList<StorePermission> permissions) throws MarketException {
+    public void edit_manager_specific_permissions(User user, User manager, int store_id, List<StorePermission> permissions) throws MarketException {
         AssignUser assignUser = user.get_state_if_assigned();
         AssignUser assignManager = manager.get_state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
@@ -274,17 +274,17 @@ public class StoreController {
     //------------------------------------------------find product by - End ----------------------------------------------------
 
 
-    public void add_product_to_store(User user, int store_id, int quantity, String name, double price, String category, List<String> key_words)
+    public Map<Product,Integer> add_product_to_store(User user, int store_id, int quantity, String name, double price, String category, List<String> key_words)
             throws MarketException {
         AssignUser assignUser = user.get_state_if_assigned();
         Store store = get_store_by_store_id(store_id);
-        store.add_product(assignUser, name, price, category, key_words, quantity);
+        return store.add_product(assignUser, name, price, category, key_words, quantity);
     }
 
-    public void delete_product_from_store(User user, int product_id, int store_id) throws MarketException {
+    public Map<Product, Integer> delete_product_from_store(User user, int product_id, int store_id) throws MarketException {
         AssignUser assignUser = user.get_state_if_assigned();
         Store store = get_store_by_store_id(store_id);
-        store.delete_product(product_id, assignUser);
+        return store.delete_product(product_id, assignUser);
     }
 
     //------------------------------------------------ edit product - Start ----------------------------------------------

@@ -5,7 +5,6 @@ import TradingSystem.server.Domain.Statistics.Statistic;
 import TradingSystem.server.Domain.Statistics.StatisticsManager;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
@@ -119,7 +118,7 @@ public class UserController {
      * @param password the user password
      * @return the status if log-in succeed
      */
-    public void login(int ID, String email, String password) throws MarketException {
+    public User login(int ID, String email, String password) throws MarketException {
         if (isRegistered(email)) {
             User cur_user = onlineUsers.get(ID);
             User user = users.get(email);
@@ -128,6 +127,7 @@ public class UserController {
             user.login(password); //verifies if the user is logged and password & changes state.
             onlineUsers.put(ID, user);
             statisticsManager.inc_login_count();
+            return user;
         } else
             throw new LoginException("User email does not match to the password");
     }

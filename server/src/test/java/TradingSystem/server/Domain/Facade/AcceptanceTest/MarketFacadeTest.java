@@ -32,6 +32,8 @@ class MarketFacadeTest {
     private String email;
     private String password;
     private String birth_date;
+    private final int num_of_threads = 100;
+
 
     private boolean check_was_exception(Response response) {
         return response.WasException();
@@ -66,13 +68,6 @@ class MarketFacadeTest {
         password = "aA12345";
     }
 
-    /*
-     * Cases checked:
-     * 1. regular register
-     * 2. register with registered user from different facade
-     * 3. register with registered user from same facade
-     * 4. register with registered user from same facade while logged in
-     */
     static Stream<Arguments> user_info_provider1() {
         return Stream.of(
                 arguments("check1@email.com", "pass3Chec", "name", "last"),
@@ -81,23 +76,34 @@ class MarketFacadeTest {
         );
     }
 
+    /**
+     * Cases checked:
+     * 1. regular register
+     * 2. register with registered user from different facade
+     * 3. register with registered user from same facade
+     * 4. register with registered user from same facade while logged in
+     */
     @ParameterizedTest
     @MethodSource("user_info_provider1")
     void register(String email, String pw, String name, String lastName) {
+        //case 1
         boolean was_exception = check_was_exception(facade1.register(email, pw, name, lastName, birth_date)); // regular register
         assertFalse(was_exception, "failed with regular register");
+        //case 2
         was_exception = check_was_exception(facade2.register(email, pw, name, lastName, birth_date)); // register with registered user from different facade
         assertTrue(was_exception, "succeed to register with registered user from different facade");
         facade1.logout();
+        //case 3
         was_exception = check_was_exception(facade1.register("check1@email.com", "pass3Chec", "name", "last", birth_date)); // register with registered user from same facade
         assertTrue(was_exception, "succeed to register with registered user from same facade");
+        //case 4
         facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date);
         was_exception = check_was_exception(facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date)); // register with registered user from same facade while logged in
         assertTrue(was_exception,"succeed to register with registered user from same facade while logged in");
         facade1.logout();
     }
 
-    /*
+    /**
      * Cases checked:
      * 1. regular login
      * 2. login with connected user different facade
@@ -123,7 +129,7 @@ class MarketFacadeTest {
         facade1.logout();
     }
 
-    /*
+    /**
      * Cases checked:
      * 1. logout with no user connected
      * 2. regular logout
@@ -307,6 +313,7 @@ class MarketFacadeTest {
     @Test
     void buy_cart() {
         boolean result;
+        facade1.add_product_to_cart(1, 1, 1);
         result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with guest user
         assertFalse(result);
         facade1.login("check1234@email.com", "pass3Chec");
@@ -316,9 +323,8 @@ class MarketFacadeTest {
         facade1.logout();
         facade1.login("check12345@email.com", "pass3Chec");
         result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with empty cart
-        assertFalse(result);
+        assertTrue(result);
         facade1.logout();
-
     }
 
     /*
@@ -453,7 +459,6 @@ class MarketFacadeTest {
     @Test
     void parallel_registration_same_user() {
         //arrange
-        int num_of_threads = 100;
         List<Thread> threads = new ArrayList<>();
         AtomicInteger num_of_exceptions = new AtomicInteger(0);
 
@@ -486,7 +491,6 @@ class MarketFacadeTest {
     @Test
     void parallel_registration_different_users() {
         // arrange
-        int num_of_threads = 100;
         String ending = "@gmail.com";
         String starting = "somthing";
         List<Thread> threads = new ArrayList<>();
@@ -525,7 +529,6 @@ class MarketFacadeTest {
     @Test
     void parallel_logging_same_user() {
         //arrange
-        int num_of_threads = 100;
         List<Thread> threads = new ArrayList<>();
         AtomicInteger num_of_exceptions = new AtomicInteger(0);
         AtomicInteger num_of_logged_after_operation = new AtomicInteger(0);

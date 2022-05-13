@@ -7,6 +7,7 @@ import TradingSystem.server.Domain.UserModule.User;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import static TradingSystem.server.Domain.StoreModule.Store.StoreManagerType.*;
 import static TradingSystem.server.Domain.StoreModule.StorePermission.*;
@@ -138,7 +139,7 @@ public class Appointment {
     public boolean has_permission(StorePermission permission){
         return this.permissions.get(permission) == 1;
     }
-    public void set_permissions(LinkedList<StorePermission> permissions) {
+    public void set_permissions(List<StorePermission> permissions) {
         // reset all permissions
         for (StorePermission myVar : StorePermission.values()) {
             this.set_permission(myVar, false);

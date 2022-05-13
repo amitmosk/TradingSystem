@@ -91,6 +91,8 @@ public class User {
     }
 
     public UserPurchase buyCart(int purchaseID) throws MarketException {
+        //check cart is not empty
+        cart.verify_not_empty();
         //check availability
         double price = this.cart.check_cart_available_products_and_calc_price();
         //update stores inventory

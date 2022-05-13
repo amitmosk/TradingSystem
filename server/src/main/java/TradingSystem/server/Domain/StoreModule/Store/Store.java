@@ -7,11 +7,12 @@ import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.UserModule.AssignUser;
-import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
+import TradingSystem.server.Domain.Utils.Utils;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -26,13 +27,15 @@ public class Store {
     private Map<AssignUser, Appointment> stuffs_and_appointments;
     private String name;
     public String foundation_date;
-    private HashMap<Product, Integer> inventory; // product & quantity
+    private Map<Product, Integer> inventory; // product & quantity
     private boolean active;
     private String purchasePolicy;
     private String discountPolicy;
     private StorePurchaseHistory purchases_history;
     private StoreReview storeReview;
     private AtomicInteger product_ids_counter;
+    private Object owners_lock;
+    private Object managers_lock;
 
 
     // -- constructors
@@ -45,10 +48,10 @@ public class Store {
         this.foundation_date = LocalDate.now().toString();
         this.storeReview = new StoreReview();
         this.purchases_history = new StorePurchaseHistory(this.name);
-        this.inventory = new HashMap<>();
-        this.stuffs_and_appointments = new HashMap<>();
-
-
+        this.inventory = new ConcurrentHashMap<>();
+        this.stuffs_and_appointments = new ConcurrentHashMap<>();
+        this.owners_lock = new Object();
+        this.managers_lock = new Object();
     }
 
 
@@ -84,10 +87,10 @@ public class Store {
         p.add_rating(user_email, rate);
     }
 
-    public Appointment appoint_founder() throws MarketException{
+    public Appointment appoint_founder() throws MarketException {
         Appointment appointment = new Appointment(this.founder, this.founder, this, StoreManagerType.store_founder);
         this.stuffs_and_appointments.put(founder, appointment);
-        this.founder.add_founder(this,appointment);
+        this.founder.add_founder(this, appointment);
         return appointment;
     }
 
@@ -95,7 +98,7 @@ public class Store {
         this.active = false;
         String message = "Store was closed permanently at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message);
-        for (AssignUser user : stuffs_and_appointments.keySet()){
+        for (AssignUser user : stuffs_and_appointments.keySet()) {
             user.remove_appointment(this);
         }
         this.stuffs_and_appointments = null;
@@ -135,7 +138,7 @@ public class Store {
     }
 
 
-    public void set_permissions(AssignUser user_who_set_permission, AssignUser manager, LinkedList<StorePermission> permissions) throws MarketException {
+    public void set_permissions(AssignUser user_who_set_permission, AssignUser manager, List<StorePermission> permissions) throws MarketException {
         // check that the manager appointed by the user
         this.check_permission(user_who_set_permission, StorePermission.edit_permissions); //TODO: verify
         if (!this.get_appointer(manager).equals(user_who_set_permission))
@@ -208,19 +211,29 @@ public class Store {
     // -----------------------------------------------------------------------------------------------------
 
 
-    public void add_product(AssignUser user, String name, double price, String category, List<String> key_words, int quantity) throws MarketException {
+    public Map<Product, Integer> add_product(AssignUser user, String name, double price, String category, List<String> key_words, int quantity) throws MarketException {
         this.check_permission(user, StorePermission.add_item);
+        if(price <= 0)
+            throw new ProductAddingException("price must be more then zero");
         if (quantity < 1)
             throw new ProductAddingException("quantity must be more then zero");
+        Utils.nameCheck(name);
+        Utils.nameCheck(category);
+        for(Product p : inventory.keySet()){
+            if(p.getName().equals(name))
+                throw new ProductAddingException("product already exists in the store");
+        }
         int product_id = this.product_ids_counter.getAndIncrement();
         Product product = new Product(name, this.store_id, product_id, price, category, key_words);
         inventory.put(product, quantity);
+        return inventory;
     }
 
-    public void delete_product(int product_id, AssignUser user) throws MarketException {
+    public Map<Product, Integer> delete_product(int product_id, AssignUser user) throws MarketException {
         Product product_to_remove = this.getProduct_by_product_id(product_id);
         this.check_permission(user, StorePermission.remove_item);
         inventory.remove(product_to_remove);
+        return inventory;
     }
 
     // -- edit product - Start ----------------------------------------------------------------------------------
@@ -313,41 +326,46 @@ public class Store {
 
     public void add_owner(AssignUser appointer, AssignUser new_owner) throws MarketException {
         this.check_permission(appointer, StorePermission.add_owner);
-        Appointment appointment = this.stuffs_and_appointments.get(new_owner);
-        if (appointment != null) {
-            throw new AppointmentException("User to appoint is already store member");
-        }
+        synchronized (owners_lock) {
+            Appointment appointment = this.stuffs_and_appointments.get(new_owner);
+            if (appointment != null) {
+                throw new AppointmentException("User to appoint is already store member");
+            }
 
-        Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner);
-        this.stuffs_and_appointments.put(new_owner, appointment_to_add);
-        new_owner.add_owner(this,appointment_to_add);
+            Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner);
+            this.stuffs_and_appointments.put(new_owner, appointment_to_add);
+            new_owner.add_owner(this, appointment_to_add);
+        }
     }
 
     public void add_manager(AssignUser appointer, AssignUser new_manager) throws MarketException {
         this.check_permission(appointer, StorePermission.add_manager);
-        Appointment appointment = this.stuffs_and_appointments.get(new_manager);
-        if (appointment != null) {
-            throw new AppointmentException("User to appoint is already store member");
+        synchronized (managers_lock) {
+            Appointment appointment = this.stuffs_and_appointments.get(new_manager);
+            if (appointment != null)
+                throw new AppointmentException("User to appoint is already store member");
+            Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager);
+            this.stuffs_and_appointments.put(new_manager, appointment_to_add);
+            new_manager.add_manager(this, appointment_to_add);
         }
-        Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager);
-        this.stuffs_and_appointments.put(new_manager, appointment_to_add);
-        new_manager.add_manager(this,appointment_to_add);
     }
 
     public void remove_manager(AssignUser remover, AssignUser user_to_delete_appointment) throws MarketException {
         this.check_permission(remover, StorePermission.add_manager);
-        Appointment appointment = this.stuffs_and_appointments.get(user_to_delete_appointment);
-        if (appointment == null) {
-            throw new AppointmentException("User to be removed is not stuff member of this store");
+        synchronized (managers_lock) {
+            Appointment appointment = this.stuffs_and_appointments.get(user_to_delete_appointment);
+            if (appointment == null) {
+                throw new AppointmentException("User to be removed is not stuff member of this store");
+            }
+            if (!appointment.is_manager()) {
+                throw new AppointmentException("User to be removed is not owner/founder");
+            }
+            if (!appointment.getAppointer().equals(remover)) {
+                throw new AppointmentException("User can not remove stuff member that is not appoint by him");
+            }
+            this.stuffs_and_appointments.remove(user_to_delete_appointment);
+            user_to_delete_appointment.remove_appointment(this);
         }
-        if (!appointment.is_manager()) {
-            throw new AppointmentException("User to be removed is not owner/founder");
-        }
-        if (!appointment.getAppointer().equals(remover)) {
-            throw new AppointmentException("User can not remove stuff member that is not appoint by him");
-        }
-        this.stuffs_and_appointments.remove(user_to_delete_appointment);
-        user_to_delete_appointment.remove_appointment(this);
     }
 
     private void remove_all_appointments_by_user(AssignUser user_to_delete_appointment) throws MarketException {
@@ -361,23 +379,24 @@ public class Store {
 
     public void remove_owner(AssignUser remover, AssignUser user_to_delete_appointment) throws MarketException {
         this.check_permission(remover, StorePermission.add_manager);
-        Appointment appointment = this.stuffs_and_appointments.get(user_to_delete_appointment);
+        synchronized (owners_lock) {
+            Appointment appointment = this.stuffs_and_appointments.get(user_to_delete_appointment);
+            if (appointment == null) {
+                throw new AppointmentException("User to be removed is not stuff member of this store");
+            }
 
-        if (appointment == null) {
-            throw new AppointmentException("User to be removed is not stuff member of this store");
+            if (!appointment.is_owner()) {
+                throw new AppointmentException("User to be removed is not owner");
+            }
+
+            if (!appointment.getAppointer().equals(remover)) {
+                throw new AppointmentException("User can not remove stuff member that is not appoint by him");
+            }
+
+            remove_all_appointments_by_user(user_to_delete_appointment);
+            this.stuffs_and_appointments.remove(user_to_delete_appointment);
+            user_to_delete_appointment.remove_appointment(this);
         }
-
-        if (!appointment.is_owner()) {
-            throw new AppointmentException("User to be removed is not owner");
-        }
-
-        if (!appointment.getAppointer().equals(remover)) {
-            throw new AppointmentException("User can not remove stuff member that is not appoint by him");
-        }
-
-        remove_all_appointments_by_user(user_to_delete_appointment);
-        this.stuffs_and_appointments.remove(user_to_delete_appointment);
-        user_to_delete_appointment.remove_appointment(this);
     }
 
 
@@ -402,7 +421,7 @@ public class Store {
         return storeReview;
     }
 
-    public HashMap<Product, Integer> getInventory() {
+    public Map<Product, Integer> getInventory() {
         return this.inventory;
     }
 
@@ -477,13 +496,13 @@ public class Store {
     }
 
     public void send_message_to_the_store_stuff(String message) {
-        for (AssignUser stuff_member : this.stuffs_and_appointments.keySet()){
+        for (AssignUser stuff_member : this.stuffs_and_appointments.keySet()) {
             stuff_member.add_notification(message);
         }
     }
 
     //TODO: testing method
-    public boolean has_appointment(AssignUser founder){
+    public boolean has_appointment(AssignUser founder) {
         return stuffs_and_appointments.containsKey(founder);
     }
 

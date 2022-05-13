@@ -1,10 +1,7 @@
 package TradingSystem.server.Domain.Facade;
 
-import java.util.LinkedList;
 import java.util.List;
-
 import TradingSystem.server.Domain.StoreModule.Basket;
-
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -25,7 +22,6 @@ import TradingSystem.server.Domain.Utils.Utils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
-
 import java.util.Map;
 
 // TODO: when we leave the system - should call logout()
@@ -104,13 +100,13 @@ public class MarketFacade{
      * @param password encrypted
      * @return a string with informative of success/failure to client
      */
-    public Response<String> login(String Email, String password) {
-        Response<String> response = null;
+    public Response<User> login(String Email, String password) {
+        Response<User> response = null;
         try {
-            user_controller.login(loggedUser, Email, password);
+            User user = user_controller.login(loggedUser, Email, password);
             String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
             isGuest = false;
-            response = new Response<>(null, "Hey +" + user_name + ", Welcome to the trading system market!");
+            response = new Response<>(user, "Hey +" + user_name + ", Welcome to the trading system market!");
             system_logger.add_log("User " + Email + " logged-in");
         } catch (Exception e) {
             response = Utils.CreateResponse(new LoginException(" "));
@@ -750,17 +746,17 @@ public class MarketFacade{
      * @param price     for one unit
      * @param category  for the product
      * @param key_words for searching product
-     * @return success/failure message
+     * @return stores inventory
      */
     //TODO: integration between user
-    public Response<String> add_product_to_store(int store_id, int quantity,
+    public Response<Map<Product,Integer>> add_product_to_store(int store_id, int quantity,
                                                  String name, double price, String category, List<String> key_words) {
-        Response<String> response = null;
+        Response<Map<Product,Integer>> response = null;
         try {
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
-            store_controller.add_product_to_store(user, store_id, quantity, name, price, category, key_words);
-            response = new Response<>(null, "Product added successfully");
+            Map<Product,Integer> products = store_controller.add_product_to_store(user, store_id, quantity, name, price, category, key_words);
+            response = new Response<>(products, "Product added successfully");
             system_logger.add_log("New product (" + name + ") added to store (" + store_id + ")");
 
         } catch (MarketException e) {
@@ -778,14 +774,14 @@ public class MarketFacade{
      * @return success/failure message
      */
     //TODO: integration
-    public Response<String> delete_product_from_store(int product_id, int store_id) {
-        Response<String> response = null;
+    public Response<Map<Product,Integer>> delete_product_from_store(int product_id, int store_id) {
+        Response<Map<Product,Integer>> response = null;
         try {
             synchronized (lock) {
                 User user = user_controller.get_user(loggedUser);
                 String user_email = this.user_controller.get_email(this.loggedUser);
-                this.store_controller.delete_product_from_store(user, product_id, store_id);
-                response = new Response<>(null, "Product deleted successfully");
+                Map<Product,Integer> inv = this.store_controller.delete_product_from_store(user, product_id, store_id);
+                response = new Response<>(inv, "Product deleted successfully");
                 system_logger.add_log("Product (" + product_id + ") was deleted from store (" + store_id + ")");
             }
         } catch (MarketException e) {
@@ -977,7 +973,6 @@ public class MarketFacade{
             this.store_controller.add_owner(appointer, user_to_appoint, store_id);
             response = new Response<>(null, "Owner added successfully");
             system_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") owner");
-
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1044,7 +1039,7 @@ public class MarketFacade{
      * @param permissions   list of the new permissions - just the relevant
      * @return success/failure message
      */
-    public Response<String> edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions) {
+    public Response<String> edit_manager_permissions(String manager_email, int store_id, List<StorePermission> permissions) {
         Response<String> response = null;
         try {
             User appointer = user_controller.get_user(loggedUser);

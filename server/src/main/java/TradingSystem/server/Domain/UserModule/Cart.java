@@ -81,4 +81,9 @@ public class Cart {
         }
         return store_id_purchase;
     }
+
+    public void verify_not_empty() throws BasketException {
+        if(this.baskets.size() == 0)
+            throw new BasketException("user try to buy empty cart");
+    }
 }
