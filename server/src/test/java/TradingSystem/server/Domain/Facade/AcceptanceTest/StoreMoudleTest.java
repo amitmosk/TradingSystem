@@ -4,6 +4,7 @@ import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.UserModule.User;
@@ -214,7 +215,7 @@ class StoreMoudleTest {
      * 1. user add product to cart and buy - check purchase
      * 2. user try to buy cart again - verify fail because cart is empty
      * 2. user add product to cart log out and buy - should fail
-     * 3. user log back on, and buy cart - check purchase
+     * 3. user log back in, and buy cart - check purchase
      * */
     @org.junit.jupiter.api.Test
     void buyCart() {
@@ -346,11 +347,51 @@ class StoreMoudleTest {
     }
 
 
+    /**
+     * 1. edit product name - should work (check new product name)
+     * 2. log out - edit product name - should fail.
+     * 3. log back in change product name - should work.
+     * 4. try to edit product name with general user
+     * 5. try to edit product name with store member.
+     * 6. try to edit product name with store member without permissions.
+     * */
     @org.junit.jupiter.api.Test
     void edit_product_name_happy() {
-        //happy
-        Response r = marketFacade.edit_product_name(productId, 1, "orange");
-        check_was_not_exception("Product name edit successfully", r);
+        //step 1 edit product name - should work (check new product name)
+        Response res = marketFacade.edit_product_name(productId, 1, "orange");
+        check_was_not_exception("failed to edit product name while it should work. - step 1", res);
+        assertTrue(check_if_product_exists_find("orange"),"orange is not exists even when the name changed and it should.");
+        assertFalse(check_if_product_exists_find("apple"), "apple is still exists in the system although the name changed.");
+        //step 2 log out - edit product name - should fail.
+        res = marketFacade.logout();
+        check_was_not_exception("failed to logout user while it should work - step 2", res);
+        res = marketFacade.edit_product_name(productId, 1, "lime");
+        assertTrue(check_was_exception(res),"edited product name with guests - step 2");
+        assertTrue(check_if_product_exists_find("orange"),"orange is not exists in the system - step 2");
+        assertFalse(check_if_product_exists_find("lime"), "lime added to the system while it shouldn't - step 2");
+        //step 3 log back in change product name - should work.
+        res = marketFacade.login(email,password);
+        check_was_not_exception("failed to login user while it should work - step 3", res);
+        res = marketFacade.edit_product_name(productId, 1, "lime");
+        check_was_not_exception("failed to edit product name while it should work. - step 3", res);
+        assertTrue(check_if_product_exists_find("lime"),"lime is not exists even when the name changed and it should. - step 3");
+        assertFalse(check_if_product_exists_find("orange"), "orange is still exists in the system although when the name changed. - step 3");
+        //step 4 try to edit product name with general user
+        res = general_user.edit_product_name(productId, 1, "banana");
+        assertTrue(check_was_exception(res),"edited product name with general user - step 4");
+        assertTrue(check_if_product_exists_find("lime"),"lime is not exists in the system - step 4");
+        assertFalse(check_if_product_exists_find("banana"), "banana added to the system while it shouldn't - step 4");
+        //step 5 try to edit product name with store member.
+        res = marketFacade.edit_product_name(productId, 1, "mango");
+        check_was_not_exception("failed to edit product name while it should work. - step 5", res);
+        assertTrue(check_if_product_exists_find("mango"),"mango is not exists even when the name changed and it should. - step 5");
+        assertFalse(check_if_product_exists_find("lime"), "lime is still exists in the system although when the name changed. - step 5");
+        //step 6 try to edit product name with store member without permissions.
+        marketFacade.edit_manager_permissions(manager_email,1,new ArrayList<>());
+        res = manager.edit_product_name(productId, 1, "banana");
+        assertTrue(check_was_exception(res),"edited product name with general user - step 6");
+        assertTrue(check_if_product_exists_find("mango"),"mango is not exists in the system - step 6");
+        assertFalse(check_if_product_exists_find("banana"), "banana added to the system while it shouldn't - step 6");
     }
 
     @org.junit.jupiter.api.Test
@@ -362,9 +403,59 @@ class StoreMoudleTest {
 
     @org.junit.jupiter.api.Test
     void edit_product_price_happy() {
-        //happy
-        Response r = marketFacade.edit_product_price(productId, 1, 90);
-        check_was_not_exception("Product price edit successfully", r);
+        Response<ProductInformation> product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 1", product_res);
+        double prev_price = product_res.getValue().getPrice();
+        //step 1 edit product price - should work (check new product name)
+        Response res = marketFacade.edit_product_price(productId, 1, prev_price+10);
+        check_was_not_exception("failed to edit product price while it should work. - step 1", res);
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 1", product_res);
+        double new_price = product_res.getValue().getPrice();
+        assertTrue(new_price == prev_price+10,"product price haven't changed - step 1");
+        prev_price = new_price;
+        //step 2 log out -> edit product price - should fail.
+        res = marketFacade.logout();
+        check_was_not_exception("failed to logout user while it should work - step 2", res);
+        res = marketFacade.edit_product_price(productId, 1, prev_price+10);
+        assertTrue(check_was_exception(res),"succeed to edit product price while it should fail. - step 2");
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 2", product_res);
+        new_price = product_res.getValue().getPrice();
+        assertFalse(new_price == prev_price+10,"product price has changed - step 2");
+        //step 3 log back in change product price - should work.
+        res = marketFacade.login(email,password);
+        check_was_not_exception("failed to login user while it should work - step 3", res);
+        res = marketFacade.edit_product_price(productId, 1, prev_price+10);
+        check_was_not_exception("failed to edit product price while it should work. - step 3", res);
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 3", product_res);
+        new_price = product_res.getValue().getPrice();
+        assertTrue(new_price == prev_price+10,"product price haven't changed - step 3");
+        prev_price = new_price;
+        //step 4 try to edit product price with general user
+        res = general_user.edit_product_price(productId, 1, prev_price+10);
+        assertTrue(check_was_exception(res),"succeed to edit product price while it should fail. - step 4");
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 4", product_res);
+        new_price = product_res.getValue().getPrice();
+        assertFalse(new_price == prev_price+10,"product price haven't changed - step 4");
+        //step 5 try to edit product price with store member.
+        res = manager.edit_product_price(productId, 1, prev_price+10);
+        check_was_not_exception("failed to edit product price while it should work. - step 5", res);
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 5", product_res);
+        new_price = product_res.getValue().getPrice();
+        assertTrue(new_price == prev_price+10,"product price haven't changed - step 5");
+        prev_price = new_price;
+        //step 6 try to edit product price with store member without permissions.
+        marketFacade.edit_manager_permissions(manager_email,1,new ArrayList<>());
+        res = manager.edit_product_price(productId, 1, prev_price+10);
+        assertTrue(check_was_exception(res),"succeed to edit product price while it should fail. - step 6");
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 6", product_res);
+        new_price = product_res.getValue().getPrice();
+        assertFalse(new_price == prev_price+10,"product price haven't changed - step 6");
     }
 
     @org.junit.jupiter.api.Test
@@ -376,10 +467,59 @@ class StoreMoudleTest {
 
     @org.junit.jupiter.api.Test
     void edit_product_category_happy() {
-        //happy
-        Response r = marketFacade.edit_product_category(productId, 1, "food");
-        check_was_not_exception("Product category edit successfully", r);
-
+        Response<ProductInformation> product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 1", product_res);
+        String prev_category = product_res.getValue().getCategory();
+        //step 1 edit product category - should work (check new product category)
+        Response res = marketFacade.edit_product_category(productId, 1, prev_category+"a");
+        check_was_not_exception("failed to edit product category while it should work. - step 1", res);
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 1", product_res);
+        String new_category = product_res.getValue().getCategory();
+        assertTrue(new_category.equals(prev_category+"a"),"product category haven't changed - step 1");
+        prev_category = new_category;
+        //step 2 log out -> edit product category - should fail.
+        res = marketFacade.logout();
+        check_was_not_exception("failed to logout user while it should work - step 2", res);
+        res = marketFacade.edit_product_category(productId, 1, prev_category+"a");
+        assertTrue(check_was_exception(res),"succeed to edit product category while it should fail. - step 2");
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 2", product_res);
+        new_category = product_res.getValue().getCategory();
+        assertFalse(new_category.equals(prev_category+"a"),"product category has changed - step 2");
+        //step 3 log back in change product category - should work.
+        res = marketFacade.login(email,password);
+        check_was_not_exception("failed to login user while it should work - step 3", res);
+        res = marketFacade.edit_product_category(productId, 1, prev_category+"a");
+        check_was_not_exception("failed to edit product category while it should work. - step 3", res);
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 3", product_res);
+        new_category = product_res.getValue().getCategory();
+        assertTrue(new_category.equals(prev_category+"a"),"product category haven't changed - step 3");
+        prev_category = new_category;
+        //step 4 try to edit product category with general user
+        res = general_user.edit_product_category(productId, 1, prev_category+"a");
+        assertTrue(check_was_exception(res),"succeed to edit product category while it should fail. - step 4");
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 4", product_res);
+        new_category = product_res.getValue().getCategory();
+        assertFalse(new_category.equals(prev_category+10),"product category haven't changed - step 4");
+        //step 5 try to edit product category with store member.
+        res = manager.edit_product_category(productId, 1, prev_category+"a");
+        check_was_not_exception("failed to edit product category while it should work. - step 5", res);
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 5", product_res);
+        new_category = product_res.getValue().getCategory();
+        assertTrue(new_category.equals(prev_category+"a"),"product category haven't changed - step 5");
+        prev_category = new_category;
+        //step 6 try to edit product category with store member without permissions.
+        marketFacade.edit_manager_permissions(manager_email,1,new ArrayList<>());
+        res = manager.edit_product_category(productId, 1, prev_category+"a");
+        assertTrue(check_was_exception(res),"succeed to edit product category while it should fail. - step 6");
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 6", product_res);
+        new_category = product_res.getValue().getCategory();
+        assertFalse(new_category.equals(prev_category+"a"),"product category haven't changed - step 6");
     }
 
     @org.junit.jupiter.api.Test
@@ -394,7 +534,6 @@ class StoreMoudleTest {
         //happy
         Response r = marketFacade.find_store_information(1);
         check_was_not_exception("Store information received successfully", r);
-
     }
 
     @org.junit.jupiter.api.Test
@@ -531,14 +670,68 @@ class StoreMoudleTest {
         check_was_exception(rSad);
     }
 
+    private List<String> gen_key_words(List<String> key_words){
+        List<String> res = new ArrayList<>();
+        String word = key_words.get(0)+"a";
+        res.add(word);
+        return res;
+    }
+
     @Test
     void edit_product_key_words_happy() {
-        //happy
-        ArrayList arrayList = new ArrayList();
-        arrayList.add("Food");
-        Response r = marketFacade.edit_product_key_words(productId, 1, arrayList);
-        check_was_not_exception("Product key_words edit successfully", r);
-
+        Response<ProductInformation> product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 1", product_res);
+        List<String> prev_key_words = product_res.getValue().getKey_words();
+        //step 1 edit product key words - should work (check new product category)
+        Response res = marketFacade.edit_product_key_words(productId, 1, gen_key_words(prev_key_words));
+        check_was_not_exception("failed to edit product key words while it should work. - step 1", res);
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 1", product_res);
+        List<String> new_key_words = product_res.getValue().getKey_words();
+        assertTrue(!new_key_words.equals(prev_key_words),"product key word haven't changed - step 1");
+        prev_key_words = new_key_words;
+        //step 2 log out -> edit product category - should fail.
+        res = marketFacade.logout();
+        check_was_not_exception("failed to logout user while it should work - step 2", res);
+        res = marketFacade.edit_product_key_words(productId, 1, gen_key_words(prev_key_words));
+        assertTrue(check_was_exception(res),"succeed to edit product key words while it should fail. - step 2");
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 2", product_res);
+        new_key_words = product_res.getValue().getKey_words();
+        assertTrue(new_key_words.equals(prev_key_words),"product key words has changed - step 2");
+        //step 3 log back in change product category - should work.
+        res = marketFacade.login(email,password);
+        check_was_not_exception("failed to login user while it should work - step 3", res);
+        res = marketFacade.edit_product_key_words(productId, 1, gen_key_words(prev_key_words));
+        check_was_not_exception("failed to edit product key words while it should work. - step 3", res);
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 3", product_res);
+        new_key_words = product_res.getValue().getKey_words();
+        assertTrue(!new_key_words.equals(prev_key_words),"product key words haven't changed - step 3");
+        prev_key_words = new_key_words;
+        //step 4 try to edit product category with general user
+        res = general_user.edit_product_key_words(productId, 1, gen_key_words(prev_key_words));
+        assertTrue(check_was_exception(res),"succeed to edit product key words while it should fail. - step 4");
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 4", product_res);
+        new_key_words = product_res.getValue().getKey_words();
+        assertTrue(new_key_words.equals(prev_key_words),"product key words haven't changed - step 4");
+        //step 5 try to edit product key words with store member.
+        res = manager.edit_product_key_words(productId, 1, gen_key_words(prev_key_words));
+        check_was_not_exception("failed to edit product key words while it should work. - step 5", res);
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 5", product_res);
+        new_key_words = product_res.getValue().getKey_words();
+        assertFalse(new_key_words.equals(prev_key_words),"product key words haven't changed - step 5");
+        prev_key_words = new_key_words;
+        //step 6 try to edit product key words with store member without permissions.
+        marketFacade.edit_manager_permissions(manager_email,1,new ArrayList<>());
+        res = manager.edit_product_key_words(productId, 1, gen_key_words(prev_key_words));
+        assertTrue(check_was_exception(res),"succeed to edit product key words while it should fail. - step 6");
+        product_res = marketFacade.find_product_information(productId,1);
+        check_was_not_exception("failed to get product information - step 6", product_res);
+        new_key_words = product_res.getValue().getKey_words();
+        assertTrue(new_key_words.equals(prev_key_words),"product key words haven't changed - step 6");
     }
 
     @Test

@@ -5,6 +5,7 @@ import TradingSystem.server.Domain.ExternSystems.PaymentAdapterImpl;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapterImpl;
 import TradingSystem.server.Domain.Facade.MarketFacade;
+import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Response;
 
@@ -23,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class MarketFacadeTest {
-
     private MarketFacade facade1;
     private MarketFacade facade2;
     private UserController uc;
@@ -68,6 +68,26 @@ class MarketFacadeTest {
         password = "aA12345";
     }
 
+    // --------------------------------------------- Helper functions -----------------------------
+    private void start_threads(List<Thread> threads) {
+        for (Thread t : threads) {
+            t.start();
+        } // running all the threads parallel
+    }
+
+    private void join_threads(List<Thread> threads) {
+        try {
+            for (Thread t : threads) {
+                t.join();
+            }
+        } catch (Exception e) {
+            assertTrue(false, "there was error while running the threads");
+        }
+    }
+
+    // --------------------------------------------------------------------------------------------------------
+
+
     static Stream<Arguments> user_info_provider1() {
         return Stream.of(
                 arguments("check1@email.com", "pass3Chec", "name", "last"),
@@ -87,8 +107,11 @@ class MarketFacadeTest {
     @MethodSource("user_info_provider1")
     void register(String email, String pw, String name, String lastName) {
         //case 1
-        boolean was_exception = check_was_exception(facade1.register(email, pw, name, lastName, birth_date)); // regular register
+        Response<User> res = facade1.register(email, pw, name, lastName, birth_date);
+        boolean was_exception = check_was_exception(res); // regular register
         assertFalse(was_exception, "failed with regular register");
+        Response<String> user_email_res = facade1.get_user_email();
+        assertEquals(user_email_res.getValue(),email,"case 1 - failed to add user to system , got different user");
         //case 2
         was_exception = check_was_exception(facade2.register(email, pw, name, lastName, birth_date)); // register with registered user from different facade
         assertTrue(was_exception, "succeed to register with registered user from different facade");
@@ -179,10 +202,9 @@ class MarketFacadeTest {
         result = check_was_exception(facade1.get_user_name()); // get name with user connected
         assertFalse(result);
         facade1.logout();
-
     }
 
-    /*
+    /**
      * Cases checked:
      * 1. edit password with wrong old password
      * 2. edit password
@@ -213,7 +235,7 @@ class MarketFacadeTest {
         facade1.logout();
     }
 
-    /*
+    /**
      * Cases checked:
      * ADD-
      * 1. add product when no user is logged in
@@ -370,7 +392,6 @@ class MarketFacadeTest {
         assertTrue(result);
         facade1.register("check123456@email.com", "pass3Chec", "name", "last", birth_date);
         facade1.logout();
-
     }
 
     /*
@@ -433,22 +454,6 @@ class MarketFacadeTest {
         facade1.logout();
     }
 
-    private void start_threads(List<Thread> threads) {
-        for (Thread t : threads) {
-            t.start();
-        } // running all the threads parallel
-    }
-
-    private void join_threads(List<Thread> threads) {
-        try {
-            for (Thread t : threads) {
-                t.join();
-            }
-        } catch (Exception e) {
-            assertTrue(false, "there was error while running the threads");
-        }
-    }
-
     /**
      * trying to register num_of_threads with same email:
      * 1. make sure the email is not registered already.
@@ -484,7 +489,7 @@ class MarketFacadeTest {
     /**
      * trying to register num_of_threads with different email:
      * 1. make sure the email is not registered already.
-     * 2. creating num_of_threads threads
+     * 2. creating num_of_threads threads - that will register the system.
      * 3. running all the threads in parallel
      * 4. make sure that all the emails is registered & there was 0 exceptions
      */

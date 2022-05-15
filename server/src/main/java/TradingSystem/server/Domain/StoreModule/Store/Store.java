@@ -217,8 +217,8 @@ public class Store {
             throw new ProductAddingException("price must be more then zero");
         if (quantity < 1)
             throw new ProductAddingException("quantity must be more then zero");
-        Utils.nameCheck(name);
-        Utils.nameCheck(category);
+        Utils.nameValidCheck(name);
+        Utils.nameValidCheck(category);
         for(Product p : inventory.keySet()){
             if(p.getName().equals(name))
                 throw new ProductAddingException("product already exists in the store");

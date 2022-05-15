@@ -79,12 +79,12 @@ public class MarketFacade{
      * @param lastName the last name of the new user
      * @return a string with informative of success/failure to client
      */
-    public Response<String> register(String Email, String pw, String name, String lastName, String birth_date) {
-        Response<String> response = null;
+    public Response<User> register(String Email, String pw, String name, String lastName, String birth_date) {
+        Response<User> response = null;
         try {
-            user_controller.register(loggedUser, Email, pw, name, lastName, birth_date);
+            User user = user_controller.register(loggedUser, Email, pw, name, lastName, birth_date);
             this.isGuest = false;
-            response = new Response<>(null, "Registration done successfully");
+            response = new Response<>(user, "Registration done successfully");
             system_logger.add_log(name + " " + lastName + " has registered to the system");
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);

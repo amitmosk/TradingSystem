@@ -16,4 +16,24 @@ public class ProductInformation {
         this.category = product.getCategory();
         this.key_words = product.getKey_words();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public ProductReviewInformation getProductReviewInformation() {
+        return productReviewInformation;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public List<String> getKey_words() {
+        return key_words;
+    }
 }
