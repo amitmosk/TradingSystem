@@ -18,7 +18,7 @@ public class PremiumSecurity extends Security{
     }
 
     public void verify_answer(String answer) throws Exception {
-        if(this.answer.equals(answer)) throw new Exception("Incorrect answer for the security question");
+        if(!this.answer.equals(answer)) throw new Exception("Incorrect answer for the security question");
     }
 
     public void check_improvable() throws Exception { throw new Exception("Cannot improve premium security");}
