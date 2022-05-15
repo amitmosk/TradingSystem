@@ -17,7 +17,7 @@ public class OrDiscountRule {
     }
 
     public double CalculatePriceAfterDiscount(Basket b) {
-        if (p1.CanApply(b) | p2.CanApply(b))
+        if (p1.CanApply(18, b) | p2.CanApply(18, b))
             return rule.CalculatePriceAfterDiscount(b);
         else
             return b.getTotal_price();

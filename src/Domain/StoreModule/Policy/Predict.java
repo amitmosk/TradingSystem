@@ -5,6 +5,7 @@ import Domain.StoreModule.Product.Product;
 import Domain.UserModule.AssignUser;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public class Predict {
 
@@ -41,20 +42,24 @@ public class Predict {
         this.hour_constraint = hour;
     }
 
+    public boolean CanApply(int age, Basket b) {
+        Map<Product, Integer> map = b.getProducts_and_quantities();
+        for (Map.Entry<Product, Integer> entry : map.entrySet())
+            if (CanApply(18, entry.getKey(), entry.getValue(), entry.getKey().getPrice()) == false)
+                return false;
+        return true;
+    }
 
-    public boolean CanApply(AssignUser user, Product product, int quantity, double price) {
+    private boolean CanApply(int age, Product product, int quantity, double price) {
         String product_category = product.getCategory();
         String date = LocalDateTime.now().toString();
-        // @TODO: implement method
-//        int age = user.get_age();
-        int age = 5;
-        boolean flag1 = this.check_valid_quantity(quantity);
-        boolean flag2 = this.check_valid_category(product_category);
-        boolean flag3 = this.check_valid_time(date);
-        boolean flag4 = this.check_valid_age(age);
-        boolean flag5 = this.check_valid_price(price);
+        boolean quantityCheck = this.check_valid_quantity(quantity);
+        boolean CategoryCheck = this.check_valid_category(product_category);
+        boolean TimeCheck = this.check_valid_time(date);
+        boolean AgeCheck = this.check_valid_age(age);
+        boolean PriceCheck = this.check_valid_price(price);
 
-        return flag1 || flag2 || flag3 || flag4;
+        return quantityCheck || CategoryCheck || TimeCheck || AgeCheck;
     }
 
     private boolean check_valid_age(int age) {
