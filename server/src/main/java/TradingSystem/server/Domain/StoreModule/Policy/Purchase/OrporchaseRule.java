@@ -1,6 +1,7 @@
-package Domain.StoreModule.Policy.Purchase;
+package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
-import Domain.StoreModule.Basket;
+
+import TradingSystem.server.Domain.StoreModule.Basket;
 
 public class OrporchaseRule implements porchaseRule {
     porchaseRule Left;
@@ -11,8 +12,7 @@ public class OrporchaseRule implements porchaseRule {
         this.Right = Right;
     }
 
-    @Override
-    public boolean isApplying(Basket basket) {
-        return Left.isApplying(basket) | Right.isApplying(basket);
+    public boolean predictCheck(int age, Basket basket) {
+        return Left.predictCheck(age, basket) | Right.predictCheck(age, basket);
     }
 }

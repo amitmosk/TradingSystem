@@ -1,9 +1,8 @@
-package Domain.StoreModule.Policy.Purchase;
+package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
-import Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Basket;
 
 public interface porchaseRule {
-
-    public boolean isApplying(Basket basket);
+    public boolean predictCheck(int age, Basket basket);
 
 }

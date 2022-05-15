@@ -1,8 +1,7 @@
-package Domain.StoreModule.Policy;
+package TradingSystem.server.Domain.StoreModule.Policy;
 
-import Domain.StoreModule.Basket;
-import Domain.StoreModule.Product.Product;
-import Domain.UserModule.AssignUser;
+import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Product.Product;
 
 import java.time.LocalDateTime;
 import java.util.Map;

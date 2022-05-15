@@ -1,7 +1,10 @@
 package TradingSystem.server.Domain.Facade;
 
 import java.util.List;
+
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -22,11 +25,12 @@ import TradingSystem.server.Domain.Utils.Utils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
+
 import java.util.Map;
 
 // TODO: when we leave the system - should call logout()
 
-public class MarketFacade{
+public class MarketFacade {
     public static final Object lock = new Object();
     private UserController user_controller;
     private StoreController store_controller;
@@ -51,7 +55,7 @@ public class MarketFacade{
 
     /**
      * Requirement 2.1.2 & 2.3.1
-     *
+     * <p>
      * logout - logout assign user
      *
      * @return a string with informative of success/failure to client
@@ -228,7 +232,7 @@ public class MarketFacade{
         try {
             Store store = store_controller.get_store(storeID);
             Product p = store_controller.checkAvailablityAndGet(storeID, productID, quantity);
-            user_controller.add_product_to_cart(loggedUser,store,p,quantity);
+            user_controller.add_product_to_cart(loggedUser, store, p, quantity);
             response = new Response<>("", "product " + productID + " added to cart");
             system_logger.add_log("User added to cart " + quantity + " of product- " + productID + " from store- " + storeID);
         } catch (MarketException e) {
@@ -252,7 +256,7 @@ public class MarketFacade{
         try {
             Store store = store_controller.get_store(storeID);
             Product p = store_controller.checkAvailablityAndGet(storeID, productID, quantity);
-            user_controller.edit_product_quantity_in_cart(loggedUser,store,p,quantity);
+            user_controller.edit_product_quantity_in_cart(loggedUser, store, p, quantity);
             response = new Response<>("", "product " + productID + " quantity has changed to " + quantity);
             system_logger.add_log("User quantity of product- " + productID + " from store- " + storeID + " in cart to " + quantity);
         } catch (MarketException e) {
@@ -749,13 +753,13 @@ public class MarketFacade{
      * @return stores inventory
      */
     //TODO: integration between user
-    public Response<Map<Product,Integer>> add_product_to_store(int store_id, int quantity,
-                                                 String name, double price, String category, List<String> key_words) {
-        Response<Map<Product,Integer>> response = null;
+    public Response<Map<Product, Integer>> add_product_to_store(int store_id, int quantity,
+                                                                String name, double price, String category, List<String> key_words) {
+        Response<Map<Product, Integer>> response = null;
         try {
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
-            Map<Product,Integer> products = store_controller.add_product_to_store(user, store_id, quantity, name, price, category, key_words);
+            Map<Product, Integer> products = store_controller.add_product_to_store(user, store_id, quantity, name, price, category, key_words);
             response = new Response<>(products, "Product added successfully");
             system_logger.add_log("New product (" + name + ") added to store (" + store_id + ")");
 
@@ -774,13 +778,13 @@ public class MarketFacade{
      * @return success/failure message
      */
     //TODO: integration
-    public Response<Map<Product,Integer>> delete_product_from_store(int product_id, int store_id) {
-        Response<Map<Product,Integer>> response = null;
+    public Response<Map<Product, Integer>> delete_product_from_store(int product_id, int store_id) {
+        Response<Map<Product, Integer>> response = null;
         try {
             synchronized (lock) {
                 User user = user_controller.get_user(loggedUser);
                 String user_email = this.user_controller.get_email(this.loggedUser);
-                Map<Product,Integer> inv = this.store_controller.delete_product_from_store(user, product_id, store_id);
+                Map<Product, Integer> inv = this.store_controller.delete_product_from_store(user, product_id, store_id);
                 response = new Response<>(inv, "Product deleted successfully");
                 system_logger.add_log("Product (" + product_id + ") was deleted from store (" + store_id + ")");
             }
@@ -896,7 +900,7 @@ public class MarketFacade{
      * @param policy   the rules to set
      * @return success/failure message
      */
-    public Response<String> set_store_purchase_policy(int store_id, String policy) {
+    public Response<String> set_store_purchase_policy(int store_id, PurchasePolicy policy) {
         Response<String> response = null;
         try {
             synchronized (lock) {
@@ -918,7 +922,7 @@ public class MarketFacade{
      * @param policy   the rules to set
      * @return success/failure message
      */
-    public Response<String> set_store_discount_policy(int store_id, String policy) {
+    public Response<String> set_store_discount_policy(int store_id, DiscountPolicy policy) {
         Response<String> response = null;
         try {
             synchronized (lock) {

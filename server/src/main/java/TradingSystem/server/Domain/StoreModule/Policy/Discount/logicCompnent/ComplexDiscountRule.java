@@ -1,9 +1,9 @@
-package Domain.StoreModule.Policy.Discount.logicCompnent;
+package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
 
-import Domain.StoreModule.Basket;
-import Domain.StoreModule.Policy.Discount.DiscountRule;
-import Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
-import Domain.StoreModule.Policy.Predict;
+import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 
 public class ComplexDiscountRule implements DiscountRule {
     SimpleDiscountRule rule;
@@ -18,11 +18,11 @@ public class ComplexDiscountRule implements DiscountRule {
         return predict.CanApply(18, basket);
     }
 
-    public double CalculatePriceAfterDiscount(Basket basket) {
+    public double CalculateDiscount(Basket basket) {
         if (CanApply(basket))
-            return rule.CalculatePriceAfterDiscount(basket);
+            return rule.CalculateDiscount(basket);
         else
-            return basket.getTotal_price();
+            return 0;
     }
 
 

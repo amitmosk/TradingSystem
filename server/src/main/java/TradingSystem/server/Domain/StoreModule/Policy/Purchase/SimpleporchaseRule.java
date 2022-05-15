@@ -1,8 +1,8 @@
-package Domain.StoreModule.Policy.Purchase;
+package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
-import Domain.StoreModule.Basket;
-import Domain.StoreModule.Policy.Predict;
-import Domain.StoreModule.Product.Product;
+
+import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class SimpleporchaseRule implements porchaseRule {
     }
 
     @Override
-    public boolean isApplying(Basket basket) {
-        return predict.CanApply(18, basket);
+    public boolean predictCheck(int age, Basket basket) {
+        return predict.CanApply(age, basket);
     }
 }

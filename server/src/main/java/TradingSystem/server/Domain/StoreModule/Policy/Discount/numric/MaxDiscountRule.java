@@ -1,7 +1,7 @@
-package Domain.StoreModule.Policy.Discount.numric;
+package TradingSystem.server.Domain.StoreModule.Policy.Discount.numric;
 
-import Domain.StoreModule.Basket;
-import Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
+import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
 
 public class MaxDiscountRule {
     SimpleDiscountRule simple1;
@@ -12,9 +12,9 @@ public class MaxDiscountRule {
         this.simple2 = simple2;
     }
 
-    public double CalculatePriceAfterDiscount(Basket basket) {
-        double discount1 = simple1.CalculatePriceAfterDiscount(basket);
-        double discount2 = simple2.CalculatePriceAfterDiscount(basket);
+    public double CalculateDiscount(Basket basket) {
+        double discount1 = simple1.CalculateDiscount(basket);
+        double discount2 = simple2.CalculateDiscount(basket);
         return Double.max(discount1, discount2);
     }
 }

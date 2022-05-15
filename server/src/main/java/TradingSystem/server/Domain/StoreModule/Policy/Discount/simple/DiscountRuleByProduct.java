@@ -1,8 +1,8 @@
-package Domain.StoreModule.Policy.Discount.simple;
+package TradingSystem.server.Domain.StoreModule.Policy.Discount.simple;
 
-import Domain.StoreModule.Basket;
-import Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
-import Domain.StoreModule.Product.Product;
+
+import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Product.Product;
 
 import java.util.Map;
 
@@ -15,16 +15,14 @@ public class DiscountRuleByProduct extends SimpleDiscountRule {
     }
 
     @Override
-    public double CalculatePriceAfterDiscount(Basket basket) {
-        double TotalPrice = 0;
+    public double CalculateDiscount(Basket basket) {
         Map<Product, Integer> basketMap = basket.getProducts_and_quantities();
         try {
             int quantity = basketMap.get(ProductToDiscount);
             double price = ProductToDiscount.getPrice();
-            double Discount = quantity * price * this.percentOfDiscount;
-            return Discount;
+            return quantity * price * this.percentOfDiscount;
         } catch (NullPointerException e) {
-            return basket.getTotal_price();
+            return 0;
         }
     }
 }

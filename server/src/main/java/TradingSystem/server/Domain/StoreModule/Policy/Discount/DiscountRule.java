@@ -1,8 +1,9 @@
-package Domain.StoreModule.Policy.Discount;
+package TradingSystem.server.Domain.StoreModule.Policy.Discount;
 
-import Domain.StoreModule.Basket;
+
+import TradingSystem.server.Domain.StoreModule.Basket;
 
 public interface DiscountRule {
-    double CalculatePriceAfterDiscount(Basket basket);
+    double CalculateDiscount(Basket basket);
     boolean CanApply(Basket basket);
 }

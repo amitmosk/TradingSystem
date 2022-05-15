@@ -2,6 +2,8 @@ package TradingSystem.server.Domain.StoreModule.Store;
 
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
@@ -29,8 +31,8 @@ public class Store {
     public String foundation_date;
     private Map<Product, Integer> inventory; // product & quantity
     private boolean active;
-    private String purchasePolicy;
-    private String discountPolicy;
+    private DiscountPolicy discountPolicy;
+    private PurchasePolicy purchasePolicy;
     private StorePurchaseHistory purchases_history;
     private StoreReview storeReview;
     private AtomicInteger product_ids_counter;
@@ -40,6 +42,8 @@ public class Store {
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder) {
+        discountPolicy = new DiscountPolicy();
+        purchasePolicy = new PurchasePolicy();
         this.store_id = store_id;
         this.founder = founder;
         this.name = name;
@@ -213,14 +217,14 @@ public class Store {
 
     public Map<Product, Integer> add_product(AssignUser user, String name, double price, String category, List<String> key_words, int quantity) throws MarketException {
         this.check_permission(user, StorePermission.add_item);
-        if(price <= 0)
+        if (price <= 0)
             throw new ProductAddingException("price must be more then zero");
         if (quantity < 1)
             throw new ProductAddingException("quantity must be more then zero");
         Utils.nameValidCheck(name);
         Utils.nameValidCheck(category);
-        for(Product p : inventory.keySet()){
-            if(p.getName().equals(name))
+        for (Product p : inventory.keySet()) {
+            if (p.getName().equals(name))
                 throw new ProductAddingException("product already exists in the store");
         }
         int product_id = this.product_ids_counter.getAndIncrement();
@@ -265,13 +269,16 @@ public class Store {
     // -----------------------------------------------------------------------------------------------------
 
 
-    public synchronized double check_available_products_and_calc_price(Basket basket) throws MarketException {
+    public synchronized double check_available_products_and_calc_price(int user_age, Basket basket) throws MarketException {
         Map<Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
+        purchasePolicy.checkPolicy(user_age, basket);
         for (Product p : products_and_quantities.keySet()) {
             this.checkAvailablityAndGet(p.getProduct_id(), products_and_quantities.get(p));
         }
-        return basket.getTotal_price();
+        double discount = discountPolicy.calculateDiscount(basket);
+        return basket.getTotal_price() - discount;
     }
+
 
     //TODO: policies
     // check product is available - throws if no.
@@ -453,12 +460,12 @@ public class Store {
         this.active = active;
     }
 
-    public void setPurchasePolicy(AssignUser user, String purchasePolicy) throws NoPremssionException {
+    public void setPurchasePolicy(AssignUser user, PurchasePolicy purchasePolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_purchase_policy);
         this.purchasePolicy = purchasePolicy;
     }
 
-    public void setDiscountPolicy(AssignUser user, String discountPolicy) throws NoPremssionException {
+    public void setDiscountPolicy(AssignUser user, DiscountPolicy discountPolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_discount_policy);
         this.discountPolicy = discountPolicy;
     }

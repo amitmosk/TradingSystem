@@ -1,9 +1,8 @@
-package Domain.StoreModule.Policy.Discount.logicCompnent;
+package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
 
-import Domain.StoreModule.Basket;
-import Domain.StoreModule.Policy.Discount.DiscountRule;
-import Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
-import Domain.StoreModule.Policy.Predict;
+import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
 
 public class XorDiscountRule implements DiscountRule {
     private SimpleDiscountRule Left;
@@ -15,9 +14,9 @@ public class XorDiscountRule implements DiscountRule {
     }
 
     @Override
-    public double CalculatePriceAfterDiscount(Basket basket) {
-        double discountFromLeft = Left.CalculatePriceAfterDiscount(basket);
-        double discountFromRight = Right.CalculatePriceAfterDiscount(basket);
+    public double CalculateDiscount(Basket basket) {
+        double discountFromLeft = Left.CalculateDiscount(basket);
+        double discountFromRight = Right.CalculateDiscount(basket);
         boolean XorRes = (discountFromLeft != 0) ^ (discountFromRight != 0);
         if (XorRes)//if XorRes==true then only one discount is working
             return Math.max(discountFromLeft, discountFromRight);

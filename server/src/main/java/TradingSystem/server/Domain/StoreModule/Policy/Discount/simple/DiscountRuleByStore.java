@@ -1,7 +1,7 @@
-package Domain.StoreModule.Policy.Discount.simple;
+package TradingSystem.server.Domain.StoreModule.Policy.Discount.simple;
 
-import Domain.StoreModule.Basket;
-import Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
+
+import TradingSystem.server.Domain.StoreModule.Basket;
 
 public class DiscountRuleByStore extends SimpleDiscountRule {
     public DiscountRuleByStore(float PrecentOfDiscount) {
@@ -9,7 +9,7 @@ public class DiscountRuleByStore extends SimpleDiscountRule {
     }
 
     @Override
-    public double CalculatePriceAfterDiscount(Basket basket) {
-        return basket.getTotal_price() - basket.getTotal_price() * percentOfDiscount;
+    public double CalculateDiscount(Basket basket) {
+        return basket.getTotal_price() * percentOfDiscount;
     }
 }
