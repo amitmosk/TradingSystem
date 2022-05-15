@@ -1,7 +1,7 @@
-package TradingSystem.server.Domain.StoreModule.Policy.Discount.simple;
+package Domain.StoreModule.Policy.Discount.simple;
 
-import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
+import Domain.StoreModule.Basket;
+import Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
 
 public class DiscountRuleByStore extends SimpleDiscountRule {
     public DiscountRuleByStore(float PrecentOfDiscount) {

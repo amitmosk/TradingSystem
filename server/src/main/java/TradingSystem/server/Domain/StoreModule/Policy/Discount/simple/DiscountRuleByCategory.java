@@ -1,8 +1,8 @@
-package TradingSystem.server.Domain.StoreModule.Policy.Discount.simple;
+package Domain.StoreModule.Policy.Discount.simple;
 
-import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
-import TradingSystem.server.Domain.StoreModule.Product.Product;
+import Domain.StoreModule.Basket;
+import Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
+import Domain.StoreModule.Product.Product;
 
 import java.util.Map;
 

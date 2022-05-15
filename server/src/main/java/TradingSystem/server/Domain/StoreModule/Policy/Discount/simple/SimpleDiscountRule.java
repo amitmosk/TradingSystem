@@ -1,9 +1,9 @@
-package TradingSystem.server.Domain.StoreModule.Policy.Discount.simple;
+package Domain.StoreModule.Policy.Discount.simple;
 
-import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountRule;
-import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.UserModule.User;
+import Domain.StoreModule.Basket;
+import Domain.StoreModule.Policy.Discount.DiscountRule;
+import Domain.StoreModule.Product.Product;
+import Domain.UserModule.User;
 
 
 public abstract class SimpleDiscountRule implements DiscountRule {
