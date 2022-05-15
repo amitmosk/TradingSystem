@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.Statistics;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Statistic {
     public String init_system_time;
@@ -10,7 +10,7 @@ public class Statistic {
     private long register_per_minutes;
     private long buy_cart_per_minutes;
 
-    public Statistic(LocalDateTime init_system_time, long login_per_minutes, long logout_per_minutes, long connect_per_minutes, long register_per_minutes, long buy_cart_per_minutes) {
+    public Statistic(LocalDate init_system_time, long login_per_minutes, long logout_per_minutes, long connect_per_minutes, long register_per_minutes, long buy_cart_per_minutes) {
         this.init_system_time = init_system_time.toString();
         this.login_per_minutes = login_per_minutes;
         this.logout_per_minutes = logout_per_minutes;

@@ -10,7 +10,8 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Utils;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -27,7 +28,7 @@ public class User {
         this.cart = new Cart();
         isGuest = new AtomicBoolean(true);
         this.isLogged = new AtomicBoolean(false);
-        this.birth_date = LocalDateTime.now().toString();
+        this.birth_date = LocalDate.now().toString();
     }
 
 
@@ -216,6 +217,10 @@ public class User {
     }
 
     public Admin is_admin(){ return state.is_admin();}
+
+    public int get_age(){
+        return Period.between(LocalDate.parse(this.birth_date),LocalDate.now()).getYears();
+    }
 
     //TODO: method for testing
     public boolean isRegistered() {

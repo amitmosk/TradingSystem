@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,7 +43,7 @@ class StoreTest {
 
     @BeforeEach
     void setUp() throws MarketException {
-        this.birth_date = LocalDateTime.now().minusYears(30).toString();
+        this.birth_date = LocalDate.now().minusYears(30).toString();
         counter++;
         this.founder = generate_user(founder_start);
         this.general_user = generate_user(general_start);

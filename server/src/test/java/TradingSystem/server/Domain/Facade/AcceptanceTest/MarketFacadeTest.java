@@ -9,7 +9,7 @@ import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Response;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -41,7 +41,7 @@ class MarketFacadeTest {
 
     @BeforeEach
     void setUp() {
-        birth_date =  LocalDateTime.now().minusYears(30).toString();
+        birth_date =  LocalDate.now().minusYears(30).toString();
         PaymentAdapter paymentAdapter = new PaymentAdapterImpl();
         SupplyAdapter supplyAdapter = new SupplyAdapterImpl();
         this.facade1 = new MarketFacade(paymentAdapter, supplyAdapter);

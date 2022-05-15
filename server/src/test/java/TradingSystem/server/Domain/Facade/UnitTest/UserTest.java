@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +22,7 @@ class UserTest {
         user = new User();
         guest = new User();
         try{
-            user.register("eylon@gmail.com", "pssw0rD", "Eylon", "Sade", LocalDateTime.now().minusYears(30).toString());
+            user.register("eylon@gmail.com", "pssw0rD", "Eylon", "Sade", LocalDate.now().minusYears(30).toString());
         }
         catch (Exception e){}
 
@@ -46,7 +46,7 @@ class UserTest {
     void register_success(String email, String pw, String name, String lastName) {
         boolean result;
         try{
-            guest.register(email, pw, name, lastName,  LocalDateTime.now().minusYears(30).toString());
+            guest.register(email, pw, name, lastName,  LocalDate.now().minusYears(30).toString());
             result = true;
         }
         catch (Exception e){
@@ -84,7 +84,7 @@ class UserTest {
     void register_fail(String email, String pw, String name, String lastName) {
         boolean result;
         try{
-            user.register(email, pw, name, lastName, LocalDateTime.now().minusYears(30).toString());
+            user.register(email, pw, name, lastName, LocalDate.now().minusYears(30).toString());
             result = true;
         }
         catch (Exception e){
@@ -93,7 +93,7 @@ class UserTest {
         assertEquals(false, result);
         result = false;
         try{
-            guest.register(email, pw, name, lastName, LocalDateTime.now().minusYears(30).toString());
+            guest.register(email, pw, name, lastName, LocalDate.now().minusYears(30).toString());
             result = true;
         }
         catch (Exception e){

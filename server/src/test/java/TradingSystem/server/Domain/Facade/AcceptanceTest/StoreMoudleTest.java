@@ -13,7 +13,7 @@ import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 import TradingSystem.server.Domain.Utils.Response;
 import org.junit.jupiter.api.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -109,7 +109,7 @@ class StoreMoudleTest {
     @BeforeEach
     void SetUp() {
         this.productId = 1;
-        this.birth_date = LocalDateTime.now().minusYears(30).toString();
+        this.birth_date = LocalDate.now().minusYears(30).toString();
         marketFacade.clear();
         marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         manager = new MarketFacade(paymentAdapter,supplyAdapter);
@@ -887,7 +887,7 @@ class StoreMoudleTest {
             //TODO: check add owner succeed
         }
         MarketFacade new_user = new MarketFacade(paymentAdapter,supplyAdapter);
-        new_user.register("check@gmail.com", password,"gal","brown",LocalDateTime.now().minusYears(30).toString());
+        new_user.register("check@gmail.com", password,"gal","brown",LocalDate.now().minusYears(30).toString());
 
         AtomicInteger num_of_success = new AtomicInteger(0);
         AtomicInteger num_of_exceptions = new AtomicInteger(0);
@@ -918,7 +918,7 @@ class StoreMoudleTest {
             //TODO: check add owner succeed
         }
         MarketFacade new_user = new MarketFacade(paymentAdapter,supplyAdapter);
-        new_user.register("check@gmail.com", password,"gal","brown",LocalDateTime.now().minusYears(30).toString());
+        new_user.register("check@gmail.com", password,"gal","brown",LocalDate.now().minusYears(30).toString());
 
         AtomicInteger num_of_success = new AtomicInteger(0);
         AtomicInteger num_of_exceptions = new AtomicInteger(0);

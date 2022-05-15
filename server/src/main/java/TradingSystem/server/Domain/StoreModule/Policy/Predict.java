@@ -1,10 +1,8 @@
 package TradingSystem.server.Domain.StoreModule.Policy;
 
-import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.UserModule.AssignUser;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Predict {
 
@@ -44,7 +42,7 @@ public class Predict {
 
     public boolean CanBuy(int user_age, Product product, int quantity, double price) {
         String product_category = product.getCategory();
-        String date = LocalDateTime.now().toString();
+        String date = LocalDate.now().toString();
 
         int age = user_age;
         boolean flag1 = this.check_valid_quantity(quantity);
