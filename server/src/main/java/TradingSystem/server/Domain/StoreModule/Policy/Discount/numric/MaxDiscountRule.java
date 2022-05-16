@@ -1,13 +1,15 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount.numric;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.DiscountRuleByStore;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
 
 public class MaxDiscountRule {
-    SimpleDiscountRule simple1;
-    SimpleDiscountRule simple2;
+    DiscountRule simple1;
+    DiscountRule simple2;
 
-    public MaxDiscountRule(SimpleDiscountRule simple1, SimpleDiscountRule simple2) {
+    public MaxDiscountRule(DiscountRule simple1, DiscountRule simple2) {
         this.simple1 = simple1;
         this.simple2 = simple2;
     }

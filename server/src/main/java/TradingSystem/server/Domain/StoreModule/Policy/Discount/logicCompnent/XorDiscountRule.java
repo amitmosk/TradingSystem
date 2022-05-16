@@ -8,6 +8,7 @@ public class XorDiscountRule implements DiscountRule {
     private SimpleDiscountRule Left;
     private SimpleDiscountRule Right;
 
+
     public XorDiscountRule(SimpleDiscountRule Left, SimpleDiscountRule Right) {
         this.Left = Left;
         this.Right = Right;

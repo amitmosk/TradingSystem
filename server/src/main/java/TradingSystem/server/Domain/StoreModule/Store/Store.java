@@ -38,12 +38,12 @@ public class Store {
     private AtomicInteger product_ids_counter;
     private Object owners_lock;
     private Object managers_lock;
-
+    
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder) {
-        discountPolicy = new DiscountPolicy();
-        purchasePolicy = new PurchasePolicy();
+        this.discountPolicy = new DiscountPolicy();
+        this.purchasePolicy = new PurchasePolicy();
         this.store_id = store_id;
         this.founder = founder;
         this.name = name;
