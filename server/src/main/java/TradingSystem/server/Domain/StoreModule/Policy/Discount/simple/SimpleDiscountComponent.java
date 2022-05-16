@@ -1,14 +1,14 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount.simple;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
 
-public abstract class SimpleDiscountRule implements DiscountRule {
+public abstract class SimpleDiscountComponent implements DiscountComponent {
     protected double percentOfDiscount;
 
-    public SimpleDiscountRule(double percentOfDiscount) throws WrongPermterException {
+    public SimpleDiscountComponent(double percentOfDiscount) throws WrongPermterException {
         checkPrecent(percentOfDiscount);
         this.percentOfDiscount = percentOfDiscount;
 

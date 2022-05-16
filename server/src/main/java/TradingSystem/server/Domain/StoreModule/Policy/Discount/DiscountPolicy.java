@@ -6,13 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DiscountPolicy {
-    private List<DiscountRule> policy;
+    private List<DiscountComponent> policy;
 
     public DiscountPolicy() {
         this.policy = new LinkedList();
     }
 
-    public void addRule(DiscountRule rule) {
+    public void addRule(DiscountComponent rule) {
         policy.add(rule);
     }
 
@@ -22,7 +22,7 @@ public class DiscountPolicy {
 
     public double calculateDiscount(Basket basket) {
         double discount = 0;
-        for (DiscountRule rule : policy)
+        for (DiscountComponent rule : policy)
             discount += rule.CalculateDiscount(basket);
         return discount;
     }

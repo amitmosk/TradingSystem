@@ -1,15 +1,15 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountRule;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 
-public class ComplexDiscountRule implements DiscountRule {
-    SimpleDiscountRule rule;
+public class ComplexDiscountComponent implements DiscountComponent {
+    SimpleDiscountComponent rule;
     Predict predict;
 
-    public ComplexDiscountRule(SimpleDiscountRule rule, Predict predict) {
+    public ComplexDiscountComponent(SimpleDiscountComponent rule, Predict predict) {
         this.predict = predict;
         this.rule = rule;
     }

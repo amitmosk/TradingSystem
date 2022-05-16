@@ -7,10 +7,10 @@ import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
 import java.util.Map;
 
-public class DiscountRuleByCategory extends SimpleDiscountRule {
+public class DiscountComponentByCategory extends SimpleDiscountComponent {
     String CategoryOfDiscount = "";
 
-    public DiscountRuleByCategory(String nameOfCategory, double percentOfDiscount) throws WrongPermterException {
+    public DiscountComponentByCategory(String nameOfCategory, double percentOfDiscount) throws WrongPermterException {
         super(percentOfDiscount);
         CategoryOfDiscount = nameOfCategory;
     }

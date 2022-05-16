@@ -1,7 +1,6 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountRule;
 import TradingSystem.server.Domain.Utils.Exception.PurchasePolicyException;
 
 import java.util.LinkedList;
