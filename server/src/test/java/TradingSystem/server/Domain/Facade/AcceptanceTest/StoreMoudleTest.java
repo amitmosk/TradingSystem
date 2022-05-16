@@ -7,6 +7,7 @@ import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
+import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.AppointmentException;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
@@ -532,8 +533,11 @@ class StoreMoudleTest {
     @org.junit.jupiter.api.Test
     void find_store_information_happy() {
         //happy
-        Response r = marketFacade.find_store_information(1);
-        check_was_not_exception("Store information received successfully", r);
+        Response<StoreInformation> res = marketFacade.find_store_information(1);
+        check_was_not_exception("Store information received successfully", res);
+        StoreInformation store = res.getValue();
+        assertEquals(email,store.getFounder_email());
+        assertEquals("amit store",store.getStore_name());
     }
 
     @org.junit.jupiter.api.Test
@@ -545,10 +549,10 @@ class StoreMoudleTest {
 
     @Test
     void find_product_information_happy() {
-        //happy
-        Response r = marketFacade.find_product_information(productId, 1);
-        check_was_not_exception("Product information received successfully", r);
-
+        Response<ProductInformation> product_information = marketFacade.find_product_information(productId, 1);
+        check_was_not_exception("Product information received successfully", product_information);
+        assertEquals(product_information.getValue().getName(),"apple","couldn't find properly product name");
+        assertEquals(product_information.getValue().getCategory(),"fruits","couldn't find properly product category");
     }
 
     @Test
@@ -560,9 +564,9 @@ class StoreMoudleTest {
 
     @Test
     void find_products_by_name_happy() {
-        //happy
-        Response r = marketFacade.find_products_by_name("apple");
-        check_was_not_exception("Product list received successfully", r);
+        Response<List<Product>> response = marketFacade.find_products_by_name("apple");
+        check_was_not_exception("Product list received successfully", response);
+        assertEquals(response.getValue().stream().findAny().get().getName(),"apple","couldn't find existing product");
     }
 
 
