@@ -1,29 +1,14 @@
-package TradingSystem.server.api;
+package TradingSystem.server.Service;
 
 import TradingSystem.server.Domain.StoreModule.StoreController;
-import TradingSystem.server.Domain.UserModule.Admin;
-import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserController;
-import TradingSystem.server.Domain.Utils.ErrorLogger;
 import TradingSystem.server.Domain.Utils.SystemLogger;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-import TradingSystem.server.Domain.Utils.SystemLogger;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapterImpl;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapterImpl;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-
 
 
 public class MarketSystem {

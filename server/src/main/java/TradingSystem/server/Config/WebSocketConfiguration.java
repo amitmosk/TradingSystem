@@ -1,6 +1,6 @@
-package TradingSystem.server.config;
+package TradingSystem.server.Config;
 
-import TradingSystem.server.api.NotificationHandler;
+import TradingSystem.server.Service.NotificationHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.WebSocketHandler;
