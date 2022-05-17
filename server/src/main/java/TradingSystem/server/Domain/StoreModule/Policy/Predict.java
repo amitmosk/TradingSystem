@@ -2,130 +2,121 @@ package TradingSystem.server.Domain.StoreModule.Policy;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.UserModule.User;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
 public class Predict {
-
+    //on what
+    private String catgorey;
     private Product product;
-    private double price_constraint = -1;
-    private String category_constraint = "";
-    private int quantity_constraint = -1;
-    private boolean less_quantity_constraint; // true: less then quantity, false: more then quantity
-    private int age_constraint = -1;
-    private boolean less_age_constraint; // true: less then age, false: more then age
-    private boolean before_time_constraint; // true: before, false: after.
-    private int year_constraint = -1;
-    private int month_constraint = -1;
-    private int day_constraint = -1;
-    private int hour_constraint = -1;
-    private boolean less_price_constraint;
 
-    public Predict(Product product, String category_constraint, int quantity_constraint,
-                   boolean less_quantity_constraint, int age_constraint, boolean less_age_constraint,
-                   boolean before_time_constraint, int year, int month, int day, int hour, double price_constraint, boolean less_price_constraint) {
+    //what type < > =
+    private boolean above;//true=above false=below
+    private boolean equql;//true=to regerd false=to not regerd
 
+    //value
+    private int num;
+
+    //field
+    private boolean price_constraint;
+    private boolean quantity_constraint;
+    private boolean age_constraint;
+    private boolean time_constraint;
+    private boolean category_constraint;
+    private boolean product_constraint;
+
+    //time
+    private int year;
+    private int month;
+    private int day;
+    private boolean alloworDisallow;//true == to allow if in time  false ==disallow if in time
+
+    public Predict(String catgorey, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day) {
+        this.catgorey = catgorey;
         this.product = product;
-        this.price_constraint = price_constraint;
-        this.category_constraint = category_constraint;
-        this.quantity_constraint = quantity_constraint;
-        this.less_quantity_constraint = less_quantity_constraint;
-        this.age_constraint = age_constraint;
-        this.less_age_constraint = less_age_constraint;
-        this.less_price_constraint = less_price_constraint;
-        this.before_time_constraint = before_time_constraint;
-        this.year_constraint = year;
-        this.month_constraint = month;
-        this.day_constraint = day;
-        this.hour_constraint = hour;
+        this.above = above;
+        this.equql = equql;
+        this.num = num;
+        this.price_constraint = price;
+        this.quantity_constraint = quantity;
+        this.age_constraint = age;
+        this.time_constraint = time;
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
 
     public boolean CanApply(int age, Basket b) {
         Map<Product, Integer> map = b.getProducts_and_quantities();
         for (Map.Entry<Product, Integer> entry : map.entrySet())
-            if (CanApply(18, entry.getKey(), entry.getValue(), entry.getKey().getPrice()) == false)
-                return false;
-        return true;
+            if (CanApply(age, entry.getKey(), entry.getValue(), entry.getKey().getPrice()))
+                return true;
+        return false;
     }
 
     private boolean CanApply(int age, Product product, int quantity, double price) {
         String product_category = product.getCategory();
-        String date = LocalDateTime.now().toString();
         boolean quantityCheck = this.check_valid_quantity(quantity);
         boolean CategoryCheck = this.check_valid_category(product_category);
-        boolean TimeCheck = this.check_valid_time(date);
+        boolean TimeCheck = this.check_valid_time();
         boolean AgeCheck = this.check_valid_age(age);
         boolean PriceCheck = this.check_valid_price(price);
+        boolean ProductCheck = this.checkProduct(product);
+        return quantityCheck || CategoryCheck || TimeCheck || AgeCheck || PriceCheck || ProductCheck;
+    }
 
-        return quantityCheck || CategoryCheck || TimeCheck || AgeCheck;
+    private boolean checkProduct(Product product) {
+        if (product_constraint)
+            return product.getName().equals(this.product.getName());
+        return false;
+    }
+
+    private boolean checkField(double numTocheck) {
+        if (equql)
+            return num == numTocheck;
+        if (above)
+            return numTocheck > num;
+        else
+            return numTocheck < num;
     }
 
     private boolean check_valid_age(int age) {
-        if (this.age_constraint != -1) {
-            // check that age < con_age
-            if (less_age_constraint)
-                return age <= this.age_constraint;
-            else
-                return age > this.age_constraint;
-        }
-        return true;
+        if (age_constraint)
+            return checkField(age);
+        return false;
     }
 
-    private boolean check_valid_time(String date) {
-        // TODO: build vars from date
-        int year = -1, month = -1, day = -1, hour = -1;
-        if (before_time_constraint) {
-            // cant buy before the given time
-            if (year_constraint != -1 && year < year_constraint)
-                return false;
-            if (month_constraint != -1 && month < month_constraint)
-                return false;
-            if (day_constraint != -1 && day < day_constraint)
-                return false;
-            if (hour_constraint != -1 && hour < hour_constraint)
-                return false;
-        } else {
-            // cant buy after the given time
-            if (year_constraint != -1 && year > year_constraint)
-                return false;
-            if (month_constraint != -1 && month > month_constraint)
-                return false;
-            if (day_constraint != -1 && day > day_constraint)
-                return false;
-            if (hour_constraint != -1 && hour > hour_constraint)
-                return false;
-
+    private boolean check_valid_time() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        int year = localDateTime.getYear();
+        int month = localDateTime.getMonthValue();
+        int day = localDateTime.getDayOfMonth();
+        if (time_constraint) {
+            if (alloworDisallow)
+                return year == this.year && month == this.month && this.day == day;
+            else
+                return year != this.year && month != this.month && this.day != day;
         }
-        return true;
-
+        return false;
     }
 
     private boolean check_valid_category(String product_category) {
-        // this.category_constraint cant be null! otherwise there will be null pointer exception
-        return product_category.equals(this.category_constraint);
-
+        if (category_constraint)
+            return product_category.equals(this.catgorey);
+        return false;
     }
 
     private boolean check_valid_quantity(int quantity) {
-        if (this.quantity_constraint != -1) {
-            // check that quantity < con_quantity
-            if (less_quantity_constraint)
-                return quantity <= this.quantity_constraint;
-            else
-                return quantity > this.quantity_constraint;
-        }
-        return true;
+        if (quantity_constraint)
+            return checkField(quantity);
+        return false;
     }
 
     public boolean check_valid_price(double price) {
-        if (this.price_constraint != -1) {
-            // check that price < con_price
-            if (less_price_constraint)
-                return price <= this.price_constraint;
-            else
-                return price > this.price_constraint;
-        }
-        return true;
+        if (price_constraint)
+            return checkField(price);
+        return false;
     }
 }

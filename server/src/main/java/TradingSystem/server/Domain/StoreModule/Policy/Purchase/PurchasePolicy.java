@@ -25,7 +25,7 @@ public class PurchasePolicy {
         }
     }
 
-    public void removeRule(int index) {
-        policy.remove(index);
+    public void removeRule(porchaseRule rule) {
+        policy.remove(rule);
     }
 }

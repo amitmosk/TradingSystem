@@ -16,8 +16,8 @@ public class DiscountPolicy {
         policy.add(rule);
     }
 
-    public void removeRule(int index) {
-        policy.remove(index);
+    public void removeRule(DiscountComponent component) {
+        policy.remove(component);
     }
 
     public double calculateDiscount(Basket basket) {

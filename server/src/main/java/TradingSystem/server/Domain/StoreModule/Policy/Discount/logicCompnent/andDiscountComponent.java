@@ -1,5 +1,4 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
-
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;

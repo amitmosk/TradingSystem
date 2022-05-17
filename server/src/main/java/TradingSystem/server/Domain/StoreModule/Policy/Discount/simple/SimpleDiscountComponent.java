@@ -21,7 +21,7 @@ public abstract class SimpleDiscountComponent implements DiscountComponent {
     }
 
     public boolean CanApply(Basket basket) {
-        return true;
+        return CalculateDiscount(basket) != 0;
     }
 
     public abstract double CalculateDiscount(Basket basket);

@@ -2,8 +2,10 @@ package TradingSystem.server.Domain.StoreModule.Store;
 
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
@@ -38,7 +40,7 @@ public class Store {
     private AtomicInteger product_ids_counter;
     private Object owners_lock;
     private Object managers_lock;
-    
+
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder) {
@@ -80,11 +82,32 @@ public class Store {
         this.storeReview.add_rating(user.get_user_email(), rating);
     }
 
-    public void set_store_purchase_rules(String rule) {
-        // TODO
+
+    private void add_discount_rule(DiscountComponent component) {
+        this.discountPolicy.addRule(component);
+    }
+
+    private void CreateDiscountRule(double percent, String catgorey, Product product, boolean above, boolean equql, int num,
+                                    boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day) {
 
     }
 
+    public void CreatePredict(String catgorey, Product product, boolean above, boolean equql, int num,
+                              boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day) {
+
+    }
+
+    private void add_purchase_rule(porchaseRule component) {
+        this.purchasePolicy.addRule(component);
+    }
+
+    public void remove_discount_rule(DiscountComponent component) {
+        this.discountPolicy.addRule(component);
+    }
+
+    public void remove_purchase_rule(porchaseRule component) {
+        this.purchasePolicy.removeRule(component);
+    }
 
     public void add_product_rating(String user_email, int product_id, int rate) throws MarketException {
         Product p = this.getProduct_by_product_id(product_id);//throws
