@@ -20,7 +20,7 @@ public class AssignUser extends AssignState {
 
     @Override
     public boolean login(String pw) throws Exception {
-        security.check_password(pw);
+        security.check_correct_password(pw);
         return true;
     }
 
@@ -59,11 +59,11 @@ public class AssignUser extends AssignState {
 
     @Override
     public void unregister(String password) throws Exception {
-        security.check_password(password);
+        security.check_correct_password(password);
     }
 
     public void edit_name(String pw, String new_name) throws Exception {
-        security.check_password(pw);
+        security.check_correct_password(pw);
         this.name = new_name;
     }
 
@@ -72,7 +72,7 @@ public class AssignUser extends AssignState {
     }
 
     public void edit_last_name(String pw, String new_last_name) throws Exception {
-        security.check_password(pw);
+        security.check_correct_password(pw);
         this.name = new_last_name;
     }
 
@@ -85,7 +85,7 @@ public class AssignUser extends AssignState {
     }
 
     public void improve_security(String password, String question, String answer) throws Exception {
-        security.check_password(password);
+        security.check_correct_password(password);
         security.check_improvable();
         security = new PremiumSecurity(password, question, answer);
     }
