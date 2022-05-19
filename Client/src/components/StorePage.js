@@ -12,6 +12,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
+import { CartApi } from '../API/CartApi';
  
 // import itemData from '@mui/material/Box';
 
@@ -73,7 +74,6 @@ export default class StorePage extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            stroe_id: undefined,
             // founder_email: store.founder_email,
             // store_name: store.store_name,
             // foundation_date: store.foundation_date,
@@ -85,14 +85,12 @@ export default class StorePage extends Component {
     
     
     async componentDidMount() {
-        let response = await StoreApi.find_store_information(this.state.store_id);
-        let store = response.value;
+        let response = await CartApi.view_user_cart();
+        let cart = response.value;
         this.setState({
-            founder_email: store.founder_email,
-            store_name: store.store_name,
-            foundation_date: store.foundation_date,
-            storeReview: store.storeReview
-        })
+            baskets:cart.baskets
+        });
+        
 
         
     }
@@ -105,7 +103,13 @@ export default class StorePage extends Component {
                 <main class="LoginMain">
                     <div class="LoginWindow">
                         <h3>Store Name goes here</h3> 
-                        <div> Store info goes here</div>
+                        {/* <h3>{this.state.store_name}</h3>  */}
+
+                        {/* <div> {this.state.founder_email}</div>
+                        <div> {this.state.foundation_date}</div>
+                        <div> {this.state.storeReview}</div> */}
+
+
                         <div> Store info goes here</div>
                         <div> Store info goes here</div>
                         <div> Store info goes here</div>
@@ -139,47 +143,56 @@ export default class StorePage extends Component {
                             }}
                             subheader={<li />}
                             >
-                            {[0, 1, 2, 3, 4].map((sectionId) => (
-                                <li key={`section-${sectionId}`}>
-                                <ul>
-                                    
-                                    {[0, 1, 2].map((item) => (
-                                    <ListItem key={`item-${sectionId}-${item}`}>
-                                        <ListItemText primary={`Item ${item}`} />
-                                    </ListItem>
-                                    ))}
-                                </ul>
-                                </li>
-                            ))}
-                            </List>        
-                            {/* <ImageList sx={{ width: 1000, height: 1450 }} cols={3} rowHeight={164}>
-                            {itemData.map((item) => (
-                            <ImageListItem key={item.img}>
-                                <img
-                                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                alt={item.title}
-                                loading="lazy"
-                                />
-                            </ImageListItem>
-                            ))}
-                            </ImageList> */}
-                        {/* <form class="LoginForm" onSubmit={this.handleSubmit}>
-                            {this.state.loginError ?
-                                <div class="CenterItemContainer"><label>{this.state.loginError}</label></div> : null}
-                            <input type="text" name="email" value={this.state.email}
-                                    placeholder="Email" required/>
-                            <input type="password" name="password" value={this.state.password}
-                                    placeholder="Password" required/>
+                            {[0, 1, 2, 3, 4, 5, 6, ].map((item) => (
+                                <ListItem key={`item}-${item}`}>
+                                    <ListItemText primary={`Item ${item}`} />
+                                </ListItem>
+                                ))}
+                            </List>
+
+
+                            <List
+                            sx={{
+                                width: '100%',
+                                maxWidth: 360,
+                                bgcolor: 'background.paper',
+                                position: 'relative',
+                                overflow: 'auto',
+                                maxHeight: 300,
+                                '& ul': { padding: 0 },
+                            }}
+                            subheader={<li />}
+                            >
+                            {this.state.baskets.map((product) => (
+                                <ListItem key={`item}-${product}`}>
+                                    <ListItemText primary={`Item ${product}`} />
+                                </ListItem>
+                                ))}
+                            </List>
+
+
+                            {/* <List
+                            sx={{
+                                width: '100%',
+                                maxWidth: 360,
+                                bgcolor: 'background.paper',
+                                position: 'relative',
+                                overflow: 'auto',
+                                maxHeight: 300,
+                                '& ul': { padding: 0 },
+                            }}
+                            subheader={<li />}
+                            >
+                            {[this.state.ptoducts].map((product) => (
+                                <ListItem key={`Product name: }-${product.name}`}>
+                                    <ListItemText primary={`price:  ${product.price}`} />
+                                </ListItem>
+                                ))}
+                            </List> */}
+
+                                   
                             
-                            <div className="ConnectRegister">
-                                
-                                <Button onClick={() => this.login()} variant="contained">Login </Button>
-                                <Link href="/Register" underline="hover">
-                                {'New user? Cretae new account'}
-                                </Link>
-                            </div>
-                        </form> */}
+                       
                     </div>
                 </main>
             );

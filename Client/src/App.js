@@ -9,7 +9,7 @@ import Supply from './components/Supply';
 // import ReactDOM from 'react-dom';
 import Button from '@mui/material/Button';
 import StorePage from './components/StorePage';
-
+import ShoppingCart from './components/ShoppingCart';
 // function App() {
 //   return <Button variant="contained">Hello World</Button>;
 // }
@@ -28,9 +28,10 @@ export default class App extends Component {
             <Payment/>
             <Supply/>
             <Register/>   
-            <Login /> */}
+            <Login />
+            <StorePage/> */}
 
-            <StorePage/>
+            <ShoppingCart/>
           </div>
     );
   }

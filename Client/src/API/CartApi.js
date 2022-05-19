@@ -6,7 +6,7 @@ import { Response } from "./Response";
 const instance = axios.create(
     {withCredentials : true}
 );
-const response_obj = new Response();
+const response_obj = new Response("","");
 
 
 export class CartApi {
