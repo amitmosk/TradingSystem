@@ -24,12 +24,12 @@ export default class App extends Component {
   render () {
     return (
             <div> 
-            {/* <HomePageSearch /> 
+            <HomePageSearch /> 
             <Login/>
             <Payment/>
             <Supply/>
             <Register/>   
-            <Login /> */}
+            <Login />
 
             <StorePage/>
           </div>
