@@ -6,6 +6,7 @@ import { Product } from "../ServiceObjects/Product";
 const instance = axios.create(
     {withCredentials : true}
 );
+const response_obj = new Response("","");
 
 
 
@@ -29,7 +30,7 @@ export class ProductApi {
             .then(res => {
                 let response = res.data;
                 let product_info = new Product(response.value);
-                return reponse_obj.create(product_info, response.message);
+                return response_obj.create(product_info, response.message);
             })
             .catch(res => undefined);
     }

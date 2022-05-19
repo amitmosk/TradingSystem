@@ -1,5 +1,5 @@
 
-
+import { ProductReview } from "./ProductReview";
 export class Product  {
 
     
@@ -14,14 +14,14 @@ export class Product  {
 
     }
     
-    static create( name,  store_id,  product_id,  price,  category,  key_words) {
+    static create( name,  product_id,  price,  category,  key_words, productReview) {
         return new Product({
             name: name,
-            store_id: store_id,
             product_id: product_id,
             price:price,
             category:category,
-            key_words:key_words
+            key_words:key_words,
+            productReview:productReview
         })
 
     }

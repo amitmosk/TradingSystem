@@ -85,6 +85,7 @@ export const EDIT_PRODUCT_KEY_WORDS = API_PATH + '/edit_product_key_words';
 export const VIEW_USER_CART = API_PATH + '/view_user_cart';
 
 export const BUY_CART = API_PATH + '/buy_cart';
+export const DELETE_PRODUCT_FROM_CART = API_PATH + '/delete_product_from_cart';
 
 // ========= Admin ========== //
 

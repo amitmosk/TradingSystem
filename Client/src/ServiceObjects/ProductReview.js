@@ -11,7 +11,7 @@ export class ProductReview  {
     }
     
     
-    static create(rating) {
+    static create(rating, reviews) {
         return new ProductReview({
             reviews: reviews,
             rating: rating,

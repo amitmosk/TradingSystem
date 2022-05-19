@@ -9,7 +9,7 @@ import { StoreInformation } from "../ServiceObjects/Store";
 const instance = axios.create(
     {withCredentials : true}
 );
-const reponse_obj = new Response;
+const response_obj = new Response("","");
 
 
 
@@ -22,7 +22,7 @@ export class StoreApi {
             .then(res => {
                 let response = res.data;
                 let store_info = new StoreInformation(response.value);
-                return reponse_obj.create(store_info, response.message);
+                return response_obj.create(store_info, response.message);
             })
             .catch(res => undefined);
     }
