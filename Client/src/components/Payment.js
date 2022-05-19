@@ -1,27 +1,23 @@
 import React, { Component } from 'react';
-import "./Login.css";
+import "./Payment.css";
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Button';
 import { ConnectApi } from '../API/ConnectApi';
-import Register from "./Register.js";
 
 const axios = require('axios');
 const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
 
-export default class Login extends Component {
-    static displayName = Login.name;
+export default class Payment extends Component {
+    static displayName = Payment.name;
 
     constructor(props) {
         super(props);
         this.state = { 
-            loginError: undefined,
-            email: undefined,
-            password: undefined,
+            paymentError: undefined,
+            creditnumber: undefined,
+            experationdate: undefined,
+            cvv: undefined,
         };
-        // this.authApi = new AuthApi();
-        
-        // this.handleInputChange = this.handleInputChange.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
+
     }
     
     // handleInputChange(event){
@@ -74,12 +70,13 @@ export default class Login extends Component {
 
     }
 
-    async login(){
-        let email = this.state.email;
-        let password = this.state.password;
-        console.log("email is "+email+" , password is "+password+"\n");
-        let response = await ConnectApi.login(email, password);
-        alert(response.message);
+    async pay(){
+        let creditnumber = this.state.creditnumber;
+        let experationdate = this.state.experationdate;
+        let cvv = this.state.cvv;
+        console.log("creditnumber is "+creditnumber+" , experationdate is "+experationdate+", experationdate is "+experationdate+"\n");
+        // let response = await ConnectApi.register(email, password, firstname, lastname);
+        // alert(response.message);
     }
     
     render() {
@@ -87,22 +84,25 @@ export default class Login extends Component {
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
-                        <h3>Login</h3>
+                        <h3>Payment</h3>
                         <form class="LoginForm" onSubmit={this.handleSubmit}>
                             {this.state.loginError ?
                                 <div class="CenterItemContainer"><label>{this.state.loginError}</label></div> : null}
-                            <input type="text" name="email" value={this.state.email}
-                                    placeholder="Email" required/>
-                            <input type="password" name="password" value={this.state.password}
-                                    placeholder="Password" required/>
-                            
+                            <input type="creditnumber" name="creditnumber" value={this.state.creditnumber}
+                                    placeholder="Credit Number" required/>
+                            <input type="experationdate" name="experationdate" value={this.state.experationdate}
+                                    placeholder="Experation Date" required/>
+                            <input type="cvv" name="cvv" value={this.state.cvv}
+                                    placeholder="CVV" required/>
+                           
+                            {/* <select name="role" value={this.state.role} required>
+                                <option value="member">Member</option>
+                                <option value="admin">Admin</option>
+                            </select> */}
                             <div className="ConnectRegister">
                                 
                                 {/* <Link to="/register">Create new account</Link> */}
-                                <Button onClick={() => this.login()} variant="contained">Login </Button>
-                                <Link href="/Register" underline="hover">
-                                {'New user? Cretae new account'}
-                                </Link>
+                                <Button onClick={() => this.pay()} variant="contained">Pay </Button>
                                 {/* <input class="action" type="submit" value="Login"/> */}
                             </div>
                         </form>

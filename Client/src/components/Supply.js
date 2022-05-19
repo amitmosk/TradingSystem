@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
-import "./Login.css";
+import "./Supply.css";
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Button';
 import { ConnectApi } from '../API/ConnectApi';
-import Register from "./Register.js";
 
 const axios = require('axios');
 const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
 
-export default class Login extends Component {
-    static displayName = Login.name;
+export default class Supply extends Component {
+    static displayName = Supply.name;
 
     constructor(props) {
         super(props);
         this.state = { 
-            loginError: undefined,
-            email: undefined,
-            password: undefined,
+            supplyError: undefined,
+            country: undefined,
+            city: undefined,
+            street: undefined,
+            apartmentnumber: undefined,
         };
-        // this.authApi = new AuthApi();
-        
-        // this.handleInputChange = this.handleInputChange.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
+
     }
     
     // handleInputChange(event){
@@ -74,12 +71,14 @@ export default class Login extends Component {
 
     }
 
-    async login(){
-        let email = this.state.email;
-        let password = this.state.password;
-        console.log("email is "+email+" , password is "+password+"\n");
-        let response = await ConnectApi.login(email, password);
-        alert(response.message);
+    async supply(){
+        let country = this.state.country;
+        let city = this.state.city;
+        let street = this.state.street;
+        let apartmentnumber = this.state.apartmentnumber;
+        console.log("country is "+country+" , city is "+city+" , street is "+street+" , apartmentnumber is "+ apartmentnumber+"\n");
+        // let response = await ConnectApi.register(email, password, firstname, lastname);
+        // alert(response.message);
     }
     
     render() {
@@ -87,22 +86,27 @@ export default class Login extends Component {
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
-                        <h3>Login</h3>
+                        <h3>Supply</h3>
                         <form class="LoginForm" onSubmit={this.handleSubmit}>
                             {this.state.loginError ?
                                 <div class="CenterItemContainer"><label>{this.state.loginError}</label></div> : null}
-                            <input type="text" name="email" value={this.state.email}
-                                    placeholder="Email" required/>
-                            <input type="password" name="password" value={this.state.password}
-                                    placeholder="Password" required/>
+                            <input type="country" name="country" value={this.state.country}
+                                    placeholder="Country" required/>
+                            <input type="city" name="city" value={this.state.city}
+                                    placeholder="City" required/>
+                            <input type="street" name="street" value={this.state.street}
+                                    placeholder="Street" required/>
+                            <input type="apartmentnumber" name="apartmentnumber" value={this.state.apartmentnumber}
+                                    placeholder="Apartment no." required/>
                             
+                            {/* <select name="role" value={this.state.role} required>
+                                <option value="member">Member</option>
+                                <option value="admin">Admin</option>
+                            </select> */}
                             <div className="ConnectRegister">
                                 
                                 {/* <Link to="/register">Create new account</Link> */}
-                                <Button onClick={() => this.login()} variant="contained">Login </Button>
-                                <Link href="/Register" underline="hover">
-                                {'New user? Cretae new account'}
-                                </Link>
+                                <Button onClick={() => this.supply()} variant="contained">Send </Button>
                                 {/* <input class="action" type="submit" value="Login"/> */}
                             </div>
                         </form>

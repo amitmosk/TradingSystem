@@ -3,9 +3,12 @@ import './App.css';
 import Login from './components/Login';
 import HomePageSearch from './components/HomePageSearch';
 import Register from './components/Register';
+import Payment from './components/Payment';
+import Supply from './components/Supply';
 // import * as React from 'react';
 // import ReactDOM from 'react-dom';
 import Button from '@mui/material/Button';
+import StorePage from './components/StorePage';
 
 // function App() {
 //   return <Button variant="contained">Hello World</Button>;
@@ -21,11 +24,14 @@ export default class App extends Component {
   render () {
     return (
             <div> 
-            <HomePageSearch /> 
+            {/* <HomePageSearch /> 
             <Login/>
+            <Payment/>
+            <Supply/>
             <Register/>   
-            
-            {/* <Login /> */}
+            <Login /> */}
+
+            <StorePage/>
           </div>
     );
   }
