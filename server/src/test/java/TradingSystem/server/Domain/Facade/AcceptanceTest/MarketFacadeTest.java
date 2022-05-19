@@ -186,7 +186,6 @@ class MarketFacadeTest {
         result = check_was_exception(facade1.get_user_last_name()); // get last name with user connected
         assertFalse(result);
         facade1.logout();
-
     }
 
     /*

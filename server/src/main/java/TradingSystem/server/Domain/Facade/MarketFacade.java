@@ -12,7 +12,6 @@ import TradingSystem.server.Domain.Utils.Exception.LoginException;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.Statistics.Statistic;
@@ -142,12 +141,11 @@ public class MarketFacade{
      * @param store_id   who has the product
      * @return product information or action failure reason
      */
-    public Response<ProductInformation> find_product_information(int product_id, int store_id) {
-        Response<ProductInformation> response = null;
+    public Response<Product> find_product_information(int product_id, int store_id) {
+        Response<Product> response = null;
         try {
             Product product = this.store_controller.find_product_information(product_id, store_id);
-            ProductInformation productInformation = new ProductInformation(product);
-            response = new Response<>(productInformation, "Product information received successfully");
+            response = new Response<>(product, "Product information received successfully");
             system_logger.add_log("Product (" + product_id + " from store " + store_id + ") information found successfully.");
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);

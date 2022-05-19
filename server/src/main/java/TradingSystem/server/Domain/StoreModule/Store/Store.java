@@ -224,7 +224,7 @@ public class Store {
                 throw new ProductAddingException("product already exists in the store");
         }
         int product_id = this.product_ids_counter.getAndIncrement();
-        Product product = new Product(name, this.store_id, product_id, price, category, key_words);
+        Product product = new Product(name, product_id, price, category, key_words);
         inventory.put(product, quantity);
         return inventory;
     }

@@ -5,7 +5,6 @@ import TradingSystem.server.Domain.Utils.Exception.ProductCreatingException;
 import java.util.List;
 
 public class Product {
-    private final int store_id;
     private final int product_id;
     private String name;
     private String category;
@@ -13,9 +12,8 @@ public class Product {
     private double price;
     private ProductReview productReview;
 
-    public Product(String name, int store_id, int product_id, double price, String category, List<String> key_words) throws ProductCreatingException {
+    public Product(String name, int product_id, double price, String category, List<String> key_words) throws ProductCreatingException {
         this.name = name;
-        this.store_id = store_id;
         this.product_id = product_id;
         if (price < 1)
             throw new ProductCreatingException("price must be more then 1");
@@ -40,10 +38,6 @@ public class Product {
 
     public String getName() {
         return name;
-    }
-
-    public int getStore_id() {
-        return store_id;
     }
 
     public double getPrice() {

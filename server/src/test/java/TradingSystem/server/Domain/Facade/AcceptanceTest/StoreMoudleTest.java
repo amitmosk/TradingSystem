@@ -4,7 +4,6 @@ import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
@@ -404,7 +403,7 @@ class StoreMoudleTest {
 
     @org.junit.jupiter.api.Test
     void edit_product_price_happy() {
-        Response<ProductInformation> product_res = marketFacade.find_product_information(productId,1);
+        Response<Product> product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
         double prev_price = product_res.getValue().getPrice();
         //step 1 edit product price - should work (check new product name)
@@ -468,7 +467,7 @@ class StoreMoudleTest {
 
     @org.junit.jupiter.api.Test
     void edit_product_category_happy() {
-        Response<ProductInformation> product_res = marketFacade.find_product_information(productId,1);
+        Response<Product> product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
         String prev_category = product_res.getValue().getCategory();
         //step 1 edit product category - should work (check new product category)
@@ -532,7 +531,6 @@ class StoreMoudleTest {
 
     @org.junit.jupiter.api.Test
     void find_store_information_happy() {
-        //happy
         Response<StoreInformation> res = marketFacade.find_store_information(1);
         check_was_not_exception("Store information received successfully", res);
         StoreInformation store = res.getValue();
@@ -549,7 +547,7 @@ class StoreMoudleTest {
 
     @Test
     void find_product_information_happy() {
-        Response<ProductInformation> product_information = marketFacade.find_product_information(productId, 1);
+        Response<Product> product_information = marketFacade.find_product_information(productId, 1);
         check_was_not_exception("Product information received successfully", product_information);
         assertEquals(product_information.getValue().getName(),"apple","couldn't find properly product name");
         assertEquals(product_information.getValue().getCategory(),"fruits","couldn't find properly product category");
@@ -584,7 +582,6 @@ class StoreMoudleTest {
         //happy
         Response r = marketFacade.find_products_by_keywords("fruits");
         check_was_not_exception("Products received successfully", r);
-        //sad
     }
 
 
@@ -683,7 +680,7 @@ class StoreMoudleTest {
 
     @Test
     void edit_product_key_words_happy() {
-        Response<ProductInformation> product_res = marketFacade.find_product_information(productId,1);
+        Response<Product> product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
         List<String> prev_key_words = product_res.getValue().getKey_words();
         //step 1 edit product key words - should work (check new product category)
