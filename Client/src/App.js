@@ -27,11 +27,11 @@ export default class App extends Component {
             {/* <HomePageSearch /> 
             <Payment/>
             <Supply/>
-            <Register/>   
+            <Register/>    */}
             <Login />
-            <StorePage/> */}
+            {/* <StorePage/> */}
 
-            <ShoppingCart/>
+            {/* <ShoppingCart/> */}
           </div>
     );
   }

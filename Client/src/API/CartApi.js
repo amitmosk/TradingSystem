@@ -1,13 +1,13 @@
-import axios from "axios";
+// import axios from "axios";
 import { Cart } from "../ServiceObjects/Cart";
 import { VIEW_USER_CART, BUY_CART } from "./ApiPaths";
 import { Response } from "./Response";
 
-const instance = axios.create(
-    {withCredentials : true}
-);
+// const instance = axios.create(
+//     {withCredentials : true}
+// );
 const response_obj = new Response("","");
-
+const instance = require('axios');
 
 export class CartApi {
 
@@ -22,10 +22,11 @@ export class CartApi {
     }
 
     buy_cart(payment_info, supply_info) {
-        return instance.post(BUY_CART,
+        return instance.get(BUY_CART,
             {
-                payment_info: payment_info,
-                supply_info: supply_info,
+                params:{ payment_info: payment_info,
+                    supply_info: supply_info,}
+               
             })
             .then(res => {
                 return new Response(res.data);

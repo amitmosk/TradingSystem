@@ -33,7 +33,7 @@ export default class HomePageSearch extends Component  {
         let name = this.state["productname"];
         console.log(name+"\n\n\n")
         // let response = await ProductApi.find_product_by_name(name);
-        let response = this.productApi.testtttt(" ya gever");
+        let response =await this.productApi.testtttt(" ya gever");
 
         console.log("\n\n"+response.value+"\n\n");
         console.log("ttttttttttttttttttttttttttttt\n\n\n\n\n");

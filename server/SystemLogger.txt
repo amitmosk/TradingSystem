@@ -1,2 +1,12 @@
-May 11, 2022 9:41:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+מאי 20, 2022 9:36:26 לפנה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: start init market
+מאי 20, 2022 9:36:26 לפנה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: system connected to the payment system
+מאי 20, 2022 9:36:26 לפנה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: system connected to the supply system
+מאי 20, 2022 9:36:26 לפנה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: user controller load
+מאי 20, 2022 9:36:26 לפנה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: store controller load
+מאי 20, 2022 9:36:26 לפנה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: admin added

@@ -3,6 +3,7 @@ package TradingSystem.server.Service;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.Facade.MarketFacade;
+import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,8 +37,12 @@ public class Service implements iService {
 
     @RequestMapping(value = "/amit")
     @CrossOrigin
-    public String amit() {
-        return "hello";
+    public String amit(String a) {
+        int e=4;
+        System.out.println("string amit");
+        Response<String> res  = new Response<String>("hello "+a,"yess" );
+//        return "hello "+a;
+        return new Gson().toJson(res);
     }
 
 

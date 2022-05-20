@@ -1,7 +1,7 @@
 
-const API_PATH = "http://localhost:8080/api"
+const API_PATH = "http://localhost:8080"
 
-export const EMPLOYEE_BASE_REST_API_URL = API_PATH + '/eylon';
+export const EMPLOYEE_BASE_REST_API_URL = API_PATH + '/amit';
 
 
 

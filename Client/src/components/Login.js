@@ -78,7 +78,8 @@ export default class Login extends Component {
         let email = this.state.email;
         let password = this.state.password;
         console.log("email is "+email+" , password is "+password+"\n");
-        let response = await ConnectApi.login(email, password);
+        let response = await ConnectApi.Login(email, password);
+        
         alert(response.message);
     }
     
