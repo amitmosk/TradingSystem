@@ -4,7 +4,10 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
 import { ConnectApi } from '../API/ConnectApi';
 import Register from "./Register.js";
-
+import HomePageSearch from './HomePageSearch';
+import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
+import {withRouter} from 'react-router-dom';
+import { Navigate } from 'react-router-dom'; 
 const axios = require('axios');
 const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
 
@@ -17,19 +20,17 @@ export default class Login extends Component {
             loginError: undefined,
             email: undefined,
             password: undefined,
+            submitted: this.props.isLoggedIn
         };
-        // this.authApi = new AuthApi();
-        
-        // this.handleInputChange = this.handleInputChange.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
+
     }
     
-    // handleInputChange(event){
-    //     const target = event.target;
-    //     this.setState({
-    //         [target.name]: target.value
-    //     });
-    // }
+    handleInputChange(event){
+        const target = event.target;
+        this.setState({
+            [target.name]: target.value
+        });
+    }
     
     async handleSubmit(event){
         event.preventDefault();
@@ -52,35 +53,22 @@ export default class Login extends Component {
         }
     }
     
-    // getUserRole(role){
-    //     return role === "member" ? UserRole.Member :
-    //         role === "admin" ? UserRole.Admin : 
-    //         undefined
-    // }
 
 
-    //async componentDidUpdate()
+
     
     async componentDidMount() {
-        // const response =await axios.get(EMPLOYEE_BASE_REST_API_URL).then(res => res).catch(err => err);
-        // console.log(response.data);
-        // let x = response;
-        // // this.setState({
-        // //     ["email"]: "response.data.wasException"
-        // // });
-        
-
-        // return response.data;
-
     }
 
     async login(){
-        let email = this.state.email;
-        let password = this.state.password;
+        const {email, password} = this.state;
+        this.props.loginUpdateHandler(email);
         console.log("email is "+email+" , password is "+password+"\n");
-        let response = await ConnectApi.Login(email, password);
+        let response = await ConnectApi.login(email, password);
         if (!response.was_execption)
         {
+            // return <Navigate to="/HomePageSearch"/>
+
             //go to home page
             //change state of App to assign user
         }
@@ -92,23 +80,28 @@ export default class Login extends Component {
     
     render() {
         const {redirectTo} = this.state
+        // { this.state.redirect ? (<Redirect push to="/"/>) : null }
+        if (this.state.submitted) {
+            console.log("have to route to homepage whe it will be ready\n\n\n");
+            return <Navigate to="/HomePageSearch"/>
+        } else {
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
                         <h3>Login</h3>
-                        <form class="LoginForm" onSubmit={this.handleSubmit}>
+                        <form class="LoginForm" >
                             {this.state.loginError ?
                                 <div class="CenterItemContainer"><label>{this.state.loginError}</label></div> : null}
-                            <input type="text" name="email" value={this.state.email}
+                            <input type="text" name="email" value={this.state.email} onChange={this.handleInputChange.bind(this)}
                                     placeholder="Email" required/>
-                            <input type="password" name="password" value={this.state.password}
+                            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange.bind(this)}
                                     placeholder="Password" required/>
                             
                             <div className="ConnectRegister">
                                 
                                 {/* <Link to="/register">Create new account</Link> */}
                                 <Button onClick={() => this.login()} variant="contained">Login </Button>
-                                <Link href="/Register" underline="hover" onclick={<Register/>}>
+                                <Link href="/Register" underline="hover" >
                                 {'New user? Cretae new account'}
                                 </Link>
                                 {/* <Button onClick={() => <Register/>} > registerr</Button> */}
@@ -119,5 +112,6 @@ export default class Login extends Component {
                 </main>
             );
         
+        }
     }
 }

@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import "./Login.css";
 import Button from '@mui/material/Button';
 import { ConnectApi } from '../API/ConnectApi';
+import { toBeInTheDocument } from '@testing-library/jest-dom/dist/matchers';
 
 const axios = require('axios');
 const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
 
-export default class Login extends Component {
-    static displayName = Login.name;
+export default class Register extends Component {
+    static displayName = Register.name;
 
     constructor(props) {
         super(props);
@@ -17,16 +18,24 @@ export default class Login extends Component {
             password: undefined,
             firstname: undefined,
             lastname: undefined,
+            birthdate: undefined,
         };
+        this.connectApi = new ConnectApi(); 
 
     }
     
-    // handleInputChange(event){
-    //     const target = event.target;
-    //     this.setState({
-    //         [target.name]: target.value
-    //     });
-    // }
+    handleInputChange(event){
+        // event.preventDefault();
+        
+        console.log("in handleInputChange");
+        const target = event.target;
+        console.log(target);
+        console.log(target.name);
+        console.log(target.value);
+        this.setState({
+            [target.name]: target.value
+        });
+    }
     
     async handleSubmit(event){
         event.preventDefault();
@@ -48,36 +57,21 @@ export default class Login extends Component {
             })
         }
     }
-    
-    // getUserRole(role){
-    //     return role === "member" ? UserRole.Member :
-    //         role === "admin" ? UserRole.Admin : 
-    //         undefined
-    // }
 
-
-    //async componentDidUpdate()
-    
     async componentDidMount() {
-        // const response =await axios.get(EMPLOYEE_BASE_REST_API_URL).then(res => res).catch(err => err);
-        // console.log(response.data);
-        // let x = response;
-        // // this.setState({
-        // //     ["email"]: "response.data.wasException"
-        // // });
-        
-
-        // return response.data;
-
     }
 
-    async register(){
-        let email = this.state.email;
-        let password = this.state.password;
-        let firstname = this.state.firstname;
-        let lastname = this.state.lastname;
-        console.log("email is "+email+" , password is "+password+"\n");
-        let response = await ConnectApi.register(email, password, firstname, lastname);
+    async register(event){
+        // event.preventDefault();
+        const {email, password, firstname, lastname, birthdate} = this.state;
+        console.log("email is "+email+" , password is "+password+" firstname is "+firstname+" lastname is "+lastname+" birthdate is "+birthdate+"\n");
+        let response = await this.connectApi.register(email, password, firstname, lastname, birthdate);
+        if (!response.was_exception)
+        {
+            const user = response.value;
+            
+            // return <Navigate to="/HomePageSearch"/>
+        }
         alert(response.message);
     }
     
@@ -87,17 +81,20 @@ export default class Login extends Component {
                 <main class="LoginMain">
                     <div class="LoginWindow">
                         <h3>Register</h3>
-                        <form class="LoginForm" onSubmit={this.handleSubmit}>
+                        <form class="LoginForm" >
                             {this.state.registerError ?
                                 <div class="CenterItemContainer"><label>{this.state.registerError}</label></div> : null}
-                            <input type="text" name="email" value={this.state.email}
+                            <input type="email" name="email" value={this.state.email} onChange={this.handleInputChange.bind(this)}
                                     placeholder="Email" required/>
-                            <input type="password" name="password" value={this.state.password}
+                            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange.bind(this)}
                                     placeholder="Password" required/>
-                            <input type="firstname" name="firstname" value={this.state.firstname}
+                            <input type="firstname" name="firstname" value={this.state.firstname} onChange={this.handleInputChange.bind(this)}
                                     placeholder="First name" required/>
-                            <input type="lastname" name="lastname" value={this.state.lastname}
+                            <input type="lastname" name="lastname" value={this.state.lastname} onChange={this.handleInputChange.bind(this)}
                                     placeholder="Last name" required/>
+                            <input type="birthdate" name="birthdate" value={this.state.birthdate} onChange={this.handleInputChange.bind(this)}
+                                    placeholder="Birth date" required/>    
+                            
                             {/* <select name="role" value={this.state.role} required>
                                 <option value="member">Member</option>
                                 <option value="admin">Admin</option>
@@ -105,7 +102,7 @@ export default class Login extends Component {
                             <div className="ConnectRegister">
                                 
                                 {/* <Link to="/register">Create new account</Link> */}
-                                <Button onClick={() => this.register()} variant="contained">Login </Button>
+                                <Button onClick={() => this.register()} variant="contained">Register </Button>
                                 {/* <input class="action" type="submit" value="Login"/> */}
                             </div>
                         </form>

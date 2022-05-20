@@ -20,7 +20,7 @@ export class ConnectApi {
 
     // }
     
-    Login(email, password) {
+    login(email, password) {
         return instance.get(LOGIN_PATH,
             {
                 params:{ email: email,
@@ -36,26 +36,34 @@ export class ConnectApi {
             .catch(res => undefined);
     }
 
-    Logout() {
+    logout() {
         return instance.get(LOGOUT_PATH)
             .then(res => {
+                
                 return new Response(res.data);
             })
             .catch(res => undefined);
     }
     
-    Register(email, password, first_name, last_name) {
+    register(email, password, first_name, last_name, birthdate) {
         return instance.get(REGISTER_PATH,
             {
                 params:{email: email,
-                    password: password,
-                    first_name: first_name,
-                    last_name: last_name,}
+                    pw: password,
+                    name: first_name,
+                    lastName: last_name,
+                birth_date : birthdate,}
                 
             })
             .then(res => {
+                // let response = res.data;
+                // let user = new User
+                console.log(res.data.value);
+                console.log(res.data.was_exception);
+                console.log(res.data.message);
+                return("res === "+res+"\n\n");
                 return Response(res.data);
             })
-            .catch(res => undefined);
+            .catch(res => console.log("fuck!!!\n\n\n\n\n"));
     }
 }

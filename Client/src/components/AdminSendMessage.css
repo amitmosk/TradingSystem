@@ -1,0 +1,66 @@
+HomePageSearchMain {
+    display: flex;
+    margin: 200px 0;
+    height: auto;
+}
+
+.HomePageSearchWindow {
+    display: flex;
+    border: solid 1px #dadce0;
+    border-radius: 12px;
+    box-shadow: 3px 3px 3px 1px #b0b1b7;
+    margin: 0 auto;
+    padding: 50px;
+    flex-flow: column;
+    text-align: center;
+    
+}
+
+.HomePageSearchForm {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.HomePageSearchForm input {
+    align-self: center;
+    margin: 10px;
+}
+.HomePageSearchForm select {
+    margin: 10px auto;
+    font-size: small;
+    padding-block: initial;
+}
+
+.HomePageSearchForm label {
+    color: red;
+}
+
+.ConnectRegister {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    margin-top: 20px;
+    align-self: center;
+}
+
+.ConnectRegister a {
+    grid-column: 1;
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.ConnectRegister input {
+    grid-column: 2;
+    align-items: center;
+    align-self: center;
+}
+
+.CenterItemContainer {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+}

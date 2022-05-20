@@ -12,6 +12,8 @@ import Supply from './components/Supply';
 import Button from '@mui/material/Button';
 import StorePage from './components/StorePage';
 import ShoppingCart from './components/ShoppingCart';
+import AdminSendMessage from './components/AdminSendMessage';
+import AdminPage from './components/AdminPage';
 // function App() {
 //   return <Button variant="contained">Hello World</Button>;
 // }
@@ -73,6 +75,7 @@ export default class App extends Component {
 
     
     async updateLoginHandler(email){
+      console.log("in updateLoginHandler\n\n\n\n\n");
       this.setState({
           isLoggedIn: true,
           email: email,
@@ -86,8 +89,12 @@ export default class App extends Component {
     return (
       <BrowserRouter>
       <Routes>
-      <Route path="/" element={<Login />}></Route>
+      <Route path="/" element={<AdminPage />}></Route>
+      {/* <Route path="/" element={<AdminSendMessage/>}></Route> */}
       <Route path="/Register" element={<Register />}></Route>
+      <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
+      <Route path="/StorePage" element={<StorePage store_id=""/>}></Route>
+      <Route path="/AdminSendMessage" element={<AdminSendMessage/>}></Route>
       
     
       </Routes>

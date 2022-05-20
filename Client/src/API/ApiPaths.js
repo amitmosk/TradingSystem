@@ -13,7 +13,7 @@ export const REGISTER_PATH = API_PATH + '/register';
 
 // ========= Store ========== //
 
-export const FIND_STORE_INFORMATION = API_PATH + '/store_information';
+export const FIND_STORE_INFORMATION = API_PATH + '/find_store_information';
 
 
 export const OPEN_STORE = API_PATH + '/open_store';
