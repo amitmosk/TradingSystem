@@ -89,8 +89,8 @@ export default class App extends Component {
     return (
       <BrowserRouter>
       <Routes>
-      <Route path="/" element={<AdminPage />}></Route>
-      {/* <Route path="/" element={<AdminSendMessage/>}></Route> */}
+      {/* <Route path="/" element={<AdminPage />}></Route> */}
+      <Route path="/" element={<Login isLoggedIn={this.state.isLoggedIn} loginUpdateHandler={this.updateLoginHandler}/>}></Route>
       <Route path="/Register" element={<Register />}></Route>
       <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
       <Route path="/StorePage" element={<StorePage store_id=""/>}></Route>
