@@ -1,29 +1,33 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
+
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;
 
-public class andDiscountComponent implements DiscountComponent {
-    DiscountComponent rule1;
-    DiscountComponent rule2;
-    SimpleDiscountComponent discount;
+import java.util.List;
 
-    public andDiscountComponent(DiscountComponent rule1, DiscountComponent rule2, SimpleDiscountComponent Discountrule) {
-        this.rule1 = rule1;
-        this.rule2 = rule2;
-        discount = Discountrule;
+public class andDiscountComponent extends DiscountlogicComponent implements DiscountComponent {
+
+    public andDiscountComponent(List<DiscountComponent> list, ComplexDiscountComponent Discountrule) {
+        super(list, Discountrule);
     }
 
 
     @Override
     public double CalculateDiscount(Basket basket) {
-        if (rule1.CanApply(basket) && rule2.CanApply(basket))
-            return discount.CalculateDiscount(basket);
-        return 0;
+        for (DiscountComponent compnent : componentsList) {
+            if (!compnent.CanApply(basket))
+                return 0;
+        }
+        return discount.CalculateDiscount(basket);
     }
 
     @Override
     public boolean CanApply(Basket basket) {
-        return rule1.CanApply(basket) && rule2.CanApply(basket);
+        for (DiscountComponent compnent : componentsList) {
+            if (!compnent.CanApply(basket))
+                return false;
+        }
+        return true;
     }
 }

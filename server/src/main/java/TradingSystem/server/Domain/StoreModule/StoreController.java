@@ -91,7 +91,7 @@ public class StoreController {
      * @throws if the user is not store founder OR the store or the user are not exist.
      */
 
-    public void set_store_purchase_rules(int store_id, String rule) throws ObjectDoesntExsitException {
+    public void set_store_purchase_rules(int store_id, PurchasePolicy rule) throws ObjectDoesntExsitException {
         if (!this.stores.containsKey(store_id)) {
             throw new ObjectDoesntExsitException("The store is not exist - store id: " + store_id);
         }

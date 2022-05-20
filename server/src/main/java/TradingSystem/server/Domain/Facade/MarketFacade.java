@@ -3,8 +3,20 @@ package TradingSystem.server.Domain.Facade;
 import java.util.List;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.OrDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.XorDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.andDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.MaxDiscountRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.PlusDiscountRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Predict;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.AndporchaseRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.OrporchaseRule;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.SimpleporchaseRule;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -752,6 +764,7 @@ public class MarketFacade {
      * @param key_words for searching product
      * @return stores inventory
      */
+
     //TODO: integration between user
     public Response<Map<Product, Integer>> add_product_to_store(int store_id, int quantity,
                                                                 String name, double price, String category, List<String> key_words) {
@@ -762,7 +775,6 @@ public class MarketFacade {
             Map<Product, Integer> products = store_controller.add_product_to_store(user, store_id, quantity, name, price, category, key_words);
             response = new Response<>(products, "Product added successfully");
             system_logger.add_log("New product (" + name + ") added to store (" + store_id + ")");
-
         } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -794,6 +806,92 @@ public class MarketFacade {
         }
         return response;
     }
+
+    //discount policy
+    //TODO concurrency
+    public Response add_discount_rule(int storeId, DiscountComponent Discount) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(storeId);
+            store.add_discout_rule(Discount);
+            response = new Response(Discount, "discount added successfully");
+            system_logger.add_log("discount deleted successfully");
+
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    //TODO concurrency
+    public Response<String> remove_discount_rule(int storeId, String nameOfDisocunt) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(storeId);
+            store.remove_discount_rule(nameOfDisocunt);
+            response = new Response(nameOfDisocunt, "discount added successfully");
+            system_logger.add_log("discount deleted successfully");
+
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    private Predict Create_predict() {
+    }
+
+
+    public andDiscountComponent CreateAndDisocuntCompnent() {
+
+    }
+
+    public OrDiscountComponent CreateOrDisocuntCompnent() {
+
+    }
+
+    public XorDiscountComponent CreateXorDisocuntCompnent() {
+
+    }
+
+    public MaxDiscountRule CreateMaxDisocuntCompnent() {
+
+    }
+
+    public PlusDiscountRule CreateplusDisocuntCompnent() {
+
+    }
+
+    public Response<ComplexDiscountComponent> CreateComplexDisocuntCompnent() {
+
+    }
+
+    public Response<SimpleDiscountComponent> CreateSimpleDisocuntCompnent() {
+
+    }
+
+    //end of discount policy
+
+    //purchase policy
+
+    public AndporchaseRule addAndPorchaseRule() {
+
+    }
+
+    public OrporchaseRule addorPorchaseRule() {
+
+    }
+
+    public SimpleporchaseRule addsimplePorchaseRule() {
+
+    }
+
+
+    //end of purchase policy
 
 
     /**

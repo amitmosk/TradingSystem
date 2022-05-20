@@ -101,7 +101,7 @@ public class Store {
         this.purchasePolicy.addRule(component);
     }
 
-    public void remove_discount_rule(DiscountComponent component) {
+    public void remove_discount_rule(String name) {
         this.discountPolicy.addRule(component);
     }
 
@@ -536,4 +536,6 @@ public class Store {
         return stuffs_and_appointments.containsKey(founder);
     }
 
+    public void set_store_purchase_rules(String rule) {
+    }
 }

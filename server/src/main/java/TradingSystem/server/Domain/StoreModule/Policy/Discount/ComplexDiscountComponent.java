@@ -1,9 +1,12 @@
-package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
+package TradingSystem.server.Domain.StoreModule.Policy.Discount;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ComplexDiscountComponent implements DiscountComponent {
     SimpleDiscountComponent rule;

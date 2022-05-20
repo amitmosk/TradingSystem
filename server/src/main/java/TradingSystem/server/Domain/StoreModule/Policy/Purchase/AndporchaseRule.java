@@ -1,18 +1,24 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 
-public class AndporchaseRule implements porchaseRule {
-    porchaseRule Left;
-    porchaseRule Right;
+import java.util.List;
 
-    public AndporchaseRule(porchaseRule Left, porchaseRule Right) {
-        this.Left = Left;
-        this.Right = Right;
+public class AndporchaseRule extends purchaseLogicComponent implements porchaseRule {
+
+
+    public AndporchaseRule(List<porchaseRule> lst) {
+        super(lst);
     }
 
     @Override
     public boolean predictCheck(int age, Basket basket) {
-        return Left.predictCheck(age, basket) & Right.predictCheck(age, basket);
+        for (porchaseRule compnent : componentsList) {
+            if (!compnent.predictCheck(age, basket))
+                return false;
+        }
+        return true;
     }
 }
+

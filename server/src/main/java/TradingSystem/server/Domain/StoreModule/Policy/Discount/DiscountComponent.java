@@ -5,5 +5,8 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 
 public interface DiscountComponent {
     double CalculateDiscount(Basket basket);
+
     boolean CanApply(Basket basket);
+
+    String name = "";
 }

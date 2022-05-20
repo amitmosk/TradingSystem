@@ -1,25 +1,26 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;
+import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
-public class XorDiscountComponent implements DiscountComponent {
-    DiscountComponent rule1;
-    DiscountComponent rule2;
-    SimpleDiscountComponent discount;
+import java.util.List;
 
-    public XorDiscountComponent(DiscountComponent rule1, DiscountComponent rule2, SimpleDiscountComponent Discountrule) {
-        this.rule1 = rule1;
-        this.rule2 = rule2;
-        discount = Discountrule;
+public class XorDiscountComponent extends DiscountlogicComponent implements DiscountComponent {
+
+
+    public XorDiscountComponent(List<DiscountComponent> lst, ComplexDiscountComponent discountComponent) throws WrongPermterException {
+        super(lst, discountComponent);
+        if (lst.size() != 2)
+            throw new WrongPermterException("xor can have only two sons");
     }
 
 
     @Override
     public double CalculateDiscount(Basket basket) {
-        double discountFromLeft = rule1.CalculateDiscount(basket);
-        double discountFromRight = rule2.CalculateDiscount(basket);
+        double discountFromLeft = componentsList.get(0).CalculateDiscount(basket);
+        double discountFromRight = componentsList.get(1).CalculateDiscount(basket);
         boolean XorRes = (discountFromLeft != 0) ^ (discountFromRight != 0);
         if (XorRes)//if XorRes==true then only one discount is working
             return Math.max(discountFromLeft, discountFromRight);
@@ -28,6 +29,6 @@ public class XorDiscountComponent implements DiscountComponent {
 
     @Override
     public boolean CanApply(Basket basket) {
-        return (rule1.CalculateDiscount(basket) != 0) || (rule2.CalculateDiscount(basket) != 0);
+        return componentsList.get(0).CanApply(basket) || componentsList.get(1).CanApply(basket);
     }
 }
