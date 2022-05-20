@@ -2,11 +2,12 @@ package TradingSystem.server.Domain.StoreModule.Store;
 
 public class StoreInformation {
 
-    private final String founder_email;
-    private final String store_name;
+    private String founder_email;
+    private String store_name;
     String foundation_date;
     private StoreReviewInformation storeReviewInformation;
 
+    // ------------------------------ constructors ------------------------------
     public StoreInformation(Store store) {
         String founder_email1 = "";
         try{ founder_email1 = store.getFounder().get_user_email();}
@@ -17,7 +18,29 @@ public class StoreInformation {
         this.storeReviewInformation = new StoreReviewInformation(store.getStoreReview());
     }
 
-//    public String toString() {
+    public StoreInformation() {
+    }
+
+    // ------------------------------ setters  ------------------------------
+
+    public void setFounder_email(String founder_email) {
+        this.founder_email = founder_email;
+    }
+
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
+    }
+
+    public void setFoundation_date(String foundation_date) {
+        this.foundation_date = foundation_date;
+    }
+
+    public void setStoreReviewInformation(StoreReviewInformation storeReviewInformation) {
+        this.storeReviewInformation = storeReviewInformation;
+    }
+
+
+    //    public String toString() {
 //        String founder_name = "----------------------";
 //        StringBuilder info = new StringBuilder();
 //        info.append("Store info: "+this.name+"\n");
@@ -56,7 +79,7 @@ public class StoreInformation {
 //
 //    }
 
-
+    // ------------------------------ getters ------------------------------
     public String getFounder_email() {
         return founder_email;
     }

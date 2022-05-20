@@ -7,6 +7,9 @@ import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 
 public abstract class AssignState {
+    public AssignState() {
+    }
+
     public boolean login(String pw) throws MarketException, Exception {
         throw new AlreadyRegisterdException("Assign user cannot log in");
     }

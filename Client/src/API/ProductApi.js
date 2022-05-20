@@ -203,9 +203,4 @@ export class ProductApi {
             })
             .catch(res => undefined);
     }
-
-    
-    
-    
-   
 }

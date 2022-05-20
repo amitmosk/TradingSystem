@@ -16,10 +16,30 @@ public class Basket {
     private Pair<String, Integer> basket_id; // <user_email, store_id>
     private Map<Product, Integer> products_and_quantities; //  product & quantity
 
+    // ------------------------------ constructors ------------------------------
     public Basket(int store_id, String buyer_email) {
         this.basket_id = new Pair<>(buyer_email, store_id);
         products_and_quantities = new HashMap<>();
     }
+
+    public Basket() {
+    }
+
+    // ------------------------------ getters ------------------------------
+    public Pair<String, Integer> getBasket_id() {
+        return basket_id;
+    }
+
+    // ------------------------------ setters ------------------------------
+    public void setBasket_id(Pair<String, Integer> basket_id) {
+        this.basket_id = basket_id;
+    }
+
+    public void setProducts_and_quantities(Map<Product, Integer> products_and_quantities) {
+        this.products_and_quantities = products_and_quantities;
+    }
+
+    // ------------------------------ methods ------------------------------
 
     public void changeQuantity(Product product, int quantity) throws MarketException {
         if (quantity < 1)

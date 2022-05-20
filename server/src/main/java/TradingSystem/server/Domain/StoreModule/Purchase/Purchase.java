@@ -10,7 +10,7 @@ public class Purchase {
     private Map<Integer, Double> product_and_totalPrice;
     private Map<Integer, String> product_and_name;
 
-
+    // ------------------------------ constructors ------------------------------
     public Purchase(Map<Integer, Integer> product_and_quantity,
                     Map<Integer, Double> product_and_totalPrice, Map<Integer, String> product_and_name) {
         transaction_date = LocalDate.now().toString();
@@ -19,6 +19,10 @@ public class Purchase {
         this.product_and_name = product_and_name;
     }
 
+    public Purchase() {
+    }
+
+    // ------------------------------ getters ------------------------------
 
     public String getTransaction_date() {
         return transaction_date;
@@ -34,6 +38,25 @@ public class Purchase {
 
     public Map<Integer, String> getProduct_and_name() {
         return product_and_name;
+    }
+
+    // ------------------------------ setters ------------------------------
+
+
+    public void setTransaction_date(String transaction_date) {
+        this.transaction_date = transaction_date;
+    }
+
+    public void setProduct_and_quantity(Map<Integer, Integer> product_and_quantity) {
+        this.product_and_quantity = product_and_quantity;
+    }
+
+    public void setProduct_and_totalPrice(Map<Integer, Double> product_and_totalPrice) {
+        this.product_and_totalPrice = product_and_totalPrice;
+    }
+
+    public void setProduct_and_name(Map<Integer, String> product_and_name) {
+        this.product_and_name = product_and_name;
     }
 
     public boolean containsProduct(int productID) {

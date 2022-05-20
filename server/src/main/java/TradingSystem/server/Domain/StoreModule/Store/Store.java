@@ -22,8 +22,8 @@ public class Store {
     //TODO: reviews - should contain users / users_email ? if user changes his email ?
 
     // -- fields
-    private final int store_id;
-    private final AssignUser founder;
+    private int store_id;
+    private AssignUser founder;
     private Map<AssignUser, Appointment> stuffs_and_appointments;
     private String name;
     public String foundation_date;
@@ -52,6 +52,93 @@ public class Store {
         this.stuffs_and_appointments = new ConcurrentHashMap<>();
         this.owners_lock = new Object();
         this.managers_lock = new Object();
+    }
+
+    public Store() {
+    }
+
+    // ------------------------------ getters ------------------------------
+
+    public Map<AssignUser, Appointment> getStuffs_and_appointments() {
+        return stuffs_and_appointments;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public String getPurchasePolicy() {
+        return purchasePolicy;
+    }
+
+    public String getDiscountPolicy() {
+        return discountPolicy;
+    }
+
+    public StorePurchaseHistory getPurchases_history() {
+        return purchases_history;
+    }
+
+    public AtomicInteger getProduct_ids_counter() {
+        return product_ids_counter;
+    }
+
+    public Object getOwners_lock() {
+        return owners_lock;
+    }
+
+    public Object getManagers_lock() {
+        return managers_lock;
+    }
+
+    // ------------------------------ setters ------------------------------
+
+    public void setStore_id(int store_id) {
+        this.store_id = store_id;
+    }
+
+    public void setFounder(AssignUser founder) {
+        this.founder = founder;
+    }
+
+    public void setStuffs_and_appointments(Map<AssignUser, Appointment> stuffs_and_appointments) {
+        this.stuffs_and_appointments = stuffs_and_appointments;
+    }
+
+    public void setFoundation_date(String foundation_date) {
+        this.foundation_date = foundation_date;
+    }
+
+    public void setInventory(Map<Product, Integer> inventory) {
+        this.inventory = inventory;
+    }
+
+    public void setPurchasePolicy(String purchasePolicy) {
+        this.purchasePolicy = purchasePolicy;
+    }
+
+    public void setDiscountPolicy(String discountPolicy) {
+        this.discountPolicy = discountPolicy;
+    }
+
+    public void setPurchases_history(StorePurchaseHistory purchases_history) {
+        this.purchases_history = purchases_history;
+    }
+
+    public void setStoreReview(StoreReview storeReview) {
+        this.storeReview = storeReview;
+    }
+
+    public void setProduct_ids_counter(AtomicInteger product_ids_counter) {
+        this.product_ids_counter = product_ids_counter;
+    }
+
+    public void setOwners_lock(Object owners_lock) {
+        this.owners_lock = owners_lock;
+    }
+
+    public void setManagers_lock(Object managers_lock) {
+        this.managers_lock = managers_lock;
     }
 
 

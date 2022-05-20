@@ -8,9 +8,35 @@ public class StorePurchaseHistory {
     private Map<Integer, StorePurchase> purchaseID_purchases;
     private String store_name;
 
+    // ------------------------------ constructors ------------------------------
     public StorePurchaseHistory(String store_name) {
         this.store_name = store_name;
         this.purchaseID_purchases = new ConcurrentHashMap<>();
+    }
+
+    public StorePurchaseHistory() {
+    }
+
+    // ------------------------------ getters ------------------------------
+
+
+    public Map<Integer, StorePurchase> getPurchaseID_purchases() {
+        return purchaseID_purchases;
+    }
+
+    public String getStore_name() {
+        return store_name;
+    }
+
+    // ------------------------------ setters ------------------------------
+
+
+    public void setPurchaseID_purchases(Map<Integer, StorePurchase> purchaseID_purchases) {
+        this.purchaseID_purchases = purchaseID_purchases;
+    }
+
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
     }
 
     public void insert(StorePurchase purchase)
