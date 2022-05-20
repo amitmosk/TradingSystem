@@ -1,4 +1,4 @@
-import { StoreReviewInformation } from "./StoreReview";
+import { StoreReview } from "./StoreReview";
 export class StoreInformation  {
     founder_email;
     store_name;
@@ -9,7 +9,7 @@ export class StoreInformation  {
         this.founder_email = data.founder_email;
         this.store_name = data.store_name;
         this.foundation_date = data.foundation_date
-        this.storeReviewInformation = new StoreReviewInformation(data.StoreReviewInformation)
+        this.storeReviewInformation = new StoreReview(data.StoreReviewInformation)
 
     }
     

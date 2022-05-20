@@ -1,11 +1,11 @@
-import axios from "axios";
+// import axios from "axios";
 import { SEND_QUESTION_TO_ADMIN, CLOSE_STORE_PERMANENTLY, REMOVE_USER, ADMIN_VIEW_USERS_QUESTION ,
      ADMIN_ANSWER_USERS_QUESTION, ADMIN_VIEW_STORE_PURCHASES_HISTORY, ADMIN_VIEW_USER_PURCHASES_HISTORY, GET_MARKET_STATS} from "./ApiPaths";
 import { Response } from "./Response";
-const instance = axios.create(
-    {withCredentials : true}
-);
-
+// const instance = axios.create(
+//     {withCredentials : true}
+// );
+const instance = require('axios');
 
 
 export class AdminApi {
@@ -19,9 +19,10 @@ export class AdminApi {
     // }
 
     send_question_to_admin(question) {
-        return instance.post(SEND_QUESTION_TO_ADMIN,
+        return instance.get(SEND_QUESTION_TO_ADMIN,
             {
-                question : question,
+                params:{question : question,}
+                
             })
             .then(res => {
                 return new Response(res.data)
@@ -29,9 +30,10 @@ export class AdminApi {
             .catch(res => undefined);
     }
     close_store_permanently(store_id){
-        return instance.post(CLOSE_STORE_PERMANENTLY,
+        return instance.get(CLOSE_STORE_PERMANENTLY,
             {
-                store_id : store_id,
+                params:{ store_id : store_id,}
+               
                 
             })
             .then(res => {
@@ -40,9 +42,10 @@ export class AdminApi {
             .catch(res => undefined);
     }
     remove_user(email){
-        return instance.post(REMOVE_USER,
+        return instance.get(REMOVE_USER,
             {
-                email : email,
+                params:{email : email,}
+                
                 
             })
             .then(res => {
@@ -60,10 +63,11 @@ export class AdminApi {
     }
    
     admin_answer_user_question(question_id, answer){
-        return instance.post(ADMIN_ANSWER_USERS_QUESTION,
+        return instance.get(ADMIN_ANSWER_USERS_QUESTION,
             {
-                question_id : question_id,
-                answer : answer,
+                params:{question_id : question_id,
+                    answer : answer,}
+                
                 
             })
             .then(res => {
@@ -73,9 +77,10 @@ export class AdminApi {
     }
 
     admin_view_store_purchases_history(store_id){
-        return instance.post(ADMIN_VIEW_STORE_PURCHASES_HISTORY,
+        return instance.get(ADMIN_VIEW_STORE_PURCHASES_HISTORY,
             {
-                store_id : store_id,
+                params:{store_id : store_id,}
+                
                 
             })
             .then(res => {
@@ -85,9 +90,10 @@ export class AdminApi {
     }
 
     admin_view_user_purchases_history(user_email){
-        return instance.post(ADMIN_VIEW_USER_PURCHASES_HISTORY,
+        return instance.get(ADMIN_VIEW_USER_PURCHASES_HISTORY,
             {
-                user_email : user_email,
+                params:{user_email : user_email,}
+                
                 
             })
             .then(res => {
