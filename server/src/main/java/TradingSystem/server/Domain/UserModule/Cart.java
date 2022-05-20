@@ -16,6 +16,12 @@ public class Cart {
         baskets = new HashMap<>();
     }
 
+    // ------------------------------ setters ------------------------------
+    public void setBaskets(Map<Store, Basket> baskets) {
+        this.baskets = baskets;
+    }
+
+    // ------------------------------ methods ------------------------------
     public Basket getBasket(int storeID, String email) {
         if (!baskets.containsKey(storeID))
             return new Basket(storeID, email);

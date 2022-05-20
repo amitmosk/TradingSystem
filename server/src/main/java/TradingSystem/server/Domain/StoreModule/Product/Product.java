@@ -5,13 +5,14 @@ import TradingSystem.server.Domain.Utils.Exception.ProductCreatingException;
 import java.util.List;
 
 public class Product {
-    private final int product_id;
+    private int product_id;
     private String name;
     private String category;
     private List<String> key_words;
     private double price;
     private ProductReview productReview;
 
+    // --------------------------------- constructors --------------------------------------------
     public Product(String name, int product_id, double price, String category, List<String> key_words) throws ProductCreatingException {
         this.name = name;
         this.product_id = product_id;
@@ -22,6 +23,10 @@ public class Product {
         this.category = category;
         this.key_words = key_words;
     }
+
+    public Product() {
+    }
+
 
     // -- Public Methods
 
@@ -61,6 +66,9 @@ public class Product {
     }
 
     // -- Setters
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
 
     public void setPrice(double price) {
         this.price = price;

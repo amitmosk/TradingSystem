@@ -9,10 +9,24 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class UserPurchaseHistory {
     private List<UserPurchase> historyList;
 
+    // ------------------------------ constructors ------------------------------
     public UserPurchaseHistory() {
         this.historyList = new CopyOnWriteArrayList<>();
     }
 
+    // ------------------------------ getters ------------------------------
+
+    public List<UserPurchase> getHistoryList() {
+        return historyList;
+    }
+
+    // ------------------------------ setters ------------------------------
+
+    public void setHistoryList(List<UserPurchase> historyList) {
+        this.historyList = historyList;
+    }
+
+    // ------------------------------ methods ------------------------------
     public void addPurchase(UserPurchase purchase) {
         historyList.add(purchase);
     }

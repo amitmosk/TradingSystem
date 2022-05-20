@@ -7,11 +7,35 @@ public class PremiumSecurity extends Security{
     private String question;
     private String answer;
 
+    // ------------------------------ constructors ------------------------------
     public PremiumSecurity(String password, String question, String answer) {
         super(password);
         this.question = question;
         this.answer = answer;
     }
+
+    public PremiumSecurity() {
+    }
+    // ------------------------------ getters ------------------------------
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    // ------------------------------ setters ------------------------------
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    // ------------------------------ methods ------------------------------
 
     public boolean isImproved(){
         return true;

@@ -23,6 +23,7 @@ public class AssignUser extends AssignState {
     private Map<Store, Appointment> owner;
     private Map<Store,Appointment> manager;
 
+    // ------------------------------ constructors ------------------------------
     public AssignUser(String email, String pw, String name, String lastName) {
         this.email = email;
         this.security = new Security(pw);
@@ -33,6 +34,77 @@ public class AssignUser extends AssignState {
         this.owner = new HashMap<>();
         this.manager = new HashMap<>();
     }
+
+    public AssignUser() {
+    }
+
+    // ------------------------------ getters ------------------------------
+    public String getEmail() {
+        return email;
+    }
+
+    public Security getSecurity() {
+        return security;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public UserPurchaseHistory getUserPurchaseHistory() {
+        return userPurchaseHistory;
+    }
+
+    public Map<Store, Appointment> getFounder() {
+        return founder;
+    }
+
+    public Map<Store, Appointment> getOwner() {
+        return owner;
+    }
+
+    public Map<Store, Appointment> getManager() {
+        return manager;
+    }
+
+    // ------------------------------ setters ------------------------------
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSecurity(Security security) {
+        this.security = security;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setUserPurchaseHistory(UserPurchaseHistory userPurchaseHistory) {
+        this.userPurchaseHistory = userPurchaseHistory;
+    }
+
+    public void setFounder(Map<Store, Appointment> founder) {
+        this.founder = founder;
+    }
+
+    public void setOwner(Map<Store, Appointment> owner) {
+        this.owner = owner;
+    }
+
+    public void setManager(Map<Store, Appointment> manager) {
+        this.manager = manager;
+    }
+
+    // ------------------------------ methods ------------------------------
 
     @Override
     public boolean login(String pw) throws Exception {

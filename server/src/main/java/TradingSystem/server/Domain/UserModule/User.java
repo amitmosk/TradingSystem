@@ -30,6 +30,41 @@ public class User {
         this.birth_date = LocalDateTime.now().toString();
     }
 
+    public AssignState getState() {
+        return state;
+    }
+
+    public AtomicBoolean getIsGuest() {
+        return isGuest;
+    }
+
+    public AtomicBoolean getIsLogged() {
+        return isLogged;
+    }
+
+    public String getBirth_date() {
+        return birth_date;
+    }
+
+    public void setState(AssignState state) {
+        this.state = state;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public void setIsGuest(AtomicBoolean isGuest) {
+        this.isGuest = isGuest;
+    }
+
+    public void setIsLogged(AtomicBoolean isLogged) {
+        this.isLogged = isLogged;
+    }
+
+    public void setBirth_date(String birth_date) {
+        this.birth_date = birth_date;
+    }
 
     private void checkDetails(String email, String pw, String name, String lastName) throws MarketException {
         Utils.emailValidCheck(email);

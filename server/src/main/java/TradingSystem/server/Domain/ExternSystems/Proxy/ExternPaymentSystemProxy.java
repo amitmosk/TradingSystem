@@ -6,4 +6,5 @@ public class ExternPaymentSystemProxy {
     }
     public boolean can_pay(double total_price, String paymentInfo) {return true;}
     public boolean connect(){return true;}
+
 }

@@ -12,6 +12,25 @@ public class Security {
         this.set_token(password);
     }
 
+    public Security() {
+    }
+
+    public iPasswordManager getPasswordManager() {
+        return passwordManager;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setPasswordManager(iPasswordManager passwordManager) {
+        this.passwordManager = passwordManager;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     private void set_token(String password) {
         this.token = this.passwordManager.hash(password);
     }
