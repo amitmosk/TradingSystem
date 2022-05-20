@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import './App.css';
+import {BrowserRouter, Link, Route, Router, Routes} from "react-router-dom";
+
 import Login from './components/Login';
 import HomePageSearch from './components/HomePageSearch';
 import Register from './components/Register';
@@ -15,34 +17,97 @@ import ShoppingCart from './components/ShoppingCart';
 // }
 
 export default class App extends Component {
-  // return (
-    // <div>     
-    //   <ListEmployee />
-    // </div>
-  // );
+  static displayName = App.name;
+
+  constructor(props) {
+      super(props)
+      this.state = {
+          isLoggedIn: false,
+          ownedStoreList:[],
+          email:'',
+          role: undefined,
+
+          messages: [],
+          webSocketConnection: undefined
+      }
+      // this.userApi = new UserApi();
+      // this.storeApi = new StoreApi();
+
+      // this.addOwnedStoreHandler = this.addOwnedStoreHandler.bind(this);
+      // this.updateLoginHandler = this.updateLoginHandler.bind(this);
+      // this.updateLogoutHandler = this.updateLogoutHandler.bind(this);
+
+  }
+      
+
+    // async connectToWebSocket(){
+    //     const socketConnection = new HubConnectionBuilder()
+    //         .configureLogging(LogLevel.Debug)
+    //         .withUrl("https://localhost:5001/messageHub", {
+    //             skipNegotiation: true,
+    //             transport: HttpTransportType.WebSockets
+    //         })
+    //         .build();
+
+    //     //console.log("socketConnection")
+
+    //     await socketConnection.start();
+    //     if(socketConnection) {
+    //         //console.log("socketConnection on")
+
+    //         socketConnection.on("message", message => {
+    //             /*console.log("new publisher message:")
+    //             console.log(message)*/
+    //             alert(`New message: ${message.message}`)
+    //             this.setState({
+    //                 messages: [...this.state.messages, message]
+    //             });
+    //         });
+    //     }
+
+    //     this.setState({
+    //         messages: [],
+    //         webSocketConnection: socketConnection
+    //     });
+    // }
+
+    
+    async updateLoginHandler(email){
+      this.setState({
+          isLoggedIn: true,
+          email: email,
+          role: "",
+      })
+  }
+ 
+
 
   render () {
     return (
-            <div> 
-            {/* <HomePageSearch /> 
-            <Payment/>
-            <Supply/>
-            <Register/>    */}
-            <Login />
-            {/* <StorePage/> */}
+      <BrowserRouter>
+      <Routes>
+      <Route path="/" element={<Login />}></Route>
+      <Route path="/Register" element={<Register />}></Route>
+      
+    
+      </Routes>
+    </BrowserRouter>
 
-            {/* <ShoppingCart/> */}
-          </div>
+
+
+
+     
+          //   <div> 
+          //   {/* <HomePageSearch /> 
+          //   <Payment/>
+          //   <Supply/>
+          //   <Register/>    */}
+          //   <Login isLoggedIn={this.state.isLoggedIn} loginUpdateHandler={this.updateLoginHandler}/>
+          //   {/* <StorePage/> */}
+
+          //   {/* <ShoppingCart/> */}
+          // </div>
     );
   }
 }
 
-
-// const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
-
-// const axios = require('axios');
-// axios.get(EMPLOYEE_BASE_REST_API_URL).then(response => {console.log(response.data)}).catch(error => {
-//   console.log("lllllll")
-// });
-
-//export default App;

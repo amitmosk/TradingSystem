@@ -79,7 +79,14 @@ export default class Login extends Component {
         let password = this.state.password;
         console.log("email is "+email+" , password is "+password+"\n");
         let response = await ConnectApi.Login(email, password);
-        
+        if (!response.was_execption)
+        {
+            //go to home page
+            //change state of App to assign user
+        }
+        else{
+
+        }
         alert(response.message);
     }
     
@@ -101,9 +108,10 @@ export default class Login extends Component {
                                 
                                 {/* <Link to="/register">Create new account</Link> */}
                                 <Button onClick={() => this.login()} variant="contained">Login </Button>
-                                <Link href="/Register" underline="hover">
+                                <Link href="/Register" underline="hover" onclick={<Register/>}>
                                 {'New user? Cretae new account'}
                                 </Link>
+                                {/* <Button onClick={() => <Register/>} > registerr</Button> */}
                                 {/* <input class="action" type="submit" value="Login"/> */}
                             </div>
                         </form>

@@ -85,7 +85,16 @@ export default class StorePage extends Component {
     
     
     async componentDidMount() {
-        let response = await CartApi.view_user_cart();
+      let store_res =  await StoreApi.find_store_information(this.props.store_id) ;
+      let store = store_res.value;
+      this.setState({
+        founder_email :store.founder_email,
+        store_name : store.store_name,
+        foundation_date : store.foundation_date,
+        storeReviewInformation : store.storeReviewInformation,
+    });
+      
+      let response = await CartApi.view_user_cart();
         let cart = response.value;
         this.setState({
             baskets:cart.baskets
