@@ -2,7 +2,6 @@ package TradingSystem.server.Service;
 
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
-import TradingSystem.server.Domain.Facade.Demi;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.UserModule.User;
 import org.springframework.web.bind.annotation.CrossOrigin;

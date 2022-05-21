@@ -65,11 +65,13 @@ export class ConnectApi {
             .then(res => {
                 // let response = res.data;
                 // let user = new User
+                console.log("in the then");
+                console.log(res);
+                console.log(res.data);
                 console.log(res.data.value);
-                console.log(res.data.was_exception);
+                console.log(res.data.wasException);
                 console.log(res.data.message);
-                return("res === "+res+"\n\n");
-                return Response(res.data);
+                return new Response(res.data);
             })
             .catch(res => console.log("fuck!!!\n\n\n\n\n"));
     }

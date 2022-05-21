@@ -121,7 +121,7 @@ public class User {
         cart.removeBasketIfNeeded(storeID, storeBasket);
     }
 
-    public Map<Store, Basket> getBaskets() {
+    public Map<Store, Basket> view_baskets() {
         return cart.getBaskets();
     }
 

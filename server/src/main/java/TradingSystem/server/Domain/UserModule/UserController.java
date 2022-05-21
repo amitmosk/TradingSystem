@@ -199,7 +199,7 @@ public class UserController {
      */
     public Map<Store, Basket> getBaskets(int loggedUser) {
         User user = onlineUsers.get(loggedUser);
-        return user.getBaskets();
+        return user.view_baskets();
     }
 
 

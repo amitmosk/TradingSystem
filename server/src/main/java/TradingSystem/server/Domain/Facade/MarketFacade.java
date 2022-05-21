@@ -62,7 +62,7 @@ public class MarketFacade{
             this.isGuest = true;
             system_logger.add_log("User logged out from the system.");
             response = new Response(null, "Logout Successfully");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -85,7 +85,7 @@ public class MarketFacade{
             this.isGuest = false;
             response = new Response<>(user, "Registration done successfully");
             system_logger.add_log(name + " " + lastName + " has registered to the system");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -127,7 +127,7 @@ public class MarketFacade{
             StoreInformation storeInformation = new StoreInformation(store);
             response = new Response<>(storeInformation, "Store information received successfully");
             system_logger.add_log("Store (" + store_id + ") information found successfully.");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -147,7 +147,7 @@ public class MarketFacade{
             Product product = this.store_controller.find_product_information(product_id, store_id);
             response = new Response<>(product, "Product information received successfully");
             system_logger.add_log("Product (" + product_id + " from store " + store_id + ") information found successfully.");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -229,7 +229,7 @@ public class MarketFacade{
             user_controller.add_product_to_cart(loggedUser,store,p,quantity);
             response = new Response<>("", "product " + productID + " added to cart");
             system_logger.add_log("User added to cart " + quantity + " of product- " + productID + " from store- " + storeID);
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -253,7 +253,7 @@ public class MarketFacade{
             user_controller.edit_product_quantity_in_cart(loggedUser,store,p,quantity);
             response = new Response<>("", "product " + productID + " quantity has changed to " + quantity);
             system_logger.add_log("User quantity of product- " + productID + " from store- " + storeID + " in cart to " + quantity);
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -276,7 +276,7 @@ public class MarketFacade{
             user_controller.remove_product_from_cart(loggedUser, store, p);
             response = new Response<>("", "product " + productID + " has removed from cart");
             system_logger.add_log("User removed from cart product- " + productID + " from store- " + storeID);
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -319,7 +319,7 @@ public class MarketFacade{
                     response = new Response<>(userPurchase, "Purchase done successfully");
                 }
             }
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -341,7 +341,7 @@ public class MarketFacade{
             int store_id = this.store_controller.open_store(online_user, store_name);
             response = new Response<>(null, "Store opened successfully");
             system_logger.add_log("Store " + store_name + " with id = " + store_id + "opened successfully");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -365,7 +365,7 @@ public class MarketFacade{
             this.store_controller.add_review(user_email, product_id, store_id, review);
             response = new Response<>(null, "Review added successfully");
             system_logger.add_log("New review added for product (" + product_id + ") form store (" + store_id + ") and user:" + user_email);
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -389,7 +389,7 @@ public class MarketFacade{
             this.store_controller.rate_product(user_email, product_id, store_id, rate);
             response = new Response<>(null, "Rating added successfully to the product");
             system_logger.add_log("New rating (" + rate + ") added for product (" + product_id + ") form store (" + store_id + ")");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -413,7 +413,7 @@ public class MarketFacade{
             this.store_controller.rate_store(user, store_id, rate);
             response = new Response<>(null, "Rating added successfully to the store");
             system_logger.add_log("New rating (" + rate + ") added for store (" + store_id + ") from user : " + user_email);
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -436,7 +436,7 @@ public class MarketFacade{
             this.store_controller.add_question(user, store_id, question);
             response = new Response<>(null, "Question send to the store successfully");
             system_logger.add_log("New question sent to store (" + store_id + ")");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -455,7 +455,7 @@ public class MarketFacade{
             this.user_controller.send_question_to_admin(loggedUser, question);
             response = new Response<>(null, "Question send to the admin successfully");
             system_logger.add_log("New question sent to admin");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -473,7 +473,7 @@ public class MarketFacade{
             UserPurchaseHistory userPurchaseHistory = user_controller.view_user_purchase_history(loggedUser);
             response = new Response<>(userPurchaseHistory, "successfully received user's product history");
             system_logger.add_log("User viewed his purchase history successfully");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -493,7 +493,7 @@ public class MarketFacade{
             response = new Response<>(email, "successfully received user's email");
             system_logger.add_log("Got user's email successfully");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -511,7 +511,7 @@ public class MarketFacade{
             String name = user_controller.get_user_name(loggedUser);
             response = new Response<>(name, "successfully received user's name");
             system_logger.add_log("Got user's name successfully");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -530,7 +530,7 @@ public class MarketFacade{
             response = new Response<>(last_name, "Last name received successfully");
             system_logger.add_log("Got user's last name successfully");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -757,7 +757,7 @@ public class MarketFacade{
             response = new Response<>(products, "Product added successfully");
             system_logger.add_log("New product (" + name + ") added to store (" + store_id + ")");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -782,7 +782,7 @@ public class MarketFacade{
                 response = new Response<>(inv, "Product deleted successfully");
                 system_logger.add_log("Product (" + product_id + ") was deleted from store (" + store_id + ")");
             }
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -808,7 +808,7 @@ public class MarketFacade{
             response = new Response<>(null, "Product name edit successfully");
             system_logger.add_log("Product (" + product_id + ") name has been changed to " + name + " in store (" + store_id + ")");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -833,7 +833,7 @@ public class MarketFacade{
                 response = new Response<>(null, "Product price edit successfully");
                 system_logger.add_log("Product (" + product_id + ") price has been changed to " + price + " in store (" + store_id + ")");
             }
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -856,7 +856,7 @@ public class MarketFacade{
             response = new Response<>(null, "Product category edit successfully");
             system_logger.add_log("Product (" + product_id + ") category has been changed to " + category + " in store (" + store_id + ")");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -880,7 +880,7 @@ public class MarketFacade{
             response = new Response<>(null, "Product key_words edit successfully");
             system_logger.add_log("Product's (" + product_id + ") key words have been changed to " + key_words + " in store (" + store_id + ")");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -902,7 +902,7 @@ public class MarketFacade{
                 store_controller.set_store_purchase_policy(store_id, user, policy);
                 response = new Response<>(null, "Store purchase rules set successfully");
             }
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -924,7 +924,7 @@ public class MarketFacade{
                 store_controller.set_store_discount_policy(store_id, user, policy);
                 response = new Response<>(null, "Store discount rules set successfully");
             }
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -946,7 +946,7 @@ public class MarketFacade{
                 response = new Response<>(null, "Store purchase rules set successfully");
                 system_logger.add_log("Store's (" + store_id + ") purchase rules have been set");
             }
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -971,7 +971,7 @@ public class MarketFacade{
             this.store_controller.add_owner(appointer, user_to_appoint, store_id);
             response = new Response<>(null, "Owner added successfully");
             system_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") owner");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -996,7 +996,7 @@ public class MarketFacade{
             this.store_controller.remove_owner(deleter, to_delete, store_id);
             response = new Response<>(null, "Owner removed successfully");
             system_logger.add_log("User- " + user_email_to_delete_appointment + " has been unappointed by user- " + user_email + " from store (" + store_id + ") owner");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1021,7 +1021,7 @@ public class MarketFacade{
             this.store_controller.add_manager(appointer, user_to_apoint, store_id);
             response = new Response<>(null, "Manager added successfully");
             system_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") manager");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1046,7 +1046,7 @@ public class MarketFacade{
             this.store_controller.edit_manager_specific_permissions(appointer, manager, store_id, permissions);
             response = new Response<>(null, "Manager permission edit successfully");
             system_logger.add_log("Manager's (" + manager_email + ") permissions have been updated by user - " + user_email + " in store (" + store_id + ")");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1071,7 +1071,7 @@ public class MarketFacade{
             this.store_controller.remove_manager(appointer, manager, store_id);
             response = new Response<>(null, "Manager removed successfully");
             system_logger.add_log("User- " + user_email_to_delete_appointment + " has been unappointed by user- " + user_email + " from store (" + store_id + ") manager");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1095,7 +1095,7 @@ public class MarketFacade{
                 response = new Response<>(null, "Store closed temporarily");
                 system_logger.add_log("Store (" + store_id + ") has been closed temporarily by user (" + user_email + ")");
             }
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1117,7 +1117,7 @@ public class MarketFacade{
             this.store_controller.open_close_store(user, store_id);
             response = new Response<>(null, "Store re-open successfully");
             system_logger.add_log("Store (" + store_id + ") has been re-opened by user (" + user_email + ")");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1138,7 +1138,7 @@ public class MarketFacade{
             String answer = this.store_controller.view_store_management_information(user, store_id);
             response = new Response<>(answer, "Store information received successfully");
             system_logger.add_log("Store's (" + store_id + ") management information has been viewed by user (" + user_email + ")");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1161,7 +1161,7 @@ public class MarketFacade{
             response = new Response<>(store_questions, "Store questions received successfully");
             system_logger.add_log("Store's (" + store_id + ") questions has been viewed by user (" + user_email + ")");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1184,7 +1184,7 @@ public class MarketFacade{
             this.store_controller.answer_question(user, store_id, question_id, answer);
             response = new Response("", "manager answer the question successfully");
             system_logger.add_log("Store (" + store_id + ") question (" + question_id + ") has been answered by user (" + user_email + ")");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1207,7 +1207,7 @@ public class MarketFacade{
             response = new Response<>(answer, "Store purchases history received successfully");
             system_logger.add_log("User received (" + user_email + ") store's (" + store_id + ") purchase history successfully.");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1232,7 +1232,7 @@ public class MarketFacade{
                 response = new Response<>(null, "Store closed permanently");
                 system_logger.add_log("Store (" + store_id + ") closed permanently.");
             }
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1256,7 +1256,7 @@ public class MarketFacade{
             // remove all users complains & questions
             response = new Response<>(email, email + "Has been removed successfully from the system");
             system_logger.add_log("Removed user (" + email + ") from the system.");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1275,7 +1275,7 @@ public class MarketFacade{
             List<String> users_questions = this.user_controller.view_users_questions(loggedUser);
             response = new Response(users_questions, "Admin received users complains successfully.");
             system_logger.add_log("Admin viewed users complains successfully.");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1318,7 +1318,7 @@ public class MarketFacade{
             response = new Response<>(answer, "Store purchases history received successfully");
             system_logger.add_log("Admin received store's (" + store_id + ") purchase history successfully.");
 
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1337,7 +1337,7 @@ public class MarketFacade{
             UserPurchaseHistory userPurchaseHistory = user_controller.admin_view_user_purchase_history(loggedUser, user_email);
             response = new Response<>(userPurchaseHistory, "received user's purchase history successfully");
             system_logger.add_log("Admin received user's (" + user_email + ") purchase history successfully.");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1355,7 +1355,7 @@ public class MarketFacade{
             Statistic stats = user_controller.get_statistics(loggedUser);
             response = new Response(stats, "Received market statistics successfully");
             system_logger.add_log("Admin received market statistics successfully.");
-        } catch (MarketException e) {
+        } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
