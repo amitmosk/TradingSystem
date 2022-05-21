@@ -14,6 +14,8 @@ import StorePage from './components/StorePage';
 import ShoppingCart from './components/ShoppingCart';
 import AdminSendMessage from './components/AdminSendMessage';
 import AdminPage from './components/AdminPage';
+import StoreManagment from './components/StoreManagment';
+import Album from './components/Album';
 // function App() {
 //   return <Button variant="contained">Hello World</Button>;
 // }
@@ -32,47 +34,12 @@ export default class App extends Component {
           messages: [],
           webSocketConnection: undefined
       }
-      // this.userApi = new UserApi();
-      // this.storeApi = new StoreApi();
-
-      // this.addOwnedStoreHandler = this.addOwnedStoreHandler.bind(this);
-      // this.updateLoginHandler = this.updateLoginHandler.bind(this);
-      // this.updateLogoutHandler = this.updateLogoutHandler.bind(this);
+ 
 
   }
       
 
-    // async connectToWebSocket(){
-    //     const socketConnection = new HubConnectionBuilder()
-    //         .configureLogging(LogLevel.Debug)
-    //         .withUrl("https://localhost:5001/messageHub", {
-    //             skipNegotiation: true,
-    //             transport: HttpTransportType.WebSockets
-    //         })
-    //         .build();
-
-    //     //console.log("socketConnection")
-
-    //     await socketConnection.start();
-    //     if(socketConnection) {
-    //         //console.log("socketConnection on")
-
-    //         socketConnection.on("message", message => {
-    //             /*console.log("new publisher message:")
-    //             console.log(message)*/
-    //             alert(`New message: ${message.message}`)
-    //             this.setState({
-    //                 messages: [...this.state.messages, message]
-    //             });
-    //         });
-    //     }
-
-    //     this.setState({
-    //         messages: [],
-    //         webSocketConnection: socketConnection
-    //     });
-    // }
-
+  
     
     async updateLoginHandler(email){
       console.log("in updateLoginHandler\n\n\n\n\n");
@@ -89,8 +56,8 @@ export default class App extends Component {
     return (
       <BrowserRouter>
       <Routes>
-      {/* <Route path="/" element={<AdminPage />}></Route> */}
-      <Route path="/" element={<Login isLoggedIn={this.state.isLoggedIn} loginUpdateHandler={this.updateLoginHandler}/>}></Route>
+      <Route path="/" element={<StoreManagment />}></Route>
+      {/* <Route path="/" element={<Login isLoggedIn={this.state.isLoggedIn} loginUpdateHandler={this.updateLoginHandler}/>}></Route> */}
       <Route path="/Register" element={<Register />}></Route>
       <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
       <Route path="/StorePage" element={<StorePage store_id=""/>}></Route>
