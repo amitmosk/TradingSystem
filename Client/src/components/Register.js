@@ -69,10 +69,8 @@ export default class Register extends Component {
         if (!response.was_exception)
         {
             const user = response.value;
-            
             // return <Navigate to="/HomePageSearch"/>
         }
-        alert(response.message);
     }
     
     render() {

@@ -28,12 +28,6 @@ export class ConnectApi {
                 
             })
             .then(res => {
-                console.log("in the then - login");
-                console.log(res);
-                console.log(res.data);
-                console.log(res.data.value);
-                console.log(res.data.wasException);
-                console.log(res.data.message);
                 // const websocket = require('ws');
                 // var ws = new websocket(WEBSOCKETURL);
                 
@@ -43,8 +37,8 @@ export class ConnectApi {
                 //     // update notifications UI with the new notification 
                 //     console.log(data);
                 //  }
-                console.log("im here "+res.data+"\n");
-                return new Response(res.data);
+                const user = new User(res.data.value);
+                return Response.create(user,res.data.wasException,res.data.message);
             })
             .catch(res => undefined);
     }
@@ -52,8 +46,7 @@ export class ConnectApi {
     logout() {
         return instance.get(LOGOUT_PATH)
             .then(res => {
-                
-                return new Response(res.data);
+                return Response.create(null,res.data.wasException,res.data.message);
             })
             .catch(res => undefined);
     }
@@ -61,31 +54,15 @@ export class ConnectApi {
     register(email, password, first_name, last_name, birthdate) {
         return instance.get(REGISTER_PATH,
             {
-                params:{email: email,
+                    params:{email: email,
                     pw: password,
                     name: first_name,
                     lastName: last_name,
-                birth_date : birthdate,}
-                
+                    birth_date : birthdate,}
             })
             .then(res => {
-                // let response = res.data;
-                // let user = new User
-
-                console.log("in the then");
-                console.log(res);
-                console.log(res.data);
-                console.log(res.data.value);
-                console.log(res.data.wasException);
-                console.log(res.data.message);
-
-
-                // const response = res.data;
-                // const user = new User(response.value);
-                // const r =Response.create(user, response.message, response.wasException);
-                // return r;
-                return new Response(res.data);
-            })
-            .catch(res => console.log("fuck!!!\n\n\n\n\n"));
+                const user = new User(res.data.value);
+                return Response.create(user,res.data.wasException,res.data.message);
+            }).catch(res => Response.create(null,true,"http failure"));
     }
 }

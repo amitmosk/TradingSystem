@@ -1,7 +1,9 @@
 // import axios from "axios";
+import { sortAndDeduplicateDiagnostics } from "typescript";
 import { SEND_QUESTION_TO_ADMIN, CLOSE_STORE_PERMANENTLY, REMOVE_USER, ADMIN_VIEW_USERS_QUESTION ,
      ADMIN_ANSWER_USERS_QUESTION, ADMIN_VIEW_STORE_PURCHASES_HISTORY, ADMIN_VIEW_USER_PURCHASES_HISTORY, GET_MARKET_STATS} from "./ApiPaths";
 import { Response } from "./Response";
+import {Statistic} from "../ServiceObjects/statistic"
 // const instance = axios.create(
 //     {withCredentials : true}
 // );
@@ -67,8 +69,6 @@ export class AdminApi {
             {
                 params:{question_id : question_id,
                     answer : answer,}
-                
-                
             })
             .then(res => {
                 return new Response(res.data)
@@ -93,8 +93,6 @@ export class AdminApi {
         return instance.get(ADMIN_VIEW_USER_PURCHASES_HISTORY,
             {
                 params:{user_email : user_email,}
-                
-                
             })
             .then(res => {
                 return new Response(res.data)
@@ -105,7 +103,8 @@ export class AdminApi {
     get_market_stats() {
         return instance.get(GET_MARKET_STATS)
             .then(res => {
-                return new Response(res.data);
+                const stats = new Statistic(res.data.value);
+                return Response.create(stats, res.wasException, res.message);
             })
             .catch(res => undefined);
     }

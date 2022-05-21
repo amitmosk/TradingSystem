@@ -28,12 +28,11 @@ export class ProductApi {
         return instance.get(FIND_PRODUCT_INFORMATION, 
             {
                 params:{product_id: product_id,}
-                
             })
             .then(res => {
                 let response = res.data;
                 let product_info = new Product(response.value);
-                return response_obj.create(product_info, response.message);
+                return Response.create(product_info, response.wasException, response.message);
             })
             .catch(res => undefined);
     }
@@ -47,7 +46,9 @@ export class ProductApi {
                 let response = res.data;
                 //traverse the products and create product for each element on the list
                 //create response with the list of products
-                return new Response(res.data)
+                const arr = [];
+                res.data.value.map(p => arr.push(new Product(p)));
+                return Response.create(arr,res.data.wasException,res.data.message);
             })
             .catch(res => undefined);
     }
@@ -61,7 +62,9 @@ export class ProductApi {
             .then(res => {
                 //traverse the products and create product for each element on the list
                 //create response with the list of products
-                return new Response(res.data)
+                const arr = [];
+                res.data.value.map(p => arr.push(new Product(p)));
+                return Response.create(arr,res.data.wasException,res.data.message);
             })
             .catch(res => undefined);
     }
@@ -74,7 +77,9 @@ export class ProductApi {
             .then(res => {
                 //traverse the products and create product for each element on the list
                 //create response with the list of products
-                return new Response(res.data)
+                const arr = [];
+                res.data.value.map(p => arr.push(new Product(p)));
+                return Response.create(arr,res.data.wasException,res.data.message);
             })
             .catch(res => undefined);
     }
@@ -141,8 +146,6 @@ export class ProductApi {
                 params:{ product_id: product_id,
                     store_id: store_id,
                     rate : rate,}
-               
-                
             })
             .then(res => {
                 return new Response(res.data)

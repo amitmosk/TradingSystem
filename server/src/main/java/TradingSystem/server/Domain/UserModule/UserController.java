@@ -124,7 +124,7 @@ public class UserController {
         if (isRegistered(email)) {
             User cur_user = onlineUsers.get(ID);
             User user = users.get(email);
-            if(cur_user.isLogged())
+            if(cur_user.test_isLogged())
                 throw new LoginException("cannot log in from logged in user");
             user.login(password); //verifies if the user is logged and password & changes state.
             onlineUsers.put(ID, user);
