@@ -18,7 +18,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 //     }
 
-export default function FormDialog({fields ,answer} ) {
+export default function FormDialog({fields ,getValues, name} ) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -32,7 +32,9 @@ export default function FormDialog({fields ,answer} ) {
     console.log("in handle submit\n");
     let ans=[];
     fields.map((f)=> ans.push(localStorage.getItem(f)))
-    ans.map((a)=> answer.push(a))
+    console.log("aaaaaaaaaaaaaa\n");
+    getValues(ans);
+    console.log("bbbbbbbbbbbbbbbb\n");
   
     
   };
@@ -47,7 +49,7 @@ export default function FormDialog({fields ,answer} ) {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
+        {name}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Subscribe</DialogTitle>

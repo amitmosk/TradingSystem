@@ -16,6 +16,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import FormDialog from './FormDialog';
+import { StoreApi } from '../API/StoreApi';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -42,10 +43,11 @@ export default class StoreManagment extends Component {
             useremailtoremove: undefined,
             storeidtoremove: undefined,
             add_product_fields:["store_id", "quantity","name", "price", "category", "key_words"],
-            aa:undefined
+            arr:[]
             
         };
         this.adminApi = new AdminApi();
+        this.storeApi = new StoreApi();
 
     }
     
@@ -63,7 +65,6 @@ export default class StoreManagment extends Component {
     }
 
     async add_product(){
-        const val= this.state.aa;
         // let response = await this.adminApi.get_market_stats();
         // const stats = response.value;
         // if (!response.was_execption)
@@ -76,6 +77,18 @@ export default class StoreManagment extends Component {
 
         // }
         // alert(response.message);
+    }
+    async add_product(values){
+        
+        console.log("in add product");
+        console.log(values[0]);
+        console.log(values[1]);
+        console.log(values[2]);
+        console.log(values[3]);
+        console.log(values[4]);
+        console.log(values[5]);
+        // let response = await this.storeApi.add_product_to_store(values[0],values[1],values[2],values[3],values[4],values[5])
+
     }
     
    
@@ -92,32 +105,21 @@ export default class StoreManagment extends Component {
 
                 <Grid container spacing={20}>
                 <Grid item xs>
-                <FormDialog fields={this.state.add_product_fields} answer={[]}></FormDialog>
-              
-                <input type="text" name="storeidtoremove" value={this.state.storeidtoremove} onChange={this.handleInputChange.bind(this)}
-                                    placeholder="Add Product" required/>
-                <Button variant="contained">Add Product</Button>
+                <FormDialog fields={this.state.add_product_fields} getValues={this.add_product.bind(this) } name="Add Product"></FormDialog>
+                
                 </Grid>
                 <Grid item xs={3}>
-                <input type="text" name="useremailtoremove" value={this.state.useremailtoremove} onChange={this.handleInputChange.bind(this)}
-                                    placeholder="User Email To Remove" required/>
-                <Button variant="contained">Remove User </Button>
+                
                 </Grid>
                 <Grid item xs>
-                <Button href="/AdminSendMessage" variant="contained">User Message </Button>
                 </Grid>
                 <Grid item xs>
-                <input type="text" name="useremailtoshowhistory" value={this.state.useremailtoshowhistory} onChange={this.handleInputChange.bind(this)}
-                                    placeholder="User Email To Show Purchase History" required/>
-                <Button  variant="contained">User Purchase History </Button>
+               
                 </Grid>
                 <Grid item xs>
-                <input type="text" name="storeidtoshowhistory" value={this.state.storeidtoshowhistory} onChange={this.handleInputChange.bind(this)}
-                                    placeholder="Store ID To Show Purchase History" required/>
-                <Button onClick={()=>this.admin_view_store_purchases_history} variant="contained">Store Purchase History </Button>
+               
                 </Grid>
                 <Grid item xs>
-                <Button onClick={()=>this.get_market_stats} variant="contained">Statistics </Button>
                 </Grid>
                 </Grid>
 
