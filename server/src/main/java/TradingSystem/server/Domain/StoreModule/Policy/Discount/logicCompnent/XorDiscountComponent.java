@@ -12,8 +12,6 @@ public class XorDiscountComponent extends DiscountlogicComponent implements Disc
 
     public XorDiscountComponent(List<DiscountComponent> lst, ComplexDiscountComponent discountComponent) throws WrongPermterException {
         super(lst, discountComponent);
-        if (lst.size() != 2)
-            throw new WrongPermterException("xor can have only two sons");
     }
 
 

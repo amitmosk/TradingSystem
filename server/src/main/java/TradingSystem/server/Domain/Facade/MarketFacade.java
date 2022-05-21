@@ -6,17 +6,11 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.OrDiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.XorDiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.andDiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.MaxDiscountRule;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.PlusDiscountRule;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
-import TradingSystem.server.Domain.StoreModule.Policy.Purchase.AndporchaseRule;
-import TradingSystem.server.Domain.StoreModule.Policy.Purchase.OrporchaseRule;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.SimpleporchaseRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -805,16 +799,50 @@ public class MarketFacade {
             error_logger.add_log(e);
         }
         return response;
+
+    }
+
+    //TODO concurrency
+    public Response add_composite_discount_rule(int storeId, List<DiscountComponent> discountComponents, String type, ComplexDiscountComponent complexDiscountComponent) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(storeId);
+            DiscountComponent discountComponent = store.add_composite_discount_rule(discountComponents, type, complexDiscountComponent);
+            response = new Response(discountComponent, " discount added  successfully");
+            system_logger.add_log("composite discount deleted successfully");
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
+    public Response add_complex_discount_rule(String catgorey, String nameOfProduct, boolean above, boolean equql, int num,
+                                              boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, double precent, int storeId
+    ) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(storeId);
+            ComplexDiscountComponent complex = store.add_complex_discount(catgorey, nameOfProduct, above, equql, num, price, quantity, age, time, year, month, day, precent);
+            response = new Response(complex, "discount added successfully");
+            system_logger.add_log("discount deleted successfully");
+
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
     }
 
     //discount policy
     //TODO concurrency
-    public Response add_discount_rule(int storeId, DiscountComponent Discount) {
+    public Response add_simple_discount_rule(int storeId, String type, String name, double precent) {
         Response<String> response = null;
         try {
             Store store = store_controller.get_store(storeId);
-            store.add_discout_rule(Discount);
-            response = new Response(Discount, "discount added successfully");
+            SimpleDiscountComponent simple = store.add_simple_discount(type, name, precent);
+            response = new Response(simple, "discount added successfully");
             system_logger.add_log("discount deleted successfully");
 
         } catch (MarketException e) {
@@ -826,12 +854,12 @@ public class MarketFacade {
 
 
     //TODO concurrency
-    public Response<String> remove_discount_rule(int storeId, String nameOfDisocunt) {
+    private Response<String> remove_discount_rule(int storeId, DiscountComponent component) {
         Response<String> response = null;
         try {
             Store store = store_controller.get_store(storeId);
-            store.remove_discount_rule(nameOfDisocunt);
-            response = new Response(nameOfDisocunt, "discount added successfully");
+            store.remove_discount_rule(component);
+            response = new Response(component, "discount added successfully");
             system_logger.add_log("discount deleted successfully");
 
         } catch (MarketException e) {
@@ -840,58 +868,6 @@ public class MarketFacade {
         }
         return response;
     }
-
-
-    private Predict Create_predict() {
-    }
-
-
-    public andDiscountComponent CreateAndDisocuntCompnent() {
-
-    }
-
-    public OrDiscountComponent CreateOrDisocuntCompnent() {
-
-    }
-
-    public XorDiscountComponent CreateXorDisocuntCompnent() {
-
-    }
-
-    public MaxDiscountRule CreateMaxDisocuntCompnent() {
-
-    }
-
-    public PlusDiscountRule CreateplusDisocuntCompnent() {
-
-    }
-
-    public Response<ComplexDiscountComponent> CreateComplexDisocuntCompnent() {
-
-    }
-
-    public Response<SimpleDiscountComponent> CreateSimpleDisocuntCompnent() {
-
-    }
-
-    //end of discount policy
-
-    //purchase policy
-
-    public AndporchaseRule addAndPorchaseRule() {
-
-    }
-
-    public OrporchaseRule addorPorchaseRule() {
-
-    }
-
-    public SimpleporchaseRule addsimplePorchaseRule() {
-
-    }
-
-
-    //end of purchase policy
 
 
     /**
@@ -1039,15 +1015,33 @@ public class MarketFacade {
      * Requirement 2.4.3
      *
      * @param store_id
-     * @param rule
      * @return success/failure message
      */
-    public Response<String> set_store_purchase_rules(int store_id, String rule) {
-        Response<String> response = null;
+    public Response<SimpleporchaseRule> add_simple_purchase_rule(String type, String name, String catgorey, String nameOfProduct, boolean above, boolean equql, int num,
+                                                                 boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, double precent, int store_id) {
+        Response<SimpleporchaseRule> response = null;
         try {
             synchronized (lock) {
-                store_controller.set_store_purchase_rules(store_id, rule);
-                response = new Response<>(null, "Store purchase rules set successfully");
+                Store store = store_controller.get_store(store_id);
+                porchaseRule porchaseRule = store.addsimplePorchaseRule(type, name, catgorey, nameOfProduct, above, equql, num,
+                        price, quantity, age, time, year, month, day, precent);
+                response = new Response(porchaseRule, "Store purchase rules set successfully");
+                system_logger.add_log("Store's (" + store_id + ") purchase rules have been set");
+            }
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response<porchaseRule> add_composite_purchase_rule(List<porchaseRule> list, int store_id, String type) {
+        Response<porchaseRule> response = null;
+        try {
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                porchaseRule porchaseRule = store.add_composite_purchase_rule(type, list);
+                response = new Response(porchaseRule, "Store purchase rules set successfully");
                 system_logger.add_log("Store's (" + store_id + ") purchase rules have been set");
             }
         } catch (MarketException e) {

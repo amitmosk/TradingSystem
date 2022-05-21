@@ -97,7 +97,7 @@ public class Predict {
             if (alloworDisallow)
                 return year == this.year && month == this.month && this.day == day;
             else
-                return year != this.year && month != this.month && this.day != day;
+                return year != this.year || month != this.month || this.day != day;
         }
         return false;
     }

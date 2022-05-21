@@ -10,7 +10,7 @@ import java.util.Map;
 public class SimpleporchaseRule implements porchaseRule {
     Predict predict;
 
-    SimpleporchaseRule(Predict predict) {
+    public SimpleporchaseRule(Predict predict) {
         this.predict = predict;
     }
 

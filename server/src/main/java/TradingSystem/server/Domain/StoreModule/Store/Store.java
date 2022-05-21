@@ -2,10 +2,20 @@ package TradingSystem.server.Domain.StoreModule.Store;
 
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.OrDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.XorDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.andDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.MaxDiscountRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.PlusDiscountRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.DiscountComponentByCategory;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.DiscountComponentByProduct;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.DiscountComponentByStore;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Predict;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.*;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
@@ -83,10 +93,6 @@ public class Store {
     }
 
 
-    private void add_discount_rule(DiscountComponent component) {
-        this.discountPolicy.addRule(component);
-    }
-
     private void CreateDiscountRule(double percent, String catgorey, Product product, boolean above, boolean equql, int num,
                                     boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day) {
 
@@ -101,9 +107,140 @@ public class Store {
         this.purchasePolicy.addRule(component);
     }
 
-    public void remove_discount_rule(String name) {
-        this.discountPolicy.addRule(component);
+    public void remove_discount_rule(DiscountComponent component) {
+        discountPolicy.removeRule(component);
     }
+
+    public DiscountComponent add_composite_discount_rule(List<DiscountComponent> discountComponents, String type,
+                                                         ComplexDiscountComponent master) throws WrongPermterException {
+        switch (type) {
+            case "and":
+                return CreateAndDisocuntCompnent(master, discountComponents);
+            case "or":
+                return CreateOrDisocuntCompnent(master, discountComponents);
+            case "xor":
+                return CreateXorDisocuntCompnent(master, discountComponents);
+            case "max":
+                return CreateMaxDisocuntCompnent(discountComponents);
+            case "plus":
+                return CreateplusDisocuntCompnent(discountComponents);
+            default:
+                throw new WrongPermterException("no recongised type");
+        }
+
+    }
+
+    public andDiscountComponent CreateAndDisocuntCompnent(ComplexDiscountComponent complexDiscountComponent, List<DiscountComponent> listToAnd) {
+        andDiscountComponent toreturn = new andDiscountComponent(listToAnd, complexDiscountComponent);
+        this.discountPolicy.addRule(toreturn);
+        return toreturn;
+    }
+
+    public OrDiscountComponent CreateOrDisocuntCompnent(ComplexDiscountComponent complexDiscountComponent, List<DiscountComponent> listToAnd) {
+        OrDiscountComponent toreturn = new OrDiscountComponent(listToAnd, complexDiscountComponent);
+        this.discountPolicy.addRule(toreturn);
+        return toreturn;
+    }
+
+    public XorDiscountComponent CreateXorDisocuntCompnent(ComplexDiscountComponent complexDiscountComponent, List<DiscountComponent> listToAnd) throws WrongPermterException {
+        if (listToAnd.size() != 2)
+            throw new WrongPermterException("there are more then two discounts");
+        XorDiscountComponent toreturn = new XorDiscountComponent(listToAnd, complexDiscountComponent);
+        this.discountPolicy.addRule(toreturn);
+        return toreturn;
+    }
+
+    public MaxDiscountRule CreateMaxDisocuntCompnent(List<DiscountComponent> listToAnd) throws WrongPermterException {
+        if (listToAnd.size() != 2)
+            throw new WrongPermterException("there are more then two discounts");
+        MaxDiscountRule toreturn = new MaxDiscountRule(listToAnd.get(0), listToAnd.get(1));
+        this.discountPolicy.addRule(toreturn);
+        return toreturn;
+    }
+
+    public PlusDiscountRule CreateplusDisocuntCompnent(List<DiscountComponent> listToAnd) throws WrongPermterException {
+        if (listToAnd.size() != 2)
+            throw new WrongPermterException("there are more then two discounts");
+        PlusDiscountRule toreturn = new PlusDiscountRule(listToAnd.get(0), listToAnd.get(1));
+        this.discountPolicy.addRule(toreturn);
+        return toreturn;
+
+    }
+
+
+    private Product get_product_by_name(String name) {
+        for (Product toCheck : inventory.keySet())
+            if (toCheck.getName().equals(name))
+                return toCheck;
+        return null;
+    }
+
+    public SimpleDiscountComponent add_simple_discount(String type, String name, double precent) throws WrongPermterException {
+        SimpleDiscountComponent simpleDiscountComponent;
+        switch (type) {
+            case "p":
+                Product p = get_product_by_name(name);
+                if (p != null)
+                    simpleDiscountComponent = new DiscountComponentByProduct(p, precent);
+                else
+                    throw new WrongPermterException("there is no prodcut with this name");
+            case "c":
+                simpleDiscountComponent = new DiscountComponentByCategory(name, precent);
+            default:
+                simpleDiscountComponent = new DiscountComponentByStore(precent);
+        }
+        this.discountPolicy.addRule(simpleDiscountComponent);
+        return simpleDiscountComponent;
+    }
+
+    public ComplexDiscountComponent add_complex_discount(String catgorey, String nameOfProduct, boolean above, boolean equql, int num,
+                                                         boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, double precent) throws WrongPermterException {
+        Product product = get_product_by_name(nameOfProduct);
+        Predict predict = new Predict(catgorey, product, above, equql, num,
+                price, quantity, age, time, year, month, day);
+        SimpleDiscountComponent simpleDiscountComponent;
+        if (product != null)
+            simpleDiscountComponent = new DiscountComponentByProduct(product, precent);
+        else if (catgorey != "")
+            simpleDiscountComponent = new DiscountComponentByCategory(catgorey, precent);
+        else
+            simpleDiscountComponent = new DiscountComponentByStore(precent);
+        ComplexDiscountComponent toreturn = new ComplexDiscountComponent(simpleDiscountComponent, predict);
+        this.discountPolicy.addRule(toreturn);
+        return toreturn;
+
+    }
+
+
+    //end of discount policy
+
+    //purchase policy
+
+    public AndporchaseRule addAndPorchaseRule(List<porchaseRule> list) {
+        AndporchaseRule toreturn = new AndporchaseRule(list);
+        this.purchasePolicy.addRule(toreturn);
+        return toreturn;
+    }
+
+    public OrporchaseRule addorPorchaseRule(List<porchaseRule> list) {
+        OrporchaseRule toreturn = new OrporchaseRule(list);
+        this.purchasePolicy.addRule(toreturn);
+        return toreturn;
+    }
+
+    public SimpleporchaseRule addsimplePorchaseRule(String type, String name, String catgorey, String nameOfProduct, boolean above, boolean equql, int num,
+                                                    boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, double precent) {
+        Product product = get_product_by_name(nameOfProduct);
+        Predict predict = new Predict(catgorey, product, above, equql, num,
+                price, quantity, age, time, year, month, day);
+        SimpleporchaseRule Toreturn = new SimpleporchaseRule(predict);
+        this.purchasePolicy.addRule(Toreturn);
+        return Toreturn;
+    }
+
+
+    //end of purchase policy
+
 
     public void remove_purchase_rule(porchaseRule component) {
         this.purchasePolicy.removeRule(component);
@@ -536,6 +673,11 @@ public class Store {
         return stuffs_and_appointments.containsKey(founder);
     }
 
-    public void set_store_purchase_rules(String rule) {
+
+    public porchaseRule add_composite_purchase_rule(String type, List<porchaseRule> list) {
+        if (type == "and")
+            return addAndPorchaseRule(list);
+        else
+            return addorPorchaseRule(list);
     }
 }
