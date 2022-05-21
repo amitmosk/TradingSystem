@@ -7,19 +7,20 @@ export class User  {
     // private String birth_date;
     
     constructor(data) {
-        this.founder_email = data.founder_email;
-        this.store_name = data.store_name;
-        this.foundation_date = data.foundation_date
-        this.storeReviewInformation = new StoreReview(data.StoreReviewInformation)
-
+        this.birth_date = data.birth_date
+        this.cart =  data.cart
+        this.isGuest = data.isGuest
+        this.isLogged = data.isLogged
+        this.state = data.state
     }
     
-    static create(founder_email, store_name, foundation_date, storeReviewInformation) {
+    static create(birth_date, cart, isGuest, isLogged, state) {
         return new User({
-            founder_email: founder_email,
-            store_name: store_name,
-            foundation_date: foundation_date,
-            storeReviewInformation:storeReviewInformation
+            birth_date: birth_date,
+            cart: cart,
+            isGuest: isGuest,
+            isLogged: isLogged,
+            state: state
         })
 
     }

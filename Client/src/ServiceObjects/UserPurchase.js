@@ -1,8 +1,6 @@
 
 
 export class UserPurchase  {
-    
-        
     constructor(data) {
         // private int purchase_id;
         // private Map<Integer, Purchase> store_id_purchase;
