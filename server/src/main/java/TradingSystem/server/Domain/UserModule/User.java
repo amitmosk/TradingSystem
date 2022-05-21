@@ -253,11 +253,11 @@ public class User {
     public Admin is_admin(){ return state.is_admin();}
 
     //TODO: method for testing
-    public boolean isRegistered() {
+    public boolean test_isRegistered() {
         return !isGuest.get();
     }
 
-    public boolean isLogged(){return this.isLogged.get();}
+    public boolean test_isLogged(){return this.isLogged.get();}
 
     public void add_notification(String notification) {
     }

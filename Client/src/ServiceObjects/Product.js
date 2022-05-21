@@ -10,25 +10,14 @@ export class Product  {
         this.productReview = new ProductReview(data.productReview)
     }
 
-
-    
-    static create( name,  product_id,  price,  category,  key_words, productReview) {
+    static create(product_id, name, category, key_words, price, productReview) {
         return new Product({
-            name: name,
             product_id: product_id,
-            price:price,
+            name: name,
             category:category,
             key_words:key_words,
+            price:price,
             productReview:productReview
         })
     }
-    
-    get name1() {return this.name;}
-    get category1() {return this.category}
-    get price1() {return this.price}
-    get productReview1() {return this.productReview}
-
-
-    
-
 }

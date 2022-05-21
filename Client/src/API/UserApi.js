@@ -147,7 +147,7 @@ export class UserApi {
                 
             })
             .then(res => {
-                return new Response(res.data)
+                return Response.create(null,res.data.wasException,res.data.message);
             })
             .catch(res => undefined);
     }

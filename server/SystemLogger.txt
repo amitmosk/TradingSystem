@@ -1,14 +1,14 @@
-מאי 21, 2022 2:49:21 אחה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 21, 2022 11:11:22 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: start init market
-מאי 21, 2022 2:49:21 אחה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 21, 2022 11:11:22 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: system connected to the payment system
-מאי 21, 2022 2:49:21 אחה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 21, 2022 11:11:22 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: system connected to the supply system
-מאי 21, 2022 2:49:21 אחה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 21, 2022 11:11:22 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: user controller load
-מאי 21, 2022 2:49:21 אחה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 21, 2022 11:11:22 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: store controller load
-מאי 21, 2022 2:49:21 אחה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 21, 2022 11:11:22 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: admin added
-מאי 21, 2022 2:49:53 אחה״צ TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Tom Nisim has registered to the system
+May 21, 2022 11:12:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system

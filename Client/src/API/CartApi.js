@@ -2,6 +2,7 @@
 import { Cart } from "../ServiceObjects/Cart";
 import { VIEW_USER_CART, BUY_CART } from "./ApiPaths";
 import { Response } from "./Response";
+import {UserPurchase} from "../ServiceObjects/UserPurchase"
 
 // const instance = axios.create(
 //     {withCredentials : true}
@@ -16,7 +17,7 @@ export class CartApi {
             .then(res => {
                 let response = res.data;
                 let cart = new Cart(response.value) ;
-                return response_obj.create(cart, response.message);
+                return Response.create(cart, response.wasException, response.message);
             })
             .catch(res => undefined);
     }
@@ -29,7 +30,8 @@ export class CartApi {
                
             })
             .then(res => {
-                return new Response(res.data);
+                const user_purchase = new UserPurchase(res.data.value)
+                return Response.create(user_purchase, res.data.wasException, res.data.message);
             })
             .catch(res => undefined);
     }
