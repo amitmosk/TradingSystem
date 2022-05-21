@@ -29,6 +29,7 @@ export default class App extends Component {
           isLoggedIn: false,
           ownedStoreList:[],
           email:'',
+          name:"Guest",
           role: undefined,
 
           messages: [],
@@ -41,14 +42,19 @@ export default class App extends Component {
 
   
     
-    async updateLoginHandler(email){
+    async updateLoginHandler(){
       console.log("in updateLoginHandler\n\n\n\n\n");
       this.setState({
           isLoggedIn: true,
-          email: email,
-          role: "",
       })
   }
+  async updateRegisterHandler(name, email){
+    console.log("in updateLoginHandler\n\n\n\n\n");
+    this.setState({
+        name:name,
+        email:email,
+    })
+}
  
 
 
@@ -56,12 +62,14 @@ export default class App extends Component {
     return (
       <BrowserRouter>
       <Routes>
-      {/* <Route path="/" element={<Album />}></Route> */}
-      <Route path="/" element={<Login isLoggedIn={this.state.isLoggedIn} loginUpdateHandler={this.updateLoginHandler}/>}></Route>
-      <Route path="/Register" element={<Register />}></Route>
+      <Route path="/" element={<Album user_name = {this.state.name}/>}></Route>
+      <Route path="/Login" element={<Login isLoggedIn={this.state.isLoggedIn} updateLoginHandler={this.updateLoginHandler.bind(this)}/>}></Route>
+      <Route path="/Register" element={<Register updateRegisterHandler={this.updateRegisterHandler.bind(this)} />}></Route>
       <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
       <Route path="/StorePage" element={<StorePage store_id=""/>}></Route>
       <Route path="/AdminSendMessage" element={<AdminSendMessage/>}></Route>
+      <Route path="/AdminPage" element={<AdminPage/>}></Route>
+      <Route path="/StoreManagment" element={<StoreManagment/>}></Route>
       
     
       </Routes>

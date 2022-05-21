@@ -16,12 +16,19 @@ export default class HomePageSearch extends Component  {
     constructor(props) {
         super(props);
         this.state = { 
-            productname:"",
-            rt: undefined,
+            productname:undefined,
+            products: undefined,
 
         };
         this.connectAPI = new ConnectApi();
         this.productApi = new ProductApi();
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+    handleInputChange(event){
+        const target = event.target;
+        this.setState({
+            [target.name]: target.value
+        });
     }
     
     
@@ -33,8 +40,13 @@ export default class HomePageSearch extends Component  {
         let name = this.state["productname"];
         console.log(name+"\n\n\n")
         // let response = await ProductApi.find_product_by_name(name);
-        let response =await this.productApi.testtttt(" ya gever");
-
+        let response =await this.productApi.find_product_by_name(name);
+        if (!response.was_exception)
+        {
+            this.setState({
+                products: response.value
+            });
+        }
         console.log("\n\n"+response.value+"\n\n");
         console.log("ttttttttttttttttttttttttttttt\n\n\n\n\n");
 
@@ -50,13 +62,9 @@ export default class HomePageSearch extends Component  {
                     <div class="HomePageSearchWindow " >
                         <h3>Welcome To the Green Trading System</h3>
                         <form class="HomePageSearchForm" >
-                        <Input placeholder="Search product by name"  inputProps={ariaLabel} onChange={(event) => {this.setState({ "productname": event.target.value});}}  />
-                            {/* <input type="text" name="productname" value={this.state.productname}
-                                    placeholder="Search product by name" required/> */}
-                                    <Button onClick={() => this.find_product_by_name()} variant="contained">Search </Button>
-                            {/* <button type="submit" value="Search"  /> */}
-                           
-                            {/* onClick={this.search_product_by_name.bind(this)} */}
+                        <Input placeholder="Search product by name"  inputProps={ariaLabel} onChange={this.handleInputChange}  />
+                        <Button onClick={() => this.find_product_by_name()} variant="contained">Search </Button>
+
                             
                         </form>
                     </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "./Login.css";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
+import HomeIcon from '@mui/icons-material/Home';
 import { ConnectApi } from '../API/ConnectApi';
 import Register from "./Register.js";
 import HomePageSearch from './HomePageSearch';
@@ -120,6 +121,7 @@ export default class AdminSendMessage extends Component {
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
+                    <Link href="/"><HomeIcon></HomeIcon></Link>
                         <h3>Send Messages - (Admin)</h3>
                         <form class="LoginForm" >
                             {this.state.loginError ?

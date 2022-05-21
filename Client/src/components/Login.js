@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "./Login.css";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
+import HomeIcon from '@mui/icons-material/Home';
 import { ConnectApi } from '../API/ConnectApi';
 import Register from "./Register.js";
 import HomePageSearch from './HomePageSearch';
@@ -22,7 +23,8 @@ export default class Login extends Component {
             password: undefined,
             submitted: this.props.isLoggedIn
         };
-
+        this.connectApi = new ConnectApi(); 
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
     
     handleInputChange(event){
@@ -31,49 +33,26 @@ export default class Login extends Component {
             [target.name]: target.value
         });
     }
-    
-    async handleSubmit(event){
-        event.preventDefault();
-        const {username, password, role} = this.state;
-        const loginRedirectAndRes = await this.authApi.Login(username, password, role);
-        if(loginRedirectAndRes) {
-            const loginRes = loginRedirectAndRes.data;
 
-            if (loginRes && loginRes.isSuccess) {
-                this.props.loginUpdateHandler(username, this.getUserRole(role))
-            } else {
-                this.setState({
-                    loginError: loginRes.error
-                })
-            }
-        } else {
-            this.setState({
-                loginError: "You need to be a guest"
-            })
-        }
-    }
-    
-
-
-
-    
     async componentDidMount() {
     }
 
     async login(){
         const {email, password} = this.state;
-        this.props.loginUpdateHandler(email);
+        this.props.updateLoginHandler();
         console.log("email is "+email+" , password is "+password+"\n");
-        let response = await ConnectApi.login(email, password);
-        if (!response.was_execption)
+        let response = await this.connectApi.login(email, password);
+        console.log(response+"\n");
+        if (!response.was_exception)
         {
+            console.log("in login, login success!\n");
             // return <Navigate to="/HomePageSearch"/>
-
+            <Navigate to="/"/>
             //go to home page
             //change state of App to assign user
         }
         else{
-
+            console.log("in login, login failed!\n");
         }
         alert(response.message);
     }
@@ -83,24 +62,26 @@ export default class Login extends Component {
         // { this.state.redirect ? (<Redirect push to="/"/>) : null }
         if (this.state.submitted) {
             console.log("have to route to homepage whe it will be ready\n\n\n");
-            return <Navigate to="/HomePageSearch"/>
+            return <Navigate to="/Album"/>
         } else {
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
+                    <Link href="/"><HomeIcon></HomeIcon></Link>
                         <h3>Login</h3>
                         <form class="LoginForm" >
                             {this.state.loginError ?
                                 <div class="CenterItemContainer"><label>{this.state.loginError}</label></div> : null}
-                            <input type="text" name="email" value={this.state.email} onChange={this.handleInputChange.bind(this)}
+                            <input type="text" name="email" value={this.state.email} onChange={this.handleInputChange}
                                     placeholder="Email" required/>
-                            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange.bind(this)}
+                            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange}
                                     placeholder="Password" required/>
                             
                             <div className="ConnectRegister">
                                 
                                 {/* <Link to="/register">Create new account</Link> */}
                                 <Button onClick={() => this.login()} variant="contained">Login </Button>
+
                                 <Link href="/Register" underline="hover" >
                                 {'New user? Cretae new account'}
                                 </Link>

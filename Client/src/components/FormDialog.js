@@ -18,8 +18,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 //     }
 
-export default function FormDialog() {
- 
+export default function FormDialog({fields ,answer} ) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -29,11 +28,20 @@ export default function FormDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleSumbit = () => {
+  const handleSumbit = event => {
     console.log("in handle submit\n");
+    let ans=[];
+    fields.map((f)=> ans.push(localStorage.getItem(f)))
+    ans.map((a)=> answer.push(a))
+  
     
-    //   console.log("in handle submit");
-    setOpen(false);
+  };
+  const handleInputChange = event => {
+    // console.log('Click');
+
+    const name = event.target.name
+    const value = event.target.value;
+    localStorage.setItem(name, value);
   };
 
   return (
@@ -49,60 +57,24 @@ export default function FormDialog() {
             will send updates occasionally.
           </DialogContentText>
           {/* (store_id, quantity,name, price, category, key_words) */}
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Store ID"
-            type="storeid"
-            fullWidth
-            variant="standard"
-          />
-                    <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Quantity"
-            type="quantity"
-            fullWidth
-            variant="standard"
-          />
-                    <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Name"
-            type="name"
-            fullWidth
-            variant="standard"
-          />
-                    <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Price"
-            type="price"
-            fullWidth
-            variant="standard"
-          />
-           <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Category"
-            type="category"
-            fullWidth
-            variant="standard"
-          />
-           <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="KeyWords"
-            type="keywords"
-            fullWidth
-            variant="standard"
-          />
+          {fields.map((field) => (
+                               <TextField
+                               autoFocus
+                               margin="dense"
+                               id="name"
+                               name={field}
+                               label={field}
+                               type="storeid"
+                               fullWidth
+                               variant="standard"
+                               onChange={handleInputChange}
+                             />
+                                ))}
+          
+             
+          
+          
+          
         </DialogContent>
         
         <DialogActions>

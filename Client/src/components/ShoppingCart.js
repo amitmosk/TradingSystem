@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "./Login.css";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
+import HomeIcon from '@mui/icons-material/Home';
 import { ConnectApi } from '../API/ConnectApi';
 import { CartApi } from '../API/CartApi';
 import Register from "./Register.js";
@@ -52,6 +53,7 @@ export default class ShoppingCart extends Component {
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
+                    <Link href="/"><HomeIcon></HomeIcon></Link>
                         <h3>Shopping Cart</h3>
                         <form class="LoginForm" onSubmit={this.handleSubmit}>
                             {this.state.loginError ?

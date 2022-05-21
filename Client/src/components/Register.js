@@ -3,7 +3,9 @@ import "./Login.css";
 import Button from '@mui/material/Button';
 import { ConnectApi } from '../API/ConnectApi';
 import { toBeInTheDocument } from '@testing-library/jest-dom/dist/matchers';
-
+import HomeIcon from '@mui/icons-material/Home';
+import { Navigate } from 'react-router-dom'; 
+import Link from '@mui/material/Button';
 const axios = require('axios');
 const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
 
@@ -21,17 +23,15 @@ export default class Register extends Component {
             birthdate: undefined,
         };
         this.connectApi = new ConnectApi(); 
+        this.handleInputChange = this.handleInputChange.bind(this);
 
     }
     
     handleInputChange(event){
-        // event.preventDefault();
-        
         console.log("in handleInputChange");
+        console.log(event.target.name);
+        console.log(event.target.value);
         const target = event.target;
-        console.log(target);
-        console.log(target.name);
-        console.log(target.value);
         this.setState({
             [target.name]: target.value
         });
@@ -62,8 +62,8 @@ export default class Register extends Component {
     }
 
     async register(event){
-        // event.preventDefault();
         const {email, password, firstname, lastname, birthdate} = this.state;
+        this.props.updateRegisterHandler(firstname+" "+lastname, email);
         console.log("email is "+email+" , password is "+password+" firstname is "+firstname+" lastname is "+lastname+" birthdate is "+birthdate+"\n");
         let response = await this.connectApi.register(email, password, firstname, lastname, birthdate);
         if (!response.was_exception)
@@ -80,19 +80,20 @@ export default class Register extends Component {
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
+                        <Link href="/"><HomeIcon></HomeIcon></Link>
                         <h3>Register</h3>
                         <form class="LoginForm" >
                             {this.state.registerError ?
                                 <div class="CenterItemContainer"><label>{this.state.registerError}</label></div> : null}
-                            <input type="email" name="email" value={this.state.email} onChange={this.handleInputChange.bind(this)}
+                            <input type="email" name="email" value={this.state.email} onChange={this.handleInputChange}
                                     placeholder="Email" required/>
-                            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange.bind(this)}
+                            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange}
                                     placeholder="Password" required/>
-                            <input type="firstname" name="firstname" value={this.state.firstname} onChange={this.handleInputChange.bind(this)}
+                            <input type="firstname" name="firstname" value={this.state.firstname} onChange={this.handleInputChange}
                                     placeholder="First name" required/>
-                            <input type="lastname" name="lastname" value={this.state.lastname} onChange={this.handleInputChange.bind(this)}
+                            <input type="lastname" name="lastname" value={this.state.lastname} onChange={this.handleInputChange}
                                     placeholder="Last name" required/>
-                            <input type="birthdate" name="birthdate" value={this.state.birthdate} onChange={this.handleInputChange.bind(this)}
+                            <input type="birthdate" name="birthdate" value={this.state.birthdate} onChange={this.handleInputChange}
                                     placeholder="Birth date" required/>    
                             
                             {/* <select name="role" value={this.state.role} required>

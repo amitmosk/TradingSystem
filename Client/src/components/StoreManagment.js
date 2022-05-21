@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "./Login.css";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
+import HomeIcon from '@mui/icons-material/Home';
 import { ConnectApi } from '../API/ConnectApi';
 import Register from "./Register.js";
 import HomePageSearch from './HomePageSearch';
@@ -40,6 +41,8 @@ export default class StoreManagment extends Component {
             useremailtoshowhistory: undefined,
             useremailtoremove: undefined,
             storeidtoremove: undefined,
+            add_product_fields:["store_id", "quantity","name", "price", "category", "key_words"],
+            aa:undefined
             
         };
         this.adminApi = new AdminApi();
@@ -59,68 +62,22 @@ export default class StoreManagment extends Component {
     async componentDidMount() {
     }
 
-    async get_market_stats(){
-        
-        let response = await this.adminApi.get_market_stats();
-        const stats = response.value;
-        if (!response.was_execption)
-        {
-            // Show stats
+    async add_product(){
+        const val= this.state.aa;
+        // let response = await this.adminApi.get_market_stats();
+        // const stats = response.value;
+        // if (!response.was_execption)
+        // {
+        //     // Show stats
 
            
-        }
-        else{
+        // }
+        // else{
 
-        }
-        alert(response.message);
+        // }
+        // alert(response.message);
     }
-    async admin_view_store_purchases_history(){
-        const store_id = this.state.storeidtoshowhistory;
-        const response = await this.adminApi.admin_view_store_purchases_history(store_id);
-        if (!response.was_execption)
-        {
-            //show history
-        }
-        else{
-
-        }
-    }
-    async admin_view_user_purchases_history(){
-        const user_email = this.state.useremailtoshowhistory;
-        const response = await this.adminApi.admin_view_user_purchases_history(user_email);
-        if (!response.was_execption)
-        {
-            //show history
-        }
-        else{
-            
-        }
-    }
-
-    async remove_user(){
-        const user_email = this.state.useremailtoremove;
-        const response = await this.adminApi.remove_user(user_email);
-        if (!response.was_execption)
-        {
-            //show history
-        }
-        else{
-            
-        }
-    }
-
-
-    async close_store_permanently(){
-        const store_id = this.state.storeidtoremove;
-        const response = await this.adminApi.close_store_permanently(store_id);
-        if (!response.was_execption)
-        {
-            //show history
-        }
-        else{
-            
-        }
-    }
+    
    
     
     render() {
@@ -130,11 +87,12 @@ export default class StoreManagment extends Component {
             return (
                 
                 <Box sx={{ flexGrow: 1 }}>
+                    <Link href="/"><HomeIcon></HomeIcon></Link>
                     <h3>Store Managment Page</h3>
 
                 <Grid container spacing={20}>
                 <Grid item xs>
-                <FormDialog/>
+                <FormDialog fields={this.state.add_product_fields} answer={[]}></FormDialog>
               
                 <input type="text" name="storeidtoremove" value={this.state.storeidtoremove} onChange={this.handleInputChange.bind(this)}
                                     placeholder="Add Product" required/>

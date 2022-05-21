@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "./Login.css";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
+import HomeIcon from '@mui/icons-material/Home';
 import { ConnectApi } from '../API/ConnectApi';
 import Register from "./Register.js";
 import Box from '@mui/material/Box';
@@ -111,6 +112,7 @@ export default class StorePage extends Component {
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
+                    <Link href="/"><HomeIcon></HomeIcon></Link>
                         <h3>Store Name goes here</h3> 
                         {/* <h3>{this.state.store_name}</h3>  */}
 

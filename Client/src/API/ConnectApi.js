@@ -28,16 +28,22 @@ export class ConnectApi {
                 
             })
             .then(res => {
-                const websocket = require('ws');
-                var ws = new websocket(WEBSOCKETURL);
+                console.log("in the then - login");
+                console.log(res);
+                console.log(res.data);
+                console.log(res.data.value);
+                console.log(res.data.wasException);
+                console.log(res.data.message);
+                // const websocket = require('ws');
+                // var ws = new websocket(WEBSOCKETURL);
                 
-                ws.onopen = function(data) {ws.send("-email- want to open web socket with the server");};
-                ws.onmessage = function(data) {
-                    alert("new notification!");
-                    // update notifications UI with the new notification 
-                    console.log(data);
-                 }
-
+                // ws.onopen = function(data) {ws.send("-email- want to open web socket with the server");};
+                // ws.onmessage = function(data) {
+                //     alert("new notification!");
+                //     // update notifications UI with the new notification 
+                //     console.log(data);
+                //  }
+                console.log("im here "+res.data+"\n");
                 return new Response(res.data);
             })
             .catch(res => undefined);
@@ -66,19 +72,19 @@ export class ConnectApi {
                 // let response = res.data;
                 // let user = new User
 
-                // console.log("in the then");
-                // console.log(res);
-                // console.log(res.data);
-                // console.log(res.data.value);
-                // console.log(res.data.wasException);
-                // console.log(res.data.message);
+                console.log("in the then");
+                console.log(res);
+                console.log(res.data);
+                console.log(res.data.value);
+                console.log(res.data.wasException);
+                console.log(res.data.message);
 
 
-                const response = res.data;
-                const user = new User(response.value);
-                const r =Response.create(user, response.message, response.wasException);
-                return r;
-                // return new Response(res.data);
+                // const response = res.data;
+                // const user = new User(response.value);
+                // const r =Response.create(user, response.message, response.wasException);
+                // return r;
+                return new Response(res.data);
             })
             .catch(res => console.log("fuck!!!\n\n\n\n\n"));
     }

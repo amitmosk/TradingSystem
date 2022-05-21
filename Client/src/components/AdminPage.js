@@ -14,6 +14,8 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import HomeIcon from '@mui/icons-material/Home';
+import FormDialog from './FormDialog';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -39,6 +41,7 @@ export default class AdminPage extends Component {
             useremailtoshowhistory: undefined,
             useremailtoremove: undefined,
             storeidtoremove: undefined,
+            fields:["hi", "ya", "gever"],
             
         };
         this.adminApi = new AdminApi();
@@ -59,11 +62,14 @@ export default class AdminPage extends Component {
     }
 
     async get_market_stats(){
-        
+        console.log("in get market stat\n");
         let response = await this.adminApi.get_market_stats();
         const stats = response.value;
         if (!response.was_execption)
         {
+
+            console.log("in get market stats - success!\n");
+            console.log(response);
             // Show stats
 
            
@@ -124,13 +130,12 @@ export default class AdminPage extends Component {
     
     render() {
         const {redirectTo} = this.state
-        // { this.state.redirect ? (<Redirect push to="/"/>) : null }
-        
             return (
                 
                 <Box sx={{ flexGrow: 1 }}>
+                    <Link href="/"><HomeIcon></HomeIcon></Link>
                     <h3>Admin Page</h3>
-
+                
                 <Grid container spacing={20}>
                 <Grid item xs>
                 <input type="text" name="storeidtoremove" value={this.state.storeidtoremove} onChange={this.handleInputChange.bind(this)}
@@ -169,19 +174,6 @@ export default class AdminPage extends Component {
 
 
 
-                // <main class="LoginMain">
-                //     <div class="LoginWindow">
-                //         <h3>Admin Page</h3>
-                //         <form class="LoginForm" >
-                //         <Button href="/Register" variant="contained">Send </Button>
-                //         <Button href="/Register" variant="contained">Send </Button>
-                //         <Button href="/Register" variant="contained">Send </Button>
-                //         <Button href="/Register" variant="contained">Send </Button>
-                //         <Button href="/Register" variant="contained">Send </Button>
-                //         <Button href="/Register" variant="contained">Send </Button>
-                //         </form>
-                //     </div>
-                // </main>
             );
         
         }

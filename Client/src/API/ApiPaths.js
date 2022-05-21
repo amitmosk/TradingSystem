@@ -60,9 +60,9 @@ export const CLOSE_STORE_PERMANENTLY= API_PATH + '/close_store_permanently';
 export const FIND_PRODUCT_INFORMATION = API_PATH + '/product_information';
 
 
-export const FIND_PRODUCTS_BY_NAME = API_PATH + '/find_product_by_name';
-export const FIND_PRODUCTS_BY_CATEGORY = API_PATH + '/find_product_by_caregory';
-export const FIND_PRODUCTS_BY_KEYWORDS = API_PATH + '/find_product_by_keywords';
+export const FIND_PRODUCTS_BY_NAME = API_PATH + '/find_products_by_name';
+export const FIND_PRODUCTS_BY_CATEGORY = API_PATH + '/find_products_by_caregory';
+export const FIND_PRODUCTS_BY_KEYWORDS = API_PATH + '/find_products_by_keywords';
 
 
 export const ADD_PRODUCT_TO_CART = API_PATH + '/add_product_to_cart';

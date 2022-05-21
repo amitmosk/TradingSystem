@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import "./Payment.css";
 import Button from '@mui/material/Button';
 import { ConnectApi } from '../API/ConnectApi';
-
+import Link from '@mui/material/Button';
+import HomeIcon from '@mui/icons-material/Home';
 const axios = require('axios');
 const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
 
@@ -84,6 +85,7 @@ export default class Payment extends Component {
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
+                    <Link href="/"><HomeIcon></HomeIcon></Link>
                         <h3>Payment</h3>
                         <form class="LoginForm" onSubmit={this.handleSubmit}>
                             {this.state.loginError ?
