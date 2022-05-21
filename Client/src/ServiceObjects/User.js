@@ -1,3 +1,4 @@
+import { StoreReview } from "./StoreReview";
 export class User  {
     // private AssignState state;
     // private Cart cart;
