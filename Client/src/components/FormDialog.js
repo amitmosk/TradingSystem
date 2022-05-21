@@ -11,14 +11,19 @@ import DialogTitle from '@mui/material/DialogTitle';
 // export default class FormDialog extends React.Component{
 //     constructor(props) {
 //         super(props);
-//         this.state = { 
+//         this.state = {
 //             fields:props.fields,
 
 //         };
 
 //     }
+FormDialog.defaultProps = {
+  outlinedVar: "outlined",
+}
 
-export default function FormDialog({fields ,getValues, name} ) {
+export default function FormDialog({ fields, getValues, name, outlinedVar }) {
+
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -30,13 +35,13 @@ export default function FormDialog({fields ,getValues, name} ) {
   };
   const handleSumbit = event => {
     console.log("in handle submit\n");
-    let ans=[];
-    fields.map((f)=> ans.push(localStorage.getItem(f)))
+    let ans = [];
+    fields.map((f) => ans.push(localStorage.getItem(f)))
     console.log("aaaaaaaaaaaaaa\n");
     getValues(ans);
     console.log("bbbbbbbbbbbbbbbb\n");
-  
-    
+    setOpen(false);
+
   };
   const handleInputChange = event => {
     // console.log('Click');
@@ -48,7 +53,7 @@ export default function FormDialog({fields ,getValues, name} ) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant={outlinedVar} onClick={handleClickOpen}>
         {name}
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -60,25 +65,25 @@ export default function FormDialog({fields ,getValues, name} ) {
           </DialogContentText>
           {/* (store_id, quantity,name, price, category, key_words) */}
           {fields.map((field) => (
-                               <TextField
-                               autoFocus
-                               margin="dense"
-                               id="name"
-                               name={field}
-                               label={field}
-                               type="storeid"
-                               fullWidth
-                               variant="standard"
-                               onChange={handleInputChange}
-                             />
-                                ))}
-          
-             
-          
-          
-          
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              name={field}
+              label={field}
+              type="storeid"
+              fullWidth
+              variant="standard"
+              onChange={handleInputChange}
+            />
+          ))}
+
+
+
+
+
         </DialogContent>
-        
+
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSumbit}>Subscribe</Button>

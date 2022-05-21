@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import './App.css';
-import {BrowserRouter, Link, Route, Router, Routes} from "react-router-dom";
+import { BrowserRouter, Link, Route, Router, Routes } from "react-router-dom";
 
 import Login from './components/Login';
 import HomePageSearch from './components/HomePageSearch';
@@ -24,71 +24,71 @@ export default class App extends Component {
   static displayName = App.name;
 
   constructor(props) {
-      super(props)
-      this.state = {
-          isLoggedIn: false,
-          ownedStoreList:[],
-          email:'',
-          name:"Guest",
-          role: undefined,
+    super(props)
+    this.state = {
+      isLoggedIn: false,
+      ownedStoreList: [],
+      email: '',
+      name: "Guest",
+      role: undefined,
 
-          messages: [],
-          webSocketConnection: undefined
-      }
- 
+      messages: [],
+      webSocketConnection: undefined
+    }
+
 
   }
-      
 
-  
-    
-    async updateLoginHandler(){
-      console.log("in updateLoginHandler\n\n\n\n\n");
-      this.setState({
-          isLoggedIn: true,
-      })
-  }
-  async updateRegisterHandler(name, email){
+
+
+
+  async updateLoginHandler() {
     console.log("in updateLoginHandler\n\n\n\n\n");
     this.setState({
-        name:name,
-        email:email,
+      isLoggedIn: true,
     })
-}
- 
+  }
+  async updateRegisterHandler(name, email) {
+    console.log("in updateLoginHandler\n\n\n\n\n");
+    this.setState({
+      name: name,
+      email: email,
+    })
+  }
 
 
-  render () {
+
+  render() {
     return (
       <BrowserRouter>
-      <Routes>
-      <Route path="/" element={<Album user_name = {this.state.name}/>}></Route>
-      <Route path="/Login" element={<Login isLoggedIn={this.state.isLoggedIn} updateLoginHandler={this.updateLoginHandler.bind(this)}/>}></Route>
-      <Route path="/Register" element={<Register updateRegisterHandler={this.updateRegisterHandler.bind(this)} />}></Route>
-      <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
-      <Route path="/StorePage" element={<StorePage store_id=""/>}></Route>
-      <Route path="/AdminSendMessage" element={<AdminSendMessage/>}></Route>
-      <Route path="/AdminPage" element={<AdminPage/>}></Route>
-      <Route path="/StoreManagment" element={<StoreManagment/>}></Route>
-      
-    
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          {/* <Route path="/" element={<Album user_name = {this.state.name}/>}></Route> */}
+          <Route path="/Login" element={<Login isLoggedIn={this.state.isLoggedIn} updateLoginHandler={this.updateLoginHandler.bind(this)} />}></Route>
+          <Route path="/Register" element={<Register updateRegisterHandler={this.updateRegisterHandler.bind(this)} />}></Route>
+          <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
+          <Route path="/StorePage" element={<StorePage store_id="" />}></Route>
+          <Route path="/AdminSendMessage" element={<AdminSendMessage />}></Route>
+          <Route path="/AdminPage" element={<AdminPage />}></Route>
+          <Route path="/" element={<StoreManagment />}></Route>
+
+
+        </Routes>
+      </BrowserRouter>
 
 
 
 
-     
-          //   <div> 
-          //   {/* <HomePageSearch /> 
-          //   <Payment/>
-          //   <Supply/>
-          //   <Register/>    */}
-          //   <Login isLoggedIn={this.state.isLoggedIn} loginUpdateHandler={this.updateLoginHandler}/>
-          //   {/* <StorePage/> */}
 
-          //   {/* <ShoppingCart/> */}
-          // </div>
+      //   <div> 
+      //   {/* <HomePageSearch /> 
+      //   <Payment/>
+      //   <Supply/>
+      //   <Register/>    */}
+      //   <Login isLoggedIn={this.state.isLoggedIn} loginUpdateHandler={this.updateLoginHandler}/>
+      //   {/* <StorePage/> */}
+
+      //   {/* <ShoppingCart/> */}
+      // </div>
     );
   }
 }
