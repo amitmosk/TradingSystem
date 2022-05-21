@@ -16,6 +16,7 @@ public class PremiumSecurity extends Security{
 
     public PremiumSecurity() {
     }
+
     // ------------------------------ getters ------------------------------
     public String getQuestion() {
         return question;
@@ -41,7 +42,7 @@ public class PremiumSecurity extends Security{
         return true;
     }
 
-    public String get_question() throws MarketException {
+    public String find_question() throws MarketException {
         return question;
     }
 

@@ -144,4 +144,33 @@ public final class PasswordManagerImpl implements iPasswordManager {
         return authenticate(password.toCharArray(), token);
     }
 
+    public static String getID() {
+        return ID;
+    }
+
+    public static int getDefaultCost() {
+        return DEFAULT_COST;
+    }
+
+    public static String getALGORITHM() {
+        return ALGORITHM;
+    }
+
+    public static int getSIZE() {
+        return SIZE;
+    }
+
+    public static Pattern getLayout() {
+        return layout;
+    }
+
+    public SecureRandom getRandom() {
+        return random;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+
 }

@@ -40,5 +40,4 @@ public class ErrorLogger {
         this.logger.severe(e.getMessage());
     }
 
-
 }

@@ -85,7 +85,7 @@ public class User {
         isGuest.set(false);
     }
 
-    public synchronized void login(String password) throws Exception {
+    public synchronized void login(String password) throws MarketException {
         if (isLogged.get())
             throw new LoginException("User already logged in.");
         this.state.login(password); //verifies password
@@ -107,7 +107,7 @@ public class User {
     public Basket getBasketByStoreID(int storeID) {
         String email = "guest";
         try {
-            email = get_user_email();
+            email = user_email();
         } catch (Exception e) {
         }
         return cart.getBasket(storeID, email);
@@ -153,15 +153,15 @@ public class User {
         return this.state.view_user_purchase_history();
     }
 
-    public String get_user_name() throws MarketException {
+    public String user_name() throws MarketException {
         return state.get_user_name();
     }
 
-    public String get_user_last_name() throws MarketException {
+    public String user_last_name() throws MarketException {
         return state.get_user_last_name();
     }
 
-    public String get_user_email() throws MarketException {
+    public String user_email() throws MarketException {
         return state.get_user_email();
     }
 
@@ -169,21 +169,21 @@ public class User {
         state.check_admin_permission();
     }
 
-    public void unregister(String password) throws Exception {
+    public void unregister(String password) throws MarketException {
         state.unregister(password);
     }
 
-    public void edit_name(String pw, String new_name) throws Exception {
+    public void edit_name(String pw, String new_name) throws MarketException {
         Utils.nameValidCheck(new_name);
         state.edit_name(pw, new_name);
     }
 
-    public void edit_password(String old_password, String password) throws Exception {
+    public void edit_password(String old_password, String password) throws MarketException {
         Utils.passwordValidCheck(password);
         state.edit_password(old_password, password);
     }
 
-    public void edit_last_name(String pw, String new_last_name) throws Exception {
+    public void edit_last_name(String pw, String new_last_name) throws MarketException {
         Utils.nameValidCheck(new_last_name);
         state.edit_last_name(pw, new_last_name);
     }
@@ -193,30 +193,30 @@ public class User {
         this.state = new Admin(email, pw, name, lastName);
     }
 
-    public String get_user_sequrity_question() throws Exception {
-        return this.state.get_security_question();
+    public String user_sequrity_question() throws MarketException {
+        return this.state.view_security_question();
     }
 
-    private void verify_answer(String answer) throws Exception {
+    private void verify_answer(String answer) throws MarketException {
         this.state.verify_answer(answer);
     }
 
-    public void edit_name_premium(String pw, String new_name, String answer) throws Exception {
+    public void edit_name_premium(String pw, String new_name, String answer) throws MarketException {
         verify_answer(answer);
         edit_name(pw, new_name);
     }
 
-    public void edit_last_name_premium(String pw, String new_last_name, String answer) throws Exception {
+    public void edit_last_name_premium(String pw, String new_last_name, String answer) throws MarketException {
         verify_answer(answer);
         edit_last_name(pw, new_last_name);
     }
 
-    public void edit_password_premium(String old_password, String new_password, String answer) throws Exception {
+    public void edit_password_premium(String old_password, String new_password, String answer) throws MarketException {
         verify_answer(answer);
         edit_password(old_password, new_password);
     }
 
-    public void improve_security(String password, String question, String answer) throws Exception {
+    public void improve_security(String password, String question, String answer) throws MarketException {
         this.state.improve_security(password, question, answer);
     }
 
@@ -227,7 +227,7 @@ public class User {
     private String get_identifier_for_basket() {
         String identifier = "guest";
         try {
-            identifier = get_user_email();
+            identifier = user_email();
         } catch (Exception e) {
         }
         return identifier;
@@ -246,8 +246,8 @@ public class User {
         this.state.add_founder(store, appointment);
     }
 
-    public AssignUser get_state_if_assigned() throws NoUserRegisterdException {
-        return this.state.get_assign();
+    public AssignUser state_if_assigned() throws NoUserRegisterdException {
+        return this.state.is_assign();
     }
 
     public Admin is_admin(){ return state.is_admin();}

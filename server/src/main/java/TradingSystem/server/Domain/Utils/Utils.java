@@ -15,6 +15,9 @@ import java.util.regex.Pattern;
 
 public class Utils {
 
+    public Utils() {
+    }
+
     public static String DateToString(LocalDate d) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 

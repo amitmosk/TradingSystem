@@ -1,5 +1,7 @@
 package TradingSystem.server.Domain.UserModule;
 
+import TradingSystem.server.Domain.Utils.Exception.MarketException;
+import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
 import TradingSystem.server.Domain.Utils.PasswordManagerImpl;
 import TradingSystem.server.Domain.Utils.iPasswordManager;
 
@@ -36,11 +38,11 @@ public class Security {
     }
 
 
-    public void check_correct_password(String password) throws Exception {
-        if (!passwordManager.authenticate(password, this.token)) throw new Exception("password does not match to current password");
+    public void check_correct_password(String password) throws MarketException {
+        if (!passwordManager.authenticate(password, this.token)) throw new MarketException("password does not match to current password");
     }
 
-    public void edit_password(String old_password, String password) throws Exception {
+    public void edit_password(String old_password, String password) throws MarketException {
         this.check_correct_password(old_password);
         this.token = this.passwordManager.hash(password);
     }
@@ -49,14 +51,14 @@ public class Security {
         return false;
     }
 
-    public String get_question() throws Exception {
-        throw new Exception("Only premium security has security question");
+    public String find_question() throws MarketException {
+        throw new MarketSecuirtyException("Only premium security has security question");
     }
 
-    public void verify_answer(String answer) throws Exception {
-        throw new Exception("Only premium security has security question");
+    public void verify_answer(String answer) throws MarketException {
+        throw new MarketSecuirtyException("Only premium security has security question");
     }
 
-    public void check_improvable() throws Exception { }
+    public void check_improvable() throws MarketException { }
 
 }

@@ -4,4 +4,7 @@ public class AppointmentException extends UserExcpetion{
     public AppointmentException(String s) {
         super(s);
     }
+
+    public AppointmentException() {
+    }
 }

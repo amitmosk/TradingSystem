@@ -124,9 +124,9 @@ class UserTest {
 
         try{
             user.edit_name("pssw0rD", "Gal");
-            assertEquals("Gal", user.get_user_name());
+            assertEquals("Gal", user.user_name());
             user.edit_name("psddsw0rD", "Eylon");
-            assertEquals("Gal", user.get_user_name());
+            assertEquals("Gal", user.user_name());
         }
         catch (Exception e){}
     }

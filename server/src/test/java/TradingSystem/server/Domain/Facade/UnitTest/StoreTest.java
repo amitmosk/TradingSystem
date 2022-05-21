@@ -1,8 +1,5 @@
 package TradingSystem.server.Domain.Facade.UnitTest;
 
-import TradingSystem.server.Domain.ExternSystems.PaymentAdapterImpl;
-import TradingSystem.server.Domain.ExternSystems.SupplyAdapterImpl;
-import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
@@ -20,7 +17,6 @@ import org.junit.jupiter.api.Test;
 
 
 import org.junit.jupiter.api.AfterEach;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -66,7 +62,7 @@ class StoreTest {
         try {
             User user = new User();
             user.register(starting + counter + ending, "aA123456", "gal", "brown", birth_date);
-            to_ret = user.get_state_if_assigned();
+            to_ret = user.state_if_assigned();
         } catch (Exception e) {
             fail("failed to initialized tests - cannot register user - " + starting);
         }

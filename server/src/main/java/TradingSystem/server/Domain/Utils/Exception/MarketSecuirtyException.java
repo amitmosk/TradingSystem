@@ -4,4 +4,7 @@ public class MarketSecuirtyException extends UserExcpetion{
     public MarketSecuirtyException(String s) {
         super(s);
     }
+
+    public MarketSecuirtyException() {
+    }
 }

@@ -10,7 +10,7 @@ public abstract class AssignState {
     public AssignState() {
     }
 
-    public boolean login(String pw) throws MarketException, Exception {
+    public boolean login(String pw) throws MarketException{
         throw new AlreadyRegisterdException("Assign user cannot log in");
     }
 
@@ -45,37 +45,37 @@ public abstract class AssignState {
         throw new NoPremssionException("only admin have permissions for this operation.");
     }
 
-    public void unregister(String password) throws Exception {
+    public void unregister(String password) throws MarketException {
         throw new NoUserRegisterdException("guest cant unregister from the system");
     }
 
-    public void edit_name(String pw, String new_name) throws MarketException, Exception {
+    public void edit_name(String pw, String new_name) throws MarketException {
         throw new NoUserRegisterdException("guest cant change is name");
     }
 
-    public void edit_password(String old_password, String password) throws Exception {
+    public void edit_password(String old_password, String password) throws MarketException {
         throw new NoUserRegisterdException("guest cant change is password");
     }
 
-    public void edit_last_name(String pw, String new_last_name) throws Exception {
+    public void edit_last_name(String pw, String new_last_name) throws MarketException {
         throw new NoUserRegisterdException("guest cant change his last name");
     }
 
-    public String get_security_question() throws Exception {
+    public String view_security_question() throws MarketException {
         throw new NoUserRegisterdException("guest does not have privacy question");
     }
 
-    public void verify_answer(String answer) throws Exception {
+    public void verify_answer(String answer) throws MarketException {
         throw new NoUserRegisterdException("guest does not have privacy question");
     }
 
-    public void improve_security(String password, String question, String answer) throws Exception {
+    public void improve_security(String password, String question, String answer) throws MarketException {
         throw new NoUserRegisterdException("guest cannot improve security");
     }
 
     public void add_founder(Store store, Appointment appointment) throws MarketException {throw new NoUserRegisterdException("guest cannot be a founder");}
 
-    public AssignUser get_assign() throws NoUserRegisterdException {throw new NoUserRegisterdException("cannot get guest AssignUser");}
+    public AssignUser is_assign() throws NoUserRegisterdException {throw new NoUserRegisterdException("cannot get guest AssignUser");}
 
     public void add_notification(String notification) throws NoUserRegisterdException { throw new NoUserRegisterdException("cannot add notification to guest");}
 

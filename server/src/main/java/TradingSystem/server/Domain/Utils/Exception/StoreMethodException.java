@@ -4,4 +4,7 @@ public class StoreMethodException extends MarketException{
     public StoreMethodException(String s) {
         super(s);
     }
+
+    public StoreMethodException() {
+    }
 }

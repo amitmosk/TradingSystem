@@ -4,4 +4,7 @@ public class ObjectDoesntExsitException extends MarketException{
     public ObjectDoesntExsitException(String s) {
         super(s);
     }
+
+    public ObjectDoesntExsitException() {
+    }
 }

@@ -107,7 +107,7 @@ public class AssignUser extends AssignState {
     // ------------------------------ methods ------------------------------
 
     @Override
-    public boolean login(String pw) throws Exception {
+    public boolean login(String pw) throws MarketException {
         security.check_correct_password(pw);
         return true;
     }
@@ -147,34 +147,34 @@ public class AssignUser extends AssignState {
     }
 
     @Override
-    public void unregister(String password) throws Exception {
+    public void unregister(String password) throws MarketException {
         security.check_correct_password(password);
     }
 
-    public void edit_name(String pw, String new_name) throws Exception {
+    public void edit_name(String pw, String new_name) throws MarketException {
         security.check_correct_password(pw);
         this.name = new_name;
     }
 
-    public void edit_password(String old_password, String password) throws Exception {
+    public void edit_password(String old_password, String password) throws MarketException {
         this.security.edit_password(old_password, password);
 
     }
 
-    public void edit_last_name(String pw, String new_last_name) throws Exception {
+    public void edit_last_name(String pw, String new_last_name) throws MarketException {
         security.check_correct_password(pw);
         this.name = new_last_name;
     }
 
-    public String get_security_question() throws Exception {
-        return security.get_question();
+    public String view_security_question() throws MarketException {
+        return security.find_question();
     }
 
-    public void verify_answer(String answer) throws Exception {
+    public void verify_answer(String answer) throws MarketException {
         security.verify_answer(answer);
     }
 
-    public void improve_security(String password, String question, String answer) throws Exception {
+    public void improve_security(String password, String question, String answer) throws MarketException {
         security.check_correct_password(password);
         security.check_improvable();
         security = new PremiumSecurity(password, question, answer);
@@ -208,7 +208,7 @@ public class AssignUser extends AssignState {
             throw new AppointmentException("user is not appointed to store");
     }
 
-    public AssignUser get_assign(){
+    public AssignUser is_assign(){
         return this;
     }
 

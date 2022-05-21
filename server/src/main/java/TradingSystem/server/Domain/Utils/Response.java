@@ -31,4 +31,23 @@ public class Response<T> {
     public String getMessage() {
         return message;
     }
+
+    public Response() {
+    }
+
+    public boolean isWasException() {
+        return wasException;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
+
+    public void setWasException(boolean wasException) {
+        this.wasException = wasException;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

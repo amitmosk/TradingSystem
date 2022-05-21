@@ -2,8 +2,9 @@ package TradingSystem.server.Service;
 
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
+import TradingSystem.server.Domain.Facade.Demi;
 import TradingSystem.server.Domain.Facade.MarketFacade;
-import com.google.gson.Gson;
+import TradingSystem.server.Domain.UserModule.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,7 +43,7 @@ public class Service implements iService {
         System.out.println("string amit");
         Response<String> res  = new Response<String>("hello "+a,"yess" );
 //        return "hello "+a;
-        return new Gson().toJson(res);
+        return "new Gson().toJson(res);";
     }
 
 
@@ -66,8 +67,10 @@ public class Service implements iService {
     @RequestMapping(value = "/register")
     @CrossOrigin
     @Override
-    public Response register(String email, String pw, String name, String lastName, String birth_date) {
-        Response answer = marketFacade.register(email, pw, name, lastName, birth_date);
+    public Response<User> register(String email, String pw, String name, String lastName, String birth_date) {
+        Response<User> answer = marketFacade.register(email, pw, name, lastName, birth_date);
+//        Response<Demi> answer = new Response<>(new Demi(),"dad");
+//        Response<User> answer = new Response<>(new User(),"dad");
         return answer;
     }
 
