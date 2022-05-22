@@ -19,7 +19,12 @@ import { Container, Row, Col } from 'react-grid-system';
 import { Paper } from '@mui/material';
 import { Typography } from '@mui/material';
 import Rating from '@mui/material/Rating';
-// import itemData from '@mui/material/Box';
+import BasicRating from './Rating';
+import ShoppingCart from './ShoppingCart';
+import { ThirtyFpsRounded } from '@mui/icons-material';
+import Grid from '@mui/material/Grid';
+import FormDialog from './FormDialog';
+
 
 const axios = require('axios');
 const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
@@ -87,9 +92,7 @@ export default class StorePage extends Component {
         send_question_to_store_fields : ["Enter your question"],
         };
         this.storeApi = new StoreApi();
-        const value = undefined;
-        const setValue = undefined;
-       
+
     }    
 
     
@@ -128,6 +131,37 @@ export default class StorePage extends Component {
 
       }
   }
+  async rate_store(rating) {
+    // const rating = this.state.rating;
+    // let response = await this.storeApi.rate_store(rating);
+    // alert(response.message);
+    // if (!response.was_exception)
+    // {
+    //   //get store
+    //   //reload store
+      
+    // }
+    // else
+    // {
+
+    // }
+    console.log("in rate store");
+    console.log("rating is = "+rating);
+}
+async send_question_to_store(values) {
+  const question = values[0];
+  let response = await this.storeApi.send_question_to_store(question);
+  alert(response.message);
+  if (!response.was_exception)
+  {
+
+  }
+  else{
+
+  }
+  
+}
+
 
 
     
@@ -140,8 +174,8 @@ export default class StorePage extends Component {
                         <h3>Store Name goes here</h3>
                        {/* <FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog> */}
                             {/* <FormDialog fields={this.state.send_question_to_store_fields} getValues={this.send_question_to_store.bind(this)} name="Send question to store"></FormDialog> */}
-
-                        <Col><row><MenuListComposition item2="Send Complaint" item3={ <Link href="/StoreManagment" underline="hover" >
+                           
+                        <Col><row><MenuListComposition item2={<FormDialog fields={this.state.send_question_to_store_fields} getValues={this.send_question_to_store.bind(this)} name="Send question to store"></FormDialog>} item3={ <Link href="/StoreManagment" underline="hover" >
                                 {'Manage Store'}
                                 </Link>}>
                                 </MenuListComposition></row> </Col>
@@ -152,13 +186,9 @@ export default class StorePage extends Component {
                         <div> {this.state.storeReview}</div> */}
 
 
-                        {/* <div> Store info goes here</div>
-                        <div> Store info goes here</div>
-                        <div> Store info goes here</div>
-                        <div> Store info goes here</div>
-                        <div> Store info goes here</div> */}
                         
                         <Paper >
+              
              <Typography
                 // style={{ width: "70%", margin: "auto" }} I think you should avoid break tags instead do something with the width
                 variant="body2"
@@ -173,22 +203,10 @@ export default class StorePage extends Component {
                 
               </Typography>
             </Paper>
-                        {/* <Box
-                            sx={{
-                                width: 300,
-                                height: 300,
-                                backgroundColor: 'primary.dark',
-                                '&:hover': {
-                                backgroundColor: 'primary.main',
-                                opacity: [0.9, 0.8, 0.7],
-                                content:'"ffffkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkffffffffffffffff"',
-                                },
-                                
-                            }}
-                            
-                            /> */}
+
                             <h3>Products</h3>
-                            <List
+                            <ShoppingCart/>
+                            {/* <List
                             sx={{
                                 width: '100%',
                                 maxWidth: 360,
@@ -205,28 +223,18 @@ export default class StorePage extends Component {
                                     <ListItemText primary={`Item ${item}`} />
                                 </ListItem>
                                 ))}
-                            </List>
+                            </List> */}
 
                             <Box
-      sx={{
-        '& > legend': { mt: 2 },
-      }}
-    >
-      {/* <Typography component="legend">Controlled</Typography>
-      <Rating
-        name="simple-controlled"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      />
-      <Typography component="legend">Read only</Typography>
-      <Rating name="read-only" value={value} readOnly />
-      <Typography component="legend">Disabled</Typography>
-      <Rating name="disabled" value={value} disabled />
-      <Typography component="legend">No rating given</Typography>
-      <Rating name="no-value" value={null} /> */}
-    </Box>
+                                    sx={{
+                                      '& > legend': { mt: 2 },
+                                    }}
+                                  >
+                                    
+
+
+
+                                  </Box>
                             <List
                             sx={{
                                 width: '100%',
@@ -245,6 +253,8 @@ export default class StorePage extends Component {
                                 </ListItem>
                                 ))}
                             </List>
+                            <BasicRating to_rate="Store" rating={this.rate_store.bind(this)} />
+                            
 
 
                      
@@ -270,3 +280,17 @@ export default class StorePage extends Component {
 
 
 
+{/* <Typography component="legend">Controlled</Typography>
+      <Rating
+        name="simple-controlled"
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      />
+      <Typography component="legend">Read only</Typography>
+      <Rating name="read-only" value={value} readOnly />
+      <Typography component="legend">Disabled</Typography>
+      <Rating name="disabled" value={value} disabled />
+      <Typography component="legend">No rating given</Typography>
+      <Rating name="no-value" value={null} /> */}
