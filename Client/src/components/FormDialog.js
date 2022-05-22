@@ -7,6 +7,16 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+
+// export default class FormDialog extends React.Component{
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             fields:props.fields,
+
+//         };
+
+//     }
 FormDialog.defaultProps = {
   outlinedVar: "outlined",
 }
@@ -47,12 +57,9 @@ export default function FormDialog({ fields, getValues, name, outlinedVar }) {
         {name}
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>Submit</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
+
           {/* (store_id, quantity,name, price, category, key_words) */}
           {fields.map((field) => (
             <TextField
@@ -76,7 +83,7 @@ export default function FormDialog({ fields, getValues, name, outlinedVar }) {
 
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSumbit}>Subscribe</Button>
+          <Button onClick={handleSumbit}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>
