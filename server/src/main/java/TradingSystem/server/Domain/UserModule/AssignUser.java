@@ -9,6 +9,8 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Service.NotificationHandler;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 // TODO: everytime user creates/appoint a store make an appointment
@@ -211,6 +213,23 @@ public class AssignUser extends AssignState {
     public AssignUser is_assign(){
         return this;
     }
+
+    public UserState find_state(){return UserState.ASSIGN_USER;}
+
+    public List<Integer> stores_managers_list() {
+        LinkedList<Integer> answer = new LinkedList();
+        for (Store store : this.founder.keySet()){
+            answer.add(store.getStore_id());
+        }
+        for (Store store : this.owner.keySet()){
+            answer.add(store.getStore_id());
+        }
+        for (Store store : this.manager.keySet()){
+            answer.add(store.getStore_id());
+        }
+        return answer;
+    }
+
 
     public void add_notification(String notification) {
         NotificationHandler.getInstance().add_notification(this.email, notification);

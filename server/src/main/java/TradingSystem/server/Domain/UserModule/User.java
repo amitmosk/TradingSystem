@@ -11,6 +11,7 @@ import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Utils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -260,5 +261,13 @@ public class User {
     public boolean test_isLogged(){return this.isLogged.get();}
 
     public void add_notification(String notification) {
+    }
+
+    public UserState find_state() {
+        return state.find_state();
+    }
+
+    public List<Integer> stores_managers_list() {
+        return state.stores_managers_list();
     }
 }

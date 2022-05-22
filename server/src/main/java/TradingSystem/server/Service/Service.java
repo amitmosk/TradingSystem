@@ -4,7 +4,6 @@ import TradingSystem.server.Config.SystemStartConfig;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.Facade.MarketFacade;
-import TradingSystem.server.Domain.UserModule.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,7 +53,9 @@ public class Service implements iService {
     @Override
     public Response login(String email, String password) {
         Response answer = marketFacade.login(email, password);
-//        this.notificationHandler.send_waiting_notifications(email);
+        // have to write new method that will be send onopen in the client to the server,
+        // and the server will send all the waiting notifications
+        this.notificationHandler.send_waiting_notifications(email);
         return answer;
     }
 
@@ -69,10 +70,8 @@ public class Service implements iService {
     @RequestMapping(value = "/register")
     @CrossOrigin
     @Override
-    public Response<User> register(String email, String pw, String name, String lastName, String birth_date) {
-        Response<User> answer = marketFacade.register(email, pw, name, lastName, birth_date);
-//        Response<Demi> answer = new Response<>(new Demi(),"dad");
-//        Response<User> answer = new Response<>(new User(),"dad");
+    public Response register(String email, String pw, String name, String lastName, String birth_date) {
+        Response answer = marketFacade.register(email, pw, name, lastName, birth_date);
         return answer;
     }
 

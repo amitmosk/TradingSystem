@@ -1,15 +1,16 @@
 package TradingSystem.server.Domain.Facade;
 
+import java.util.LinkedList;
 import java.util.List;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
+import TradingSystem.server.Domain.UserModule.UserInformation;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.ErrorLogger;
 import TradingSystem.server.Domain.Utils.Exception.LoginException;
-import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
@@ -78,12 +79,13 @@ public class MarketFacade{
      * @param lastName the last name of the new user
      * @return a string with informative of success/failure to client
      */
-    public Response<User> register(String Email, String pw, String name, String lastName, String birth_date) {
-        Response<User> response = null;
+    public Response<UserInformation> register(String Email, String pw, String name, String lastName, String birth_date) {
+        Response<UserInformation> response = null;
         try {
             User user = user_controller.register(loggedUser, Email, pw, name, lastName, birth_date);
             this.isGuest = false;
-            response = new Response<>(user, "Registration done successfully");
+            UserInformation userInformation = new UserInformation(user);
+            response = new Response<>(userInformation, "Registration done successfully");
             system_logger.add_log(name + " " + lastName + " has registered to the system");
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
@@ -99,13 +101,14 @@ public class MarketFacade{
      * @param password encrypted
      * @return a string with informative of success/failure to client
      */
-    public Response<User> login(String Email, String password) {
-        Response<User> response = null;
+    public Response<UserInformation> login(String Email, String password) {
+        Response<UserInformation> response = null;
         try {
             User user = user_controller.login(loggedUser, Email, password);
             String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
             isGuest = false;
-            response = new Response<>(user, "Hey +" + user_name + ", Welcome to the trading system market!");
+            UserInformation userInformation = new UserInformation(user);
+            response = new Response<>(userInformation, "Hey +" + user_name + ", Welcome to the trading system market!");
             system_logger.add_log("User " + Email + " logged-in");
         } catch (Exception e) {
             response = Utils.CreateResponse(new LoginException(" "));

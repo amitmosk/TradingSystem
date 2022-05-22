@@ -319,7 +319,7 @@ class StoreMoudleTest {
         assertTrue(check_was_exception(res),"succeed to remove product - general_user");
         assertTrue(check_if_product_exists_find("apple"),"apple deleted by general_user");
         //step 6
-        Response<User> user_res = marketFacade.login(email,password);
+        Response user_res = marketFacade.login(email,password);
         check_was_not_exception("failed to log in user - step 6",user_res);
         res = marketFacade.delete_product_from_store(productId,1);
         check_was_not_exception("failed to remove product from store while it should succeed - step 6", res);
