@@ -535,7 +535,7 @@ class StoreMoudleTest {
         check_was_not_exception("Store information received successfully", res);
         StoreInformation store = res.getValue();
         assertEquals(email,store.getFounder_email());
-        assertEquals("amit store",store.getStore_name());
+        assertEquals("amit store",store.getName());
     }
 
     @org.junit.jupiter.api.Test
