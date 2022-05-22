@@ -2,6 +2,8 @@ package TradingSystem.server.Service;
 
 
 
+import TradingSystem.server.Domain.Utils.Response;
+
 import java.util.List;
 
 public interface iService {
@@ -229,5 +231,8 @@ public interface iService {
      * Requirement 2.6.5
      */
     TradingSystem.server.Domain.Utils.Response get_market_stats();
+
+    TradingSystem.server.Domain.Utils.Response get_products_by_store_id(int store_id);
+    TradingSystem.server.Domain.Utils.Response get_all_stores();
 
 }

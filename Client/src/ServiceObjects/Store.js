@@ -1,25 +1,29 @@
 import { StoreReview } from "./StoreReview";
 export class Store  {
+    store_id;
     founder_email;
-    store_name;
+    name;
     foundation_date;
-    storeReviewInformation;
+    inventory; // product & quantity
+    storeReview;
     
     constructor(data) {
-        this.founder_email = data.founder_email;
-        this.store_name = data.store_name;
-        this.foundation_date = data.foundation_date
-        this.storeReviewInformation = new StoreReview(data.StoreReviewInformation)
-
+    this.store_id = data.store_id;
+    this.founder_email = data.founder_email;
+    this.name = data.name;
+    this.foundation_date = data.foundation_date;
+    this.inventory = data.inventory; // product & quantity
+    this.storeReview = data.storeReview;
     }
     
-    static create(founder_email, store_name, foundation_date, storeReviewInformation) {
+    static create(store_id, founder_email, name, foundation_date, inventory, storeReview) {
         return new Store({
+            store_id: store_id,
             founder_email: founder_email,
-            store_name: store_name,
-            foundation_date: foundation_date,
-            storeReviewInformation:storeReviewInformation
+            name: name,
+            foundation_date:foundation_date,
+            inventory : inventory,
+            storeReview: storeReview
         })
-
     }
 }

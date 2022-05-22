@@ -18,7 +18,7 @@ import MenuListComposition from './MenuListComposition';
 import { Container, Row, Col } from 'react-grid-system';
 import { Paper } from '@mui/material';
 import { Typography } from '@mui/material';
-
+import Rating from '@mui/material/Rating';
 // import itemData from '@mui/material/Box';
 
 const axios = require('axios');
@@ -73,9 +73,9 @@ const itemData = [
       title: 'Bike',
     },
   ];
+  
 export default class StorePage extends Component {
     static displayName = StorePage.name;
-
     constructor(props) {
         super(props);
         this.state = { 
@@ -87,8 +87,11 @@ export default class StorePage extends Component {
         send_question_to_store_fields : ["Enter your question"],
         };
         this.storeApi = new StoreApi();
+        const value = undefined;
+        const setValue = undefined;
        
-    }
+    }    
+
     
     
     
@@ -149,11 +152,11 @@ export default class StorePage extends Component {
                         <div> {this.state.storeReview}</div> */}
 
 
+                        {/* <div> Store info goes here</div>
                         <div> Store info goes here</div>
                         <div> Store info goes here</div>
                         <div> Store info goes here</div>
-                        <div> Store info goes here</div>
-                        <div> Store info goes here</div>
+                        <div> Store info goes here</div> */}
                         
                         <Paper >
              <Typography
@@ -162,16 +165,15 @@ export default class StorePage extends Component {
                 color="textPrimary"
                 component="span"
               >
-                What are Tabaani experience standards and requirements?
-                What are Tabaani experience standards and requirements?
-                What are Tabaani experience standards and requirements?
-                What are Tabaani experience standards and requirements?
-                What are Tabaani experience standards and requirements?
-                What are Tabaani experience standards and requirements?
-                What are Tabaani experience standards and requirements?
+                 <div> Store info goes here</div>
+                        <div> Store info goes here</div>
+                        <div> Store info goes here</div>
+                        <div> Store info goes here</div>
+                        <div> Store info goes here</div>
+                
               </Typography>
             </Paper>
-                        <Box
+                        {/* <Box
                             sx={{
                                 width: 300,
                                 height: 300,
@@ -184,7 +186,7 @@ export default class StorePage extends Component {
                                 
                             }}
                             
-                            />
+                            /> */}
                             <h3>Products</h3>
                             <List
                             sx={{
@@ -205,7 +207,26 @@ export default class StorePage extends Component {
                                 ))}
                             </List>
 
-
+                            <Box
+      sx={{
+        '& > legend': { mt: 2 },
+      }}
+    >
+      {/* <Typography component="legend">Controlled</Typography>
+      <Rating
+        name="simple-controlled"
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      />
+      <Typography component="legend">Read only</Typography>
+      <Rating name="read-only" value={value} readOnly />
+      <Typography component="legend">Disabled</Typography>
+      <Rating name="disabled" value={value} disabled />
+      <Typography component="legend">No rating given</Typography>
+      <Rating name="no-value" value={null} /> */}
+    </Box>
                             <List
                             sx={{
                                 width: '100%',

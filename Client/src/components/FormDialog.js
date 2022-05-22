@@ -7,16 +7,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-
-// export default class FormDialog extends React.Component{
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             fields:props.fields,
-
-//         };
-
-//     }
 FormDialog.defaultProps = {
   outlinedVar: "outlined",
 }

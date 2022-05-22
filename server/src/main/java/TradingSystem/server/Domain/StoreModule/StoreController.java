@@ -442,5 +442,14 @@ public class StoreController {
         this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
     }
+
+    public Map<Integer,Store> get_all_stores() {
+        return this.stores;
+    }
+
+    public Map<Product,Integer> get_products_by_store_id(int store_id) throws MarketException {
+        Store store = this.get_store_by_store_id(store_id);
+        return store.getInventory();
+    }
 }
 
