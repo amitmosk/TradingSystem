@@ -1,5 +1,6 @@
 package TradingSystem.server.Service;
 
+import TradingSystem.server.Config.SystemStartConfig;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.Facade.MarketFacade;
@@ -25,6 +26,8 @@ public class Service implements iService {
         SupplyAdapter supplyAdapter = system.getSupply_adapter();
         this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         this.notificationHandler = new NotificationHandler();
+        // -- amit code, TODO: remove after checks
+        // SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
 
     }
 
@@ -36,8 +39,12 @@ public class Service implements iService {
 
     @RequestMapping(value = "/amit")
     @CrossOrigin
-    public String amit() {
-        return "hello";
+    public String amit(String a) {
+        int e=4;
+        System.out.println("string amit");
+        Response<String> res  = new Response<String>("hello "+a,"yess" );
+//        return "hello "+a;
+        return "new Gson().toJson(res);";
     }
 
 
@@ -46,6 +53,8 @@ public class Service implements iService {
     @Override
     public Response login(String email, String password) {
         Response answer = marketFacade.login(email, password);
+        // have to write new method that will be send onopen in the client to the server,
+        // and the server will send all the waiting notifications
         this.notificationHandler.send_waiting_notifications(email);
         return answer;
     }
@@ -482,6 +491,20 @@ public class Service implements iService {
     @Override
     public Response get_market_stats() {
         Response answer = marketFacade.get_market_stats();
+        return answer;
+    }
+
+    @RequestMapping(value = "/get_all_stores")
+    @CrossOrigin
+    public Response get_all_stores() {
+        Response answer = marketFacade.get_all_stores();
+        return answer;
+    }
+
+    @RequestMapping(value = "/get_products_by_store_id")
+    @CrossOrigin
+    public Response get_products_by_store_id(int store_id) {
+        Response answer = marketFacade.get_products_by_store_id(store_id);
         return answer;
     }
 }

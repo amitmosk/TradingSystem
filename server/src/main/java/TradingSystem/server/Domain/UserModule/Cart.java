@@ -4,6 +4,7 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
+import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.Utils.Exception.*;
 
 import java.util.HashMap;
@@ -16,6 +17,12 @@ public class Cart {
         baskets = new HashMap<>();
     }
 
+    // ------------------------------ setters ------------------------------
+    public void setBaskets(Map<Store, Basket> baskets) {
+        this.baskets = baskets;
+    }
+
+    // ------------------------------ methods ------------------------------
     public Basket getBasket(int storeID, String email) {
         if (!baskets.containsKey(storeID))
             return new Basket(storeID, email);
@@ -85,5 +92,14 @@ public class Cart {
     public void verify_not_empty() throws BasketException {
         if(this.baskets.size() == 0)
             throw new BasketException("user try to buy empty cart");
+    }
+
+    public CartInformation cartInformation(){
+        HashMap<StoreInformation, Basket> answer = new HashMap<>();
+        for (Map.Entry<Store,Basket> entry : this.baskets.entrySet()){
+            StoreInformation temp = new StoreInformation(entry.getKey());
+            answer.put(temp, entry.getValue());
+        }
+        return new CartInformation(answer);
     }
 }

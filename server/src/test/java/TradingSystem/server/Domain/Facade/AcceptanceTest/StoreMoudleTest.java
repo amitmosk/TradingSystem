@@ -319,7 +319,7 @@ class StoreMoudleTest {
         assertTrue(check_was_exception(res),"succeed to remove product - general_user");
         assertTrue(check_if_product_exists_find("apple"),"apple deleted by general_user");
         //step 6
-        Response<User> user_res = marketFacade.login(email,password);
+        Response user_res = marketFacade.login(email,password);
         check_was_not_exception("failed to log in user - step 6",user_res);
         res = marketFacade.delete_product_from_store(productId,1);
         check_was_not_exception("failed to remove product from store while it should succeed - step 6", res);
@@ -535,7 +535,7 @@ class StoreMoudleTest {
         check_was_not_exception("Store information received successfully", res);
         StoreInformation store = res.getValue();
         assertEquals(email,store.getFounder_email());
-        assertEquals("amit store",store.getStore_name());
+        assertEquals("amit store",store.getName());
     }
 
     @org.junit.jupiter.api.Test
@@ -779,7 +779,7 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("oneusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, num_of_products);
-            Map<Store, Basket> res = mf.view_user_cart().getValue();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
             for (Basket b : res.values()) {
                 if (b.get_productsIds_and_quantity().containsKey(productId))
@@ -815,7 +815,7 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, 1);
-            Map<Store, Basket> res = mf.view_user_cart().getValue();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
             for (Basket b : res.values()) {
                 if (b.get_productsIds_and_quantity().containsKey(productId))
@@ -851,7 +851,7 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, 1);
-            Map<Store, Basket> res = mf.view_user_cart().getValue();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
             for (Basket b : res.values()) {
                 if (b.get_productsIds_and_quantity().containsKey(productId))
