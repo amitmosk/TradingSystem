@@ -21,13 +21,18 @@ import { ConnectApi } from './API/ConnectApi';
 //   return <Button variant="contained">Hello World</Button>;
 // }
 
+// user state enum
+const GUEST = 0;
+const ASSIGN_USER = 1;
+const ADMIN = 2;
+
 export default class App extends Component {
   static displayName = App.name;
 
   constructor(props) {
     super(props)
     this.state = {
-      isLoggedIn: false,
+      user_state : GUEST,
       ownedStoreList: [],
       email: '',
       name: "Guest",
@@ -46,8 +51,8 @@ export default class App extends Component {
     if (!response.was_exception)
     {
       this.setState({
-        isLoggedIn: false,
-        name: "Geust",
+        user_state: GUEST,
+        name: "Guest",
         email:"",
         user:undefined,
       })
@@ -64,13 +69,13 @@ export default class App extends Component {
   async updateLoginHandler() {
     console.log("in updateLoginHandler\n\n\n\n\n");
     this.setState({
-      isLoggedIn: true,
-    })
+      user_state: ASSIGN_USER
+        })
   }
   async updateRegisterHandler(name, email, user) {
     console.log("in updateRegisterHandler\n\n\n\n\n");
     this.setState({
-      isLoggedIn: true,
+      user_state: ASSIGN_USER,
       name: name,
       email: email,
       user:user
