@@ -107,7 +107,7 @@ class MarketFacadeTest {
     @MethodSource("user_info_provider1")
     void register(String email, String pw, String name, String lastName) {
         //case 1
-        Response<User> res = facade1.register(email, pw, name, lastName, birth_date);
+        Response res = facade1.register(email, pw, name, lastName, birth_date);
         boolean was_exception = check_was_exception(res); // regular register
         assertFalse(was_exception, "failed with regular register");
         Response<String> user_email_res = facade1.get_user_email();

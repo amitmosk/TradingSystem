@@ -6,6 +6,9 @@ import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public abstract class AssignState {
     public AssignState() {
     }
@@ -89,4 +92,7 @@ public abstract class AssignState {
     public void remove_appointment(Store store) throws MarketException {throw new NoUserRegisterdException("guest cannot be appointed");}
 
 
-}
+    public UserState find_state(){return UserState.GUEST;}
+
+    public List<Integer> stores_managers_list() {return new LinkedList<>();}
+    }
