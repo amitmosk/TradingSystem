@@ -17,9 +17,9 @@ export class CartApi {
             .then(res => {
                 let response = res.data;
                 let cart = new Cart(response.value) ;
-                return Response.create(cart, response.wasException, response.message);
+                return Response.create(cart, response.was_exception, response.message);
             })
-            .catch(res => undefined);
+            .catch(res => new Response(res));
     }
 
     buy_cart(payment_info, supply_info) {
@@ -31,7 +31,7 @@ export class CartApi {
             })
             .then(res => {
                 const user_purchase = new UserPurchase(res.data.value)
-                return Response.create(user_purchase, res.data.wasException, res.data.message);
+                return Response.create(user_purchase, res.data.was_exception, res.data.message);
             })
             .catch(res => undefined);
     }

@@ -32,7 +32,7 @@ export class ProductApi {
             .then(res => {
                 let response = res.data;
                 let product_info = new Product(response.value);
-                return Response.create(product_info, response.wasException, response.message);
+                return Response.create(product_info, response.was_exception, response.message);
             })
             .catch(res => undefined);
     }
@@ -49,7 +49,7 @@ export class ProductApi {
                 //create response with the list of products
                 const arr = [];
                 res.data.value.map(p => arr.push(new Product(p)));
-                return Response.create(arr,res.data.wasException,res.data.message);
+                return Response.create(arr,res.data.was_exception,res.data.message);
             })
             .catch(res => undefined);
     }
@@ -65,7 +65,7 @@ export class ProductApi {
                 //create response with the list of products
                 const arr = [];
                 res.data.value.map(p => arr.push(new Product(p)));
-                return Response.create(arr,res.data.wasException,res.data.message);
+                return Response.create(arr,res.data.was_exception,res.data.message);
             })
             .catch(res => undefined);
     }
@@ -80,7 +80,7 @@ export class ProductApi {
                 //create response with the list of products
                 const arr = [];
                 res.data.value.map(p => arr.push(new Product(p)));
-                return Response.create(arr,res.data.wasException,res.data.message);
+                return Response.create(arr,res.data.was_exception,res.data.message);
             })
             .catch(res => undefined);
     }

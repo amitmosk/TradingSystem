@@ -6,22 +6,19 @@ import {FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE, SEND_QUESTION_TO_STORE,
       VIEW_STORE_MANAGEMENT_INFORMATION, MANAGER_ANSWER_QUESTION, VIEW_STORE_PURCHASES_HISTORY, 
       MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS, GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES} from "./ApiPaths";
 import { Response } from "./Response";
+import { Store } from "../ServiceObjects/Store";
 import { Product } from "../ServiceObjects/Product";
-import Store from "../ServiceObjects/Store";
 // const instance = axios.create(
 //     {withCredentials : true}
 // );
 const instance = require('axios');
 const response_obj = new Response("","");
 
-
-
 export class StoreApi {
     find_store_information(store_id) {
         return instance.get(FIND_STORE_INFORMATION,
             {
                 params:{ store_id : store_id,}
-                
             })
             .then(res => {
                 let response = res.data;

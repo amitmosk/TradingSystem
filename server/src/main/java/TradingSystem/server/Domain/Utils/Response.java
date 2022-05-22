@@ -5,18 +5,18 @@ import TradingSystem.server.Domain.Utils.Exception.MarketException;
 
 public class Response<T> {
     private T value;
-    private boolean wasException=false;
+    private boolean was_exception=false;
     private String message;
 
     public Response(String message, Exception e){
         this.value = (T) e;
-        wasException = true;
+        was_exception = true;
         this.message = message;
     }
 
     public Response(T value, String message){
         this.value = value;
-        this.wasException = false;
+        this.was_exception = false;
         this.message = message;
     }
 
@@ -24,8 +24,8 @@ public class Response<T> {
         return value;
     }
 
-    public boolean WasException() {
-        return wasException;
+    public boolean was_exception() {
+        return was_exception;
     }
 
     public String getMessage() {
@@ -35,16 +35,16 @@ public class Response<T> {
     public Response() {
     }
 
-    public boolean isWasException() {
-        return wasException;
+    public boolean iswas_exception() {
+        return was_exception;
     }
 
     public void setValue(T value) {
         this.value = value;
     }
 
-    public void setWasException(boolean wasException) {
-        this.wasException = wasException;
+    public void setwas_exception(boolean was_exception) {
+        this.was_exception = was_exception;
     }
 
     public void setMessage(String message) {
