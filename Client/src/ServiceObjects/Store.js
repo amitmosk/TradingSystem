@@ -8,12 +8,12 @@ export class Store  {
     storeReview;
     
     constructor(data) {
-    this.store_id = store_id;
-    this.founder_email = founder_email;
-    this.name = name;
-    this.foundation_date = foundation_date;
-    this.inventory = inventory; // product & quantity
-    this.storeReview = storeReview;
+    this.store_id = data.store_id;
+    this.founder_email = data.founder_email;
+    this.name = data.name;
+    this.foundation_date = data.foundation_date;
+    this.inventory = data.inventory; // product & quantity
+    this.storeReview = data.storeReview;
     }
     
     static create(store_id, founder_email, name, foundation_date, inventory, storeReview) {
