@@ -150,10 +150,10 @@ export class StoreApi {
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
    
-    delete_owner(user_email_to_appoint, store_id)  {
+    delete_owner(user_email_to_delete_appointment, store_id)  {
         return instance.get(DELETE_OWNER,
             {
-                params:{user_email_to_appoint : user_email_to_appoint,
+                params:{user_email_to_delete_appointment : user_email_to_delete_appointment,
                     store_id : store_id,}
                 
                 
