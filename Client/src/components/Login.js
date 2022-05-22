@@ -11,6 +11,7 @@ import {withRouter} from 'react-router-dom';
 import { Navigate } from 'react-router-dom'; 
 const axios = require('axios');
 const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
+const WEBSOCKETURL = "ws://localhost:8080/chat";
 
 export default class Login extends Component {
     static displayName = Login.name;
@@ -34,6 +35,20 @@ export default class Login extends Component {
         });
     }
 
+
+    async open_web_socket(){
+        const websocket = require('ws');
+        var ws = new websocket(WEBSOCKETURL);
+        
+        ws.onopen = function(data) {ws.send("-client- want to open web socket with the server");};
+        ws.onmessage = function(data) {
+            alert("new notification!");
+            // update notifications UI with the new notification 
+            console.log(data);
+         }
+    }
+
+
     async componentDidMount() {
     }
 
@@ -42,19 +57,20 @@ export default class Login extends Component {
         this.props.updateLoginHandler();
         console.log("email is "+email+" , password is "+password+"\n");
         let response = await this.connectApi.login(email, password);
+        alert(response.message);
         if (!response.was_exception)
         {
+            // login success
             console.log("in login, login success!\n");
-            console.log(response);
-            // return <Navigate to="/HomePageSearch"/>
+            // open seb socket
+            // this.open_web_socket();
+            // return to home page and update properties (change state of App to assign user).
             return (<Navigate to="/"/>)
-            //go to home page
-            //change state of App to assign user
         }
         else{
+            // failure
             console.log("in login, login failed!\n");
         }
-        alert(response.message);
     }
     
     render() {

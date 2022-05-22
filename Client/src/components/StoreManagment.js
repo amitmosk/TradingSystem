@@ -104,6 +104,7 @@ export default class StoreManagment extends Component {
         const category = values[4];
         const key_words = values[5];
         const response = await this.storeApi.add_product_to_store(store_id, quantity, name, price, category, key_words);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in add product - success!\n");
             //show history
@@ -118,6 +119,7 @@ export default class StoreManagment extends Component {
         const product_id = values[0];
         const store_id = values[1];
         const response = await this.storeApi.delete_product_from_store(product_id, store_id);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in delete product - success!\n");
             //show history
@@ -130,8 +132,8 @@ export default class StoreManagment extends Component {
         console.log("in store_puchase_policies!\n");
         const store_id = values[0];
         const policy = values[1];
-
         const response = await this.storeApi.puchase_policies_fields(store_id, policy);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in store_puchase_policies - success!\n");
             //show history
@@ -144,8 +146,9 @@ export default class StoreManagment extends Component {
         console.log("in store_discount_policy!\n");
         const store_id = values[0];
         const policy = values[1];
-
+        
         const response = await this.storeApi.set_store_discount_policy(store_id, policy);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in store_discount_policy - success!\n");
             //show history
@@ -158,8 +161,9 @@ export default class StoreManagment extends Component {
         console.log("in add_owner!\n");
         const user_email_to_appoint = values[0];
         const store_id = values[1];
-
         const response = await this.storeApi.add_owner(user_email_to_appoint, store_id);
+        alert(response.message);
+
         if (!response.was_execption) {
             console.log("in add_owner - success!\n");
             //show history
@@ -172,8 +176,8 @@ export default class StoreManagment extends Component {
         console.log("in delete_owner!\n");
         const user_email_to_appoint = values[0];
         const store_id = values[1];
-
-        const response = await this.storeApi.add_owner(user_email_to_appoint, store_id);
+        const response = await this.storeApi.delete_owner(user_email_to_appoint, store_id);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in delete_owner - success!\n");
             //show history
@@ -184,10 +188,11 @@ export default class StoreManagment extends Component {
     }
     async add_manager(values) {
         console.log("in add_manager!\n");
-        const user_email_to_appoint = values[0];
+        const user_email_to_delete_appointment = values[0];
         const store_id = values[1];
-
-        const response = await this.storeApi.add_manager(user_email_to_appoint, store_id);
+        
+        const response = await this.storeApi.add_manager(user_email_to_delete_appointment, store_id);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in add_manager - success!\n");
             //show history
@@ -200,8 +205,12 @@ export default class StoreManagment extends Component {
         console.log("in delete_manager!\n");
         const user_email_to_appoint = values[0];
         const store_id = values[1];
+        console.log(user_email_to_appoint);
+        console.log(store_id);
+
 
         const response = await this.storeApi.delete_manager(user_email_to_appoint, store_id);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in delete_manager - success!\n");
             //show history
@@ -216,6 +225,7 @@ export default class StoreManagment extends Component {
         const store_id = values[0];
 
         const response = await this.storeApi.close_store_temporarily(store_id);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in close_store_temporarily - success!\n");
             //show history
@@ -230,6 +240,7 @@ export default class StoreManagment extends Component {
         const store_id = values[0];
 
         const response = await this.storeApi.open_close_store(store_id);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in open_close_store - success!\n");
             //show history
@@ -244,6 +255,7 @@ export default class StoreManagment extends Component {
         const store_id = values[0];
 
         const response = await this.storeApi.view_store_management_information(store_id);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in view_store_management_information - success!\n");
             //show history
@@ -258,6 +270,7 @@ export default class StoreManagment extends Component {
         const store_id = values[0];
 
         const response = await this.storeApi.manager_view_store_questions(store_id);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in manager_view_store_questions - success!\n");
             //show history
@@ -274,6 +287,7 @@ export default class StoreManagment extends Component {
         const answer = values[2];
 
         const response = await this.storeApi.manager_answer_question(store_id, question_id, answer);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in manager_answer_question - success!\n");
             //show history
@@ -287,6 +301,7 @@ export default class StoreManagment extends Component {
         const store_id = values[0];
 
         const response = await this.storeApi.view_store_purchases_history(store_id);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in view_store_purchases_history - success!\n");
             //show history
@@ -300,7 +315,7 @@ export default class StoreManagment extends Component {
         const manager_email = values[0];
         const store_id = values[1];
         const permissions = values[2];
-
+        alert(response.message);
         const response = await this.storeApi.edit_manager_permissions(manager_email, store_id, permissions);
         if (!response.was_execption) {
             console.log("in edit_manager_permissions - success!\n");

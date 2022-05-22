@@ -23,6 +23,7 @@ export const RATE_STORE = API_PATH + '/rate_store';
 export const SEND_QUESTION_TO_STORE = API_PATH + '/send_question_to_store';
 
 export const ADD_PRODUCT_TO_STORE = API_PATH + '/add_product_to_store';
+export const DELETE_PRODUCT_FROM_STORE = API_PATH + '/delete_product_from_store';
 
 export const SET_STORE_PURCHASE_POLICY = API_PATH + '/set_store_purchase_policy';
 

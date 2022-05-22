@@ -1,0 +1,8 @@
+May 22, 2022 10:03:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: null
+May 22, 2022 10:04:12 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: null
+May 22, 2022 10:04:28 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: null
+May 22, 2022 10:05:31 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
