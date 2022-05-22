@@ -47,7 +47,7 @@ export default class Login extends Component {
             console.log("in login, login success!\n");
             console.log(response);
             // return <Navigate to="/HomePageSearch"/>
-            <Navigate to="/"/>
+            return (<Navigate to="/"/>)
             //go to home page
             //change state of App to assign user
         }
@@ -61,8 +61,9 @@ export default class Login extends Component {
         const {redirectTo} = this.state
         // { this.state.redirect ? (<Redirect push to="/"/>) : null }
         if (this.state.submitted) {
+            
             console.log("have to route to homepage whe it will be ready\n\n\n");
-            return <Navigate to="/"/>
+            return (<Navigate to="/"/>);
         } else {
             return (
                 <main class="LoginMain">

@@ -70,8 +70,12 @@ export default class Register extends Component {
         {
             const user = response.value;
             this.props.updateRegisterHandler(firstname+" "+lastname, email, user);
-            return <Navigate to="/"/>
+            return (<Navigate to="/"/>)
         }
+        else{
+
+        }
+        alert(response.message);
     }
     
     render() {

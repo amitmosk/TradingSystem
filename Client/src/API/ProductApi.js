@@ -1,5 +1,5 @@
 // import axios from "axios";
-import {EMPLOYEE_BASE_REST_API_URL,  FIND_PRODUCT_INFORMATION, FIND_PRODUCTS_BY_NAME, FIND_PRODUCTS_BY_CATEGORY,FIND_PRODUCTS_BY_KEYWORDS 
+import {CONNECTION_ERROR, CATCH, EMPLOYEE_BASE_REST_API_URL,  FIND_PRODUCT_INFORMATION, FIND_PRODUCTS_BY_NAME, FIND_PRODUCTS_BY_CATEGORY,FIND_PRODUCTS_BY_KEYWORDS 
     ,ADD_PRODUCT_TO_CART, EDIT_PRODUCT_QUANTITY_IN_CART,REMOVE_PRODUCT_FROM_CART, ADD_PRODUCT_REVIEW, RATE_PRODUCT, EDIT_PRODUCT_NAME, EDIT_PRODUCT_PRICE, EDIT_PRODUCT_CATEGORY, EDIT_PRODUCT_KEY_WORDS, LOGIN_PATH} from "./ApiPaths";
 import { Response } from "./Response";
 import { Product } from "../ServiceObjects/Product";
@@ -34,7 +34,7 @@ export class ProductApi {
                 let product_info = new Product(response.value);
                 return Response.create(product_info, response.was_exception, response.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     find_products_by_name(product_name) {
         console.log("product name = "+product_name+"\n\n\n");
@@ -51,7 +51,7 @@ export class ProductApi {
                 res.data.value.map(p => arr.push(new Product(p)));
                 return Response.create(arr,res.data.was_exception,res.data.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     find_products_by_category(product_category) {
@@ -68,7 +68,7 @@ export class ProductApi {
                 res.data.value.map(p => arr.push(new Product(p)));
                 return Response.create(arr,res.data.was_exception,res.data.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     find_products_by_keywords(product_keywords) {
         console.log("product keywords = "+product_keywords+"\n\n\n");
@@ -84,7 +84,7 @@ export class ProductApi {
                 res.data.value.map(p => arr.push(new Product(p)));
                 return Response.create(arr,res.data.was_exception,res.data.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     add_product_to_cart(store_id, product_id, quantity) {
@@ -98,7 +98,7 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     edit_product_quantity_in_cart(store_id, product_id, quantity) {
@@ -112,7 +112,7 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     remove_product_from_cart(store_id, product_id) {
@@ -125,7 +125,7 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     
 
@@ -140,7 +140,7 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     rate_product(product_id, store_id, rate) {
@@ -153,7 +153,7 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     edit_product_name(product_id, store_id, name) {
@@ -167,7 +167,7 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     edit_product_price(product_id, store_id, price) {
@@ -181,7 +181,7 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     edit_product_category(product_id, store_id, category) {
         return instance.get(EDIT_PRODUCT_CATEGORY,
@@ -194,7 +194,7 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     edit_product_key_words(product_id, store_id, key_words) {
         return instance.get(EDIT_PRODUCT_KEY_WORDS,
@@ -207,6 +207,6 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 }

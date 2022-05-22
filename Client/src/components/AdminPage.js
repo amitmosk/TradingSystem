@@ -47,6 +47,8 @@ export default class AdminPage extends Component {
 
         };
         this.adminApi = new AdminApi();
+        this.handleInputChange = this.handleInputChange.bind(this);
+
 
     }
 

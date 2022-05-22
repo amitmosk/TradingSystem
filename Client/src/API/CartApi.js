@@ -1,6 +1,6 @@
 // import axios from "axios";
 import { Cart } from "../ServiceObjects/Cart";
-import { VIEW_USER_CART, BUY_CART } from "./ApiPaths";
+import {CONNECTION_ERROR, CATCH, VIEW_USER_CART, BUY_CART } from "./ApiPaths";
 import { Response } from "./Response";
 import {UserPurchase} from "../ServiceObjects/UserPurchase"
 
@@ -19,7 +19,7 @@ export class CartApi {
                 let cart = new Cart(response.value) ;
                 return Response.create(cart, response.was_exception, response.message);
             })
-            .catch(res => new Response(res));
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     buy_cart(payment_info, supply_info) {
@@ -33,7 +33,7 @@ export class CartApi {
                 const user_purchase = new UserPurchase(res.data.value)
                 return Response.create(user_purchase, res.data.was_exception, res.data.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     
     

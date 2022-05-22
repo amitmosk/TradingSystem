@@ -106,10 +106,21 @@ class Album extends React.Component {
             let response = await this.storeApi.open_store(store_name);
             if (!response.was_exception)
             {
+               
+                
 
             }
             else
             {
+                if (response.value == "CATCH")
+                {
+                    //catch - connection error
+                    alert(response.message)
+                }
+                else
+                {
+                    //then - but operation failed
+                }
 
             }
         }

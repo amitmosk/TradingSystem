@@ -1,6 +1,6 @@
 // import axios from "axios";
 import { sortAndDeduplicateDiagnostics } from "typescript";
-import { SEND_QUESTION_TO_ADMIN, CLOSE_STORE_PERMANENTLY, REMOVE_USER, ADMIN_VIEW_USERS_QUESTION ,
+import { CONNECTION_ERROR, CATCH,SEND_QUESTION_TO_ADMIN, CLOSE_STORE_PERMANENTLY, REMOVE_USER, ADMIN_VIEW_USERS_QUESTION ,
      ADMIN_ANSWER_USERS_QUESTION, ADMIN_VIEW_STORE_PURCHASES_HISTORY, ADMIN_VIEW_USER_PURCHASES_HISTORY, GET_MARKET_STATS} from "./ApiPaths";
 import { Response } from "./Response";
 import {Statistic} from "../ServiceObjects/Statistic"
@@ -29,7 +29,7 @@ export class AdminApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     close_store_permanently(store_id){
         return instance.get(CLOSE_STORE_PERMANENTLY,
@@ -41,7 +41,7 @@ export class AdminApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     remove_user(email){
         return instance.get(REMOVE_USER,
@@ -53,7 +53,7 @@ export class AdminApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     admin_view_users_questions() {
@@ -61,7 +61,7 @@ export class AdminApi {
             .then(res => {
                 return new Response(res.data);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
    
     admin_answer_user_question(question_id, answer){
@@ -73,7 +73,7 @@ export class AdminApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     admin_view_store_purchases_history(store_id){
@@ -86,7 +86,7 @@ export class AdminApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     admin_view_user_purchases_history(user_email){
@@ -97,7 +97,7 @@ export class AdminApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     
     get_market_stats() {
@@ -106,6 +106,6 @@ export class AdminApi {
                 const stats = new Statistic(res.data.value);
                 return Response.create(stats, res.was_exception, res.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 }

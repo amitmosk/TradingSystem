@@ -1,5 +1,5 @@
 // import axios from "axios";
-import {FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE, SEND_QUESTION_TO_STORE,
+import {CONNECTION_ERROR, CATCH, FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE, SEND_QUESTION_TO_STORE,
      ADD_PRODUCT_TO_STORE, DELETE_PRODUCT_FROM_CART, SET_STORE_PURCHASE_POLICY,
       SET_STORE_DISCOUNT_POLICY, SET_STORE_PURCHASE_RULES, ADD_OWNER, DELETE_OWNER, 
       ADD_MANAGER, DELETE_MANAGER, CLOSE_STORE_TEMPORARILY, OPEN_CLOSE_STORE,
@@ -25,7 +25,7 @@ export class StoreApi {
                 let store_info = new Store(response.value);
                 return response_obj.create(store_info, response.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     open_store(store_name)    {
         return instance.get(OPEN_STORE,
@@ -36,7 +36,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     
     rate_store(store_id, rate) {
@@ -49,7 +49,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     send_question_to_store(store_id, question) {
@@ -62,7 +62,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     
     add_product_to_store(store_id, quantity,name, price, category, key_words) {
@@ -79,7 +79,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     delete_product_from_store(product_id, store_id) {
         return instance.get(DELETE_PRODUCT_FROM_CART,
@@ -92,7 +92,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     set_store_purchase_policy(store_id, policy) {
@@ -106,7 +106,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     set_store_discount_policy(store_id, policy) {
@@ -120,7 +120,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     set_store_purchase_rules(store_id, rule) {
         return instance.get(SET_STORE_PURCHASE_RULES,
@@ -133,7 +133,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     add_owner(user_email_to_appoint, store_id)  {
@@ -147,7 +147,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
    
     delete_owner(user_email_to_appoint, store_id)  {
@@ -161,7 +161,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
        
@@ -176,7 +176,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
 
@@ -191,7 +191,7 @@ export class StoreApi {
                 .then(res => {
                     return new Response(res.data)
                 })
-                .catch(res => undefined);
+                .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
         }
     close_store_temporarily(store_id){
         return instance.get(CLOSE_STORE_TEMPORARILY,
@@ -203,7 +203,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     open_close_store(store_id){
         return instance.get(OPEN_CLOSE_STORE,
@@ -215,7 +215,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     view_store_management_information(store_id){
         return instance.get(VIEW_STORE_MANAGEMENT_INFORMATION,
@@ -227,7 +227,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data) //value is string answer
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     manager_view_store_questions(store_id){ // value is list of strings
         return instance.get(MANAGER_VIEW_STORE_QUESTIONS,
@@ -238,7 +238,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     manager_answer_question(store_id, question_id, answer){
         return instance.get(MANAGER_ANSWER_QUESTION,
@@ -252,7 +252,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     view_store_purchases_history(store_id){ // value is string of the purchases history
         return instance.get(VIEW_STORE_PURCHASES_HISTORY,
@@ -264,7 +264,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     edit_manager_permissions(manager_email, store_id, permissions){
         return instance.get(EDIT_MANAGER_PERMISSIONS,
@@ -278,7 +278,7 @@ export class StoreApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     get_products_by_store_id(store_id){
         return instance.get(GET_PRODUCTS_BY_STORE_ID,
@@ -297,7 +297,7 @@ export class StoreApi {
                 res.data.value.map(p => arr.push(new Product(p)));
                 return Response.create(arr,res.data.wasException,res.data.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     get_all_stores(store_id){
         return instance.get(GET_ALL_STORES,
@@ -316,7 +316,7 @@ export class StoreApi {
                 res.data.value.map(s => arr.push(new Store(s)));
                 return Response.create(arr,res.data.wasException,res.data.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     
 

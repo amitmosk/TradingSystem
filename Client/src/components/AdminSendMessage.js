@@ -52,6 +52,8 @@ export default class AdminSendMessage extends Component {
             content: undefined,
         };
         this.adminApi = new AdminApi();
+        this.handleInputChange = this.handleInputChange.bind(this);
+
 
     }
     

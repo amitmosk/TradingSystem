@@ -1,5 +1,5 @@
 // import axios from "axios";
-import {EMPLOYEE_BASE_REST_API_URL, LOGIN_PATH, REGISTER_PATH,LOGOUT_PATH} from "./ApiPaths";
+import {CONNECTION_ERROR, CATCH, EMPLOYEE_BASE_REST_API_URL, LOGIN_PATH, REGISTER_PATH,LOGOUT_PATH} from "./ApiPaths";
 import { Response } from "./Response";
 import { User } from "../ServiceObjects/User";
 // const instance = axios.create(
@@ -7,6 +7,7 @@ import { User } from "../ServiceObjects/User";
 // );
 const instance = require('axios');
 const WEBSOCKETURL = "ws://localhost:8080/chat";
+
 export class ConnectApi {
 
     //  amit (a) {
@@ -41,7 +42,7 @@ export class ConnectApi {
                 const user = new User(res.data.value);
                 return Response.create(user,res.data.was_exception,res.data.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
     logout() {
@@ -49,7 +50,7 @@ export class ConnectApi {
             .then(res => {
                 return Response.create(null,res.data.was_exception,res.data.message);
             })
-            .catch(res => undefined);
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     
     register(email, password, first_name, last_name, birthdate) {
@@ -64,6 +65,7 @@ export class ConnectApi {
             .then(res => {
                 const user = new User(res.data.value);
                 return Response.create(user,res.data.was_exception,res.data.message);
-            }).catch(res => Response.create(null,true,"http failure"));
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 }
