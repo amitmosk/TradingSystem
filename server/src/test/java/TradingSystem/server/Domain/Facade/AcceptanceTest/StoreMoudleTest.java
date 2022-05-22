@@ -779,7 +779,7 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("oneusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, num_of_products);
-            Map<Store, Basket> res = mf.view_user_cart().getValue();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
             for (Basket b : res.values()) {
                 if (b.get_productsIds_and_quantity().containsKey(productId))
@@ -815,7 +815,7 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, 1);
-            Map<Store, Basket> res = mf.view_user_cart().getValue();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
             for (Basket b : res.values()) {
                 if (b.get_productsIds_and_quantity().containsKey(productId))
@@ -851,7 +851,7 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, 1);
-            Map<Store, Basket> res = mf.view_user_cart().getValue();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
             for (Basket b : res.values()) {
                 if (b.get_productsIds_and_quantity().containsKey(productId))

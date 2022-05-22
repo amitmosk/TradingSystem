@@ -27,7 +27,7 @@ public class Service implements iService {
         this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         this.notificationHandler = new NotificationHandler();
         // -- amit code, TODO: remove after checks
-        SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
+        // SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
 
     }
 

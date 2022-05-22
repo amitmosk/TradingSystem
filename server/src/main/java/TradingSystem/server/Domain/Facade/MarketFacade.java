@@ -7,8 +7,7 @@ import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
-import TradingSystem.server.Domain.UserModule.UserInformation;
-import TradingSystem.server.Domain.UserModule.User;
+import TradingSystem.server.Domain.UserModule.*;
 import TradingSystem.server.Domain.Utils.ErrorLogger;
 import TradingSystem.server.Domain.Utils.Exception.LoginException;
 import TradingSystem.server.Domain.Utils.Response;
@@ -16,7 +15,6 @@ import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.Statistics.Statistic;
-import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.SystemLogger;
 import TradingSystem.server.Domain.Utils.Utils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
@@ -292,9 +290,9 @@ public class MarketFacade{
      *
      * @return the user cart information
      */
-    public Response<Map<Store, Basket>> view_user_cart() {
-        Map<Store, Basket> cart = user_controller.getBaskets(loggedUser);
-        Response<Map<Store, Basket>> response = new Response<>(cart, "successfully received user's cart");
+    public Response<CartInformation> view_user_cart() {
+        CartInformation cartInformation = user_controller.getCart(loggedUser).cartInformation();
+        Response<CartInformation> response = new Response<>(cartInformation, "successfully received user's cart");
         system_logger.add_log("User viewed his cart successfully");
         return response;
     }
