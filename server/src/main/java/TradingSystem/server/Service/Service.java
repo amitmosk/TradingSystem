@@ -1,5 +1,6 @@
 package TradingSystem.server.Service;
 
+import TradingSystem.server.Config.SystemStartConfig;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.Facade.MarketFacade;
@@ -26,6 +27,8 @@ public class Service implements iService {
         SupplyAdapter supplyAdapter = system.getSupply_adapter();
         this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         this.notificationHandler = new NotificationHandler();
+        // -- amit code, TODO: remove after checks
+        SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
 
     }
 
