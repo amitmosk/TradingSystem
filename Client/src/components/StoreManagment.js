@@ -18,6 +18,8 @@ import Grid from '@mui/material/Grid';
 import FormDialog from './FormDialog';
 import { StoreApi } from '../API/StoreApi';
 import { Container, Row, Col } from 'react-grid-system';
+import FormDialogPurchase from './FormDialogPurchase';
+import { Input } from "@mui/material";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -60,16 +62,19 @@ export default class StoreManagment extends Component {
             // אילוצי עקביות
             close_store_temp_fields: ["store_id"],
             open_closed_store_fields: ["store_id"],
-            staff_information_fields: ["store_id"]
+            staff_information_fields: ["store_id"],
+            option:"Simple",
 
         };
         this.adminApi = new AdminApi();
         this.storeApi = new StoreApi();
+        this.handleInputChange = this.handleInputChange.bind(this);
+
 
     }
 
 
-    handleInputChange(event) {
+    handleInputChange(event){
         const target = event.target;
         this.setState({
             [target.name]: target.value
@@ -79,20 +84,7 @@ export default class StoreManagment extends Component {
     async componentDidMount() {
     }
 
-    // async add_product() {
-    //     // let response = await this.adminApi.get_market_stats();
-    //     // const stats = response.value;
-    //     // if (!response.was_execption)
-    //     // {
-    //     //     // Show stats
 
-
-    //     // }
-    //     // else{
-
-    //     // }
-    //     // alert(response.message);
-    // }
     async add_product(values) {
 
         // console.log("in add product");
@@ -318,9 +310,52 @@ export default class StoreManagment extends Component {
 
         }
     }
+    open_select_menu()
+    {
+        return (<FormDialogPurchase/>)
+
+    }
+
+
+    async add_discount_rule(option) {
+        console.log("in add discount rule");
+        console.log(option);
+        switch (option) {
+            case "Simple":
+                this.add_simple_discount_rule()
+                break;
+            case "Complex":
+                this.add_complex_discount_rule()
+                break;
+            case "Composite Or":
+                this.add_composite_or_discount_rule()
+                break;
+            case "Composite And":
+                this.add_composite_and_discount_rule()
+                break;
+            case "Composite Xor":
+                this.add_composite_xor_discount_rule()
+                break;
+            default:
+                console.log("option is empty");
+        }
+
+    }
+    async add_simple_discount_rule(option) {
+    }
+    async add_complex_discount_rule(option) {
+    }
+    async add_composite_or_discount_rule(option) {
+    }
+    async add_composite_and_discount_rule(option) {
+    }
+    async add_composite_xor_discount_rule(option) {
+    }
+ 
 
 
     render() {
+
         const { redirectTo } = this.state
         // { this.state.redirect ? (<Redirect push to="/"/>) : null }
 
@@ -345,11 +380,13 @@ export default class StoreManagment extends Component {
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.close_store_temp_fields} getValues={this.close_store_temporarily.bind(this)} name="Close Store Temporarily"></FormDialog></Item ></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.open_closed_store_fields} getValues={this.open_closed_store.bind(this)} name="Open Closed Store"></FormDialog></Item ></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.staff_information_fields} getValues={this.view_store_management_information.bind(this)} name="View Staff Information"></FormDialog></Item ></Grid >
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item >
-
-                    </Grid>
-
-
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link href="/AddDiscount" underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid>
+                    
+                    
+                    
+                    
+                   
                 </Grid>
 
                 <Box sx={{ flexGrow: 3 }}>

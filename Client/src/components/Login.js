@@ -83,9 +83,7 @@ export default class Login extends Component {
                                 {/* <Link to="/register">Create new account</Link> */}
                                 <Button onClick={() => this.login()} variant="contained">Login </Button>
 
-                                <Link href="/Register" underline="hover" >
-                                {'New user? Cretae new account'}
-                                </Link>
+                                <Link href="/Register" underline="hover" >{'New user? Cretae new account'}</Link>
                                 {/* <Button onClick={() => <Register/>} > registerr</Button> */}
                                 {/* <input class="action" type="submit" value="Login"/> */}
                             </div>

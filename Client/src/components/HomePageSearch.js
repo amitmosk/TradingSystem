@@ -114,6 +114,8 @@ export default class HomePageSearch extends Component {
                     <form class="HomePageSearchForm" >
                         <Input name="val" value={this.state.val} placeholder={searchLabel + this.state.option} onChange={this.handleInputChange} required/>
                         <Button onClick={() => this.find_product_by(this.state.option, this.state.val)} variant="contained">Search </Button>
+                        
+                        
                         <select name="option" value={this.state.option} onChange={this.handleInputChange} required>
                             <option value="name">name</option>
                             <option value="category">category</option>

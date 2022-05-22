@@ -15,11 +15,9 @@ import ShoppingCart from './components/ShoppingCart';
 import AdminSendMessage from './components/AdminSendMessage';
 import AdminPage from './components/AdminPage';
 import StoreManagment from './components/StoreManagment';
-import Album from './components/Album';
+import HomePage from './components/HomePage';
 import { ConnectApi } from './API/ConnectApi';
-// function App() {
-//   return <Button variant="contained">Hello World</Button>;
-// }
+import AddDiscount from './components/AddDiscount';
 
 // user state enum
 const GUEST = 0;
@@ -88,7 +86,7 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Album user_name = {this.state.name} />}></Route>
+          <Route path="/" element={<HomePage user_name = {this.state.name} />}></Route>
           <Route path="/Login" element={<Login isLoggedIn={this.state.isLoggedIn} updateLoginHandler={this.updateLoginHandler.bind(this)} />}></Route>
           <Route path="/Register" element={<Register updateRegisterHandler={this.updateRegisterHandler.bind(this)} />}></Route>
           <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
@@ -97,6 +95,7 @@ export default class App extends Component {
           <Route path="/AdminPage" element={<AdminPage />}></Route>
           <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
           <Route path="/StoreManagment" element={<StoreManagment store_id=""/>}></Route>
+          <Route path="/AddDiscount" element={<AddDiscount store_id=""/>}></Route>
 
 
         </Routes>
