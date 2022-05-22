@@ -188,10 +188,10 @@ export default class StoreManagment extends Component {
     }
     async add_manager(values) {
         console.log("in add_manager!\n");
-        const user_email_to_delete_appointment = values[0];
+        const user_email_to_appoint = values[0];
         const store_id = values[1];
         
-        const response = await this.storeApi.add_manager(user_email_to_delete_appointment, store_id);
+        const response = await this.storeApi.add_manager(user_email_to_appoint, store_id);
         alert(response.message);
         if (!response.was_execption) {
             console.log("in add_manager - success!\n");
@@ -203,13 +203,12 @@ export default class StoreManagment extends Component {
     }
     async delete_manager(values) {
         console.log("in delete_manager!\n");
-        const user_email_to_appoint = values[0];
+        const user_email_to_delete_appointment = values[0];
         const store_id = values[1];
-        console.log(user_email_to_appoint);
         console.log(store_id);
 
 
-        const response = await this.storeApi.delete_manager(user_email_to_appoint, store_id);
+        const response = await this.storeApi.delete_manager(user_email_to_delete_appointment, store_id);
         alert(response.message);
         if (!response.was_execption) {
             console.log("in delete_manager - success!\n");

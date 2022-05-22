@@ -165,10 +165,10 @@ export class StoreApi {
     }
 
        
-    add_manager(user_email_to_delete_appointment, store_id)  {
+    add_manager(user_email_to_appoint, store_id)  {
         return instance.get(ADD_MANAGER,
             {
-                params:{user_email_to_delete_appointment : user_email_to_delete_appointment,
+                params:{user_email_to_appoint : user_email_to_appoint,
                     store_id : store_id,}
                 
                 
@@ -180,10 +180,10 @@ export class StoreApi {
     }
 
 
-    delete_manager(user_email_to_appoint, store_id)  {
+    delete_manager(user_email_to_delete_appointment, store_id)  {
             return instance.get(DELETE_MANAGER,
                 {
-                    params:{user_email_to_appoint : user_email_to_appoint,
+                    params:{user_email_to_delete_appointment : user_email_to_delete_appointment,
                         store_id : store_id,}
                     
                     
