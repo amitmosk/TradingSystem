@@ -19,6 +19,7 @@ export default class HomePageSearch extends Component {
             productname: undefined,
             products: undefined,
             option: "name",
+            val:undefined,
 
         };
         this.connectAPI = new ConnectApi();
@@ -27,6 +28,8 @@ export default class HomePageSearch extends Component {
     }
     handleInputChange(event) {
         const target = event.target;
+        console.log(target.name);
+        console.log(target.value);
         this.setState({
             [target.name]: target.value
         });
@@ -40,6 +43,7 @@ export default class HomePageSearch extends Component {
 
     async find_product_by(option, val) {
         console.log("in find product by");
+        console.log(option);
         switch (option) {
             case "name":
                 this.find_product_by_name(val)
@@ -59,6 +63,7 @@ export default class HomePageSearch extends Component {
 
     }
     async find_product_by_name(val) {
+        console.log(val);
         console.log("in find product by name");
         let response = await this.productApi.find_products_by_name(val);
         if (!response.was_exception) {
@@ -100,7 +105,7 @@ export default class HomePageSearch extends Component {
         }
 
     }
-    async find_product_by_name(val) {
+    async find_product_by_keywords(val) {
         console.log("in find product by keywords");
         let response = await this.productApi.find_products_by_keywords(val);
         if (!response.was_exception) {
@@ -123,7 +128,7 @@ export default class HomePageSearch extends Component {
                 <div class="HomePageSearchWindow " >
                     {/* <h3>Welcome To the Green Trading System</h3> */}
                     <form class="HomePageSearchForm" >
-                        <Input value={this.state.val} placeholder={searchLabel + this.state.option} inputProps={ariaLabel} onChange={this.handleInputChange} />
+                        <Input name="val" value={this.state.val} placeholder={searchLabel + this.state.option} onChange={this.handleInputChange} required/>
                         <Button onClick={() => this.find_product_by(this.state.option, this.state.val)} variant="contained">Search </Button>
                         <select name="option" value={this.state.option} onChange={this.handleInputChange} required>
                             <option value="name">name</option>

@@ -62,7 +62,7 @@ export default class Login extends Component {
         // { this.state.redirect ? (<Redirect push to="/"/>) : null }
         if (this.state.submitted) {
             console.log("have to route to homepage whe it will be ready\n\n\n");
-            return <Navigate to="/Album"/>
+            return <Navigate to="/"/>
         } else {
             return (
                 <main class="LoginMain">

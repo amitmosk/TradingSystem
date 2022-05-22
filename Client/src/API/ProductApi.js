@@ -37,6 +37,7 @@ export class ProductApi {
             .catch(res => undefined);
     }
     find_products_by_name(product_name) {
+        console.log("product name = "+product_name+"\n\n\n");
         return instance.get(FIND_PRODUCTS_BY_NAME,
             {
                 params:{product_name: product_name,}

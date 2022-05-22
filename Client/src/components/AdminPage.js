@@ -38,7 +38,7 @@ export default class AdminPage extends Component {
         super(props);
         this.state = {
 
-            close_store_fields: ["Store id"],
+            close_store_fields: ["Store ID"],
             remove_user_fields: ["User Email"],
             admin_answer_user_question_fields: ["User Email"],
             admin_view_user_purchases_history_fields: ["User Email"],

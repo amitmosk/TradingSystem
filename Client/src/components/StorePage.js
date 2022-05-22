@@ -14,7 +14,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import { CartApi } from '../API/CartApi';
- 
+import MenuListComposition from './MenuListComposition';
+import { Container, Row, Col } from 'react-grid-system';
+import { Paper } from '@mui/material';
+import { Typography } from '@mui/material';
+
 // import itemData from '@mui/material/Box';
 
 const axios = require('axios');
@@ -80,6 +84,7 @@ export default class StorePage extends Component {
         store_name :undefined ,
         foundation_date : undefined,
         storeReviewInformation : undefined,
+        send_question_to_store_fields : ["Enter your question"],
         };
         this.storeApi = new StoreApi();
        
@@ -107,6 +112,19 @@ export default class StorePage extends Component {
 
         
     }
+    async send_question_to_store(values) {
+      const store_id = this.props.store_id;
+      const question = values[0];
+      let response = await this.storeApi.send_question_to_store(store_id, question);
+      if (!response.was_exception)
+      {
+
+      }
+      else
+      {
+
+      }
+  }
 
 
     
@@ -116,7 +134,14 @@ export default class StorePage extends Component {
                 <main class="LoginMain">
                     <div class="LoginWindow">
                     <Link href="/"><HomeIcon></HomeIcon></Link>
-                        <h3>Store Name goes here</h3> 
+                        <h3>Store Name goes here</h3>
+                       {/* <FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog> */}
+                            {/* <FormDialog fields={this.state.send_question_to_store_fields} getValues={this.send_question_to_store.bind(this)} name="Send question to store"></FormDialog> */}
+
+                        <Col><row><MenuListComposition item2="Send Complaint" item3={ <Link href="/StoreManagment" underline="hover" >
+                                {'Manage Store'}
+                                </Link>}>
+                                </MenuListComposition></row> </Col>
                         {/* <h3>{this.state.store_name}</h3>  */}
 
                         {/* <div> {this.state.founder_email}</div>
@@ -130,7 +155,22 @@ export default class StorePage extends Component {
                         <div> Store info goes here</div>
                         <div> Store info goes here</div>
                         
-                        
+                        <Paper >
+             <Typography
+                // style={{ width: "70%", margin: "auto" }} I think you should avoid break tags instead do something with the width
+                variant="body2"
+                color="textPrimary"
+                component="span"
+              >
+                What are Tabaani experience standards and requirements?
+                What are Tabaani experience standards and requirements?
+                What are Tabaani experience standards and requirements?
+                What are Tabaani experience standards and requirements?
+                What are Tabaani experience standards and requirements?
+                What are Tabaani experience standards and requirements?
+                What are Tabaani experience standards and requirements?
+              </Typography>
+            </Paper>
                         <Box
                             sx={{
                                 width: 300,
@@ -139,6 +179,7 @@ export default class StorePage extends Component {
                                 '&:hover': {
                                 backgroundColor: 'primary.main',
                                 opacity: [0.9, 0.8, 0.7],
+                                content:'"ffffkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkffffffffffffffff"',
                                 },
                                 
                             }}

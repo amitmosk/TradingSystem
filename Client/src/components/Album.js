@@ -23,6 +23,7 @@ import AppBar from "@mui/material/AppBar";
 import { StoreApi } from '../API/StoreApi';
 import AccountMenu from './AccountMenu';
 import FormDialog from './FormDialog';
+import { AdminApi } from '../API/AdminApi';
 //import MenuItem from '@material-ui/core';
 //const useStyles = makeStyles((theme) => ({
 const useStyles = makeStyles(theme => ({
@@ -66,12 +67,15 @@ class Album extends React.Component {
             super(props);
             this.state = {
                 username: "Guest",
-                stores:[]
+                stores:[],
+                open_store_fields:["Store name"],
+                send_question_to_admin_fields:["Enter your question"],
 
             };
             this.connectAPI = new ConnectApi();
             this.productApi = new ProductApi();
             this.storeApi = new StoreApi();
+            this.adminApi = new AdminApi();
         }
         async componentDidMount() {
             console.log("in component did mount");
@@ -97,6 +101,31 @@ class Album extends React.Component {
                 </Typography>
             );
         }
+        async open_store(values) {
+            const store_name = values[0];
+            let response = await this.storeApi.open_store(store_name);
+            if (!response.was_exception)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        async send_question_to_admin(values) {
+            const question = values[0];
+            let response = await this.adminApi.send_question_to_admin(question);
+            if (!response.was_exception)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        
 
 
 
@@ -157,6 +186,8 @@ class Album extends React.Component {
                                 
                             </Row>
                             <Row>
+                            {/* <FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog> */}
+                            {/* <FormDialog fields={this.state.send_question_to_admin_fields} getValues={this.send_question_to_admin.bind(this)} name="Send question to admin"></FormDialog> */}
                                 <Col><row><MenuListComposition item1="Open Store" item2="Send Complaint" item3={ <Link href="/AdminPage" underline="hover" >
                                 {'Admin Operations'}
                                 </Link>}>

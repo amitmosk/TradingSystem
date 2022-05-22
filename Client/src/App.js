@@ -31,7 +31,7 @@ export default class App extends Component {
       ownedStoreList: [],
       email: '',
       name: "Guest",
-      role: undefined,
+      user:undefined,
 
       messages: [],
       webSocketConnection: undefined
@@ -91,7 +91,7 @@ export default class App extends Component {
           <Route path="/AdminSendMessage" element={<AdminSendMessage />}></Route>
           <Route path="/AdminPage" element={<AdminPage />}></Route>
           <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
-          {/* <Route path="/" element={<StoreManagment />}></Route> */}
+          <Route path="/StoreManagment" element={<StoreManagment store_id=""/>}></Route>
 
 
         </Routes>
