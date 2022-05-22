@@ -24,7 +24,7 @@ public class Response<T> {
         return value;
     }
 
-    public boolean was_exception() {
+    public boolean WasException() {
         return was_exception;
     }
 
