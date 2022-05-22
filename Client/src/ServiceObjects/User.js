@@ -1,26 +1,26 @@
 import { StoreReview } from "./StoreReview";
 export class User  {
-    // private AssignState state;
-    // private Cart cart;
-    // private AtomicBoolean isGuest;
-    // private AtomicBoolean isLogged;
-    // private String birth_date;
-    
     constructor(data) {
-        this.birth_date = data.birth_date
-        this.cart =  data.cart
-        this.isGuest = data.isGuest
-        this.isLogged = data.isLogged
-        this.state = data.state
+        this.state = data.state;
+        this.email = data.email;
+        this.name = data.name;
+        this.lastName = data.lastName;
+        this.birth_date = data.birth_date;
+        this.cart = data.cart;
+        this.storesManaged = data.storesManaged;
+        this.security_question = data.security_question;
     }
     
-    static create(birth_date, cart, isGuest, isLogged, state) {
+    static create(state, email, name, lastName, birth_date, cart, storesManaged, security_question) {
         return new User({
-            birth_date: birth_date,
-            cart: cart,
-            isGuest: isGuest,
-            isLogged: isLogged,
-            state: state
+            state : state,
+            email :email,
+            name :name,
+            lastName : lastName,
+            birth_date : birth_date,
+            cart :cart,
+            storesManaged : storesManaged,
+            security_question : security_question,
         })
 
     }
