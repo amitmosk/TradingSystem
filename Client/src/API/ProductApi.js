@@ -36,7 +36,7 @@ export class ProductApi {
             })
             .catch(res => undefined);
     }
-    find_product_by_name(product_name) {
+    find_products_by_name(product_name) {
         return instance.get(FIND_PRODUCTS_BY_NAME,
             {
                 params:{product_name: product_name,}
@@ -53,7 +53,7 @@ export class ProductApi {
             .catch(res => undefined);
     }
 
-    find_product_by_category(product_category) {
+    find_products_by_category(product_category) {
         return instance.get(FIND_PRODUCTS_BY_CATEGORY,
             {
                 params:{product_category: product_category,}
@@ -68,7 +68,7 @@ export class ProductApi {
             })
             .catch(res => undefined);
     }
-    find_product_by_keywords(product_keywords) {
+    find_products_by_keywords(product_keywords) {
         return instance.get(FIND_PRODUCTS_BY_KEYWORDS,
             {
                 params:{product_keywords: product_keywords,}

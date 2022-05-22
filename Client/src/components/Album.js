@@ -18,7 +18,11 @@ import { ConnectApi } from '../API/ConnectApi';
 import { ProductApi } from '../API/ProductApi';
 import { ThemeProvider, createMuiTheme } from '@mui/material/styles';
 import { withStyles } from '@material-ui/styles';
-
+import HomePageSearch from './HomePageSearch';
+import AppBar from "@mui/material/AppBar";
+import { StoreApi } from '../API/StoreApi';
+import AccountMenu from './AccountMenu';
+import FormDialog from './FormDialog';
 //import MenuItem from '@material-ui/core';
 //const useStyles = makeStyles((theme) => ({
 const useStyles = makeStyles(theme => ({
@@ -62,10 +66,24 @@ class Album extends React.Component {
             super(props);
             this.state = {
                 username: "Guest",
+                stores:[]
 
             };
             this.connectAPI = new ConnectApi();
             this.productApi = new ProductApi();
+            this.storeApi = new StoreApi();
+        }
+        async componentDidMount() {
+            console.log("in component did mount");
+            this.setState({
+                username:this.props.user_name
+            });
+            // let response = await this.storeApi.get_all_stores();
+            // let stores = response.value;
+            // this.setState({
+            //     stores:stores,
+            // });
+            //TODO: Show Stores
         }
         copyright() {
             return (
@@ -94,8 +112,9 @@ class Album extends React.Component {
                     <PrimarySearchAppBar position="relative" color="white">
                         <Toolbar>
                             <Typography variant="h6" color="inherit" noWrap>
-                                Hello {this.props.user_name},
+                                Hello {this.state.username},
                             </Typography>
+                            
                             <Link
                                 href="/Login"
                                 component="button"
@@ -119,7 +138,9 @@ class Album extends React.Component {
                             >
                                 \ Register
                             </Link>
+                            <AccountMenu />
                         </Toolbar>
+                        
                     </PrimarySearchAppBar>
 
 
@@ -128,20 +149,27 @@ class Album extends React.Component {
                         <Container>
                             <Row><Col></Col>
                                 <Col xs={5}>
-                                    <Header title="Featured Categories"></Header>
+                                    <Header title="Welcome To Ebay"></Header>
                                 </Col>
                                 <Col></Col>
                             </Row>
                             <Row>
-                                <Col><row><MenuListComposition item1="Open Store" item2="Send Complaint" item3="Admin Operations">
+                                
+                            </Row>
+                            <Row>
+                                <Col><row><MenuListComposition item1="Open Store" item2="Send Complaint" item3={ <Link href="/AdminPage" underline="hover" >
+                                {'Admin Operations'}
+                                </Link>}>
                                 </MenuListComposition></row> </Col>
                                 <Col xs={7}>
+                                <HomePageSearch/>
+                                <Header title="Stores"></Header>
                                     <Container className={classes.cardGrid} maxWidth="md">
                                         {/* End hero unit */}
 
                                         <Grid container spacing={4}>
 
-                                            {cards.map((card) => (
+                                            {cards.map((card) => ( //switch crads with this.state.stores
                                                 <Grid item key={card} xs={12} sm={6} md={4}>
 
                                                     <Card className={classes.card}>
@@ -170,50 +198,16 @@ class Album extends React.Component {
                                         </Grid>
                                     </Container>
                                 </Col>
-                                <Col><MenuListComposition item1="My Acount" item2="My Cart" item3="Purchase History">
-                                </MenuListComposition>
-                                </Col>
+                               
 
                                 <Row><Col></Col>
                                     <Col>
-                                        <Header title="Stores"></Header>
+                                        
                                     </Col>
 
                                 </Row>
                                 <Row><Col></Col><Col xs={7}>
-                                    <Container className={classes.cardGrid} maxWidth="md">
-                                        {/* End hero unit */}
-
-                                        <Grid container spacing={4}>
-
-                                            {cards.map((card) => (
-                                                <Grid item key={card} xs={12} sm={6} md={4}>
-
-                                                    <Card className={classes.card}>
-                                                        <CardMedia
-                                                            className={classes.cardMedia}
-                                                            image="https://source.unsplash.com/random"
-                                                            title="Image title"
-                                                        />
-                                                        <CardContent className={classes.cardContent}>
-                                                            <Typography gutterBottom variant="h5" component="h2">
-                                                                Heading
-                                                            </Typography>
-
-                                                        </CardContent>
-                                                        <CardActions>
-                                                            <Button size="small" color="primary">
-                                                                View
-                                                            </Button>
-                                                            <Button size="small" color="primary">
-                                                                Edit
-                                                            </Button>
-                                                        </CardActions>
-                                                    </Card>
-                                                </Grid>
-                                            ))}
-                                        </Grid>
-                                    </Container>
+                                   
                                 </Col>
                                     <Col></Col></Row>
                             </Row>

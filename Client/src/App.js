@@ -16,6 +16,7 @@ import AdminSendMessage from './components/AdminSendMessage';
 import AdminPage from './components/AdminPage';
 import StoreManagment from './components/StoreManagment';
 import Album from './components/Album';
+import { ConnectApi } from './API/ConnectApi';
 // function App() {
 //   return <Button variant="contained">Hello World</Button>;
 // }
@@ -35,8 +36,26 @@ export default class App extends Component {
       messages: [],
       webSocketConnection: undefined
     }
+    this.connectApi = new ConnectApi();
 
 
+  }
+  static async logout(){
+    console.log("in logout");
+    let response = await this.connectApi.logout();
+    if (!response.was_exception)
+    {
+      this.setState({
+        isLoggedIn: false,
+        name: "Geust",
+        email:"",
+        user:undefined,
+      })
+    }
+    else
+    {
+
+    }
   }
 
 
@@ -48,11 +67,13 @@ export default class App extends Component {
       isLoggedIn: true,
     })
   }
-  async updateRegisterHandler(name, email) {
-    console.log("in updateLoginHandler\n\n\n\n\n");
+  async updateRegisterHandler(name, email, user) {
+    console.log("in updateRegisterHandler\n\n\n\n\n");
     this.setState({
+      isLoggedIn: true,
       name: name,
       email: email,
+      user:user
     })
   }
 
@@ -62,14 +83,15 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<Album user_name = {this.state.name}/>}></Route> */}
+          <Route path="/" element={<Album user_name = {this.state.name} />}></Route>
           <Route path="/Login" element={<Login isLoggedIn={this.state.isLoggedIn} updateLoginHandler={this.updateLoginHandler.bind(this)} />}></Route>
           <Route path="/Register" element={<Register updateRegisterHandler={this.updateRegisterHandler.bind(this)} />}></Route>
           <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
           <Route path="/StorePage" element={<StorePage store_id="" />}></Route>
           <Route path="/AdminSendMessage" element={<AdminSendMessage />}></Route>
           <Route path="/AdminPage" element={<AdminPage />}></Route>
-          <Route path="/" element={<StoreManagment />}></Route>
+          <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
+          {/* <Route path="/" element={<StoreManagment />}></Route> */}
 
 
         </Routes>

@@ -1,11 +1,13 @@
 // import axios from "axios";
-import {  FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE, SEND_QUESTION_TO_STORE,
+import {FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE, SEND_QUESTION_TO_STORE,
      ADD_PRODUCT_TO_STORE, DELETE_PRODUCT_FROM_CART, SET_STORE_PURCHASE_POLICY,
       SET_STORE_DISCOUNT_POLICY, SET_STORE_PURCHASE_RULES, ADD_OWNER, DELETE_OWNER, 
       ADD_MANAGER, DELETE_MANAGER, CLOSE_STORE_TEMPORARILY, OPEN_CLOSE_STORE,
-      VIEW_STORE_MANAGEMENT_INFORMATION, MANAGER_ANSWER_QUESTION, VIEW_STORE_PURCHASES_HISTORY, MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS} from "./ApiPaths";
+      VIEW_STORE_MANAGEMENT_INFORMATION, MANAGER_ANSWER_QUESTION, VIEW_STORE_PURCHASES_HISTORY, 
+      MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS, GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES} from "./ApiPaths";
 import { Response } from "./Response";
-import { StoreInformation } from "../ServiceObjects/Store";
+import { Product } from "../ServiceObjects/Product";
+import Store from "../ServiceObjects/Store";
 // const instance = axios.create(
 //     {withCredentials : true}
 // );
@@ -23,7 +25,7 @@ export class StoreApi {
             })
             .then(res => {
                 let response = res.data;
-                let store_info = new StoreInformation(response.value);
+                let store_info = new Store(response.value);
                 return response_obj.create(store_info, response.message);
             })
             .catch(res => undefined);
@@ -278,6 +280,44 @@ export class StoreApi {
             })
             .then(res => {
                 return new Response(res.data)
+            })
+            .catch(res => undefined);
+    }
+    get_products_by_store_id(store_id){
+        return instance.get(GET_PRODUCTS_BY_STORE_ID,
+            {
+                params:{ 
+                    store_id : store_id,
+                   }
+                
+
+            })
+            .then(res => {
+                let response = res.data;
+                //traverse the products and create product for each element on the list
+                //create response with the list of products
+                const arr = [];
+                res.data.value.map(p => arr.push(new Product(p)));
+                return Response.create(arr,res.data.wasException,res.data.message);
+            })
+            .catch(res => undefined);
+    }
+    get_all_stores(store_id){
+        return instance.get(GET_ALL_STORES,
+            {
+                params:{ 
+                    store_id : store_id,
+                   }
+                
+
+            })
+            .then(res => {
+                let response = res.data;
+                //traverse the products and create product for each element on the list
+                //create response with the list of products
+                const arr = [];
+                res.data.value.map(s => arr.push(new Store(s)));
+                return Response.create(arr,res.data.wasException,res.data.message);
             })
             .catch(res => undefined);
     }

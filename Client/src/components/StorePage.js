@@ -75,11 +75,13 @@ export default class StorePage extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            // founder_email: store.founder_email,
-            // store_name: store.store_name,
-            // foundation_date: store.foundation_date,
-            // storeReview: store.storeReview
+            products:[],
+            founder_email :undefined,
+        store_name :undefined ,
+        foundation_date : undefined,
+        storeReviewInformation : undefined,
         };
+        this.storeApi = new StoreApi();
        
     }
     
@@ -95,10 +97,11 @@ export default class StorePage extends Component {
         storeReviewInformation : store.storeReviewInformation,
     });
       
-      let response = await CartApi.view_user_cart();
-        let cart = response.value;
+
+        let products_res = await this.storeApi.get_products_by_store_id(this.props.store_id);
+        let products = products_res.value;
         this.setState({
-            baskets:cart.baskets
+          products:products
         });
         
 
@@ -174,7 +177,7 @@ export default class StorePage extends Component {
                             }}
                             subheader={<li />}
                             >
-                            {this.state.baskets.map((product) => (
+                            {this.state.products.map((product) => (
                                 <ListItem key={`item}-${product}`}>
                                     <ListItemText primary={`Item ${product}`} />
                                 </ListItem>
@@ -182,24 +185,7 @@ export default class StorePage extends Component {
                             </List>
 
 
-                            {/* <List
-                            sx={{
-                                width: '100%',
-                                maxWidth: 360,
-                                bgcolor: 'background.paper',
-                                position: 'relative',
-                                overflow: 'auto',
-                                maxHeight: 300,
-                                '& ul': { padding: 0 },
-                            }}
-                            subheader={<li />}
-                            >
-                            {[this.state.ptoducts].map((product) => (
-                                <ListItem key={`Product name: }-${product.name}`}>
-                                    <ListItemText primary={`price:  ${product.price}`} />
-                                </ListItem>
-                                ))}
-                            </List> */}
+                     
 
                                    
                             

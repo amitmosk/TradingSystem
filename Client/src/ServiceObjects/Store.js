@@ -1,5 +1,5 @@
 import { StoreReview } from "./StoreReview";
-export class StoreInformation  {
+export default class Store  {
     founder_email;
     store_name;
     foundation_date;
@@ -14,7 +14,7 @@ export class StoreInformation  {
     }
     
     static create(founder_email, store_name, foundation_date, storeReviewInformation) {
-        return new StoreInformation({
+        return new Store({
             founder_email: founder_email,
             store_name: store_name,
             foundation_date: foundation_date,

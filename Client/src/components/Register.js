@@ -63,13 +63,14 @@ export default class Register extends Component {
 
     async register(event){
         const {email, password, firstname, lastname, birthdate} = this.state;
-        this.props.updateRegisterHandler(firstname+" "+lastname, email);
+        
         console.log("email is "+email+" , password is "+password+" firstname is "+firstname+" lastname is "+lastname+" birthdate is "+birthdate+"\n");
         let response = await this.connectApi.register(email, password, firstname, lastname, birthdate);
         if (!response.was_exception)
         {
             const user = response.value;
-            // return <Navigate to="/HomePageSearch"/>
+            this.props.updateRegisterHandler(firstname+" "+lastname, email, user);
+            return <Navigate to="/"/>
         }
     }
     
@@ -100,9 +101,11 @@ export default class Register extends Component {
                             </select> */}
                             <div className="ConnectRegister">
                                 
-                                {/* <Link to="/register">Create new account</Link> */}
+                
                                 <Button onClick={() => this.register()} variant="contained">Register </Button>
-                                {/* <input class="action" type="submit" value="Login"/> */}
+                                <Link href="/Login" underline="hover" >
+                                {'Already registered? Login'}
+                                </Link>
                             </div>
                         </form>
                     </div>
