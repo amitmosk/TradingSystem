@@ -7,7 +7,7 @@ export class Product  {
         this.category = data.category;
         this.key_words = data.key_words;
         this.price = data.price;
-        this.productReview = new ProductReview(data.productReview)
+        this.productReview = this.productReview;
     }
 
     static create(product_id, name, category, key_words, price, productReview) {

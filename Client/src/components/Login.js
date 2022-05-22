@@ -42,10 +42,10 @@ export default class Login extends Component {
         this.props.updateLoginHandler();
         console.log("email is "+email+" , password is "+password+"\n");
         let response = await this.connectApi.login(email, password);
-        console.log(response+"\n");
         if (!response.was_exception)
         {
             console.log("in login, login success!\n");
+            console.log(response);
             // return <Navigate to="/HomePageSearch"/>
             <Navigate to="/"/>
             //go to home page

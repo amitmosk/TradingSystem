@@ -63,7 +63,7 @@ export default class Payment extends Component {
         // console.log(response.data);
         // let x = response;
         // // this.setState({
-        // //     ["email"]: "response.data.wasException"
+        // //     ["email"]: "response.data.was_exception"
         // // });
         
 

@@ -3,7 +3,7 @@ import { sortAndDeduplicateDiagnostics } from "typescript";
 import { SEND_QUESTION_TO_ADMIN, CLOSE_STORE_PERMANENTLY, REMOVE_USER, ADMIN_VIEW_USERS_QUESTION ,
      ADMIN_ANSWER_USERS_QUESTION, ADMIN_VIEW_STORE_PURCHASES_HISTORY, ADMIN_VIEW_USER_PURCHASES_HISTORY, GET_MARKET_STATS} from "./ApiPaths";
 import { Response } from "./Response";
-import {Statistic} from "../ServiceObjects/statistic"
+import {Statistic} from "../ServiceObjects/Statistic"
 // const instance = axios.create(
 //     {withCredentials : true}
 // );
@@ -104,7 +104,7 @@ export class AdminApi {
         return instance.get(GET_MARKET_STATS)
             .then(res => {
                 const stats = new Statistic(res.data.value);
-                return Response.create(stats, res.wasException, res.message);
+                return Response.create(stats, res.was_exception, res.message);
             })
             .catch(res => undefined);
     }

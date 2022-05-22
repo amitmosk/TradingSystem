@@ -37,8 +37,9 @@ export class ConnectApi {
                 //     // update notifications UI with the new notification 
                 //     console.log(data);
                 //  }
+                console.log(res.data)
                 const user = new User(res.data.value);
-                return Response.create(user,res.data.wasException,res.data.message);
+                return Response.create(user,res.data.was_exception,res.data.message);
             })
             .catch(res => undefined);
     }
@@ -46,7 +47,7 @@ export class ConnectApi {
     logout() {
         return instance.get(LOGOUT_PATH)
             .then(res => {
-                return Response.create(null,res.data.wasException,res.data.message);
+                return Response.create(null,res.data.was_exception,res.data.message);
             })
             .catch(res => undefined);
     }
@@ -62,7 +63,7 @@ export class ConnectApi {
             })
             .then(res => {
                 const user = new User(res.data.value);
-                return Response.create(user,res.data.wasException,res.data.message);
+                return Response.create(user,res.data.was_exception,res.data.message);
             }).catch(res => Response.create(null,true,"http failure"));
     }
 }
