@@ -1362,6 +1362,32 @@ public class MarketFacade{
         return response;
     }
 
+    public Response get_all_stores() {
+        Response<Map<Integer,Store>> response = null;
+        try {
+            Map<Integer, Store> stores = store_controller.get_all_stores();
+            response = new Response(stores, "Received market stores successfully");
+            system_logger.add_log("received market stores successfully.");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response get_products_by_store_id(int store_id) {
+        Response<Map<Product, Integer>> response = null;
+        try {
+            Map<Product, Integer> products = store_controller.get_products_by_store_id(store_id);
+            response = new Response(products, "Received store products successfully");
+            system_logger.add_log("received market stores successfully.");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
     // TODO: testing functions
     public boolean is_logged() {
         return !isGuest;
@@ -1376,4 +1402,5 @@ public class MarketFacade{
         user_controller.clear();
         store_controller.clear();
     }
+
 }
