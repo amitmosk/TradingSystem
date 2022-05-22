@@ -54,7 +54,7 @@ public class Service implements iService {
     @Override
     public Response login(String email, String password) {
         Response answer = marketFacade.login(email, password);
-        this.notificationHandler.send_waiting_notifications(email);
+//        this.notificationHandler.send_waiting_notifications(email);
         return answer;
     }
 
