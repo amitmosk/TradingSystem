@@ -48,9 +48,6 @@ export default class HomePageSearch extends Component {
             case "name":
                 this.find_product_by_name(val)
                 break;
-            case "price":
-                this.find_product_by_price(val)
-                break;
             case "category":
                 this.find_product_by_category(val)
                 break;
@@ -77,20 +74,7 @@ export default class HomePageSearch extends Component {
         }
 
     }
-    async find_product_by_price(val) {
-        console.log("in find product by price");
-        let response = await this.productApi.find_products_by_price(val);
-        if (!response.was_exception) {
-            this.setState({
-                products: response.value
-            });
-            //show products
-        }
-        else {
-            console.log("in find product by price - fail");
-        }
 
-    }
     async find_product_by_category(val) {
         console.log("in find product by category");
         let response = await this.productApi.find_products_by_category(val);
@@ -134,7 +118,6 @@ export default class HomePageSearch extends Component {
                             <option value="name">name</option>
                             <option value="category">category</option>
                             <option value="keywords">keywords</option>
-                            <option value="price">price</option>
                         </select>
 
 

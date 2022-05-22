@@ -1,5 +1,5 @@
 import { StoreReview } from "./StoreReview";
-export default class Store  {
+export class Store  {
     founder_email;
     store_name;
     foundation_date;

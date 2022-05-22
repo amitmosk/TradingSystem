@@ -55,6 +55,7 @@ export class ProductApi {
     }
 
     find_products_by_category(product_category) {
+        console.log("product category = "+product_category+"\n\n\n");
         return instance.get(FIND_PRODUCTS_BY_CATEGORY,
             {
                 params:{product_category: product_category,}
@@ -70,6 +71,7 @@ export class ProductApi {
             .catch(res => undefined);
     }
     find_products_by_keywords(product_keywords) {
+        console.log("product keywords = "+product_keywords+"\n\n\n");
         return instance.get(FIND_PRODUCTS_BY_KEYWORDS,
             {
                 params:{product_keywords: product_keywords,}
