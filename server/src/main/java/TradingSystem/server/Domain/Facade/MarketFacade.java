@@ -1,9 +1,7 @@
 package TradingSystem.server.Domain.Facade;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import TradingSystem.server.Domain.StoreModule.Basket;
+
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -564,14 +562,13 @@ public class MarketFacade{
     /**
      * Requirement 2.3.8 - edit
      *
-     * @param pw       password
      * @param new_name new first name
      * @return success/failure message
      */
-    public Response<String> edit_name(String pw, String new_name) {
+    public Response<String> edit_name(String new_name) {
         Response<String> response = null;
         try {
-            String email = user_controller.edit_name(loggedUser, pw, new_name);
+            String email = user_controller.edit_name(loggedUser, new_name);
             response = new Response<>(new_name, email + " name changed to " + new_name);
             system_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
 
@@ -589,10 +586,10 @@ public class MarketFacade{
      * @param new_last_name new last name
      * @return success/failure message
      */
-    public Response<String> edit_last_name(String pw, String new_last_name) {
+    public Response<String> edit_last_name(String new_last_name) {
         Response<String> response = null;
         try {
-            String email = user_controller.edit_last_name(loggedUser, pw, new_last_name);
+            String email = user_controller.edit_last_name(loggedUser, new_last_name);
             response = new Response<>(new_last_name, email + " last name changed to " + new_last_name);
             system_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
 
@@ -637,10 +634,10 @@ public class MarketFacade{
      */
 
 
-    public Response<String> edit_name_premium(String pw, String new_name, String answer) {
+    public Response<String> edit_name_premium(String new_name, String answer) {
         Response<String> response = null;
         try {
-            String email = user_controller.edit_name_premium(loggedUser, pw, new_name, answer);
+            String email = user_controller.edit_name_premium(loggedUser, new_name, answer);
             response = new Response<>(new_name, email + " name changed to " + new_name);
             system_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
 
@@ -660,10 +657,10 @@ public class MarketFacade{
      * @return success/failure message
      */
 
-    public Response<String> edit_last_name_premium(String pw, String new_last_name, String answer) {
+    public Response<String> edit_last_name_premium(String new_last_name, String answer) {
         Response<String> response = null;
         try {
-            String email = user_controller.edit_last_name_premium(loggedUser, pw, new_last_name, answer);
+            String email = user_controller.edit_last_name_premium(loggedUser, new_last_name, answer);
             response = new Response<>(new_last_name, email + " last name changed to " + new_last_name);
             system_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
 
@@ -685,7 +682,7 @@ public class MarketFacade{
     public Response<String> edit_password_premium(String old_password, String new_password, String answer) {
         Response<String> response = null;
         try {
-            String email = user_controller.edit_passsword_premium(loggedUser, old_password, new_password, answer);
+            String email = user_controller.edit_password_premium(loggedUser, old_password, new_password, answer);
             response = new Response<>(null, email + " password changed");
             system_logger.add_log("User's (" + email + ") password has been successfully changed.");
 

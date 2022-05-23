@@ -11,12 +11,15 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Link from '@mui/material/Button';
 import StorePage from './StorePage'
+import { generatePath } from "react-router";
+
 
 
 
 // import { GridApi } from '@mui/x-data-grid-pro';
 
 const prods = [Product.create(10,'snow',"a",1,10,"bb"),Product.create(21,'snow',"a",1,10,"bb"),Product.create(27,'snow',"a",1,10,"bb"),Product.create(11,'amit',"a",1,10,"bb"),Product.create(32,'kol',"a",1,10,"bb")];
+
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'name', headerName: 'name', width: 130 },
@@ -24,8 +27,7 @@ const columns = [
   { field: 'price', headerName: 'price', type: 'double', width: 90,},
   { field: 'quantity', headerName: 'quantity', type: 'number', width: 90, editable:true},
   { field: 'store', headerName: 'store', width: 90, hide: true},
-  { field: 'key_words', headerName:'key words',  width: 0, hide:true},
-];
+  { field: 'key_words', headerName:'key words',  width: 0, hide:true},];
   const make_rows = (res) => {
     let ret = []
     res.map(p=>{ret.push({id:p.product_id,name:p.name,category:p.category,price:p.price,quantity:0,store:1,key_words:["hi","hello"]})});
@@ -57,6 +59,16 @@ const columns = [
     }else
       alert("you should select item to add")
   }
+
+  // const generate_store_page_url = async () =>{
+  //   set_selected(items.filter(i=> selected_row.some(s=> s === i.id)))
+  //   if(selected_item.length > 0){
+  //     let selected = selected_item[0];
+  //     return "/StorePage/:"+selected.store
+  //   }
+  //   return "/HomePage"
+  // }
+
   const add_to_cart = async () =>{
     set_selected(items.filter(i=> selected_row.some(s=> s === i.id)))
     if(selected_item.length > 0){
@@ -80,13 +92,24 @@ const columns = [
 
   const handleCloseSnackbar = () => setSnackbar(null);
 
+  const edit_function = async (oldRow, newRow) =>{
+    if(oldRow.quantity != newRow.quantity)
+      return await productApi.edit_product_quantity_in_cart(newRow.store_id,newRow.id,newRow.quantity);
+    else if(oldRow.price != newRow.price)
+      return await productApi.edit_product_price(newRow.store_id,newRow.id,newRow.price);
+    else if(oldRow.name != newRow.name)
+      return await productApi.edit_product_name(newRow.store_id,newRow.id,newRow.name);
+    else if(oldRow.category != newRow.category)
+      return await productApi.edit_product_category(newRow.store_id,newRow.id,newRow.category);
+  }
+
   const processRowUpdate = React.useCallback(
-    async (newRow) => {
+    (newRow,oldRow) => {
       // Make the HTTP request to save in the backend
-      // const response = await productApi.edit_product_quantity_in_cart(newRow.store_id,newRow.id,newRow.edit_quantity);
+      let response = edit_function(oldRow,newRow);
       setSnackbar({ children: 'User successfully saved', severity: 'success' });
       console.log(newRow)
-      return Promise.resolve().then(()=>newRow);
+      return response;
     },
     [productApi.edit_product_quantity_in_cart],
   );
@@ -95,11 +118,6 @@ const columns = [
     setSnackbar({ children: error.message, severity: 'error' });
   }, []);
 
-
-
-
-  const store_id = 1;
-  const url = `/StorePage/${store_id}`;
   return (
       <main>
     <div style={{ height: 400, width: '100%' }}>
@@ -108,7 +126,8 @@ const columns = [
             <Col align='left'><Button size="small" width='5' variant="contained" onClick={add_to_cart}>add selected product to cart</Button>
             <Button size="small" variant="contained" onClick={remove_products}>remove selected product from cart</Button>
             <Button variant="contained" size="small" onClick={edit_quantity}>change selected product quantity</Button>
-            <Button variant="contained" size="small" onClick={<StorePage store_id="1"/>}>view store information</Button></Col>
+            {/*<Link variant="contained" size="small" href={generatePath("/H/:id", { id: 1 })} store_id={selected_row}>view store information</Link>*/}
+            </Col>
           </Row>
           </Grid>
           <DataGrid rows={items} columns={columns}         

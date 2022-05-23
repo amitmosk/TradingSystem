@@ -104,7 +104,7 @@ export class AdminApi {
         return instance.get(GET_MARKET_STATS)
             .then(res => {
                 const stats = new Statistic(res.data.value);
-                return Response.create(stats, res.was_exception, res.message);
+                return Response.create(stats, res.data.was_exception, res.data.message);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }

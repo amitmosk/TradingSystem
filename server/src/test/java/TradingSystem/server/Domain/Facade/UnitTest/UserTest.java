@@ -123,10 +123,9 @@ class UserTest {
     void edit_name(){
 
         try{
-            user.edit_name("pssw0rD", "Gal");
+            user.edit_name( "Gal");
             assertEquals("Gal", user.user_name());
-            user.edit_name("psddsw0rD", "Eylon");
-            assertEquals("Gal", user.user_name());
+
         }
         catch (Exception e){}
     }
