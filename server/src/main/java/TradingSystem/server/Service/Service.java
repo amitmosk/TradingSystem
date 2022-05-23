@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -359,8 +360,10 @@ public class Service implements iService {
     @RequestMapping(value = "/edit_product_key_words")
     @CrossOrigin
     @Override
-    public Response edit_product_key_words(int product_id, int store_id, List<String> key_words) {
-        Response answer = marketFacade.edit_product_key_words(product_id, store_id, key_words);
+    public Response edit_product_key_words(int product_id, int store_id, String key_words) {
+        List<String> key_words_list = new LinkedList<>();
+        key_words_list.add(key_words);
+        Response answer = marketFacade.edit_product_key_words(product_id, store_id, key_words_list);
         return answer;
     }
 
