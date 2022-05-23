@@ -121,9 +121,9 @@ export default class App extends Component {
           <Route path="/ViewStat" element={<ViewStat />}></Route>
 
 
-          // user history purchase.
+          {/* // user history purchase. */}
            {/* <Route path="/UserPurchaseHistory" element={<UserQuestions questions={this.get_user_questions()}/>}></Route> */}
-          // user own questions -> view my questions.
+          {/* // user own questions -> view my questions. */}
           {/* <Route path="/UserQuestions" element={<?? />}></Route>
           // notificans
           <Route path="/Notifications" element={<?? />}></Route> } */}
