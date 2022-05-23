@@ -14,6 +14,26 @@ public class QuestionController implements iQuestionController {
     private Map<Integer, UserQuestion> user_to_admin;
     private AtomicInteger question_ids_counter;
 
+    public List<String> get_all_user_questions(String user_email) {
+        List<String> answer = new LinkedList<>();
+        String temp;
+        for ( BuyerQuestion question : this.buyer_to_store.values())
+        {
+            if (question.getSender().get_user_email().equals(user_email)){
+                temp = question.toString_for_user();
+                answer.add(temp);
+            }
+        }
+        for ( UserQuestion question : this.user_to_admin.values())
+        {
+            if (question.getSender().get_user_email().equals(user_email)){
+                temp = question.toString_for_user();
+                answer.add(temp);
+            }
+        }
+        return answer;
+    }
+
 
     private static class SingletonHolder{
         private static QuestionController instance = new QuestionController();

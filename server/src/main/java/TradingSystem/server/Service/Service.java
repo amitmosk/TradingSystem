@@ -516,5 +516,12 @@ public class Service implements iService {
         Response answer = marketFacade.get_products_by_store_id(store_id);
         return answer;
     }
+
+    @RequestMapping(value = "/get_user_questions")
+    @CrossOrigin
+    public Response get_user_questions() {
+        Response answer = marketFacade.get_user_questions();
+        return answer;
+    }
 }
 

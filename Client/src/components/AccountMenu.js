@@ -87,8 +87,18 @@ export default function AccountMenu(logout) {
                                 </Link>
         </MenuItem>
         <MenuItem>
-          <Avatar /> <Link href="/Profile" underline="hover" >
-                                {'My account'}
+          <Avatar /> <Link href="/UserPurchaseHistory" underline="hover" >
+                                {'My Purchases History'}
+                                </Link>
+        </MenuItem>
+        <MenuItem>
+          <Avatar /> <Link href="/UserQuestions" underline="hover" >
+                                {'My Questions'}
+                                </Link>
+        </MenuItem>
+        <MenuItem>
+          <Avatar /> <Link href="/Notifications" underline="hover" >
+                                {'Notifications'}
                                 </Link>
         </MenuItem>
         <Divider />

@@ -33,5 +33,15 @@ public class BuyerQuestion extends Question {
                 '}';
     }
 
+    @Override
+    public String toString_for_user() {
+        return "Question to store :" + store_id +
+                ", message_date=" + message_date +
+                ", answer_date=" + answer_date +
+                ", message='" + message + '\'' +
+                ", answer='" + answer + '\'' +
+                '}';
+    }
+
 
 }

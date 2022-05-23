@@ -26,7 +26,7 @@ export class User  {
             birth_date : "12-12-2021",
             cart : "",
             storesManaged : "",
-            security_question : "",
+            security_question : "what is the time?",
         })
     }
     

@@ -17,6 +17,7 @@ import AdminPage from './components/AdminPage';
 import StoreManagment from './components/StoreManagment';
 import { ConnectApi } from './API/ConnectApi';
 import AddDiscount from './components/AddDiscount';
+import EditProfilePremium from './components/EditProfilePremium';
 import EditProfile from './components/EditProfile';
 import ProductPage from './components/ProductPage';
 import HomePage from './components/HomePage';
@@ -92,15 +93,19 @@ export default class App extends Component {
           {/* <Route path="/ShoppingCart" element={<ShoppingCart />}></Route> */}
           <Route path="/StoreManagment" element={<StoreManagment store_id=""/>}></Route>
           <Route path="/AddDiscount" element={<AddDiscount store_id=""/>}></Route>
-          {/* <Route path="/EditProfile" element={<EditProfile name={this.state.user.name}  lastName = {this.state.user.lastName} security_question={this.state.user.security_question} ></EditProfile>}></Route> */}
-          {/* <Route path="/EditProfile" element={<EditProfile getUserStateName={this.get_name.bind(this)} updateUserStateName={this.updateUserStateName.bind(this)} ></EditProfile>}></Route> */}
-          {/* <Route path="/EditProfile" element={<EditProfile getUserStateName={this.get_name.bind(this)}} ></EditProfile>}></Route> */}
           <Route path="/EditProfile" element={<EditProfile get_state={this.get_state.bind(this)} />}></Route>
+          <Route path="/EditProfilePremium" element={<EditProfilePremium get_state={this.get_state.bind(this)} />}></Route>
 
           <Route path="/ProductPage" element={<ProductPage product_id={1} store_id={1}/>}></Route>
           {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
           <Route path="/ViewUserQuestions" element={<ViewUserQuestions questions={[]} />}></Route>
           <Route path="/ViewStat" element={<ViewStat />}></Route>
+
+
+
+          {/* <Route path="/UserPurchaseHistory" element={<??? />}></Route>
+          <Route path="/UserQuestions" element={<?? />}></Route>
+          <Route path="/Notifications" element={<?? />}></Route> */}
 
         </Routes>
       </BrowserRouter>

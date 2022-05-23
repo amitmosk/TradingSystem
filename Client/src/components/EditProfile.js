@@ -7,9 +7,11 @@ import Link from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { UserApi } from '../API/UserApi';
+import { StoreApi } from '../API/StoreApi';
 import { Alert } from '@mui/material';
 import Typography from '@material-ui/core/Typography';
 
+import FormDialog from './FormDialog';
 
 // EditProfile.defaultProps = {
 //     outlinedVar: "outlined",
@@ -32,6 +34,9 @@ export default class EditProfile extends Component {
             name: this.props.name,
             lastName: this.props.lastName,
             security_question: this.props.security_question,
+            improve_security_fields: ["question", "answer","password"],
+            unregister_fields: ["password"],
+
 
         }
         console.log("start edit profile");
@@ -56,21 +61,9 @@ export default class EditProfile extends Component {
     }
 
 
-    async handle_name_edit_premium(event)  {
-        console.log("in handle name edit premium\n");
-        const answer_of_premium_question = this.get_answer_of_security_question();
-        
-        const new_name = localStorage.getItem("Edit Name");
-        let response = await this.userApi.edit_name_premium(new_name);
-        alert(response.message);
-        if (!response.was_exception) {
-            console.log("in edit name - success!\n");
-        }
-        else {
-        }
-    }
     
     async handle_last_name_edit(event) {
+
         console.log("in handle last name edit\n");
         let new_name = localStorage.getItem("Edit Last Name");
         let response =  await this.userApi.edit_last_name(new_name);
@@ -81,6 +74,30 @@ export default class EditProfile extends Component {
         else {    
         }
     
+    }
+
+    async unregister(values){
+        const password = values[0];
+        let response = await this.userApi.unregister(password);
+        alert(response.message);
+        if (!response.was_exception) {
+            // set as a guest & go to home page.
+        }
+
+    }
+    async improve_security(values){
+        const question = values[0];
+        const answer = values[1];
+        const password = values[2];
+
+        let response =  await this.userApi.improve_security(password, question, answer);
+        alert(response.message);
+        if (!response.was_exception) {
+            //show history
+        }
+        else {    
+        }
+
     }
     
     async handle_password_edit(event) {
@@ -183,13 +200,15 @@ export default class EditProfile extends Component {
                                 </Button>
 
                             </Grid>
-                            {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" 
+                            <Grid><FormDialog outlinedVar="text" 
                             fields={this.state.improve_security_fields} getValues={this.improve_security.bind(this)}
-                             name="Upgrade Security"></FormDialog></Item></Grid> */}
+                             name="Upgrade Security"></FormDialog></Grid> 
+                        </Grid>
+                        <Grid><FormDialog outlinedVar="text" 
+                            fields={this.state.unregister_fields} getValues={this.unregister.bind(this)}
+                             name="unregister"></FormDialog></Grid> 
                         </Grid>
                     </Grid>
-                </Grid>
-
             </Box>
         </>)
     }
