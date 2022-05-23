@@ -21,6 +21,8 @@ import EditProfile from './components/EditProfile';
 import ProductPage from './components/ProductPage';
 import HomePage from './components/HomePage';
 import {User} from './ServiceObjects/User';
+import ViewUserQuestions from './components/ViewUserQuestions';
+import ViewStat from './components/ViewStat';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -87,7 +89,7 @@ export default class App extends Component {
           <Route path="/StorePage" element={<StorePage store_id="" />}></Route>
           <Route path="/AdminSendMessage" element={<AdminSendMessage />}></Route>
           <Route path="/AdminPage" element={<AdminPage />}></Route>
-          <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
+          {/* <Route path="/ShoppingCart" element={<ShoppingCart />}></Route> */}
           <Route path="/StoreManagment" element={<StoreManagment store_id=""/>}></Route>
           <Route path="/AddDiscount" element={<AddDiscount store_id=""/>}></Route>
           {/* <Route path="/EditProfile" element={<EditProfile name={this.state.user.name}  lastName = {this.state.user.lastName} security_question={this.state.user.security_question} ></EditProfile>}></Route> */}
@@ -97,6 +99,8 @@ export default class App extends Component {
 
           <Route path="/ProductPage" element={<ProductPage product_id={1} store_id={1}/>}></Route>
           {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
+          <Route path="/ViewUserQuestions" element={<ViewUserQuestions questions={[]} />}></Route>
+          <Route path="/ViewStat" element={<ViewStat />}></Route>
 
         </Routes>
       </BrowserRouter>

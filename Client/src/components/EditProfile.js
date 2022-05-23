@@ -183,9 +183,9 @@ export default class EditProfile extends Component {
                                 </Button>
 
                             </Grid>
-                            <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" 
+                            {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" 
                             fields={this.state.improve_security_fields} getValues={this.improve_security.bind(this)}
-                             name="Upgrade Security"></FormDialog></Item></Grid>
+                             name="Upgrade Security"></FormDialog></Item></Grid> */}
                         </Grid>
                     </Grid>
                 </Grid>
