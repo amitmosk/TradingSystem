@@ -7,18 +7,12 @@ import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import java.util.List;
 
 public class purchaseLogicComponent {
-    public List<porchaseRule> componentsList;
+    public porchaseRule left;
+    public porchaseRule right;
 
-    public purchaseLogicComponent(List<porchaseRule> lst) {
-        this.componentsList = lst;
-    }
-
-    public void addItem(porchaseRule component) {
-        componentsList.add(component);
-    }
-
-    public void removeItem(porchaseRule component) {
-        componentsList.remove(component);
+    public purchaseLogicComponent(porchaseRule left, porchaseRule right) {
+        this.left = left;
+        this.right = right;
     }
 
 }

@@ -9,17 +9,14 @@ import java.util.List;
 public class OrporchaseRule extends purchaseLogicComponent implements porchaseRule {
 
 
-    public OrporchaseRule(List<porchaseRule> lst) {
-        super(lst);
+        public OrporchaseRule(porchaseRule left, porchaseRule right) {
+            super(left, right);
+        }
+
+        @Override
+        public boolean predictCheck(int age, Basket basket) {
+            return left.predictCheck(age, basket) && right.predictCheck(age, basket);
+        }
     }
 
-    @Override
-    public boolean predictCheck(int age, Basket basket) {
-        for (porchaseRule compnent : componentsList) {
-            if (compnent.predictCheck(age, basket))
-                return true;
-        }
-        return false;
-    }
-}
 

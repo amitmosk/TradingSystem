@@ -2,13 +2,13 @@ package TradingSystem.server.Domain.StoreModule.Policy.Discount;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Predict;
+import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 
 public class ComplexDiscountComponent implements DiscountComponent {
-    simpleDiscountComponent rule;
-    Predict predict;
+    DiscountComponent rule;
+    Ipredict predict;
 
-    public ComplexDiscountComponent(simpleDiscountComponent rule, Predict predict) {
+    public ComplexDiscountComponent(DiscountComponent rule, Ipredict predict) {
         this.predict = predict;
         this.rule = rule;
     }

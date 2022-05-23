@@ -1,10 +1,10 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
 public class DiscountPolicy {
     private HashMap<String, DiscountComponent> policy;
@@ -17,12 +17,20 @@ public class DiscountPolicy {
         policy.values().add(rule);
     }
 
-    public void removeRule(DiscountComponent component) {
-        policy.remove(component);
+    public void removeRule(String name) {
+        policy.remove(policy.get(name));
     }
 
-    public HashMap<String, DiscountComponent> getPolicy() {
-        return policy;
+
+    public DiscountComponent getDiscountCompnentByName(String name) throws WrongPermterException {
+        DiscountComponent Toreturn = policy.get(name);
+        if (Toreturn == null)
+            throw new WrongPermterException("there is no discount compnent with this name");
+        return Toreturn;
+    }
+
+    public Set<String> getPolicyNames() {
+        return policy.keySet();
     }
 
     public double calculateDiscount(Basket basket) {

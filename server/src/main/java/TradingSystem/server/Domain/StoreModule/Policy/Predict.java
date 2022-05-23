@@ -7,7 +7,7 @@ import TradingSystem.server.Domain.UserModule.User;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public class Predict {
+public class Predict implements Ipredict {
     //on what
     private String catgorey;
     private Product product;
@@ -50,13 +50,6 @@ public class Predict {
         this.day = day;
     }
 
-    public boolean CanApply(int age, Basket b) {
-        Map<Product, Integer> map = b.getProducts_and_quantities();
-        for (Map.Entry<Product, Integer> entry : map.entrySet())
-            if (CanApply(age, entry.getKey(), entry.getValue(), entry.getKey().getPrice()))
-                return true;
-        return false;
-    }
 
     private boolean CanApply(int age, Product product, int quantity, double price) {
         String product_category = product.getCategory();
@@ -67,6 +60,14 @@ public class Predict {
         boolean PriceCheck = this.check_valid_price(price * quantity);
         boolean ProductCheck = this.checkProduct(product);
         return quantityCheck || CategoryCheck || TimeCheck || AgeCheck || PriceCheck || ProductCheck;
+    }
+
+    public boolean CanApply(int age, Basket b) {
+        Map<Product, Integer> map = b.getProducts_and_quantities();
+        for (Map.Entry<Product, Integer> entry : map.entrySet())
+            if (CanApply(age, entry.getKey(), entry.getValue(), entry.getKey().getPrice()))
+                return true;
+        return false;
     }
 
     public boolean CanApply(Basket b) {

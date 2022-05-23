@@ -4,8 +4,7 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.Utils.Exception.PurchasePolicyException;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
 public class PurchasePolicy {
     private HashMap<String, porchaseRule> policy;
@@ -24,6 +23,14 @@ public class PurchasePolicy {
             if (rule.predictCheck(userAge, basket) == false)
                 throw new PurchasePolicyException("check");
         }
+    }
+
+    public Set<String> getPolicyNames() {
+        return policy.keySet();
+    }
+
+    public porchaseRule getPolicy(String name) {
+        return policy.get(name);
     }
 
     public void removeRule(porchaseRule rule) {

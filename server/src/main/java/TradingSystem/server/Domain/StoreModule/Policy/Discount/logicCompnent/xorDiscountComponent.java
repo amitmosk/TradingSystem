@@ -1,24 +1,23 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
-import java.util.List;
+public class xorDiscountComponent implements DiscountComponent {
+    DiscountComponent left;
+    DiscountComponent right;
 
-public class xorDiscountComponent extends abstractDiscountlogicComponent implements DiscountComponent {
-
-
-    public xorDiscountComponent(List<DiscountComponent> lst, ComplexDiscountComponent discountComponent) throws WrongPermterException {
-        super(lst, discountComponent);
+    public xorDiscountComponent(DiscountComponent left, DiscountComponent right) throws WrongPermterException {
+        this.right = right;
+        this.left = left;
     }
 
 
     @Override
     public double CalculateDiscount(Basket basket) {
-        double discountFromLeft = componentsList.get(0).CalculateDiscount(basket);
-        double discountFromRight = componentsList.get(1).CalculateDiscount(basket);
+        double discountFromLeft = left.CalculateDiscount(basket);
+        double discountFromRight = right.CalculateDiscount(basket);
         boolean XorRes = (discountFromLeft != 0) ^ (discountFromRight != 0);
         if (XorRes)//if XorRes==true then only one discount is working
             return Math.max(discountFromLeft, discountFromRight);
@@ -27,6 +26,6 @@ public class xorDiscountComponent extends abstractDiscountlogicComponent impleme
 
     @Override
     public boolean CanApply(Basket basket) {
-        return componentsList.get(0).CanApply(basket) || componentsList.get(1).CanApply(basket);
+        return left.CanApply(basket) || right.CanApply(basket);
     }
 }

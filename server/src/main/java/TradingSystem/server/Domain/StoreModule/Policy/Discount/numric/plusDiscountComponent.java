@@ -4,17 +4,17 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 
 public class plusDiscountComponent implements DiscountComponent {
-    DiscountComponent simple1;
-    DiscountComponent simple2;
+    DiscountComponent left;
+    DiscountComponent right;
 
-    public plusDiscountComponent(DiscountComponent simple1, DiscountComponent simple2) {
-        this.simple1 = simple1;
-        this.simple2 = simple2;
+    public plusDiscountComponent(DiscountComponent left, DiscountComponent right) {
+        this.left = left;
+        this.right = right;
     }
 
     public double CalculateDiscount(Basket basket) {
-        double discount1 = simple1.CalculateDiscount(basket);
-        double discount2 = simple2.CalculateDiscount(basket);
+        double discount1 = left.CalculateDiscount(basket);
+        double discount2 = right.CalculateDiscount(basket);
         return discount1 + discount2;
     }
 

@@ -4,9 +4,6 @@ package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class SimpleporchaseRule implements porchaseRule {
     Predict predict;
 
