@@ -1,4 +1,10 @@
 import { StoreReview } from "./StoreReview";
+
+const GUEST = 0;
+const ASSIGN_USER = 1;
+const ADMIN = 2;
+
+
 export class User  {
     constructor(data) {
         this.state = data.state;
@@ -9,6 +15,19 @@ export class User  {
         this.cart = data.cart;
         this.storesManaged = data.storesManaged;
         this.security_question = data.security_question;
+    }
+
+    static guest(){
+        return new User({
+            state : GUEST,
+            email :"",
+            name :"guest private name",
+            lastName : "guest last name",
+            birth_date : "12-12-2021",
+            cart : "",
+            storesManaged : "",
+            security_question : "",
+        })
     }
     
     static create(state, email, name, lastName, birth_date, cart, storesManaged, security_question) {
