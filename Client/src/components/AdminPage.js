@@ -158,39 +158,64 @@ export default class AdminPage extends Component {
         const { redirectTo } = this.state
         return (
 
-            <Box sx={{ flexGrow: 1 }}>
+            // <Box sx={{ flexGrow: 1 }}>
 
-                <Link href="/"><HomeIcon></HomeIcon></Link>
-                <h3>Admin Page</h3>
+            //     <Link href="/"><HomeIcon></HomeIcon></Link>
+            //     <h3>Admin Page</h3>
+                    
+            //     <Grid container spacing={20}>
+            //         <Grid item xs>
+            //             <FormDialog fields={this.state.close_store_fields} getValues={this.close_store_permanently.bind(this)} name="Close Store"></FormDialog>
 
-                <Grid container spacing={20}>
-                    <Grid item xs>
-                        <FormDialog fields={this.state.close_store_fields} getValues={this.close_store_permanently.bind(this)} name="Close Store"></FormDialog>
 
+            //         </Grid>
+            //         <Grid item xs={3}>
+            //             <FormDialog fields={this.state.remove_user_fields} getValues={this.remove_user.bind(this)} name="Remove User"></FormDialog>
+            //         </Grid>
+            //         <Grid item xs>
+            //             <FormDialog fields={this.state.admin_answer_user_question_fields} getValues={this.admin_answer_user_question.bind(this)} name="User Message"></FormDialog>
+            //         </Grid>
+            //         <Grid item xs>
+            //             <FormDialog fields={this.state.admin_view_user_purchases_history_fields} getValues={this.admin_view_user_purchases_history.bind(this)} name="View User Purchase History"></FormDialog>
+            //         </Grid>
+            //         <Grid item xs>
+            //             <FormDialog fields={this.state.admin_view_store_purchases_history_fields} getValues={this.admin_view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog>
+            //         </Grid>
+            //         <Grid item xs>
+            //             <FormDialog fields={this.state.get_market_stats_fields} getValues={this.get_market_stats.bind(this)} name="Show Statistics"></FormDialog>
+            //         </Grid>
+            //     </Grid>
 
-                    </Grid>
-                    <Grid item xs={3}>
-                        <FormDialog fields={this.state.remove_user_fields} getValues={this.remove_user.bind(this)} name="Remove User"></FormDialog>
-                    </Grid>
-                    <Grid item xs>
-                        <FormDialog fields={this.state.admin_answer_user_question_fields} getValues={this.admin_answer_user_question.bind(this)} name="User Message"></FormDialog>
-                    </Grid>
-                    <Grid item xs>
-                        <FormDialog fields={this.state.admin_view_user_purchases_history_fields} getValues={this.admin_view_user_purchases_history.bind(this)} name="View User Purchase History"></FormDialog>
-                    </Grid>
-                    <Grid item xs>
-                        <FormDialog fields={this.state.admin_view_store_purchases_history_fields} getValues={this.admin_view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog>
-                    </Grid>
-                    <Grid item xs>
-                        <FormDialog fields={this.state.get_market_stats_fields} getValues={this.get_market_stats.bind(this)} name="Show Statistics"></FormDialog>
-                    </Grid>
-                </Grid>
+            //     <Box sx={{ flexGrow: 3 }}>
 
-                <Box sx={{ flexGrow: 3 }}>
+            //     </Box>
+            //     <h3> </h3>
+            // </Box>
 
-                </Box>
-                <h3> </h3>
-            </Box>
+<Box sx={{ flexGrow: 1 }}>
+<Link href="/"><HomeIcon></HomeIcon></Link>
+<h3 align="center">Store Managment Page</h3>
+
+<Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
+    <Grid item xs={3}> <FormDialog fields={this.state.close_store_fields} getValues={this.close_store_permanently.bind(this)} name="Close Store"></FormDialog> </Grid>
+    <Grid item xs={3}> <FormDialog fields={this.state.remove_user_fields} getValues={this.remove_user.bind(this)} name="Remove User"></FormDialog></Grid>
+    <Grid item xs={3}>  <FormDialog fields={this.state.admin_answer_user_question_fields} getValues={this.admin_answer_user_question.bind(this)} name="User Message"></FormDialog></Grid>
+    <Grid item xs={3}>  <FormDialog fields={this.state.admin_view_user_purchases_history_fields} getValues={this.admin_view_user_purchases_history.bind(this)} name="View User Purchase History"></FormDialog></Grid>
+    <Grid item xs={3}>  <FormDialog fields={this.state.admin_view_store_purchases_history_fields} getValues={this.admin_view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog></Grid>
+    <Grid item xs={3}>  <FormDialog fields={this.state.get_market_stats_fields} getValues={this.get_market_stats.bind(this)} name="Show Statistics"></FormDialog> </Grid>
+    
+    
+    
+    
+    
+   
+</Grid>
+
+<Box sx={{ flexGrow: 3 }}>
+
+</Box>
+<h3> </h3>
+</Box>
 
 
 

@@ -50,6 +50,7 @@ export default class HomePage extends Component {
             stores: [],
             open_store_fields: ["Store name"],
             send_question_to_admin_fields: ["Enter your question"],
+            products: [],
 
         };
         this.connectAPI = new ConnectApi();
@@ -88,6 +89,14 @@ export default class HomePage extends Component {
         else {
 
         }
+    }
+    show_products(products) {
+        console.log("in show product");
+         this.setState({
+            products:products,
+        });
+    //    return (<ShoppingCart products={products}></ShoppingCart>);
+        return (<ShoppingCart products={this.state.products}></ShoppingCart>);
     }
 
     render() {
@@ -136,7 +145,7 @@ export default class HomePage extends Component {
                         <h3 class="Header" align="center">
                             Welcome To Ebay
                         </h3>
-                        <HomePageSearch sx={{ height: '5%' }} />
+                        <HomePageSearch show_products={this.show_products.bind(this)} sx={{ height: '5%' }} />
                     </Box>
                     <Grid container>
                         
@@ -147,7 +156,7 @@ export default class HomePage extends Component {
                                 </Link>}>
                                 </MenuListComposition></row> </Col>
                         <Header position="right" align="right" title="Stores"></Header>
-                        <ShoppingCart/>
+                        {/* {this.show_products()} */}
 
                     </Grid>
                 </Container>

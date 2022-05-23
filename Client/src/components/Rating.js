@@ -7,7 +7,7 @@ import { RateReview } from '@mui/icons-material';
 export default function BasicRating(to_rate, rating) {
   const [value, setValue] = React.useState(2);
   const RATE ="Rate ";
-  to_rate.rating(value);
+  
   return (
     <Box
       sx={{
@@ -20,6 +20,7 @@ export default function BasicRating(to_rate, rating) {
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
+          to_rate.rating(newValue);
         }}
       />
     </Box>
