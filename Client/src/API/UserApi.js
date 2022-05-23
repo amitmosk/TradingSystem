@@ -1,5 +1,5 @@
 // import axios from "axios";
-import {CONNECTION_ERROR, CATCH,  VIEW_USER_PURCHASE_HISTORY, GET_USER_EMAIL, GET_USER_NAME, GET_USER_LAST_NAME, EDIT_PASSWORD, EDIT_NAME , EDIT_LAST_NAME, UNREGISTER, EDIT_NAME_PREMIUM, EDIT_LAST_NAME_PREMIUM, EDIT_PASSWORD_PREMIUM, GET_USER_SECURITY_QUESTION, IMPROVE_SECURITY} from "./ApiPaths";
+import {CONNECTION_ERROR, CATCH, VIEW_USER_QUESTIONS,  VIEW_USER_PURCHASE_HISTORY, GET_USER_EMAIL, GET_USER_NAME, GET_USER_LAST_NAME, EDIT_PASSWORD, EDIT_NAME , EDIT_LAST_NAME, UNREGISTER, EDIT_NAME_PREMIUM, EDIT_LAST_NAME_PREMIUM, EDIT_PASSWORD_PREMIUM, GET_USER_SECURITY_QUESTION, IMPROVE_SECURITY} from "./ApiPaths";
 import { Response } from "./Response";
 // const instance = axios.create(
 //     {withCredentials : true}
@@ -132,6 +132,13 @@ export class UserApi {
     }
     get_user_security_question() {
         return instance.get(GET_USER_SECURITY_QUESTION)
+            .then(res => {
+                return new Response(res.data);
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    }
+    get_user_questions() {
+        return instance.get(VIEW_USER_QUESTIONS)
             .then(res => {
                 return new Response(res.data);
             })

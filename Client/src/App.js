@@ -16,14 +16,17 @@ import AdminSendMessage from './components/AdminSendMessage';
 import AdminPage from './components/AdminPage';
 import StoreManagment from './components/StoreManagment';
 import { ConnectApi } from './API/ConnectApi';
+import { UserApi } from './API/UserApi';
 import AddDiscount from './components/AddDiscount';
 import EditProfilePremium from './components/EditProfilePremium';
 import EditProfile from './components/EditProfile';
 import ProductPage from './components/ProductPage';
 import HomePage from './components/HomePage';
 import {User} from './ServiceObjects/User';
-import ViewUserQuestions from './components/ViewUserQuestions';
+// import ViewUserQuestions from './components/ViewUserQuestions';
 import ViewStat from './components/ViewStat';
+import UserQuestions from './components/UserQuestions';
+
 
 export default class App extends Component {
   static displayName = App.name;
@@ -76,8 +79,24 @@ export default class App extends Component {
         return this.state.user;
       }
 
+// user own questions -> view my questions.
+  // async get_user_questions() {
+  //     console.log("get user questions\n");
+  //     const user_api = new UserApi();
+  //     console.log("try 2");
+  //     let response = await user_api.get_user_questions();
+  //     console.log("try 3");
+  //     alert(response.message);
+  //     if (!response.was_exception) {
+  //         console.log("in get store staff info - success!\n");
+  //         console.log(response);
+  //         return response.value;
+  //     }
+  //     else {
+  //         return [];
 
-
+  //     }
+  //   }
 
   render() {
     return (
@@ -102,10 +121,12 @@ export default class App extends Component {
           <Route path="/ViewStat" element={<ViewStat />}></Route>
 
 
-
-          {/* <Route path="/UserPurchaseHistory" element={<??? />}></Route>
-          <Route path="/UserQuestions" element={<?? />}></Route>
-          <Route path="/Notifications" element={<?? />}></Route> */}
+          // user history purchase.
+           {/* <Route path="/UserPurchaseHistory" element={<UserQuestions questions={this.get_user_questions()}/>}></Route> */}
+          // user own questions -> view my questions.
+          {/* <Route path="/UserQuestions" element={<?? />}></Route>
+          // notificans
+          <Route path="/Notifications" element={<?? />}></Route> } */}
 
         </Routes>
       </BrowserRouter>

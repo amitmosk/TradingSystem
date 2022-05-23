@@ -651,7 +651,6 @@ public class MarketFacade{
     /**
      * Requirement 2.3.8 - edit
      *
-     * @param pw            password
      * @param new_last_name new last name
      * @param answer        for the security question
      * @return success/failure message

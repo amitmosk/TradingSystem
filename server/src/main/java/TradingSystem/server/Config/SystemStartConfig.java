@@ -37,6 +37,13 @@ public class SystemStartConfig {
         marketFacade1.add_product_to_cart(3,1,20);
         marketFacade1.add_product_to_cart(4,1,20);
         marketFacade1.add_product_to_cart(5,1,20);
+        // add questions
+        marketFacade1.send_question_to_store(2,"why always me?");
+        marketFacade1.send_question_to_store(3,"why always me?");
+        marketFacade1.send_question_to_store(4,"why always me?");
+        marketFacade1.send_question_to_store(5,"why always me?");
+        marketFacade1.send_question_to_store(1,"why always me?");
+        marketFacade1.send_question_to_admin("why admin is the e");
         // logout
         marketFacade1.logout();
         marketFacade2.logout();

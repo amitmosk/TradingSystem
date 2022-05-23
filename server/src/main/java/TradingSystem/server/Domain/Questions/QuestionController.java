@@ -3,6 +3,7 @@ package TradingSystem.server.Domain.Questions;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ public class QuestionController implements iQuestionController {
     private AtomicInteger question_ids_counter;
 
     public List<String> get_all_user_questions(String user_email) {
-        List<String> answer = new LinkedList<>();
+        List<String> answer = new ArrayList<>();
         String temp;
         for ( BuyerQuestion question : this.buyer_to_store.values())
         {

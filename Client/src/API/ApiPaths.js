@@ -109,6 +109,7 @@ export const GET_MARKET_STATS = API_PATH + '/get_market_stats';
 // // ========= User ========== //
 
 export const VIEW_USER_PURCHASE_HISTORY = API_PATH + '/view_user_purchase_history';
+export const VIEW_USER_QUESTIONS = API_PATH + '/get_user_questions';
 export const GET_USER_EMAIL = API_PATH + '/get_user_email';
 
 export const GET_USER_NAME = API_PATH + '/get_user_name';
