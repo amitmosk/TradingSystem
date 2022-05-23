@@ -177,7 +177,7 @@ export default class AdminPage extends Component {
 
 <Box sx={{ flexGrow: 1 }}>
 <Link href="/"><HomeIcon></HomeIcon></Link>
-<h3 align="center">Store Managment Page</h3>
+<h3 align="center">Admin Page</h3>
 
 <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
     <Grid item xs={3}> <FormDialog fields={this.state.close_store_fields} getValues={this.close_store_permanently.bind(this)} name="Close Store"></FormDialog> </Grid>

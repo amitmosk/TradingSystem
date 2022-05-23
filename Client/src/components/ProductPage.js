@@ -138,6 +138,71 @@ async add_product_review(values) {
 }
 
 
+async edit_product_key_words(val) {
+    console.log("in edit_product_key_words");
+    let response = await this.productApi.edit_product_key_words(val);
+    alert(response.message);
+        if (!response.was_exception) {
+            console.log("in edit_product_key_words- success");
+        }
+        else {
+            console.log("in edit_product_key_words - fail");
+        }
+    
+}
+
+async find_product_by_category(val) {
+    console.log("in find_product_by_category");
+    let response = await this.productApi.find_product_by_category(val);
+    alert(response.message);
+        if (!response.was_exception) {
+            console.log("in find_product_by_category- success");
+        }
+        else {
+            console.log("in find_product_by_category - fail");
+        }
+    
+}
+
+async edit_product_price(val) {
+    console.log("in edit_product_price");
+    let response = await this.productApi.edit_product_price(val);
+    alert(response.message);
+        if (!response.was_exception) {
+            console.log("in edit_product_price- success");
+        }
+        else {
+            console.log("in edit_product_price - fail");
+        }
+    
+}
+async edit_product_name(val) {
+    console.log("in edit_product_name");
+    let response = await this.productApi.edit_product_name(val);
+    alert(response.message);
+        if (!response.was_exception) {
+            console.log("in edit_product_name- success");
+        }
+        else {
+            console.log("in edit_product_name - fail");
+        }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     render() {
         const EDIT_PRODUCT = "Edit Product ";
