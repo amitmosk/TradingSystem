@@ -1,62 +1,62 @@
-May 22, 2022 4:52:24 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: start init market
-May 22, 2022 4:52:24 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: system connected to the payment system
-May 22, 2022 4:52:24 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: system connected to the supply system
-May 22, 2022 4:52:24 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: user controller load
-May 22, 2022 4:52:24 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: store controller load
-May 22, 2022 4:52:24 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: admin added
-May 22, 2022 4:52:24 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: amit moskovitz has registered to the system
-May 22, 2022 4:52:24 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: amit moskovitz has registered to the system
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: amit moskovitz has registered to the system
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: amit moskovitz has registered to the system
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: amit moskovitz has registered to the system
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store amit store with id = 1opened successfully
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store tom store with id = 2opened successfully
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store gal store with id = 3opened successfully
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store grumet store with id = 4opened successfully
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store eylon store with id = 5opened successfully
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: New product (iphone) added to store (1)
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: New product (iphone) added to store (2)
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: New product (iphone) added to store (3)
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: New product (iphone) added to store (4)
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: New product (iphone) added to store (5)
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User added to cart 20 of product- 1 from store- 1
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User added to cart 20 of product- 1 from store- 2
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User added to cart 20 of product- 1 from store- 3
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User added to cart 20 of product- 1 from store- 4
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User added to cart 20 of product- 1 from store- 5
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-May 22, 2022 4:52:25 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+May 22, 2022 10:02:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.

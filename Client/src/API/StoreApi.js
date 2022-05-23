@@ -4,7 +4,7 @@ import {CONNECTION_ERROR, CATCH, FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE,
       SET_STORE_DISCOUNT_POLICY, SET_STORE_PURCHASE_RULES, ADD_OWNER, DELETE_OWNER, 
       ADD_MANAGER, DELETE_MANAGER, CLOSE_STORE_TEMPORARILY, OPEN_CLOSE_STORE,
       VIEW_STORE_MANAGEMENT_INFORMATION, MANAGER_ANSWER_QUESTION, VIEW_STORE_PURCHASES_HISTORY, 
-      MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS, GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES} from "./ApiPaths";
+      MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS, GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES, DELETE_PRODUCT_FROM_STORE} from "./ApiPaths";
 import { Response } from "./Response";
 import { Store } from "../ServiceObjects/Store";
 import { Product } from "../ServiceObjects/Product";
@@ -82,7 +82,7 @@ export class StoreApi {
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     delete_product_from_store(product_id, store_id) {
-        return instance.get(DELETE_PRODUCT_FROM_CART,
+        return instance.get(DELETE_PRODUCT_FROM_STORE,
             {
                 params:{product_id : product_id,
                     store_id : store_id,}
@@ -150,10 +150,10 @@ export class StoreApi {
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
    
-    delete_owner(user_email_to_appoint, store_id)  {
+    delete_owner(user_email_to_delete_appointment, store_id)  {
         return instance.get(DELETE_OWNER,
             {
-                params:{user_email_to_appoint : user_email_to_appoint,
+                params:{user_email_to_delete_appointment : user_email_to_delete_appointment,
                     store_id : store_id,}
                 
                 
@@ -180,10 +180,10 @@ export class StoreApi {
     }
 
 
-    delete_manager(user_email_to_appoint, store_id)  {
+    delete_manager(user_email_to_delete_appointment, store_id)  {
             return instance.get(DELETE_MANAGER,
                 {
-                    params:{user_email_to_appoint : user_email_to_appoint,
+                    params:{user_email_to_delete_appointment : user_email_to_delete_appointment,
                         store_id : store_id,}
                     
                     

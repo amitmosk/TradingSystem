@@ -63,9 +63,9 @@ export default class Register extends Component {
 
     async register(event){
         const {email, password, firstname, lastname, birthdate} = this.state;
-        
         console.log("email is "+email+" , password is "+password+" firstname is "+firstname+" lastname is "+lastname+" birthdate is "+birthdate+"\n");
         let response = await this.connectApi.register(email, password, firstname, lastname, birthdate);
+        alert(response.message);
         if (!response.was_exception)
         {
             const user = response.value;
@@ -75,7 +75,6 @@ export default class Register extends Component {
         else{
 
         }
-        alert(response.message);
     }
     
     render() {

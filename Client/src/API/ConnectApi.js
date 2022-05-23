@@ -29,15 +29,6 @@ export class ConnectApi {
                 
             })
             .then(res => {
-                // const websocket = require('ws');
-                // var ws = new websocket(WEBSOCKETURL);
-                
-                // ws.onopen = function(data) {ws.send("-email- want to open web socket with the server");};
-                // ws.onmessage = function(data) {
-                //     alert("new notification!");
-                //     // update notifications UI with the new notification 
-                //     console.log(data);
-                //  }
                 console.log(res.data)
                 const user = new User(res.data.value);
                 return Response.create(user,res.data.was_exception,res.data.message);

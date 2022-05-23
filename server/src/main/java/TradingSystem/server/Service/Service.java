@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.List;
+
+
+import java.util.LinkedList;
+
 
 @RestController
 public class Service implements iService {
@@ -28,7 +31,7 @@ public class Service implements iService {
         this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         this.notificationHandler = new NotificationHandler();
         // -- amit code, TODO: remove after checks
-        // SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
+         SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
 
     }
 
@@ -314,8 +317,10 @@ public class Service implements iService {
     @RequestMapping(value = "/add_product_to_store")
     @CrossOrigin
     @Override
-    public Response add_product_to_store(int store_id, int quantity, String name, double price, String category, List<String> key_words) {
-        Response answer = marketFacade.add_product_to_store(store_id, quantity, name, price, category, key_words);
+    public Response add_product_to_store(int store_id, int quantity, String name, double price, String category, String key_words) {
+        List<String> key_words_list = new LinkedList<>();
+        key_words_list.add(key_words);
+        Response answer = marketFacade.add_product_to_store(store_id, quantity, name, price, category, key_words_list);
         return answer;
     }
 

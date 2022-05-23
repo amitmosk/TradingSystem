@@ -127,7 +127,7 @@ public interface iService {
 
 
     TradingSystem.server.Domain.Utils.Response add_product_to_store(int store_id, int quantity, String name, double price,
-                                String category, List<String> key_words);
+                                String category, String key_words);
 
     TradingSystem.server.Domain.Utils.Response delete_product_from_store(int product_id, int store_id);
 

@@ -102,18 +102,22 @@ export default class StorePage extends Component {
       let store_res =  await StoreApi.find_store_information(this.props.store_id) ;
       let store = store_res.value;
       this.setState({
-        founder_email :store.founder_email,
-        store_name : store.store_name,
-        foundation_date : store.foundation_date,
-        storeReviewInformation : store.storeReviewInformation,
+        store_id: store.store_id,
+            founder_email: store.founder_email,
+            name: store.name,
+            foundation_date:store.foundation_date,
+            inventory : store.inventory,
+            storeReview: store.storeReview
     });
       
 
         let products_res = await this.storeApi.get_products_by_store_id(this.props.store_id);
         let products = products_res.value;
+        // products.map((p)=>)
         this.setState({
           products:products
         });
+
         
 
         

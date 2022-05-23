@@ -23,6 +23,7 @@ export const RATE_STORE = API_PATH + '/rate_store';
 export const SEND_QUESTION_TO_STORE = API_PATH + '/send_question_to_store';
 
 export const ADD_PRODUCT_TO_STORE = API_PATH + '/add_product_to_store';
+export const DELETE_PRODUCT_FROM_STORE = API_PATH + '/delete_product_from_store';
 
 export const SET_STORE_PURCHASE_POLICY = API_PATH + '/set_store_purchase_policy';
 
@@ -60,11 +61,11 @@ export const GET_ALL_STORES= API_PATH + '/get_all_stores';
 
 
 // ========= Product ========== //
-export const FIND_PRODUCT_INFORMATION = API_PATH + '/product_information';
+export const FIND_PRODUCT_INFORMATION = API_PATH + '/find_product_information';
 
 
 export const FIND_PRODUCTS_BY_NAME = API_PATH + '/find_products_by_name';
-export const FIND_PRODUCTS_BY_CATEGORY = API_PATH + '/find_products_by_caregory';
+export const FIND_PRODUCTS_BY_CATEGORY = API_PATH + '/find_products_by_category';
 export const FIND_PRODUCTS_BY_KEYWORDS = API_PATH + '/find_products_by_keywords';
 
 
