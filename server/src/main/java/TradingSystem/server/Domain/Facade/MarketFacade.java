@@ -2,9 +2,11 @@ package TradingSystem.server.Domain.Facade;
 
 import java.util.List;
 
+import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
+import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.UserModule.*;
 import TradingSystem.server.Domain.Utils.ErrorLogger;
@@ -582,7 +584,6 @@ public class MarketFacade{
     /**
      * Requirement 2.3.8 - edit
      *
-     * @param pw            password
      * @param new_last_name new last name
      * @return success/failure message
      */
@@ -627,7 +628,6 @@ public class MarketFacade{
     /**
      * Requirement 2.3.8 - edit
      *
-     * @param pw       password
      * @param new_name new first name
      * @param answer   for the security question
      * @return success/failure message
@@ -1129,12 +1129,12 @@ public class MarketFacade{
      * @param store_id - the store we want to get information about
      * @return store management information or failure message
      */
-    public Response<String> view_store_management_information(int store_id) {
-        Response<String> response = null;
+    public Response<StoreManagersInfo> view_store_management_information(int store_id) {
+        Response<StoreManagersInfo> response = null;
         try {
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
-            String answer = this.store_controller.view_store_management_information(user, store_id);
+            StoreManagersInfo answer = this.store_controller.view_store_management_information(user, store_id);
             response = new Response<>(answer, "Store information received successfully");
             system_logger.add_log("Store's (" + store_id + ") management information has been viewed by user (" + user_email + ")");
         } catch (Exception e) {
@@ -1365,6 +1365,7 @@ public class MarketFacade{
         Response<Map<Integer,Store>> response = null;
         try {
             Map<Integer, Store> stores = store_controller.get_all_stores();
+            response = new Response(stores, "Received market stores successfully");
             Map<Integer, StoreInformation> map = new HashMap<>();
             for(Map.Entry<Integer,Store> en : stores.entrySet()){
                 map.put(en.getKey(),new StoreInformation(en.getValue()));
@@ -1406,4 +1407,18 @@ public class MarketFacade{
         store_controller.clear();
     }
 
+    public Response get_user_questions() {
+        Response<List<String>> response = null;
+        try {
+            String user_email = this.user_controller.get_email(this.loggedUser);
+            List<String> user_questions = QuestionController.getInstance().get_all_user_questions(user_email);
+            response = new Response<>(user_questions, "user questions received successfully");
+            system_logger.add_log("User's (" + user_email + ") questions has been viewed.");
+
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
 }
