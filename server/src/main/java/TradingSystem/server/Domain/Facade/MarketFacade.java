@@ -19,7 +19,7 @@ import TradingSystem.server.Domain.Utils.Utils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
-import java.util.Map;
+import java.util.*;
 
 // TODO: when we leave the system - should call logout()
 
@@ -1365,7 +1365,11 @@ public class MarketFacade{
         Response<Map<Integer,Store>> response = null;
         try {
             Map<Integer, Store> stores = store_controller.get_all_stores();
-            response = new Response(stores, "Received market stores successfully");
+            Map<Integer, StoreInformation> map = new HashMap<>();
+            for(Map.Entry<Integer,Store> en : stores.entrySet()){
+                map.put(en.getKey(),new StoreInformation(en.getValue()));
+            }
+            response = new Response(map, "Received market stores successfully");
             system_logger.add_log("received market stores successfully.");
         } catch (Exception e) {
             response = Utils.CreateResponse(e);

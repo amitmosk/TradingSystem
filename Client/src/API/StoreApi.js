@@ -302,11 +302,6 @@ export class StoreApi {
     get_all_stores(store_id){
         return instance.get(GET_ALL_STORES,
             {
-                params:{ 
-                    store_id : store_id,
-                   }
-                
-
             })
             .then(res => {
                 let response = res.data;
