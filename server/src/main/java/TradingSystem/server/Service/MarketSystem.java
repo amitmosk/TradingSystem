@@ -60,7 +60,7 @@ public class MarketSystem {
     }
 
     public void add_admins() throws MarketException {
-        UserController.getInstance().add_admin("barak_bahar@haifa.com", "aA12345678", "Barak", "Bahar");
+        UserController.getInstance().add_admin("barak@gmail.com", "1234", "Barak", "Bahar");
         SystemLogger.getInstance().add_log("admin added");
 
 
