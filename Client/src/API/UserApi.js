@@ -143,7 +143,7 @@ export class UserApi {
             {
                 params:{password : password,
                     question : question,
-                    answer : answer,
+                    premAnswer : answer,
                                     }
                 
             })
