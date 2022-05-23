@@ -6,8 +6,7 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Predict;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.SimpleporchaseRule;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
@@ -818,6 +817,36 @@ public class MarketFacade {
     }
 
     //TODO concurrency
+    public Response send_to_user_purchase_policy(int storeId) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(storeId);
+            List<String> policy = store.getPurchasePolicy();
+            response = new Response(policy, " discount added  successfully");
+            system_logger.add_log("composite discount deleted successfully");
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
+    public Response send_to_user_discount_policy(int storeId) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(storeId);
+            List<String> policy = store.getDiscountPolicyName();
+            response = new Response(policy, " Sent to user discount policy");
+            system_logger.add_log("composite discount deleted successfully");
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
     public Response add_complex_discount_rule(String catgorey, String nameOfProduct, boolean above, boolean equql, int num,
                                               boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, double precent, int storeId
     ) {
@@ -837,12 +866,42 @@ public class MarketFacade {
 
     //discount policy
     //TODO concurrency
-    public Response add_simple_discount_rule(int storeId, String type, String name, double precent) {
+    public Response add_simple_categorey_discount_rule(int storeId, String name, double precent) {
         Response<String> response = null;
         try {
             Store store = store_controller.get_store(storeId);
-            SimpleDiscountComponent simple = store.add_simple_discount(type, name, precent);
-            response = new Response(simple, "discount added successfully");
+            simpleDiscountComponent simple = store.add_simple_discount("p", name, precent);
+            response = new Response(simple, "categorey discount added successfully");
+            system_logger.add_log("discount deleted successfully");
+
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response add_simple_product_discount_rule(int storeId, String name, double precent) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(storeId);
+            simpleDiscountComponent simple = store.add_simple_discount("c", name, precent);
+            response = new Response(simple, "product discount added successfully");
+            system_logger.add_log("discount deleted successfully");
+
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response add_simple_store_discount_rule(int storeId, String type, String name, double precent) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(storeId);
+            simpleDiscountComponent simple = store.add_simple_discount("store", name, precent);
+            response = new Response(simple, "store discount added successfully");
             system_logger.add_log("discount deleted successfully");
 
         } catch (MarketException e) {

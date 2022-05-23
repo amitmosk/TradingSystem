@@ -7,6 +7,4 @@ public interface DiscountComponent {
     double CalculateDiscount(Basket basket);
 
     boolean CanApply(Basket basket);
-
-    String name = "";
 }

@@ -1,24 +1,20 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class ComplexDiscountComponent implements DiscountComponent {
-    SimpleDiscountComponent rule;
+    simpleDiscountComponent rule;
     Predict predict;
 
-    public ComplexDiscountComponent(SimpleDiscountComponent rule, Predict predict) {
+    public ComplexDiscountComponent(simpleDiscountComponent rule, Predict predict) {
         this.predict = predict;
         this.rule = rule;
     }
 
     public boolean CanApply(Basket basket) {
-        return predict.CanApply(18, basket);
+        return predict.CanApply(basket);
     }
 
     public double CalculateDiscount(Basket basket) {
@@ -27,6 +23,4 @@ public class ComplexDiscountComponent implements DiscountComponent {
         else
             return 0;
     }
-
-
 }

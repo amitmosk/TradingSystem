@@ -5,10 +5,10 @@ import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
 
-public abstract class SimpleDiscountComponent implements DiscountComponent {
+public abstract class simpleDiscountComponent implements DiscountComponent {
     protected double percentOfDiscount;
 
-    public SimpleDiscountComponent(double percentOfDiscount) throws WrongPermterException {
+    public simpleDiscountComponent(double percentOfDiscount) throws WrongPermterException {
         checkPrecent(percentOfDiscount);
         this.percentOfDiscount = percentOfDiscount;
 

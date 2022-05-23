@@ -7,10 +7,10 @@ import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
 import java.util.List;
 
-public class XorDiscountComponent extends DiscountlogicComponent implements DiscountComponent {
+public class xorDiscountComponent extends abstractDiscountlogicComponent implements DiscountComponent {
 
 
-    public XorDiscountComponent(List<DiscountComponent> lst, ComplexDiscountComponent discountComponent) throws WrongPermterException {
+    public xorDiscountComponent(List<DiscountComponent> lst, ComplexDiscountComponent discountComponent) throws WrongPermterException {
         super(lst, discountComponent);
     }
 

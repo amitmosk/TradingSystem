@@ -6,7 +6,7 @@ import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent
 
 import java.util.List;
 
-public class andDiscountComponent extends DiscountlogicComponent implements DiscountComponent {
+public class andDiscountComponent extends abstractDiscountlogicComponent implements DiscountComponent {
 
     public andDiscountComponent(List<DiscountComponent> list, ComplexDiscountComponent Discountrule) {
         super(list, Discountrule);

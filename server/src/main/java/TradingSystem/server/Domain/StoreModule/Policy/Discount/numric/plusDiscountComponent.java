@@ -3,11 +3,11 @@ package TradingSystem.server.Domain.StoreModule.Policy.Discount.numric;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 
-public class PlusDiscountRule implements DiscountComponent {
+public class plusDiscountComponent implements DiscountComponent {
     DiscountComponent simple1;
     DiscountComponent simple2;
 
-    public PlusDiscountRule(DiscountComponent simple1, DiscountComponent simple2) {
+    public plusDiscountComponent(DiscountComponent simple1, DiscountComponent simple2) {
         this.simple1 = simple1;
         this.simple2 = simple2;
     }

@@ -38,6 +38,8 @@ public class Predict {
         this.product = product;
         this.above = above;
         this.equql = equql;
+        this.category_constraint = catgorey != "";
+        this.product_constraint = product != null;
         this.num = num;
         this.price_constraint = price;
         this.quantity_constraint = quantity;
@@ -62,9 +64,27 @@ public class Predict {
         boolean CategoryCheck = this.check_valid_category(product_category);
         boolean TimeCheck = this.check_valid_time();
         boolean AgeCheck = this.check_valid_age(age);
-        boolean PriceCheck = this.check_valid_price(price);
+        boolean PriceCheck = this.check_valid_price(price * quantity);
         boolean ProductCheck = this.checkProduct(product);
         return quantityCheck || CategoryCheck || TimeCheck || AgeCheck || PriceCheck || ProductCheck;
+    }
+
+    public boolean CanApply(Basket b) {
+        Map<Product, Integer> map = b.getProducts_and_quantities();
+        for (Map.Entry<Product, Integer> entry : map.entrySet())
+            if (CanApply(entry.getKey(), entry.getValue(), entry.getKey().getPrice()))
+                return true;
+        return false;
+    }
+
+    private boolean CanApply(Product product, int quantity, double price) {
+        String product_category = product.getCategory();
+        boolean quantityCheck = this.check_valid_quantity(quantity);
+        boolean CategoryCheck = this.check_valid_category(product_category);
+        boolean TimeCheck = this.check_valid_time();
+        boolean PriceCheck = this.check_valid_price(price * quantity);
+        boolean ProductCheck = this.checkProduct(product);
+        return quantityCheck || CategoryCheck || TimeCheck || PriceCheck || ProductCheck;
     }
 
     private boolean checkProduct(Product product) {
@@ -104,7 +124,10 @@ public class Predict {
 
     private boolean check_valid_category(String product_category) {
         if (category_constraint)
-            return product_category.equals(this.catgorey);
+            if (equql)
+                return product_category.equals(this.catgorey);
+            else
+                return !product_category.equals(this.catgorey);
         return false;
     }
 

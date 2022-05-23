@@ -6,10 +6,10 @@ import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent
 
 import java.util.List;
 
-public class OrDiscountComponent extends DiscountlogicComponent implements DiscountComponent {
+public class orDiscountComponent extends abstractDiscountlogicComponent implements DiscountComponent {
 
 
-    public OrDiscountComponent(List<DiscountComponent> list, ComplexDiscountComponent discount) {
+    public orDiscountComponent(List<DiscountComponent> list, ComplexDiscountComponent discount) {
         super(list, discount);
     }
 

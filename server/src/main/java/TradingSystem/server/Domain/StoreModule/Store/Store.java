@@ -5,15 +5,15 @@ import TradingSystem.server.Domain.StoreModule.*;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.OrDiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.XorDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.orDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.xorDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.andDiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.MaxDiscountRule;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.PlusDiscountRule;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.DiscountComponentByCategory;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.DiscountComponentByProduct;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.DiscountComponentByStore;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.SimpleDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.maxDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.plusDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByCategory;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByProduct;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByStore;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.*;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
@@ -136,32 +136,42 @@ public class Store {
         return toreturn;
     }
 
-    public OrDiscountComponent CreateOrDisocuntCompnent(ComplexDiscountComponent complexDiscountComponent, List<DiscountComponent> listToAnd) {
-        OrDiscountComponent toreturn = new OrDiscountComponent(listToAnd, complexDiscountComponent);
+    public orDiscountComponent CreateOrDisocuntCompnent(ComplexDiscountComponent complexDiscountComponent, List<DiscountComponent> listToAnd) {
+        orDiscountComponent toreturn = new orDiscountComponent(listToAnd, complexDiscountComponent);
         this.discountPolicy.addRule(toreturn);
         return toreturn;
     }
 
-    public XorDiscountComponent CreateXorDisocuntCompnent(ComplexDiscountComponent complexDiscountComponent, List<DiscountComponent> listToAnd) throws WrongPermterException {
+    public List<String> getDiscountPolicyNames() {
+
+        return  List.discountPolicy.getPolicy().;
+    }
+
+    public List<String> getPurchasePolicyNames() {
+
+
+    }
+
+    public xorDiscountComponent CreateXorDisocuntCompnent(ComplexDiscountComponent complexDiscountComponent, List<DiscountComponent> listToAnd) throws WrongPermterException {
         if (listToAnd.size() != 2)
             throw new WrongPermterException("there are more then two discounts");
-        XorDiscountComponent toreturn = new XorDiscountComponent(listToAnd, complexDiscountComponent);
+        xorDiscountComponent toreturn = new xorDiscountComponent(listToAnd, complexDiscountComponent);
         this.discountPolicy.addRule(toreturn);
         return toreturn;
     }
 
-    public MaxDiscountRule CreateMaxDisocuntCompnent(List<DiscountComponent> listToAnd) throws WrongPermterException {
+    public maxDiscountComponent CreateMaxDisocuntCompnent(List<DiscountComponent> listToAnd) throws WrongPermterException {
         if (listToAnd.size() != 2)
             throw new WrongPermterException("there are more then two discounts");
-        MaxDiscountRule toreturn = new MaxDiscountRule(listToAnd.get(0), listToAnd.get(1));
+        maxDiscountComponent toreturn = new maxDiscountComponent(listToAnd.get(0), listToAnd.get(1));
         this.discountPolicy.addRule(toreturn);
         return toreturn;
     }
 
-    public PlusDiscountRule CreateplusDisocuntCompnent(List<DiscountComponent> listToAnd) throws WrongPermterException {
+    public plusDiscountComponent CreateplusDisocuntCompnent(List<DiscountComponent> listToAnd) throws WrongPermterException {
         if (listToAnd.size() != 2)
             throw new WrongPermterException("there are more then two discounts");
-        PlusDiscountRule toreturn = new PlusDiscountRule(listToAnd.get(0), listToAnd.get(1));
+        plusDiscountComponent toreturn = new plusDiscountComponent(listToAnd.get(0), listToAnd.get(1));
         this.discountPolicy.addRule(toreturn);
         return toreturn;
 
@@ -175,19 +185,19 @@ public class Store {
         return null;
     }
 
-    public SimpleDiscountComponent add_simple_discount(String type, String name, double precent) throws WrongPermterException {
-        SimpleDiscountComponent simpleDiscountComponent;
+    public simpleDiscountComponent add_simple_discount(String type, String name, double precent) throws WrongPermterException {
+        simpleDiscountComponent simpleDiscountComponent;
         switch (type) {
             case "p":
                 Product p = get_product_by_name(name);
                 if (p != null)
-                    simpleDiscountComponent = new DiscountComponentByProduct(p, precent);
+                    simpleDiscountComponent = new simpleDiscountComponentByProduct(p, precent);
                 else
                     throw new WrongPermterException("there is no prodcut with this name");
             case "c":
-                simpleDiscountComponent = new DiscountComponentByCategory(name, precent);
+                simpleDiscountComponent = new simpleDiscountComponentByCategory(name, precent);
             default:
-                simpleDiscountComponent = new DiscountComponentByStore(precent);
+                simpleDiscountComponent = new simpleDiscountComponentByStore(precent);
         }
         this.discountPolicy.addRule(simpleDiscountComponent);
         return simpleDiscountComponent;
@@ -198,13 +208,13 @@ public class Store {
         Product product = get_product_by_name(nameOfProduct);
         Predict predict = new Predict(catgorey, product, above, equql, num,
                 price, quantity, age, time, year, month, day);
-        SimpleDiscountComponent simpleDiscountComponent;
+        simpleDiscountComponent simpleDiscountComponent;
         if (product != null)
-            simpleDiscountComponent = new DiscountComponentByProduct(product, precent);
+            simpleDiscountComponent = new simpleDiscountComponentByProduct(product, precent);
         else if (catgorey != "")
-            simpleDiscountComponent = new DiscountComponentByCategory(catgorey, precent);
+            simpleDiscountComponent = new simpleDiscountComponentByCategory(catgorey, precent);
         else
-            simpleDiscountComponent = new DiscountComponentByStore(precent);
+            simpleDiscountComponent = new simpleDiscountComponentByStore(precent);
         ComplexDiscountComponent toreturn = new ComplexDiscountComponent(simpleDiscountComponent, predict);
         this.discountPolicy.addRule(toreturn);
         return toreturn;
