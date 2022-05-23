@@ -4,7 +4,7 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 
-public class OrCompositePredict extends CompositePredict {
+public class OrCompositePredict extends CompositePredict  {
     Ipredict left;
     Ipredict right;
 

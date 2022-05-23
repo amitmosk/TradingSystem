@@ -16,7 +16,6 @@ public class andCompsoitePredict extends CompositePredict {
     }
 
 
-
     @Override
     public boolean CanApply(Basket basket) {
         return left.CanApply(basket) && right.CanApply(basket);

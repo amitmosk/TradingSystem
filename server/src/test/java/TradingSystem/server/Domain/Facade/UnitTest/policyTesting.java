@@ -10,6 +10,7 @@ import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDisc
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByStore;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
@@ -190,15 +191,12 @@ public class policyTesting {
     void ComplexDiscountPassing(simpleDiscountComponent simpleDiscountComponent, Predict p, double amountOfDiscount, Basket basket) {
         assertEquals(new ComplexDiscountComponent(simpleDiscountComponent, p).CalculateDiscount(basket), amountOfDiscount);
     }
-//    @ParameterizedTest
-//    void ComplexDiscount(Predict) {
-//        try {
-//            DiscountRuleByStore byStore = new DiscountRuleByStore(0.5);
-//            double discount = byStore.CalculateDiscount(basket);
-//        } catch (WrongPermterException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
+    @ParameterizedTest
+    @MethodSource("Predicts")
+    void porchaseRule(porchaseRule rule, int age, Basket b, boolean res) {
+        assertEquals(rule.predictCheck(age, b), res);
+
+    }
 
 }

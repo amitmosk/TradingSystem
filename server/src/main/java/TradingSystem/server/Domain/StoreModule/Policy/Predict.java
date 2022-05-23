@@ -90,7 +90,10 @@ public class Predict implements Ipredict {
 
     private boolean checkProduct(Product product) {
         if (product_constraint)
-            return product.getName().equals(this.product.getName());
+            if (equql)
+                return product.getName().equals(this.product.getName());
+            else
+                return !product.getName().equals(this.product.getName());
         return false;
     }
 
