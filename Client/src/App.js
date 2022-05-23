@@ -25,7 +25,7 @@ import HomePage from './components/HomePage';
 import {User} from './ServiceObjects/User';
 // import ViewUserQuestions from './components/ViewUserQuestions';
 import ViewStat from './components/ViewStat';
-import UserQuestions from './components/UserQuestions';
+// import UserQuestions from './components/UserQuestions';
 
 
 export default class App extends Component {
