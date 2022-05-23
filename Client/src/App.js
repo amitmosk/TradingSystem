@@ -117,7 +117,7 @@ export default class App extends Component {
 
           <Route path="/ProductPage" element={<ProductPage product_id={1} store_id={1}/>}></Route>
           {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
-          <Route path="/ViewUserQuestions" element={<ViewUserQuestions questions={[]} />}></Route>
+          {/* <Route path="/ViewUserQuestions" element={<ViewUserQuestions questions={[]} />}></Route> */}
           <Route path="/ViewStat" element={<ViewStat />}></Route>
 
 
