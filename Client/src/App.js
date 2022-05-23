@@ -69,11 +69,6 @@ export default class App extends Component {
   //     })
   //   }
 
-    get_name() {
-      console.log("in get UserState - name\n\n\n\n\n");
-      console.log(this.state.user);
-      return this.state.user.name;
-      }
 
       get_state() {
         return this.state.user;
