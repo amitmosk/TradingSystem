@@ -18,6 +18,7 @@ import StoreManagment from './components/StoreManagment';
 import HomePage from './components/HomePage';
 import { ConnectApi } from './API/ConnectApi';
 import AddDiscount from './components/AddDiscount';
+import EditProfile from './components/EditProfile';
 
 // user state enum
 const GUEST = 0;
@@ -96,7 +97,7 @@ export default class App extends Component {
           <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
           <Route path="/StoreManagment" element={<StoreManagment store_id=""/>}></Route>
           <Route path="/AddDiscount" element={<AddDiscount store_id=""/>}></Route>
-
+          <Route path="/EditProfile" element={<EditProfile></EditProfile>}></Route>
 
         </Routes>
       </BrowserRouter>

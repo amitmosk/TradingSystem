@@ -121,7 +121,7 @@ export default class HomePage extends Component {
                                 console.info("I'm Register button, add link.");
                             }}
                         >
-                            \ Register
+                            Register
                         </Link>
                         <AccountMenu />
 
@@ -133,22 +133,20 @@ export default class HomePage extends Component {
                     <Box sx={{ flexGrow: 1 }}>
 
 
-                        <h3 class="Header" align="center">
+                        <h1 class="Header" align="center">
                             Welcome To Ebay
-                        </h3>
-                        <HomePageSearch sx={{ height: '5%' }} />
+                        </h1>
+                        {/* <HomePageSearch sx={{ height: '5%' }} /> */}
                     </Box>
-                    <Grid container>
-                        
-                        <Col><row><MenuListComposition item1={<FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog>} 
-                        item2={<FormDialog fields={this.state.send_question_to_admin_fields} getValues={this.send_question_to_admin.bind(this)} name="Send question to admin"></FormDialog>} 
-                        item3={ <Link href="/AdminPage" underline="hover" >
-                                {'Admin Operations'}
-                                </Link>}>
-                                </MenuListComposition></row> </Col>
-                        <Header position="right" align="right" title="Stores"></Header>
-                        <ShoppingCart/>
-
+                    <Header position="center" align="center" title="Our products"></Header>
+                    <Grid align="center">
+                    <Row><ShoppingCart/></Row>
+                    <Row><h1 style={{color: "white"}}>operations</h1></Row>
+                    <Row>
+                        <Col><FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog></Col>
+                        <Col><FormDialog fields={this.state.send_question_to_admin_fields} getValues={this.send_question_to_admin.bind(this)} name="Send question to admin"></FormDialog></Col>
+                        <Col><Link href="/AdminPage" underline="hover" >{'Admin Operations'}</Link></Col>
+                    </Row>
                     </Grid>
                 </Container>
 
