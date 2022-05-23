@@ -26,7 +26,7 @@ import Grid from '@mui/material/Grid';
 import FormDialog from './FormDialog';
 import { Input } from "@mui/material";
 import { ProductApi } from '../API/ProductApi';
-
+import Card from '@mui/material/Card';
 
   
 export default class ProductPage extends Component {
@@ -121,6 +121,7 @@ async edit_product(option, val) {
 async add_product_review(values) {
     console.log("in add product review");
     const review = values[0];
+    console.log(review);
     const store_id = this.state.store_id;
     const product_id = this.state.product_id;
     let response = await this.productApi.add_product_review(product_id, store_id, review);
@@ -191,6 +192,12 @@ async add_product_review(values) {
                         <FormDialog fields={this.state.add_product_review_fields} getValues={this.add_product_review.bind(this)} name="Add Review"></FormDialog>
                             
                             <BasicRating to_rate="Product" rating={this.rate_product.bind(this)} />
+                            
+                            
+    
+
+                         
+
                             
 
 

@@ -98,7 +98,7 @@ export default class AdminSendMessage extends Component {
         console.log("to is "+to+" , subject is "+subject+", content is "+content+"\n");
         const question = subject+"\n"+content;
         let response = await this.adminApi.admin_answer_user_question(question);
-        if (!response.was_execption)
+        if (!response.was_exception)
         {
             // return <Navigate to="/HomePageSearch"/>
 
