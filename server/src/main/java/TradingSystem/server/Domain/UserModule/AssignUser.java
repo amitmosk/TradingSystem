@@ -153,8 +153,7 @@ public class AssignUser extends AssignState {
         security.check_correct_password(password);
     }
 
-    public void edit_name(String pw, String new_name) throws MarketException {
-        security.check_correct_password(pw);
+    public void edit_name(String new_name) {
         this.name = new_name;
     }
 
@@ -163,9 +162,8 @@ public class AssignUser extends AssignState {
 
     }
 
-    public void edit_last_name(String pw, String new_last_name) throws MarketException {
-        security.check_correct_password(pw);
-        this.name = new_last_name;
+    public void edit_last_name(String new_last_name) {
+        this.lastName = new_last_name;
     }
 
     public String view_security_question() throws MarketException {

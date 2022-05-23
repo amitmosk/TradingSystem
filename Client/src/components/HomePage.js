@@ -57,6 +57,7 @@ export default class HomePage extends Component {
         this.productApi = new ProductApi();
         this.storeApi = new StoreApi();
         this.adminApi = new AdminApi();
+        this.logout = this.logout.bind(this);
     }
     async componentDidMount() {
         console.log("in component did mount");
@@ -80,6 +81,20 @@ export default class HomePage extends Component {
 
         }
     }
+
+      async logout(){
+        console.log("in logout home page");
+        let response = await this.connectAPI.logout();
+        
+        alert(response.message);
+        if (!response.was_exception)
+        {
+            const user = response.value;
+            this.props.updateUserState(user);
+        }
+      }
+
+      
     async send_question_to_admin(values) {
         const question = values[0];
         let response = await this.adminApi.send_question_to_admin(question);
@@ -106,7 +121,8 @@ export default class HomePage extends Component {
                 <PrimarySearchAppBar position="relative" color="white">
                     <Toolbar>
                         <Typography variant="h6" color="inherit" noWrap>
-                            Hello {this.state.username},
+                            {/* Hello {this.state.username}, */}
+                            Hello Amit,
                         </Typography>
 
                         <Link
@@ -132,8 +148,7 @@ export default class HomePage extends Component {
                         >
                             \ Register
                         </Link>
-                        <AccountMenu />
-
+                        <AccountMenu log={this.logout.bind(this)}></AccountMenu>
                     </Toolbar>
 
                 </PrimarySearchAppBar>
@@ -149,7 +164,7 @@ export default class HomePage extends Component {
                     </Box>
                     <Header position="center" align="center" title="Our products"></Header>
                     <Grid align="center">
-                    <Row><ShoppingCart/></Row>
+                    {/* <Row><ShoppingCart/></Row> */}
                     <Row><h1 style={{color: "white"}}>operations</h1></Row>
                     <Row>
                         <Col><FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog></Col>

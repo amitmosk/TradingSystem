@@ -174,9 +174,9 @@ public class User {
         state.unregister(password);
     }
 
-    public void edit_name(String pw, String new_name) throws MarketException {
+    public void edit_name(String new_name) throws MarketException {
         Utils.nameValidCheck(new_name);
-        state.edit_name(pw, new_name);
+        state.edit_name(new_name);
     }
 
     public void edit_password(String old_password, String password) throws MarketException {
@@ -184,9 +184,9 @@ public class User {
         state.edit_password(old_password, password);
     }
 
-    public void edit_last_name(String pw, String new_last_name) throws MarketException {
+    public void edit_last_name(String new_last_name) throws MarketException {
         Utils.nameValidCheck(new_last_name);
-        state.edit_last_name(pw, new_last_name);
+        state.edit_last_name(new_last_name);
     }
 
     public void set_admin(String email, String pw, String name, String lastName) throws MarketException {
@@ -194,7 +194,7 @@ public class User {
         this.state = new Admin(email, pw, name, lastName);
     }
 
-    public String user_sequrity_question() throws MarketException {
+    public String user_security_question() throws MarketException {
         return this.state.view_security_question();
     }
 
@@ -202,14 +202,14 @@ public class User {
         this.state.verify_answer(answer);
     }
 
-    public void edit_name_premium(String pw, String new_name, String answer) throws MarketException {
+    public void edit_name_premium(String new_name, String answer) throws MarketException {
         verify_answer(answer);
-        edit_name(pw, new_name);
+        edit_name(new_name);
     }
 
-    public void edit_last_name_premium(String pw, String new_last_name, String answer) throws MarketException {
+    public void edit_last_name_premium(String new_last_name, String answer) throws MarketException {
         verify_answer(answer);
-        edit_last_name(pw, new_last_name);
+        edit_last_name(new_last_name);
     }
 
     public void edit_password_premium(String old_password, String new_password, String answer) throws MarketException {

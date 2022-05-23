@@ -39,7 +39,8 @@ export class ConnectApi {
     logout() {
         return instance.get(LOGOUT_PATH)
             .then(res => {
-                return Response.create(null,res.data.was_exception,res.data.message);
+                const user_guest = User.guest()
+                return Response.create(user_guest,res.data.was_exception,res.data.message);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }

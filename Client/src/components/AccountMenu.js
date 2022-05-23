@@ -15,7 +15,7 @@ import { Button } from '@material-ui/core';
 import App from '../App';
 import Link from '@mui/material/Button';
 
-export default function AccountMenu() {
+export default function AccountMenu(logout) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,11 +24,7 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const logout_ = () =>
-  {
-      App.logout();
-
-  }
+  
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -102,7 +98,7 @@ export default function AccountMenu() {
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon  >
-          <Button onClick={()=>logout_()} >Logout</Button>
+          <Button onClick={logout.log} >Logout</Button>
         </MenuItem>
       </Menu>
     </React.Fragment>

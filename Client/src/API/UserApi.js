@@ -40,7 +40,7 @@ export class UserApi {
     edit_password(old_password, password) {
         return instance.get(EDIT_PASSWORD,
             {
-                params:{ old_password : old_password,
+                params:{ old_pw : old_password,
                     password : password,}
                
             })
@@ -49,24 +49,25 @@ export class UserApi {
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
-    edit_name(password, new_name) {
+    edit_name(new_name) {
+        console.log("edit name welcome user api");
         return instance.get(EDIT_NAME,
             {
-                params:{password : password,
+                params:{
                     new_name : new_name,}
                 
             })
             .then(res => {
+                console.log("edit name user API thennn");
                 return new Response(res.data)
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
-    edit_last_name(password, new_last_name) {
+    edit_last_name(new_last_name) {
         return instance.get(EDIT_LAST_NAME,
             {
-                params:{password : password,
-                    new_last_name : new_last_name,}
+                params:{new_last_name : new_last_name,}
                 
             })
             .then(res => {
@@ -86,10 +87,10 @@ export class UserApi {
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
-    edit_name_premium(password, new_name, answer) {
+    edit_name_premium(new_name, answer) {
         return instance.get(EDIT_NAME_PREMIUM,
             {
-                params:{password : password,
+                params:{
                     new_name : new_name,
                     answer : answer,
                                     }
@@ -101,10 +102,10 @@ export class UserApi {
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
-    edit_last_name_premium(password, new_last_name, answer) {
+    edit_last_name_premium(new_last_name, answer) {
         return instance.get(EDIT_LAST_NAME_PREMIUM,
             {
-                params:{password : password,
+                params:{
                     new_last_name : new_last_name,
                     answer : answer,
                                     }

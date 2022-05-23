@@ -254,16 +254,16 @@ public class Service implements iService {
     @RequestMapping(value = "/edit_name")
     @CrossOrigin
     @Override
-    public Response edit_name(String pw, String new_name) {
-        Response answer = marketFacade.edit_name(pw, new_name);
+    public Response edit_name(String new_name) {
+        Response answer = marketFacade.edit_name(new_name);
         return answer;
     }
 
     @RequestMapping(value = "/edit_last_name")
     @CrossOrigin
     @Override
-    public Response edit_last_name(String pw, String new_last_name) {
-        Response answer = marketFacade.edit_last_name(pw, new_last_name);
+    public Response edit_last_name(String new_last_name) {
+        Response answer = marketFacade.edit_last_name(new_last_name);
         return answer;
     }
 
@@ -278,16 +278,16 @@ public class Service implements iService {
     @RequestMapping(value = "/edit_name_premium")
     @CrossOrigin
     @Override
-    public Response edit_name_premium(String pw, String new_name, String premAnswer) {
-        Response answer = marketFacade.edit_name_premium(pw, new_name, premAnswer);
+    public Response edit_name_premium(String new_name, String premAnswer) {
+        Response answer = marketFacade.edit_name_premium(new_name, premAnswer);
         return answer;
     }
 
     @RequestMapping(value = "/edit_last_name_premium")
     @CrossOrigin
     @Override
-    public Response edit_last_name_premium(String pw, String new_last_name, String premAnswer) {
-        Response answer = marketFacade.edit_last_name_premium(pw, new_last_name, premAnswer);
+    public Response edit_last_name_premium(String new_last_name, String premAnswer) {
+        Response answer = marketFacade.edit_last_name_premium(new_last_name, premAnswer);
         return answer;
     }
 

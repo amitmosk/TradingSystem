@@ -9,9 +9,12 @@ import HomePageSearch from './HomePageSearch';
 import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
 import {withRouter} from 'react-router-dom';
 import { Navigate } from 'react-router-dom'; 
+import {User } from '../ServiceObjects/User';
+// import {User} from '../ServiceObjects/User'
 const axios = require('axios');
 const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
 const WEBSOCKETURL = "ws://localhost:8080/chat";
+
 
 export default class Login extends Component {
     static displayName = Login.name;
@@ -22,7 +25,7 @@ export default class Login extends Component {
             loginError: undefined,
             email: undefined,
             password: undefined,
-            submitted: this.props.isLoggedIn
+            // submitted: this.props.isLoggedIn
         };
         this.connectApi = new ConnectApi(); 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -54,13 +57,14 @@ export default class Login extends Component {
 
     async login(){
         const {email, password} = this.state;
-        this.props.updateLoginHandler();
         console.log("email is "+email+" , password is "+password+"\n");
         let response = await this.connectApi.login(email, password);
         alert(response.message);
         if (!response.was_exception)
         {
             // login success
+            const user = response.value;
+            this.props.updateUserState(user);
             console.log("in login, login success!\n");
             // open seb socket
             // this.open_web_socket();
@@ -72,11 +76,14 @@ export default class Login extends Component {
             console.log("in login, login failed!\n");
         }
     }
+
+
     
     render() {
         const {redirectTo} = this.state
         // { this.state.redirect ? (<Redirect push to="/"/>) : null }
-        if (this.state.submitted) {
+        // if (this.state.submitted) {
+        if (false) {
             
             console.log("have to route to homepage whe it will be ready\n\n\n");
             return (<Navigate to="/"/>);
@@ -98,8 +105,8 @@ export default class Login extends Component {
                                 
                                 {/* <Link to="/register">Create new account</Link> */}
                                 <Button onClick={() => this.login()} variant="contained">Login </Button>
-
-                                <Link href="/Register" underline="hover" >{'New user? Cretae new account'}</Link>
+                                {/* <Button onClick={() => this.logout()} variant="contained">logout </Button> */}
+                                <Link href="/Register" underline="hover" >{'New user? Create new account'}</Link>
                                 {/* <Button onClick={() => <Register/>} > registerr</Button> */}
                                 {/* <input class="action" type="submit" value="Login"/> */}
                             </div>

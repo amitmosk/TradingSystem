@@ -16,75 +16,7 @@ import Typography from '@material-ui/core/Typography';
 //     fields: ["Edit Name", "Edit Last Name", "Edit Password", ""],
 // };
 
-const handle_name_edit = event => {
-    console.log("in handle name edit\n");
-    const new_name = localStorage.getItem("Edit Name");
-    // getValues(ans);
-    //  const new_name = ans[0];
-    const response = this.userApi.edit_name(new_name);
-    if (!response.was_execption) {
-        console.log("in edit name - success!\n");
-        alert("Success, last name saved.");
 
-        //show history
-    }
-    else {
-        alert("Action Failed.");
-
-    }
-}
-
-const handle_last_name_edit = event => {
-    console.log("in handle last name edit\n");
-    //let ans = [];
-    //    fields.map((f) => ans.push(localStorage.getItem(f)))
-    // getValues(ans);
-    let new_name = localStorage.getItem("Edit Last Name");
-    // const new_name = ans[0];
-    let response = this.userApi.edit_last_name(new_name);
-    if (!response.was_execption) {
-        console.log("in edit last name - success!\n");
-        alert("Success, last name saved.");
-
-        //show history
-    }
-    else {
-        alert("Action Failed.");
-
-    }
-
-}
-
-const handle_password_edit = event => {
-    console.log("in handle password edit\n");
-    //let ans = [];
-    //    fields.map((f) => ans.push(localStorage.getItem(f)))
-    // getValues(ans);
-    let new_password = localStorage.getItem("Edit Password");
-    let new_password_check = localStorage.getItem("Re-Enter Password");
-    let old_password = localStorage.getItem("Old Password");
-
-    if (new_password == new_password_check) {
-        // const new_name = ans[0];
-        const response = this.userApi.edit_password(old_password, new_password);
-        if (!response.was_execption) {
-            console.log("in edit password - success!\n");
-            //show history
-            alert("Success, new password saved.");
-
-        }
-        else {
-            alert("Fail, passwords do not match.");
-
-        }
-
-    }
-    else {
-        console.log("in edit password - NOT THE SAME!\n");
-        alert("Fail, passwords do not match.");
-
-    }
-}
 
 const handleInputChange = event => {
 
@@ -97,9 +29,85 @@ export default class EditProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            name: this.props.name,
+            lastName: this.props.lastName,
+            security_question: this.props.security_question,
+
         }
+        console.log("start edit profile");
         this.userApi = new UserApi();
-        //  this.handleInputChange = this.handleInputChange.bind(this);
+        // this.handleInputChange = this.handleInputChange.bind(this);
+        this.handle_name_edit = this.handle_name_edit.bind(this);
+        this.handle_last_name_edit = this.handle_last_name_edit.bind(this);
+        this.handle_password_edit = this.handle_password_edit.bind(this);
+    }
+
+
+    async handle_name_edit(event)  {
+        console.log("in handle name edit\n");
+        const new_name = localStorage.getItem("Edit Name");
+        let response = await this.userApi.edit_name(new_name);
+        alert(response.message);
+        if (!response.was_exception) {
+            console.log("in edit name - success!\n");
+        }
+        else {
+        }
+    }
+
+
+    async handle_name_edit_premium(event)  {
+        console.log("in handle name edit premium\n");
+        const answer_of_premium_question = this.get_answer_of_security_question();
+        
+        const new_name = localStorage.getItem("Edit Name");
+        let response = await this.userApi.edit_name_premium(new_name);
+        alert(response.message);
+        if (!response.was_exception) {
+            console.log("in edit name - success!\n");
+        }
+        else {
+        }
+    }
+    
+    async handle_last_name_edit(event) {
+        console.log("in handle last name edit\n");
+        let new_name = localStorage.getItem("Edit Last Name");
+        let response =  await this.userApi.edit_last_name(new_name);
+        alert(response.message);
+        if (!response.was_exception) {
+            //show history
+        }
+        else {    
+        }
+    
+    }
+    
+    async handle_password_edit(event) {
+        console.log("in handle password edit\n");
+        let new_password = localStorage.getItem("Edit Password");
+        let new_password_check = localStorage.getItem("Re-Enter Password");
+        let old_password = localStorage.getItem("Old Password");
+        if (new_password == new_password_check) {
+            let response =  await this.userApi.edit_password(old_password, new_password);
+            alert(response.message);
+            if (!response.was_exception) {
+    
+            }
+            else {
+    
+            }
+    
+        }
+        else {
+            console.log("in edit password - NOT THE SAME!\n");
+    
+        }
+    }
+    async componentDidMount() {
+        console.log("did mount in edit profile : ");
+        console.log(this.props.get_state());
+      
     }
 
     render() {
@@ -116,12 +124,13 @@ export default class EditProfile extends Component {
                         <TextField
                             autoFocus
                             id="Edit Name"
+                            defaultValue = {this.props.get_state().name}
                             label="Edit Name"
                             variant="outlined"
                             onChange={handleInputChange}
 
                         />
-                        <Button variant="contained" onClick={handle_name_edit}>
+                        <Button variant="contained" onClick={this.handle_name_edit}>
                             Save
                         </Button>
                     </Grid>
@@ -130,12 +139,13 @@ export default class EditProfile extends Component {
                         <TextField
                             autoFocus
                             id="Edit Last Name"
+                            defaultValue = {this.props.get_state().lastName}
                             label="Edit Last Name"
                             variant="outlined"
                             onChange={handleInputChange}
 
                         />
-                        <Button variant="contained" onClick={handle_last_name_edit}>
+                        <Button variant="contained" onClick={this.handle_last_name_edit}>
                             Save
                         </Button>
 
@@ -168,11 +178,14 @@ export default class EditProfile extends Component {
                                     onChange={handleInputChange}
 
                                 />
-                                <Button variant="contained" onClick={handle_password_edit}>
+                                <Button variant="contained" onClick={this.handle_password_edit}>
                                     Save
                                 </Button>
 
                             </Grid>
+                            <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" 
+                            fields={this.state.improve_security_fields} getValues={this.improve_security.bind(this)}
+                             name="Upgrade Security"></FormDialog></Item></Grid>
                         </Grid>
                     </Grid>
                 </Grid>

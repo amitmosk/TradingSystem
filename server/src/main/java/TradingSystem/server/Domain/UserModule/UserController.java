@@ -306,9 +306,9 @@ public class UserController {
         return email;
     }
 
-    public String edit_name(int loggedUser, String pw, String new_name) throws MarketException {
+    public String edit_name(int loggedUser, String new_name) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        user.edit_name(pw, new_name);
+        user.edit_name(new_name);
         return get_email(loggedUser);
     }
 
@@ -318,9 +318,9 @@ public class UserController {
         return get_email(loggedUser);
     }
 
-    public String edit_last_name(int loggedUser, String pw, String new_last_name) throws MarketException {
+    public String edit_last_name(int loggedUser, String new_last_name) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        user.edit_last_name(pw, new_last_name);
+        user.edit_last_name(new_last_name);
         return get_email(loggedUser);
     }
 
@@ -361,22 +361,22 @@ public class UserController {
 
     public String get_user_security_question(int loggedUser) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        return user.user_sequrity_question();
+        return user.user_security_question();
     }
 
-    public String edit_name_premium(int loggedUser, String pw, String new_name, String answer) throws MarketException {
+    public String edit_name_premium(int loggedUser, String new_name, String answer) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        user.edit_name_premium(pw, new_name, answer);
+        user.edit_name_premium(new_name, answer);
         return get_email(loggedUser);
     }
 
-    public String edit_last_name_premium(int loggedUser, String pw, String new_last_name, String answer) throws MarketException {
+    public String edit_last_name_premium(int loggedUser, String new_last_name, String answer) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        user.edit_last_name_premium(pw, new_last_name, answer);
+        user.edit_last_name_premium(new_last_name, answer);
         return get_email(loggedUser);
     }
 
-    public String edit_passsword_premium(int loggedUser, String old_password, String new_password, String answer) throws MarketException {
+    public String edit_password_premium(int loggedUser, String old_password, String new_password, String answer) throws MarketException {
         User user = onlineUsers.get(loggedUser);
         user.edit_password_premium(old_password, new_password, answer);
         return get_email(loggedUser);

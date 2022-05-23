@@ -69,7 +69,7 @@ export default class Register extends Component {
         if (!response.was_exception)
         {
             const user = response.value;
-            this.props.updateRegisterHandler(firstname+" "+lastname, email, user);
+            this.props.updateUserState(user);
             return (<Navigate to="/"/>)
         }
         else{
