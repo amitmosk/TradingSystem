@@ -46,24 +46,26 @@ export default class StoreManagment extends Component {
             useremailtoshowhistory: undefined,
             useremailtoremove: undefined,
             storeidtoremove: undefined,
-            add_product_fields: ["store_id", "quantity", "name", "price", "category", "key_words"],
+            add_product_fields: ["quantity", "name", "price", "category", "key_words"],
             arr: [],
-            delete_product_fields: ["product_id", "store_id"],
-            puchase_policies_fields: ["store_id", "policy"],
-            discount_policies_fields: ["store_id", "policy"],
-            appoint_manager_fields: ["user_email_to_appoint", "store_id"],
-            appoint_owner_fields: ["user_email_to_appoint", "store_id"],
-            remove_owner_appointment_fields: ["user_email_to_appoint", "store_id"],
-            remove_manager_appointment_fields: ["user_email_to_appoint", "store_id"],
-            change_manager_permissions_fields: ["manager_email", "store_id", "permissions"],
-            answer_user_questions_fields: ["store_id", "question_id", "answer"],
-            user_massages_fields: ["store_id"],
-            store_purchase_history_fields: ["store_id"],
+            delete_product_fields: ["product_id"],
+            puchase_policies_fields: ["policy"],
+            discount_policies_fields: ["policy"],
+            appoint_manager_fields: ["user_email_to_appoint"],
+            appoint_owner_fields: ["user_email_to_appoint"],
+            remove_owner_appointment_fields: ["user_email_to_appoint"],
+            remove_manager_appointment_fields: ["user_email_to_appoint"],
+            change_manager_permissions_fields: ["manager_email", "permissions"],
+            answer_user_questions_fields: ["question_id", "answer"],
+            user_massages_fields: [],
+            store_purchase_history_fields: [],
             // אילוצי עקביות
-            close_store_temp_fields: ["store_id"],
-            open_closed_store_fields: ["store_id"],
-            staff_information_fields: ["store_id"],
-            option:"Simple",
+            close_store_temp_fields: [],
+            open_closed_store_fields: [],
+            staff_information_fields: [],
+            store_id: this.props.store_id,
+
+            option: "Simple",
 
         };
         this.adminApi = new AdminApi();
@@ -74,7 +76,7 @@ export default class StoreManagment extends Component {
     }
 
 
-    handleInputChange(event){
+    handleInputChange(event) {
         const target = event.target;
         this.setState({
             [target.name]: target.value
@@ -97,12 +99,13 @@ export default class StoreManagment extends Component {
         // let response = await this.storeApi.add_product_to_store(values[0],values[1],values[2],values[3],values[4],values[5])
         /* add_product_fields: ["store_id", "quantity", "name", "price", "category", "key_words"] */
         console.log("in add product!\n");
-        const store_id = values[0];
-        const quantity = values[1];
-        const name = values[2];
-        const price = values[3];
-        const category = values[4];
-        const key_words = values[5];
+        const store_id = this.state.store_id;
+        const quantity = values[0];
+        const name = values[1];
+        const price = values[2];
+        const category = values[3];
+        const key_words = values[4];
+
         const response = await this.storeApi.add_product_to_store(store_id, quantity, name, price, category, key_words);
         alert(response.message);
         if (!response.was_execption) {
@@ -117,7 +120,8 @@ export default class StoreManagment extends Component {
         /*delete_product_fields: ["product_id", "store_id"],*/
         console.log("in delete product!\n");
         const product_id = values[0];
-        const store_id = values[1];
+        const store_id = this.state.store_id;
+
         const response = await this.storeApi.delete_product_from_store(product_id, store_id);
         alert(response.message);
         if (!response.was_execption) {
@@ -130,8 +134,10 @@ export default class StoreManagment extends Component {
     }
     async store_puchase_policies(values) {
         console.log("in store_puchase_policies!\n");
-        const store_id = values[0];
-        const policy = values[1];
+        console.log("in store_puchase_policies!\n");
+        const store_id = this.state.store_id;
+        const policy = values[0];
+
         const response = await this.storeApi.puchase_policies_fields(store_id, policy);
         alert(response.message);
         if (!response.was_execption) {
@@ -144,9 +150,10 @@ export default class StoreManagment extends Component {
     }
     async store_discount_policy(values) {
         console.log("in store_discount_policy!\n");
-        const store_id = values[0];
-        const policy = values[1];
-        
+        const store_id = this.state.store_id;
+        const policy = values[0];
+
+
         const response = await this.storeApi.set_store_discount_policy(store_id, policy);
         alert(response.message);
         if (!response.was_execption) {
@@ -160,7 +167,8 @@ export default class StoreManagment extends Component {
     async add_owner(values) {
         console.log("in add_owner!\n");
         const user_email_to_appoint = values[0];
-        const store_id = values[1];
+        const store_id = this.state.store_id;
+
         const response = await this.storeApi.add_owner(user_email_to_appoint, store_id);
         alert(response.message);
 
@@ -175,7 +183,8 @@ export default class StoreManagment extends Component {
     async delete_owner(values) {
         console.log("in delete_owner!\n");
         const user_email_to_delete_appointment = values[0];
-        const store_id = values[1];
+        const store_id = this.state.store_id;
+
         const response = await this.storeApi.delete_owner(user_email_to_delete_appointment, store_id);
         alert(response.message);
         if (!response.was_execption) {
@@ -189,8 +198,9 @@ export default class StoreManagment extends Component {
     async add_manager(values) {
         console.log("in add_manager!\n");
         const user_email_to_appoint = values[0];
-        const store_id = values[1];
-        
+        const store_id = this.state.store_id;
+
+
         const response = await this.storeApi.add_manager(user_email_to_appoint, store_id);
         alert(response.message);
         if (!response.was_execption) {
@@ -204,7 +214,8 @@ export default class StoreManagment extends Component {
     async delete_manager(values) {
         console.log("in delete_manager!\n");
         const user_email_to_delete_appointment = values[0];
-        const store_id = values[1];
+        const store_id = this.state.store_id;
+
         console.log(store_id);
 
 
@@ -221,8 +232,7 @@ export default class StoreManagment extends Component {
 
     async close_store_temporarily(values) {
         console.log("in close_store_temporarily!\n");
-        const store_id = values[0];
-
+        const store_id = this.state.store_id;
         const response = await this.storeApi.close_store_temporarily(store_id);
         alert(response.message);
         if (!response.was_execption) {
@@ -236,8 +246,7 @@ export default class StoreManagment extends Component {
 
     async open_closed_store(values) {
         console.log("in open_close_store!\n");
-        const store_id = values[0];
-
+        const store_id = this.state.store_id;
         const response = await this.storeApi.open_close_store(store_id);
         alert(response.message);
         if (!response.was_execption) {
@@ -251,8 +260,7 @@ export default class StoreManagment extends Component {
 
     async view_store_management_information(values) {
         console.log("in view_store_management_information!\n");
-        const store_id = values[0];
-
+        const store_id = this.state.store_id;
         const response = await this.storeApi.view_store_management_information(store_id);
         alert(response.message);
         if (!response.was_execption) {
@@ -266,8 +274,7 @@ export default class StoreManagment extends Component {
 
     async manager_view_store_questions(values) {
         console.log("in manager_view_store_questions!\n");
-        const store_id = values[0];
-
+        const store_id = this.state.store_id;
         const response = await this.storeApi.manager_view_store_questions(store_id);
         alert(response.message);
         if (!response.was_execption) {
@@ -281,9 +288,10 @@ export default class StoreManagment extends Component {
 
     async manager_answer_question(values) {
         console.log("in manager_answer_question!\n");
-        const store_id = values[0];
-        const question_id = values[1];
-        const answer = values[2];
+        const store_id = this.state.store_id;
+        const question_id = values[0];
+        const answer = values[1];
+
 
         const response = await this.storeApi.manager_answer_question(store_id, question_id, answer);
         alert(response.message);
@@ -297,8 +305,7 @@ export default class StoreManagment extends Component {
     }
     async view_store_purchases_history(values) {
         console.log("in view_store_purchases_history!\n");
-        const store_id = values[0];
-
+        const store_id = this.state.store_id;
         const response = await this.storeApi.view_store_purchases_history(store_id);
         alert(response.message);
         if (!response.was_execption) {
@@ -312,8 +319,10 @@ export default class StoreManagment extends Component {
     async edit_manager_permissions(values) {
         console.log("in edit_manager_permissions!\n");
         const manager_email = values[0];
-        const store_id = values[1];
-        const permissions = values[2];
+        const store_id = this.state.store_id;
+        const permissions = values[1];
+
+
         alert(response.message);
         const response = await this.storeApi.edit_manager_permissions(manager_email, store_id, permissions);
         if (!response.was_execption) {
@@ -324,9 +333,8 @@ export default class StoreManagment extends Component {
 
         }
     }
-    open_select_menu()
-    {
-        return (<FormDialogPurchase/>)
+    open_select_menu() {
+        return (<FormDialogPurchase />)
 
     }
 
@@ -365,7 +373,7 @@ export default class StoreManagment extends Component {
     }
     async add_composite_xor_discount_rule(option) {
     }
- 
+
 
 
     render() {
@@ -396,11 +404,11 @@ export default class StoreManagment extends Component {
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.staff_information_fields} getValues={this.view_store_management_information.bind(this)} name="View Staff Information"></FormDialog></Item ></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <Link href="/AddDiscount" underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid>
-                    
-                    
-                    
-                    
-                   
+
+
+
+
+
                 </Grid>
 
                 <Box sx={{ flexGrow: 3 }}>

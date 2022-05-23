@@ -52,7 +52,7 @@ public abstract class AssignState {
         throw new NoUserRegisterdException("guest cant unregister from the system");
     }
 
-    public void edit_name(String pw, String new_name) throws MarketException {
+    public void edit_name(String new_name) throws MarketException {
         throw new NoUserRegisterdException("guest cant change is name");
     }
 
@@ -60,7 +60,7 @@ public abstract class AssignState {
         throw new NoUserRegisterdException("guest cant change is password");
     }
 
-    public void edit_last_name(String pw, String new_last_name) throws MarketException {
+    public void edit_last_name(String new_last_name) throws MarketException {
         throw new NoUserRegisterdException("guest cant change his last name");
     }
 

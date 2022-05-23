@@ -27,7 +27,7 @@ public class UserInformation {
         this.cart = user.getCart().cartInformation();
         this.storesManaged = user.stores_managers_list();
         try {
-            this.security_question = user.user_sequrity_question();
+            this.security_question = user.user_security_question();
         }
         catch (Exception e){
             this.security_question = "";

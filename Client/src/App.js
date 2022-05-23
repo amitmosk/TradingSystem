@@ -15,15 +15,14 @@ import ShoppingCart from './components/ShoppingCart';
 import AdminSendMessage from './components/AdminSendMessage';
 import AdminPage from './components/AdminPage';
 import StoreManagment from './components/StoreManagment';
-import HomePage from './components/HomePage';
 import { ConnectApi } from './API/ConnectApi';
 import AddDiscount from './components/AddDiscount';
 import EditProfile from './components/EditProfile';
 import ProductPage from './components/ProductPage';
-// user state enum
-const GUEST = 0;
-const ASSIGN_USER = 1;
-const ADMIN = 2;
+import HomePage from './components/HomePage';
+import {User} from './ServiceObjects/User';
+import ViewUserQuestions from './components/ViewUserQuestions';
+import ViewStat from './components/ViewStat';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -31,55 +30,51 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      user_state : GUEST,
-      ownedStoreList: [],
-      email: '',
-      name: "Guest",
-      user:undefined,
-
+      user: User.guest(),
       messages: [],
       webSocketConnection: undefined
     }
     this.connectApi = new ConnectApi();
+    this.updateUserState = this.updateUserState.bind(this);
+
 
 
   }
-  static async logout(){
-    console.log("in logout");
-    let response = await this.connectApi.logout();
-    if (!response.was_exception)
-    {
-      this.setState({
-        user_state: GUEST,
-        name: "Guest",
-        email:"",
-        user:undefined,
-      })
+
+
+
+
+  async updateUserState(user) {
+    console.log("in updateUserState\n\n\n\n\n");
+    console.log(user);
+    console.log(this.state.user);
+
+    this.setState((state) => {
+      // Important: read `state` instead of `this.state` when updating.
+      return {user: user}
+    });
+    
+    console.log(this.state.user);
     }
-    else
-    {
-
-    }
-  }
 
 
+  // async updateUserStateName(name) {
+  //   console.log("in set UserState - name\n\n\n\n\n");
+  //   this.setState({
+  //     user.name: name,
+  //     })
+  //   }
 
+    get_name() {
+      console.log("in get UserState - name\n\n\n\n\n");
+      console.log(this.state.user);
+      return this.state.user.name;
+      }
 
-  async updateLoginHandler() {
-    console.log("in updateLoginHandler\n\n\n\n\n");
-    this.setState({
-      user_state: ASSIGN_USER
-        })
-  }
-  async updateRegisterHandler(name, email, user) {
-    console.log("in updateRegisterHandler\n\n\n\n\n");
-    this.setState({
-      user_state: ASSIGN_USER,
-      name: name,
-      email: email,
-      user:user
-    })
-  }
+      get_state() {
+        return this.state.user;
+      }
+
 
 
 
@@ -87,19 +82,25 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage user_name = {this.state.name} />}></Route>
-          <Route path="/Login" element={<Login isLoggedIn={this.state.isLoggedIn} updateLoginHandler={this.updateLoginHandler.bind(this)} />}></Route>
-          <Route path="/Register" element={<Register updateRegisterHandler={this.updateRegisterHandler.bind(this)} />}></Route>
+          <Route path="/" element={<HomePage updateUserState={this.updateUserState.bind(this)}/>}></Route>
+          <Route path="/Login" element={<Login updateUserState={this.updateUserState.bind(this)} />}></Route>
+          <Route path="/Register" element={<Register updateUserState={this.updateUserState.bind(this)} />}></Route>
           <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
           <Route path="/StorePage" element={<StorePage store_id="" />}></Route>
           <Route path="/AdminSendMessage" element={<AdminSendMessage />}></Route>
           <Route path="/AdminPage" element={<AdminPage />}></Route>
-          <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
+          {/* <Route path="/ShoppingCart" element={<ShoppingCart />}></Route> */}
           <Route path="/StoreManagment" element={<StoreManagment store_id=""/>}></Route>
           <Route path="/AddDiscount" element={<AddDiscount store_id=""/>}></Route>
-          <Route path="/EditProfile" element={<EditProfile></EditProfile>}></Route>
-          <Route path="/ProductPage" element={<ProductPage product_id={1} store_id={1}/>}></Route>
+          {/* <Route path="/EditProfile" element={<EditProfile name={this.state.user.name}  lastName = {this.state.user.lastName} security_question={this.state.user.security_question} ></EditProfile>}></Route> */}
+          {/* <Route path="/EditProfile" element={<EditProfile getUserStateName={this.get_name.bind(this)} updateUserStateName={this.updateUserStateName.bind(this)} ></EditProfile>}></Route> */}
+          {/* <Route path="/EditProfile" element={<EditProfile getUserStateName={this.get_name.bind(this)}} ></EditProfile>}></Route> */}
+          <Route path="/EditProfile" element={<EditProfile get_state={this.get_state.bind(this)} />}></Route>
 
+          <Route path="/ProductPage" element={<ProductPage product_id={1} store_id={1}/>}></Route>
+          {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
+          <Route path="/ViewUserQuestions" element={<ViewUserQuestions questions={[]} />}></Route>
+          <Route path="/ViewStat" element={<ViewStat />}></Route>
 
         </Routes>
       </BrowserRouter>

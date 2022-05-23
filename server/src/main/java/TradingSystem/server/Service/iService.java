@@ -104,8 +104,8 @@ public interface iService {
     TradingSystem.server.Domain.Utils.Response get_user_last_name();
 
     TradingSystem.server.Domain.Utils.Response unregister(String password);
-    TradingSystem.server.Domain.Utils.Response edit_name(String pw, String new_name);
-    TradingSystem.server.Domain.Utils.Response edit_last_name(String pw, String new_last_name);
+    TradingSystem.server.Domain.Utils.Response edit_name(String new_name);
+    TradingSystem.server.Domain.Utils.Response edit_last_name(String new_last_name);
     TradingSystem.server.Domain.Utils.Response edit_password(String pw, String password);
 
 
@@ -114,8 +114,8 @@ public interface iService {
      * Requirement 2.3.9
      */
 
-    TradingSystem.server.Domain.Utils.Response edit_name_premium(String pw, String new_name, String answer);
-    TradingSystem.server.Domain.Utils.Response edit_last_name_premium(String pw, String new_last_name, String answer);
+    TradingSystem.server.Domain.Utils.Response edit_name_premium(String new_name, String answer);
+    TradingSystem.server.Domain.Utils.Response edit_last_name_premium(String new_last_name, String answer);
     TradingSystem.server.Domain.Utils.Response edit_password_premium(String pw, String password, String answer);
 
     TradingSystem.server.Domain.Utils.Response get_user_security_question();

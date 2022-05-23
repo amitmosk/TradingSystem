@@ -43,7 +43,6 @@ export default class AdminPage extends Component {
             admin_answer_user_question_fields: ["User Email"],
             admin_view_user_purchases_history_fields: ["User Email"],
             admin_view_store_purchases_history_fields: ["Store ID"],
-            get_market_stats_fields: [],
 
         };
         this.adminApi = new AdminApi();
@@ -65,28 +64,12 @@ export default class AdminPage extends Component {
     async componentDidMount() {
     }
 
-    async get_market_stats(values) {
-        console.log("in get market stat\n");
-        let response = await this.adminApi.get_market_stats();
-        const stats = response.value;
-        if (!response.was_execption) {
-
-            console.log("in get market stats - success!\n");
-            console.log(response);
-            // TODO: Show stats
-
-
-        }
-        else {
-
-        }
-        alert(response.message);
-    }
+ 
     async admin_view_store_purchases_history(values) {
         console.log("in admin view store purchases history\n");
         const store_id = values[0];
         const response = await this.adminApi.admin_view_store_purchases_history(store_id);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             console.log("in admin view store purchases history - success!\n");
 
             //show history
@@ -99,7 +82,7 @@ export default class AdminPage extends Component {
         console.log("in admin view user purchases history!\n");
         const user_email = values[0];
         const response = await this.adminApi.admin_view_user_purchases_history(user_email);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             console.log("in admin view user purchases history - success!\n");
             //show history
         }
@@ -112,7 +95,7 @@ export default class AdminPage extends Component {
         console.log("in remove user!\n");
         const user_email = values[0];
         const response = await this.adminApi.remove_user(user_email);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             console.log("in remove user - success!\n");
             //show history
         }
@@ -126,7 +109,7 @@ export default class AdminPage extends Component {
         console.log("in close store permanently - success!\n");
         const store_id = values[0];
         const response = await this.adminApi.close_store_permanently(store_id);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             console.log("in close store permanently !\n");
             //show history
         }
@@ -141,7 +124,7 @@ export default class AdminPage extends Component {
         const question_id = values[0];
         const answer = values[1];
         const response = await this.adminApi.admin_answer_user_question(question_id, answer);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             console.log("in admin answer user question - success!\n");
             //show history
         }
@@ -194,7 +177,7 @@ export default class AdminPage extends Component {
 
 <Box sx={{ flexGrow: 1 }}>
 <Link href="/"><HomeIcon></HomeIcon></Link>
-<h3 align="center">Store Managment Page</h3>
+<h3 align="center">Admin Page</h3>
 
 <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
     <Grid item xs={3}> <FormDialog fields={this.state.close_store_fields} getValues={this.close_store_permanently.bind(this)} name="Close Store"></FormDialog> </Grid>
@@ -202,7 +185,7 @@ export default class AdminPage extends Component {
     <Grid item xs={3}>  <FormDialog fields={this.state.admin_answer_user_question_fields} getValues={this.admin_answer_user_question.bind(this)} name="User Message"></FormDialog></Grid>
     <Grid item xs={3}>  <FormDialog fields={this.state.admin_view_user_purchases_history_fields} getValues={this.admin_view_user_purchases_history.bind(this)} name="View User Purchase History"></FormDialog></Grid>
     <Grid item xs={3}>  <FormDialog fields={this.state.admin_view_store_purchases_history_fields} getValues={this.admin_view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog></Grid>
-    <Grid item xs={3}>  <FormDialog fields={this.state.get_market_stats_fields} getValues={this.get_market_stats.bind(this)} name="Show Statistics"></FormDialog> </Grid>
+    <Grid item xs={3}>  <Link href="/ShowStat" underline="hover"> {'Show Statistics'}</Link> </Grid>
     
     
     
