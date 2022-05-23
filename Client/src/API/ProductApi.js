@@ -8,7 +8,6 @@ import { Product } from "../ServiceObjects/Product";
 // );
 const instance = require('axios');
 
-const response_obj = new Response("","");
 
 
 
@@ -24,10 +23,11 @@ export class ProductApi {
             })
             .catch(res => console.log("fuckkkkk\n\n"));
     }
-    find_product_information(product_id) {
+    find_product_information(product_id, store_id) {
         return instance.get(FIND_PRODUCT_INFORMATION, 
             {
-                params:{product_id: product_id,}
+                params:{product_id: product_id,
+                    store_id: store_id,}
             })
             .then(res => {
                 let response = res.data;

@@ -84,6 +84,7 @@ export default class StorePage extends Component {
     constructor(props) {
         super(props);
         this.state = { 
+          store_id:this.props.store_id,
             products:[],
             founder_email :undefined,
         store_name :undefined ,
@@ -99,21 +100,25 @@ export default class StorePage extends Component {
     
     
     async componentDidMount() {
-      let store_res =  await StoreApi.find_store_information(this.props.store_id) ;
+      let store_res =  await this.storeApi.find_store_information(this.state.store_id) ;
       let store = store_res.value;
       this.setState({
-        founder_email :store.founder_email,
-        store_name : store.store_name,
-        foundation_date : store.foundation_date,
-        storeReviewInformation : store.storeReviewInformation,
+        store_id: store.store_id,
+        founder_email: store.founder_email,
+        name: store.name,
+        foundation_date:store.foundation_date,
+        inventory : store.inventory,
+        storeReview: store.storeReview
     });
       
 
-        let products_res = await this.storeApi.get_products_by_store_id(this.props.store_id);
+        let products_res = await this.storeApi.get_products_by_store_id(this.state.store_id);
         let products = products_res.value;
+        // products.map((p)=>)
         this.setState({
           products:products
         });
+
         
 
         
@@ -132,21 +137,21 @@ export default class StorePage extends Component {
       }
   }
   async rate_store(rating) {
-    // const rating = this.state.rating;
-    // let response = await this.storeApi.rate_store(rating);
-    // alert(response.message);
-    // if (!response.was_exception)
-    // {
-    //   //get store
-    //   //reload store
-      
-    // }
-    // else
-    // {
-
-    // }
     console.log("in rate store");
     console.log("rating is = "+rating);
+    let response = await this.storeApi.rate_store(this.state.store_id, rating);
+    alert(response.message);
+    if (!response.was_exception)
+    {
+      //get store
+      //reload store
+      
+    }
+    else
+    {
+
+    }
+    
 }
 async send_question_to_store(values) {
   const question = values[0];
@@ -171,23 +176,21 @@ async send_question_to_store(values) {
                 <main class="LoginMain">
                     <div class="LoginWindow">
                     <Link href="/"><HomeIcon></HomeIcon></Link>
-                        <h3>Store Name goes here</h3>
+                        <row><h3>Store Name goes here</h3></row>
+                        <row><h3>{this.state.store_name}</h3></row>
                        {/* <FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog> */}
                             {/* <FormDialog fields={this.state.send_question_to_store_fields} getValues={this.send_question_to_store.bind(this)} name="Send question to store"></FormDialog> */}
                            
-                        <Col><row><MenuListComposition item2={<FormDialog fields={this.state.send_question_to_store_fields} getValues={this.send_question_to_store.bind(this)} name="Send question to store"></FormDialog>} item3={ <Link href="/StoreManagment" underline="hover" >
+                        <Row><MenuListComposition item2={<FormDialog fields={this.state.send_question_to_store_fields} getValues={this.send_question_to_store.bind(this)} name="Send question to store"></FormDialog>} item3={ <Link href="/StoreManagment" underline="hover" >
                                 {'Manage Store'}
                                 </Link>}>
-                                </MenuListComposition></row> </Col>
-                        {/* <h3>{this.state.store_name}</h3>  */}
+                                </MenuListComposition> </Row>
 
-                        {/* <div> {this.state.founder_email}</div>
-                        <div> {this.state.foundation_date}</div>
-                        <div> {this.state.storeReview}</div> */}
+                       
 
 
                         
-                        <Paper >
+                        <row><Paper >
               
              <Typography
                 // style={{ width: "70%", margin: "auto" }} I think you should avoid break tags instead do something with the width
@@ -195,35 +198,17 @@ async send_question_to_store(values) {
                 color="textPrimary"
                 component="span"
               >
-                 <div> Store info goes here</div>
-                        <div> Store info goes here</div>
-                        <div> Store info goes here</div>
-                        <div> Store info goes here</div>
-                        <div> Store info goes here</div>
+                  <div> Founder Email: {this.state.founder_email}</div>
+                        <div> Foundation Date: {this.state.foundation_date}</div>
+                        {this.state.storeReview ? <div><label>{this.state.storeReview}</label></div> : null}
+
                 
               </Typography>
-            </Paper>
+            </Paper></row>
 
-                            <h3>Products</h3>
+                            <row><h3>Products</h3></row>
                             <ShoppingCart/>
-                            {/* <List
-                            sx={{
-                                width: '100%',
-                                maxWidth: 360,
-                                bgcolor: 'background.paper',
-                                position: 'relative',
-                                overflow: 'auto',
-                                maxHeight: 300,
-                                '& ul': { padding: 0 },
-                            }}
-                            subheader={<li />}
-                            >
-                            {[0, 1, 2, 3, 4, 5, 6, ].map((item) => (
-                                <ListItem key={`item}-${item}`}>
-                                    <ListItemText primary={`Item ${item}`} />
-                                </ListItem>
-                                ))}
-                            </List> */}
+                          
 
                             <Box
                                     sx={{

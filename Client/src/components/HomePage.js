@@ -50,6 +50,7 @@ export default class HomePage extends Component {
             stores: [],
             open_store_fields: ["Store name"],
             send_question_to_admin_fields: ["Enter your question"],
+            products: [],
 
         };
         this.connectAPI = new ConnectApi();
@@ -89,6 +90,14 @@ export default class HomePage extends Component {
 
         }
     }
+    show_products(products) {
+        console.log("in show product");
+         this.setState({
+            products:products,
+        });
+    //    return (<ShoppingCart products={products}></ShoppingCart>);
+        return (<ShoppingCart products={this.state.products}></ShoppingCart>);
+    }
 
     render() {
 
@@ -121,7 +130,7 @@ export default class HomePage extends Component {
                                 console.info("I'm Register button, add link.");
                             }}
                         >
-                            Register
+                            \ Register
                         </Link>
                         <AccountMenu />
 

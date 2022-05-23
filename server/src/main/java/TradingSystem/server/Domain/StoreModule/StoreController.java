@@ -447,9 +447,14 @@ public class StoreController {
         return this.stores;
     }
 
-    public Map<Product,Integer> get_products_by_store_id(int store_id) throws MarketException {
+    public List<Product> get_products_by_store_id(int store_id) throws MarketException {
         Store store = this.get_store_by_store_id(store_id);
-        return store.getInventory();
+        List<Product> to_return=new LinkedList<>();
+        for(Product p:store.getInventory().keySet())
+        {
+            to_return.add(p);
+        }
+        return to_return;
     }
 }
 

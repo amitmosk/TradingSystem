@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.Facade;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import TradingSystem.server.Domain.StoreModule.Basket;
@@ -1377,9 +1378,9 @@ public class MarketFacade{
     }
 
     public Response get_products_by_store_id(int store_id) {
-        Response<Map<Product, Integer>> response = null;
+        Response<List<Product>> response = null;
         try {
-            Map<Product, Integer> products = store_controller.get_products_by_store_id(store_id);
+            List<Product> products = store_controller.get_products_by_store_id(store_id);
             response = new Response(products, "Received store products successfully");
             system_logger.add_log("received market stores successfully.");
         } catch (Exception e) {

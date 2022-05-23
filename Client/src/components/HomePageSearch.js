@@ -60,14 +60,16 @@ export default class HomePageSearch extends Component {
 
     }
     async find_product_by_name(val) {
+        //this.props.show_products("products");
         console.log(val);
         console.log("in find product by name");
         let response = await this.productApi.find_products_by_name(val);
         if (!response.was_exception) {
-            this.setState({
-                products: response.value
-            });
+
+              const products = response.value;
+
             //show products
+            this.props.show_products(products);
         }
         else {
             console.log("in find product by name - fail");
