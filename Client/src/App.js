@@ -131,6 +131,7 @@ export default class App extends Component {
 
           {/* // user history purchase. */}
           {/* // user own questions -> view my questions. */}
+          <Route path="/UserPurchaseHistory" element={<UserPurchaseHistory />}></Route>
           {/* <Route path="/UserQuestions" element={<?? />}></Route>
           // notificans
           <Route path="/Notifications" element={<?? />}></Route> } */}
