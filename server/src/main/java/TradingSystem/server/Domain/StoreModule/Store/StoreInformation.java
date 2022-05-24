@@ -2,9 +2,12 @@ package TradingSystem.server.Domain.StoreModule.Store;
 
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -13,7 +16,7 @@ public class StoreInformation {
     private String founder_email;
     private String name;
     public String foundation_date;
-    private Map<Product, Integer> inventory; // product & quantity
+    private List<ProductInformation> inventory; // product & quantity
     private StoreReview storeReview;
 
 
@@ -27,7 +30,15 @@ public class StoreInformation {
         this.name = store.getName();
         this.foundation_date = store.getFoundation_date();
         this.storeReview = store.getStoreReview();
-        this.inventory = store.getInventory();
+        update_inv(store.getInventory());
+    }
+
+    private void update_inv(Map<Product, Integer> prod_quantity){
+        List<ProductInformation> lst = new ArrayList<>();
+        for(Map.Entry<Product,Integer> en : prod_quantity.entrySet()){
+            lst.add(new ProductInformation(en.getKey(),en.getValue()));
+        }
+        this.inventory = lst;
     }
 
     public StoreInformation() {
@@ -47,10 +58,9 @@ public class StoreInformation {
         this.name = name;
     }
 
-    public void setInventory(Map<Product, Integer> inventory) {
+    public void setInventory(List<ProductInformation> inventory) {
         this.inventory = inventory;
     }
-
     public void setStoreReview(StoreReview storeReview) {
         this.storeReview = storeReview;
     }
@@ -116,7 +126,7 @@ public class StoreInformation {
         return name;
     }
 
-    public Map<Product, Integer> getInventory() {
+    public List<ProductInformation> getInventory() {
         return inventory;
     }
 

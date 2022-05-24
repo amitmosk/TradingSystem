@@ -283,11 +283,7 @@ export class StoreApi {
     get_products_by_store_id(store_id){
         return instance.get(GET_PRODUCTS_BY_STORE_ID,
             {
-                params:{ 
-                    store_id : store_id,
-                   }
-                
-
+                params:{store_id : store_id}
             })
             .then(res => {
                 let response = res.data;
@@ -299,7 +295,7 @@ export class StoreApi {
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
-    get_all_stores(store_id){
+    get_all_stores(){
         return instance.get(GET_ALL_STORES,
             {
             })

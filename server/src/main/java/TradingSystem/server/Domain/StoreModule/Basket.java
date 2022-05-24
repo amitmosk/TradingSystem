@@ -64,6 +64,8 @@ public class Basket {
     }
 
     public void addProduct(Product p, int quantity)throws MarketException {
+        if(quantity < 1)
+            throw new WrongPermterException("cannot add quantity lower then 1");
         if(this.products_and_quantities.containsKey(p))
         {
             throw new BasketException("Product already in the basket - product id: "+p.getProduct_id());

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.AfterEach;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 class StoreTest {
     private String birth_date;
@@ -48,7 +49,7 @@ class StoreTest {
         this.manager = generate_user(manager_start);
 
 
-        store = new Store(659, "toysRus", founder);
+        store = new Store(659, "toysRus", founder,new AtomicInteger(1));
         store.appoint_founder();
     }
 

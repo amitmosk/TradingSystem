@@ -21,19 +21,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import ShoppingCart from './ShoppingCart';
 import { Row, Col } from 'react-grid-system';
 import MenuListComposition from './MenuListComposition';
-// const Copyright = {
-//     return (
-//         <Typography variant="body2" color="textSecondary" align="center">
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://mui.com/">
-//                 Market System
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     )
-// }
-
+import HomeProducts from './HomeProducts'
+import HomeProductsTable from './HomeProductsTable'
+import StoreProductsTable from './StoreProductsTable'
+import StoreManagmentProductsTable from './StoreManagmentProductsTable'
 const style = {
     width: '100%',
     maxWidth: 360,
@@ -153,19 +144,17 @@ export default class HomePage extends Component {
 
                 </PrimarySearchAppBar>
                 <Container>
-
                     <Box sx={{ flexGrow: 1 }}>
-
-
-                        <h1 class="Header" align="center">
+                        <h1 className="Header" align="center">
                             Welcome To Ebay
                         </h1>
                         {/* <HomePageSearch sx={{ height: '5%' }} /> */}
                     </Box>
                     <Header position="center" align="center" title="Our products"></Header>
-                    <Grid align="center">
-                    {/* <Row><ShoppingCart/></Row> */}
-                    <Row><h1 style={{color: "white"}}>operations</h1></Row>
+                    <Grid position={"center"}>
+                    <Row position="center"><HomeProductsTable/></Row>
+                    <Row><h1 style={{color: "white"}}>---------------------------------------</h1></Row>
+                    <Row><h1 style={{color: "white"}}>---------------------------------------</h1></Row>
                     <Row>
                         <Col><FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog></Col>
                         <Col><FormDialog fields={this.state.send_question_to_admin_fields} getValues={this.send_question_to_admin.bind(this)} name="Send question to admin"></FormDialog></Col>

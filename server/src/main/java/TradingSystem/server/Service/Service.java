@@ -125,8 +125,8 @@ public class Service implements iService {
     @RequestMapping(value = "/add_product_to_cart")
     @CrossOrigin
     @Override
-    public Response add_product_to_cart(int storeID, int productID, int quantity) {
-        Response answer = marketFacade.add_product_to_cart(storeID, productID, quantity);
+    public Response add_product_to_cart(int store_id, int product_id, int quantity) {
+        Response answer = marketFacade.add_product_to_cart(store_id, product_id, quantity);
         return answer;
 
     }
@@ -134,8 +134,8 @@ public class Service implements iService {
     @RequestMapping(value = "/remove_product_from_cart")
     @CrossOrigin
     @Override
-    public Response remove_product_from_cart(int storeID, int productID) {
-        Response answer = marketFacade.remove_product_from_cart(storeID, productID);
+    public Response remove_product_from_cart(int store_id, int product_id) {
+        Response answer = marketFacade.remove_product_from_cart(store_id, product_id);
         return answer;
     }
 

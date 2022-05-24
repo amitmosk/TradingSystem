@@ -39,11 +39,11 @@ public class Store {
 
 
     // -- constructors
-    public Store(int store_id, String name, AssignUser founder) {
+    public Store(int store_id, String name, AssignUser founder,AtomicInteger ai) {
         this.store_id = store_id;
         this.founder = founder;
         this.name = name;
-        this.product_ids_counter = new AtomicInteger(1);
+        this.product_ids_counter = ai;
         this.active = true;
         this.foundation_date = LocalDate.now().toString();
         this.storeReview = new StoreReview();
@@ -311,7 +311,7 @@ public class Store {
                 throw new ProductAddingException("product already exists in the store");
         }
         int product_id = this.product_ids_counter.getAndIncrement();
-        Product product = new Product(name, product_id, price, category, key_words);
+        Product product = new Product(name, product_id, price, category, key_words, store_id);
         inventory.put(product, quantity);
         return inventory;
     }

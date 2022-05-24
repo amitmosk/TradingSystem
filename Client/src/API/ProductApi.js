@@ -88,12 +88,13 @@ export class ProductApi {
     }
 
     add_product_to_cart(store_id, product_id, quantity) {
+        console.log("store id: " + store_id)
+        console.log("product id:" + product_id)
         return instance.get(ADD_PRODUCT_TO_CART,
             {
                 params:{store_id: store_id,
                     product_id: product_id,
                     quantity: quantity,}
-                
             })
             .then(res => {
                 return new Response(res.data)

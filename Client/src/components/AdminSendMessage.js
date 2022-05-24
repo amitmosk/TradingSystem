@@ -121,13 +121,13 @@ export default class AdminSendMessage extends Component {
             return <Navigate to="/HomePageSearch"/>
         } else {
             return (
-                <main class="LoginMain">
-                    <div class="LoginWindow">
+                <main className="LoginMain">
+                    <div className="LoginWindow">
                     <Link href="/"><HomeIcon></HomeIcon></Link>
                         <h3>Send Messages - (Admin)</h3>
-                        <form class="LoginForm" >
+                        <form className="LoginForm" >
                             {this.state.loginError ?
-                                <div class="CenterItemContainer"><label>{this.state.loginError}</label></div> : null}
+                                <div className="CenterItemContainer"><label>{this.state.loginError}</label></div> : null}
                             <div>To</div>
                             <input type="text" name="email" value={this.state.email} onChange={this.handleInputChange.bind(this)}
                                     placeholder="Email" required/>

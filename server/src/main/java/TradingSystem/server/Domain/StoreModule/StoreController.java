@@ -20,6 +20,7 @@ public class StoreController {
     private ConcurrentHashMap<Integer, Store> stores;
     private AtomicInteger store_ids_counter;
     private AtomicInteger purchase_ids_counter;
+    private AtomicInteger products_id;
     private Object storesLock;
 
     private static StoreController instance = null;
@@ -35,6 +36,7 @@ public class StoreController {
         this.purchase_ids_counter = new AtomicInteger(1);
         this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
+        this.products_id = new AtomicInteger(1);
     }
 
     public static void load() {
@@ -362,7 +364,7 @@ public class StoreController {
     public int open_store(User founder, String store_name) throws MarketException {
         AssignUser founder_state = founder.state_if_assigned();
         int store_id = this.store_ids_counter.getAndIncrement();
-        Store store = new Store(store_id, store_name, founder_state);
+        Store store = new Store(store_id, store_name, founder_state,products_id);
         Appointment appointment = store.appoint_founder();
         founder.add_founder(store, appointment);
         this.stores.put(store_id, store);

@@ -2,6 +2,7 @@ package TradingSystem.server.Domain.Facade;
 
 import java.util.List;
 
+import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -1362,12 +1363,12 @@ public class MarketFacade{
     }
 
     public Response get_all_stores() {
-        Response<Map<Integer,Store>> response = null;
+        Response<List<StoreInformation>> response = null;
         try {
             Map<Integer, Store> stores = store_controller.get_all_stores();
-            Map<Integer, StoreInformation> map = new HashMap<>();
+            List<StoreInformation> map = new ArrayList<>();
             for(Map.Entry<Integer,Store> en : stores.entrySet()){
-                map.put(en.getKey(),new StoreInformation(en.getValue()));
+                map.add(new StoreInformation(en.getValue()));
             }
             response = new Response(map, "Received market stores successfully");
             system_logger.add_log("received market stores successfully.");
@@ -1379,10 +1380,14 @@ public class MarketFacade{
     }
 
     public Response get_products_by_store_id(int store_id) {
-        Response<List<Product>> response = null;
+        Response<List<ProductInformation>> response = null;
         try {
             List<Product> products = store_controller.get_products_by_store_id(store_id);
-            response = new Response(products, "Received store products successfully");
+            List<ProductInformation> products_information = new ArrayList<>();
+            for(Product p:products){
+                products_information.add(new ProductInformation(p,0));
+            }
+            response = new Response(products_information, "Received store products successfully");
             system_logger.add_log("received market stores successfully.");
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
