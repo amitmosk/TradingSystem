@@ -443,6 +443,7 @@ public class StoreController {
         this.purchase_ids_counter = new AtomicInteger(1);
         this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
+        this.products_id = new AtomicInteger(1);
     }
 
     public Map<Integer,Store> get_all_stores() {
