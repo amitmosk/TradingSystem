@@ -4,6 +4,7 @@ import java.util.List;
 
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.Questions.QuestionController;
+import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -1197,12 +1198,12 @@ public class MarketFacade{
      * @return store purchase history or failure message
      */
 
-    public Response<StorePurchaseHistory> view_store_purchases_history(int store_id) {
-        Response<StorePurchaseHistory> response = null;
+    public Response<Collection<StorePurchase>> view_store_purchases_history(int store_id) {
+        Response<Collection<StorePurchase>> response = null;
         try {
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
-            StorePurchaseHistory answer = this.store_controller.view_store_purchases_history(user, store_id);
+            Collection<StorePurchase> answer = this.store_controller.view_store_purchases_history(user, store_id).getPurchaseID_purchases().values();
             response = new Response<>(answer, "Store purchases history received successfully");
             system_logger.add_log("User received (" + user_email + ") store's (" + store_id + ") purchase history successfully.");
 

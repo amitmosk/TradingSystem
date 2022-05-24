@@ -443,7 +443,8 @@ public class Service implements iService {
     @CrossOrigin
     @Override
     public Response view_store_purchases_history(int store_id) {
-        Response answer = marketFacade.view_store_management_information(store_id);
+        Response answer = marketFacade.view_store_purchases_history(store_id);
+
         return answer;
     }
 

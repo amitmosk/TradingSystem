@@ -23,6 +23,7 @@ import { Container, Row, Col } from 'react-grid-system';
 import FormDialogPurchase from './FormDialogPurchase';
 import { Input } from "@mui/material";
 import StoreManagmentProductsTable from './StoreManagmentProductsTable';
+import StaffInfo from './StaffInfo';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -59,10 +60,13 @@ export default class StoreManagment extends Component {
             remove_owner_appointment_fields: ["user_email_to_appoint"],
             remove_manager_appointment_fields: ["user_email_to_appoint"],
             change_manager_permissions_fields: ["manager_email", "permissions"],
+            answer_user_questions_fields: ["question_id", "answer"],
             user_massages_fields: [],
+            store_purchase_history_fields: [],
             // אילוצי עקביות
             close_store_temp_fields: [],
             open_closed_store_fields: [],
+            staff_information_fields: [],
             store_id: this.props.store_id,
 
             option: "Simple",
@@ -265,6 +269,7 @@ export default class StoreManagment extends Component {
         alert(response.message);
         if (!response.was_execption) {
             console.log("in view_store_management_information - success!\n");
+            return response.value;
             //show history
         }
         else {
@@ -272,9 +277,37 @@ export default class StoreManagment extends Component {
         }
     }
 
-    
+    async manager_view_store_questions(values) {
+        console.log("in manager_view_store_questions!\n");
+        const store_id = this.state.store_id;
+        const response = await this.storeApi.manager_view_store_questions(store_id);
+        alert(response.message);
+        if (!response.was_execption) {
+            console.log("in manager_view_store_questions - success!\n");
+            //show history
+        }
+        else {
 
-    
+        }
+    }
+
+    async manager_answer_question(values) {
+        console.log("in manager_answer_question!\n");
+        const store_id = this.state.store_id;
+        const question_id = values[0];
+        const answer = values[1];
+
+
+        const response = await this.storeApi.manager_answer_question(store_id, question_id, answer);
+        alert(response.message);
+        if (!response.was_execption) {
+            console.log("in manager_answer_question - success!\n");
+            //show history
+        }
+        else {
+
+        }
+    }
     async view_store_purchases_history(values) {
         console.log("in view_store_purchases_history!\n");
         const store_id = this.state.store_id;
@@ -294,7 +327,7 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
         const permissions = values[1];
 
-        
+
         const response = await this.storeApi.edit_manager_permissions(manager_email, store_id, permissions);
         alert(response.message);
         if (!response.was_execption) {
@@ -363,10 +396,8 @@ export default class StoreManagment extends Component {
                 </Grid>
                 <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.add_product_fields} getValues={this.add_product.bind(this)} name="Add Product"></FormDialog></Item>                    </Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to="/ViewStaffInformation"  underline="hover" >{'View Staff Information'}</Link>   </Item ></Grid >
-
-                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.delete_product_fields} getValues={this.delete_product.bind(this)} name="Delete Product"></FormDialog></Item></Grid> */}
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.purchase_policies_fields} getValues={this.store_puchase_policies.bind(this)} name="Store Purchase Policies"></FormDialog></Item></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.delete_product_fields} getValues={this.delete_product.bind(this)} name="Delete Product"></FormDialog></Item></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.puchase_policies_fields} getValues={this.store_puchase_policies.bind(this)} name="Store Purchase Policies"></FormDialog></Item></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.discount_policies_fields} getValues={this.store_discount_policy.bind(this)} name="Store Discount Policies"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_manager_fields} getValues={this.add_manager.bind(this)} name="Add Manager"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_owner_fields} getValues={this.add_owner.bind(this)} name="Add Owner"></FormDialog></Item></Grid >
@@ -379,8 +410,21 @@ export default class StoreManagment extends Component {
 
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.close_store_temp_fields} getValues={this.close_store_temporarily.bind(this)} name="Close Store Temporarily"></FormDialog></Item ></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.open_closed_store_fields} getValues={this.open_closed_store.bind(this)} name="Open Closed Store"></FormDialog></Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.user_massages_fields} getValues={this.manager_view_store_questions.bind(this)} name="View User Questions"></FormDialog></Item ></Grid >
 
-                    {/* <Grid item xs={3}>  <Item variant="outlined"> <Link href="/AddDiscount" underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid> */}
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.store_purchase_history_fields} getValues={this.view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog></Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.close_store_temp_fields} getValues={this.close_store_temporarily.bind(this)} name="Close Store Temporarily" title="Confirm to Close Store Temporarily" submit_button="Confirm"></FormDialog></Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.open_closed_store_fields} getValues={this.open_closed_store.bind(this)} name="Open Closed Store" title="Confirm to Open Closed Store" submit_button="Confirm"></FormDialog></Item ></Grid >
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.staff_information_fields} getValues={this.view_store_management_information.bind(this)} name="View Staff Information"></FormDialog></Item ></Grid > */}
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link outlinedVar="text" href="/StaffInfo">{'View Staff Information'}</Link></Item ></Grid >
+
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link href="/AddDiscount" underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid>
+
+
+
+
+
                 </Grid>
 
                 <Box sx={{ flexGrow: 3 }}>

@@ -30,13 +30,19 @@ public class SystemStartConfig {
         marketFacade2.add_product_to_store(2,50,"iphone",2999.9, "electronic",new LinkedList<>());
         marketFacade3.add_product_to_store(3,50,"iphone",2999.9, "electronic",new LinkedList<>());
         marketFacade4.add_product_to_store(4,50,"iphone",2999.9, "electronic",new LinkedList<>());
+        marketFacade5.add_product_to_store(5,50,"iphoneS",2999.9, "electronic",new LinkedList<>());
+
         marketFacade5.add_product_to_store(5,50,"iphone",2999.9, "electronic",new LinkedList<>());
         // add products to cart
         marketFacade1.add_product_to_cart(1,1,20);
         marketFacade1.add_product_to_cart(2,2,20);
-        marketFacade1.add_product_to_cart(3,3,20);
-        marketFacade1.add_product_to_cart(4,4,20);
-        marketFacade1.add_product_to_cart(5,5,20);
+        marketFacade1.add_product_to_cart(3,1,20);
+        marketFacade1.add_product_to_cart(4,1,20);
+        marketFacade1.add_product_to_cart(5,1,20);
+        marketFacade1.add_product_to_cart(5,2,20);
+
+        // buy from store
+        marketFacade1.buy_cart("Payment Info", "Supply Info");
         // logout
         marketFacade1.logout();
         marketFacade2.logout();
