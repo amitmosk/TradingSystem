@@ -21,8 +21,8 @@ export class User  {
         return new User({
             state : GUEST,
             email :"",
-            name :"guest private name",
-            lastName : "guest last name",
+            name :"Guest",
+            lastName : "last",
             birth_date : "12-12-2021",
             cart : "",
             storesManaged : "",

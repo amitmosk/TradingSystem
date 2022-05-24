@@ -107,7 +107,7 @@ public class MarketFacade{
             String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
             isGuest = false;
             UserInformation userInformation = new UserInformation(user);
-            response = new Response<>(userInformation, "Hey +" + user_name + ", Welcome to the trading system market!");
+            response = new Response<>(userInformation, "Hey " + user_name + ", Welcome to the trading system market!");
             system_logger.add_log("User " + Email + " logged-in");
         } catch (Exception e) {
             response = Utils.CreateResponse(new LoginException(" "));
@@ -1252,7 +1252,7 @@ public class MarketFacade{
             user_controller.remove_user(loggedUser, email);
             // remove user from all owners and managers
             // remove all users complains & questions
-            response = new Response<>(email, email + "Has been removed successfully from the system");
+            response = new Response<>(email, email + " Has been removed successfully from the system");
             system_logger.add_log("Removed user (" + email + ") from the system.");
         } catch (Exception e) {
             response = Utils.CreateResponse(e);

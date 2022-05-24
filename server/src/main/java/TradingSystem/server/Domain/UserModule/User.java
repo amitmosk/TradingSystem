@@ -91,6 +91,7 @@ public class User {
             throw new LoginException("User already logged in.");
         this.state.login(password); //verifies password
         boolean res = this.isLogged.compareAndSet(false, true);
+        this.isGuest.compareAndSet(true, false);
         if (!res)
             throw new LoginException("User already logged in - concurrency");
     }
@@ -99,6 +100,8 @@ public class User {
         if (isGuest.get()) throw new NoUserRegisterdException("failed to logout from guest");
         if (!this.isLogged.compareAndSet(true, false))
             throw new NoUserRegisterdException("failed to logout user - concurrency problem");
+        this.isGuest.compareAndSet(false, true);
+
     }
 
     public Cart getCart() {

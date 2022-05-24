@@ -21,6 +21,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import ShoppingCart from './ShoppingCart';
 import { Row, Col } from 'react-grid-system';
 import MenuListComposition from './MenuListComposition';
+import NavBar from './NavBar';
 // const Copyright = {
 //     return (
 //         <Typography variant="body2" color="textSecondary" align="center">
@@ -61,9 +62,9 @@ export default class HomePage extends Component {
     }
     async componentDidMount() {
         console.log("in component did mount");
-        this.setState({
-            username: this.props.user_name
-        });
+        // this.setState({
+        //     username: this.props.user_name
+        // });
         // let response = await this.storeApi.get_all_stores();
         // let stores = response.value;
         // this.setState({
@@ -74,6 +75,7 @@ export default class HomePage extends Component {
     async open_store(values) {
         const store_name = values[0];
         let response = await this.storeApi.open_store(store_name);
+        alert(response.message);
         if (!response.was_exception) {
 
         }
@@ -98,6 +100,7 @@ export default class HomePage extends Component {
     async send_question_to_admin(values) {
         const question = values[0];
         let response = await this.adminApi.send_question_to_admin(question);
+        alert(response.message);
         if (!response.was_exception) {
 
         }
@@ -118,40 +121,6 @@ export default class HomePage extends Component {
 
         return (
             <>
-                <PrimarySearchAppBar position="relative" color="white">
-                    <Toolbar>
-                        <Typography variant="h6" color="inherit" noWrap>
-                            {/* Hello {this.state.username}, */}
-                            Hello Amit,
-                        </Typography>
-
-                        <Link
-                            href="/Login"
-                            component="button"
-                            variant="body2"
-                            position="right"
-                            onClick={() => {
-                                console.info("I'm Login button, add link.");
-                            }}
-                        >
-                            Login
-                        </Link>
-                        <Link
-                            href="/Register"
-                            component="button"
-                            variant="body2"
-                            position="right"
-                            onClick={() => {
-
-                                console.info("I'm Register button, add link.");
-                            }}
-                        >
-                            \ Register
-                        </Link>
-                        <AccountMenu log={this.logout.bind(this)}></AccountMenu>
-                    </Toolbar>
-
-                </PrimarySearchAppBar>
                 <Container>
 
                     <Box sx={{ flexGrow: 1 }}>

@@ -23,11 +23,16 @@ import EditProfile from './components/EditProfile';
 import ProductPage from './components/ProductPage';
 import HomePage from './components/HomePage';
 import {User} from './ServiceObjects/User';
-// import ViewUserQuestions from './components/ViewUserQuestions';
 import ViewStat from './components/ViewStat';
+import AdminViewUserQuestions from './components/AdminViewUserQuestions';
+import ManagerViewStoreQuestions from './components/ManagerViewStoreQuestions';
+// import UserPurchaseHistory from './components/UserPurchaseHistory';
 // import UserQuestions from './components/UserQuestions';
-
-
+import UserViewQuestions from './components/UserViewQuestions';
+import ViewStaffInformation from './components/ViewStaffInformation';
+// import ViewStorePurchaseHistory from './components/ViewStorePurchaseHistory';
+// import ViewUserPurchaseHistory from './components/ViewUserPurchaseHistory';
+import NavBar from './components/NavBar';
 export default class App extends Component {
   static displayName = App.name;
 
@@ -53,9 +58,9 @@ export default class App extends Component {
     console.log(user);
     console.log(this.state.user);
 
-    this.setState((state) => {
+    this.setState( {
       // Important: read `state` instead of `this.state` when updating.
-      return {user: user}
+       user: user
     });
     
     console.log(this.state.user);
@@ -95,13 +100,16 @@ export default class App extends Component {
 
   render() {
     return (
+
       <BrowserRouter>
+          <NavBar state = {this.state.user}></NavBar>
+
         <Routes>
           <Route path="/" element={<HomePage updateUserState={this.updateUserState.bind(this)}/>}></Route>
           <Route path="/Login" element={<Login updateUserState={this.updateUserState.bind(this)} />}></Route>
           <Route path="/Register" element={<Register updateUserState={this.updateUserState.bind(this)} />}></Route>
           <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
-          <Route path="/StorePage" element={<StorePage store_id="" />}></Route>
+          <Route path="/StorePage" element={<StorePage store_id={1} />}></Route>
           <Route path="/AdminSendMessage" element={<AdminSendMessage />}></Route>
           <Route path="/AdminPage" element={<AdminPage />}></Route>
           {/* <Route path="/ShoppingCart" element={<ShoppingCart />}></Route> */}
@@ -112,12 +120,17 @@ export default class App extends Component {
 
           <Route path="/ProductPage" element={<ProductPage product_id={1} store_id={1}/>}></Route>
           {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
-          {/* <Route path="/ViewUserQuestions" element={<ViewUserQuestions questions={[]} />}></Route> */}
           <Route path="/ViewStat" element={<ViewStat />}></Route>
+          <Route path="/AdminViewUserQuestions" element={<AdminViewUserQuestions />}></Route>
+          <Route path="/StoreManagment/ManagerViewStoreQuestions/:id" element={<ManagerViewStoreQuestions />}></Route>
+          <Route path="/UserViewQuestions" element={<UserViewQuestions />}></Route>
+          <Route path="/ViewStaffInformation" element={<ViewStaffInformation />}></Route>
+          {/* <Route path="/ViewUserPurchaseHistory" element={<ViewUserPurchaseHistory />}></Route>
+          
+          <Route path="/ViewStorePurchaseHistory" element={<ViewStorePurchaseHistory />}></Route> */}
 
 
           {/* // user history purchase. */}
-           {/* <Route path="/UserPurchaseHistory" element={<UserQuestions questions={this.get_user_questions()}/>}></Route> */}
           {/* // user own questions -> view my questions. */}
           {/* <Route path="/UserQuestions" element={<?? />}></Route>
           // notificans

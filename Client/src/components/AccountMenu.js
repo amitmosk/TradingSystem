@@ -92,7 +92,7 @@ export default function AccountMenu(logout) {
                                 </Link>
         </MenuItem>
         <MenuItem>
-          <Avatar /> <Link href="/UserQuestions" underline="hover" >
+          <Avatar /> <Link href="/UserViewQuestions" underline="hover" >
                                 {'My Questions'}
                                 </Link>
         </MenuItem>

@@ -98,11 +98,11 @@ export default class ViewStat extends Component {
                     <div class="LoginWindow">
                     <Link href="/"><HomeIcon></HomeIcon></Link>
                         <row><h3>Market Statistics</h3></row>
-                        {[0,1,2,3,4,5,6,7].map((item) => (
+                        {/* {[0,1,2,3,4,5,6,7].map((item) => (
                             <Card >
                             {item}
                             </Card>
-                        ))}
+                        ))} */}
                       <Card >
 
                     <div> init system time: {this.state.init_system_time}</div>
