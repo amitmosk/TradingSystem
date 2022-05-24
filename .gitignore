@@ -1,2 +1,10 @@
 
 *.json
+*.pack
+*.pack
+server/ErrorLogger.txt
+server/ErrorLogger.txt.1
+server/SystemLogger.txt
+server/SystemLogger.txt.1
+server/ErrorLogger.txt
+server/SystemLogger.txt

@@ -137,11 +137,11 @@ public class StoreController {
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
-    public String view_store_management_information(User user, int store_id) throws MarketException {
+    public StoreManagersInfo view_store_management_information(User user, int store_id) throws MarketException {
         AssignUser assignUser = user.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
         StoreManagersInfo info = store.view_store_management_information(assignUser);
-        return info.get_management_information();
+        return info;
     }
 
     /**

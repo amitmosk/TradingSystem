@@ -21,6 +21,20 @@ import CardMedia from '@material-ui/core/CardMedia';
 import ShoppingCart from './ShoppingCart';
 import { Row, Col } from 'react-grid-system';
 import MenuListComposition from './MenuListComposition';
+import NavBar from './NavBar';
+// const Copyright = {
+//     return (
+//         <Typography variant="body2" color="textSecondary" align="center">
+//             {'Copyright © '}
+//             <Link color="inherit" href="https://mui.com/">
+//                 Market System
+//             </Link>{' '}
+//             {new Date().getFullYear()}
+//             {'.'}
+//         </Typography>
+//     )
+// }
+
 import HomeProducts from './HomeProducts'
 import HomeProductsTable from './HomeProductsTable'
 import StoreProductsTable from './StoreProductsTable'
@@ -65,6 +79,7 @@ export default class HomePage extends Component {
     async open_store(values) {
         const store_name = values[0];
         let response = await this.storeApi.open_store(store_name);
+        alert(response.message);
         if (!response.was_exception) {
 
         }
@@ -89,6 +104,7 @@ export default class HomePage extends Component {
     async send_question_to_admin(values) {
         const question = values[0];
         let response = await this.adminApi.send_question_to_admin(question);
+        alert(response.message);
         if (!response.was_exception) {
 
         }

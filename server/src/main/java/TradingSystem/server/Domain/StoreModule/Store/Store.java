@@ -212,12 +212,14 @@ public class Store {
     public StoreManagersInfo view_store_management_information(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.view_permissions);
         //TODO: added parse to emails - appointment map
-        HashMap<String, Appointment> emails_appointmets = new HashMap<>();
-        for (Map.Entry<AssignUser, Appointment> en : stuffs_and_appointments.entrySet()) {
-            emails_appointmets.put(en.getKey().get_user_email(), en.getValue());
+        List<AppointmentInformation> answer = new LinkedList<>();
+        for (Appointment appointment : stuffs_and_appointments.values()) {
+            AppointmentInformation temp = new AppointmentInformation(appointment.getMember().get_user_email(), appointment.getAppointer().get_user_email(),
+                    appointment.getType().toString());
+            answer.add(temp);
         }
         //end
-        return new StoreManagersInfo(this.name, emails_appointmets);
+        return new StoreManagersInfo(this.name, answer);
     }
 
     public boolean is_active() {

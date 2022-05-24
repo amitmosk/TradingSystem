@@ -28,6 +28,8 @@ import Grid from '@mui/material/Grid';
 import FormDialog from './FormDialog';
 import Card from '@mui/material/Card';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import { AdminApi } from '../API/AdminApi';
+import { Question } from '../ServiceObjects/Question';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -36,15 +38,14 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
   
-export default class ViewUserQuestions extends Component {
-    static displayName = ViewUserQuestions.name;
+export default class AdminViewUserQuestions extends Component {
+    static displayName = AdminViewUserQuestions.name;
     constructor(props) {
         super(props);
         this.state = { 
-            questions:this.props.questions,
-            answer_user_questions_fields:["Question ID"],
+            questions:[],
         };
-        this.storeApi = new StoreApi();
+        this.adminApi = new AdminApi();
 
     }    
 
@@ -52,59 +53,83 @@ export default class ViewUserQuestions extends Component {
     
     
     async componentDidMount() {
-      
-    }
-      
-
-        
-
-        
-
-        
-    async manager_answer_question(values) {
-        console.log("in manager_answer_question!\n");
-        const store_id = values[0];
-        const question_id = values[1];
-        const answer = values[2];
-
-        const response = await this.storeApi.manager_answer_question(store_id, question_id, answer);
+        console.log("in admin_view_users_questions!\n");
+        const response = await this.adminApi.admin_view_users_questions();
+        const questions = response.value;
+        console.log("questions = "+questions);
         alert(response.message);
-        if (!response.was_execption) {
-            console.log("in manager_answer_question - success!\n");
-            //show history
+        if (!response.was_excecption) {
+
+            console.log("in AdminViewUserQuestions - success!\n");
+            console.log(response);
+            
+                  //
+                  //static create( question_id,  message_date,  answer_date,  message,  answer, has_answer) {
+            const final_questions=[];
+            let splitted_questions=[];
+            questions.map(q=>{ splitted_questions = q.split(",");
+            console.log("spplited= "+splitted_questions);
+            const user_email = splitted_questions[0];
+            const question_id = splitted_questions[1];
+            const message_date = splitted_questions[2];
+            const answer_date = splitted_questions[3];
+            const message = splitted_questions[4];
+            const answer = splitted_questions[5];
+            const has_answer = splitted_questions[6];
+            const que=new Question (question_id, message_date, answer_date, message, answer, has_answer, user_email);
+            final_questions.push(que);
+                });
+            this.setState({
+                questions:final_questions,
+                    })
+            
+
+
+            // console.log("qqqqq");
+            // console.log(questions);
+            // console.log(questions[0]);
+            // console.log(questions[0].split(","));
+            // console.log(final_questions);
+            
+            // console.log(questions_arr);
+           
+
+
         }
         else {
 
         }
     }
-   
+      
 
-
-    
     render() {
         const {redirectTo} = this.state
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
                     <Link href="/"><HomeIcon></HomeIcon></Link>
-                        <row><h3>User Questions</h3></row>
-                        {[0,1,2,3,4,5,6,7].map((item) => (
+                        <row><h1>User Questions (Admin)</h1></row>
+                        {/* {[0,1,2,3,4,5,6,7].map((item) => (
                             <Card >
                             {item}
                             </Card>
-                        ))}
-                        {this.state.questions.map((question) => (
+                        ))} */}
+                        {this.state.questions.length == 0 ? <h3 style={{ color: 'red' }}>No Questions To Show</h3> : 
+                        this.state.questions.map((question) => (
                             <Card >
-
-                            <div> question_id: {question.question_id}</div>
-                            <div> message_date: {question.message_date}</div>
-                            <div> answer_date: {question.answer_date}</div>
-                            <div> answer: {question.answer}</div>
-                            <div> has_answer: {question.has_answer}</div>
+                            <h3 style={{ color: 'blue' }}> {question.email}</h3>
+                            {/* (question_id, message_date, answer_date, message, answer, has_answer, user_email); */}
+                            <div> {question.question_id}</div>
+                            <div> {question.message_date}</div>
+                            <div> {question.answer_date}</div>
+                            <div> {question.message}</div>
+                            <div> {question.answer}</div>
+                            <div> {question.has_answer}</div>
+                            {/* <div> question : {question}</div> */}
+                           
 
                             </Card>
                         ))}
-                        <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid>
 
 
                        

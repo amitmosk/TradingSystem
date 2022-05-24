@@ -73,4 +73,10 @@ public abstract class Question {
         this.has_answer = true;
         this.answer_date = LocalDate.now().toString();
     }
+
+    public abstract String toString_for_user();
+
+
+
+
 }

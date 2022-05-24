@@ -18,10 +18,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 //     }
 FormDialog.defaultProps = {
+  title: "sumbit",
   outlinedVar: "outlined",
 }
 
-export default function FormDialog({ fields, getValues, name, outlinedVar }) {
+export default function FormDialog({ fields, getValues, name, outlinedVar , title}) {
 
 
   const [open, setOpen] = React.useState(false);
@@ -57,7 +58,7 @@ export default function FormDialog({ fields, getValues, name, outlinedVar }) {
         {name}
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Submit</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
 
           {/* (store_id, quantity,name, price, category, key_words) */}

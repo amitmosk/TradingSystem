@@ -95,9 +95,9 @@ export default class AdminPage extends Component {
         console.log("in remove user!\n");
         const user_email = values[0];
         const response = await this.adminApi.remove_user(user_email);
+        alert(response.message);
         if (!response.was_exception) {
             console.log("in remove user - success!\n");
-            //show history
         }
         else {
 
@@ -106,11 +106,12 @@ export default class AdminPage extends Component {
 
 
     async close_store_permanently(values) {
-        console.log("in close store permanently - success!\n");
+        console.log("in close store permanently \n");
         const store_id = values[0];
         const response = await this.adminApi.close_store_permanently(store_id);
+        alert(response.message);
         if (!response.was_exception) {
-            console.log("in close store permanently !\n");
+            console.log("in close store permanently - success!\n");
             //show history
         }
         else {
@@ -132,6 +133,9 @@ export default class AdminPage extends Component {
 
         }
     }
+
+
+    
 
 
 
@@ -182,10 +186,11 @@ export default class AdminPage extends Component {
 <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
     <Grid item xs={3}> <FormDialog fields={this.state.close_store_fields} getValues={this.close_store_permanently.bind(this)} name="Close Store"></FormDialog> </Grid>
     <Grid item xs={3}> <FormDialog fields={this.state.remove_user_fields} getValues={this.remove_user.bind(this)} name="Remove User"></FormDialog></Grid>
-    <Grid item xs={3}>  <FormDialog fields={this.state.admin_answer_user_question_fields} getValues={this.admin_answer_user_question.bind(this)} name="User Message"></FormDialog></Grid>
+    <Grid item xs={3}>  <Link href="/AdminViewUserQuestions" underline="hover"> {'View user questions'}</Link> </Grid>
+    {/* <Grid item xs={3}>  <FormDialog fields={this.state.admin_answer_user_question_fields} getValues={this.admin_answer_user_question.bind(this)} name="User Message"></FormDialog></Grid> */}
     <Grid item xs={3}>  <FormDialog fields={this.state.admin_view_user_purchases_history_fields} getValues={this.admin_view_user_purchases_history.bind(this)} name="View User Purchase History"></FormDialog></Grid>
     <Grid item xs={3}>  <FormDialog fields={this.state.admin_view_store_purchases_history_fields} getValues={this.admin_view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog></Grid>
-    <Grid item xs={3}>  <Link href="/ShowStat" underline="hover"> {'Show Statistics'}</Link> </Grid>
+    <Grid item xs={3}>  <Link href="/ViewStat" underline="hover"> {'Show Statistics'}</Link> </Grid>
     
     
     
