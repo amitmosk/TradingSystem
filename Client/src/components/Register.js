@@ -80,13 +80,13 @@ export default class Register extends Component {
     render() {
         const {redirectTo} = this.state
             return (
-                <main class="LoginMain">
-                    <div class="LoginWindow">
+                <main className="LoginMain">
+                    <div className="LoginWindow">
                         <Link href="/"><HomeIcon></HomeIcon></Link>
                         <h3>Register</h3>
-                        <form class="LoginForm" >
+                        <form className="LoginForm" >
                             {this.state.registerError ?
-                                <div class="CenterItemContainer"><label>{this.state.registerError}</label></div> : null}
+                                <div className="CenterItemContainer"><label>{this.state.registerError}</label></div> : null}
                             <input type="email" name="email" value={this.state.email} onChange={this.handleInputChange}
                                     placeholder="Email" required/>
                             <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange}

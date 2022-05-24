@@ -91,6 +91,7 @@ export default class StoreManagmentProductsTable extends Component{
     }
     let new_list = this.state.items.filter(p=>p.id !== newRow.id)
     new_list.push(newRow) 
+    new_list.sort((a,b)=>(a.id-b.id));
     this.setState({items:new_list})
     this.setSnackbar({ children: response.message, severity: 'success' });
     return newRow;

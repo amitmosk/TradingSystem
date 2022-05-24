@@ -5,12 +5,14 @@ export class Cart  {
         
         constructor(data) {
             // private Map<Integer, Basket> baskets;                // storeID,Basket
-            this.baskets = data.baskets;
+            this.products = data.products;
+            this.price = data.price;
         }
         
         static create(baskets) {
             return new Cart({
-                baskets:baskets
+                products:baskets.products,
+                price:baskets.price
             })
     
         }

@@ -21,7 +21,9 @@ public class CartInformation {
         this.price = 0;
         this.products = new ArrayList<>();
         for (Map.Entry<StoreInformation,Basket> basket: basketHashMap.entrySet()){
-            products.addAll(basket.getKey().getInventory());
+            for(Map.Entry<Product,Integer> en : basket.getValue().getProducts_and_quantities().entrySet()){
+                this.products.add(new ProductInformation(en.getKey(),en.getValue()));
+            }
             this.price += basket.getValue().getTotal_price();
         }
     }

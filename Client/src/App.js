@@ -112,12 +112,11 @@ export default class App extends Component {
           <Route path="/StorePage" element={<StorePage store_id={1} />}></Route>
           <Route path="/AdminSendMessage" element={<AdminSendMessage />}></Route>
           <Route path="/AdminPage" element={<AdminPage />}></Route>
-          {/* <Route path="/ShoppingCart" element={<ShoppingCart />}></Route> */}
+          <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
           <Route path="/StoreManagment" element={<StoreManagment store_id=""/>}></Route>
           <Route path="/AddDiscount" element={<AddDiscount store_id=""/>}></Route>
           <Route path="/EditProfile" element={<EditProfile get_state={this.get_state.bind(this)} />}></Route>
           <Route path="/EditProfilePremium" element={<EditProfilePremium get_state={this.get_state.bind(this)} />}></Route>
-
           <Route path="/ProductPage" element={<ProductPage product_id={1} store_id={1}/>}></Route>
           {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
           <Route path="/ViewStat" element={<ViewStat />}></Route>

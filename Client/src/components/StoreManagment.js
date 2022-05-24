@@ -22,6 +22,7 @@ import { StoreApi } from '../API/StoreApi';
 import { Container, Row, Col } from 'react-grid-system';
 import FormDialogPurchase from './FormDialogPurchase';
 import { Input } from "@mui/material";
+import StoreManagmentProductsTable from './StoreManagmentProductsTable';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -293,9 +294,9 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
         const permissions = values[1];
 
-
-        alert(response.message);
+        
         const response = await this.storeApi.edit_manager_permissions(manager_email, store_id, permissions);
+        alert(response.message);
         if (!response.was_execption) {
             console.log("in edit_manager_permissions - success!\n");
             //show history
@@ -357,10 +358,14 @@ export default class StoreManagment extends Component {
             <Box sx={{ flexGrow: 1 }}>
                 <Link to="/"><HomeIcon></HomeIcon></Link>
                 <h3 align="center">Store Managment Page</h3>
-
+                <Grid>
+                    <StoreManagmentProductsTable store_id={1}></StoreManagmentProductsTable>
+                </Grid>
                 <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.add_product_fields} getValues={this.add_product.bind(this)} name="Add Product"></FormDialog></Item>                    </Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.delete_product_fields} getValues={this.delete_product.bind(this)} name="Delete Product"></FormDialog></Item></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to="/ViewStaffInformation"  underline="hover" >{'View Staff Information'}</Link>   </Item ></Grid >
+
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.delete_product_fields} getValues={this.delete_product.bind(this)} name="Delete Product"></FormDialog></Item></Grid> */}
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.purchase_policies_fields} getValues={this.store_puchase_policies.bind(this)} name="Store Purchase Policies"></FormDialog></Item></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.discount_policies_fields} getValues={this.store_discount_policy.bind(this)} name="Store Discount Policies"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_manager_fields} getValues={this.add_manager.bind(this)} name="Add Manager"></FormDialog></Item></Grid >
@@ -375,13 +380,7 @@ export default class StoreManagment extends Component {
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.close_store_temp_fields} getValues={this.close_store_temporarily.bind(this)} name="Close Store Temporarily"></FormDialog></Item ></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.open_closed_store_fields} getValues={this.open_closed_store.bind(this)} name="Open Closed Store"></FormDialog></Item ></Grid >
 
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to="/ViewStaffInformation"  underline="hover" >{'View Staff Information'}</Link>   </Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link href="/AddDiscount" underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid> */}
-
-
-
-
-
                 </Grid>
 
                 <Box sx={{ flexGrow: 3 }}>

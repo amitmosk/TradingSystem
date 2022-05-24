@@ -16,6 +16,7 @@ export class CartApi {
         return instance.get(VIEW_USER_CART)
             .then(res => {
                 let response = res.data;
+                console.log(response)
                 let cart = new Cart(response.value) ;
                 return Response.create(cart, response.was_exception, response.message);
             })
@@ -25,8 +26,8 @@ export class CartApi {
     buy_cart(payment_info, supply_info) {
         return instance.get(BUY_CART,
             {
-                params:{ payment_info: payment_info,
-                    supply_info: supply_info,}
+                params:{ paymentInfo: payment_info,
+                    supplyInfo: supply_info,}
                
             })
             .then(res => {
