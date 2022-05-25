@@ -1,4 +1,3 @@
-// import * as React from 'react';
 import React, { Component } from 'react';
 import TextField from '@mui/material/TextField';
 import HomeIcon from '@mui/icons-material/Home';
@@ -7,16 +6,9 @@ import Link from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { UserApi } from '../API/UserApi';
-import { StoreApi } from '../API/StoreApi';
-import { Alert } from '@mui/material';
-import Typography from '@material-ui/core/Typography';
-
 import FormDialog from './FormDialog';
-
-// EditProfile.defaultProps = {
-//     outlinedVar: "outlined",
-//     fields: ["Edit Name", "Edit Last Name", "Edit Password", ""],
-// };
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 
 
@@ -36,12 +28,9 @@ export default class EditProfile extends Component {
             security_question: this.props.security_question,
             improve_security_fields: ["question", "answer","password"],
             unregister_fields: ["password"],
-
-
         }
         console.log("start edit profile");
         this.userApi = new UserApi();
-        // this.handleInputChange = this.handleInputChange.bind(this);
         this.handle_name_edit = this.handle_name_edit.bind(this);
         this.handle_last_name_edit = this.handle_last_name_edit.bind(this);
         this.handle_password_edit = this.handle_password_edit.bind(this);
@@ -52,11 +41,13 @@ export default class EditProfile extends Component {
         console.log("in handle name edit\n");
         const new_name = localStorage.getItem("Edit Name");
         let response = await this.userApi.edit_name(new_name);
-        alert(response.message);
+        // alert(response.message);
         if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in edit name - success!\n");
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
         }
     }
 
@@ -210,6 +201,20 @@ export default class EditProfile extends Component {
                         </Grid>
                     </Grid>
             </Box>
+            
+            {!!this.state.snackbar && (
+                <Snackbar
+                open
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                onClose={this.handleCloseSnackbar}
+                autoHideDuration={6000}
+                >
+                <Alert
+                    {...this.state.snackbar}
+                    onClose={this.handleCloseSnackbar}
+                />
+                </Snackbar>
+            )}
         </>)
     }
 }

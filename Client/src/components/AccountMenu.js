@@ -6,13 +6,9 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Button } from '@material-ui/core';
-import App from '../App';
 import Link from '@mui/material/Button';
 
 export default function AccountMenu(logout) {
@@ -87,7 +83,7 @@ export default function AccountMenu(logout) {
                                 </Link>
         </MenuItem>
         <MenuItem>
-          <Avatar /> <Link href="/UserPurchaseHistory" underline="hover" >
+          <Avatar /> <Link href="/ViewUserPurchaseHistory" underline="hover" >
                                 {'My Purchases History'}
                                 </Link>
         </MenuItem>

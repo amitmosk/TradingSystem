@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import "./Login.css";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';
 import { ConnectApi } from '../API/ConnectApi';
-import Register from "./Register.js";
-import HomePageSearch from './HomePageSearch';
-import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
-import {withRouter} from 'react-router-dom';
 import { Navigate } from 'react-router-dom'; 
-import {User } from '../ServiceObjects/User';
-// import {User} from '../ServiceObjects/User'
-const axios = require('axios');
-const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 const WEBSOCKETURL = "ws://localhost:8080/chat";
 
 
@@ -45,7 +38,9 @@ export default class Login extends Component {
         
         ws.onopen = function(data) {ws.send("-client- want to open web socket with the server");};
         ws.onmessage = function(data) {
-            alert("new notification!");
+            // alert("new notification!");
+            this.setState({ snackbar: { children: "new notifications!", severity: "success" } });
+
             // update notifications UI with the new notification 
             console.log(data);
          }
@@ -59,9 +54,11 @@ export default class Login extends Component {
         const {email, password} = this.state;
         console.log("email is "+email+" , password is "+password+"\n");
         let response = await this.connectApi.login(email, password);
-        alert(response.message);
+        // alert(response.message);
         if (!response.was_exception)
         {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
+
             // login success
             const user = response.value;
             this.props.updateUserState(user);
@@ -72,6 +69,8 @@ export default class Login extends Component {
             return (<Navigate to="/"/>)
         }
         else{
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
+
             // failure
             console.log("in login, login failed!\n");
         }
@@ -81,8 +80,6 @@ export default class Login extends Component {
     
     render() {
         const {redirectTo} = this.state
-        // { this.state.redirect ? (<Redirect push to="/"/>) : null }
-        // if (this.state.submitted) {
         if (this.props.state != 0) {
             
             console.log("have to route to homepage whe it will be ready\n\n\n");
@@ -103,14 +100,23 @@ export default class Login extends Component {
                             
                             <div className="ConnectRegister">
                                 
-                                {/* <Link to="/register">Create new account</Link> */}
                                 <Button onClick={() => this.login()} variant="contained">Login </Button>
-                                {/* <Button onClick={() => this.logout()} variant="contained">logout </Button> */}
                                 <Link href="/Register" underline="hover" >{'New user? Create new account'}</Link>
-                                {/* <Button onClick={() => <Register/>} > registerr</Button> */}
-                                {/* <input class="action" type="submit" value="Login"/> */}
                             </div>
                         </form>
+                        {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
                     </div>
                 </main>
             );

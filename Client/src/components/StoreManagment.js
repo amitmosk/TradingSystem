@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import "./Login.css";
 import Button from '@mui/material/Button';
 // import Link from '@mui/material/Button';
 // import Link from '@mui/material/Link';
@@ -20,10 +19,8 @@ import Grid from '@mui/material/Grid';
 import FormDialog from './FormDialog';
 import { StoreApi } from '../API/StoreApi';
 import { Container, Row, Col } from 'react-grid-system';
-import FormDialogPurchase from './FormDialogPurchase';
 import { Input } from "@mui/material";
 import StoreManagmentProductsTable from './StoreManagmentProductsTable';
-import StaffInfo from './StaffInfo';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -329,10 +326,7 @@ export default class StoreManagment extends Component {
 
         }
     }
-    open_select_menu() {
-        return (<FormDialogPurchase />)
 
-    }
 
 
     async add_discount_rule(option) {
@@ -427,21 +421,6 @@ export default class StoreManagment extends Component {
             </Box>
 
 
-
-
-            // <main class="LoginMain">
-            //     <div class="LoginWindow">
-            //         <h3>Admin Page</h3>
-            //         <form class="LoginForm" >
-            //         <Button href="/Register" variant="contained">Send </Button>
-            //         <Button href="/Register" variant="contained">Send </Button>
-            //         <Button href="/Register" variant="contained">Send </Button>
-            //         <Button href="/Register" variant="contained">Send </Button>
-            //         <Button href="/Register" variant="contained">Send </Button>
-            //         <Button href="/Register" variant="contained">Send </Button>
-            //         </form>
-            //     </div>
-            // </main>
         );
 
     }

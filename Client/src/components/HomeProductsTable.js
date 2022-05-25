@@ -1,15 +1,9 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import Button from "@mui/material/Button";
 import { ProductApi } from "../API/ProductApi";
-import { Row, Col } from "react-grid-system";
-import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-// import Link from "@mui/material/Button";
 import { Link } from "react-router-dom";
-
-import { map } from "ramda";
 import { StoreApi } from "../API/StoreApi";
 import { Component } from "react";
 import IconButton from "@mui/material/IconButton";
@@ -204,6 +198,20 @@ export default class HomeProductsTable extends Component {
               />
             </Snackbar>
           )}
+          {!!this.state.snackbar && (
+          <Snackbar
+            open
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            onClose={this.handleCloseSnackbar}
+            autoHideDuration={6000}
+          >
+            <Alert
+              {...this.state.snackbar}
+              onClose={this.handleCloseSnackbar}
+            />
+          </Snackbar>
+        )}
+
         </div>
       </main>
     );

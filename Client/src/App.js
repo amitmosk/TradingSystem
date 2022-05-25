@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import './App.css';
 import { BrowserRouter, Link, Route, Router, Routes } from "react-router-dom";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from "@mui/material/Alert";
 
 import Login from './components/Login';
 import HomePageSearch from './components/HomePageSearch';
@@ -26,7 +28,7 @@ import {User} from './ServiceObjects/User';
 import ViewStat from './components/ViewStat';
 import AdminViewUserQuestions from './components/AdminViewUserQuestions';
 import ManagerViewStoreQuestions from './components/ManagerViewStoreQuestions';
-import UserPurchaseHistory from './components/UserPurchaseHistory';
+// import UserPurchaseHistory from './components/UserPurchaseHistory';
 // import UserQuestions from './components/UserQuestions';
 import UserViewQuestions from './components/UserViewQuestions';
 import ViewStaffInformation from './components/ViewStaffInformation';
@@ -46,6 +48,7 @@ export default class App extends Component {
     this.state = {
       user: User.guest(),
       messages: [],
+      snackbar: null,
       webSocketConnection: undefined
     }
     this.connectApi = new ConnectApi();
@@ -111,19 +114,33 @@ export default class App extends Component {
           <Route path="/AdminViewUserQuestions" element={<AdminViewUserQuestions />}></Route>
           <Route path="/StorePage/:id/StoreManagment/ManagerViewStoreQuestions" element={<MangerViewStoreQuestionsNevigator />}></Route>
           {/* <Route path="/StoreManagment/ManagerViewStoreQuestions/:id" element={<ManagerViewStoreQuestions />}></Route> */}
-          <Route path="/UserViewQuestions" element={<UserViewQuestions />}></Route>
+          {/* <Route path="/UserViewQuestions" element={<UserViewQuestions />}></Route> */}
           <Route path="/StorePage/:id/StoreManagment/ViewStaffInformation" element={<ViewStaffInformationNevigator />}></Route>
           <Route path="/ViewUserPurchaseHistory" element={<ViewUserPurchaseHistory />}></Route>
           
           <Route path="/StorePage/:id/StoreManagment/ViewStorePurchaseHistory" element={<ViewStorePurchaseHistoryNevigator />}></Route>
 
 
-          <Route path="/UserPurchaseHistory" element={<UserPurchaseHistory />}></Route>
+          {/* <Route path="/UserPurchaseHistory" element={<UserPurchaseHistory />}></Route> */}
           {/* <Route path="/UserQuestions" element={<?? />}></Route>
           // notificans
           <Route path="/Notifications" element={<?? />}></Route> } */}
 
         </Routes>
+        
+        {!!this.state.snackbar && (
+            <Snackbar
+              open
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+              onClose={this.handleCloseSnackbar}
+              autoHideDuration={6000}
+            >
+              <Alert
+                {...this.state.snackbar}
+                onClose={this.handleCloseSnackbar}
+              />
+            </Snackbar>
+          )}
       </BrowserRouter>
 
 

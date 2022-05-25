@@ -1,34 +1,12 @@
 import React, { Component } from 'react';
-import "./Login.css";
-import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
-import { ConnectApi } from '../API/ConnectApi';
-import Register from "./Register.js";
-import HomePageSearch from './HomePageSearch';
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
-import { withRouter } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 import { AdminApi } from '../API/AdminApi';
-import { TextField, makeStyles } from '@mui/material';
-import { experimentalStyled as styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import HomeIcon from '@mui/icons-material/Home';
 import FormDialog from './FormDialog';
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
-
-
-const axios = require('axios');
-const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
-
-
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 
 export default class AdminPage extends Component {
@@ -95,11 +73,14 @@ export default class AdminPage extends Component {
         console.log("in remove user!\n");
         const user_email = values[0];
         const response = await this.adminApi.remove_user(user_email);
-        alert(response.message);
+        // alert(response.message);
+        
         if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in remove user - success!\n");
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -109,12 +90,14 @@ export default class AdminPage extends Component {
         console.log("in close store permanently \n");
         const store_id = values[0];
         const response = await this.adminApi.close_store_permanently(store_id);
-        alert(response.message);
+        // alert(response.message);
         if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in close store permanently - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -145,71 +128,50 @@ export default class AdminPage extends Component {
         const { redirectTo } = this.state
         return (
 
-            // <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1 }}>
+        <Link href="/"><HomeIcon></HomeIcon></Link>
+        <h3 align="center">Admin Page</h3>
 
-            //     <Link href="/"><HomeIcon></HomeIcon></Link>
-            //     <h3>Admin Page</h3>
-                    
-            //     <Grid container spacing={20}>
-            //         <Grid item xs>
-            //             <FormDialog fields={this.state.close_store_fields} getValues={this.close_store_permanently.bind(this)} name="Close Store"></FormDialog>
-
-
-            //         </Grid>
-            //         <Grid item xs={3}>
-            //             <FormDialog fields={this.state.remove_user_fields} getValues={this.remove_user.bind(this)} name="Remove User"></FormDialog>
-            //         </Grid>
-            //         <Grid item xs>
-            //             <FormDialog fields={this.state.admin_answer_user_question_fields} getValues={this.admin_answer_user_question.bind(this)} name="User Message"></FormDialog>
-            //         </Grid>
-            //         <Grid item xs>
-            //             <FormDialog fields={this.state.admin_view_user_purchases_history_fields} getValues={this.admin_view_user_purchases_history.bind(this)} name="View User Purchase History"></FormDialog>
-            //         </Grid>
-            //         <Grid item xs>
-            //             <FormDialog fields={this.state.admin_view_store_purchases_history_fields} getValues={this.admin_view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog>
-            //         </Grid>
-            //         <Grid item xs>
-            //             <FormDialog fields={this.state.get_market_stats_fields} getValues={this.get_market_stats.bind(this)} name="Show Statistics"></FormDialog>
-            //         </Grid>
-            //     </Grid>
-
-            //     <Box sx={{ flexGrow: 3 }}>
-
-            //     </Box>
-            //     <h3> </h3>
-            // </Box>
-
-<Box sx={{ flexGrow: 1 }}>
-<Link href="/"><HomeIcon></HomeIcon></Link>
-<h3 align="center">Admin Page</h3>
-
-<Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
-    <Grid item xs={3}> <FormDialog fields={this.state.close_store_fields} getValues={this.close_store_permanently.bind(this)} name="Close Store"></FormDialog> </Grid>
-    <Grid item xs={3}> <FormDialog fields={this.state.remove_user_fields} getValues={this.remove_user.bind(this)} name="Remove User"></FormDialog></Grid>
-    <Grid item xs={3}>  <Link href="/AdminViewUserQuestions" underline="hover"> {'View user questions'}</Link> </Grid>
-    {/* <Grid item xs={3}>  <FormDialog fields={this.state.admin_answer_user_question_fields} getValues={this.admin_answer_user_question.bind(this)} name="User Message"></FormDialog></Grid> */}
-    <Grid item xs={3}>  <FormDialog fields={this.state.admin_view_user_purchases_history_fields} getValues={this.admin_view_user_purchases_history.bind(this)} name="View User Purchase History"></FormDialog></Grid>
-    <Grid item xs={3}>  <FormDialog fields={this.state.admin_view_store_purchases_history_fields} getValues={this.admin_view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog></Grid>
-    <Grid item xs={3}>  <Link href="/ViewStat" underline="hover"> {'Show Statistics'}</Link> </Grid>
-    
+        <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
+            <Grid item xs={3}> <FormDialog fields={this.state.close_store_fields} getValues={this.close_store_permanently.bind(this)} name="Close Store"></FormDialog> </Grid>
+            <Grid item xs={3}> <FormDialog fields={this.state.remove_user_fields} getValues={this.remove_user.bind(this)} name="Remove User"></FormDialog></Grid>
+            <Grid item xs={3}>  <Link href="/AdminViewUserQuestions" underline="hover"> {'View user questions'}</Link> </Grid>
+            {/* <Grid item xs={3}>  <FormDialog fields={this.state.admin_answer_user_question_fields} getValues={this.admin_answer_user_question.bind(this)} name="User Message"></FormDialog></Grid> */}
+            <Grid item xs={3}>  <FormDialog fields={this.state.admin_view_user_purchases_history_fields} getValues={this.admin_view_user_purchases_history.bind(this)} name="View User Purchase History"></FormDialog></Grid>
+            <Grid item xs={3}>  <FormDialog fields={this.state.admin_view_store_purchases_history_fields} getValues={this.admin_view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog></Grid>
+            <Grid item xs={3}>  <Link href="/ViewStat" underline="hover"> {'Show Statistics'}</Link> </Grid>
+            
     
     
     
     
    
-</Grid>
+            </Grid>
+            {!!this.state.snackbar && (
+                <Snackbar
+                open
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                onClose={this.handleCloseSnackbar}
+                autoHideDuration={6000}
+                >
+                <Alert
+                    {...this.state.snackbar}
+                    onClose={this.handleCloseSnackbar}
+                />
+                </Snackbar>
+            )}
 
-<Box sx={{ flexGrow: 3 }}>
+            <Box sx={{ flexGrow: 3 }}>
 
-</Box>
-<h3> </h3>
-</Box>
-
-
+            </Box>
+            <h3> </h3>
+            </Box>
 
 
-        );
 
-    }
+
+                    );
+
+                }
 
 }

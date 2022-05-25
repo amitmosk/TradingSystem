@@ -160,6 +160,7 @@ export default class ShoppingCart extends Component {
     );
     if (response.was_exception)
       this.setSnackbar({ children: response.message, severity: "error" });
+  
     else {
       this.setSnackbar({
         children: "product removed successfully",

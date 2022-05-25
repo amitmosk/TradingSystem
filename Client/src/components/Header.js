@@ -1,4 +1,3 @@
-
 const Header = ({ title }) => {
 
     return (
@@ -11,9 +10,5 @@ const Header = ({ title }) => {
 Header.defaultProps = {
     title: "Market System",
 }
-
-// Header.propTypes = {
-//     title: propTypes.string.isRequired,
-// }
 
 export default Header

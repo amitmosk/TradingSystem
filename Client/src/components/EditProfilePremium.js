@@ -1,27 +1,14 @@
 // import * as React from 'react';
 import React, { Component } from 'react';
-import TextField from '@mui/material/TextField';
 import HomeIcon from '@mui/icons-material/Home';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import { UserApi } from '../API/UserApi';
-import { StoreApi } from '../API/StoreApi';
-import { Alert, DialogTitle } from '@mui/material';
-import Typography from '@material-ui/core/Typography';
-
 import FormDialog from './FormDialog';
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
-
-
-
-const handleInputChange = event => {
-
-    const id = event.target.id;
-    const value = event.target.value;
-    localStorage.setItem(id, value);
-};
 
 export default class EditProfileEditProfilePremium extends Component {
     constructor(props) {
@@ -48,11 +35,12 @@ export default class EditProfileEditProfilePremium extends Component {
         const password = values[2];
 
         let response =  await this.userApi.improve_security(password, question, answer);
-        alert(response.message);
+        // alert(response.message);
         if (!response.was_exception) {
-            //show history
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
         }
         else {    
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
         }
 
     }
@@ -61,11 +49,13 @@ export default class EditProfileEditProfilePremium extends Component {
         const new_name = values[0];
         const answer = values[1];
         let response = await this.userApi.edit_name_premium(new_name, answer);
-        alert(response.message);
+        // alert(response.message);
         if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in edit name premium - success!\n");
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
         }
     }
 
@@ -78,11 +68,12 @@ export default class EditProfileEditProfilePremium extends Component {
         const new_name = values[0];
         const answer = values[1];
         let response = await this.userApi.edit_last_name_premium(new_name, answer);
-        alert(response.message);
+        // alert(response.message);
         if (!response.was_exception) {
-            
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
         }
         else {    
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
         }
     
     }
@@ -97,11 +88,12 @@ export default class EditProfileEditProfilePremium extends Component {
         
         if (new_password == new_password_check) {
             let response =  await this.userApi.edit_password_premium(old_password, new_password, answer);
-            alert(response.message);
+            // alert(response.message);
             if (!response.was_exception) {
-    
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             }
             else {
+                this.setState({ snackbar: { children: response.message, severity: "error" } });
     
             }
     
@@ -115,9 +107,14 @@ export default class EditProfileEditProfilePremium extends Component {
     async unregister(values){
         const password = values[0];
         let response = await this.userApi.unregister(password);
-        alert(response.message);
+        // alert(response.message);
         if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             // set as a guest & go to home page.
+        }
+        else
+        {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
         }
 
     }
@@ -161,6 +158,20 @@ export default class EditProfileEditProfilePremium extends Component {
                     name="unregister"></FormDialog></Grid> 
 
             </Box>
+            {!!this.state.snackbar && (
+                <Snackbar
+                open
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                onClose={this.handleCloseSnackbar}
+                autoHideDuration={6000}
+                >
+                <Alert
+                    {...this.state.snackbar}
+                    onClose={this.handleCloseSnackbar}
+                />
+                </Snackbar>
+            )}
+
         </>)
     }
 }

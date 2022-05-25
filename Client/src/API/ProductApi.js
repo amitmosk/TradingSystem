@@ -14,17 +14,7 @@ const instance = require('axios');
 
 
 export class ProductApi {
-    testtttt(a) {
-        return instance.get(EMPLOYEE_BASE_REST_API_URL, 
-            {
-                params:{a : a}
-            })
-            .then(res => {
-                console.log("this is the answer\n\n"+res.data.value)
-                return new Response(res.data)
-            })
-            .catch(res => console.log("fuckkkkk\n\n"));
-    }
+   
     find_product_information(product_id, store_id) {
         return instance.get(FIND_PRODUCT_INFORMATION, 
             {

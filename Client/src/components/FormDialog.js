@@ -4,19 +4,9 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 
-// export default class FormDialog extends React.Component{
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             fields:props.fields,
-
-//         };
-
-//     }
 FormDialog.defaultProps = {
   title: "Submit",
   outlinedVar: "outlined",
@@ -39,15 +29,11 @@ export default function FormDialog({ fields, getValues, name, outlinedVar, title
     console.log("in handle submit\n");
     let ans = [];
     fields.map((f) => ans.push(localStorage.getItem(f)))
-    console.log("aaaaaaaaaaaaaa\n");
     getValues(ans);
-    console.log("bbbbbbbbbbbbbbbb\n");
     setOpen(false);
 
   };
   const handleInputChange = event => {
-    // console.log('Click');
-
     const name = event.target.name
     const value = event.target.value;
     localStorage.setItem(name, value);

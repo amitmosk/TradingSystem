@@ -12,13 +12,7 @@ const instance = require('axios');
 
 export class AdminApi {
 
-    // view_user_cart() {
-    //     return instance.get(VIEW_USER_CART)
-    //         .then(res => {
-    //             return new Response(res.data);
-    //         })
-    //         .catch(res => undefined);
-    // }
+
 
     send_question_to_admin(question) {
         return instance.get(SEND_QUESTION_TO_ADMIN,

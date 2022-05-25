@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import "./Login.css";
 import Button from "@mui/material/Button";
 // import Link from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import HomeIcon from "@mui/icons-material/Home";
 import { ConnectApi } from "../API/ConnectApi";
 import Register from "./Register.js";
@@ -37,6 +38,7 @@ export default class StorePage extends Component {
       store_name:"", 
       founder_email: "",
       foundation_date:"",
+      snackbar:null,
       // inventory : "",
       // storeReview: "",
       send_question_to_store_fields: ["Enter your question"],
@@ -44,32 +46,27 @@ export default class StorePage extends Component {
     this.storeApi = new StoreApi();
     this.find_store_information(this.props.store_id);
   }
-  // setStateFunction(state, props) {
-  //   const newState = {...state, store: state.props};
-  //   return newState;
-  // }
-  
+
 
   async find_store_information(store_id)
   {
     let store_res = await this.storeApi.find_store_information(this.props.store_id);
     let store = store_res.value;
     console.log("store foundation_date = "+store.foundation_date);
-    alert(store_res.message);
+    // alert(store_res.message);
+    this.setState({ snackbar: { children: store_res.message, severity: "success" } });
     if (!store_res.was_exception)
     {
       console.log("in fnid store info success");
       this.setState({
-        // store_id: store.store_id,
-        // founder_email: store.founder_email,
+
         store_name: store.name,
         founder_email: store.founder_email,
         foundation_date:store.foundation_date,
         // inventory : store.inventory,
         // storeReview: store.storeReview
       });
-      // this.setState(setStateFunction);
-      // console.log("store name in state = "+this.state.store.name);
+
 
     }
     else
@@ -77,6 +74,16 @@ export default class StorePage extends Component {
       
 
     }
+    let products_res = await this.storeApi.get_products_by_store_id(this.state.store_id);
+    let products = products_res.value;
+    // alert(products_res.message);
+    this.setState({ snackbar: { children: products_res.message, severity: "success" } });
+
+    // products.map((p)=>)
+    this.setState({
+      products: products,
+    });
+  
     
 
   } 
@@ -84,19 +91,20 @@ export default class StorePage extends Component {
   // async componentDidMount() {
   //   let store_res = await this.storeApi.find_store_information(this.props.store_id);
   //   let store = store_res.value;
-  //   console.log("store name = "+store.name);
+  //   console.log("store foundation_date = "+store.foundation_date);
   //   alert(store_res.message);
   //   if (!store_res.was_exception)
   //   {
+  //     console.log("in fnid store info success");
   //     this.setState({
-  //       // store_id: store.store_id,
-  //       // founder_email: store.founder_email,
-  //       store: store,
-  //       // foundation_date: store.foundation_date,
-  //       // inventory: store.inventory,
-  //       // storeReview: store.storeReview,
+
+  //       store_name: store.name,
+  //       founder_email: store.founder_email,
+  //       foundation_date:store.foundation_date,
+  //       // inventory : store.inventory,
+  //       // storeReview: store.storeReview
   //     });
-  //     console.log("store name in state = "+this.state.store.name);
+
 
   //   }
   //   else
@@ -129,7 +137,9 @@ export default class StorePage extends Component {
     console.log("in rate store");
     console.log("rating is = " + rating);
     let response = await this.storeApi.rate_store(this.state.store_id, rating);
-    alert(response.message);
+    // alert(response.message);
+    this.setState({ snackbar: { children: response.message, severity: "success" } });
+
     if (!response.was_exception) {
       //get store
       //reload store
@@ -225,7 +235,21 @@ export default class StorePage extends Component {
             ></MenuListComposition>{" "}
           </Grid>
           <BasicRating to_rate="Store" rating={this.rate_store.bind(this)} />
+          {!!this.state.snackbar && (
+            <Snackbar
+              open
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+              onClose={this.handleCloseSnackbar}
+              autoHideDuration={6000}
+            >
+              <Alert
+                {...this.state.snackbar}
+                onClose={this.handleCloseSnackbar}
+              />
+            </Snackbar>
+          )}
         </div>
+        
     );
   }
 }

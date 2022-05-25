@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
-import "./Login.css";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
-import { ConnectApi } from '../API/ConnectApi';
-import Register from "./Register.js";
-import HomePageSearch from './HomePageSearch';
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
-import { withRouter } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 import { AdminApi } from '../API/AdminApi';
-import { TextField, makeStyles } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import HomeIcon from '@mui/icons-material/Home';
-import FormDialog from './FormDialog';
 import { Input } from "@mui/material";
 
 const Item = styled(Paper)(({ theme }) => ({

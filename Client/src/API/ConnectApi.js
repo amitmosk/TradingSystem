@@ -10,16 +10,6 @@ const WEBSOCKETURL = "ws://localhost:8080/chat";
 
 export class ConnectApi {
 
-    //  amit (a) {
-    //     console.log("pooo\n\n\n\n\n");
-    //     return  axioss.post(EMPLOYEE_BASE_REST_API_URL)
-    //         .then(res => {
-    //             console.log("yessss\n\n\n\n\n");
-    //             return new Response(res.data);
-    //         })
-    //         .catch(res => console.log("nooooooo\n\n\n\n\n"));
-
-    // }
     
     login(email, password) {
         return instance.get(LOGIN_PATH,

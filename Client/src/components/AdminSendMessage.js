@@ -1,45 +1,11 @@
 import React, { Component } from 'react';
-import "./Login.css";
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';
-import { ConnectApi } from '../API/ConnectApi';
-import Register from "./Register.js";
-import HomePageSearch from './HomePageSearch';
-import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
-import {withRouter} from 'react-router-dom';
 import { Navigate } from 'react-router-dom'; 
 import { AdminApi } from '../API/AdminApi';
-import { TextField,makeStyles  } from '@mui/material';
-const axios = require('axios');
-const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
-
-// const useStyles = makeStyles({
-//     input: {
-//       width: 400,
-//       height: 150,
-//       '& input + fieldset': {
-//         borderColor: 'hotpink',
-//       },
-//     },
-//   });
-  
-//   function InputBox() {
-//     const classes = useStyles();
-  
-//     return (
-//       <TextField
-//         InputProps={{
-//           className: classes.input,
-//         }}
-//         id="outlined-basic"
-//         variant="outlined"
-//         label="Default"
-//         defaultValue="Input Text"
-//       />
-//     );
-//   }
-  
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default class AdminSendMessage extends Component {
     static displayName = AdminSendMessage.name;
@@ -56,7 +22,6 @@ export default class AdminSendMessage extends Component {
 
 
     }
-    
     
     handleInputChange(event){
         const target = event.target;
@@ -100,22 +65,18 @@ export default class AdminSendMessage extends Component {
         let response = await this.adminApi.admin_answer_user_question(question);
         if (!response.was_exception)
         {
-            // return <Navigate to="/HomePageSearch"/>
-
-            //go to home page
-            //change state of App to assign user
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
         }
         else{
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
-        alert(response.message);
     }
     
    
     
     render() {
         const {redirectTo} = this.state
-        // { this.state.redirect ? (<Redirect push to="/"/>) : null }
         if (this.state.submitted) {
             console.log("have to route to homepage whe it will be ready\n\n\n");
             return <Navigate to="/HomePageSearch"/>
@@ -142,6 +103,19 @@ export default class AdminSendMessage extends Component {
                                 
                             </div>
                         </form>
+                        {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
                     </div>
                 </main>
             );

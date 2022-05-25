@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import "./Payment.css";
 import Button from '@mui/material/Button';
 import { ConnectApi } from '../API/ConnectApi';
 import Link from '@mui/material/Button';

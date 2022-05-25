@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
+import BasicRating from "./Rating";
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -84,6 +85,7 @@ export default class ViewStorePurchaseHistory extends Component {
 
         }
     }
+   
 
     async componentDidMount() {
         this.view_store_purchases_history();

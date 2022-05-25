@@ -35,10 +35,6 @@ const columns = [
     console.log("getting stores : \n\n")
     let stores = await storeApi.get_all_stores(); 
     console.log(stores)
-      // let products_list = []
-      // stores.map(st => st.inventory.map(p=>products_list.push({p.value.product_id,
-      // p.value.name,p.value.category,p.value.price,p.value,st.store_id})))
-      // console.log(products_list)
       return [];
   }
 
@@ -119,7 +115,6 @@ const columns = [
           </Grid>
           <DataGrid rows={items} columns={columns}         
                             editMode='row'
-                            //                   checkboxSelection
                             onSelectionModelChange={(newSelectionModel) => {
                             set_row_selected(newSelectionModel);}}
                             onEditRowsModelChange={(edit_row)=>{
@@ -127,9 +122,7 @@ const columns = [
                             processRowUpdate={processRowUpdate}
                             onProcessRowUpdateError={handleProcessRowUpdateError}
                             experimentalFeatures={{ newEditingApi: true }}
-                            // selectionModel={selected_row}
-                            // editRowsModel = {edited}
-                            // onEditRowsModelChange={(edit_row,details)=>edit_quantity(edit_row)}
+
         >
           </DataGrid>
           {!!snackbar && (

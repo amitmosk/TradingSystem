@@ -1,14 +1,10 @@
 import React, { Component } from "react";
-import "./HomePageSearch.css"
 import Button from '@mui/material/Button';
 import { Input } from "@mui/material";
 import { ProductApi } from "../API/ProductApi";
 import { ConnectApi } from "../API/ConnectApi";
-import train from "../API/train.ts";
-
-const axios = require('axios');
-const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/api/amit";
-const ariaLabel = { 'aria-label': 'description' };
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 
 export default class HomePageSearch extends Component {
@@ -126,6 +122,19 @@ export default class HomePageSearch extends Component {
 
 
                     </form>
+                    {!!this.state.snackbar && (
+                    <Snackbar
+                    open
+                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                    onClose={this.handleCloseSnackbar}
+                    autoHideDuration={6000}
+                    >
+                    <Alert
+                        {...this.state.snackbar}
+                        onClose={this.handleCloseSnackbar}
+                    />
+                    </Snackbar>
+  )}
                 </div>
             </main>
 

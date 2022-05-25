@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Typography from "@material-ui/core/Typography";
 import Link from "@mui/material/Button";
 import { ConnectApi } from "../API/ConnectApi";
 import { ProductApi } from "../API/ProductApi";
@@ -7,43 +6,14 @@ import { Container } from "@mui/material";
 import Box from "@mui/material/Box";
 import { AdminApi } from "../API/AdminApi";
 import { StoreApi } from "../API/StoreApi";
-import PrimarySearchAppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@mui/material/Grid";
-import HomePageSearch from "./HomePageSearch";
-import Header from "./Header";
 import FormDialog from "./FormDialog";
-import AccountMenu from "./AccountMenu";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import ShoppingCart from "./ShoppingCart";
-import { Row, Col } from "react-grid-system";
-import MenuListComposition from "./MenuListComposition";
-import NavBar from "./NavBar";
-// const Copyright = {
-//     return (
-//         <Typography variant="body2" color="textSecondary" align="center">
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://mui.com/">
-//                 Market System
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     )
-// }
-
-import HomeProducts from "./HomeProducts";
+import { Row } from "react-grid-system";
 import HomeProductsTable from "./HomeProductsTable";
-import StoreProductsTable from "./StoreProductsTable";
-import StoreManagmentProductsTable from "./StoreManagmentProductsTable";
-const style = {
-  width: "100%",
-  maxWidth: 360,
-  bgcolor: "background.paper",
-};
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -66,39 +36,47 @@ export default class HomePage extends Component {
     this.setState({
       username: this.props.user_name,
     });
-    // let response = await this.storeApi.get_all_stores();
-    // let stores = response.value;
-    // this.setState({
-    //     stores:stores,
-    // });
-    //TODO: Show Stores
   }
   async open_store(values) {
     const store_name = values[0];
     let response = await this.storeApi.open_store(store_name);
-    alert(response.message);
+    // alert(response.message);
     if (!response.was_exception) {
-    } else {
+      this.setState({ snackbar: { children: response.message, severity: "success" } });
+
+    } 
+    else {
+      this.setState({ snackbar: { children: response.message, severity: "error" } });
+
     }
   }
 
   async logout() {
     console.log("in logout home page");
     let response = await this.connectAPI.logout();
-
-    alert(response.message);
+    // alert(response.message);
     if (!response.was_exception) {
+      this.setState({ snackbar: { children: response.message, severity: "success" } });
       const user = response.value;
       this.props.updateUserState(user);
+    }
+    else
+    {
+      this.setState({ snackbar: { children: response.message, severity: "error" } });
+
     }
   }
 
   async send_question_to_admin(values) {
     const question = values[0];
     let response = await this.adminApi.send_question_to_admin(question);
-    alert(response.message);
+    // alert(response.message);
     if (!response.was_exception) {
-    } else {
+      this.setState({ snackbar: { children: response.message, severity: "success" } });
+    } 
+    else {
+      this.setState({ snackbar: { children: response.message, severity: "error" } });
+
     }
   }
   show_products(products) {
@@ -148,6 +126,19 @@ export default class HomePage extends Component {
             {"Admin Operations"}
           </Link>
         </Grid>
+        {!!this.state.snackbar && (
+    <Snackbar
+      open
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      onClose={this.handleCloseSnackbar}
+      autoHideDuration={6000}
+    >
+      <Alert
+        {...this.state.snackbar}
+        onClose={this.handleCloseSnackbar}
+      />
+    </Snackbar>
+  )}
       </>
     );
   }
