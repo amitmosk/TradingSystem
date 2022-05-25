@@ -234,19 +234,7 @@ async edit_product_name(val) {
             </Paper>
                       
                            
-                        {/* <row><MenuListComposition  item1={<FormDialog fields={this.state.add_product_review_fields} getValues={this.add_product_review.bind(this)} name="Add Review"></FormDialog>}>
-                                </MenuListComposition></row>  */}
-                               <Input name="val" placeholder={EDIT_PRODUCT + this.state.option} onChange={this.handleInputChange} required/>
                         
-                               <row>
-                        <Button onClick={() => this.edit_product(this.state.option, this.state.val)} variant="contained">Edit Product</Button>
-                        <select name="option" value={this.state.option} onChange={this.handleInputChange} required>
-                            <option value="name">name</option>
-                            <option value="price">price</option>
-                            <option value="category">category</option>
-                            <option value="keywords">keywords</option>
-                        </select></row>
-                       
 
 
                         

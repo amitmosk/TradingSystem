@@ -235,19 +235,19 @@ export default class StorePage extends Component {
             ></MenuListComposition>{" "}
           </Grid>
           <BasicRating to_rate="Store" rating={this.rate_store.bind(this)} />
-          {!!this.state.snackbar && (
-            <Snackbar
-              open
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              onClose={this.handleCloseSnackbar}
-              autoHideDuration={6000}
-            >
-              <Alert
-                {...this.state.snackbar}
-                onClose={this.handleCloseSnackbar}
-              />
-            </Snackbar>
-          )}
+              {!!this.state.snackbar && (
+                <Snackbar
+                  open
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  onClose={this.handleCloseSnackbar}
+                  autoHideDuration={6000}
+                >
+                  <Alert
+                    {...this.state.snackbar}
+                    onClose={this.handleCloseSnackbar}
+                  />
+                </Snackbar>
+              )}
         </div>
         
     );

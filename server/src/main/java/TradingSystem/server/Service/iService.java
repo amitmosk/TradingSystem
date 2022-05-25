@@ -2,8 +2,10 @@ package TradingSystem.server.Service;
 
 
 
+import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.Utils.Response;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public interface iService {
@@ -170,7 +172,7 @@ public interface iService {
     /**
      * Requirement 2.4.7
      */
-//    TradingSystem.server.Domain.Utils.Response edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions);
+    TradingSystem.server.Domain.Utils.Response edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions);
 
     /**
      * Requirement 2.4.8

@@ -6,7 +6,8 @@ import { Row, Col } from "react-grid-system";
 import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import Link from "@mui/material/Button";
+// import Link from "@mui/material/Button";
+import { Link } from "react-router-dom";
 import { map } from "ramda";
 import { StoreApi } from "../API/StoreApi";
 import { Component } from "react";
@@ -55,9 +56,34 @@ export default class StoreProductsTable extends Component {
             >
               <AddShoppingCartOutlined />
             </IconButton>
+            
           </>
         ),
       },
+      // {
+      //   field: "Go To Product",
+      //   headerName: "Go To Product",
+      //   width: 250,
+      //   // Important: passing id from customers state so I can delete or edit each user
+      //   renderCell: (id) => (
+      //     <>
+      //       {/* <IconButton
+      //         color="primary"
+      //         aria-label="go to product page"
+      //         onClick={() => this.go_to_product(id)}
+      //       >
+      //         <AddShoppingCartOutlined />
+      //       </IconButton> */}
+      //       <Link to={{pathname:`ProductPage/${1}`, state:{product_id:1, store_id:1 } }}   underline="hover" >{   <IconButton
+      //         color="primary"
+      //         aria-label="store"
+      //       >
+      //         <AddShoppingCartOutlined />
+      //       </IconButton>}</Link>
+      //     </>
+      //   ),
+      // },
+      
     ];
   }
   async componentDidMount() {
@@ -101,7 +127,18 @@ export default class StoreProductsTable extends Component {
     else
       this.setSnackbar({children: "item was added to cart",severity: "success",});
   };
-
+  go_to_product = async (id) => {
+    let selected = this.state.items.find((i) => id.id === i.id);
+    let response = await this.productApi.add_product_to_cart(
+      selected.store,//store
+      selected.id,//product
+      selected.quantity
+    );
+    if (response.was_exception)
+      this.setSnackbar({ children: response.message, severity: "error" });
+    else
+      this.setSnackbar({children: "item was added to cart",severity: "success",});
+  };
   handleCloseSnackbar = () => this.setSnackbar(null);
 
   processRowUpdate = (newRow, oldRow) => {

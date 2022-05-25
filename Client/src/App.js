@@ -26,6 +26,7 @@ import ProductPage from './components/ProductPage';
 import HomePage from './components/HomePage';
 import {User} from './ServiceObjects/User';
 import ViewStat from './components/ViewStat';
+import ProductPageNevigator from './components/ProductPageNevigator';
 import AdminViewUserQuestions from './components/AdminViewUserQuestions';
 import ManagerViewStoreQuestions from './components/ManagerViewStoreQuestions';
 // import UserPurchaseHistory from './components/UserPurchaseHistory';
@@ -108,7 +109,8 @@ export default class App extends Component {
           <Route path="/StorePage/:id/StoreManagment/AddDiscount" element={<AddDiscount store_id={1}/>}></Route>
           <Route path="/EditProfile" element={<EditProfile get_state={this.get_state.bind(this)} />}></Route>
           <Route path="/EditProfilePremium" element={<EditProfilePremium get_state={this.get_state.bind(this)} />}></Route>
-          <Route path="/ProductPage" element={<ProductPage product_id={1} store_id={1}/>}></Route>
+          <Route path="/StorePage/:store_id/ProductPage:product_id" element={<ProductPageNevigator/>}></Route>
+          <Route path="/ProductPage" element={<ProductPage/>}></Route>
           {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
           <Route path="/ViewStat" element={<ViewStat />}></Route>
           <Route path="/AdminViewUserQuestions" element={<AdminViewUserQuestions />}></Route>

@@ -4,6 +4,7 @@ import TradingSystem.server.Config.SystemStartConfig;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.Facade.MarketFacade;
+import TradingSystem.server.Domain.StoreModule.StorePermission;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -529,6 +530,13 @@ public class Service implements iService {
     @CrossOrigin
     public Response get_user_questions() {
         Response answer = marketFacade.get_user_questions();
+        return answer;
+    }
+    @RequestMapping(value = "/edit_manager_permissions")
+    @CrossOrigin
+    @Override
+    public Response edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions) {
+        Response answer = marketFacade.edit_manager_permissions(manager_email, store_id, permissions);
         return answer;
     }
 }
