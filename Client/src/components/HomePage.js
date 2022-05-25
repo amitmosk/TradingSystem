@@ -20,6 +20,7 @@ export default class HomePage extends Component {
     super(props);
     this.state = {
       username: "Guest",
+      
       stores: [],
       open_store_fields: ["Store name"],
       send_question_to_admin_fields: ["Enter your question"],
@@ -33,9 +34,9 @@ export default class HomePage extends Component {
   }
   async componentDidMount() {
     console.log("in component did mount");
-    this.setState({
-      username: this.props.user_name,
-    });
+    // this.setState({
+    //   username: this.props.user_name,
+    // });
   }
   async open_store(values) {
     const store_name = values[0];

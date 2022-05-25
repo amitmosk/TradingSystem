@@ -6,6 +6,7 @@ import { ConnectApi } from '../API/ConnectApi';
 import { Navigate } from 'react-router-dom'; 
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import "./Login.css";
 const WEBSOCKETURL = "ws://localhost:8080/chat";
 
 
