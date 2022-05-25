@@ -31,7 +31,6 @@ public class Predict implements Ipredict {
     private int year;
     private int month;
     private int day;
-    private boolean alloworDisallow;//true == to allow if in time  false ==disallow if in time
 
     public Predict(String catgorey, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day) {
         this.catgorey = catgorey;
@@ -112,13 +111,14 @@ public class Predict implements Ipredict {
         return false;
     }
 
+    //TODO improve time formats allowed
     private boolean check_valid_time() {
         LocalDateTime localDateTime = LocalDateTime.now();
         int year = localDateTime.getYear();
         int month = localDateTime.getMonthValue();
         int day = localDateTime.getDayOfMonth();
         if (time_constraint) {
-            if (alloworDisallow)
+            if (equql)
                 return year == this.year && month == this.month && this.day == day;
             else
                 return year != this.year || month != this.month || this.day != day;

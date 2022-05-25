@@ -13,8 +13,11 @@ public class DiscountPolicy {
         this.policy = new HashMap<>();
     }
 
-    public void addRule(DiscountComponent rule) {
-        policy.values().add(rule);
+    public void addRule(String name, DiscountComponent rule) throws WrongPermterException {
+        if (policy.get(name) != null)
+            policy.put(name, rule);
+        else
+            throw new WrongPermterException("there is a rule with this name allready");
     }
 
     public void removeRule(String name) {

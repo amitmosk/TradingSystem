@@ -8,8 +8,6 @@ import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 import java.util.List;
 
 public class andCompsoitePredict extends CompositePredict {
-    Ipredict left;
-    Ipredict right;
 
     public andCompsoitePredict(Ipredict left, Ipredict right) {
         super(left, right);

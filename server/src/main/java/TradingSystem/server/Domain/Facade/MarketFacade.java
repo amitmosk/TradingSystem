@@ -33,7 +33,7 @@ import java.util.Map;
 
 // TODO: when we leave the system - should call logout()
 
-public class MarketFacade implements IFacade {
+public class MarketFacade {
     private UserController user_controller;
     private StoreController store_controller;
     private int loggedUser;                  //id
@@ -42,6 +42,7 @@ public class MarketFacade implements IFacade {
     private SupplyAdapter supply_adapter;
     private ErrorLogger error_logger;
     private SystemLogger system_logger;
+    Object lock = new Object();
 
     public MarketFacade(PaymentAdapter payment_adapter, SupplyAdapter supply_adapter) {
         this.isGuest = true;
@@ -62,7 +63,7 @@ public class MarketFacade implements IFacade {
      *
      * @return a string with informative of success/failure to client
      */
-    @Override
+
     public Response<String> logout() {
         Response<String> response = null;
         try {
@@ -86,7 +87,7 @@ public class MarketFacade implements IFacade {
      * @param lastName the last name of the new user
      * @return a string with informative of success/failure to client
      */
-    @Override
+
     public Response<User> register(String Email, String pw, String name, String lastName, String birth_date) {
         Response<User> response = null;
         try {
@@ -108,7 +109,7 @@ public class MarketFacade implements IFacade {
      * @param password encrypted
      * @return a string with informative of success/failure to client
      */
-    @Override
+
     public Response<User> login(String Email, String password) {
         Response<User> response = null;
         try {
@@ -130,7 +131,7 @@ public class MarketFacade implements IFacade {
      * @param store_id represents the store id
      * @return store information or action failure reason
      */
-    @Override
+
     public Response<StoreInformation> find_store_information(int store_id) {
         Response<StoreInformation> response = null;
         try {
@@ -152,7 +153,7 @@ public class MarketFacade implements IFacade {
      * @param store_id   who has the product
      * @return product information or action failure reason
      */
-    @Override
+
     public Response<ProductInformation> find_product_information(int product_id, int store_id) {
         Response<ProductInformation> response = null;
         try {
@@ -174,7 +175,7 @@ public class MarketFacade implements IFacade {
      * @param product_name the name of the desired product
      * @return List of Products with the specific name or action failure reason
      */
-    @Override
+
     public Response<List<Product>> find_products_by_name(String product_name) {
         Response<List<Product>> response = null;
         try {
@@ -194,7 +195,7 @@ public class MarketFacade implements IFacade {
      * @param category the category of the desired product
      * @return List of Products with the specific category or action failure reason
      */
-    @Override
+
     public Response<List<Product>> find_products_by_category(String category) {
         Response<List<Product>> response = null;
         try {
@@ -214,7 +215,7 @@ public class MarketFacade implements IFacade {
      * @param key_words the keywords of the desired product
      * @return List of Products with the specific key_word or action failure reason
      */
-    @Override
+
     public Response<List<Product>> find_products_by_keywords(String key_words) {
         Response<List<Product>> response = null;
         try {
@@ -237,7 +238,7 @@ public class MarketFacade implements IFacade {
      * @param quantity  of the product
      * @return success/failure message
      */
-    @Override
+
     public Response<String> add_product_to_cart(int storeID, int productID, int quantity) {
         Response<String> response = null;
         try {
@@ -262,7 +263,7 @@ public class MarketFacade implements IFacade {
      * @param quantity  new amount
      * @return success/failure message
      */
-    @Override
+
     public Response<String> edit_product_quantity_in_cart(int storeID, int productID, int quantity) {
         Response<String> response = null;
         try {
@@ -286,7 +287,7 @@ public class MarketFacade implements IFacade {
      * @param productID we want to remove from the cart
      * @return success/failure message
      */
-    @Override
+
     public Response<String> remove_product_from_cart(int storeID, int productID) {
         Response<String> response = null;
         try {
@@ -308,7 +309,7 @@ public class MarketFacade implements IFacade {
      *
      * @return the user cart information
      */
-    @Override
+
     public Response<Map<Store, Basket>> view_user_cart() {
         Map<Store, Basket> cart = user_controller.getBaskets(loggedUser);
         Response<Map<Store, Basket>> response = new Response<>(cart, "successfully received user's cart");
@@ -325,7 +326,6 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
     //TODO: concurrent & edit
-    @Override
     public Response<UserPurchase> buy_cart(String paymentInfo, String SupplyInfo) {
         Response<UserPurchase> response = null;
         try {
@@ -355,7 +355,6 @@ public class MarketFacade implements IFacade {
      * @precondition : GUI check store name is valid
      */
     //TODO: should we return the store ? or should we do something with the store id
-    @Override
     public Response<String> open_store(String store_name) {
         Response<String> response = null;
         try {
@@ -379,7 +378,6 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
     //TODO: can edit if needed by getting user.
-    @Override
     public Response<String> add_product_review(int product_id, int store_id, String review) {
         Response<String> response = null;
         try {
@@ -404,7 +402,7 @@ public class MarketFacade implements IFacade {
      * @param rate       number in range 1-5
      * @return success/failure message
      */
-    @Override
+
     public Response<String> rate_product(int product_id, int store_id, int rate) {
         Response<String> response = null;
         try {
@@ -428,7 +426,6 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
     //TODO: should be fixed
-    @Override
     public Response<String> rate_store(int store_id, int rate) {
         Response<String> response = null;
         try {
@@ -453,7 +450,7 @@ public class MarketFacade implements IFacade {
      * @param question - member question
      * @return success/failure message
      */
-    @Override
+
     public Response<String> send_question_to_store(int store_id, String question) {
         Response<String> response = null;
         try {
@@ -475,7 +472,7 @@ public class MarketFacade implements IFacade {
      * @param question to admin
      * @return success/failure message
      */
-    @Override
+
     public Response send_question_to_admin(String question) {
         Response response = null;
         try {
@@ -494,7 +491,7 @@ public class MarketFacade implements IFacade {
      *
      * @return user purchase history or failure message
      */
-    @Override
+
     public Response<UserPurchaseHistory> view_user_purchase_history() {
         Response<UserPurchaseHistory> response = null;
         try {
@@ -514,7 +511,7 @@ public class MarketFacade implements IFacade {
      *
      * @return user email or failure message
      */
-    @Override
+
     public Response<String> get_user_email() {
         Response<String> response = null;
         try {
@@ -534,7 +531,7 @@ public class MarketFacade implements IFacade {
      *
      * @return user name or failure message
      */
-    @Override
+
     public Response<String> get_user_name() {
         Response<String> response = null;
         try {
@@ -553,7 +550,7 @@ public class MarketFacade implements IFacade {
      *
      * @return user last name or failure message
      */
-    @Override
+
     public Response<String> get_user_last_name() {
         Response<String> response = null;
         try {
@@ -577,7 +574,6 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
     //TODO: password should be sent ?
-    @Override
     public Response<String> edit_password(String old_password, String password) {
         Response<String> response = null;
         try {
@@ -598,7 +594,7 @@ public class MarketFacade implements IFacade {
      * @param new_name new first name
      * @return success/failure message
      */
-    @Override
+
     public Response<String> edit_name(String pw, String new_name) {
         Response<String> response = null;
         try {
@@ -620,7 +616,7 @@ public class MarketFacade implements IFacade {
      * @param new_last_name new last name
      * @return success/failure message
      */
-    @Override
+
     public Response<String> edit_last_name(String pw, String new_last_name) {
         Response<String> response = null;
         try {
@@ -642,7 +638,6 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
     //TODO: fix method
-    @Override
     public Response<String> unregister(String password) {
         Response<String> response = null;
         try {
@@ -670,7 +665,6 @@ public class MarketFacade implements IFacade {
      */
 
 
-    @Override
     public Response<String> edit_name_premium(String pw, String new_name, String answer) {
         Response<String> response = null;
         try {
@@ -694,7 +688,7 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
 
-    @Override
+
     public Response<String> edit_last_name_premium(String pw, String new_last_name, String answer) {
         Response<String> response = null;
         try {
@@ -717,7 +711,7 @@ public class MarketFacade implements IFacade {
      * @param answer       for the security question
      * @return success/failure message
      */
-    @Override
+
     public Response<String> edit_password_premium(String old_password, String new_password, String answer) {
         Response<String> response = null;
         try {
@@ -737,7 +731,7 @@ public class MarketFacade implements IFacade {
      *
      * @return the security question of the user or failure message
      */
-    @Override
+
     public Response<String> get_user_security_question() {
         Response<String> response = null;
         try {
@@ -760,7 +754,7 @@ public class MarketFacade implements IFacade {
      * @param answer   of the security question
      * @return success or failure message
      */
-    @Override
+
     public Response<String> improve_security(String password, String question, String answer) {
         Response<String> response = null;
         try {
@@ -788,7 +782,6 @@ public class MarketFacade implements IFacade {
      */
 
     //TODO: integration between user
-    @Override
     public Response<Map<Product, Integer>> add_product_to_store(int store_id, int quantity,
                                                                 String name, double price, String category, List<String> key_words) {
         Response<Map<Product, Integer>> response = null;
@@ -813,7 +806,6 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
     //TODO: integration
-    @Override
     public Response<Map<Product, Integer>> delete_product_from_store(int product_id, int store_id) {
         Response<Map<Product, Integer>> response = null;
         try {
@@ -836,7 +828,7 @@ public class MarketFacade implements IFacade {
     //discount policy
 
     //TODO concurrency
-    @Override
+
     public Response add_predict(int store_id, String catgorey, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name) {
         Response<Predict> response = null;
         try {
@@ -852,7 +844,7 @@ public class MarketFacade implements IFacade {
     }
 
     //TODO concurrency
-    @Override
+
     public Response send_to_user_purchase_policy(int store_id) {
         Response<List<String>> response = null;
         try {
@@ -869,7 +861,7 @@ public class MarketFacade implements IFacade {
 
 
     //TODO concurrency
-    @Override
+
     public Response send_predicts(int store_id) {
         Response<List<String>> response = null;
         try {
@@ -885,7 +877,7 @@ public class MarketFacade implements IFacade {
     }
 
     //TODO concurrency
-    @Override
+
     public Response send_to_user_discount_policy(int store_id) {
         Response<List<String>> response = null;
         try {
@@ -901,12 +893,12 @@ public class MarketFacade implements IFacade {
     }
 
     //TODO concurrency
-    @Override
-    public Response add_complex_discount_rule(int store_id, String nameOfPredict, String nameOfPolicy) {
+
+    public Response add_complex_discount_rule(int store_id, String nameOfPredict, String nameOfPolicy, String nameOfRule) {
         Response<String> response = null;
         try {
             Store store = store_controller.get_store(store_id);
-            ComplexDiscountComponent complex = store.add_complex_discount(nameOfPredict, nameOfPolicy);
+            ComplexDiscountComponent complex = store.add_complex_discount(nameOfRule, nameOfPredict, nameOfPolicy);
             response = new Response(complex, "complex discount added successfully");
             system_logger.add_log("complex discount added successfully");
 
@@ -918,12 +910,12 @@ public class MarketFacade implements IFacade {
     }
 
     //TODO concurrency
-    @Override
-    public Response add_simple_categorey_discount_rule(int store_id, String name, double precent) {
+
+    public Response add_simple_categorey_discount_rule(int store_id, String name, double precent, String nameOfRule) {
         Response<String> response = null;
         try {
             Store store = store_controller.get_store(store_id);
-            simpleDiscountComponent simple = store.add_simple_discount("p", name, precent);
+            simpleDiscountComponent simple = store.add_simple_discount(nameOfRule, "c", name, precent);
             response = new Response(simple, "simple category discount added successfully");
             system_logger.add_log("simple category discount added successfully");
 
@@ -935,12 +927,12 @@ public class MarketFacade implements IFacade {
     }
 
     //TODO concurrency
-    @Override
-    public Response add_simple_product_discount_rule(int store_id, int id, double precent) {
+
+    public Response add_simple_product_discount_rule(int store_id, int id, double precent, String nameOfrule) {
         Response<String> response = null;
         try {
             Store store = store_controller.get_store(store_id);
-            simpleDiscountComponent simple = store.add_simple_product_discount(id, precent);
+            simpleDiscountComponent simple = store.add_simple_product_discount(nameOfrule, id, precent);
             response = new Response(simple, "simple product discount added successfully");
             system_logger.add_log("simple product discount added successfully");
         } catch (MarketException e) {
@@ -951,12 +943,12 @@ public class MarketFacade implements IFacade {
     }
 
     //TODO concurrency
-    @Override
-    public Response add_simple_store_discount_rule(int store_id, String type, String name, double precent) {
+
+    public Response add_simple_store_discount_rule(int store_id, String type, String name, double precent, String nameOfRule) {
         Response<String> response = null;
         try {
             Store store = store_controller.get_store(store_id);
-            simpleDiscountComponent simple = store.add_simple_discount("store", name, precent);
+            simpleDiscountComponent simple = store.add_simple_discount(nameOfRule, "store", name, precent);
             response = new Response(simple, "store discount added successfully");
             system_logger.add_log("Store's (" + store_id + ")discount deleted successfully");
 
@@ -968,14 +960,19 @@ public class MarketFacade implements IFacade {
     }
 
 
+    public Response<String> remove_discount_rule(int store_id, String name) {
+        return new Response<String>("a", "check,");
+    }
+
+
     //TODO concurrency
-    @Override
-    public Response<SimpleporchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
+
+    public Response<SimpleporchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id, String nameOfRule) {
         Response<SimpleporchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
-                porchaseRule porchaseRule = store.addsimplePorchaseRule(PredictName, NameOfRule);
+                porchaseRule porchaseRule = store.addsimplePorchaseRule(nameOfRule, PredictName, NameOfRule);
                 response = new Response(porchaseRule, "simple purchase added successfully");
                 system_logger.add_log("Store's (" + store_id + ") simple purchase added successfully");
             }
@@ -987,13 +984,13 @@ public class MarketFacade implements IFacade {
     }
 
     //TODO concurrency
-    @Override
-    public Response<porchaseRule> add_and_purchase_rule(String left, String right, int store_id) {
+
+    public Response<porchaseRule> add_and_purchase_rule(String left, String right, int store_id, String NameOfrule) {
         Response<porchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
-                porchaseRule porchaseRule = store.add_and_purchase_rule(left, right);
+                porchaseRule porchaseRule = store.add_and_purchase_rule(NameOfrule, left, right);
                 response = new Response(porchaseRule, "Store purchase and rule added successfully");
                 system_logger.add_log("Store's (" + store_id + ") purchase and rule have been added");
             }
@@ -1005,13 +1002,13 @@ public class MarketFacade implements IFacade {
     }
 
     //TODO concurrency
-    @Override
-    public Response<porchaseRule> add_or_purchase_rule(String left, String right, int store_id) {
+
+    public Response<porchaseRule> add_or_purchase_rule(String left, String right, int store_id, String nameOfrule) {
         Response<porchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
-                porchaseRule porchaseRule = store.add_or_purchase_rule(left, right);
+                porchaseRule porchaseRule = store.add_or_purchase_rule(nameOfrule, left, right);
                 response = new Response(porchaseRule, "Store purchase rules added successfully");
                 system_logger.add_log("Store's (" + store_id + ") purchase rules have been added");
             }
@@ -1032,7 +1029,6 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
     //TODO: integration
-    @Override
     public Response<String> edit_product_name(int product_id, int store_id, String name) {
         Response<String> response = null;
         try {
@@ -1058,7 +1054,6 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
     //TODO: integration
-    @Override
     public Response<String> edit_product_price(int product_id, int store_id, double price) {
         Response<String> response = null;
         try {
@@ -1083,7 +1078,7 @@ public class MarketFacade implements IFacade {
      * @param category
      * @return success/failure message
      */
-    @Override
+
     public Response<String> edit_product_category(int product_id, int store_id, String category) {
         Response<String> response = null;
         try {
@@ -1108,7 +1103,7 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
 
-    @Override
+
     public Response<String> edit_product_key_words(int product_id, int store_id, List<String> key_words) {
         Response<String> response = null;
         try {
@@ -1141,7 +1136,7 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
 
-    @Override
+
     public Response<String> add_owner(String user_email_to_appoint, int store_id) {
         Response<String> response = null;
         try {
@@ -1167,7 +1162,7 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
 
-    @Override
+
     public Response delete_owner(String user_email_to_delete_appointment, int store_id) {
         Response response = null;
         try {
@@ -1193,7 +1188,7 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
 
-    @Override
+
     public Response add_manager(String user_email_to_appoint, int store_id) {
         Response<String> response = null;
         try {
@@ -1219,7 +1214,7 @@ public class MarketFacade implements IFacade {
      * @param permissions   list of the new permissions - just the relevant
      * @return success/failure message
      */
-    @Override
+
     public Response<String> edit_manager_permissions(String manager_email, int store_id, List<StorePermission> permissions) {
         Response<String> response = null;
         try {
@@ -1245,7 +1240,7 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
 
-    @Override
+
     public Response<String> delete_manager(String user_email_to_delete_appointment, int store_id) {
         Response<String> response = null;
         try {
@@ -1269,7 +1264,7 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      * @precondition the store is open
      */
-    @Override
+
     public Response<String> close_store_temporarily(int store_id) {
         Response<String> response = null;
         try {
@@ -1294,7 +1289,7 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      * @precondition the store is close
      */
-    @Override
+
     public Response<String> open_close_store(int store_id) {
         Response<String> response = null;
         try {
@@ -1316,7 +1311,7 @@ public class MarketFacade implements IFacade {
      * @param store_id - the store we want to get information about
      * @return store management information or failure message
      */
-    @Override
+
     public Response<String> view_store_management_information(int store_id) {
         Response<String> response = null;
         try {
@@ -1339,7 +1334,7 @@ public class MarketFacade implements IFacade {
      * @param store_id - the store we want to get information about
      * @return all the questions for a store or failure message
      */
-    @Override
+
     public Response<List<String>> manager_view_store_questions(int store_id) {
         Response<List<String>> response = null;
         try {
@@ -1364,7 +1359,7 @@ public class MarketFacade implements IFacade {
      * @param answer      - manager answer
      * @return success/failure message
      */
-    @Override
+
     public Response<String> manager_answer_question(int store_id, int question_id, String answer) {
         Response<String> response = null;
         try {
@@ -1387,7 +1382,7 @@ public class MarketFacade implements IFacade {
      * @return store purchase history or failure message
      */
 
-    @Override
+
     public Response<StorePurchaseHistory> view_store_purchases_history(int store_id) {
         Response<StorePurchaseHistory> response = null;
         try {
@@ -1413,7 +1408,6 @@ public class MarketFacade implements IFacade {
      * @preconition the store is open
      */
     // TODO: ask bar for double use in 2 controllers.
-    @Override
     public Response<String> close_store_permanently(int store_id) {
         Response<String> response = null;
         try {
@@ -1437,7 +1431,7 @@ public class MarketFacade implements IFacade {
      * @param email of the user we want to cancel his subscribe
      * @return success/failure message
      */
-    @Override
+
     public Response<String> remove_user(String email) {
         Response<String> response = null;
         try {
@@ -1460,7 +1454,7 @@ public class MarketFacade implements IFacade {
      *
      * @return all the questions for an admin or failure message
      */
-    @Override
+
     public Response<List<String>> admin_view_users_questions() {
         Response<List<String>> response = null;
         try {
@@ -1483,7 +1477,7 @@ public class MarketFacade implements IFacade {
      * @return success/failure message
      */
 
-    @Override
+
     public Response<String> admin_answer_user_question(int question_id, String answer) {
         Response<String> response = null;
         try {
@@ -1504,7 +1498,7 @@ public class MarketFacade implements IFacade {
      * @param store_id who we want to see her purchases
      * @return purchases history information or failure message
      */
-    @Override
+
     public Response<StorePurchaseHistory> admin_view_store_purchases_history(int store_id) {
         Response<StorePurchaseHistory> response = null;
         try {
@@ -1526,7 +1520,7 @@ public class MarketFacade implements IFacade {
      * @param user_email who we want to see his purchases
      * @return purchases history information or failure message
      */
-    @Override
+
     public Response<UserPurchaseHistory> admin_view_user_purchases_history(String user_email) {
         Response<UserPurchaseHistory> response = null;
         try {
@@ -1545,7 +1539,7 @@ public class MarketFacade implements IFacade {
      *
      * @return stats of the market or failure message
      */
-    @Override
+
     public Response<Statistic> get_market_stats() {
         Response<Statistic> response = null;
         try {
@@ -1560,18 +1554,18 @@ public class MarketFacade implements IFacade {
     }
 
     // TODO: testing functions
-    @Override
+
     public boolean is_logged() {
         return !isGuest;
     }
 
-    @Override
+
     public User get_user_for_tests() {
         return user_controller.get_user_for_tests(loggedUser);
     }
 
     //TODO: function that clears system for testing
-    @Override
+
     public void clear() {
         user_controller.clear();
         store_controller.clear();

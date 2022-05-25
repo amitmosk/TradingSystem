@@ -5,8 +5,6 @@ import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 
 public class OrCompositePredict extends CompositePredict  {
-    Ipredict left;
-    Ipredict right;
 
     public OrCompositePredict(Ipredict left, Ipredict right) {
         super(left, right);

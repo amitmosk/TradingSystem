@@ -2,6 +2,7 @@ package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.Utils.Exception.PurchasePolicyException;
+import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -13,8 +14,11 @@ public class PurchasePolicy {
         this.policy = new HashMap<String, porchaseRule>();
     }
 
-    public void addRule(porchaseRule rule) {
-        policy.values().add(rule);
+    public void addRule(String name, porchaseRule rule) throws WrongPermterException {
+        if (policy.get(name)!=null)
+        policy.put(name, rule);
+        else
+            throw new WrongPermterException("there is a rule with this name allready");
     }
 
     public void checkPolicy(int userAge, Basket basket) throws PurchasePolicyException {

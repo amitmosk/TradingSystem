@@ -3,6 +3,8 @@ package TradingSystem.server.Domain.Facade.UnitTest;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.OrCompositePredict;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.andCompsoitePredict;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.maxDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.plusDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByCategory;
@@ -192,11 +194,63 @@ public class policyTesting {
         assertEquals(new ComplexDiscountComponent(simpleDiscountComponent, p).CalculateDiscount(basket), amountOfDiscount);
     }
 
-    @ParameterizedTest
-    @MethodSource("Predicts")
-    void porchaseRule(porchaseRule rule, int age, Basket b, boolean res) {
-        assertEquals(rule.predictCheck(age, b), res);
+    static Stream<Arguments> PredictsOnly() throws MarketException {
 
+        Predict only_above_hunderd_shkal = new Predict("", null, true, false, 100,
+                true, false, false, false, 0, 0, 0);
+        Predict only_below_hunderd_shkal = new Predict("", null, false, false, 100,
+                true, false, false, false, 0, 0, 0);
+
+        Predict only_above_five_products = new Predict("", null, true, false, 5,
+                false, true, false, false, 0, 0, 0);
+        Predict only_below_five_products = new Predict("", null, false, false, 5,
+                false, true, false, false, 0, 0, 0);
+
+        Predict only_in_catgyorey_fruits = new Predict("fruits", null, false, true, 0,
+                false, false, false, false, 0, 0, 0);
+        Predict only_not_in_catgyorey_fruits = new Predict("fruits", null, false, false, 5,
+                false, false, false, false, 0, 0, 0);
+
+        Predict only_in_catgyorey_tech = new Predict("tech", null, false, true, 0,
+                false, false, false, false, 0, 0, 0);
+        Product apple = new Product("apple", 1, 1, 100, "fruits", new LinkedList<>());
+        simpleDiscountComponentByStore ByStore = new simpleDiscountComponentByStore(0.5);
+
+
+        Basket TestBasket = new Basket(1, "amit");
+        TestBasket.addProduct(apple, 7);
+        andCompsoitePredict above5above100 = new andCompsoitePredict(only_above_five_products, only_above_hunderd_shkal);
+        andCompsoitePredict above5infruits = new andCompsoitePredict(only_above_five_products, only_in_catgyorey_fruits);
+
+        OrCompositePredict onlyintechorabove100 = new OrCompositePredict(only_in_catgyorey_tech, only_above_hunderd_shkal);
+        andCompsoitePredict above5above100inftuits = new andCompsoitePredict(above5above100, only_in_catgyorey_fruits);
+        andCompsoitePredict above5above100infruitsorintech = new andCompsoitePredict(above5above100inftuits, only_above_hunderd_shkal);
+
+
+        ComplexDiscountComponent c1 = new ComplexDiscountComponent(ByStore, above5above100);
+        ComplexDiscountComponent c2 = new ComplexDiscountComponent(ByStore, above5infruits);
+        ComplexDiscountComponent c3 = new ComplexDiscountComponent(ByStore, onlyintechorabove100);
+        ComplexDiscountComponent c4 = new ComplexDiscountComponent(ByStore, above5above100inftuits);
+        ComplexDiscountComponent c5 = new ComplexDiscountComponent(ByStore, above5above100infruitsorintech);
+
+        return Stream.of(
+                //SimpleDiscountComponent simpleDiscountComponent, String catgorey, Product product, boolean above, boolean equql,
+                // int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, double amountOfDiscount
+
+
+                Arguments.arguments(c1, TestBasket, 350),
+                Arguments.arguments(c2, TestBasket, 350),
+                Arguments.arguments(c3, TestBasket, 350),
+                Arguments.arguments(c4, TestBasket, 350),
+                Arguments.arguments(c5, TestBasket, 350)
+        );
     }
 
+    @ParameterizedTest
+    @MethodSource("PredictsOnly")
+    void ComplexDiscount(ComplexDiscountComponent rule, Basket b, double res) {
+        double discount = rule.CalculateDiscount(b);
+        assertEquals(rule.CalculateDiscount(b), res);
+    }
+    //TODO do complex and simple porchaseRule
 }

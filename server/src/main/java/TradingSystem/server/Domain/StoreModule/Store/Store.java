@@ -88,19 +88,19 @@ public class Store {
         p.add_review(user_email, review);
     }
 
-    public AndporchaseRule add_and_purchase_rule(String left, String right) {
+    public AndporchaseRule add_and_purchase_rule(String nameOfRule,String left, String right) throws WrongPermterException {
         porchaseRule purchaseright = purchasePolicy.getPolicy(left);
         porchaseRule purchaseleft = purchasePolicy.getPolicy(right);
         AndporchaseRule and = new AndporchaseRule(purchaseleft, purchaseright);
-        purchasePolicy.addRule(and);
+        purchasePolicy.addRule(nameOfRule,and);
         return and;
     }
 
-    public OrporchaseRule add_or_purchase_rule(String left, String right) {
+    public OrporchaseRule add_or_purchase_rule(String name, String left, String right) throws WrongPermterException {
         porchaseRule purchaseright = purchasePolicy.getPolicy(left);
         porchaseRule purchaseleft = purchasePolicy.getPolicy(right);
         OrporchaseRule or = new OrporchaseRule(purchaseleft, purchaseright);
-        purchasePolicy.addRule(or);
+        purchasePolicy.addRule(name, or);
         return or;
     }
 
@@ -162,7 +162,7 @@ public class Store {
     }
 
 
-    public andCompsoitePredict CreateAndDisocuntCompnent(String left, String right, String name) throws WrongPermterException {
+    public andCompsoitePredict CreateAndDisocuntCompnent(String name, String left, String right) throws WrongPermterException {
         Ipredict leftPredict = predictList.get(left);
         Ipredict rightPredict = predictList.get(right);
         andCompsoitePredict toreturn = new andCompsoitePredict(leftPredict, rightPredict);
@@ -171,7 +171,7 @@ public class Store {
         return toreturn;
     }
 
-    public OrCompositePredict CreateOrDisocuntCompnent(String left, String right, String complex) throws WrongPermterException {
+    public OrCompositePredict CreateOrDisocuntCompnent(String name, String left, String right, String complex) throws WrongPermterException {
         Ipredict leftPredict = predictList.get(left);
         Ipredict rightPredict = predictList.get(right);
         OrCompositePredict toreturn = new OrCompositePredict(leftPredict, rightPredict);
@@ -180,57 +180,57 @@ public class Store {
         return toreturn;
     }
 
-    public xorDiscountComponent CreateXorDisocuntCompnent(String left, String right) throws WrongPermterException {
+    public xorDiscountComponent CreateXorDisocuntCompnent(String name, String left, String right) throws WrongPermterException {
         DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
         DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
         xorDiscountComponent toreturn = new xorDiscountComponent(leftdiscount, rifhtdiscount);
-        this.discountPolicy.addRule(toreturn);
+        this.discountPolicy.addRule(name, toreturn);
         return toreturn;
     }
 
-    public maxDiscountComponent CreateMaxDisocuntCompnent(String left, String right) throws WrongPermterException {
+    public maxDiscountComponent CreateMaxDisocuntCompnent(String name, String left, String right) throws WrongPermterException {
         DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
         DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
         maxDiscountComponent toreturn = new maxDiscountComponent(leftdiscount, rifhtdiscount);
-        this.discountPolicy.addRule(toreturn);
+        this.discountPolicy.addRule(name, toreturn);
         return toreturn;
     }
 
-    public plusDiscountComponent CreateplusDisocuntCompnent(String left, String right) throws WrongPermterException {
+    public plusDiscountComponent CreateplusDisocuntCompnent(String name, String left, String right) throws WrongPermterException {
         DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
         DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
         plusDiscountComponent toreturn = new plusDiscountComponent(leftdiscount, rifhtdiscount);
-        this.discountPolicy.addRule(toreturn);
+        this.discountPolicy.addRule(name, toreturn);
         return toreturn;
     }
 
 
-    public simpleDiscountComponent add_simple_product_discount(int id, double precent) throws WrongPermterException, ObjectDoesntExsitException {
+    public simpleDiscountComponent add_simple_product_discount(String name, int id, double precent) throws WrongPermterException, ObjectDoesntExsitException {
         simpleDiscountComponent simpleDiscountComponent;
         Product p = getProduct_by_product_id(id);
         simpleDiscountComponent = new simpleDiscountComponentByProduct(p, precent);
-        this.discountPolicy.addRule(simpleDiscountComponent);
+        this.discountPolicy.addRule(name, simpleDiscountComponent);
         return simpleDiscountComponent;
     }
 
 
-    public simpleDiscountComponent add_simple_discount(String type, String name, double precent) throws WrongPermterException {
+    public simpleDiscountComponent add_simple_discount(String name, String type, String nameOfCategorey, double precent) throws WrongPermterException {
         simpleDiscountComponent simpleDiscountComponent;
         if (type == "c")
-            simpleDiscountComponent = new simpleDiscountComponentByCategory(name, precent);
+            simpleDiscountComponent = new simpleDiscountComponentByCategory(nameOfCategorey, precent);
         else
             simpleDiscountComponent = new simpleDiscountComponentByStore(precent);
-        this.discountPolicy.addRule(simpleDiscountComponent);
+        this.discountPolicy.addRule(name, simpleDiscountComponent);
         return simpleDiscountComponent;
     }
 
-    public ComplexDiscountComponent add_complex_discount(String nameOFPredict, String nameOfPolicy) throws WrongPermterException {
+    public ComplexDiscountComponent add_complex_discount(String name, String nameOFPredict, String nameOfPolicy) throws WrongPermterException {
         Ipredict predict = predictList.get(nameOFPredict);
         DiscountComponent simpleDiscountComponent = discountPolicy.getDiscountCompnentByName(nameOfPolicy);
         if (!(simpleDiscountComponent instanceof simpleDiscountComponent))
             throw new WrongPermterException("this polciy is not of type simple");
         ComplexDiscountComponent toreturn = new ComplexDiscountComponent(simpleDiscountComponent, predict);
-        this.discountPolicy.addRule(toreturn);
+        this.discountPolicy.addRule(name, toreturn);
         return toreturn;
 
     }
@@ -247,17 +247,13 @@ public class Store {
         return (Predict) p;
     }
 
-    public SimpleporchaseRule addsimplePorchaseRule(String Predict, String name) throws WrongPermterException {
+    public SimpleporchaseRule addsimplePorchaseRule(String nameOfRule, String nameForule, String name) throws WrongPermterException {
         Predict p = getSimplePredictsByName(name);
         SimpleporchaseRule Toreturn = new SimpleporchaseRule(p);
-        this.purchasePolicy.addRule(Toreturn);
+        this.purchasePolicy.addRule(nameForule, Toreturn);
         return Toreturn;
     }
 
-
-    public void remove_purchase_rule(porchaseRule component) {
-        this.purchasePolicy.removeRule(component);
-    }
 
     //TODO add purchase or and
     //end of purchase policy
