@@ -24,6 +24,7 @@ export class CartApi {
     }
 
     buy_cart(payment_info, supply_info) {
+        console.log("in buy cart - cart api");
         return instance.get(BUY_CART,
             {
                 params:{ paymentInfo: payment_info,

@@ -72,6 +72,7 @@ export default class StoreManagment extends Component {
             option: "Simple",
 
         };
+      
         this.adminApi = new AdminApi();
         this.storeApi = new StoreApi();
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -92,16 +93,6 @@ export default class StoreManagment extends Component {
 
 
     async add_product(values) {
-
-        // console.log("in add product");
-        // console.log(values[0]);
-        // console.log(values[1]);
-        // console.log(values[2]);
-        // console.log(values[3]);
-        // console.log(values[4]);
-        // console.log(values[5]);
-        // let response = await this.storeApi.add_product_to_store(values[0],values[1],values[2],values[3],values[4],values[5])
-        /* add_product_fields: ["store_id", "quantity", "name", "price", "category", "key_words"] */
         console.log("in add product!\n");
         const store_id = this.state.store_id;
         const quantity = values[0];
@@ -397,7 +388,7 @@ export default class StoreManagment extends Component {
                 <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.add_product_fields} getValues={this.add_product.bind(this)} name="Add Product"></FormDialog></Item>                    </Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.delete_product_fields} getValues={this.delete_product.bind(this)} name="Delete Product"></FormDialog></Item></Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.puchase_policies_fields} getValues={this.store_puchase_policies.bind(this)} name="Store Purchase Policies"></FormDialog></Item></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.purchase_policies_fields} getValues={this.store_puchase_policies.bind(this)} name="Store Purchase Policies"></FormDialog></Item></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.discount_policies_fields} getValues={this.store_discount_policy.bind(this)} name="Store Discount Policies"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_manager_fields} getValues={this.add_manager.bind(this)} name="Add Manager"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_owner_fields} getValues={this.add_owner.bind(this)} name="Add Owner"></FormDialog></Item></Grid >
@@ -405,21 +396,23 @@ export default class StoreManagment extends Component {
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.remove_manager_appointment_fields} getValues={this.delete_manager.bind(this)} name="Remove Manager"></FormDialog></Item ></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions"></FormDialog></Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link to = {`ManagerViewStoreQuestions/${id}`} query={{store:1}}>Bid Item</Link></Item ></Grid >         */}
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ManagerViewStoreQuestions/${id}`, state:{store_id:1} }}   underline="hover" >{'View User Questions'}</Link>   </Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ManagerViewStoreQuestions` }}   underline="hover" >{'View User Questions'}</Link>   </Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link href="/ViewStorePurchaseHistory"  underline="hover" >{'View Store Purchase History'}</Link>   </Item ></Grid > */}
 
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.close_store_temp_fields} getValues={this.close_store_temporarily.bind(this)} name="Close Store Temporarily"></FormDialog></Item ></Grid >
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.open_closed_store_fields} getValues={this.open_closed_store.bind(this)} name="Open Closed Store"></FormDialog></Item ></Grid >
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.user_massages_fields} getValues={this.manager_view_store_questions.bind(this)} name="View User Questions"></FormDialog></Item ></Grid >
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.close_store_temp_fields} getValues={this.close_store_temporarily.bind(this)} name="Close Store Temporarily"></FormDialog></Item ></Grid > */}
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.open_closed_store_fields} getValues={this.open_closed_store.bind(this)} name="Open Closed Store"></FormDialog></Item ></Grid > */}
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.user_massages_fields} getValues={this.manager_view_store_questions.bind(this)} name="View User Questions"></FormDialog></Item ></Grid > */}
 
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.store_purchase_history_fields} getValues={this.view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog></Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ViewStorePurchaseHistory` }} underline="hover" >{'View Store Purchase History'}</Link></Item ></Grid>
+
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.store_purchase_history_fields} getValues={this.view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog></Item ></Grid > */}
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.close_store_temp_fields} getValues={this.close_store_temporarily.bind(this)} name="Close Store Temporarily" title="Confirm to Close Store Temporarily" submit_button="Confirm"></FormDialog></Item ></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.open_closed_store_fields} getValues={this.open_closed_store.bind(this)} name="Open Closed Store" title="Confirm to Open Closed Store" submit_button="Confirm"></FormDialog></Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.staff_information_fields} getValues={this.view_store_management_information.bind(this)} name="View Staff Information"></FormDialog></Item ></Grid > */}
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link outlinedVar="text" href="/StaffInfo">{'View Staff Information'}</Link></Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link outlinedVar="text" to={{pathname:`ViewStaffInformation` }} >{'View Staff Information'}</Link></Item ></Grid >
 
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link href="/AddDiscount" underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid>
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid> */}
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddDiscount` }} underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid>
 
 
 

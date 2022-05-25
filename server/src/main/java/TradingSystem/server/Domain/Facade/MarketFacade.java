@@ -1425,4 +1425,19 @@ public class MarketFacade{
         }
         return response;
     }
+
+    public Response edit_product_quantity(int product_id, int store_id, int quantity) {
+        Response<String> response = null;
+        try {
+            User user = user_controller.get_user(loggedUser);
+            this.store_controller.edit_product_quantity(user, product_id, store_id, quantity);
+            response = new Response<>(null, "Product quantity edit successfully");
+            system_logger.add_log("Product (" + product_id + ") quantity has been changed to " + quantity + " in store (" + store_id + ")");
+
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
 }

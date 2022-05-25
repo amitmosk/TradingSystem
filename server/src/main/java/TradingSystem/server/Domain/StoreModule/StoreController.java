@@ -459,5 +459,11 @@ public class StoreController {
         }
         return to_return;
     }
+
+    public void edit_product_quantity(User user, int product_id, int store_id, int quantity) throws MarketException {
+        AssignUser assignUser = user.state_if_assigned();
+        Store store = get_store_by_store_id(store_id); //trows exceptions
+        store.edit_product_quantity(assignUser, product_id, quantity);
+    }
 }
 

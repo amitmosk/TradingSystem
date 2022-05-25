@@ -12,18 +12,21 @@ import { Product } from "../ServiceObjects/Product";
 //     {withCredentials : true}
 // );
 const instance = require('axios');
-const response_obj = new Response("","");
 
 export class StoreApi {
     find_store_information(store_id) {
+        console.log("in find store information -> dtore id = "+store_id);
         return instance.get(FIND_STORE_INFORMATION,
             {
                 params:{ store_id : store_id,}
             })
             .then(res => {
                 let response = res.data;
+                console.log("111\n");
                 let store_info = new Store(response.value);
-                return response_obj.create(store_info, response.message);
+                console.log("222\n");
+                console.log("store info = "+store_info.store_id);
+                return Response.create(store_info, false, response.message);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }

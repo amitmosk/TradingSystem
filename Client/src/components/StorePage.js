@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./Login.css";
 import Button from "@mui/material/Button";
-import Link from "@mui/material/Button";
+// import Link from "@mui/material/Button";
+import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import { ConnectApi } from "../API/ConnectApi";
 import Register from "./Register.js";
@@ -21,63 +22,10 @@ import { Typography } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import BasicRating from "./Rating";
 import ShoppingCart from "./ShoppingCart";
-import { ThirtyFpsRounded } from "@mui/icons-material";
+import { Store, ThirtyFpsRounded } from "@mui/icons-material";
 import Grid from "@mui/material/Grid";
 import FormDialog from "./FormDialog";
 import StoreProductsTable from "./StoreProductsTable";
-
-const axios = require("axios");
-const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    title: "Sea star",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "Bike",
-  },
-];
 
 export default class StorePage extends Component {
   static displayName = StorePage.name;
@@ -86,38 +34,86 @@ export default class StorePage extends Component {
     this.state = {
       store_id: this.props.store_id,
       products: [],
-      founder_email: undefined,
-      store_name: undefined,
-      foundation_date: undefined,
-      storeReviewInformation: undefined,
+      store_name:"", 
+      founder_email: "",
+      foundation_date:"",
+      // inventory : "",
+      // storeReview: "",
       send_question_to_store_fields: ["Enter your question"],
     };
     this.storeApi = new StoreApi();
+    this.find_store_information(this.props.store_id);
   }
+  // setStateFunction(state, props) {
+  //   const newState = {...state, store: state.props};
+  //   return newState;
+  // }
+  
 
-  async componentDidMount() {
-    let store_res = await this.storeApi.find_store_information(
-      this.state.store_id
-    );
+  async find_store_information(store_id)
+  {
+    let store_res = await this.storeApi.find_store_information(this.props.store_id);
     let store = store_res.value;
-    this.setState({
-      store_id: store.store_id,
-      founder_email: store.founder_email,
-      name: store.name,
-      foundation_date: store.foundation_date,
-      inventory: store.inventory,
-      storeReview: store.storeReview,
-    });
+    console.log("store foundation_date = "+store.foundation_date);
+    alert(store_res.message);
+    if (!store_res.was_exception)
+    {
+      console.log("in fnid store info success");
+      this.setState({
+        // store_id: store.store_id,
+        // founder_email: store.founder_email,
+        store_name: store.name,
+        founder_email: store.founder_email,
+        foundation_date:store.foundation_date,
+        // inventory : store.inventory,
+        // storeReview: store.storeReview
+      });
+      // this.setState(setStateFunction);
+      // console.log("store name in state = "+this.state.store.name);
 
-    let products_res = await this.storeApi.get_products_by_store_id(
-      this.state.store_id
-    );
-    let products = products_res.value;
-    // products.map((p)=>)
-    this.setState({
-      products: products,
-    });
-  }
+    }
+    else
+    {
+      
+
+    }
+    
+
+  } 
+
+  // async componentDidMount() {
+  //   let store_res = await this.storeApi.find_store_information(this.props.store_id);
+  //   let store = store_res.value;
+  //   console.log("store name = "+store.name);
+  //   alert(store_res.message);
+  //   if (!store_res.was_exception)
+  //   {
+  //     this.setState({
+  //       // store_id: store.store_id,
+  //       // founder_email: store.founder_email,
+  //       store: store,
+  //       // foundation_date: store.foundation_date,
+  //       // inventory: store.inventory,
+  //       // storeReview: store.storeReview,
+  //     });
+  //     console.log("store name in state = "+this.state.store.name);
+
+  //   }
+  //   else
+  //   {
+      
+
+  //   }
+    
+    
+
+  //   // let products_res = await this.storeApi.get_products_by_store_id(this.state.store_id);
+  //   // let products = products_res.value;
+  //   // // products.map((p)=>)
+  //   // this.setState({
+  //   //   products: products,
+  //   // });
+  // }
   async send_question_to_store(values) {
     const store_id = this.props.store_id;
     const question = values[0];
@@ -163,10 +159,10 @@ export default class StorePage extends Component {
             justifyContent="center"
             alignItems="center"
           >
-            <Link href="/">
+            <Link to="/">
               <HomeIcon></HomeIcon>
             </Link>
-            <h3>Store Name goes here</h3>
+            {/* <h3>Store Name goes here</h3> */}
             <h3>{this.state.store_name}</h3>
             {/* <FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog> */}
             {/* <FormDialog fields={this.state.send_question_to_store_fields} getValues={this.send_question_to_store.bind(this)} name="Send question to store"></FormDialog> */}
@@ -178,16 +174,16 @@ export default class StorePage extends Component {
                 // style={{ width: "70%", margin: "auto" }} I think you should avoid break tags instead do something with the width
               >
                 <div>
-                  <h8>Founder Email: {this.state.founder_email}</h8>
+                  <h5>Founder Email: {this.state.founder_email}</h5>
                 </div>
                 <div>
-                  <h8>Foundation Date: {this.state.foundation_date}</h8>
+                  <h5>Foundation Date: {this.state.foundation_date}</h5>
                 </div>
-                {this.state.storeReview ? (
+                {/* {this.state.storeReview !="" ? (
                   <div>
                     <label>{this.state.storeReview}</label>
                   </div>
-                ) : null}
+                ) : null} */}
               </Typography>
             </Paper>
             <h5>Products</h5>
@@ -224,9 +220,7 @@ export default class StorePage extends Component {
                 ></FormDialog>
               }
               item3={
-                <Link href="/StoreManagment" underline="hover">
-                  {"Manage Store"}
-                </Link>
+                <Link to={{pathname:`StoreManagment`}}   underline="hover" >{'Manage Store'}</Link> 
               }
             ></MenuListComposition>{" "}
           </Grid>

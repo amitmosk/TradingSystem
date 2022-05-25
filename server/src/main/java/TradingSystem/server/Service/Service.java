@@ -150,12 +150,12 @@ public class Service implements iService {
     @RequestMapping(value = "/edit_product_quantity_in_cart")
     @CrossOrigin
     @Override
-    public Response edit_product_quantity_in_cart(int storeID, int productID, int quantity) {
-        Response answer = marketFacade.edit_product_quantity_in_cart(storeID, productID, quantity);
+    public Response edit_product_quantity_in_cart(int store_id, int product_id, int quantity) {
+        Response answer = marketFacade.edit_product_quantity_in_cart(store_id, product_id, quantity);
         return answer;
     }
 
-    @RequestMapping(value = "/buy_cart(")
+    @RequestMapping(value = "/buy_cart")
     @CrossOrigin
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo) {
@@ -364,6 +364,13 @@ public class Service implements iService {
         List<String> key_words_list = new LinkedList<>();
         key_words_list.add(key_words);
         Response answer = marketFacade.edit_product_key_words(product_id, store_id, key_words_list);
+        return answer;
+    }
+    @RequestMapping(value = "/edit_product_quantity")
+    @CrossOrigin
+    @Override
+    public Response edit_product_quantity(int product_id, int store_id, int quantity) {
+        Response answer = marketFacade.edit_product_quantity(product_id, store_id, quantity);
         return answer;
     }
 

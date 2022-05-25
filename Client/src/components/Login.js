@@ -83,7 +83,7 @@ export default class Login extends Component {
         const {redirectTo} = this.state
         // { this.state.redirect ? (<Redirect push to="/"/>) : null }
         // if (this.state.submitted) {
-        if (false) {
+        if (this.props.state != 0) {
             
             console.log("have to route to homepage whe it will be ready\n\n\n");
             return (<Navigate to="/"/>);

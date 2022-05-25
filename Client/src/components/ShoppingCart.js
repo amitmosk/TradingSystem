@@ -122,12 +122,22 @@ export default class ShoppingCart extends Component {
   buy_cart = async () => {
     let response = await this.cartApi.buy_cart("", "");
     if (response.was_exception)
+    {
       this.setSnackbar({ children: response.message, severity: "error" });
+    }
+
+      
     else
+    {
       this.setSnackbar({
         children: "buy cart worked succesfully",
         severity: "success",
       });
+      this.setItems([]);
+      this.setState({ price: 0 });
+
+    }
+      
   };
 
   handleCloseSnackbar = () => this.setSnackbar(null);
@@ -139,24 +149,7 @@ export default class ShoppingCart extends Component {
         newRow.id,
         newRow.quantity
       );
-    else if (oldRow.price !== newRow.price)
-      return await this.productApi.edit_product_price(
-        newRow.store,
-        newRow.id,
-        newRow.price
-      );
-    else if (oldRow.name !== newRow.name)
-      return await this.productApi.edit_product_name(
-        newRow.store,
-        newRow.id,
-        newRow.name
-      );
-    else if (oldRow.category !== newRow.category)
-      return await this.productApi.edit_product_category(
-        newRow.store,
-        newRow.id,
-        newRow.category
-      );
+    
   };
 
   remove_products = async (id) => {

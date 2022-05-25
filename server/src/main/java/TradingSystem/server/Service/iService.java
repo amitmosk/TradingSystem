@@ -138,6 +138,7 @@ public interface iService {
     TradingSystem.server.Domain.Utils.Response edit_product_category(int product_id, int store_id, String category);
 
     TradingSystem.server.Domain.Utils.Response edit_product_key_words(int product_id, int store_id, String key_words);
+    TradingSystem.server.Domain.Utils.Response edit_product_quantity(int product_id, int store_id, int quantity);
 
     /**
      * Requirement 2.4.2

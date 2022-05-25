@@ -1,6 +1,8 @@
 // import axios from "axios";
 import {CONNECTION_ERROR, CATCH, EMPLOYEE_BASE_REST_API_URL,  FIND_PRODUCT_INFORMATION, FIND_PRODUCTS_BY_NAME, FIND_PRODUCTS_BY_CATEGORY,FIND_PRODUCTS_BY_KEYWORDS 
-    ,ADD_PRODUCT_TO_CART, EDIT_PRODUCT_QUANTITY_IN_CART,REMOVE_PRODUCT_FROM_CART, ADD_PRODUCT_REVIEW, RATE_PRODUCT, EDIT_PRODUCT_NAME, EDIT_PRODUCT_PRICE, EDIT_PRODUCT_CATEGORY, EDIT_PRODUCT_KEY_WORDS, LOGIN_PATH} from "./ApiPaths";
+    ,ADD_PRODUCT_TO_CART, EDIT_PRODUCT_QUANTITY_IN_CART,REMOVE_PRODUCT_FROM_CART, 
+    ADD_PRODUCT_REVIEW, RATE_PRODUCT, EDIT_PRODUCT_NAME, EDIT_PRODUCT_PRICE, 
+    EDIT_PRODUCT_CATEGORY, EDIT_PRODUCT_KEY_WORDS, LOGIN_PATH, EDIT_PRODUCT_QUANTITY} from "./ApiPaths";
 import { Response } from "./Response";
 import { Product } from "../ServiceObjects/Product";
 // const instance = axios.create(
@@ -203,6 +205,19 @@ export class ProductApi {
                 params:{ product_id: product_id,
                     store_id: store_id,
                     key_words : key_words,}
+               
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    }
+    edit_product_quantity(product_id, store_id, quantity) {
+        return instance.get(EDIT_PRODUCT_QUANTITY,
+            {
+                params:{ product_id: product_id,
+                    store_id: store_id,
+                    quantity : quantity,}
                
             })
             .then(res => {

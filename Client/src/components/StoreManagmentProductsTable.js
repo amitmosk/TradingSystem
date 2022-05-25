@@ -65,8 +65,8 @@ export default class StoreManagmentProductsTable extends Component{
   set_edited = (val) => {this.setState({edited:val})}
   
   edit_function = async (oldRow, newRow) =>{
-    // if(oldRow.quantity !== newRow.quantity)
-    //   return await this.storeApi.(newRow.id,newRow.store,newRow.quantity);
+    if(oldRow.quantity !== newRow.quantity)
+      return await this.productApi.edit_product_quantity(newRow.id,newRow.store,newRow.quantity);
     if(oldRow.price !== newRow.price)
       return await this.productApi.edit_product_price(newRow.id,newRow.store,newRow.price);
     else if(oldRow.name !== newRow.name)

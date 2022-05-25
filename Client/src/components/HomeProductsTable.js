@@ -6,13 +6,16 @@ import { Row, Col } from "react-grid-system";
 import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import Link from "@mui/material/Button";
+// import Link from "@mui/material/Button";
+import { Link } from "react-router-dom";
+
 import { map } from "ramda";
 import { StoreApi } from "../API/StoreApi";
 import { Component } from "react";
 import IconButton from "@mui/material/IconButton";
 import AddShoppingCartOutlined from "@mui/icons-material/AddShoppingCartOutlined";
 import Store from "@mui/icons-material/Store";
+import StorePage from "./StorePage";
 export default class HomeProductsTable extends Component {
   constructor(props) {
     super(props);
@@ -65,13 +68,21 @@ export default class HomeProductsTable extends Component {
         // Important: passing id from customers state so I can delete or edit each user
         renderCell: (id) => (
           <>
-            <IconButton
+            {/* <IconButton
               color="primary"
               aria-label="store"
+              // onClick={() => this.go_to_store_page(id)}
               onClick={() => this.go_to_store_page(id)}
             >
               <Store />
-            </IconButton>
+            </IconButton> */}
+         
+             <Link to={{pathname:`StorePage/${1}`, state:{store_id:1} }}   underline="hover" >{   <IconButton
+              color="primary"
+              aria-label="store"
+            >
+              <Store />
+            </IconButton>}</Link> 
           </>
         ),
       },
@@ -118,8 +129,10 @@ export default class HomeProductsTable extends Component {
   };
 
   go_to_store_page = async (id) => {
+    console.log("in go to store id")
     let selected = this.state.items.find((i) => id.id === i.id); // represents selected row
     let selected_store_id = selected.store; // required store_id
+    return (<StorePage store_id={selected_store_id}></StorePage>);
   };
 
   add_to_cart = async (id) => {

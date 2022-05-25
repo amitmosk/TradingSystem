@@ -42,6 +42,7 @@ export default class ViewStorePurchaseHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            store_id : this.props.store_id,
             history: [],
             open: false,
         };
@@ -57,7 +58,7 @@ export default class ViewStorePurchaseHistory extends Component {
     async view_store_purchases_history(values) {
         console.log("in view_store_purchases_history!\n");
         // const store_id = this.state.store_id;
-        const response = await this.storeApi.view_store_purchases_history(5);
+        const response = await this.storeApi.view_store_purchases_history(this.state.store_id);
         alert(response.message);
         if (!response.was_execption) {
             // console.log("in view_store_purchases_history - success!\n");

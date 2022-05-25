@@ -595,4 +595,13 @@ public class Store {
         return stuffs_and_appointments.containsKey(founder);
     }
 
+    public void edit_product_quantity(AssignUser assignUser, int product_id, int quantity) throws MarketException {
+        Product to_edit = this.getProduct_by_product_id(product_id);
+        this.check_permission(assignUser, StorePermission.edit_item_quantity);
+        if (quantity < 1)
+        {
+            throw new WrongPermterException("quantity must be positive number");
+        }
+        this.inventory.put(to_edit, quantity);
+    }
 }

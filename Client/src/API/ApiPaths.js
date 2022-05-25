@@ -70,7 +70,7 @@ export const FIND_PRODUCTS_BY_KEYWORDS = API_PATH + '/find_products_by_keywords'
 
 
 export const ADD_PRODUCT_TO_CART = API_PATH + '/add_product_to_cart';
-export const EDIT_PRODUCT_QUANTITY_IN_CART = API_PATH + '/add_product_to_cart';
+export const EDIT_PRODUCT_QUANTITY_IN_CART = API_PATH + '/edit_product_quantity_in_cart';
 export const REMOVE_PRODUCT_FROM_CART = API_PATH + '/remove_product_from_cart';
 
 export const ADD_PRODUCT_REVIEW = API_PATH + '/add_product_review';
@@ -80,6 +80,7 @@ export const RATE_PRODUCT = API_PATH + '/rate_product';
 export const EDIT_PRODUCT_NAME = API_PATH + '/edit_product_name';
 export const EDIT_PRODUCT_PRICE = API_PATH + '/edit_product_price';
 export const EDIT_PRODUCT_CATEGORY = API_PATH + '/edit_product_category';
+export const EDIT_PRODUCT_QUANTITY = API_PATH + '/edit_product_quantity';
 
 export const EDIT_PRODUCT_KEY_WORDS = API_PATH + '/edit_product_key_words';
 

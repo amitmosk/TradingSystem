@@ -36,6 +36,7 @@ export default class ViewStaffInformation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            store_id:this.props.store_id,
             staff: [],
         };
         this.storeApi = new StoreApi();
@@ -47,7 +48,7 @@ export default class ViewStaffInformation extends Component {
     async get_staff_info() {
         console.log("get store staff info\n");
 
-        let response = await this.storeApi.view_store_management_information(5);
+        let response = await this.storeApi.view_store_management_information(this.state.store_id);
         if (!response.was_exception) {
             console.log("in get store staff info - success!\n");
             // return response.message;

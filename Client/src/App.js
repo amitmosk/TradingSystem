@@ -26,13 +26,18 @@ import {User} from './ServiceObjects/User';
 import ViewStat from './components/ViewStat';
 import AdminViewUserQuestions from './components/AdminViewUserQuestions';
 import ManagerViewStoreQuestions from './components/ManagerViewStoreQuestions';
-// import UserPurchaseHistory from './components/UserPurchaseHistory';
+import UserPurchaseHistory from './components/UserPurchaseHistory';
 // import UserQuestions from './components/UserQuestions';
 import UserViewQuestions from './components/UserViewQuestions';
 import ViewStaffInformation from './components/ViewStaffInformation';
-// import ViewStorePurchaseHistory from './components/ViewStorePurchaseHistory';
-// import ViewUserPurchaseHistory from './components/ViewUserPurchaseHistory';
+import ViewStorePurchaseHistory from './components/ViewStorePurchaseHistory';
+import ViewUserPurchaseHistory from './components/ViewUserPurchaseHistory';
+import MangerViewStoreQuestionsNevigator from './components/MangerViewStoreQuestionsNevigator';
 import NavBar from './components/NavBar';
+import StorePageNevigator from './components/StorePageNevigator';
+import StoreManagmentNevigator from './components/StoreManagmentNevigator';
+import ViewStaffInformationNevigator from './components/ViewStaffInformationNevigator';
+import ViewStorePurchaseHistoryNevigator from './components/ViewStorePurchaseHistoryNevigator';
 export default class App extends Component {
   static displayName = App.name;
 
@@ -79,24 +84,6 @@ export default class App extends Component {
         return this.state.user;
       }
 
-// user own questions -> view my questions.
-  // async get_user_questions() {
-  //     console.log("get user questions\n");
-  //     const user_api = new UserApi();
-  //     console.log("try 2");
-  //     let response = await user_api.get_user_questions();
-  //     console.log("try 3");
-  //     alert(response.message);
-  //     if (!response.was_exception) {
-  //         console.log("in get store staff info - success!\n");
-  //         console.log(response);
-  //         return response.value;
-  //     }
-  //     else {
-  //         return [];
-
-  //     }
-  //   }
 
   render() {
     return (
@@ -105,32 +92,32 @@ export default class App extends Component {
           <NavBar state = {this.state.user}></NavBar>
 
         <Routes>
-          <Route path="/" element={<HomePage updateUserState={this.updateUserState.bind(this)}/>}></Route>
-          <Route path="/Login" element={<Login updateUserState={this.updateUserState.bind(this)} />}></Route>
+          <Route path="/" element={<HomePage updateUserState={this.updateUserState.bind(this)} />}></Route>
+          <Route path="/Login" element={<Login updateUserState={this.updateUserState.bind(this)} state = {this.state.user.state}/>}></Route>
           <Route path="/Register" element={<Register updateUserState={this.updateUserState.bind(this)} />}></Route>
           <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
-          <Route path="/StorePage" element={<StorePage store_id={1} />}></Route>
+          {/* <Route path="/StorePage" element={<StorePageNevigator/>}></Route> */}
+          <Route path="/StorePage/:id" element={<StorePageNevigator/>}></Route>
           <Route path="/AdminSendMessage" element={<AdminSendMessage />}></Route>
           <Route path="/AdminPage" element={<AdminPage />}></Route>
           <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
-          <Route path="/StoreManagment" element={<StoreManagment store_id=""/>}></Route>
-          <Route path="/AddDiscount" element={<AddDiscount store_id=""/>}></Route>
+          <Route path="/StorePage/:id/StoreManagment" element={<StoreManagmentNevigator/>}></Route>
+          <Route path="/StorePage/:id/StoreManagment/AddDiscount" element={<AddDiscount store_id={1}/>}></Route>
           <Route path="/EditProfile" element={<EditProfile get_state={this.get_state.bind(this)} />}></Route>
           <Route path="/EditProfilePremium" element={<EditProfilePremium get_state={this.get_state.bind(this)} />}></Route>
           <Route path="/ProductPage" element={<ProductPage product_id={1} store_id={1}/>}></Route>
           {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
           <Route path="/ViewStat" element={<ViewStat />}></Route>
           <Route path="/AdminViewUserQuestions" element={<AdminViewUserQuestions />}></Route>
-          <Route path="/StoreManagment/ManagerViewStoreQuestions/:id" element={<ManagerViewStoreQuestions />}></Route>
+          <Route path="/StorePage/:id/StoreManagment/ManagerViewStoreQuestions" element={<MangerViewStoreQuestionsNevigator />}></Route>
+          {/* <Route path="/StoreManagment/ManagerViewStoreQuestions/:id" element={<ManagerViewStoreQuestions />}></Route> */}
           <Route path="/UserViewQuestions" element={<UserViewQuestions />}></Route>
-          <Route path="/ViewStaffInformation" element={<ViewStaffInformation />}></Route>
-          {/* <Route path="/ViewUserPurchaseHistory" element={<ViewUserPurchaseHistory />}></Route>
+          <Route path="/StorePage/:id/StoreManagment/ViewStaffInformation" element={<ViewStaffInformationNevigator />}></Route>
+          <Route path="/ViewUserPurchaseHistory" element={<ViewUserPurchaseHistory />}></Route>
           
-          <Route path="/ViewStorePurchaseHistory" element={<ViewStorePurchaseHistory />}></Route> */}
+          <Route path="/StorePage/:id/StoreManagment/ViewStorePurchaseHistory" element={<ViewStorePurchaseHistoryNevigator />}></Route>
 
 
-          {/* // user history purchase. */}
-          {/* // user own questions -> view my questions. */}
           <Route path="/UserPurchaseHistory" element={<UserPurchaseHistory />}></Route>
           {/* <Route path="/UserQuestions" element={<?? />}></Route>
           // notificans
