@@ -1,4 +1,4 @@
-package TradingSystem.server.api;
+package TradingSystem.server.Service;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;

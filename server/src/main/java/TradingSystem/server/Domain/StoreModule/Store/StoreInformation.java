@@ -55,4 +55,21 @@ public class StoreInformation {
 //        return info.toString();
 //
 //    }
+
+
+    public String getFounder_email() {
+        return founder_email;
+    }
+
+    public String getStore_name() {
+        return store_name;
+    }
+
+    public String getFoundation_date() {
+        return foundation_date;
+    }
+
+    public StoreReviewInformation getStoreReviewInformation() {
+        return storeReviewInformation;
+    }
 }

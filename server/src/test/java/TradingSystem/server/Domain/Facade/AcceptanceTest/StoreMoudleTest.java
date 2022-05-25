@@ -4,9 +4,9 @@ import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
+import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.AppointmentException;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
@@ -319,7 +319,7 @@ class StoreMoudleTest {
         assertTrue(check_was_exception(res),"succeed to remove product - general_user");
         assertTrue(check_if_product_exists_find("apple"),"apple deleted by general_user");
         //step 6
-        Response<User> user_res = marketFacade.login(email,password);
+        Response user_res = marketFacade.login(email,password);
         check_was_not_exception("failed to log in user - step 6",user_res);
         res = marketFacade.delete_product_from_store(productId,1);
         check_was_not_exception("failed to remove product from store while it should succeed - step 6", res);
@@ -403,7 +403,7 @@ class StoreMoudleTest {
 
     @org.junit.jupiter.api.Test
     void edit_product_price_happy() {
-        Response<ProductInformation> product_res = marketFacade.find_product_information(productId,1);
+        Response<Product> product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
         double prev_price = product_res.getValue().getPrice();
         //step 1 edit product price - should work (check new product name)
@@ -467,7 +467,7 @@ class StoreMoudleTest {
 
     @org.junit.jupiter.api.Test
     void edit_product_category_happy() {
-        Response<ProductInformation> product_res = marketFacade.find_product_information(productId,1);
+        Response<Product> product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
         String prev_category = product_res.getValue().getCategory();
         //step 1 edit product category - should work (check new product category)
@@ -531,9 +531,11 @@ class StoreMoudleTest {
 
     @org.junit.jupiter.api.Test
     void find_store_information_happy() {
-        //happy
-        Response r = marketFacade.find_store_information(1);
-        check_was_not_exception("Store information received successfully", r);
+        Response<StoreInformation> res = marketFacade.find_store_information(1);
+        check_was_not_exception("Store information received successfully", res);
+        StoreInformation store = res.getValue();
+        assertEquals(email,store.getFounder_email());
+        assertEquals("amit store",store.getName());
     }
 
     @org.junit.jupiter.api.Test
@@ -545,10 +547,10 @@ class StoreMoudleTest {
 
     @Test
     void find_product_information_happy() {
-        //happy
-        Response r = marketFacade.find_product_information(productId, 1);
-        check_was_not_exception("Product information received successfully", r);
-
+        Response<Product> product_information = marketFacade.find_product_information(productId, 1);
+        check_was_not_exception("Product information received successfully", product_information);
+        assertEquals(product_information.getValue().getName(),"apple","couldn't find properly product name");
+        assertEquals(product_information.getValue().getCategory(),"fruits","couldn't find properly product category");
     }
 
     @Test
@@ -560,9 +562,9 @@ class StoreMoudleTest {
 
     @Test
     void find_products_by_name_happy() {
-        //happy
-        Response r = marketFacade.find_products_by_name("apple");
-        check_was_not_exception("Product list received successfully", r);
+        Response<List<Product>> response = marketFacade.find_products_by_name("apple");
+        check_was_not_exception("Product list received successfully", response);
+        assertEquals(response.getValue().stream().findAny().get().getName(),"apple","couldn't find existing product");
     }
 
 
@@ -580,7 +582,6 @@ class StoreMoudleTest {
         //happy
         Response r = marketFacade.find_products_by_keywords("fruits");
         check_was_not_exception("Products received successfully", r);
-        //sad
     }
 
 
@@ -679,7 +680,7 @@ class StoreMoudleTest {
 
     @Test
     void edit_product_key_words_happy() {
-        Response<ProductInformation> product_res = marketFacade.find_product_information(productId,1);
+        Response<Product> product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
         List<String> prev_key_words = product_res.getValue().getKey_words();
         //step 1 edit product key words - should work (check new product category)
@@ -778,7 +779,7 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("oneusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, num_of_products);
-            Map<Store, Basket> res = mf.view_user_cart().getValue();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
             for (Basket b : res.values()) {
                 if (b.get_productsIds_and_quantity().containsKey(productId))
@@ -814,7 +815,7 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, 1);
-            Map<Store, Basket> res = mf.view_user_cart().getValue();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
             for (Basket b : res.values()) {
                 if (b.get_productsIds_and_quantity().containsKey(productId))
@@ -850,7 +851,7 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, 1);
-            Map<Store, Basket> res = mf.view_user_cart().getValue();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
             for (Basket b : res.values()) {
                 if (b.get_productsIds_and_quantity().containsKey(productId))
