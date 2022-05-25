@@ -2,7 +2,13 @@ package TradingSystem.server.Domain.Facade;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Predict;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.SimpleporchaseRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -20,12 +26,12 @@ import TradingSystem.server.Domain.Utils.Utils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
+
 import java.util.Map;
 
 // TODO: when we leave the system - should call logout()
 
-public class MarketFacade{
-    public static final Object lock = new Object();
+public class MarketFacade {
     private UserController user_controller;
     private StoreController store_controller;
     private int loggedUser;                  //id
@@ -34,6 +40,7 @@ public class MarketFacade{
     private SupplyAdapter supply_adapter;
     private ErrorLogger error_logger;
     private SystemLogger system_logger;
+    Object lock = new Object();
 
     public MarketFacade(PaymentAdapter payment_adapter, SupplyAdapter supply_adapter) {
         this.isGuest = true;
@@ -54,6 +61,7 @@ public class MarketFacade{
      *
      * @return a string with informative of success/failure to client
      */
+
     public Response<String> logout() {
         Response<String> response = null;
         try {
@@ -105,8 +113,7 @@ public class MarketFacade{
             User user = user_controller.login(loggedUser, Email, password);
             String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
             isGuest = false;
-            UserInformation userInformation = new UserInformation(user);
-            response = new Response<>(userInformation, "Hey +" + user_name + ", Welcome to the trading system market!");
+            response = new Response<>(user, "Hey +" + user_name + ", Welcome to the trading system market!");
             system_logger.add_log("User " + Email + " logged-in");
         } catch (Exception e) {
             response = Utils.CreateResponse(new LoginException(" "));
@@ -128,7 +135,7 @@ public class MarketFacade{
             StoreInformation storeInformation = new StoreInformation(store);
             response = new Response<>(storeInformation, "Store information received successfully");
             system_logger.add_log("Store (" + store_id + ") information found successfully.");
-        } catch (Exception e) {
+        } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -142,13 +149,14 @@ public class MarketFacade{
      * @param store_id   who has the product
      * @return product information or action failure reason
      */
-    public Response<Product> find_product_information(int product_id, int store_id) {
-        Response<Product> response = null;
+    public Response<ProductInformation> find_product_information(int product_id, int store_id) {
+        Response<ProductInformation> response = null;
         try {
             Product product = this.store_controller.find_product_information(product_id, store_id);
-            response = new Response<>(product, "Product information received successfully");
+            ProductInformation productInformation = new ProductInformation(product);
+            response = new Response<>(productInformation, "Product information received successfully");
             system_logger.add_log("Product (" + product_id + " from store " + store_id + ") information found successfully.");
-        } catch (Exception e) {
+        } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -162,6 +170,7 @@ public class MarketFacade{
      * @param product_name the name of the desired product
      * @return List of Products with the specific name or action failure reason
      */
+
     public Response<List<Product>> find_products_by_name(String product_name) {
         Response<List<Product>> response = null;
         try {
@@ -181,6 +190,7 @@ public class MarketFacade{
      * @param category the category of the desired product
      * @return List of Products with the specific category or action failure reason
      */
+
     public Response<List<Product>> find_products_by_category(String category) {
         Response<List<Product>> response = null;
         try {
@@ -200,6 +210,7 @@ public class MarketFacade{
      * @param key_words the keywords of the desired product
      * @return List of Products with the specific key_word or action failure reason
      */
+
     public Response<List<Product>> find_products_by_keywords(String key_words) {
         Response<List<Product>> response = null;
         try {
@@ -222,12 +233,13 @@ public class MarketFacade{
      * @param quantity  of the product
      * @return success/failure message
      */
+
     public Response<String> add_product_to_cart(int storeID, int productID, int quantity) {
         Response<String> response = null;
         try {
             Store store = store_controller.get_store(storeID);
             Product p = store_controller.checkAvailablityAndGet(storeID, productID, quantity);
-            user_controller.add_product_to_cart(loggedUser,store,p,quantity);
+            user_controller.add_product_to_cart(loggedUser, store, p, quantity);
             response = new Response<>("", "product " + productID + " added to cart");
             system_logger.add_log("User added to cart " + quantity + " of product- " + productID + " from store- " + storeID);
         } catch (Exception e) {
@@ -246,12 +258,13 @@ public class MarketFacade{
      * @param quantity  new amount
      * @return success/failure message
      */
+
     public Response<String> edit_product_quantity_in_cart(int storeID, int productID, int quantity) {
         Response<String> response = null;
         try {
             Store store = store_controller.get_store(storeID);
             Product p = store_controller.checkAvailablityAndGet(storeID, productID, quantity);
-            user_controller.edit_product_quantity_in_cart(loggedUser,store,p,quantity);
+            user_controller.edit_product_quantity_in_cart(loggedUser, store, p, quantity);
             response = new Response<>("", "product " + productID + " quantity has changed to " + quantity);
             system_logger.add_log("User quantity of product- " + productID + " from store- " + storeID + " in cart to " + quantity);
         } catch (Exception e) {
@@ -269,6 +282,7 @@ public class MarketFacade{
      * @param productID we want to remove from the cart
      * @return success/failure message
      */
+
     public Response<String> remove_product_from_cart(int storeID, int productID) {
         Response<String> response = null;
         try {
@@ -382,6 +396,7 @@ public class MarketFacade{
      * @param rate       number in range 1-5
      * @return success/failure message
      */
+
     public Response<String> rate_product(int product_id, int store_id, int rate) {
         Response<String> response = null;
         try {
@@ -429,6 +444,7 @@ public class MarketFacade{
      * @param question - member question
      * @return success/failure message
      */
+
     public Response<String> send_question_to_store(int store_id, String question) {
         Response<String> response = null;
         try {
@@ -450,6 +466,7 @@ public class MarketFacade{
      * @param question to admin
      * @return success/failure message
      */
+
     public Response send_question_to_admin(String question) {
         Response response = null;
         try {
@@ -468,6 +485,7 @@ public class MarketFacade{
      *
      * @return user purchase history or failure message
      */
+
     public Response<UserPurchaseHistory> view_user_purchase_history() {
         Response<UserPurchaseHistory> response = null;
         try {
@@ -487,6 +505,7 @@ public class MarketFacade{
      *
      * @return user email or failure message
      */
+
     public Response<String> get_user_email() {
         Response<String> response = null;
         try {
@@ -506,6 +525,7 @@ public class MarketFacade{
      *
      * @return user name or failure message
      */
+
     public Response<String> get_user_name() {
         Response<String> response = null;
         try {
@@ -524,6 +544,7 @@ public class MarketFacade{
      *
      * @return user last name or failure message
      */
+
     public Response<String> get_user_last_name() {
         Response<String> response = null;
         try {
@@ -567,6 +588,7 @@ public class MarketFacade{
      * @param new_name new first name
      * @return success/failure message
      */
+
     public Response<String> edit_name(String pw, String new_name) {
         Response<String> response = null;
         try {
@@ -588,6 +610,7 @@ public class MarketFacade{
      * @param new_last_name new last name
      * @return success/failure message
      */
+
     public Response<String> edit_last_name(String pw, String new_last_name) {
         Response<String> response = null;
         try {
@@ -659,6 +682,7 @@ public class MarketFacade{
      * @return success/failure message
      */
 
+
     public Response<String> edit_last_name_premium(String pw, String new_last_name, String answer) {
         Response<String> response = null;
         try {
@@ -681,6 +705,7 @@ public class MarketFacade{
      * @param answer       for the security question
      * @return success/failure message
      */
+
     public Response<String> edit_password_premium(String old_password, String new_password, String answer) {
         Response<String> response = null;
         try {
@@ -700,6 +725,7 @@ public class MarketFacade{
      *
      * @return the security question of the user or failure message
      */
+
     public Response<String> get_user_security_question() {
         Response<String> response = null;
         try {
@@ -722,6 +748,7 @@ public class MarketFacade{
      * @param answer   of the security question
      * @return success or failure message
      */
+
     public Response<String> improve_security(String password, String question, String answer) {
         Response<String> response = null;
         try {
@@ -747,6 +774,7 @@ public class MarketFacade{
      * @param key_words for searching product
      * @return stores inventory
      */
+
     //TODO: integration between user
     public Response<Map<Product,Integer>> add_product_to_store(int store_id, int quantity,
                                                  String name, double price, String category, List<String> key_words) {
@@ -754,7 +782,7 @@ public class MarketFacade{
         try {
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
-            Map<Product,Integer> products = store_controller.add_product_to_store(user, store_id, quantity, name, price, category, key_words);
+            Map<Product, Integer> products = store_controller.add_product_to_store(user, store_id, quantity, name, price, category, key_words);
             response = new Response<>(products, "Product added successfully");
             system_logger.add_log("New product (" + name + ") added to store (" + store_id + ")");
 
@@ -773,17 +801,213 @@ public class MarketFacade{
      * @return success/failure message
      */
     //TODO: integration
-    public Response<Map<Product,Integer>> delete_product_from_store(int product_id, int store_id) {
-        Response<Map<Product,Integer>> response = null;
+    public Response<Map<Product, Integer>> delete_product_from_store(int product_id, int store_id) {
+        Response<Map<Product, Integer>> response = null;
         try {
             synchronized (lock) {
                 User user = user_controller.get_user(loggedUser);
                 String user_email = this.user_controller.get_email(this.loggedUser);
-                Map<Product,Integer> inv = this.store_controller.delete_product_from_store(user, product_id, store_id);
+                Map<Product, Integer> inv = this.store_controller.delete_product_from_store(user, product_id, store_id);
                 response = new Response<>(inv, "Product deleted successfully");
                 system_logger.add_log("Product (" + product_id + ") was deleted from store (" + store_id + ")");
             }
         } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+
+    }
+
+
+    //discount policy
+
+    //TODO concurrency
+
+    public Response add_predict(int store_id, String catgorey, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name) {
+        Response<Predict> response = null;
+        try {
+            Store store = store_controller.get_store(store_id);
+            Predict predict = store.addPredict(catgorey, product, above, equql, num, price, quantity, age, time, year, month, day, name);
+            response = new Response(predict, "predict added successfully");
+            system_logger.add_log("predict added deleted successfully");
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
+
+    public Response send_to_user_purchase_policy(int store_id) {
+        Response<List<String>> response = null;
+        try {
+            Store store = store_controller.get_store(store_id);
+            List<String> policy = store.getPurchasePolicyNames();
+            response = new Response(policy, "purchase policy sent");
+            system_logger.add_log("purchase policy sent to user");
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    //TODO concurrency
+
+    public Response send_predicts(int store_id) {
+        Response<List<String>> response = null;
+        try {
+            Store store = store_controller.get_store(store_id);
+            List<String> policy = store.getPredicts();
+            response = new Response(policy, "predicts sent");
+            system_logger.add_log("predicts sent to user");
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
+
+    public Response send_to_user_discount_policy(int store_id) {
+        Response<List<String>> response = null;
+        try {
+            Store store = store_controller.get_store(store_id);
+            List<String> policy = store.getDiscountPolicyNames();
+            response = new Response(policy, "discount policy sent");
+            system_logger.add_log("composite discount deleted successfully");
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
+
+    public Response add_complex_discount_rule(int store_id, String nameOfPredict, String nameOfPolicy, String nameOfRule) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(store_id);
+            ComplexDiscountComponent complex = store.add_complex_discount(nameOfRule, nameOfPredict, nameOfPolicy);
+            response = new Response(complex, "complex discount added successfully");
+            system_logger.add_log("complex discount added successfully");
+
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
+
+    public Response add_simple_categorey_discount_rule(int store_id, String name, double precent, String nameOfRule) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(store_id);
+            simpleDiscountComponent simple = store.add_simple_discount(nameOfRule, "c", name, precent);
+            response = new Response(simple, "simple category discount added successfully");
+            system_logger.add_log("simple category discount added successfully");
+
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
+
+    public Response add_simple_product_discount_rule(int store_id, int id, double precent, String nameOfrule) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(store_id);
+            simpleDiscountComponent simple = store.add_simple_product_discount(nameOfrule, id, precent);
+            response = new Response(simple, "simple product discount added successfully");
+            system_logger.add_log("simple product discount added successfully");
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
+
+    public Response add_simple_store_discount_rule(int store_id, String type, String name, double precent, String nameOfRule) {
+        Response<String> response = null;
+        try {
+            Store store = store_controller.get_store(store_id);
+            simpleDiscountComponent simple = store.add_simple_discount(nameOfRule, "store", name, precent);
+            response = new Response(simple, "store discount added successfully");
+            system_logger.add_log("Store's (" + store_id + ")discount deleted successfully");
+
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response<String> remove_discount_rule(int store_id, String name) {
+        return new Response<String>("a", "check,");
+    }
+
+
+    //TODO concurrency
+
+    public Response<SimpleporchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id, String nameOfRule) {
+        Response<SimpleporchaseRule> response = null;
+        try {
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                porchaseRule porchaseRule = store.addsimplePorchaseRule(nameOfRule, PredictName, NameOfRule);
+                response = new Response(porchaseRule, "simple purchase added successfully");
+                system_logger.add_log("Store's (" + store_id + ") simple purchase added successfully");
+            }
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
+
+    public Response<porchaseRule> add_and_purchase_rule(String left, String right, int store_id, String NameOfrule) {
+        Response<porchaseRule> response = null;
+        try {
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                porchaseRule porchaseRule = store.add_and_purchase_rule(NameOfrule, left, right);
+                response = new Response(porchaseRule, "Store purchase and rule added successfully");
+                system_logger.add_log("Store's (" + store_id + ") purchase and rule have been added");
+            }
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    //TODO concurrency
+
+    public Response<porchaseRule> add_or_purchase_rule(String left, String right, int store_id, String nameOfrule) {
+        Response<porchaseRule> response = null;
+        try {
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                porchaseRule porchaseRule = store.add_or_purchase_rule(nameOfrule, left, right);
+                response = new Response(porchaseRule, "Store purchase rules added successfully");
+                system_logger.add_log("Store's (" + store_id + ") purchase rules have been added");
+            }
+        } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -849,6 +1073,7 @@ public class MarketFacade{
      * @param category
      * @return success/failure message
      */
+
     public Response<String> edit_product_category(int product_id, int store_id, String category) {
         Response<String> response = null;
         try {
@@ -873,6 +1098,7 @@ public class MarketFacade{
      * @return success/failure message
      */
 
+
     public Response<String> edit_product_key_words(int product_id, int store_id, List<String> key_words) {
         Response<String> response = null;
         try {
@@ -888,71 +1114,13 @@ public class MarketFacade{
         return response;
     }
 
-    /**
-     * Requirement 2.4.2 - purchase policy
-     *
-     * @param store_id id for the store
-     * @param policy   the rules to set
-     * @return success/failure message
-     */
-    public Response<String> set_store_purchase_policy(int store_id, String policy) {
-        Response<String> response = null;
-        try {
-            synchronized (lock) {
-                User user = user_controller.get_user(loggedUser);
-                store_controller.set_store_purchase_policy(store_id, user, policy);
-                response = new Response<>(null, "Store purchase rules set successfully");
-            }
-        } catch (Exception e) {
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    /**
-     * Requirement 2.4.2 - discount policy
-     *
-     * @param store_id id for the store
-     * @param policy   the rules to set
-     * @return success/failure message
-     */
-    public Response<String> set_store_discount_policy(int store_id, String policy) {
-        Response<String> response = null;
-        try {
-            synchronized (lock) {
-                User user = user_controller.get_user(loggedUser);
-                store_controller.set_store_discount_policy(store_id, user, policy);
-                response = new Response<>(null, "Store discount rules set successfully");
-            }
-        } catch (Exception e) {
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
 
     /**
      * Requirement 2.4.3
      *
      * @param store_id
-     * @param rule
      * @return success/failure message
      */
-    public Response<String> set_store_purchase_rules(int store_id, String rule) {
-        Response<String> response = null;
-        try {
-            synchronized (lock) {
-                store_controller.set_store_purchase_rules(store_id, rule);
-                response = new Response<>(null, "Store purchase rules set successfully");
-                system_logger.add_log("Store's (" + store_id + ") purchase rules have been set");
-            }
-        } catch (Exception e) {
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
 
 
     /**
@@ -962,6 +1130,7 @@ public class MarketFacade{
      * @param store_id              - the relevant store for the appointment
      * @return success/failure message
      */
+
 
     public Response<String> add_owner(String user_email_to_appoint, int store_id) {
         Response<String> response = null;
@@ -988,6 +1157,7 @@ public class MarketFacade{
      * @return success/failure message
      */
 
+
     public Response delete_owner(String user_email_to_delete_appointment, int store_id) {
         Response response = null;
         try {
@@ -1012,6 +1182,7 @@ public class MarketFacade{
      * @param store_id              - the relevant store for the appointment
      * @return success/failure message
      */
+
 
     public Response add_manager(String user_email_to_appoint, int store_id) {
         Response<String> response = null;
@@ -1038,6 +1209,7 @@ public class MarketFacade{
      * @param permissions   list of the new permissions - just the relevant
      * @return success/failure message
      */
+
     public Response<String> edit_manager_permissions(String manager_email, int store_id, List<StorePermission> permissions) {
         Response<String> response = null;
         try {
@@ -1063,6 +1235,7 @@ public class MarketFacade{
      * @return success/failure message
      */
 
+
     public Response<String> delete_manager(String user_email_to_delete_appointment, int store_id) {
         Response<String> response = null;
         try {
@@ -1086,6 +1259,7 @@ public class MarketFacade{
      * @return success/failure message
      * @precondition the store is open
      */
+
     public Response<String> close_store_temporarily(int store_id) {
         Response<String> response = null;
         try {
@@ -1110,6 +1284,7 @@ public class MarketFacade{
      * @return success/failure message
      * @precondition the store is close
      */
+
     public Response<String> open_close_store(int store_id) {
         Response<String> response = null;
         try {
@@ -1131,6 +1306,7 @@ public class MarketFacade{
      * @param store_id - the store we want to get information about
      * @return store management information or failure message
      */
+
     public Response<String> view_store_management_information(int store_id) {
         Response<String> response = null;
         try {
@@ -1153,6 +1329,7 @@ public class MarketFacade{
      * @param store_id - the store we want to get information about
      * @return all the questions for a store or failure message
      */
+
     public Response<List<String>> manager_view_store_questions(int store_id) {
         Response<List<String>> response = null;
         try {
@@ -1177,6 +1354,7 @@ public class MarketFacade{
      * @param answer      - manager answer
      * @return success/failure message
      */
+
     public Response<String> manager_answer_question(int store_id, int question_id, String answer) {
         Response<String> response = null;
         try {
@@ -1198,6 +1376,7 @@ public class MarketFacade{
      * @param store_id ,
      * @return store purchase history or failure message
      */
+
 
     public Response<StorePurchaseHistory> view_store_purchases_history(int store_id) {
         Response<StorePurchaseHistory> response = null;
@@ -1247,6 +1426,7 @@ public class MarketFacade{
      * @param email of the user we want to cancel his subscribe
      * @return success/failure message
      */
+
     public Response<String> remove_user(String email) {
         Response<String> response = null;
         try {
@@ -1269,6 +1449,7 @@ public class MarketFacade{
      *
      * @return all the questions for an admin or failure message
      */
+
     public Response<List<String>> admin_view_users_questions() {
         Response<List<String>> response = null;
         try {
@@ -1291,6 +1472,7 @@ public class MarketFacade{
      * @return success/failure message
      */
 
+
     public Response<String> admin_answer_user_question(int question_id, String answer) {
         Response<String> response = null;
         try {
@@ -1311,6 +1493,7 @@ public class MarketFacade{
      * @param store_id who we want to see her purchases
      * @return purchases history information or failure message
      */
+
     public Response<StorePurchaseHistory> admin_view_store_purchases_history(int store_id) {
         Response<StorePurchaseHistory> response = null;
         try {
@@ -1332,6 +1515,7 @@ public class MarketFacade{
      * @param user_email who we want to see his purchases
      * @return purchases history information or failure message
      */
+
     public Response<UserPurchaseHistory> admin_view_user_purchases_history(String user_email) {
         Response<UserPurchaseHistory> response = null;
         try {
@@ -1350,6 +1534,7 @@ public class MarketFacade{
      *
      * @return stats of the market or failure message
      */
+
     public Response<Statistic> get_market_stats() {
         Response<Statistic> response = null;
         try {
@@ -1390,15 +1575,18 @@ public class MarketFacade{
     }
 
     // TODO: testing functions
+
     public boolean is_logged() {
         return !isGuest;
     }
+
 
     public User get_user_for_tests() {
         return user_controller.get_user_for_tests(loggedUser);
     }
 
     //TODO: function that clears system for testing
+
     public void clear() {
         user_controller.clear();
         store_controller.clear();

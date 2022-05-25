@@ -15,7 +15,7 @@ public class Product {
     public Product(String name, int product_id, double price, String category, List<String> key_words) throws ProductCreatingException {
         this.name = name;
         this.product_id = product_id;
-        if (price < 1)
+        if (price <= 0)
             throw new ProductCreatingException("price must be more then 1");
         this.price = price;
         this.productReview = new ProductReview();
@@ -28,10 +28,10 @@ public class Product {
     public void add_review(String user_email, String review) {
         this.productReview.add_review(user_email, review);
     }
+
     public void add_rating(String user_email, int rating) {
         this.productReview.add_rating(user_email, rating);
     }
-
 
 
     // -- Getters

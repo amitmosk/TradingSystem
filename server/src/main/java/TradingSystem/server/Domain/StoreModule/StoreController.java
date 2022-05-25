@@ -1,6 +1,8 @@
 package TradingSystem.server.Domain.StoreModule;
 
 
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
@@ -50,7 +52,7 @@ public class StoreController {
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
-    public void set_store_purchase_policy(int store_id, User user, String policy) throws MarketException {
+    public void set_store_purchase_policy(int store_id, User user, PurchasePolicy policy) throws MarketException {
         AssignUser assignUser = user.get_state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         store.setPurchasePolicy(assignUser, policy);
@@ -64,7 +66,7 @@ public class StoreController {
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
-    public void set_store_discount_policy(int store_id, User user, String policy) throws MarketException {
+    public void set_store_discount_policy(int store_id, User user, DiscountPolicy policy) throws MarketException {
         AssignUser assignUser = user.get_state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         store.setDiscountPolicy(assignUser, policy);
@@ -89,13 +91,6 @@ public class StoreController {
      * @throws if the user is not store founder OR the store or the user are not exist.
      */
 
-    public void set_store_purchase_rules(int store_id, String rule) throws ObjectDoesntExsitException {
-        if (!this.stores.containsKey(store_id)) {
-            throw new ObjectDoesntExsitException("The store is not exist - store id: " + store_id);
-        }
-        Store store = this.stores.get(store_id);
-        store.set_store_purchase_rules(rule);
-    }
 
     /**
      * @param store_id represent the store we asked to re-open
@@ -314,21 +309,21 @@ public class StoreController {
 
     //------------------------------------------------ edit product - End ----------------------------------------------
 
-    public double check_cart_available_products_and_calc_price(Cart cart) throws MarketException {
-        Map<Store, Basket> baskets_of_storesID = cart.getBaskets();
-        double cart_price = 0;
-        for (Basket basket : baskets_of_storesID.values()) {
-            int store_id = basket.getStore_id();
-            if (stores.containsKey(store_id)) {
-                double basket_price = stores.get(store_id).check_available_products_and_calc_price(basket); // throw if not available
-                cart_price += basket_price;
-            } else {
-                throw new ObjectDoesntExsitException("Store does not exist");
-                //not suppose to happen
-            }
-        }
-        return cart_price;
-    }
+//    public double check_cart_available_products_and_calc_price(Cart cart) throws MarketException {
+//        Map<Store, Basket> baskets_of_storesID = cart.getBaskets();
+//        double cart_price = 0;
+//        for (Basket basket : baskets_of_storesID.values()) {
+//            int store_id = basket.getStore_id();
+//            if (stores.containsKey(store_id)) {
+//                double basket_price = stores.get(store_id).check_available_products_and_calc_price(basket); // throw if not available
+//                cart_price += basket_price;
+//            } else {
+//                throw new ObjectDoesntExsitException("Store does not exist");
+//                //not suppose to happen
+//            }
+//        }
+//        return cart_price;
+//    }
 
     public Product checkAvailablityAndGet(int store_id, int product_id, int quantity) throws MarketException {
         if (!stores.containsKey(store_id)) {
