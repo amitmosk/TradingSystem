@@ -12,6 +12,9 @@ import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDisc
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByStore;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.AndporchaseRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.OrporchaseRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.SimpleporchaseRule;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
@@ -246,11 +249,68 @@ public class policyTesting {
         );
     }
 
+    static Stream<Arguments> purchase() throws MarketException {
+
+        Predict only_above_hunderd_shkal = new Predict("", null, true, false, 100,
+                true, false, false, false, 0, 0, 0);
+        Predict only_below_hunderd_shkal = new Predict("", null, false, false, 100,
+                true, false, false, false, 0, 0, 0);
+
+        Predict only_above_five_products = new Predict("", null, true, false, 5,
+                false, true, false, false, 0, 0, 0);
+        Predict only_below_five_products = new Predict("", null, false, false, 5,
+                false, true, false, false, 0, 0, 0);
+
+        Predict only_in_catgyorey_fruits = new Predict("fruits", null, false, true, 0,
+                false, false, false, false, 0, 0, 0);
+        Predict only_not_in_catgyorey_fruits = new Predict("fruits", null, false, false, 5,
+                false, false, false, false, 0, 0, 0);
+
+        Predict only_in_catgyorey_tech = new Predict("tech", null, false, true, 0,
+                false, false, false, false, 0, 0, 0);
+        Product apple = new Product("apple", 1, 1, 100, "fruits", new LinkedList<>());
+        simpleDiscountComponentByStore ByStore = new simpleDiscountComponentByStore(0.5);
+
+        SimpleporchaseRule only_above_hunderd_shkals = new SimpleporchaseRule(only_below_hunderd_shkal);
+        SimpleporchaseRule only_above_five_productss = new SimpleporchaseRule(only_below_hunderd_shkal);
+        SimpleporchaseRule only_in_catgyorey_fruitss = new SimpleporchaseRule(only_below_hunderd_shkal);
+
+
+        Basket TestBasket = new Basket(1, "amit");
+        TestBasket.addProduct(apple, 7);
+        OrporchaseRule above5above100 = new OrporchaseRule(only_above_hunderd_shkals, only_above_five_productss);
+        OrporchaseRule above5infruits = new OrporchaseRule(only_in_catgyorey_fruitss, above5above100);
+
+        OrporchaseRule onlyintechorabove100 = new OrporchaseRule(above5infruits, above5above100);
+        OrporchaseRule above5above100inftuits = new OrporchaseRule(onlyintechorabove100, above5above100);
+        OrporchaseRule above5above100infruitsorintech = new OrporchaseRule(above5above100inftuits, onlyintechorabove100);
+
+
+        return Stream.of(
+                //SimpleDiscountComponent simpleDiscountComponent, String catgorey, Product product, boolean above, boolean equql,
+                // int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, double amountOfDiscount
+
+
+                Arguments.arguments(above5above100, TestBasket, false),
+                Arguments.arguments(above5infruits, TestBasket, false),
+                Arguments.arguments(onlyintechorabove100, TestBasket, false),
+                Arguments.arguments(above5above100inftuits, TestBasket, false),
+                Arguments.arguments(above5above100infruitsorintech, TestBasket, false)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("PredictsOnly")
     void ComplexDiscount(ComplexDiscountComponent rule, Basket b, double res) {
         double discount = rule.CalculateDiscount(b);
         assertEquals(rule.CalculateDiscount(b), res);
     }
-    //TODO do complex and simple porchaseRule
+
+    @ParameterizedTest
+    @MethodSource("purchase")
+    void purchaseRule(porchaseRule rule, Basket b, boolean res) {
+        boolean ans = rule.predictCheck(18, b);
+        assertEquals(res, ans);
+    }
+
 }
