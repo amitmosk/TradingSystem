@@ -6,7 +6,6 @@ import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 
-import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
@@ -19,7 +18,7 @@ import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.UserModule.*;
 import TradingSystem.server.Domain.Utils.ErrorLogger;
-import TradingSystem.server.Domain.Utils.Exception.LoginException;
+import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
@@ -1108,58 +1107,6 @@ public class MarketFacade {
         }
         return response;
     }
-
-    /**
-     * Requirement 2.4.2 - purchase policy
-     *
-     * @param store_id id for the store
-     * @param policy   the rules to set
-     * @return success/failure message
-     */
-    public Response<String> set_store_purchase_policy(int store_id, String policy) {
-        Response<String> response = null;
-        try {
-            synchronized (lock) {
-                User user = user_controller.get_user(loggedUser);
-                store_controller.set_store_purchase_policy(store_id, user, policy);
-                response = new Response<>(null, "Store purchase rules set successfully");
-            }
-        } catch (Exception e) {
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    /**
-     * Requirement 2.4.2 - discount policy
-     *
-     * @param store_id id for the store
-     * @param policy   the rules to set
-     * @return success/failure message
-     */
-    public Response<String> set_store_discount_policy(int store_id, String policy) {
-        Response<String> response = null;
-        try {
-            synchronized (lock) {
-                User user = user_controller.get_user(loggedUser);
-                store_controller.set_store_discount_policy(store_id, user, policy);
-                response = new Response<>(null, "Store discount rules set successfully");
-            }
-        } catch (Exception e) {
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    /**
-     * Requirement 2.4.3
-     *
-     * @param store_id
-     * @return success/failure message
-     */
 
 
     /**

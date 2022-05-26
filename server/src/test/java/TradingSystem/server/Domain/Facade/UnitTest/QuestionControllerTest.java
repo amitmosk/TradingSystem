@@ -8,7 +8,7 @@ import TradingSystem.server.Domain.UserModule.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 class QuestionControllerTest {
@@ -20,7 +20,7 @@ class QuestionControllerTest {
     void setUp() {
         User new_user = new User();
         try {
-            new_user.register(email, "aA123456", "gal", "brown", LocalDateTime.now().minusYears(30).toString());
+            new_user.register(email, "aA123456", "gal", "brown", LocalDate.now().minusYears(30).toString());
             assigned_user = new_user.state_if_assigned();
         }catch (Exception e){
             fail("failed to initialized new user for question controller tests");

@@ -10,7 +10,9 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Utils;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,7 +30,7 @@ public class User {
         this.cart = new Cart();
         isGuest = new AtomicBoolean(true);
         this.isLogged = new AtomicBoolean(false);
-        this.birth_date = LocalDateTime.now().toString();
+        this.birth_date = LocalDate.now().toString();
     }
 
     public AssignState getState() {
@@ -245,8 +247,7 @@ public class User {
         this.cart.edit_product_quantity_in_cart(store, p, quantity);
     }
 
-    public void add_founder(Store store, Appo
-            intment appointment) throws MarketException {
+    public void add_founder(Store store, Appointment appointment) throws MarketException {
         this.state.add_founder(store, appointment);
     }
 

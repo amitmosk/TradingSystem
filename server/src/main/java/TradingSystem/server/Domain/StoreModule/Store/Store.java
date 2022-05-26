@@ -55,7 +55,6 @@ public class Store {
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder,AtomicInteger ai) {
-    public Store(int store_id, String name, AssignUser founder) {
         this.discountPolicy = new DiscountPolicy();
         this.purchasePolicy = new PurchasePolicy();
         this.store_id = store_id;
@@ -84,14 +83,6 @@ public class Store {
 
     public boolean isActive() {
         return active;
-    }
-
-    public String getPurchasePolicy() {
-        return purchasePolicy;
-    }
-
-    public String getDiscountPolicy() {
-        return discountPolicy;
     }
 
     public StorePurchaseHistory getPurchases_history() {
@@ -130,14 +121,6 @@ public class Store {
 
     public void setInventory(Map<Product, Integer> inventory) {
         this.inventory = inventory;
-    }
-
-    public void setPurchasePolicy(String purchasePolicy) {
-        this.purchasePolicy = purchasePolicy;
-    }
-
-    public void setDiscountPolicy(String discountPolicy) {
-        this.discountPolicy = discountPolicy;
     }
 
     public void setPurchases_history(StorePurchaseHistory purchases_history) {

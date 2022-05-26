@@ -5,6 +5,10 @@ import { toBeInTheDocument } from '@testing-library/jest-dom/dist/matchers';
 import HomeIcon from '@mui/icons-material/Home';
 import { Navigate } from 'react-router-dom'; 
 import Link from '@mui/material/Button';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 const axios = require('axios');
 const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
 
@@ -20,6 +24,7 @@ export default class Register extends Component {
             firstname: undefined,
             lastname: undefined,
             birthdate: undefined,
+            b_d : new Date(),
         };
         this.connectApi = new ConnectApi(); 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -75,6 +80,15 @@ export default class Register extends Component {
 
         }
     }
+
+    parse_date = (date_to_parse) => {
+        let year = date_to_parse.getFullYear()
+        let month = date_to_parse.getMonth()
+        let day = date_to_parse.getDay()
+        let day_string = day<10?"0"+day:day
+        let month_string = month<10?"0"+month:month
+        this.setState({birthdate : year+"-"+month_string+"-"+day_string, b_d:date_to_parse})
+    }
     
     render() {
         const {redirectTo} = this.state
@@ -94,9 +108,11 @@ export default class Register extends Component {
                                     placeholder="First name" required/>
                             <input type="lastname" name="lastname" value={this.state.lastname} onChange={this.handleInputChange}
                                     placeholder="Last name" required/>
-                            <input type="birthdate" name="birthdate" value={this.state.birthdate} onChange={this.handleInputChange}
-                                    placeholder="Birth date" required/>    
-                            
+                            {/* <input type="birthdate" name="birthdate" value={this.state.birthdate} onChange={this.handleInputChange}
+                                    placeholder="Birth date - yyyy-mm-dd" required/>  */}
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DesktopDatePicker label="Birth date" value={this.state.b_d} minDate={new Date('1900-01-01')} onChange={(newValue) => {this.parse_date(newValue);}} renderInput={(params) => <TextField {...params} />}/>   
+                            </LocalizationProvider>
                             {/* <select name="role" value={this.state.role} required>
                                 <option value="member">Member</option>
                                 <option value="admin">Admin</option>
