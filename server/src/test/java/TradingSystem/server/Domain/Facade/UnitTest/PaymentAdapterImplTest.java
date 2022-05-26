@@ -4,7 +4,6 @@ import TradingSystem.server.Domain.ExternSystems.PaymentAdapterImpl;
 import TradingSystem.server.Domain.ExternSystems.Proxy.ExternPaymentSystemProxy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PaymentAdapterImplTest {

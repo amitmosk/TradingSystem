@@ -27,6 +27,8 @@ public class Utils {
     public static Response CreateResponse(Exception e) {
         if (e instanceof AdminException)
             return new Response<>("this action wont work because of admin rules.", e);
+        if (e instanceof PurchasePolicyException)
+            return new Response<>("this purchase is violating our store policy", e);
         if (e instanceof AlreadyRegisterdException)
             return new Response<>("there is a user who is register to the system from this network right now.", e);
         if (e instanceof AppointmentException)

@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.AfterEach;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -37,10 +37,12 @@ class StoreTest {
     private AssignUser general_user2;
     private AssignUser owner;
     private AssignUser manager;
+    private int UnderAge = 17;
+    private int OverAge = 18;
 
     @BeforeEach
     void setUp() throws MarketException {
-        this.birth_date = LocalDateTime.now().minusYears(30).toString();
+        this.birth_date = LocalDate.now().minusYears(30).toString();
         counter++;
         this.founder = generate_user(founder_start);
         this.general_user = generate_user(general_start);
@@ -135,7 +137,7 @@ class StoreTest {
             boolean has_appointment = store.has_appointment(founder);
             assertEquals(this.founder, store.getFounder(), "store has different founder");
             assertTrue(has_appointment, "founder does not have appointment");
-        }catch (Exception e){
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -574,7 +576,7 @@ class StoreTest {
             store.edit_product_price(founder, 1, 600);
             Basket basket = new Basket(1, "6");
             basket.addProduct(p, 1);
-            price = store.check_available_products_and_calc_price(basket);
+            price = store.check_available_products_and_calc_price(OverAge, basket);
 
 
         } catch (Exception e) {
@@ -591,7 +593,7 @@ class StoreTest {
             store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
             Product p = store.getProduct_by_product_id(1);
             Basket basket = new Basket(1, "6");
-            price = store.check_available_products_and_calc_price(basket);
+            price = store.check_available_products_and_calc_price(OverAge, basket);
         } catch (Exception e) {
             fail("edit product fail");
         }
@@ -608,7 +610,7 @@ class StoreTest {
             Product p = store.getProduct_by_product_id(1);
             Basket basket = new Basket(1, "6");
             basket.addProduct(p, 1);
-            price = store.check_available_products_and_calc_price(basket);
+            price = store.check_available_products_and_calc_price(OverAge,basket);
         } catch (Exception e) {
             fail("edit product fail");
         }
@@ -631,7 +633,7 @@ class StoreTest {
             basket.addProduct(p1, 3);
             basket.addProduct(p2, 2);
             basket.addProduct(p3, 1);
-            price = store.check_available_products_and_calc_price(basket);
+            price = store.check_available_products_and_calc_price(OverAge,basket);
             System.out.println(price);
         } catch (Exception e) {
             fail("edit product fail");
@@ -651,7 +653,7 @@ class StoreTest {
             store.edit_product_price(founder, 1, 600);
             Basket basket = new Basket(1, "6");
             basket.addProduct(p, 60);
-            price = store.check_available_products_and_calc_price(basket);
+            price = store.check_available_products_and_calc_price(OverAge,basket);
         } catch (Exception e) {
             was_exception = true;
         }
@@ -725,9 +727,6 @@ class StoreTest {
         assertEquals(answer.size(), 0);
         assertEquals(answer2.size(), 1);
     }
-
-
-
 
 
 }

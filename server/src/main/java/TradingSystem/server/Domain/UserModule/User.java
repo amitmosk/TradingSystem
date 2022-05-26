@@ -132,9 +132,9 @@ public class User {
         //check cart is not empty
         cart.verify_not_empty();
         //check availability
-        double price = this.cart.check_cart_available_products_and_calc_price();
+        double price = this.cart.check_cart_available_products_and_calc_price(this.get_age());
         //update stores inventory
-        Map<Integer,Purchase> store_id_purchase = cart.update_stores_inventory(purchaseID);
+        Map<Integer, Purchase> store_id_purchase = cart.update_stores_inventory(purchaseID);
         //make purchase
         UserPurchase purchase = new UserPurchase(purchaseID, store_id_purchase, price);
         //add to purchaseHistory
@@ -245,7 +245,8 @@ public class User {
         this.cart.edit_product_quantity_in_cart(store, p, quantity);
     }
 
-    public void add_founder(Store store, Appointment appointment) throws MarketException {
+    public void add_founder(Store store, Appo
+            intment appointment) throws MarketException {
         this.state.add_founder(store, appointment);
     }
 
@@ -253,7 +254,13 @@ public class User {
         return this.state.is_assign();
     }
 
-    public Admin is_admin(){ return state.is_admin();}
+    public Admin is_admin() {
+        return state.is_admin();
+    }
+
+    public int get_age() {
+        return Period.between(LocalDate.parse(this.birth_date), LocalDate.now()).getYears();
+    }
 
     //TODO: method for testing
     public boolean test_isRegistered() {

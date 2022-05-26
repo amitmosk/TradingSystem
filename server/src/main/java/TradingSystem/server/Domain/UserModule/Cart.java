@@ -66,21 +66,21 @@ public class Cart {
         baskets.get(store).changeQuantity(p, quantity);
     }
 
-    public double check_cart_available_products_and_calc_price() throws MarketException {
+    public double check_cart_available_products_and_calc_price(int user_age) throws MarketException {
         double cart_price = 0;
         for (Map.Entry<Store, Basket> entry : baskets.entrySet()) {
             Store store = entry.getKey();
             Basket basket = entry.getValue();
-            if(!store.is_active()) throw new PurchaseException("store "+store.getStore_id()+" is not active");
-            double basket_price = store.check_available_products_and_calc_price(basket); // throw if not available
+            if (!store.is_active()) throw new PurchaseException("store " + store.getStore_id() + " is not active");
+            double basket_price = store.check_available_products_and_calc_price(user_age, basket); // throw if not available
             cart_price += basket_price;
         }
         return cart_price;
     }
 
     public Map<Integer, Purchase> update_stores_inventory(int purchase_id) throws MarketException {
-        Map<Integer,Purchase> store_id_purchase = new HashMap<>();
-        for (Map.Entry<Store,Basket> entry : baskets.entrySet()) {
+        Map<Integer, Purchase> store_id_purchase = new HashMap<>();
+        for (Map.Entry<Store, Basket> entry : baskets.entrySet()) {
             Store store = entry.getKey();
             Basket basket = entry.getValue();
             Purchase purchase = store.remove_basket_products_from_store(basket, purchase_id);
@@ -90,7 +90,7 @@ public class Cart {
     }
 
     public void verify_not_empty() throws BasketException {
-        if(this.baskets.size() == 0)
+        if (this.baskets.size() == 0)
             throw new BasketException("user try to buy empty cart");
     }
 

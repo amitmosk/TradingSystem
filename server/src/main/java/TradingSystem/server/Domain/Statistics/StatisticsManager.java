@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.Statistics;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -13,7 +13,7 @@ public class StatisticsManager implements iStatisticsManager {
     private AtomicInteger buy_cart_count;
 
     public StatisticsManager() {
-        this.init_time = LocalDateTime.now().toString();
+        this.init_time = LocalDate.now().toString();
         this.login_count = new AtomicInteger(0);
         this.logout_count = new AtomicInteger(0);
         this.connect_system_count = new AtomicInteger(0);
@@ -22,7 +22,7 @@ public class StatisticsManager implements iStatisticsManager {
     }
 
     private long get_total_minutes_system_on() {
-        return ChronoUnit.MINUTES.between(LocalDateTime.parse(init_time), LocalDateTime.now());
+        return ChronoUnit.MINUTES.between(LocalDate.parse(init_time), LocalDate.now());
     }
 
     private long get_login_statistics() {
@@ -81,7 +81,7 @@ public class StatisticsManager implements iStatisticsManager {
     }
 
     public Statistic get_system_statistics() {
-        LocalDateTime init_system_time = LocalDateTime.parse(init_time);
+        LocalDate init_system_time = LocalDate.parse(init_time);
         long login_per_minutes = get_login_statistics();
         long logout_per_minutes = get_logout_statistics();
         long connect_per_minutes = get_connect_system_statistics();

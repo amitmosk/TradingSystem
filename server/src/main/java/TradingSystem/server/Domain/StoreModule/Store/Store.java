@@ -2,6 +2,21 @@ package TradingSystem.server.Domain.StoreModule.Store;
 
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.OrCompositePredict;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.xorDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent.andCompsoitePredict;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.maxDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.numric.plusDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByCategory;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByProduct;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByStore;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
+import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
+import TradingSystem.server.Domain.StoreModule.Policy.Predict;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.*;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
@@ -29,17 +44,20 @@ public class Store {
     public String foundation_date;
     private Map<Product, Integer> inventory; // product & quantity
     private boolean active;
-    private String purchasePolicy;
-    private String discountPolicy;
+    private DiscountPolicy discountPolicy;
+    private PurchasePolicy purchasePolicy;
     private StorePurchaseHistory purchases_history;
     private StoreReview storeReview;
     private AtomicInteger product_ids_counter;
     private Object owners_lock;
     private Object managers_lock;
-
+    private HashMap<String, Ipredict> predictList;
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder,AtomicInteger ai) {
+    public Store(int store_id, String name, AssignUser founder) {
+        this.discountPolicy = new DiscountPolicy();
+        this.purchasePolicy = new PurchasePolicy();
         this.store_id = store_id;
         this.founder = founder;
         this.name = name;
@@ -52,6 +70,7 @@ public class Store {
         this.stuffs_and_appointments = new ConcurrentHashMap<>();
         this.owners_lock = new Object();
         this.managers_lock = new Object();
+        this.predictList = new HashMap<>();
     }
 
     public Store() {
@@ -157,17 +176,175 @@ public class Store {
         p.add_review(user_email, review);
     }
 
+    public AndporchaseRule add_and_purchase_rule(String nameOfRule,String left, String right) throws WrongPermterException {
+        porchaseRule purchaseright = purchasePolicy.getPolicy(left);
+        porchaseRule purchaseleft = purchasePolicy.getPolicy(right);
+        AndporchaseRule and = new AndporchaseRule(purchaseleft, purchaseright);
+        purchasePolicy.addRule(nameOfRule,and);
+        return and;
+    }
+
+    public OrporchaseRule add_or_purchase_rule(String name, String left, String right) throws WrongPermterException {
+        porchaseRule purchaseright = purchasePolicy.getPolicy(left);
+        porchaseRule purchaseleft = purchasePolicy.getPolicy(right);
+        OrporchaseRule or = new OrporchaseRule(purchaseleft, purchaseright);
+        purchasePolicy.addRule(name, or);
+        return or;
+    }
+
     public void add_store_rating(AssignUser user, int rating) throws MarketException {
         if (this.stuffs_and_appointments.containsKey(user))
             throw new NoPremssionException("store members can't rate their store");
         this.storeReview.add_rating(user.get_user_email(), rating);
     }
 
-    public void set_store_purchase_rules(String rule) {
-        // TODO
+    public Predict addPredict(String catgorey, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name) throws WrongPermterException {
+        Predict predict = new Predict(catgorey, product, above, equql, num, price, quantity, age, time, year, month, day);
+        if (predictList.keySet().contains(name))
+            throw new WrongPermterException("there is alreay a predict with the same name");
+        predictList.put(name, predict);
+        return predict;
+    }
+
+    //start of discount policy
+    public void remove_discount_rule(String name) {
+        discountPolicy.removeRule(name);
+    }
+
+    private void checkUniqName(String name, HashMap map) throws WrongPermterException {
+        if (map.keySet().contains(name))
+            throw new WrongPermterException("there is a predict with this name in the store,please choose another name");
+    }
+
+
+    public List<String> getDiscountPolicyNames() {
+        List<String> list = new LinkedList<>();
+        for (String s : discountPolicy.getPolicyNames())
+            list.add(s);
+        return list;
+    }
+
+    public List<String> getPurchasePolicyNames() {
+        List<String> list = new LinkedList<>();
+        for (String s : purchasePolicy.getPolicyNames())
+            list.add(s);
+        return list;
 
     }
 
+    public List<String> getPredicts() {
+        List<String> list = new LinkedList<>();
+        for (String s : predictList.keySet())
+            list.add(s);
+        return list;
+
+    }
+
+    public List<String> getSimplePredicts() {
+        List<String> list = new LinkedList<>();
+        for (String s : predictList.keySet())
+            if (predictList.get(s) instanceof Predict)
+                list.add(s);
+        return list;
+
+    }
+
+
+    public andCompsoitePredict CreateAndDisocuntCompnent(String name, String left, String right) throws WrongPermterException {
+        Ipredict leftPredict = predictList.get(left);
+        Ipredict rightPredict = predictList.get(right);
+        andCompsoitePredict toreturn = new andCompsoitePredict(leftPredict, rightPredict);
+        checkUniqName(name, predictList);
+        this.predictList.put(name, toreturn);
+        return toreturn;
+    }
+
+    public OrCompositePredict CreateOrDisocuntCompnent(String name, String left, String right, String complex) throws WrongPermterException {
+        Ipredict leftPredict = predictList.get(left);
+        Ipredict rightPredict = predictList.get(right);
+        OrCompositePredict toreturn = new OrCompositePredict(leftPredict, rightPredict);
+        checkUniqName(name, predictList);
+        this.predictList.put(name, toreturn);
+        return toreturn;
+    }
+
+    public xorDiscountComponent CreateXorDisocuntCompnent(String name, String left, String right) throws WrongPermterException {
+        DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
+        DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
+        xorDiscountComponent toreturn = new xorDiscountComponent(leftdiscount, rifhtdiscount);
+        this.discountPolicy.addRule(name, toreturn);
+        return toreturn;
+    }
+
+    public maxDiscountComponent CreateMaxDisocuntCompnent(String name, String left, String right) throws WrongPermterException {
+        DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
+        DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
+        maxDiscountComponent toreturn = new maxDiscountComponent(leftdiscount, rifhtdiscount);
+        this.discountPolicy.addRule(name, toreturn);
+        return toreturn;
+    }
+
+    public plusDiscountComponent CreateplusDisocuntCompnent(String name, String left, String right) throws WrongPermterException {
+        DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
+        DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
+        plusDiscountComponent toreturn = new plusDiscountComponent(leftdiscount, rifhtdiscount);
+        this.discountPolicy.addRule(name, toreturn);
+        return toreturn;
+    }
+
+
+    public simpleDiscountComponent add_simple_product_discount(String name, int id, double precent) throws WrongPermterException, ObjectDoesntExsitException {
+        simpleDiscountComponent simpleDiscountComponent;
+        Product p = getProduct_by_product_id(id);
+        simpleDiscountComponent = new simpleDiscountComponentByProduct(p, precent);
+        this.discountPolicy.addRule(name, simpleDiscountComponent);
+        return simpleDiscountComponent;
+    }
+
+
+    public simpleDiscountComponent add_simple_discount(String name, String type, String nameOfCategorey, double precent) throws WrongPermterException {
+        simpleDiscountComponent simpleDiscountComponent;
+        if (type == "c")
+            simpleDiscountComponent = new simpleDiscountComponentByCategory(nameOfCategorey, precent);
+        else
+            simpleDiscountComponent = new simpleDiscountComponentByStore(precent);
+        this.discountPolicy.addRule(name, simpleDiscountComponent);
+        return simpleDiscountComponent;
+    }
+
+    public ComplexDiscountComponent add_complex_discount(String name, String nameOFPredict, String nameOfPolicy) throws WrongPermterException {
+        Ipredict predict = predictList.get(nameOFPredict);
+        DiscountComponent simpleDiscountComponent = discountPolicy.getDiscountCompnentByName(nameOfPolicy);
+        if (!(simpleDiscountComponent instanceof simpleDiscountComponent))
+            throw new WrongPermterException("this polciy is not of type simple");
+        ComplexDiscountComponent toreturn = new ComplexDiscountComponent(simpleDiscountComponent, predict);
+        this.discountPolicy.addRule(name, toreturn);
+        return toreturn;
+
+    }
+
+
+    //end of discount policy
+
+    //purchase policy
+
+    private Predict getSimplePredictsByName(String name) throws WrongPermterException {
+        Ipredict p = predictList.get(name);
+        if (!(p instanceof Predict))
+            throw new WrongPermterException("the name of the predict is wrong");
+        return (Predict) p;
+    }
+
+    public SimpleporchaseRule addsimplePorchaseRule(String nameOfRule, String nameForule, String name) throws WrongPermterException {
+        Predict p = getSimplePredictsByName(name);
+        SimpleporchaseRule Toreturn = new SimpleporchaseRule(p);
+        this.purchasePolicy.addRule(nameForule, Toreturn);
+        return Toreturn;
+    }
+
+
+    //TODO add purchase or and
+    //end of purchase policy
 
     public void add_product_rating(String user_email, int product_id, int rate) throws MarketException {
         Product p = this.getProduct_by_product_id(product_id);//throws
@@ -302,14 +479,14 @@ public class Store {
 
     public Map<Product, Integer> add_product(AssignUser user, String name, double price, String category, List<String> key_words, int quantity) throws MarketException {
         this.check_permission(user, StorePermission.add_item);
-        if(price <= 0)
+        if (price <= 0)
             throw new ProductAddingException("price must be more then zero");
         if (quantity < 1)
             throw new ProductAddingException("quantity must be more then zero");
         Utils.nameValidCheck(name);
         Utils.nameValidCheck(category);
-        for(Product p : inventory.keySet()){
-            if(p.getName().equals(name))
+        for (Product p : inventory.keySet()) {
+            if (p.getName().equals(name))
                 throw new ProductAddingException("product already exists in the store");
         }
         int product_id = this.product_ids_counter.getAndIncrement();
@@ -354,13 +531,16 @@ public class Store {
     // -----------------------------------------------------------------------------------------------------
 
 
-    public synchronized double check_available_products_and_calc_price(Basket basket) throws MarketException {
+    public synchronized double check_available_products_and_calc_price(int user_age, Basket basket) throws MarketException {
         Map<Product, Integer> products_and_quantities = basket.getProducts_and_quantities();
+        purchasePolicy.checkPolicy(user_age, basket);
         for (Product p : products_and_quantities.keySet()) {
             this.checkAvailablityAndGet(p.getProduct_id(), products_and_quantities.get(p));
         }
-        return basket.getTotal_price();
+        double discount = discountPolicy.calculateDiscount(basket);
+        return basket.getTotal_price() - discount;
     }
+
 
     //TODO: policies
     // check product is available - throws if no.
@@ -542,12 +722,12 @@ public class Store {
         this.active = active;
     }
 
-    public void setPurchasePolicy(AssignUser user, String purchasePolicy) throws NoPremssionException {
+    public void setPurchasePolicy(AssignUser user, PurchasePolicy purchasePolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_purchase_policy);
         this.purchasePolicy = purchasePolicy;
     }
 
-    public void setDiscountPolicy(AssignUser user, String discountPolicy) throws NoPremssionException {
+    public void setDiscountPolicy(AssignUser user, DiscountPolicy discountPolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_discount_policy);
         this.discountPolicy = discountPolicy;
     }
@@ -604,4 +784,5 @@ public class Store {
         }
         this.inventory.put(to_edit, quantity);
     }
+
 }

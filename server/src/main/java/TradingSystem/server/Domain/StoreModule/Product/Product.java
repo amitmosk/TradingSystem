@@ -36,10 +36,10 @@ public class Product {
     public void add_review(String user_email, String review) {
         this.productReview.add_review(user_email, review);
     }
+
     public void add_rating(String user_email, int rating) {
         this.productReview.add_rating(user_email, rating);
     }
-
 
 
     // -- Getters
