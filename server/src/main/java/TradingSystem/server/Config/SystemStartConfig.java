@@ -4,21 +4,23 @@ import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class SystemStartConfig {
     public static void init_data_to_market(PaymentAdapter paymentAdapter, SupplyAdapter supplyAdapter) {
+        String birth_date = LocalDate.now().minusYears(22).toString();
         MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         MarketFacade marketFacade2 = new MarketFacade(paymentAdapter, supplyAdapter);
         MarketFacade marketFacade3 = new MarketFacade(paymentAdapter, supplyAdapter);
         MarketFacade marketFacade4 = new MarketFacade(paymentAdapter, supplyAdapter);
         MarketFacade marketFacade5 = new MarketFacade(paymentAdapter, supplyAdapter);
         // register
-        marketFacade1.register("amit@gmail.com","12345678aA","amit","moskovitz","19-04-95");
-        marketFacade2.register("tom@gmail.com","12345678aA","amit","moskovitz","19-04-95");
-        marketFacade3.register("gal@gmail.com","12345678aA","amit","moskovitz","19-04-95");
-        marketFacade4.register("grumet@gmail.com","12345678aA","amit","moskovitz","19-04-95");
-        marketFacade5.register("eylon@gmail.com","12345678aA","amit","moskovitz","19-04-95");
+        marketFacade1.register("amit@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        marketFacade2.register("tom@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        marketFacade3.register("gal@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        marketFacade4.register("grumet@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        marketFacade5.register("eylon@gmail.com","12345678aA","amit","moskovitz",birth_date);
         // open store
         marketFacade1.open_store("amit store");
         marketFacade2.open_store("tom store");
