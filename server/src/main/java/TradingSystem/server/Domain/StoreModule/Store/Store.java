@@ -37,8 +37,8 @@ public class Store {
     //TODO: reviews - should contain users / users_email ? if user changes his email ?
 
     // -- fields
-    private int store_id;
-    private AssignUser founder;
+    private final int store_id;
+    private final AssignUser founder;
     private Map<AssignUser, Appointment> stuffs_and_appointments;
     private String name;
     public String foundation_date;
@@ -54,13 +54,13 @@ public class Store {
     private HashMap<String, Ipredict> predictList;
 
     // -- constructors
-    public Store(int store_id, String name, AssignUser founder,AtomicInteger ai) {
+    public Store(int store_id, String name, AssignUser founder) {
         this.discountPolicy = new DiscountPolicy();
         this.purchasePolicy = new PurchasePolicy();
         this.store_id = store_id;
         this.founder = founder;
         this.name = name;
-        this.product_ids_counter = ai;
+        this.product_ids_counter = new AtomicInteger(1);
         this.active = true;
         this.foundation_date = LocalDate.now().toString();
         this.storeReview = new StoreReview();
@@ -70,77 +70,6 @@ public class Store {
         this.owners_lock = new Object();
         this.managers_lock = new Object();
         this.predictList = new HashMap<>();
-    }
-
-    public Store() {
-    }
-
-    // ------------------------------ getters ------------------------------
-
-    public Map<AssignUser, Appointment> getStuffs_and_appointments() {
-        return stuffs_and_appointments;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public StorePurchaseHistory getPurchases_history() {
-        return purchases_history;
-    }
-
-    public AtomicInteger getProduct_ids_counter() {
-        return product_ids_counter;
-    }
-
-    public Object getOwners_lock() {
-        return owners_lock;
-    }
-
-    public Object getManagers_lock() {
-        return managers_lock;
-    }
-
-    // ------------------------------ setters ------------------------------
-
-    public void setStore_id(int store_id) {
-        this.store_id = store_id;
-    }
-
-    public void setFounder(AssignUser founder) {
-        this.founder = founder;
-    }
-
-    public void setStuffs_and_appointments(Map<AssignUser, Appointment> stuffs_and_appointments) {
-        this.stuffs_and_appointments = stuffs_and_appointments;
-    }
-
-    public void setFoundation_date(String foundation_date) {
-        this.foundation_date = foundation_date;
-    }
-
-    public void setInventory(Map<Product, Integer> inventory) {
-        this.inventory = inventory;
-    }
-
-    public void setPurchases_history(StorePurchaseHistory purchases_history) {
-        this.purchases_history = purchases_history;
-    }
-
-    public void setStoreReview(StoreReview storeReview) {
-        this.storeReview = storeReview;
-    }
-
-    public void setProduct_ids_counter(AtomicInteger product_ids_counter) {
-        this.product_ids_counter = product_ids_counter;
-    }
-
-    public void setOwners_lock(Object owners_lock) {
-        this.owners_lock = owners_lock;
-    }
-
-    public void setManagers_lock(Object managers_lock) {
-        this.managers_lock = managers_lock;
     }
 
 
@@ -372,14 +301,12 @@ public class Store {
     public StoreManagersInfo view_store_management_information(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.view_permissions);
         //TODO: added parse to emails - appointment map
-        List<AppointmentInformation> answer = new LinkedList<>();
-        for (Appointment appointment : stuffs_and_appointments.values()) {
-            AppointmentInformation temp = new AppointmentInformation(appointment.getMember().get_user_email(), appointment.getAppointer().get_user_email(),
-                    appointment.getType().toString());
-            answer.add(temp);
+        HashMap<String, Appointment> emails_appointmets = new HashMap<>();
+        for (Map.Entry<AssignUser, Appointment> en : stuffs_and_appointments.entrySet()) {
+            emails_appointmets.put(en.getKey().get_user_email(), en.getValue());
         }
         //end
-        return new StoreManagersInfo(this.name, answer);
+        return new StoreManagersInfo(this.name, emails_appointmets);
     }
 
     public boolean is_active() {
@@ -473,7 +400,7 @@ public class Store {
                 throw new ProductAddingException("product already exists in the store");
         }
         int product_id = this.product_ids_counter.getAndIncrement();
-        Product product = new Product(name, product_id, price, category, key_words, store_id);
+        Product product = new Product(name, product_id, price, category, key_words);
         inventory.put(product, quantity);
         return inventory;
     }
@@ -758,14 +685,5 @@ public class Store {
         return stuffs_and_appointments.containsKey(founder);
     }
 
-    public void edit_product_quantity(AssignUser assignUser, int product_id, int quantity) throws MarketException {
-        Product to_edit = this.getProduct_by_product_id(product_id);
-        this.check_permission(assignUser, StorePermission.edit_item_quantity);
-        if (quantity < 1)
-        {
-            throw new WrongPermterException("quantity must be positive number");
-        }
-        this.inventory.put(to_edit, quantity);
-    }
 
 }

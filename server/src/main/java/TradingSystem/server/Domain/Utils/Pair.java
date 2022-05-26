@@ -8,8 +8,8 @@ import java.util.Set;
 // Pair class
 public class Pair<U, V>
 {
-    public U first;       // the first field of a pair
-    public V second;      // the second field of a pair
+    public final U first;       // the first field of a pair
+    public final V second;      // the second field of a pair
 
     // Constructs a new pair with specified values
     public Pair(U first, V second)
@@ -67,16 +67,5 @@ public class Pair<U, V>
     public V getSecond()
     {
         return this.second;
-    }
-
-    public Pair() {
-    }
-
-    public void setFirst(U first) {
-        this.first = first;
-    }
-
-    public void setSecond(V second) {
-        this.second = second;
     }
 }

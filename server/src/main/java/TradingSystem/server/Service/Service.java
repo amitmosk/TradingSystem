@@ -4,18 +4,12 @@ import TradingSystem.server.Config.SystemStartConfig;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.Facade.MarketFacade;
-import TradingSystem.server.Domain.StoreModule.StorePermission;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Map;
-
-
-import java.util.LinkedList;
-
 
 @RestController
 public class Service implements iService {
@@ -33,7 +27,7 @@ public class Service implements iService {
         this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         this.notificationHandler = new NotificationHandler();
         // -- amit code, TODO: remove after checks
-         SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
+        // SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
 
     }
 
@@ -126,8 +120,8 @@ public class Service implements iService {
     @RequestMapping(value = "/add_product_to_cart")
     @CrossOrigin
     @Override
-    public Response add_product_to_cart(int store_id, int product_id, int quantity) {
-        Response answer = marketFacade.add_product_to_cart(store_id, product_id, quantity);
+    public Response add_product_to_cart(int storeID, int productID, int quantity) {
+        Response answer = marketFacade.add_product_to_cart(storeID, productID, quantity);
         return answer;
 
     }
@@ -135,8 +129,8 @@ public class Service implements iService {
     @RequestMapping(value = "/remove_product_from_cart")
     @CrossOrigin
     @Override
-    public Response remove_product_from_cart(int store_id, int product_id) {
-        Response answer = marketFacade.remove_product_from_cart(store_id, product_id);
+    public Response remove_product_from_cart(int storeID, int productID) {
+        Response answer = marketFacade.remove_product_from_cart(storeID, productID);
         return answer;
     }
 
@@ -151,12 +145,12 @@ public class Service implements iService {
     @RequestMapping(value = "/edit_product_quantity_in_cart")
     @CrossOrigin
     @Override
-    public Response edit_product_quantity_in_cart(int store_id, int product_id, int quantity) {
-        Response answer = marketFacade.edit_product_quantity_in_cart(store_id, product_id, quantity);
+    public Response edit_product_quantity_in_cart(int storeID, int productID, int quantity) {
+        Response answer = marketFacade.edit_product_quantity_in_cart(storeID, productID, quantity);
         return answer;
     }
 
-    @RequestMapping(value = "/buy_cart")
+    @RequestMapping(value = "/buy_cart(")
     @CrossOrigin
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo) {
@@ -255,16 +249,16 @@ public class Service implements iService {
     @RequestMapping(value = "/edit_name")
     @CrossOrigin
     @Override
-    public Response edit_name(String new_name) {
-        Response answer = marketFacade.edit_name(new_name);
+    public Response edit_name(String pw, String new_name) {
+        Response answer = marketFacade.edit_name(pw, new_name);
         return answer;
     }
 
     @RequestMapping(value = "/edit_last_name")
     @CrossOrigin
     @Override
-    public Response edit_last_name(String new_last_name) {
-        Response answer = marketFacade.edit_last_name(new_last_name);
+    public Response edit_last_name(String pw, String new_last_name) {
+        Response answer = marketFacade.edit_last_name(pw, new_last_name);
         return answer;
     }
 
@@ -279,16 +273,16 @@ public class Service implements iService {
     @RequestMapping(value = "/edit_name_premium")
     @CrossOrigin
     @Override
-    public Response edit_name_premium(String new_name, String premAnswer) {
-        Response answer = marketFacade.edit_name_premium(new_name, premAnswer);
+    public Response edit_name_premium(String pw, String new_name, String premAnswer) {
+        Response answer = marketFacade.edit_name_premium(pw, new_name, premAnswer);
         return answer;
     }
 
     @RequestMapping(value = "/edit_last_name_premium")
     @CrossOrigin
     @Override
-    public Response edit_last_name_premium(String new_last_name, String premAnswer) {
-        Response answer = marketFacade.edit_last_name_premium(new_last_name, premAnswer);
+    public Response edit_last_name_premium(String pw, String new_last_name, String premAnswer) {
+        Response answer = marketFacade.edit_last_name_premium(pw, new_last_name, premAnswer);
         return answer;
     }
 
@@ -319,10 +313,8 @@ public class Service implements iService {
     @RequestMapping(value = "/add_product_to_store")
     @CrossOrigin
     @Override
-    public Response add_product_to_store(int store_id, int quantity, String name, double price, String category, String key_words) {
-        List<String> key_words_list = new LinkedList<>();
-        key_words_list.add(key_words);
-        Response answer = marketFacade.add_product_to_store(store_id, quantity, name, price, category, key_words_list);
+    public Response add_product_to_store(int store_id, int quantity, String name, double price, String category, List<String> key_words) {
+        Response answer = marketFacade.add_product_to_store(store_id, quantity, name, price, category, key_words);
         return answer;
     }
 
@@ -361,17 +353,8 @@ public class Service implements iService {
     @RequestMapping(value = "/edit_product_key_words")
     @CrossOrigin
     @Override
-    public Response edit_product_key_words(int product_id, int store_id, String key_words) {
-        List<String> key_words_list = new LinkedList<>();
-        key_words_list.add(key_words);
-        Response answer = marketFacade.edit_product_key_words(product_id, store_id, key_words_list);
-        return answer;
-    }
-    @RequestMapping(value = "/edit_product_quantity")
-    @CrossOrigin
-    @Override
-    public Response edit_product_quantity(int product_id, int store_id, int quantity) {
-        Response answer = marketFacade.edit_product_quantity(product_id, store_id, quantity);
+    public Response edit_product_key_words(int product_id, int store_id, List<String> key_words) {
+        Response answer = marketFacade.edit_product_key_words(product_id, store_id, key_words);
         return answer;
     }
 
@@ -451,8 +434,7 @@ public class Service implements iService {
     @CrossOrigin
     @Override
     public Response view_store_purchases_history(int store_id) {
-        Response answer = marketFacade.view_store_purchases_history(store_id);
-
+        Response answer = marketFacade.view_store_management_information(store_id);
         return answer;
     }
 
@@ -523,28 +505,6 @@ public class Service implements iService {
     @CrossOrigin
     public Response get_products_by_store_id(int store_id) {
         Response answer = marketFacade.get_products_by_store_id(store_id);
-        return answer;
-    }
-
-    @RequestMapping(value = "/get_user_questions")
-    @CrossOrigin
-    public Response get_user_questions() {
-        Response answer = marketFacade.get_user_questions();
-        return answer;
-    }
-    @RequestMapping(value = "/edit_manager_permissions")
-    @CrossOrigin
-    @Override
-    public Response edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions) {
-        Response answer = marketFacade.edit_manager_permissions(manager_email, store_id, permissions);
-        return answer;
-    }
-
-    @RequestMapping(value = "/online_user")
-    @CrossOrigin
-    @Override
-    public Response online_user() {
-        Response answer = marketFacade.online_user();
         return answer;
     }
 }

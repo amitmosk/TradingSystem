@@ -22,15 +22,4 @@ public class UserQuestion extends Question {
                 ", has_answer=" + has_answer +
                 '}';
     }
-
-
-    @Override
-    public String toString_for_user() {
-        return "Question to admin :" +
-                ", message_date=" + message_date +
-                ", answer_date=" + answer_date +
-                ", message='" + message + '\'' +
-                ", answer='" + answer + '\'' +
-                '}';
-    }
 }

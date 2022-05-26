@@ -1,6 +1,5 @@
 package TradingSystem.server.Service;
 
-import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -32,7 +31,6 @@ public class NotificationHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
-        System.out.println(message.getPayload());
         for (WebSocketSession webSocketSession : webSocketSessionList) {
             webSocketSession.sendMessage(message);
         }
@@ -41,7 +39,6 @@ public class NotificationHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
-        System.out.println("connection closed");
         webSocketSessionList.remove(session);
     }
 

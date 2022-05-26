@@ -30,8 +30,4 @@ public class PaymentAdapterImpl implements PaymentAdapter {
         SystemLogger.getInstance().add_log("system connected to the payment system");
         return externPaymentSystemProxy.connect();
     }
-
-    public ExternPaymentSystemProxy getExternPaymentSystemProxy() {
-        return externPaymentSystemProxy;
-    }
 }

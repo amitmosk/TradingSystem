@@ -44,14 +44,14 @@ public class policyTesting {
     @BeforeEach
     void SetUp() throws MarketException {
         basket = new Basket(1, "amit@gmail.com");
-        apple = new Product("apple", 1,  100, "fruits", new LinkedList<>(),1);
-        banana = new Product("banana", 1,  50, "fruits", new LinkedList<>(),1);
-        grape = new Product("grape", 1,  75, "fruits", new LinkedList<>(),1);
+        apple = new Product("apple", 1, 1, 100, "fruits", new LinkedList<>());
+        banana = new Product("banana", 1, 1, 50, "fruits", new LinkedList<>());
+        grape = new Product("grape", 1, 1, 75, "fruits", new LinkedList<>());
 
 
-        iphone = new Product("iphone", 1, 150, "tech", new LinkedList<>(),1);
-        samsung = new Product("samsung", 1, 200, "tech", new LinkedList<>(),1);
-        xiaomi = new Product("xiaomi", 1, 300, "tech", new LinkedList<>(),1);
+        iphone = new Product("iphone", 1, 1, 150, "tech", new LinkedList<>());
+        samsung = new Product("samsung", 1, 1, 200, "tech", new LinkedList<>());
+        xiaomi = new Product("xiaomi", 1, 1, 300, "tech", new LinkedList<>());
 
         basket.addProduct(apple, 10);
         basket.addProduct(banana, 10);
@@ -146,7 +146,7 @@ public class policyTesting {
     }
 
     static Stream<Arguments> Predicts() throws MarketException {
-        Product apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(),1);
+        Product apple = new Product("apple", 1, 1, 100, "fruits", new LinkedList<>());
         simpleDiscountComponentByStore ByStore = new simpleDiscountComponentByStore(0.5);
 
 
@@ -216,7 +216,7 @@ public class policyTesting {
 
         Predict only_in_catgyorey_tech = new Predict("tech", null, false, true, 0,
                 false, false, false, false, 0, 0, 0);
-        Product apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(),1);
+        Product apple = new Product("apple", 1, 1, 100, "fruits", new LinkedList<>());
         simpleDiscountComponentByStore ByStore = new simpleDiscountComponentByStore(0.5);
 
 
@@ -268,7 +268,7 @@ public class policyTesting {
 
         Predict only_in_catgyorey_tech = new Predict("tech", null, false, true, 0,
                 false, false, false, false, 0, 0, 0);
-        Product apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(),1);
+        Product apple = new Product("apple", 1, 1, 100, "fruits", new LinkedList<>());
         simpleDiscountComponentByStore ByStore = new simpleDiscountComponentByStore(0.5);
 
         SimpleporchaseRule only_above_hunderd_shkals = new SimpleporchaseRule(only_below_hunderd_shkal);

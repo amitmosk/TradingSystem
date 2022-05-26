@@ -4,7 +4,4 @@ public class StoreException extends MarketException{
     public StoreException(String s) {
         super(s);
     }
-
-    public StoreException() {
-    }
 }

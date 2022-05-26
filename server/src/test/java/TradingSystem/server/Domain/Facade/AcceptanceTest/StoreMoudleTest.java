@@ -4,7 +4,6 @@ import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
@@ -635,7 +634,7 @@ class StoreMoudleTest {
     void BuyHappy() {
         marketFacade.open_store("Amit Store2");
         marketFacade.add_product_to_store(2, 100, "tmp", 100, "tmp", new ArrayList<>());
-        marketFacade.add_product_to_cart(2, 2, 100);
+        marketFacade.add_product_to_cart(2, 1, 100);
         Response res = marketFacade.buy_cart("", "");
         check_was_not_exception("", res);
     }
@@ -780,10 +779,10 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("oneusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, num_of_products);
-            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
-            for (ProductInformation p : res) {
-                if (p.getProduct_id() == productId)
+            for (Basket b : res.values()) {
+                if (b.get_productsIds_and_quantity().containsKey(productId))
                     contains = true;
             }
             assertTrue(contains, "failed to add product to users cart");
@@ -816,10 +815,10 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, 1);
-            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
-            for (ProductInformation p : res) {
-                if (p.getProduct_id() == productId)
+            for (Basket b : res.values()) {
+                if (b.get_productsIds_and_quantity().containsKey(productId))
                     contains = true;
             }
             assertTrue(contains, "failed to add product to users cart");
@@ -852,10 +851,10 @@ class StoreMoudleTest {
         List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
         for (MarketFacade mf : marketFacadeList) { // add all products to cart
             mf.add_product_to_cart(1, productId, 1);
-            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
+            Map<StoreInformation, Basket> res = mf.view_user_cart().getValue().getBaskets();
             boolean contains = false;
-            for (ProductInformation p : res) {
-                if (p.getProduct_id() == productId)
+            for (Basket b : res.values()) {
+                if (b.get_productsIds_and_quantity().containsKey(productId))
                     contains = true;
             }
             assertTrue(contains, "failed to add product to users cart");

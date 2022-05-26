@@ -21,7 +21,7 @@ class QuestionControllerTest {
         User new_user = new User();
         try {
             new_user.register(email, "aA123456", "gal", "brown", LocalDate.now().minusYears(30).toString());
-            assigned_user = new_user.state_if_assigned();
+            assigned_user = new_user.get_state_if_assigned();
         }catch (Exception e){
             fail("failed to initialized new user for question controller tests");
         }

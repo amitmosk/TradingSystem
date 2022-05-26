@@ -1,51 +1,28 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
 import TradingSystem.server.Domain.StoreModule.Appointment;
-import TradingSystem.server.Domain.StoreModule.AppointmentInformation;
-
 
 import java.util.HashMap;
-import java.util.List;
 
 public class StoreManagersInfo {
+    private HashMap<String, Appointment> managers; // email & Appointment
     private String store_name;
-    private List<AppointmentInformation> appointmentInformationList;
 
-    // ------------------------------ constructors ------------------------------
-    public StoreManagersInfo(String store_name, List<AppointmentInformation> appointmentInformationList) {
-
+    public StoreManagersInfo(String store_name, HashMap<String, Appointment> managers) {
         this.store_name = store_name;
-        this.appointmentInformationList = appointmentInformationList;
+        this.managers = managers;
     }
 
-    public StoreManagersInfo() {
+    public String get_management_information() {
+        StringBuilder answer = new StringBuilder("Store name :" + this.store_name + "\n");
+        for (Appointment appointment : this.managers.values())
+        {
+            answer.append(appointment.toString()).append("\n");
+        }
+        return answer.toString();
     }
 
-    public void setStore_name(String store_name) {
-        this.store_name = store_name;
+    public Appointment getMemberAppopintment(String email){
+        return this.managers.get(email);
     }
-
-    public void setAppointmentInformationList(List<AppointmentInformation> appointmentInformationList) {
-        this.appointmentInformationList = appointmentInformationList;
-    }
-
-    public String getStore_name() {
-        return store_name;
-    }
-
-    public List<AppointmentInformation> getAppointmentInformationList() {
-        return appointmentInformationList;
-    }
-
-    // ------------------------------ getters ------------------------------
-
-
-
-    // ------------------------------ setters ------------------------------
-
-
-
-    // ------------------------------ methods ------------------------------
-
-
 }

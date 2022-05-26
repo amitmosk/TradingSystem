@@ -4,7 +4,4 @@ public class LoginException extends UserExcpetion {
     public LoginException(String s) {
         super(s);
     }
-
-    public LoginException() {
-    }
 }

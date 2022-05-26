@@ -107,7 +107,7 @@ class MarketFacadeTest {
     @MethodSource("user_info_provider1")
     void register(String email, String pw, String name, String lastName) {
         //case 1
-        Response res = facade1.register(email, pw, name, lastName, birth_date);
+        Response<User> res = facade1.register(email, pw, name, lastName, birth_date);
         boolean was_exception = check_was_exception(res); // regular register
         assertFalse(was_exception, "failed with regular register");
         Response<String> user_email_res = facade1.get_user_email();
@@ -419,14 +419,14 @@ class MarketFacadeTest {
     @Test
     void edit_name() {
         boolean result;
-        result = check_was_exception(facade1.edit_name( "Eylon")); // edit name with no user connected
+        result = check_was_exception(facade1.edit_name("pass3Chec", "Eylon")); // edit name with no user connected
         assertTrue(result);
         facade1.login("check123456@email.com", "pass3Chec");
-        result = check_was_exception(facade1.edit_name("Eylon")); // edit name with user connected
+        result = check_was_exception(facade1.edit_name("pass3Chec", "Eylon")); // edit name with user connected
         assertFalse(result);
-        result = check_was_exception(facade1.edit_name( "")); // edit name to empty name with user connected
+        result = check_was_exception(facade1.edit_name("pass3Chec", "")); // edit name to empty name with user connected
         assertTrue(result);
-        result = check_was_exception(facade1.edit_name("EylonintHamellonit")); // edit name to invalid name with user connected
+        result = check_was_exception(facade1.edit_name("pass3Chec", "EylonintHamellonit")); // edit name to invalid name with user connected
         assertTrue(result);
         facade1.logout();
     }
@@ -441,14 +441,14 @@ class MarketFacadeTest {
     @Test
     void edit_last_name() {
         boolean result;
-        result = check_was_exception(facade1.edit_last_name("Eylon")); // edit last name with no user connected
+        result = check_was_exception(facade1.edit_last_name("pass3Chec", "Eylon")); // edit last name with no user connected
         assertTrue(result);
         facade1.login("check123456@email.com", "pass3Chec");
-        result = check_was_exception(facade1.edit_last_name( "Eylon")); // edit last name with user connected
+        result = check_was_exception(facade1.edit_last_name("pass3Chec", "Eylon")); // edit last name with user connected
         assertFalse(result);
-        result = check_was_exception(facade1.edit_last_name( "")); // edit last name to empty last name with user connected
+        result = check_was_exception(facade1.edit_last_name("pass3Chec", "")); // edit last name to empty last name with user connected
         assertTrue(result);
-        result = check_was_exception(facade1.edit_last_name( "EylonintHamellonit")); // edit last name to invalid last name with user connected
+        result = check_was_exception(facade1.edit_last_name("pass3Chec", "EylonintHamellonit")); // edit last name to invalid last name with user connected
         assertTrue(result);
         facade1.logout();
     }

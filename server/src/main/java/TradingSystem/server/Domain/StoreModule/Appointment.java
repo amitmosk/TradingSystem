@@ -14,9 +14,9 @@ import static TradingSystem.server.Domain.StoreModule.StorePermission.*;
 
 public class Appointment {
     // -- fields
-    private AssignUser member;
-    private AssignUser appointer;
-    private Store store;
+    private final AssignUser member;
+    private final AssignUser appointer;
+    private final Store store;
 
     private StoreManagerType type;
     private HashMap<StorePermission,Integer> permissions;
@@ -41,8 +41,6 @@ public class Appointment {
         }
     }
 
-    public Appointment() {
-    }
 
     // -- init permissions methods
     private void set_manager_permissions(){
@@ -123,13 +121,6 @@ public class Appointment {
         return store;
     }
 
-    public StoreManagerType getType() {
-        return type;
-    }
-
-    public HashMap<StorePermission, Integer> getPermissions() {
-        return permissions;
-    }
     // -- setters
     private void set_permission(StorePermission key, boolean value){
         if (value)
@@ -137,26 +128,6 @@ public class Appointment {
         else
             this.permissions.put(key, 0);
 
-    }
-
-    public void setMember(AssignUser member) {
-        this.member = member;
-    }
-
-    public void setAppointer(AssignUser appointer) {
-        this.appointer = appointer;
-    }
-
-    public void setStore(Store store) {
-        this.store = store;
-    }
-
-    public void setType(StoreManagerType type) {
-        this.type = type;
-    }
-
-    public void setPermissions(HashMap<StorePermission, Integer> permissions) {
-        this.permissions = permissions;
     }
 
     // -- methods

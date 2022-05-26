@@ -6,14 +6,8 @@ import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public abstract class AssignState {
-    public AssignState() {
-    }
-
-    public boolean login(String pw) throws MarketException{
+    public boolean login(String pw) throws MarketException, Exception {
         throw new AlreadyRegisterdException("Assign user cannot log in");
     }
 
@@ -48,37 +42,37 @@ public abstract class AssignState {
         throw new NoPremssionException("only admin have permissions for this operation.");
     }
 
-    public void unregister(String password) throws MarketException {
+    public void unregister(String password) throws Exception {
         throw new NoUserRegisterdException("guest cant unregister from the system");
     }
 
-    public void edit_name(String new_name) throws MarketException {
+    public void edit_name(String pw, String new_name) throws MarketException, Exception {
         throw new NoUserRegisterdException("guest cant change is name");
     }
 
-    public void edit_password(String old_password, String password) throws MarketException {
+    public void edit_password(String old_password, String password) throws Exception {
         throw new NoUserRegisterdException("guest cant change is password");
     }
 
-    public void edit_last_name(String new_last_name) throws MarketException {
+    public void edit_last_name(String pw, String new_last_name) throws Exception {
         throw new NoUserRegisterdException("guest cant change his last name");
     }
 
-    public String view_security_question() throws MarketException {
+    public String get_security_question() throws Exception {
         throw new NoUserRegisterdException("guest does not have privacy question");
     }
 
-    public void verify_answer(String answer) throws MarketException {
+    public void verify_answer(String answer) throws Exception {
         throw new NoUserRegisterdException("guest does not have privacy question");
     }
 
-    public void improve_security(String password, String question, String answer) throws MarketException {
+    public void improve_security(String password, String question, String answer) throws Exception {
         throw new NoUserRegisterdException("guest cannot improve security");
     }
 
     public void add_founder(Store store, Appointment appointment) throws MarketException {throw new NoUserRegisterdException("guest cannot be a founder");}
 
-    public AssignUser is_assign() throws NoUserRegisterdException {throw new NoUserRegisterdException("cannot get guest AssignUser");}
+    public AssignUser get_assign() throws NoUserRegisterdException {throw new NoUserRegisterdException("cannot get guest AssignUser");}
 
     public void add_notification(String notification) throws NoUserRegisterdException { throw new NoUserRegisterdException("cannot add notification to guest");}
 
@@ -92,7 +86,4 @@ public abstract class AssignState {
     public void remove_appointment(Store store) throws MarketException {throw new NoUserRegisterdException("guest cannot be appointed");}
 
 
-    public UserState find_state(){return UserState.GUEST;}
-
-    public List<Integer> stores_managers_list() {return new LinkedList<>();}
-    }
+}

@@ -8,7 +8,6 @@ public enum StorePermission
     edit_item_price,
     edit_item_category,
     edit_item_keywords,
-    edit_item_quantity,
     view_permissions,
     view_users_questions,
     edit_store_policy,

@@ -12,8 +12,6 @@ import TradingSystem.server.Domain.Utils.Utils;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -33,41 +31,6 @@ public class User {
         this.birth_date = LocalDate.now().toString();
     }
 
-    public AssignState getState() {
-        return state;
-    }
-
-    public AtomicBoolean getIsGuest() {
-        return isGuest;
-    }
-
-    public AtomicBoolean getIsLogged() {
-        return isLogged;
-    }
-
-    public String getBirth_date() {
-        return birth_date;
-    }
-
-    public void setState(AssignState state) {
-        this.state = state;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public void setIsGuest(AtomicBoolean isGuest) {
-        this.isGuest = isGuest;
-    }
-
-    public void setIsLogged(AtomicBoolean isLogged) {
-        this.isLogged = isLogged;
-    }
-
-    public void setBirth_date(String birth_date) {
-        this.birth_date = birth_date;
-    }
 
     private void checkDetails(String email, String pw, String name, String lastName) throws MarketException {
         Utils.emailValidCheck(email);
@@ -88,12 +51,11 @@ public class User {
         isGuest.set(false);
     }
 
-    public synchronized void login(String password) throws MarketException {
+    public synchronized void login(String password) throws Exception {
         if (isLogged.get())
             throw new LoginException("User already logged in.");
         this.state.login(password); //verifies password
         boolean res = this.isLogged.compareAndSet(false, true);
-        this.isGuest.compareAndSet(true,false);
         if (!res)
             throw new LoginException("User already logged in - concurrency");
     }
@@ -102,7 +64,6 @@ public class User {
         if (isGuest.get()) throw new NoUserRegisterdException("failed to logout from guest");
         if (!this.isLogged.compareAndSet(true, false))
             throw new NoUserRegisterdException("failed to logout user - concurrency problem");
-        this.isGuest.compareAndSet(false,true);
     }
 
     public Cart getCart() {
@@ -112,7 +73,7 @@ public class User {
     public Basket getBasketByStoreID(int storeID) {
         String email = "guest";
         try {
-            email = user_email();
+            email = get_user_email();
         } catch (Exception e) {
         }
         return cart.getBasket(storeID, email);
@@ -126,7 +87,7 @@ public class User {
         cart.removeBasketIfNeeded(storeID, storeBasket);
     }
 
-    public Map<Store, Basket> view_baskets() {
+    public Map<Store, Basket> getBaskets() {
         return cart.getBaskets();
     }
 
@@ -158,15 +119,15 @@ public class User {
         return this.state.view_user_purchase_history();
     }
 
-    public String user_name() throws MarketException {
+    public String get_user_name() throws MarketException {
         return state.get_user_name();
     }
 
-    public String user_last_name() throws MarketException {
+    public String get_user_last_name() throws MarketException {
         return state.get_user_last_name();
     }
 
-    public String user_email() throws MarketException {
+    public String get_user_email() throws MarketException {
         return state.get_user_email();
     }
 
@@ -174,23 +135,23 @@ public class User {
         state.check_admin_permission();
     }
 
-    public void unregister(String password) throws MarketException {
+    public void unregister(String password) throws Exception {
         state.unregister(password);
     }
 
-    public void edit_name(String new_name) throws MarketException {
+    public void edit_name(String pw, String new_name) throws Exception {
         Utils.nameValidCheck(new_name);
-        state.edit_name(new_name);
+        state.edit_name(pw, new_name);
     }
 
-    public void edit_password(String old_password, String password) throws MarketException {
+    public void edit_password(String old_password, String password) throws Exception {
         Utils.passwordValidCheck(password);
         state.edit_password(old_password, password);
     }
 
-    public void edit_last_name(String new_last_name) throws MarketException {
+    public void edit_last_name(String pw, String new_last_name) throws Exception {
         Utils.nameValidCheck(new_last_name);
-        state.edit_last_name(new_last_name);
+        state.edit_last_name(pw, new_last_name);
     }
 
     public void set_admin(String email, String pw, String name, String lastName) throws MarketException {
@@ -198,30 +159,30 @@ public class User {
         this.state = new Admin(email, pw, name, lastName);
     }
 
-    public String user_security_question() throws MarketException {
-        return this.state.view_security_question();
+    public String get_user_sequrity_question() throws Exception {
+        return this.state.get_security_question();
     }
 
-    private void verify_answer(String answer) throws MarketException {
+    private void verify_answer(String answer) throws Exception {
         this.state.verify_answer(answer);
     }
 
-    public void edit_name_premium(String new_name, String answer) throws MarketException {
+    public void edit_name_premium(String pw, String new_name, String answer) throws Exception {
         verify_answer(answer);
-        edit_name(new_name);
+        edit_name(pw, new_name);
     }
 
-    public void edit_last_name_premium(String new_last_name, String answer) throws MarketException {
+    public void edit_last_name_premium(String pw, String new_last_name, String answer) throws Exception {
         verify_answer(answer);
-        edit_last_name(new_last_name);
+        edit_last_name(pw, new_last_name);
     }
 
-    public void edit_password_premium(String old_password, String new_password, String answer) throws MarketException {
+    public void edit_password_premium(String old_password, String new_password, String answer) throws Exception {
         verify_answer(answer);
         edit_password(old_password, new_password);
     }
 
-    public void improve_security(String password, String question, String answer) throws MarketException {
+    public void improve_security(String password, String question, String answer) throws Exception {
         this.state.improve_security(password, question, answer);
     }
 
@@ -232,7 +193,7 @@ public class User {
     private String get_identifier_for_basket() {
         String identifier = "guest";
         try {
-            identifier = user_email();
+            identifier = get_user_email();
         } catch (Exception e) {
         }
         return identifier;
@@ -251,8 +212,8 @@ public class User {
         this.state.add_founder(store, appointment);
     }
 
-    public AssignUser state_if_assigned() throws NoUserRegisterdException {
-        return this.state.is_assign();
+    public AssignUser get_state_if_assigned() throws NoUserRegisterdException {
+        return this.state.get_assign();
     }
 
     public Admin is_admin() {
@@ -264,20 +225,14 @@ public class User {
     }
 
     //TODO: method for testing
-    public boolean test_isRegistered() {
+    public boolean isRegistered() {
         return !isGuest.get();
     }
 
-    public boolean test_isLogged(){return this.isLogged.get();}
+    public boolean isLogged() {
+        return this.isLogged.get();
+    }
 
     public void add_notification(String notification) {
-    }
-
-    public UserState find_state() {
-        return state.find_state();
-    }
-
-    public List<Integer> stores_managers_list() {
-        return state.stores_managers_list();
     }
 }

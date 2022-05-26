@@ -11,7 +11,6 @@ public class ProductReview {
         reviews = new HashMap<>();
         rating = new HashMap<>();
     }
-
     public void add_review(String user_email, String review) {
         this.reviews.put(user_email, review);
     }
@@ -19,23 +18,11 @@ public class ProductReview {
         this.rating.put(user_email, rating);
     }
 
-    // ----------------------------------- getters -------------------------------------
-
     public Map<String, Integer> getRating() {
         return rating;
     }
 
     public Map<String, String> getReviews() {
         return reviews;
-    }
-
-    // ------------------------------------ setters -------------------------------------
-
-    public void setReviews(Map<String, String> reviews) {
-        this.reviews = reviews;
-    }
-
-    public void setRating(Map<String, Integer> rating) {
-        this.rating = rating;
     }
 }

@@ -4,7 +4,4 @@ public class ShippingException extends MarketException {
     ShippingException(String s) {
         super(s);
     }
-
-    public ShippingException() {
-    }
 }

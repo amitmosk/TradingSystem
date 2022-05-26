@@ -2,33 +2,25 @@ package TradingSystem.server.Domain.StoreModule.Product;
 
 import TradingSystem.server.Domain.Utils.Exception.ProductCreatingException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Product {
-    private int product_id;
+    private final int product_id;
     private String name;
     private String category;
     private List<String> key_words;
     private double price;
     private ProductReview productReview;
-    private int store_id;
 
-    // --------------------------------- constructors --------------------------------------------
-    public Product(String name, int product_id, double price, String category, List<String> key_words, int store_id) throws ProductCreatingException {
+    public Product(String name, int product_id, double price, String category, List<String> key_words) throws ProductCreatingException {
         this.name = name;
         this.product_id = product_id;
         if (price <= 0)
-            throw new ProductCreatingException("price must be more then 0");
+            throw new ProductCreatingException("price must be more then 1");
         this.price = price;
         this.productReview = new ProductReview();
         this.category = category;
         this.key_words = key_words;
-        this.store_id = store_id;
-    }
-
-    public Product() {
     }
 
     // -- Public Methods
@@ -43,11 +35,6 @@ public class Product {
 
 
     // -- Getters
-
-
-    public int getStore_id() { return store_id; }
-
-    public void setStore_id(int store_id) { this.store_id = store_id; }
 
     public String getName() {
         return name;
@@ -74,9 +61,6 @@ public class Product {
     }
 
     // -- Setters
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
-    }
 
     public void setPrice(double price) {
         this.price = price;

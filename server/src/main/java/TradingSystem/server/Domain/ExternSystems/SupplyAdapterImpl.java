@@ -15,14 +15,6 @@ public class SupplyAdapterImpl implements SupplyAdapter {
         return this.externSupplySystemProxy.supply(supplyInfo);
     }
 
-    public void setExternSupplySystemProxy(ExternSupplySystemProxy externSupplySystemProxy) {
-        this.externSupplySystemProxy = externSupplySystemProxy;
-    }
-
-    public ExternSupplySystemProxy getExternSupplySystemProxy() {
-        return externSupplySystemProxy;
-    }
-
     @Override
     public boolean can_supply(String supplyInfo) {
         return this.externSupplySystemProxy.can_supply(supplyInfo);

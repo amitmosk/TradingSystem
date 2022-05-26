@@ -14,8 +14,6 @@ public interface iQuestionController {
 
     void answer_user_question(int question_id, String answer) throws ObjectDoesntExsitException;
 
-    List<String> get_all_user_questions(String user_email);
-
     List<String> view_buyers_to_store_questions(int store_id);
 
     List<String> view_users_to_admin_questions();

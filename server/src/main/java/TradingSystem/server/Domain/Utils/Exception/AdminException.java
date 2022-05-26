@@ -4,7 +4,4 @@ public class AdminException extends UserExcpetion {
     public AdminException(String s) {
         super(s);
     }
-
-    public AdminException() {
-    }
 }

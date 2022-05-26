@@ -8,17 +8,24 @@ public class StorePurchase {
     private Purchase purchase;
     private int purchase_id;
 
-    // ------------------------------ constructors ------------------------------
     public StorePurchase(Purchase purchase, String buyer_email, int purchase_id) {
         this.buyer_email = buyer_email;
         this.purchase = purchase;
         this.purchase_id = purchase_id;
     }
 
-    public StorePurchase() {
-    }
+    @Override
+    public String toString() {
+        return "StorePurchase{" +
+                "buyer_email='" + buyer_email + '\'' +
+                ", totalPrice=" + this.getTotalPrice() +
+                ", transaction_date=" + this.getTransaction_date() +
+                ", product_and_quantity=" + this.getProduct_and_quantity() +
+                ", product_and_totalPrice=" + this.getProduct_and_totalPrice() +
+                ", product_and_name=" + this.getProduct_and_name() +
 
-    // ------------------------------ getters ------------------------------
+                '}';
+    }
 
     public Integer getPurchase_id()
     {
@@ -52,34 +59,6 @@ public class StorePurchase {
 
     public String getBuyer_email() {
         return buyer_email;
-    }
-
-    // ------------------------------ setters ------------------------------
-
-
-    public void setBuyer_email(String buyer_email) {
-        this.buyer_email = buyer_email;
-    }
-
-    public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
-    }
-
-    public void setPurchase_id(int purchase_id) {
-        this.purchase_id = purchase_id;
-    }
-
-    @Override
-    public String toString() {
-        return "StorePurchase{" +
-                "buyer_email='" + buyer_email + '\'' +
-                ", totalPrice=" + this.getTotalPrice() +
-                ", transaction_date=" + this.getTransaction_date() +
-                ", product_and_quantity=" + this.getProduct_and_quantity() +
-                ", product_and_totalPrice=" + this.getProduct_and_totalPrice() +
-                ", product_and_name=" + this.getProduct_and_name() +
-
-                '}';
     }
 }
 

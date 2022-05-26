@@ -1,11 +1,9 @@
 package TradingSystem.server.Domain.Facade;
 
+import java.util.LinkedList;
 import java.util.List;
 
-import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
-import TradingSystem.server.Domain.Questions.QuestionController;
-import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
-
+import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
@@ -14,11 +12,10 @@ import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
-import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.UserModule.*;
 import TradingSystem.server.Domain.Utils.ErrorLogger;
-import TradingSystem.server.Domain.Utils.Exception.*;
+import TradingSystem.server.Domain.Utils.Exception.LoginException;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
@@ -29,12 +26,12 @@ import TradingSystem.server.Domain.Utils.Utils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
-import java.util.*;
+
+import java.util.Map;
 
 // TODO: when we leave the system - should call logout()
 
 public class MarketFacade {
-    public static final Object lock = new Object();
     private UserController user_controller;
     private StoreController store_controller;
     private int loggedUser;                  //id
@@ -43,6 +40,7 @@ public class MarketFacade {
     private SupplyAdapter supply_adapter;
     private ErrorLogger error_logger;
     private SystemLogger system_logger;
+    Object lock = new Object();
 
     public MarketFacade(PaymentAdapter payment_adapter, SupplyAdapter supply_adapter) {
         this.isGuest = true;
@@ -63,14 +61,14 @@ public class MarketFacade {
      *
      * @return a string with informative of success/failure to client
      */
-    public Response<UserInformation> logout() {
-        Response<UserInformation> response = null;
+
+    public Response<String> logout() {
+        Response<String> response = null;
         try {
-            User user = user_controller.logout(loggedUser);
+            user_controller.logout(loggedUser);
             this.isGuest = true;
-            UserInformation user_inform = new UserInformation(user);
             system_logger.add_log("User logged out from the system.");
-            response = new Response(user_inform, "Logout Successfully");
+            response = new Response(null, "Logout Successfully");
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -115,8 +113,7 @@ public class MarketFacade {
             User user = user_controller.login(loggedUser, Email, password);
             String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
             isGuest = false;
-            UserInformation userInformation = new UserInformation(user);
-            response = new Response<>(userInformation, "Hey " + user_name + ", Welcome to the trading system market!");
+            response = new Response<>(user, "Hey +" + user_name + ", Welcome to the trading system market!");
             system_logger.add_log("User " + Email + " logged-in");
         } catch (Exception e) {
             response = Utils.CreateResponse(new LoginException(" "));
@@ -138,7 +135,7 @@ public class MarketFacade {
             StoreInformation storeInformation = new StoreInformation(store);
             response = new Response<>(storeInformation, "Store information received successfully");
             system_logger.add_log("Store (" + store_id + ") information found successfully.");
-        } catch (Exception e) {
+        } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -152,13 +149,14 @@ public class MarketFacade {
      * @param store_id   who has the product
      * @return product information or action failure reason
      */
-    public Response<Product> find_product_information(int product_id, int store_id) {
-        Response<Product> response = null;
+    public Response<ProductInformation> find_product_information(int product_id, int store_id) {
+        Response<ProductInformation> response = null;
         try {
             Product product = this.store_controller.find_product_information(product_id, store_id);
-            response = new Response<>(product, "Product information received successfully");
+            ProductInformation productInformation = new ProductInformation(product);
+            response = new Response<>(productInformation, "Product information received successfully");
             system_logger.add_log("Product (" + product_id + " from store " + store_id + ") information found successfully.");
-        } catch (Exception e) {
+        } catch (MarketException e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -586,13 +584,15 @@ public class MarketFacade {
     /**
      * Requirement 2.3.8 - edit
      *
+     * @param pw       password
      * @param new_name new first name
      * @return success/failure message
      */
-    public Response<String> edit_name(String new_name) {
+
+    public Response<String> edit_name(String pw, String new_name) {
         Response<String> response = null;
         try {
-            String email = user_controller.edit_name(loggedUser, new_name);
+            String email = user_controller.edit_name(loggedUser, pw, new_name);
             response = new Response<>(new_name, email + " name changed to " + new_name);
             system_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
 
@@ -606,13 +606,15 @@ public class MarketFacade {
     /**
      * Requirement 2.3.8 - edit
      *
+     * @param pw            password
      * @param new_last_name new last name
      * @return success/failure message
      */
-    public Response<String> edit_last_name(String new_last_name) {
+
+    public Response<String> edit_last_name(String pw, String new_last_name) {
         Response<String> response = null;
         try {
-            String email = user_controller.edit_last_name(loggedUser, new_last_name);
+            String email = user_controller.edit_last_name(loggedUser, pw, new_last_name);
             response = new Response<>(new_last_name, email + " last name changed to " + new_last_name);
             system_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
 
@@ -650,16 +652,17 @@ public class MarketFacade {
     /**
      * Requirement 2.3.8 - edit
      *
+     * @param pw       password
      * @param new_name new first name
      * @param answer   for the security question
      * @return success/failure message
      */
 
 
-    public Response<String> edit_name_premium(String new_name, String answer) {
+    public Response<String> edit_name_premium(String pw, String new_name, String answer) {
         Response<String> response = null;
         try {
-            String email = user_controller.edit_name_premium(loggedUser, new_name, answer);
+            String email = user_controller.edit_name_premium(loggedUser, pw, new_name, answer);
             response = new Response<>(new_name, email + " name changed to " + new_name);
             system_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
 
@@ -673,15 +676,17 @@ public class MarketFacade {
     /**
      * Requirement 2.3.8 - edit
      *
+     * @param pw            password
      * @param new_last_name new last name
      * @param answer        for the security question
      * @return success/failure message
      */
 
-    public Response<String> edit_last_name_premium(String new_last_name, String answer) {
+
+    public Response<String> edit_last_name_premium(String pw, String new_last_name, String answer) {
         Response<String> response = null;
         try {
-            String email = user_controller.edit_last_name_premium(loggedUser, new_last_name, answer);
+            String email = user_controller.edit_last_name_premium(loggedUser, pw, new_last_name, answer);
             response = new Response<>(new_last_name, email + " last name changed to " + new_last_name);
             system_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
 
@@ -704,7 +709,7 @@ public class MarketFacade {
     public Response<String> edit_password_premium(String old_password, String new_password, String answer) {
         Response<String> response = null;
         try {
-            String email = user_controller.edit_password_premium(loggedUser, old_password, new_password, answer);
+            String email = user_controller.edit_passsword_premium(loggedUser, old_password, new_password, answer);
             response = new Response<>(null, email + " password changed");
             system_logger.add_log("User's (" + email + ") password has been successfully changed.");
 
@@ -1101,12 +1106,21 @@ public class MarketFacade {
             this.store_controller.edit_product_key_words(user, product_id, store_id, key_words);
             response = new Response<>(null, "Product key_words edit successfully");
             system_logger.add_log("Product's (" + product_id + ") key words have been changed to " + key_words + " in store (" + store_id + ")");
+
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
         return response;
     }
+
+
+    /**
+     * Requirement 2.4.3
+     *
+     * @param store_id
+     * @return success/failure message
+     */
 
 
     /**
@@ -1292,12 +1306,13 @@ public class MarketFacade {
      * @param store_id - the store we want to get information about
      * @return store management information or failure message
      */
-    public Response<StoreManagersInfo> view_store_management_information(int store_id) {
-        Response<StoreManagersInfo> response = null;
+
+    public Response<String> view_store_management_information(int store_id) {
+        Response<String> response = null;
         try {
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
-            StoreManagersInfo answer = this.store_controller.view_store_management_information(user, store_id);
+            String answer = this.store_controller.view_store_management_information(user, store_id);
             response = new Response<>(answer, "Store information received successfully");
             system_logger.add_log("Store's (" + store_id + ") management information has been viewed by user (" + user_email + ")");
         } catch (Exception e) {
@@ -1362,12 +1377,13 @@ public class MarketFacade {
      * @return store purchase history or failure message
      */
 
-    public Response<Collection<StorePurchase>> view_store_purchases_history(int store_id) {
-        Response<Collection<StorePurchase>> response = null;
+
+    public Response<StorePurchaseHistory> view_store_purchases_history(int store_id) {
+        Response<StorePurchaseHistory> response = null;
         try {
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
-            Collection<StorePurchase> answer = this.store_controller.view_store_purchases_history(user, store_id).getPurchaseID_purchases().values();
+            StorePurchaseHistory answer = this.store_controller.view_store_purchases_history(user, store_id);
             response = new Response<>(answer, "Store purchases history received successfully");
             system_logger.add_log("User received (" + user_email + ") store's (" + store_id + ") purchase history successfully.");
 
@@ -1419,7 +1435,7 @@ public class MarketFacade {
             user_controller.remove_user(loggedUser, email);
             // remove user from all owners and managers
             // remove all users complains & questions
-            response = new Response<>(email, email + " Has been removed successfully from the system");
+            response = new Response<>(email, email + "Has been removed successfully from the system");
             system_logger.add_log("Removed user (" + email + ") from the system.");
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
@@ -1533,14 +1549,10 @@ public class MarketFacade {
     }
 
     public Response get_all_stores() {
-        Response<List<StoreInformation>> response = null;
+        Response<Map<Integer,Store>> response = null;
         try {
             Map<Integer, Store> stores = store_controller.get_all_stores();
-            List<StoreInformation> map = new ArrayList<>();
-            for(Map.Entry<Integer,Store> en : stores.entrySet()){
-                map.add(new StoreInformation(en.getValue()));
-            }
-            response = new Response(map, "Received market stores successfully");
+            response = new Response(stores, "Received market stores successfully");
             system_logger.add_log("received market stores successfully.");
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
@@ -1550,14 +1562,10 @@ public class MarketFacade {
     }
 
     public Response get_products_by_store_id(int store_id) {
-        Response<List<ProductInformation>> response = null;
+        Response<Map<Product, Integer>> response = null;
         try {
-            List<Product> products = store_controller.get_products_by_store_id(store_id);
-            List<ProductInformation> products_information = new ArrayList<>();
-            for(Product p:products){
-                products_information.add(new ProductInformation(p,0));
-            }
-            response = new Response(products_information, "Received store products successfully");
+            Map<Product, Integer> products = store_controller.get_products_by_store_id(store_id);
+            response = new Response(products, "Received store products successfully");
             system_logger.add_log("received market stores successfully.");
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
@@ -1584,46 +1592,4 @@ public class MarketFacade {
         store_controller.clear();
     }
 
-    public Response get_user_questions() {
-        Response<List<String>> response = null;
-        try {
-            String user_email = this.user_controller.get_email(this.loggedUser);
-            List<String> user_questions = QuestionController.getInstance().get_all_user_questions(user_email);
-            response = new Response<>(user_questions, "user questions received successfully");
-            system_logger.add_log("User's (" + user_email + ") questions has been viewed.");
-
-        } catch (Exception e) {
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    public Response edit_product_quantity(int product_id, int store_id, int quantity) {
-        Response<String> response = null;
-        try {
-            User user = user_controller.get_user(loggedUser);
-            this.store_controller.edit_product_quantity(user, product_id, store_id, quantity);
-            response = new Response<>(null, "Product quantity edit successfully");
-            system_logger.add_log("Product (" + product_id + ") quantity has been changed to " + quantity + " in store (" + store_id + ")");
-
-        } catch (Exception e) {
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    public Response online_user() {
-        Response<UserInformation> response = null;
-        try {
-            User user = user_controller.get_user(loggedUser);
-            UserInformation userInformation = new UserInformation(user);
-            response = new Response<>(userInformation, "");
-        } catch (Exception e) {
-            response = Utils.CreateResponse(new MarketException("failed to fetch user - connection error"));
-            error_logger.add_log(e);
-        }
-        return response;
-    }
 }

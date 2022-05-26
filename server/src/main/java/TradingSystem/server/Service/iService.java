@@ -2,10 +2,6 @@ package TradingSystem.server.Service;
 
 
 
-import TradingSystem.server.Domain.StoreModule.StorePermission;
-import TradingSystem.server.Domain.Utils.Response;
-
-import java.util.LinkedList;
 import java.util.List;
 
 public interface iService {
@@ -106,8 +102,8 @@ public interface iService {
     TradingSystem.server.Domain.Utils.Response get_user_last_name();
 
     TradingSystem.server.Domain.Utils.Response unregister(String password);
-    TradingSystem.server.Domain.Utils.Response edit_name(String new_name);
-    TradingSystem.server.Domain.Utils.Response edit_last_name(String new_last_name);
+    TradingSystem.server.Domain.Utils.Response edit_name(String pw, String new_name);
+    TradingSystem.server.Domain.Utils.Response edit_last_name(String pw, String new_last_name);
     TradingSystem.server.Domain.Utils.Response edit_password(String pw, String password);
 
 
@@ -116,8 +112,8 @@ public interface iService {
      * Requirement 2.3.9
      */
 
-    TradingSystem.server.Domain.Utils.Response edit_name_premium(String new_name, String answer);
-    TradingSystem.server.Domain.Utils.Response edit_last_name_premium(String new_last_name, String answer);
+    TradingSystem.server.Domain.Utils.Response edit_name_premium(String pw, String new_name, String answer);
+    TradingSystem.server.Domain.Utils.Response edit_last_name_premium(String pw, String new_last_name, String answer);
     TradingSystem.server.Domain.Utils.Response edit_password_premium(String pw, String password, String answer);
 
     TradingSystem.server.Domain.Utils.Response get_user_security_question();
@@ -129,7 +125,7 @@ public interface iService {
 
 
     TradingSystem.server.Domain.Utils.Response add_product_to_store(int store_id, int quantity, String name, double price,
-                                String category, String key_words);
+                                String category, List<String> key_words);
 
     TradingSystem.server.Domain.Utils.Response delete_product_from_store(int product_id, int store_id);
 
@@ -139,8 +135,7 @@ public interface iService {
 
     TradingSystem.server.Domain.Utils.Response edit_product_category(int product_id, int store_id, String category);
 
-    TradingSystem.server.Domain.Utils.Response edit_product_key_words(int product_id, int store_id, String key_words);
-    TradingSystem.server.Domain.Utils.Response edit_product_quantity(int product_id, int store_id, int quantity);
+    TradingSystem.server.Domain.Utils.Response edit_product_key_words(int product_id, int store_id, List<String> key_words);
 
     /**
      * Requirement 2.4.2
@@ -172,7 +167,7 @@ public interface iService {
     /**
      * Requirement 2.4.7
      */
-    TradingSystem.server.Domain.Utils.Response edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions);
+//    TradingSystem.server.Domain.Utils.Response edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions);
 
     /**
      * Requirement 2.4.8
@@ -234,11 +229,5 @@ public interface iService {
      * Requirement 2.6.5
      */
     TradingSystem.server.Domain.Utils.Response get_market_stats();
-
-    // additional methods
-
-    TradingSystem.server.Domain.Utils.Response get_products_by_store_id(int store_id);
-    TradingSystem.server.Domain.Utils.Response get_all_stores();
-    TradingSystem.server.Domain.Utils.Response online_user();
 
 }

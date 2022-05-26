@@ -5,17 +5,13 @@ import TradingSystem.server.Domain.UserModule.AssignUser;
 import java.time.LocalDate;
 
 public abstract class Question {
-    protected int question_id;
-    protected String message_date;
+    protected final int question_id;
+    protected final String message_date;
     protected String answer_date;
     protected String message;
     protected String answer;
     protected boolean has_answer;
-    protected AssignUser sender; // assign user
-
-    // ---------------------- Constructor ---------------------------------------
-    public Question() {
-    }
+    protected final AssignUser sender; // assign user
 
     public Question(int question_id, String message, AssignUser sender) {
         this.question_id = question_id;
@@ -26,9 +22,10 @@ public abstract class Question {
 
     }
 
-    // --------------------- getters --------------------------------------------
-    public int getQuestion_id() {
-        return question_id;
+    public void setAnswer(String answer) {
+        this.answer = answer;
+        this.has_answer = true;
+        this.answer_date = LocalDate.now().toString();
     }
 
     public String getMessage() {
@@ -42,41 +39,4 @@ public abstract class Question {
     public AssignUser getSender() {
         return sender;
     }
-
-    public String getMessage_date() {
-        return message_date;
-    }
-
-    public String getAnswer_date() {
-        return answer_date;
-    }
-
-    public boolean isHas_answer() {
-        return has_answer;
-    }
-
-    // -------------------------------- setters -------------------------------------
-    public void setAnswer_date(String answer_date) {
-        this.answer_date = answer_date;
-    }
-
-    public void setHas_answer(boolean has_answer) {
-        this.has_answer = has_answer;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-        this.has_answer = true;
-        this.answer_date = LocalDate.now().toString();
-    }
-
-    public abstract String toString_for_user();
-
-
-
-
 }

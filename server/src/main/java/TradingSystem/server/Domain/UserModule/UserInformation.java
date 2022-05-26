@@ -2,13 +2,12 @@ package TradingSystem.server.Domain.UserModule;
 
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 
 public class UserInformation {
-    private int state;
+    private UserState state;
     private String email;
     private String name;
     private String lastName;
@@ -20,30 +19,24 @@ public class UserInformation {
     public UserInformation(){}
 
     public UserInformation(User user) throws MarketException {
+        this.email = user.user_email();
+        this.state = user.find_state();
+        this.name = user.user_name();
+        this.lastName = user.user_last_name();
+        this.birth_date = user.getBirth_date();
+        this.cart = user.getCart().cartInformation();
+        this.storesManaged = user.stores_managers_list();
         try {
-            this.email = user.user_email();
-            this.state = user.find_state().ordinal();
-            this.name = user.user_name();
-            this.lastName = user.user_last_name();
-            this.birth_date = user.getBirth_date();
-            this.cart = user.getCart().cartInformation();
-            this.storesManaged = user.stores_managers_list();
-            try {
-                this.security_question = user.user_security_question();
-            }catch (Exception e){
-                this.security_question = "";
-            }
+            this.security_question = user.user_sequrity_question();
         }
         catch (Exception e){
-            this.email = "Guest";
-            this.state = user.find_state().ordinal();
-            this.name = "Guest";
-            this.lastName = "";
-            this.birth_date = user.getBirth_date();
-            this.cart = user.getCart().cartInformation();
-            this.storesManaged = new ArrayList<>();
             this.security_question = "";
+
         }
+    }
+
+    public void setState(UserState state) {
+        this.state = state;
     }
 
     public void setEmail(String email) {
@@ -74,12 +67,8 @@ public class UserInformation {
         this.security_question = security_question;
     }
 
-    public int getState() {
+    public UserState getState() {
         return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
     }
 
     public String getEmail() {

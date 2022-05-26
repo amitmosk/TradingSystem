@@ -4,7 +4,4 @@ public class UserNeverBoughtInTheStoreException extends MarketException {
     public UserNeverBoughtInTheStoreException(String s) {
         super(s);
     }
-
-    public UserNeverBoughtInTheStoreException() {
-    }
 }

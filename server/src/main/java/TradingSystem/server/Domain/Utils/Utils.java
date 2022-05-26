@@ -15,9 +15,6 @@ import java.util.regex.Pattern;
 
 public class Utils {
 
-    public Utils() {
-    }
-
     public static String DateToString(LocalDate d) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -33,40 +30,39 @@ public class Utils {
             return new Response<>("there is a user who is register to the system from this network right now.", e);
         if (e instanceof AppointmentException)
             return new Response<>("this action wont work because of appointment rules", e);
-//        if (e instanceof BasketException)
-//            return new Response<>("the system cant preform this action on the shopping basket.", e);
+        if (e instanceof BasketException)
+            return new Response<>("the system cant preform this action on the shopping basket.", e);
         if (e instanceof LoginException)
             return new Response<>("the system cant preform login.", e);
         if (e instanceof NoPremssionException)
             return new Response<>("you dont have permission to do this action.", e);
         if (e instanceof NoUserRegisterdException)
-            return new Response<>("this action cannot perform by guest - please log in or register.", e);
-//        if (e instanceof ObjectDoesntExsitException)
-//            return new Response<>("the object doesnt Exists.", e);
-//        if (e instanceof ProductAddingException)
-//            return new Response<>("cant add the product.", e);
-//        if (e instanceof ProductCreatingException)
-//            return new Response<>("cant create the product.", e);
-//        if (e instanceof PurchaseException)
-//            return new Response<>("cant preform the purchase.", e);
-//        if (e instanceof RegisterException)
-//            return new Response<>("cant register to the system.", e);
+            return new Response<>("there is no user currently connected to the system.", e);
+        if (e instanceof ObjectDoesntExsitException)
+            return new Response<>("the object doesnt Exists.", e);
+        if (e instanceof ProductAddingException)
+            return new Response<>("cant add the product.", e);
+        if (e instanceof ProductCreatingException)
+            return new Response<>("cant create the product.", e);
+        if (e instanceof PurchaseException)
+            return new Response<>("cant preform the purchase.", e);
+        if (e instanceof RegisterException)
+            return new Response<>("cant register to the system.", e);
         if (e instanceof MarketSecuirtyException)
             return new Response<>("this action violate our security protocols please try again.", e);
-//        if (e instanceof ShippingException)
-//            return new Response<>("cant ship to the desired address", e);
+        if (e instanceof ShippingException)
+            return new Response<>("cant ship to the desired address", e);
         if (e instanceof StoreException)
             return new Response<>("this action wont work because of appointment rules", e);
         if (e instanceof StoreMethodException)
             return new Response<>("this action wont work because of store rules", e);
-//        if (e instanceof UserExcpetion)
-//            return new Response<>("this action wont work because of user ruels", e);
+        if (e instanceof UserExcpetion)
+            return new Response<>("this action wont work because of user ruels", e);
         if (e instanceof UserNeverBoughtInTheStoreException)
             return new Response<>("the user never bought from the store", e);
-//        if (e instanceof WrongPermterException)
-//            return new Response<>("wrong parameter entered. ", e);
-//        return new Response<>("the action didnt worked,try again", e);
-        return new Response<>(e.getMessage(),e);
+        if (e instanceof WrongPermterException)
+            return new Response<>("wrong parameter entered. ", e);
+        return new Response<>("the action didnt worked,try again", e);
     }
 
     public static Date StringToDate(String s) {

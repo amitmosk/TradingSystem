@@ -4,7 +4,7 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.UserModule.User;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class Predict implements Ipredict {
@@ -113,10 +113,10 @@ public class Predict implements Ipredict {
 
     //TODO improve time formats allowed
     private boolean check_valid_time() {
-        LocalDate localDate = LocalDate.now();
-        int year = localDate.getYear();
-        int month = localDate.getMonthValue();
-        int day = localDate.getDayOfMonth();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        int year = localDateTime.getYear();
+        int month = localDateTime.getMonthValue();
+        int day = localDateTime.getDayOfMonth();
         if (time_constraint) {
             if (equql)
                 return year == this.year && month == this.month && this.day == day;
