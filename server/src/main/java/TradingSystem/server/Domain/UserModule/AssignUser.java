@@ -9,6 +9,8 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Service.NotificationHandler;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 // TODO: everytime user creates/appoint a store make an appointment
@@ -23,6 +25,7 @@ public class AssignUser extends AssignState {
     private Map<Store, Appointment> owner;
     private Map<Store,Appointment> manager;
 
+    // ------------------------------ constructors ------------------------------
     public AssignUser(String email, String pw, String name, String lastName) {
         this.email = email;
         this.security = new Security(pw);
@@ -34,8 +37,79 @@ public class AssignUser extends AssignState {
         this.manager = new HashMap<>();
     }
 
+    public AssignUser() {
+    }
+
+    // ------------------------------ getters ------------------------------
+    public String getEmail() {
+        return email;
+    }
+
+    public Security getSecurity() {
+        return security;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public UserPurchaseHistory getUserPurchaseHistory() {
+        return userPurchaseHistory;
+    }
+
+    public Map<Store, Appointment> getFounder() {
+        return founder;
+    }
+
+    public Map<Store, Appointment> getOwner() {
+        return owner;
+    }
+
+    public Map<Store, Appointment> getManager() {
+        return manager;
+    }
+
+    // ------------------------------ setters ------------------------------
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSecurity(Security security) {
+        this.security = security;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setUserPurchaseHistory(UserPurchaseHistory userPurchaseHistory) {
+        this.userPurchaseHistory = userPurchaseHistory;
+    }
+
+    public void setFounder(Map<Store, Appointment> founder) {
+        this.founder = founder;
+    }
+
+    public void setOwner(Map<Store, Appointment> owner) {
+        this.owner = owner;
+    }
+
+    public void setManager(Map<Store, Appointment> manager) {
+        this.manager = manager;
+    }
+
+    // ------------------------------ methods ------------------------------
+
     @Override
-    public boolean login(String pw) throws Exception {
+    public boolean login(String pw) throws MarketException {
         security.check_correct_password(pw);
         return true;
     }
@@ -75,34 +149,32 @@ public class AssignUser extends AssignState {
     }
 
     @Override
-    public void unregister(String password) throws Exception {
+    public void unregister(String password) throws MarketException {
         security.check_correct_password(password);
     }
 
-    public void edit_name(String pw, String new_name) throws Exception {
-        security.check_correct_password(pw);
+    public void edit_name(String new_name) {
         this.name = new_name;
     }
 
-    public void edit_password(String old_password, String password) throws Exception {
+    public void edit_password(String old_password, String password) throws MarketException {
         this.security.edit_password(old_password, password);
 
     }
 
-    public void edit_last_name(String pw, String new_last_name) throws Exception {
-        security.check_correct_password(pw);
-        this.name = new_last_name;
+    public void edit_last_name(String new_last_name) {
+        this.lastName = new_last_name;
     }
 
-    public String get_security_question() throws Exception {
-        return security.get_question();
+    public String view_security_question() throws MarketException {
+        return security.find_question();
     }
 
-    public void verify_answer(String answer) throws Exception {
+    public void verify_answer(String answer) throws MarketException {
         security.verify_answer(answer);
     }
 
-    public void improve_security(String password, String question, String answer) throws Exception {
+    public void improve_security(String password, String question, String answer) throws MarketException {
         security.check_correct_password(password);
         security.check_improvable();
         security = new PremiumSecurity(password, question, answer);
@@ -136,9 +208,26 @@ public class AssignUser extends AssignState {
             throw new AppointmentException("user is not appointed to store");
     }
 
-    public AssignUser get_assign(){
+    public AssignUser is_assign(){
         return this;
     }
+
+    public UserState find_state(){return UserState.ASSIGN_USER;}
+
+    public List<Integer> stores_managers_list() {
+        LinkedList<Integer> answer = new LinkedList();
+        for (Store store : this.founder.keySet()){
+            answer.add(store.getStore_id());
+        }
+        for (Store store : this.owner.keySet()){
+            answer.add(store.getStore_id());
+        }
+        for (Store store : this.manager.keySet()){
+            answer.add(store.getStore_id());
+        }
+        return answer;
+    }
+
 
     public void add_notification(String notification) {
         NotificationHandler.getInstance().add_notification(this.email, notification);

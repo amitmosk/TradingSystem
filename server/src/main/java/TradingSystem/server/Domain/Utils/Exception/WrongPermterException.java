@@ -4,4 +4,7 @@ public class WrongPermterException extends MarketException{
     public WrongPermterException(String s) {
         super(s);
     }
+
+    public WrongPermterException() {
+    }
 }

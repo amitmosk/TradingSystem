@@ -7,12 +7,35 @@ public class UserPurchase {
     private Map<Integer, Purchase> store_id_purchase;
     private double total_price;
 
-
+    // ------------------------------ constructors ------------------------------
     public UserPurchase(int purchase_id, Map<Integer, Purchase> store_id_purchase, double total_price) {
         this.purchase_id = purchase_id;
         this.store_id_purchase = store_id_purchase;
         this.total_price = total_price;
     }
+
+    // ------------------------------ getters ------------------------------
+
+
+    public Map<Integer, Purchase> getStore_id_purchase() {
+        return store_id_purchase;
+    }
+
+    // ------------------------------ setters ------------------------------
+
+    public void setPurchase_id(int purchase_id) {
+        this.purchase_id = purchase_id;
+    }
+
+    public void setStore_id_purchase(Map<Integer, Purchase> store_id_purchase) {
+        this.store_id_purchase = store_id_purchase;
+    }
+
+    public void setTotal_price(double total_price) {
+        this.total_price = total_price;
+    }
+
+    // ------------------------------ methods ------------------------------
 
     public boolean bought_from_store(int storeID){
         return store_id_purchase.containsKey(storeID);

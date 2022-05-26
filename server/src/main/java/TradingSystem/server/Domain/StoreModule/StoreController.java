@@ -22,6 +22,7 @@ public class StoreController {
     private ConcurrentHashMap<Integer, Store> stores;
     private AtomicInteger store_ids_counter;
     private AtomicInteger purchase_ids_counter;
+    private AtomicInteger products_id;
     private Object storesLock;
 
     private static StoreController instance = null;
@@ -37,6 +38,7 @@ public class StoreController {
         this.purchase_ids_counter = new AtomicInteger(1);
         this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
+        this.products_id = new AtomicInteger(1);
     }
 
     public static void load() {
@@ -53,7 +55,7 @@ public class StoreController {
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
     public void set_store_purchase_policy(int store_id, User user, PurchasePolicy policy) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         store.setPurchasePolicy(assignUser, policy);
     }
@@ -67,7 +69,7 @@ public class StoreController {
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
     public void set_store_discount_policy(int store_id, User user, DiscountPolicy policy) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         store.setDiscountPolicy(assignUser, policy);
     }
@@ -79,18 +81,10 @@ public class StoreController {
      * @throws if the user is not store founder OR the store or the user are not exist.
      */
     public void close_store_temporarily(User user, int store_id) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
         store.close_store_temporarily(assignUser);
     }
-
-    /**
-     * @param store_id represent the store we want to set new rule for
-     * @param rule     the method you need to enforce
-     * @return false if the store was already open, and true if the store were re-open
-     * @throws if the user is not store founder OR the store or the user are not exist.
-     */
-
 
     /**
      * @param store_id represent the store we asked to re-open
@@ -99,7 +93,7 @@ public class StoreController {
      * @throws if the user is not store founder OR the store or the user are not exist.
      */
     public void open_close_store(User user, int store_id) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         if (!this.stores.containsKey(store_id)) {
             throw new ObjectDoesntExsitException("The store is not exist - store id: " + store_id);
         }
@@ -117,8 +111,8 @@ public class StoreController {
      * @throws IllegalArgumentException if the user asking change his own permissions.
      */
     public void edit_manager_specific_permissions(User user, User manager, int store_id, List<StorePermission> permissions) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
-        AssignUser assignManager = manager.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
+        AssignUser assignManager = manager.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
         store.set_permissions(assignUser, assignManager, permissions);
     }
@@ -130,11 +124,11 @@ public class StoreController {
      * @throws IllegalArgumentException if the store not exist,
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
-    public String view_store_management_information(User user, int store_id) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+    public StoreManagersInfo view_store_management_information(User user, int store_id) throws MarketException {
+        AssignUser assignUser = user.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
         StoreManagersInfo info = store.view_store_management_information(assignUser);
-        return info.get_management_information();
+        return info;
     }
 
     /**
@@ -145,7 +139,7 @@ public class StoreController {
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
     public List<String> view_store_questions(User user, int store_id) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
         return store.view_store_questions(assignUser);
     }
@@ -159,7 +153,7 @@ public class StoreController {
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
     public void answer_question(User user, int store_id, int question_id, String answer) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
         store.answer_question(assignUser, question_id, answer);
     }
@@ -172,7 +166,7 @@ public class StoreController {
      * @throws IllegalAccessException   the user doesn't have the relevant permission.
      */
     public StorePurchaseHistory view_store_purchases_history(User user, int store_id) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
         return store.view_store_purchases_history(assignUser);
     }
@@ -271,38 +265,38 @@ public class StoreController {
 
     public Map<Product,Integer> add_product_to_store(User user, int store_id, int quantity, String name, double price, String category, List<String> key_words)
             throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         return store.add_product(assignUser, name, price, category, key_words, quantity);
     }
 
     public Map<Product, Integer> delete_product_from_store(User user, int product_id, int store_id) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         return store.delete_product(product_id, assignUser);
     }
 
     //------------------------------------------------ edit product - Start ----------------------------------------------
     public void edit_product_name(User user, int product_id, int store_id, String name) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id); //trows exceptions
         store.edit_product_name(assignUser, product_id, name);
     }
 
     public void edit_product_price(User user, int product_id, int store_id, double price) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         store.edit_product_price(assignUser, product_id, price);
     }
 
     public void edit_product_category(User user, int product_id, int store_id, String category) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         store.edit_product_category(assignUser, product_id, category);
     }
 
     public void edit_product_key_words(User user, int product_id, int store_id, List<String> key_words) throws MarketException {
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id);
         store.edit_product_key_words(assignUser, product_id, key_words);
     }
@@ -355,9 +349,9 @@ public class StoreController {
     }
 
     public int open_store(User founder, String store_name) throws MarketException {
-        AssignUser founder_state = founder.get_state_if_assigned();
+        AssignUser founder_state = founder.state_if_assigned();
         int store_id = this.store_ids_counter.getAndIncrement();
-        Store store = new Store(store_id, store_name, founder_state);
+        Store store = new Store(store_id, store_name, founder_state,products_id);
         Appointment appointment = store.appoint_founder();
         founder.add_founder(store, appointment);
         this.stores.put(store_id, store);
@@ -376,7 +370,7 @@ public class StoreController {
     }
 
     public void rate_store(User user, int store_id, int rate) throws MarketException {
-        AssignUser user_state = user.get_state_if_assigned();
+        AssignUser user_state = user.state_if_assigned();
         Store to_rate = this.get_store_by_store_id(store_id);//throw exceptions
         to_rate.add_store_rating(user_state, rate);
     }
@@ -387,35 +381,35 @@ public class StoreController {
     }
 
     public void add_owner(User appointer, User user_to_appoint, int store_id) throws MarketException {
-        AssignUser appointer_state = appointer.get_state_if_assigned();
-        AssignUser to_appoint_state = user_to_appoint.get_state_if_assigned();
+        AssignUser appointer_state = appointer.state_if_assigned();
+        AssignUser to_appoint_state = user_to_appoint.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);//throws
         store.add_owner(appointer_state, to_appoint_state);
     }
 
     public void add_manager(User appointer, User user_to_appoint, int store_id) throws MarketException {
-        AssignUser appointer_state = appointer.get_state_if_assigned();
-        AssignUser to_appoint_state = user_to_appoint.get_state_if_assigned();
+        AssignUser appointer_state = appointer.state_if_assigned();
+        AssignUser to_appoint_state = user_to_appoint.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);//throws
         store.add_manager(appointer_state, to_appoint_state);
     }
 
     public void remove_manager(User remover, User user_to_delete_appointment, int store_id) throws MarketException {
-        AssignUser remover_state = remover.get_state_if_assigned();
-        AssignUser to_remove_state = user_to_delete_appointment.get_state_if_assigned();
+        AssignUser remover_state = remover.state_if_assigned();
+        AssignUser to_remove_state = user_to_delete_appointment.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);//throws
         store.remove_manager(remover_state, to_remove_state);
     }
 
     public void remove_owner(User remover, User user_to_delete_appointment, int store_id) throws MarketException {
-        AssignUser remover_state = remover.get_state_if_assigned();
-        AssignUser to_remove_state = user_to_delete_appointment.get_state_if_assigned();
+        AssignUser remover_state = remover.state_if_assigned();
+        AssignUser to_remove_state = user_to_delete_appointment.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);//throws
         store.remove_owner(remover_state, to_remove_state);
     }
 
     public void add_question(User user, int store_id, String question) throws MarketException {
-        AssignUser user_state = user.get_state_if_assigned();
+        AssignUser user_state = user.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
         store.add_question(user_state, question);
     }
@@ -436,6 +430,27 @@ public class StoreController {
         this.purchase_ids_counter = new AtomicInteger(1);
         this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
+        this.products_id = new AtomicInteger(1);
+    }
+
+    public Map<Integer,Store> get_all_stores() {
+        return this.stores;
+    }
+
+    public List<Product> get_products_by_store_id(int store_id) throws MarketException {
+        Store store = this.get_store_by_store_id(store_id);
+        List<Product> to_return=new LinkedList<>();
+        for(Product p:store.getInventory().keySet())
+        {
+            to_return.add(p);
+        }
+        return to_return;
+    }
+
+    public void edit_product_quantity(User user, int product_id, int store_id, int quantity) throws MarketException {
+        AssignUser assignUser = user.state_if_assigned();
+        Store store = get_store_by_store_id(store_id); //trows exceptions
+        store.edit_product_quantity(assignUser, product_id, quantity);
     }
 }
 

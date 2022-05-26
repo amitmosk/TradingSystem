@@ -4,4 +4,7 @@ public class RegisterException extends UserExcpetion {
     public RegisterException(String s) {
         super(s);
     }
+
+    public RegisterException() {
+    }
 }

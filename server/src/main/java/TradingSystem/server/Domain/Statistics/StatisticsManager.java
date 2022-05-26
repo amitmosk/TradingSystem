@@ -1,6 +1,7 @@
 package TradingSystem.server.Domain.Statistics;
 
 import java.time.LocalDate;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -27,26 +28,36 @@ public class StatisticsManager implements iStatisticsManager {
 
     private long get_login_statistics() {
         long mins = get_total_minutes_system_on();
+        if (login_count.get() == 0)
+            return 0;
         return mins / login_count.get();
     }
 
     private long get_logout_statistics() {
         long mins = get_total_minutes_system_on();
+        if (logout_count.get() == 0)
+            return 0;
         return mins / logout_count.get();
     }
 
     private long get_connect_system_statistics() {
         long mins = get_total_minutes_system_on();
+        if (connect_system_count.get() == 0)
+            return 0;
         return mins / connect_system_count.get();
     }
 
     private long get_register_statistics() {
         long mins = get_total_minutes_system_on();
+        if (register_count.get() == 0)
+            return 0;
         return mins / register_count.get();
     }
 
     private long get_buy_cart_statistics() {
         long mins = get_total_minutes_system_on();
+        if (buy_cart_count.get() == 0)
+            return 0;
         return mins / buy_cart_count.get();
     }
 

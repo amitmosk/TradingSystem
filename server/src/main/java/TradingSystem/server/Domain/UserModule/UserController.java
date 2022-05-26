@@ -120,11 +120,11 @@ public class UserController {
      * @param password the user password
      * @return the status if log-in succeed
      */
-    public User login(int ID, String email, String password) throws Exception {
+    public User login(int ID, String email, String password) throws MarketException {
         if (isRegistered(email)) {
             User cur_user = onlineUsers.get(ID);
             User user = users.get(email);
-            if(cur_user.isLogged())
+            if(cur_user.test_isLogged())
                 throw new LoginException("cannot log in from logged in user");
             user.login(password); //verifies if the user is logged and password & changes state.
             onlineUsers.put(ID, user);
@@ -138,11 +138,12 @@ public class UserController {
     /**
      * @param ID online user's id to logout
      */
-    public void logout(int ID) throws MarketException {
+    public User logout(int ID) throws MarketException {
         User user = onlineUsers.get(ID);
         user.logout();
         onlineUsers.put(ID, new User());
         statisticsManager.inc_logout_count();
+        return user;
     }
 
     /**
@@ -199,7 +200,7 @@ public class UserController {
      */
     public Map<Store, Basket> getBaskets(int loggedUser) {
         User user = onlineUsers.get(loggedUser);
-        return user.getBaskets();
+        return user.view_baskets();
     }
 
 
@@ -244,17 +245,17 @@ public class UserController {
 
     public String get_user_name(int loggedUser) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        return user.get_user_name();
+        return user.user_name();
     }
 
     public String get_user_last_name(int loggedUser) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        return user.get_user_last_name();
+        return user.user_last_name();
     }
 
     public String get_email(int loggedUser) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        return user.get_user_email();
+        return user.user_email();
     }
 
     public void check_admin_permission(int loggedUser) throws MarketException {
@@ -273,7 +274,7 @@ public class UserController {
     private void remove_email_from_online_users(String email) { //if exists
         for (Map.Entry<Integer, User> entry : onlineUsers.entrySet()) {
             try {
-                if (entry.getValue().get_user_email().equals(email)) {
+                if (entry.getValue().user_email().equals(email)) {
                     onlineUsers.remove(entry.getKey());
                     return;
                 }
@@ -295,7 +296,7 @@ public class UserController {
         }
     }
 
-    public String unregister(int ID, String password) throws Exception {
+    public String unregister(int ID, String password) throws MarketException {
         String email = get_email(ID);
         User user = onlineUsers.get(ID);
         user.unregister(password);
@@ -306,21 +307,21 @@ public class UserController {
         return email;
     }
 
-    public String edit_name(int loggedUser, String pw, String new_name) throws Exception {
+    public String edit_name(int loggedUser, String new_name) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        user.edit_name(pw, new_name);
+        user.edit_name(new_name);
         return get_email(loggedUser);
     }
 
-    public String edit_password(int loggedUser, String old_password, String password) throws Exception {
+    public String edit_password(int loggedUser, String old_password, String password) throws MarketException {
         User user = onlineUsers.get(loggedUser);
         user.edit_password(old_password, password);
         return get_email(loggedUser);
     }
 
-    public String edit_last_name(int loggedUser, String pw, String new_last_name) throws Exception {
+    public String edit_last_name(int loggedUser, String new_last_name) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        user.edit_last_name(pw, new_last_name);
+        user.edit_last_name(new_last_name);
         return get_email(loggedUser);
     }
 
@@ -332,7 +333,7 @@ public class UserController {
 
     public void send_question_to_admin(int loggedUser, String question) throws NoUserRegisterdException {
         User user = onlineUsers.get(loggedUser);
-        AssignUser assignUser = user.get_state_if_assigned();
+        AssignUser assignUser = user.state_if_assigned();
         QuestionController.getInstance().add_user_question(question, assignUser);
         List<Admin> adminsList = this.get_admins();
         for (Admin admin : adminsList){
@@ -359,30 +360,30 @@ public class UserController {
         return admin;
     }
 
-    public String get_user_security_question(int loggedUser) throws Exception {
+    public String get_user_security_question(int loggedUser) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        return user.get_user_sequrity_question();
+        return user.user_security_question();
     }
 
-    public String edit_name_premium(int loggedUser, String pw, String new_name, String answer) throws Exception {
+    public String edit_name_premium(int loggedUser, String new_name, String answer) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        user.edit_name_premium(pw, new_name, answer);
+        user.edit_name_premium(new_name, answer);
         return get_email(loggedUser);
     }
 
-    public String edit_last_name_premium(int loggedUser, String pw, String new_last_name, String answer) throws Exception {
+    public String edit_last_name_premium(int loggedUser, String new_last_name, String answer) throws MarketException {
         User user = onlineUsers.get(loggedUser);
-        user.edit_last_name_premium(pw, new_last_name, answer);
+        user.edit_last_name_premium(new_last_name, answer);
         return get_email(loggedUser);
     }
 
-    public String edit_passsword_premium(int loggedUser, String old_password, String new_password, String answer) throws Exception {
+    public String edit_password_premium(int loggedUser, String old_password, String new_password, String answer) throws MarketException {
         User user = onlineUsers.get(loggedUser);
         user.edit_password_premium(old_password, new_password, answer);
         return get_email(loggedUser);
     }
 
-    public String improve_security(int loggedUser, String password, String question, String answer) throws Exception {
+    public String improve_security(int loggedUser, String password, String question, String answer) throws MarketException {
         User user = onlineUsers.get(loggedUser);
         user.improve_security(password, question, answer);
         return get_email(loggedUser);

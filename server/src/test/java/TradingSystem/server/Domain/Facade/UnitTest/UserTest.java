@@ -108,12 +108,12 @@ class UserTest {
 
         try{
             user.login("pssw0rD");
-            assertTrue(user.isLogged(),"user should be logged in");
+            assertTrue(user.test_isLogged(),"user should be logged in");
             user.logout();
             user.login("pssw02rD");
-            assertFalse(user.isLogged(),"logged in with invalid password");
+            assertFalse(user.test_isLogged(),"logged in with invalid password");
             user.login("pssw0rD");
-            assertTrue(user.isLogged(),"failed to log in offline user with his password");
+            assertTrue(user.test_isLogged(),"failed to log in offline user with his password");
         }
         catch (Exception e){}
 
@@ -123,10 +123,9 @@ class UserTest {
     void edit_name(){
 
         try{
-            user.edit_name("pssw0rD", "Gal");
-            assertEquals("Gal", user.get_user_name());
-            user.edit_name("psddsw0rD", "Eylon");
-            assertEquals("Gal", user.get_user_name());
+            user.edit_name( "Gal");
+            assertEquals("Gal", user.user_name());
+
         }
         catch (Exception e){}
     }
