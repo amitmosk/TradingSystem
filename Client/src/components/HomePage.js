@@ -13,14 +13,15 @@ import { Row } from "react-grid-system";
 import HomeProductsTable from "./HomeProductsTable";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { propSatisfies } from "ramda";
 
 
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "Guest",
-      
+      state : props.user.state,
+      username: props.user.name,
       stores: [],
       open_store_fields: ["Store name"],
       send_question_to_admin_fields: ["Enter your question"],
@@ -58,6 +59,7 @@ export default class HomePage extends Component {
     // alert(response.message);
     if (!response.was_exception) {
       this.setState({ snackbar: { children: response.message, severity: "success" } });
+      console.log(response)
       const user = response.value;
       this.props.updateUserState(user);
     }
@@ -113,6 +115,7 @@ export default class HomePage extends Component {
         <h1 style={{ color: "white" }}>-------------------------</h1>
         <h1 style={{ color: "white" }}>-------------------------</h1>
         <Grid container direction="row" justifyContent="space-evenly">
+          {this.state.state !== 0? (<>
           <FormDialog
             fields={this.state.open_store_fields}
             getValues={this.open_store.bind(this)}
@@ -122,10 +125,11 @@ export default class HomePage extends Component {
             fields={this.state.send_question_to_admin_fields}
             getValues={this.send_question_to_admin.bind(this)}
             name="Send question to admin"
-          ></FormDialog>
-          <Link href="/AdminPage" underline="hover">
+          ></FormDialog></>):null}
+          {this.state.state === 2?<>
+            <Link href="/AdminPage" underline="hover">
             {"Admin Operations"}
-          </Link>
+          </Link></>:null}
         </Grid>
         {!!this.state.snackbar && (
     <Snackbar

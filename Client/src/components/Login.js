@@ -58,8 +58,7 @@ export default class Login extends Component {
         // alert(response.message);
         if (!response.was_exception)
         {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
-
+            
             // login success
             const user = response.value;
             this.props.updateUserState(user);
@@ -67,6 +66,7 @@ export default class Login extends Component {
             // open seb socket
             // this.open_web_socket();
             // return to home page and update properties (change state of App to assign user).
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             return (<Navigate to="/"/>)
         }
         else{

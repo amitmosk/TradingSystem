@@ -16,13 +16,15 @@ export class User  {
         this.storesManaged = data.storesManaged;
         this.security_question = data.security_question;
     }
-
+    
     static guest(){
+        
+
         return new User({
             state : GUEST,
             email :"",
             name :"Guest",
-            lastName : "last",
+            lastName : "",
             birth_date : "12-12-2021",
             cart : "",
             storesManaged : "",

@@ -539,5 +539,13 @@ public class Service implements iService {
         Response answer = marketFacade.edit_manager_permissions(manager_email, store_id, permissions);
         return answer;
     }
+
+    @RequestMapping(value = "/online_user")
+    @CrossOrigin
+    @Override
+    public Response online_user() {
+        Response answer = marketFacade.online_user();
+        return answer;
+    }
 }
 

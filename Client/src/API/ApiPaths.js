@@ -11,6 +11,7 @@ export const CATCH="CATCH";
 export const LOGIN_PATH = API_PATH + '/login';
 export const LOGOUT_PATH = API_PATH + '/logout';
 export const REGISTER_PATH = API_PATH + '/register';
+export const ONLINE_USER_PATH = API_PATH + '/online_user'
 
 // ========= Store ========== //
 

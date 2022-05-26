@@ -138,11 +138,12 @@ public class UserController {
     /**
      * @param ID online user's id to logout
      */
-    public void logout(int ID) throws MarketException {
+    public User logout(int ID) throws MarketException {
         User user = onlineUsers.get(ID);
         user.logout();
         onlineUsers.put(ID, new User());
         statisticsManager.inc_logout_count();
+        return user;
     }
 
     /**

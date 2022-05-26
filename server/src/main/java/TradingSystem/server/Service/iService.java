@@ -239,5 +239,6 @@ public interface iService {
 
     TradingSystem.server.Domain.Utils.Response get_products_by_store_id(int store_id);
     TradingSystem.server.Domain.Utils.Response get_all_stores();
+    TradingSystem.server.Domain.Utils.Response online_user();
 
 }

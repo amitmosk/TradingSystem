@@ -13,6 +13,7 @@ import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.UserModule.*;
 import TradingSystem.server.Domain.Utils.ErrorLogger;
 import TradingSystem.server.Domain.Utils.Exception.LoginException;
+import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
@@ -57,13 +58,14 @@ public class MarketFacade{
      *
      * @return a string with informative of success/failure to client
      */
-    public Response<String> logout() {
-        Response<String> response = null;
+    public Response<UserInformation> logout() {
+        Response<UserInformation> response = null;
         try {
-            user_controller.logout(loggedUser);
+            User user = user_controller.logout(loggedUser);
             this.isGuest = true;
+            UserInformation user_inform = new UserInformation(user);
             system_logger.add_log("User logged out from the system.");
-            response = new Response(null, "Logout Successfully");
+            response = new Response(user_inform, "Logout Successfully");
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1436,6 +1438,19 @@ public class MarketFacade{
 
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response online_user() {
+        Response<UserInformation> response = null;
+        try {
+            User user = user_controller.get_user(loggedUser);
+            UserInformation userInformation = new UserInformation(user);
+            response = new Response<>(userInformation, "");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(new MarketException("failed to fetch user - connection error"));
             error_logger.add_log(e);
         }
         return response;
