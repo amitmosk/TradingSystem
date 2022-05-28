@@ -60,29 +60,29 @@ export default class StoreProductsTable extends Component {
           </>
         ),
       },
-      // {
-      //   field: "Go To Product",
-      //   headerName: "Go To Product",
-      //   width: 250,
-      //   // Important: passing id from customers state so I can delete or edit each user
-      //   renderCell: (id) => (
-      //     <>
-      //       {/* <IconButton
-      //         color="primary"
-      //         aria-label="go to product page"
-      //         onClick={() => this.go_to_product(id)}
-      //       >
-      //         <AddShoppingCartOutlined />
-      //       </IconButton> */}
-      //       <Link to={{pathname:`ProductPage/${1}`, state:{product_id:1, store_id:1 } }}   underline="hover" >{   <IconButton
-      //         color="primary"
-      //         aria-label="store"
-      //       >
-      //         <AddShoppingCartOutlined />
-      //       </IconButton>}</Link>
-      //     </>
-      //   ),
-      // },
+      {
+        field: "Go To Product",
+        headerName: "Go To Product",
+        width: 250,
+        // Important: passing id from customers state so I can delete or edit each user
+        renderCell: (id) => (
+          <>
+            {/* <IconButton
+              color="primary"
+              aria-label="go to product page"
+              onClick={() => this.go_to_product(id)}
+            >
+              <AddShoppingCartOutlined />
+            </IconButton> */}
+            <Link to={{pathname:`ProductPage/${this.state.items.find((i) => id.id === i.id).id}`, state:{product_id:2, store_id:2 } }}   underline="hover" >{   <IconButton
+              color="primary"
+              aria-label="store"
+            >
+              <AddShoppingCartOutlined />
+            </IconButton>}</Link>
+          </>
+        ),
+      },
       
     ];
   }

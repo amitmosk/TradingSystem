@@ -40,13 +40,12 @@ export default class ProductPage extends Component {
             key_words:undefined,
             price:undefined,
             productReview:undefined,
-            option:"name",
-            val:undefined,
             add_product_review_fields:["Review"],
         };
         this.storeApi = new StoreApi();
         this.productApi = new ProductApi();
         this.handleInputChange = this.handleInputChange.bind(this);
+        console.log("in product page, product id = "+this.state.product_id+" store id = "+this.state.store_id);
 
     } 
     handleInputChange(event) {
@@ -66,15 +65,17 @@ export default class ProductPage extends Component {
       let product_res =  await this.productApi.find_product_information(this.state.product_id, this.state.store_id) ;
       let product = product_res.value;
       console.log("response = "+product_res);
-        // alert(product_res.message);
+        alert(product_res.message);
+        
       this.setState({
         name: product.name,
         category:product.category,
         key_words:product.key_words,
         price:product.price,
         productReview:product.productReview,
-        val:product.name,
     });
+    console.log("review ="+this.productReview);
+    console.log("in product page - component did mount");
       
  
     }
@@ -96,59 +97,10 @@ export default class ProductPage extends Component {
     }
     
 }
-async edit_product(option, val) {
-    console.log("in edit product");
-    console.log(option);
-    switch (option) {
-        case "keywords":
-            this.edit_product_key_words(val)
-            break;
-        case "category":
-            this.find_product_by_category(val)
-            break;
-        case "price":
-            this.edit_product_price(val)
-            break;
-        case "name":
-            this.edit_product_name(val)
-            break;
-        default:
-            console.log("option is empty");
-    }
-}
-
-async add_product_review(values) {
-    console.log("in add product review");
-    const review = values[0];
-    console.log(review);
-    const store_id = this.state.store_id;
-    const product_id = this.state.product_id;
-    let response = await this.productApi.add_product_review(product_id, store_id, review);
-    console.log("response = "+response);
-    alert(response.message);
-    if (!response.was_exception)
-    {
-        //reload product
-
-    }
-    else{
-
-    }
-}
 
 
-async edit_product_key_words(val) {
-    console.log("in edit_product_key_words");
-    let response = await this.productApi.edit_product_key_words(val);
-    alert(response.message);
-        if (!response.was_exception) {
-            console.log("in edit_product_key_words- success");
-        }
-        else {
-            console.log("in edit_product_key_words - fail");
-        }
-    
-}
+
+
 
 async find_product_by_category(val) {
     console.log("in find_product_by_category");
@@ -163,30 +115,7 @@ async find_product_by_category(val) {
     
 }
 
-async edit_product_price(val) {
-    console.log("in edit_product_price");
-    let response = await this.productApi.edit_product_price(val);
-    alert(response.message);
-        if (!response.was_exception) {
-            console.log("in edit_product_price- success");
-        }
-        else {
-            console.log("in edit_product_price - fail");
-        }
-    
-}
-async edit_product_name(val) {
-    console.log("in edit_product_name");
-    let response = await this.productApi.edit_product_name(val);
-    alert(response.message);
-        if (!response.was_exception) {
-            console.log("in edit_product_name- success");
-        }
-        else {
-            console.log("in edit_product_name - fail");
-        }
-    
-}
+
 
 
 
@@ -204,12 +133,10 @@ async edit_product_name(val) {
 
     
     render() {
-        const EDIT_PRODUCT = "Edit Product ";
         const {redirectTo} = this.state
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
-                    <Link href="/"><HomeIcon></HomeIcon></Link>
                         {/* <row><h3>Product Name goes here</h3></row> */}
                         <row><h3>{this.state.name}</h3></row>  
                         <Paper >
@@ -228,7 +155,7 @@ async edit_product_name(val) {
                         
                         <div> Category: {this.state.category}</div>
                         <div> Price: {this.state.price}</div>
-                        {this.state.productReview ? <div>{this.state.productReview}</div> : null}
+                        {/* {this.state.productReview ? <div>{this.state.productReview}</div> : null} */}
 
               </Typography>
             </Paper>
@@ -241,7 +168,6 @@ async edit_product_name(val) {
                         
 
                            
-                        <FormDialog fields={this.state.add_product_review_fields} getValues={this.add_product_review.bind(this)} name="Add Review"></FormDialog>
                             
                             <BasicRating to_rate="Product" rating={this.rate_product.bind(this)} />
                             

@@ -70,8 +70,8 @@ export default class HomeProductsTable extends Component {
             >
               <Store />
             </IconButton> */}
-         
-             <Link to={{pathname:`StorePage/${1}`, state:{store_id:1} }}   underline="hover" >{   <IconButton
+              
+             <Link to={{pathname:`StorePage/${this.state.items.find((i) => id.id === i.id).store}`}}   underline="hover" >{   <IconButton
               color="primary"
               aria-label="store"
             >
@@ -85,6 +85,7 @@ export default class HomeProductsTable extends Component {
 
   async componentDidMount() {
     let stores = await this.storeApi.get_all_stores();
+    console.log("stores = " + stores.value);
     let products_list = [];
     stores.value.map((st) =>
       st.inventory.map((p) =>
@@ -99,6 +100,7 @@ export default class HomeProductsTable extends Component {
         })
       )
     );
+    console.log("products = "+products_list);
     this.setState({
       items: products_list,
       products: products_list,
@@ -122,11 +124,11 @@ export default class HomeProductsTable extends Component {
     this.setState({ edited: val });
   };
 
-  go_to_store_page = async (id) => {
+  get_store_id = async (id) => {
     console.log("in go to store id")
     let selected = this.state.items.find((i) => id.id === i.id); // represents selected row
     let selected_store_id = selected.store; // required store_id
-    return (<StorePage store_id={selected_store_id}></StorePage>);
+    return selected_store_id; 
   };
 
   add_to_cart = async (id) => {

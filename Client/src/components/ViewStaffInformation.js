@@ -40,6 +40,7 @@ export default class ViewStaffInformation extends Component {
             staff: [],
         };
         this.storeApi = new StoreApi();
+        console.log("in view stuff information, id = "+this.props.store_id);
 
 
 

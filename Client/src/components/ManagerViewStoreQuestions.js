@@ -52,11 +52,12 @@ export default class ManagerViewStoreQuestions extends Component {
         this.state = { 
             questions:[],
             answer_user_questions_fields: ["question_id", "answer"],
+            store_id:this.props.store_id, 
 
         };
         this.storeApi = new StoreApi();
         // const testvalue = this.props.match.params.testvalue;
-        console.log("yallllaaa");
+        console.log("in manager view user question , id = "+this.props.store_id);
         console.log(this.props);
         // console.log(this.props);
         // console.log(this.props.location);

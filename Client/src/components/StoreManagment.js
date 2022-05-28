@@ -73,6 +73,7 @@ export default class StoreManagment extends Component {
         this.adminApi = new AdminApi();
         this.storeApi = new StoreApi();
         this.handleInputChange = this.handleInputChange.bind(this);
+        console.log("in store managemrnt , store page = "+this.props.store_id);
 
 
     }
@@ -377,7 +378,7 @@ export default class StoreManagment extends Component {
                 <Link to="/"><HomeIcon></HomeIcon></Link>
                 <h3 align="center">Store Managment Page</h3>
                 <Grid>
-                    <StoreManagmentProductsTable store_id={1}></StoreManagmentProductsTable>
+                    <StoreManagmentProductsTable store_id={this.state.store_id}></StoreManagmentProductsTable>
                 </Grid>
                 <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.add_product_fields} getValues={this.add_product.bind(this)} name="Add Product"></FormDialog></Item>                    </Grid>

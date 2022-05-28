@@ -45,6 +45,7 @@ export default class StorePage extends Component {
     };
     this.storeApi = new StoreApi();
     this.find_store_information(this.props.store_id);
+    console.log("store id = "+this.props.store_id);
   }
 
 

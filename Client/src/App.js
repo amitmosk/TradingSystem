@@ -146,7 +146,7 @@ export default class App extends Component {
             }
           ></Route>
           <Route
-            path="/StorePage/:store_id/ProductPage:product_id"
+            path="/StorePage/:store_id/ProductPage/:product_id"
             element={<ProductPageNevigator />}
           ></Route>
           <Route path="/ProductPage" element={<ProductPage />}></Route>
