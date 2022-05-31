@@ -19,7 +19,7 @@ export default class Login extends Component {
             loginError: undefined,
             email: undefined,
             password: undefined,
-            // submitted: this.props.isLoggedIn
+            snackbar: null,
         };
         this.connectApi = new ConnectApi(); 
         this.handleInputChange = this.handleInputChange.bind(this);

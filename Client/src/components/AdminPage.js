@@ -21,6 +21,7 @@ export default class AdminPage extends Component {
             admin_answer_user_question_fields: ["User Email"],
             admin_view_user_purchases_history_fields: ["User Email"],
             admin_view_store_purchases_history_fields: ["Store ID"],
+            snackbar: null,
 
         };
         this.adminApi = new AdminApi();

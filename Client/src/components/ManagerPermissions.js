@@ -9,6 +9,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; 
 import { StoreApi } from '../API/StoreApi';
 
 function not(a, b) {
@@ -24,6 +26,7 @@ function union(a, b) {
 }
 
 export default function ManagerPermissions() {
+    const [snackbar, setSnackbar] = React.useState(null);
     const {store_id, user_email} = useParams();
     const [checked, setChecked] = React.useState([]);
     const [left, setLeft] = React.useState(["Add Item", "Remove Item", "Edit Item Name", "Edit Item Price",
@@ -238,6 +241,19 @@ export default function ManagerPermissions() {
                 </Grid>
             </Grid>
             <Button variant="contained" onClick={hadleSubmit}>Submit</Button>
+            {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
         </>
     );
 }

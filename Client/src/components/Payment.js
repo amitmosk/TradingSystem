@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Button from '@mui/material/Button';
-import { ConnectApi } from '../API/ConnectApi';
 import Link from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';
-const axios = require('axios');
-const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; 
 
 export default class Payment extends Component {
     static displayName = Payment.name;
@@ -16,16 +15,11 @@ export default class Payment extends Component {
             creditnumber: undefined,
             experationdate: undefined,
             cvv: undefined,
+            snackbar: null,
         };
 
     }
-    
-    // handleInputChange(event){
-    //     const target = event.target;
-    //     this.setState({
-    //         [target.name]: target.value
-    //     });
-    // }
+
     
     async handleSubmit(event){
         event.preventDefault();
@@ -48,25 +42,10 @@ export default class Payment extends Component {
         }
     }
     
-    // getUserRole(role){
-    //     return role === "member" ? UserRole.Member :
-    //         role === "admin" ? UserRole.Admin : 
-    //         undefined
-    // }
 
-
-    //async componentDidUpdate()
     
     async componentDidMount() {
-        // const response =await axios.get(EMPLOYEE_BASE_REST_API_URL).then(res => res).catch(err => err);
-        // console.log(response.data);
-        // let x = response;
-        // // this.setState({
-        // //     ["email"]: "response.data.was_exception"
-        // // });
-        
 
-        // return response.data;
 
     }
 
@@ -74,9 +53,8 @@ export default class Payment extends Component {
         let creditnumber = this.state.creditnumber;
         let experationdate = this.state.experationdate;
         let cvv = this.state.cvv;
-        console.log("creditnumber is "+creditnumber+" , experationdate is "+experationdate+", experationdate is "+experationdate+"\n");
-        // let response = await ConnectApi.register(email, password, firstname, lastname);
-        // alert(response.message);
+        console.log("creditnumber is "+creditnumber+" , experationdate is "+experationdate+", experationdate is "+experationdate+" cvv is "+cvv+"\n");
+
     }
     
     render() {
@@ -106,6 +84,19 @@ export default class Payment extends Component {
                                 <Button onClick={() => this.pay()} variant="contained">Pay </Button>
                                 {/* <input class="action" type="submit" value="Login"/> */}
                             </div>
+                            {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
                         </form>
                     </div>
                 </main>

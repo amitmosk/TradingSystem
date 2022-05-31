@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Button from '@mui/material/Button';
-import { ConnectApi } from '../API/ConnectApi';
 import Link from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';
-const axios = require('axios');
-const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; 
 
 export default class Supply extends Component {
     static displayName = Supply.name;
@@ -17,16 +16,11 @@ export default class Supply extends Component {
             city: undefined,
             street: undefined,
             apartmentnumber: undefined,
+            snackbar: null,
         };
 
     }
-    
-    // handleInputChange(event){
-    //     const target = event.target;
-    //     this.setState({
-    //         [target.name]: target.value
-    //     });
-    // }
+
     
     async handleSubmit(event){
         event.preventDefault();
@@ -49,25 +43,9 @@ export default class Supply extends Component {
         }
     }
     
-    // getUserRole(role){
-    //     return role === "member" ? UserRole.Member :
-    //         role === "admin" ? UserRole.Admin : 
-    //         undefined
-    // }
 
-
-    //async componentDidUpdate()
     
     async componentDidMount() {
-        // const response =await axios.get(EMPLOYEE_BASE_REST_API_URL).then(res => res).catch(err => err);
-        // console.log(response.data);
-        // let x = response;
-        // // this.setState({
-        // //     ["email"]: "response.data.was_exception"
-        // // });
-        
-
-        // return response.data;
 
     }
 
@@ -111,6 +89,19 @@ export default class Supply extends Component {
                                 {/* <input class="action" type="submit" value="Login"/> */}
                             </div>
                         </form>
+                        {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
                     </div>
                 </main>
             );

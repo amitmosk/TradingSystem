@@ -50,13 +50,16 @@ const columns = [
       let selected = selected_item[0];
       let response = await productApi.remove_product_from_cart(selected.store_id,selected.id);
       if(response.was_exception)
-        alert(response.message)
+        setSnackbar({ children: response.message, severity: 'error' });
+        // alert(response.message)
       else{
-        alert("product removed succesfully")
+        setSnackbar({ children: "product removed succesfully", severity: 'success' });        
+        // alert("product removed succesfully")
         setItems(items.filter(i=> !selected_row.some(s=> s === i.id)))
         set_selected([]);
       }
     }else
+      setSnackbar({ children: "you should select item to add", severity: 'error' });
       alert("you should select item to add")
   }
 
@@ -66,11 +69,14 @@ const columns = [
       let selected = selected_item[0];
       let response = await productApi.add_product_to_cart(selected.store_id,selected.id,selected.quantity);
       if(response.was_exception)
-        alert(response.message)
+        setSnackbar({ children: response.message, severity: 'error' });
+        // alert(response.message)
       else
-        alert("product added succesfully")
+        setSnackbar({ children: "product added succesfully", severity: 'success' });
+        // alert("product added succesfully")
     }else
-      alert("you should select item to add")
+      setSnackbar({ children: "you should select item to add", severity: 'error' });
+      // alert("you should select item to add")
   }
   
   const [snackbar, setSnackbar] = React.useState(null);

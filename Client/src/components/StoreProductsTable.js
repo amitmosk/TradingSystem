@@ -1,14 +1,9 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import Button from "@mui/material/Button";
 import { ProductApi } from "../API/ProductApi";
-import { Row, Col } from "react-grid-system";
-import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-// import Link from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import { map } from "ramda";
 import { StoreApi } from "../API/StoreApi";
 import { Component } from "react";
 import IconButton from "@mui/material/IconButton";
@@ -67,13 +62,6 @@ export default class StoreProductsTable extends Component {
         // Important: passing id from customers state so I can delete or edit each user
         renderCell: (id) => (
           <>
-            {/* <IconButton
-              color="primary"
-              aria-label="go to product page"
-              onClick={() => this.go_to_product(id)}
-            >
-              <AddShoppingCartOutlined />
-            </IconButton> */}
             <Link to={{pathname:`ProductPage/${this.state.items.find((i) => id.id === i.id).id}`, state:{product_id:2, store_id:2 } }}   underline="hover" >{   <IconButton
               color="primary"
               aria-label="store"

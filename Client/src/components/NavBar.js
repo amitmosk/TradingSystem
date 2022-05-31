@@ -14,11 +14,12 @@ export default function NavBar({state,updateUserState}) {
   console.log(user_name);
   const logout = async () => {
     let response = await new ConnectApi().logout();
+    alert(response.message);
     if (!response.was_exception) {
       console.log(response)
       const user = response.value;
       updateUserState(user);
-      alert(response.message);
+      
     }
   };
   const login_register = () => {

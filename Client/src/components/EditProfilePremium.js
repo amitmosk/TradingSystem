@@ -21,6 +21,7 @@ export default class EditProfileEditProfilePremium extends Component {
             edit_name_fields: ["new_name","security question answer"],
             edit_password_fields: ["old password","new password","new password again","security question answer"],
             unregister_fields: ["password"],
+            snackbar: null,
 
 
         }

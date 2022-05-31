@@ -9,7 +9,6 @@ import { Component } from "react";
 import IconButton from "@mui/material/IconButton";
 import AddShoppingCartOutlined from "@mui/icons-material/AddShoppingCartOutlined";
 import Store from "@mui/icons-material/Store";
-import StorePage from "./StorePage";
 export default class HomeProductsTable extends Component {
   constructor(props) {
     super(props);

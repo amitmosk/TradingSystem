@@ -1,29 +1,15 @@
 import React, { Component } from "react";
-import Button from "@mui/material/Button";
-// import Link from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import HomeIcon from "@mui/icons-material/Home";
-import { ConnectApi } from "../API/ConnectApi";
-import Register from "./Register.js";
 import Box from "@mui/material/Box";
-import ImageListItem from "@mui/material/Box";
-import ImageList from "@mui/material/Box";
 import { StoreApi } from "../API/StoreApi";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from "@mui/material/ListSubheader";
-import { CartApi } from "../API/CartApi";
 import MenuListComposition from "./MenuListComposition";
-import { Container, Row, Col } from "react-grid-system";
 import { Paper } from "@mui/material";
 import { Typography } from "@mui/material";
-import Rating from "@mui/material/Rating";
 import BasicRating from "./Rating";
-import ShoppingCart from "./ShoppingCart";
-import { Store, ThirtyFpsRounded } from "@mui/icons-material";
 import Grid from "@mui/material/Grid";
 import FormDialog from "./FormDialog";
 import StoreProductsTable from "./StoreProductsTable";
@@ -39,9 +25,8 @@ export default class StorePage extends Component {
       founder_email: "",
       foundation_date:"",
       snackbar:null,
-      // inventory : "",
-      // storeReview: "",
       send_question_to_store_fields: ["Enter your question"],
+      ratings:[]
     };
     this.storeApi = new StoreApi();
     this.find_store_information(this.props.store_id);
@@ -55,10 +40,11 @@ export default class StorePage extends Component {
     let store = store_res.value;
     console.log("store foundation_date = "+store.foundation_date);
     // alert(store_res.message);
-    this.setState({ snackbar: { children: store_res.message, severity: "success" } });
+    
     if (!store_res.was_exception)
     {
-      console.log("in fnid store info success");
+      this.setState({ snackbar: { children: store_res.message, severity: "success" } });
+      console.log("in find store info success");
       this.setState({
 
         store_name: store.name,
@@ -67,62 +53,41 @@ export default class StorePage extends Component {
         // inventory : store.inventory,
         // storeReview: store.storeReview
       });
+        const store_reviews_and_ratings = store.storeReview;
+        const rating_entries = Object.entries(store_reviews_and_ratings.rating);
+        const ratings = []
+        rating_entries.map((e) => ratings.push("User - "+e[0]+" rate is "+e[1]))
 
 
+      //Fetch product of the store
+      let products_res = await this.storeApi.get_products_by_store_id(this.state.store_id);
+      let products = products_res.value;
+      // alert(products_res.message);
+      if (!products_res.was_exception)
+      {
+        this.setState({ snackbar: { children: products_res.message, severity: "success" } });
+        this.setState({
+          products: products,
+          ratings: ratings,
+        });
+      }
+      else
+      {
+        this.setState({ snackbar: { children: products_res.message, severity: "error" } });
+      }
+      
     }
     else
     {
-      
-
-    }
-    let products_res = await this.storeApi.get_products_by_store_id(this.state.store_id);
-    let products = products_res.value;
-    // alert(products_res.message);
-    this.setState({ snackbar: { children: products_res.message, severity: "success" } });
-
-    // products.map((p)=>)
-    this.setState({
-      products: products,
-    });
-  
+      this.setState({ snackbar: { children: store_res.message, severity: "error" } });
     
-
+    }
+    
   } 
 
-  // async componentDidMount() {
-  //   let store_res = await this.storeApi.find_store_information(this.props.store_id);
-  //   let store = store_res.value;
-  //   console.log("store foundation_date = "+store.foundation_date);
-  //   alert(store_res.message);
-  //   if (!store_res.was_exception)
-  //   {
-  //     console.log("in fnid store info success");
-  //     this.setState({
+  async componentDidMount() {
 
-  //       store_name: store.name,
-  //       founder_email: store.founder_email,
-  //       foundation_date:store.foundation_date,
-  //       // inventory : store.inventory,
-  //       // storeReview: store.storeReview
-  //     });
-
-
-  //   }
-  //   else
-  //   {
-      
-
-  //   }
-    
-    
-
-  //   // let products_res = await this.storeApi.get_products_by_store_id(this.state.store_id);
-  //   // let products = products_res.value;
-  //   // // products.map((p)=>)
-  //   // this.setState({
-  //   //   products: products,
-  //   // });
-  // }
+  }
   async send_question_to_store(values) {
     const store_id = this.props.store_id;
     const question = values[0];
@@ -144,23 +109,13 @@ export default class StorePage extends Component {
     if (!response.was_exception) {
       //get store
       //reload store
-    } else {
+    } 
+    else {
     }
   }
-  // async send_question_to_store(values) {
-  //   const question = values[0];
-  //   let response = await this.storeApi.send_question_to_store(question);
-  //   alert(response.message);
-  //   if (!response.was_exception)
-  //   {
-
-  //   }
-  //   else{
-
-  //   }
-  // }
 
   render() {
+    const ratings = this.state.ratings;
     const { redirectTo } = this.state;
     return (
         <div className="LoginWindow">
@@ -190,14 +145,17 @@ export default class StorePage extends Component {
                 <div>
                   <h5>Foundation Date: {this.state.foundation_date}</h5>
                 </div>
-                {/* {this.state.storeReview !="" ? (
+                <div>
+                  <h5 style={{ color: 'blue' }}>Ratings:</h5>
+                </div>
+                {ratings.length !== 0 ? (
                   <div>
-                    <label>{this.state.storeReview}</label>
+                    <label>{this.state.ratings}</label>
                   </div>
-                ) : null} */}
+                ) : <h5 style={{ color: 'red' }}> No Rating for this store</h5>}
               </Typography>
             </Paper>
-            <h5>Products</h5>
+            <h1>Products</h1>
           </Grid>
           <StoreProductsTable
             store_id={this.state.store_id}
@@ -255,19 +213,3 @@ export default class StorePage extends Component {
   }
 }
 
-{
-  /* <Typography component="legend">Controlled</Typography>
-      <Rating
-        name="simple-controlled"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      />
-      <Typography component="legend">Read only</Typography>
-      <Rating name="read-only" value={value} readOnly />
-      <Typography component="legend">Disabled</Typography>
-      <Rating name="disabled" value={value} disabled />
-      <Typography component="legend">No rating given</Typography>
-      <Rating name="no-value" value={null} /> */
-}

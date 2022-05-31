@@ -26,6 +26,7 @@ export default class HomePage extends Component {
       open_store_fields: ["Store name"],
       send_question_to_admin_fields: ["Enter your question"],
       products: [],
+      snackbar: null,
     };
     this.connectAPI = new ConnectApi();
     this.productApi = new ProductApi();

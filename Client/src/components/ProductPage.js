@@ -1,31 +1,11 @@
 import React, { Component } from 'react';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Button';
-import HomeIcon from '@mui/icons-material/Home';
-import { ConnectApi } from '../API/ConnectApi';
-import Register from "./Register.js";
-import Box from '@mui/material/Box';
-import ImageListItem from '@mui/material/Box';
-import ImageList from '@mui/material/Box';
 import { StoreApi } from '../API/StoreApi';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import { CartApi } from '../API/CartApi';
-import MenuListComposition from './MenuListComposition';
-import { Container, Row, Col } from 'react-grid-system';
 import { Paper } from '@mui/material';
 import { Typography } from '@mui/material';
-import Rating from '@mui/material/Rating';
 import BasicRating from './Rating';
-import ShoppingCart from './ShoppingCart';
-import { ThirtyFpsRounded } from '@mui/icons-material';
-import Grid from '@mui/material/Grid';
-import FormDialog from './FormDialog';
-import { Input } from "@mui/material";
 import { ProductApi } from '../API/ProductApi';
-import Card from '@mui/material/Card';
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; 
 
   
 export default class ProductPage extends Component {
@@ -39,8 +19,10 @@ export default class ProductPage extends Component {
             category:undefined,
             key_words:undefined,
             price:undefined,
-            productReview:undefined,
+            reviews:[],
+            ratings:[],
             add_product_review_fields:["Review"],
+            snackbar: null,
         };
         this.storeApi = new StoreApi();
         this.productApi = new ProductApi();
@@ -63,19 +45,38 @@ export default class ProductPage extends Component {
     async componentDidMount() {
         console.log("product id = "+this.state.product_id);
       let product_res =  await this.productApi.find_product_information(this.state.product_id, this.state.store_id) ;
-      let product = product_res.value;
-      console.log("response = "+product_res);
-        alert(product_res.message);
-        
-      this.setState({
-        name: product.name,
-        category:product.category,
-        key_words:product.key_words,
-        price:product.price,
-        productReview:product.productReview,
+      // alert(product_res.message);
+      if (!product_res.was_exception)
+      {
+        this.setState({ snackbar: { children: product_res.message, severity: "success" } });
+        let product = product_res.value;
+        const product_reviews_and_ratings = product.productReview;
+        const rating_entries = Object.entries(product_reviews_and_ratings.rating);
+        const ratings = []
+        rating_entries.map((e) => ratings.push("User - "+e[0]+" rate is "+e[1]))
+
+
+        const reviews_entries = Object.entries(product_reviews_and_ratings.reviews);
+        const reviews = []
+        reviews_entries.map((e) => reviews.push("User - "+e[0]+" review is "+e[1]))
+        this.setState({
+          name: product.name,
+          category:product.category,
+          key_words:product.key_words,
+          price:product.price,
+          reviews:reviews,
+          ratings:ratings,
     });
-    console.log("review ="+this.productReview);
-    console.log("in product page - component did mount");
+
+      }
+      else
+      {
+        this.setState({ snackbar: { children: product_res.message, severity: "error" } });
+      }
+      
+
+
+      
       
  
     }
@@ -84,15 +85,17 @@ export default class ProductPage extends Component {
     console.log("in rate Product");
     console.log("rating is = "+rating);
     let response = await this.productApi.rate_product(this.state.product_id, this.state.store_id,rating);
-    alert(response.message);
+    // alert(response.message);
     if (!response.was_exception)
     {
+      this.setState({ snackbar: { children: response.message, severity: "success" } });
       //get product
       //reload product
       
     }
     else
     {
+      this.setState({ snackbar: { children: response.message, severity: "error" } });
 
     }
     
@@ -105,12 +108,14 @@ export default class ProductPage extends Component {
 async find_product_by_category(val) {
     console.log("in find_product_by_category");
     let response = await this.productApi.find_product_by_category(val);
-    alert(response.message);
+    // alert(response.message);
         if (!response.was_exception) {
             console.log("in find_product_by_category- success");
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
         }
         else {
             console.log("in find_product_by_category - fail");
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
         }
     
 }
@@ -133,6 +138,8 @@ async find_product_by_category(val) {
 
     
     render() {
+      const ratings = this.state.ratings;
+      const reviews = this.state.reviews;
         const {redirectTo} = this.state
             return (
                 <main class="LoginMain">
@@ -155,34 +162,29 @@ async find_product_by_category(val) {
                         
                         <div> Category: {this.state.category}</div>
                         <div> Price: {this.state.price}</div>
-                        {/* {this.state.productReview ? <div>{this.state.productReview}</div> : null} */}
+                        <h5 style={{ color: 'blue' }}>Ratings</h5>
+                        {ratings.length !== 0 ? <div> {ratings.map((r)=><div>{r}</div>)}</div>: <h5 style={{ color: 'red' }}> No Rating for this store</h5>} 
+                        <h5 style={{ color: 'blue' }}>Reviews</h5>
+                        {reviews.length !== 0 ? <div> {reviews.map((r)=><div>{r}</div>)}</div>: <h5 style={{ color: 'red' }}> No Reviews for this store</h5>} 
 
               </Typography>
             </Paper>
-                      
-                           
-                        
-
-
-                        
-                        
-
-                           
+            {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
                             
-                            <BasicRating to_rate="Product" rating={this.rate_product.bind(this)} />
-                            
-                            
-    
-
-                         
-
-                            
-
-
-                     
-
-                                   
-                            
+                            {/* <BasicRating to_rate="Product" rating={this.rate_product.bind(this)} /> */}
+                             
                        
                     </div>
                 </main>

@@ -5,25 +5,15 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import FolderIcon from '@mui/icons-material/Folder';
-import DeleteIcon from '@mui/icons-material/Delete';
-import HomeIcon from '@mui/icons-material/Home';
 import Link from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
-import EditIcon from '@mui/icons-material/Edit';
-import { Store } from '../ServiceObjects/User';
 import { StoreApi } from '../API/StoreApi';
-
-// const staffy = [{ emaill1: "eylon@walla.com", emaill2: "eylon@eylon.eylon", type1: "typetype" },
-// { emaill1: "eylon@walla.com", emaill2: "eylon@eylon.eylon", type1: "typetype" }];
-
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; 
+import HomeIcon from '@mui/icons-material/Home';
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -38,6 +28,7 @@ export default class ViewStaffInformation extends Component {
         this.state = {
             store_id:this.props.store_id,
             staff: [],
+            snackbar: null,
         };
         this.storeApi = new StoreApi();
         console.log("in view stuff information, id = "+this.props.store_id);
@@ -51,6 +42,7 @@ export default class ViewStaffInformation extends Component {
 
         let response = await this.storeApi.view_store_management_information(this.state.store_id);
         if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in get store staff info - success!\n");
             // return response.message;
             console.log(response.value.appointmentInformationList);
@@ -58,7 +50,8 @@ export default class ViewStaffInformation extends Component {
             this.setState({ staff: response.value.appointmentInformationList });
         }
         else {
-            alert(response.message);
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
+            // alert(response.message);
 
 
         }
@@ -69,14 +62,8 @@ export default class ViewStaffInformation extends Component {
     }
 
     render() {
-        // const staff = (this.get_staff_info()).then((value) => value);
-        // console.log("this is 1 : " + staff + "\n");
-        // staff.then((value) => console.log(value.value.appointmentInformationList));
-
-        // return ((this.get_staff_info()).then((value) =>
         return (
-            // console.log("value = " + value + "\n"),
-            // console.log(value.value.appointmentInformationList),
+
             <>
                 <Link to="/">
                     <HomeIcon></HomeIcon>
@@ -120,6 +107,20 @@ export default class ViewStaffInformation extends Component {
                         </Grid>
                     </Grid>
                 </Box>
+                {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
+
             </>
         );
         // )

@@ -28,6 +28,7 @@ export default class EditProfile extends Component {
             security_question: this.props.security_question,
             improve_security_fields: ["question", "answer","password"],
             unregister_fields: ["password"],
+            snackbar: null,
         }
         console.log("start edit profile");
         this.userApi = new UserApi();

@@ -1,41 +1,14 @@
 
      
 import React, { Component } from 'react';
-import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';
-import { ConnectApi } from '../API/ConnectApi';
-import Register from "./Register.js";
-import Box from '@mui/material/Box';
-import ImageListItem from '@mui/material/Box';
-import ImageList from '@mui/material/Box';
-import { StoreApi } from '../API/StoreApi';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import { CartApi } from '../API/CartApi';
-import MenuListComposition from './MenuListComposition';
-import { Container, Row, Col } from 'react-grid-system';
-import { Paper } from '@mui/material';
-import { Typography } from '@mui/material';
-import Rating from '@mui/material/Rating';
-import BasicRating from './Rating';
-import ShoppingCart from './ShoppingCart';
-import { ThirtyFpsRounded } from '@mui/icons-material';
-import Grid from '@mui/material/Grid';
-import FormDialog from './FormDialog';
 import Card from '@mui/material/Card';
-import { experimentalStyled as styled } from '@mui/material/styles';
 import { AdminApi } from '../API/AdminApi';
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
-  
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; 
+
+
 export default class ViewStat extends Component {
     static displayName = ViewStat.name;
     constructor(props) {
@@ -47,6 +20,7 @@ export default class ViewStat extends Component {
             connect_per_minutes:undefined,
             register_per_minutes:undefined,
             buy_cart_per_minutes:undefined,
+            snackbar: null,
             
         };
         this.adminApi = new AdminApi();
@@ -59,9 +33,9 @@ export default class ViewStat extends Component {
         let response = await this.adminApi.get_market_stats();
         console.log("response = " + response);
         const stats = response.value;
-        alert(response.message);
+        // alert(response.message);
         if (!response.was_excecption) {
-
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in get market stats - success!\n");
             console.log(response);
             this.setState({
@@ -77,6 +51,7 @@ export default class ViewStat extends Component {
 
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -119,6 +94,19 @@ export default class ViewStat extends Component {
                             
                        
                     </div>
+                    {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
                 </main>
             );
         
