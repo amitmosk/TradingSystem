@@ -41,6 +41,8 @@ import StorePageNevigator from "./components/StorePageNevigator";
 import StoreManagmentNevigator from "./components/StoreManagmentNevigator";
 import ViewStaffInformationNevigator from "./components/ViewStaffInformationNevigator";
 import ViewStorePurchaseHistoryNevigator from "./components/ViewStorePurchaseHistoryNevigator";
+import AllStores from "./components/AllStores";
+import MyStoresNevigator from "./components/MyStoresNevigator";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -91,6 +93,7 @@ export default class App extends Component {
         <NavBar
           state={this.state.user}
           updateUserState={this.updateUserState.bind(this)}
+          user = {this.state.user}
         ></NavBar>
 
         <Routes>
@@ -121,6 +124,7 @@ export default class App extends Component {
           <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
           {/* <Route path="/StorePage" element={<StorePageNevigator/>}></Route> */}
           <Route path="/StorePage/:id" element={<StorePageNevigator />}></Route>
+          <Route path="/AllStores/StorePage/:id" element={<StorePageNevigator />}></Route>
           <Route
             path="/AdminSendMessage"
             element={<AdminSendMessage />}
@@ -149,6 +153,15 @@ export default class App extends Component {
             path="/StorePage/:store_id/ProductPage/:product_id"
             element={<ProductPageNevigator />}
           ></Route>
+          <Route
+            path="/AllStores"
+            element={<AllStores/>}
+          ></Route>
+          <Route
+            path="/MyStores/:user"
+            element={<MyStoresNevigator/>}
+          ></Route>
+
           <Route path="/ProductPage" element={<ProductPage />}></Route>
           {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
           <Route path="/ViewStat" element={<ViewStat />}></Route>

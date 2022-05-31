@@ -125,9 +125,6 @@ export default class StorePage extends Component {
             justifyContent="center"
             alignItems="center"
           >
-            <Link to="/">
-              <HomeIcon></HomeIcon>
-            </Link>
             {/* <h3>Store Name goes here</h3> */}
             <h3>{this.state.store_name}</h3>
             {/* <FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog> */}

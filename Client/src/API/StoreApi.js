@@ -22,10 +22,7 @@ export class StoreApi {
             })
             .then(res => {
                 let response = res.data;
-                console.log("111\n");
                 let store_info = new Store(response.value);
-                console.log("222\n");
-                console.log("store info = "+store_info.store_id);
                 return Response.create(store_info, false, response.message);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
@@ -307,8 +304,8 @@ export class StoreApi {
                 //traverse the products and create product for each element on the list
                 //create response with the list of products
                 const arr = [];
-                res.data.value.map(s => arr.push(new Store(s)));
-                return Response.create(arr,res.data.wasException,res.data.message);
+                response.value.map(s => arr.push(new Store(s)));
+                return Response.create(arr,response.wasException,response.message);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }

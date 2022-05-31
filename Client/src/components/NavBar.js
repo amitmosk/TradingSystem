@@ -6,12 +6,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import AccountMenu from "./AccountMenu";
 import Grid from "@mui/material/Grid";
 import { ConnectApi } from "../API/ConnectApi";
-import { Navigate } from 'react-router-dom'; 
 
 
-export default function NavBar({state,updateUserState}) {
+export default function NavBar({state,updateUserState, user}) {
+
   const user_name = state.name;
-  console.log(user_name);
+  console.log("username = " + user_name);
   const logout = async () => {
     let response = await new ConnectApi().logout();
     alert(response.message);
@@ -63,6 +63,14 @@ export default function NavBar({state,updateUserState}) {
         </Grid>
         <Grid container justifyContent="flex-end">
           <Link
+              href="/AllStores"
+              component="button"
+              variant="body2"
+              position="right"
+            >
+              Market Stores
+            </Link>
+          <Link
             href="/"
             component="button"
             variant="body2"
@@ -74,7 +82,7 @@ export default function NavBar({state,updateUserState}) {
             Home
           </Link>
           {login_register()}
-          <AccountMenu log={logout} state={state.state}></AccountMenu>
+          <AccountMenu log={logout} state={state.state} user={user}></AccountMenu>
         </Grid>
       </Toolbar>
     </PrimarySearchAppBar>

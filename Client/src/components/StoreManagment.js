@@ -391,7 +391,7 @@ export default class StoreManagment extends Component {
         return (
 
             <Box sx={{ flexGrow: 1 }}>
-                <Link to="/"><HomeIcon></HomeIcon></Link>
+                
                 <h3 align="center">Store Managment Page</h3>
                 <Grid>
                     <StoreManagmentProductsTable store_id={this.state.store_id}></StoreManagmentProductsTable>

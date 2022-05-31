@@ -122,9 +122,7 @@ export default class EditProfile extends Component {
     render() {
         return (<>
             <Box sx={{ flexGrow: 1 }}>
-                <Link href="/">
-                    <HomeIcon></HomeIcon>
-                </Link>
+
                 <h3 class="Header" align="center">
                     Edit Profile
                 </h3>
