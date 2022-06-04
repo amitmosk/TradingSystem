@@ -5,10 +5,18 @@ import TradingSystem.server.Domain.ExternSystems.PaymentAdapterImpl;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapterImpl;
 import TradingSystem.server.Domain.Facade.MarketFacade;
+import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
+import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
+import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
+import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
+import TradingSystem.server.Domain.StoreModule.Store.Store;
+import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserController;
+import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 
+import java.security.KeyStore;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +48,7 @@ class MarketFacadeTest {
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws MarketException {
         birth_date =  LocalDate.now().minusYears(30).toString();
         PaymentAdapter paymentAdapter = new PaymentAdapterImpl();
         SupplyAdapter supplyAdapter = new SupplyAdapterImpl();
@@ -63,6 +71,8 @@ class MarketFacadeTest {
         facade1.register("heck1234578@email.com", "pass3Chec", "name", "last",birth_date);
         facade1.improve_security("pass3Chec", "What was your mother's maiden name?", "Sasson");
         facade1.logout();
+        UserController.getInstance().add_admin("admin@gmail.com", "12345678aA", "Barak", "Bahar");
+
 
         uc = UserController.getInstance();
         pa = new PaymentAdapterImpl();
@@ -88,7 +98,233 @@ class MarketFacadeTest {
         }
     }
 
+    private int num_of_stores(){
+        Response res = facade1.get_all_stores();
+        int stores_count = 0;
+        if(res.getValue().getClass() == (new ArrayList<StoreInformation>()).getClass()) {
+            stores_count = ((ArrayList<StoreInformation>) res.getValue()).size();
+            System.out.println("\n\n" + stores_count + "\n\n");
+        }
+        return stores_count;
+    }
+
+    private boolean find_store(String name, int num_of_stores) {
+        Response res = facade1.get_all_stores();
+        int counter = 0;
+        if (res.getValue().getClass() == (new ArrayList<StoreInformation>()).getClass()) {
+            ArrayList<StoreInformation> stores = ((ArrayList<StoreInformation>) res.getValue());
+            for (StoreInformation info : stores)
+                if (info.getName() == name)
+                {
+                    counter++;
+                    if(num_of_stores == counter)
+                        return true;
+                }
+        }
+        return false;
+    }
+
+    private String get_store_founder(String name, int num_of_stores){
+        Response res = facade1.get_all_stores();
+        int counter = 0;
+        if (res.getValue().getClass() == (new ArrayList<StoreInformation>()).getClass()) {
+            ArrayList<StoreInformation> stores = ((ArrayList<StoreInformation>) res.getValue());
+            for (StoreInformation info : stores)
+                if (info.getName() == name)
+                {
+                    counter++;
+                    if(num_of_stores == counter)
+                        return info.getFounder_email();
+                }
+        }
+        return "";
+    }
     // --------------------------------------------------------------------------------------------------------
+
+
+    /**
+     * Cases checked:
+     * 1. no user is connected
+     * 2. store founder opens store number 2
+     * 3. store founder opens store with same name
+     * 4. store founder opens first store
+     */
+    @Test
+    void open_store(){
+        Response res;
+
+        int stores_count = num_of_stores();
+        String name = "this shouldn't work";
+        res = facade1.open_store(name); // no user is connected
+        assertTrue(check_was_exception(res));
+        assertEquals(stores_count, num_of_stores());
+        assertFalse(find_store(name, 1));
+
+        name = "store number 2";
+        facade1.login("check1234@email.com", "pass3Chec");
+        res = facade1.open_store(name); // store founder opens store number 2
+        assertFalse(check_was_exception(res));
+        assertTrue(find_store(name, 1));
+        stores_count++;
+        assertEquals(stores_count, num_of_stores());
+        assertEquals("check1234@email.com", get_store_founder("store number 2", 1));
+
+        res = facade1.open_store(name); // store founder opens store with same name
+        assertFalse(check_was_exception(res));
+        stores_count++;
+        assertEquals(stores_count, num_of_stores());
+        assertTrue(find_store(name, 2));
+        assertEquals("check1234@email.com", get_store_founder("store number 2", 2));
+
+        facade1.logout();
+        facade1.login("check123456@email.com", "pass3Chec");
+
+        name = "Store number 1";
+        res = facade1.open_store(name); // store founder opens first store
+        assertFalse(check_was_exception(res));
+        stores_count++;
+        assertEquals(stores_count, num_of_stores());
+        assertTrue(find_store(name, 1));
+        assertEquals("check123456@email.com", get_store_founder("Store number 1", 1));
+
+        facade1.logout();
+    }
+
+    /**
+     * Cases checked:
+     * 1. get all stores
+     */
+    @Test
+    void get_all_stores(){
+        Response res;
+
+        res = facade1.get_all_stores();
+        assertFalse(check_was_exception(res));
+        if(res.getValue().getClass() == (new ArrayList<StoreInformation>()).getClass()){
+            assertEquals(1 ,((ArrayList<StoreInformation>)res.getValue()).size());
+        }
+
+
+    }
+
+    /**
+     * Cases checked:
+     * 1. no one is connected
+     * 2. user connected is not an admin
+     * 3. admin enters an email that doesn't exist
+     * 4. admin removes user
+     */
+    @Test
+    void remove_user(){
+        Response res;
+
+        res = facade1.remove_user("check123456@email.com");  // no one is connected
+        assertTrue(check_was_exception(res));
+        res = facade2.login("check123456@email.com", "pass3Chec"); // check if user can still login -> still exists
+        assertFalse(res.WasException());
+        facade2.logout();
+
+        facade1.login("heck1234578@email.com", "pass3Chec");
+        res = facade1.remove_user("check123456@email.com");  // user connected is not an admin
+        assertTrue(check_was_exception(res));
+        res = facade2.login("check123456@email.com", "pass3Chec"); // check if user can still login -> still exists
+        assertFalse(res.WasException());
+        facade2.logout();
+
+        facade1.logout();
+        facade1.login("admin@gmail.com", "12345678aA");
+        res = facade1.remove_user("idontexist@email.com");  // admin enters an email that doesn't exist
+        assertTrue(check_was_exception(res));
+
+        res = facade1.remove_user("check123456@email.com");  // admin removes user
+        assertFalse(check_was_exception(res));
+        res = facade2.login("check123456@email.com", "pass3Chec"); // check if user can still login -> still exists
+        assertTrue(res.WasException());
+
+        facade1.logout();
+
+
+    }
+
+    /**
+     * Cases checked:
+     * 1. no one is connected
+     * 2. user connected is not an admin
+     * 3. admin enters a store id that does not exist
+     * 4. admin views user's purchase history
+     */
+    @Test
+    void admin_view_store_purchases_history() throws MarketException {
+        Response res;
+
+        res = facade1.admin_view_store_purchases_history(1); // no one is connected
+        assertTrue(check_was_exception(res));
+
+        facade1.login("heck1234578@email.com", "pass3Chec");
+        res = facade1.admin_view_store_purchases_history(1); // user connected is not an admin
+        assertTrue(check_was_exception(res));
+
+        facade2.login("admin@gmail.com", "12345678aA");
+        res = facade2.admin_view_store_purchases_history(2); // admin enters a store id that does not exist
+        assertTrue(check_was_exception(res));
+
+        res = facade2.admin_view_store_purchases_history(1); // admin views store's purchase history
+        assertFalse(check_was_exception(res));
+        if(res.getValue().getClass() == StorePurchaseHistory.class){
+            StorePurchaseHistory his = (StorePurchaseHistory)res.getValue();
+            boolean flag = false;
+            for(StorePurchase p : his.getPurchaseID_purchases().values()){
+                if(p.getBuyer_email() == "check12345@email.com" && p.getProduct_and_totalPrice().containsKey(1))
+                    flag = true;
+            }
+            assertTrue(flag);
+        }
+
+        facade1.logout();
+        facade2.logout();
+
+    }
+
+
+    /**
+     * Cases checked:
+     * 1. no one is connected
+     * 2. user connected is not an admin
+     * 3. admin views user's empty purchase history
+     * 4. admin views user's purchase history
+     */
+    @Test
+    void admin_view_user_purchases_history() throws MarketException {
+        Response res;
+
+        res = facade1.admin_view_user_purchases_history("check12345@email.com"); // no one is connected
+        assertTrue(check_was_exception(res));
+
+        facade1.login("heck1234578@email.com", "pass3Chec");
+        res = facade1.admin_view_user_purchases_history("check12345@email.com"); // user connected is not an admin
+        assertTrue(check_was_exception(res));
+
+        facade2.login("admin@gmail.com", "12345678aA");
+        res = facade2.admin_view_user_purchases_history("check123456@email.com"); // admin views user's empty purchase history
+        assertFalse(check_was_exception(res));
+        if(res.getValue().getClass() == UserPurchaseHistory.class){
+            UserPurchaseHistory his = (UserPurchaseHistory)res.getValue();
+            assertTrue(his.getHistoryList().isEmpty());
+        }
+
+        facade2.login("admin@gmail.com", "12345678aA");
+        res = facade2.admin_view_user_purchases_history("check12345@email.com"); // admin views user's purchase history
+        assertFalse(check_was_exception(res));
+        if(res.getValue().getClass() == UserPurchaseHistory.class){
+            UserPurchaseHistory his = (UserPurchaseHistory)res.getValue();
+            assertTrue(his.check_if_user_buy_from_this_store(1));
+            assertTrue(his.check_if_user_buy_this_product(1, 1));
+
+        }
+        facade1.logout();
+        facade2.logout();
+
+    }
 
 
     static Stream<Arguments> user_info_provider1() {
@@ -720,4 +956,6 @@ class MarketFacadeTest {
         assertTrue(num_of_exceptions.get() == num_of_threads - 1, "parallel bug");
         assertTrue(num_of_logged_after_operation.get() == 1, num_of_logged_after_operation.get() + " logging operation succeed");
     }
+
+
 }
