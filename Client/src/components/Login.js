@@ -81,7 +81,7 @@ export default class Login extends Component {
     
     render() {
         const {redirectTo} = this.state
-        if (this.props.state != 0) {
+        if (this.props.user.state != 0) {
             
             console.log("have to route to homepage whe it will be ready\n\n\n");
             return (<Navigate to="/"/>);

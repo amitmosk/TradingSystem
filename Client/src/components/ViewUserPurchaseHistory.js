@@ -55,7 +55,7 @@ export default class UserPurchaseHistory extends Component {
         console.log(response);
 
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log(response.value);
             this.setState({ history: response.value.historyList });

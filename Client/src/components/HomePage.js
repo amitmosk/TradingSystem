@@ -20,8 +20,8 @@ export default class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      state : props.user.state,
-      username: props.user.name,
+      user:this.props.user,
+      username: this.props.user.name,
       stores: [],
       open_store_fields: ["Store name"],
       send_question_to_admin_fields: ["Enter your question"],
@@ -32,12 +32,15 @@ export default class HomePage extends Component {
     this.productApi = new ProductApi();
     this.storeApi = new StoreApi();
     this.adminApi = new AdminApi();
-    this.logout = this.logout.bind(this);
+    // this.logout = this.logout.bind(this);
+    console.log(this.props);
+    console.log("in component did mount - user state = "+this.props.user.state);
   }
   async componentDidMount() {
-    console.log("in component did mount");
+
     // this.setState({
-    //   username: this.props.user_name,
+    //   state : this.props.user.state,
+    //   username: this.props.user.name,
     // });
   }
   async open_store(values) {
@@ -45,7 +48,9 @@ export default class HomePage extends Component {
     let response = await this.storeApi.open_store(store_name);
     // alert(response.message);
     if (!response.was_exception) {
+      const store_id = response.value;
       this.setState({ snackbar: { children: response.message, severity: "success" } });
+      this.props.add_store_to_user(store_id)
 
     } 
     else {
@@ -54,22 +59,22 @@ export default class HomePage extends Component {
     }
   }
 
-  async logout() {
-    console.log("in logout home page");
-    let response = await this.connectAPI.logout();
-    // alert(response.message);
-    if (!response.was_exception) {
-      this.setState({ snackbar: { children: response.message, severity: "success" } });
-      console.log(response)
-      const user = response.value;
-      this.props.updateUserState(user);
-    }
-    else
-    {
-      this.setState({ snackbar: { children: response.message, severity: "error" } });
+  // async logout() {
+  //   console.log("in logout home page");
+  //   let response = await this.connectAPI.logout();
+  //   // alert(response.message);
+  //   if (!response.was_exception) {
+  //     this.setState({ snackbar: { children: response.message, severity: "success" } });
+  //     console.log(response)
+  //     const user_logout = response.value;
+  //     this.props.updateUserState(user_logout);
+  //   }
+  //   else
+  //   {
+  //     this.setState({ snackbar: { children: response.message, severity: "error" } });
 
-    }
-  }
+  //   }
+  // }
 
   async send_question_to_admin(values) {
     const question = values[0];
@@ -116,7 +121,7 @@ export default class HomePage extends Component {
         <h1 style={{ color: "white" }}>-------------------------</h1>
         <h1 style={{ color: "white" }}>-------------------------</h1>
         <Grid container direction="row" justifyContent="space-evenly">
-          {this.state.state !== 0? (<>
+          {this.state.user.state !== 0 ? (<>
           <FormDialog
             fields={this.state.open_store_fields}
             getValues={this.open_store.bind(this)}
@@ -127,7 +132,7 @@ export default class HomePage extends Component {
             getValues={this.send_question_to_admin.bind(this)}
             name="Send question to admin"
           ></FormDialog></>):null}
-          {this.state.state === 2?<>
+          {this.state.user.state === 2?<>
             <Link href="/AdminPage" underline="hover">
             {"Admin Operations"}
           </Link></>:null}

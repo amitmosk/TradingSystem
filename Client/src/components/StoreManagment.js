@@ -87,7 +87,7 @@ export default class StoreManagment extends Component {
 
         const response = await this.storeApi.add_product_to_store(store_id, quantity, name, price, category, key_words);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in add product - success!\n");
             //show history
@@ -105,7 +105,7 @@ export default class StoreManagment extends Component {
 
         const response = await this.storeApi.delete_product_from_store(product_id, store_id);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in delete product - success!\n");
             //show history
@@ -123,7 +123,7 @@ export default class StoreManagment extends Component {
 
         const response = await this.storeApi.puchase_policies_fields(store_id, policy);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in store_purchase_policies - success!\n");
             //show history
@@ -141,7 +141,7 @@ export default class StoreManagment extends Component {
 
         const response = await this.storeApi.set_store_discount_policy(store_id, policy);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in store_discount_policy - success!\n");
             //show history
@@ -159,7 +159,7 @@ export default class StoreManagment extends Component {
         const response = await this.storeApi.add_owner(user_email_to_appoint, store_id);
         // alert(response.message);
 
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in add_owner - success!\n");
             //show history
@@ -176,7 +176,7 @@ export default class StoreManagment extends Component {
 
         const response = await this.storeApi.delete_owner(user_email_to_delete_appointment, store_id);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in delete_owner - success!\n");
             //show history
@@ -194,7 +194,7 @@ export default class StoreManagment extends Component {
 
         const response = await this.storeApi.add_manager(user_email_to_appoint, store_id);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in add_manager - success!\n");
             //show history
@@ -214,7 +214,7 @@ export default class StoreManagment extends Component {
 
         const response = await this.storeApi.delete_manager(user_email_to_delete_appointment, store_id);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in delete_manager - success!\n");
             //show history
@@ -230,7 +230,7 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
         const response = await this.storeApi.close_store_temporarily(store_id);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in close_store_temporarily - success!\n");
             //show history
@@ -246,7 +246,7 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
         const response = await this.storeApi.open_close_store(store_id);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in open_close_store - success!\n");
             //show history
@@ -262,7 +262,7 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
         const response = await this.storeApi.view_store_management_information(store_id);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in view_store_management_information - success!\n");
             return response.value;
@@ -279,7 +279,7 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
         const response = await this.storeApi.manager_view_store_questions(store_id);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in manager_view_store_questions - success!\n");
             //show history
@@ -299,7 +299,7 @@ export default class StoreManagment extends Component {
 
         const response = await this.storeApi.manager_answer_question(store_id, question_id, answer);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in manager_answer_question - success!\n");
             //show history
@@ -314,7 +314,7 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
         const response = await this.storeApi.view_store_purchases_history(store_id);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in view_store_purchases_history - success!\n");
             //show history
@@ -333,7 +333,7 @@ export default class StoreManagment extends Component {
 
         const response = await this.storeApi.edit_manager_permissions(manager_email, store_id, permissions);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in edit_manager_permissions - success!\n");
             //show history

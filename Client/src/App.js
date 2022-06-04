@@ -42,34 +42,66 @@ import StoreManagmentNevigator from "./components/StoreManagmentNevigator";
 import ViewStaffInformationNevigator from "./components/ViewStaffInformationNevigator";
 import ViewStorePurchaseHistoryNevigator from "./components/ViewStorePurchaseHistoryNevigator";
 import AllStores from "./components/AllStores";
-import MyStoresNevigator from "./components/MyStoresNevigator";
+import MyStores from "./components/MyStores";
 
 export default class App extends Component {
   static displayName = App.name;
   constructor(props) {
     super(props);
+    console.log("in constructor of APP");
     this.state = {
       user:User.guest(),
       messages: [],
       snackbar: null,
       webSocketConnection: undefined,
     };
+    // if (this.state.user === undefined)
+    // {
+    //   console.log("ppp");
+    //   this.setState({
+    //     // Important: read `state` instead of `this.state` when updating.
+    //     user: User.guest(),
+       
+    //   });
+    // }
     this.connectApi = new ConnectApi();
-    this.get_online_user()
     this.updateUserState = this.updateUserState.bind(this);
+    this.get_online_user();
+  }
+  async componentDidMount() {
+    this.get_online_user();
+    // if (this.state.user == undefined)
+    // {
+    //   console.log("ppp");
+    //   this.setState({
+    //     // Important: read `state` instead of `this.state` when updating.
+    //     user: User.guest(),
+       
+    //   });
+    // }
+    console.log("in component did mount - home page");
   }
 
-  async updateUserState(user) {
+   updateUserState(user) {
     console.log("in updateUserState\n\n\n\n\n");
     console.log(user);
     console.log(this.state.user);
     this.setState({
       // Important: read `state` instead of `this.state` when updating.
       user: user,
+     
     });
+    
 
     console.log(this.state.user);
   }
+  async add_store_to_user(store_id)
+  {
+    this.state.user.add_store(store_id);
+    console.log("in add store to user - store id -> "+store_id);
+
+  }
+
 
   // async updateUserStateName(name) {
   //   console.log("in set UserState - name\n\n\n\n\n");
@@ -86,14 +118,15 @@ export default class App extends Component {
       let response = await this.connectApi.get_online_user()
       this.setState({user : response.value})
   }
+  
 
   render() {
     return (
       <BrowserRouter>
         <NavBar
-          state={this.state.user}
           updateUserState={this.updateUserState.bind(this)}
           user = {this.state.user}
+          
         ></NavBar>
 
         <Routes>
@@ -103,6 +136,7 @@ export default class App extends Component {
               <HomePage
                 user={this.state.user}
                 updateUserState={this.updateUserState.bind(this)}
+                add_store_to_user = {this.add_store_to_user.bind(this)}
               />
             }
           ></Route>
@@ -111,7 +145,7 @@ export default class App extends Component {
             element={
               <Login
                 updateUserState={this.updateUserState.bind(this)}
-                state={this.state.user.state}
+                user={this.state.user}
               />
             }
           ></Route>
@@ -158,8 +192,8 @@ export default class App extends Component {
             element={<AllStores/>}
           ></Route>
           <Route
-            path="/MyStores/:user"
-            element={<MyStoresNevigator/>}
+            path="/MyStores"
+            element={<MyStores/>}
           ></Route>
 
           <Route path="/ProductPage" element={<ProductPage />}></Route>

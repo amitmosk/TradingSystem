@@ -19,7 +19,7 @@ export class ConnectApi {
                 
             })
             .then(res => {
-                console.log(res.data)
+                console.log("user = " +res.data.value.storesManaged+"\n\n\n\n");
                 const user = new User(res.data.value);
                 return Response.create(user,res.data.was_exception,res.data.message);
             })
@@ -45,6 +45,7 @@ export class ConnectApi {
                     birth_date : birthdate,}
             })
             .then(res => {
+                console.log("user = " +res.data.value.storesManaged+"\n\n\n\n");
                 const user = new User(res.data.value);
                 return Response.create(user,res.data.was_exception,res.data.message);
             })

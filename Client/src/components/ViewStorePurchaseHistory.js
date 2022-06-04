@@ -47,7 +47,7 @@ export default class ViewStorePurchaseHistory extends Component {
         // const store_id = this.state.store_id;
         const response = await this.storeApi.view_store_purchases_history(this.state.store_id);
         // alert(response.message);
-        if (!response.was_execption) {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             let res = [];
             this.setState({ history: response.value });

@@ -6,24 +6,26 @@ import Toolbar from "@material-ui/core/Toolbar";
 import AccountMenu from "./AccountMenu";
 import Grid from "@mui/material/Grid";
 import { ConnectApi } from "../API/ConnectApi";
+import { Navigate } from 'react-router-dom'; 
 
 
-export default function NavBar({state,updateUserState, user}) {
+export default function NavBar({updateUserState, user}) {
 
-  const user_name = state.name;
+  const user_name = user.name;
   console.log("username = " + user_name);
   const logout = async () => {
     let response = await new ConnectApi().logout();
     alert(response.message);
     if (!response.was_exception) {
       console.log(response)
-      const user = response.value;
-      updateUserState(user);
-      
+      const user_logout = response.value;
+      console.log("in logout - user is "+user_logout);
+      updateUserState(user_logout);
+      // return (<Navigate to="/"/>)
     }
   };
   const login_register = () => {
-    return state.state === 0 ?
+    return user.state === 0 ?
      (
       <>
       <Link
@@ -56,7 +58,7 @@ export default function NavBar({state,updateUserState, user}) {
       <Toolbar>
         <Grid container justifyContent="flex-start">
           <Typography variant="h6" color="inherit" noWrap>
-            Hello {state.name}
+            Hello {user.name}
             {/* Hello {user_name} , */}
             {/* Hello Amit, */}
           </Typography>
@@ -82,7 +84,7 @@ export default function NavBar({state,updateUserState, user}) {
             Home
           </Link>
           {login_register()}
-          <AccountMenu log={logout} state={state.state} user={user}></AccountMenu>
+          <AccountMenu log={logout} state={user.state} user={user}></AccountMenu>
         </Grid>
       </Toolbar>
     </PrimarySearchAppBar>

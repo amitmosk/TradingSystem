@@ -107,7 +107,7 @@ export default function AccountMenu({ log, state, user }) {
             </MenuItem>
             <MenuItem>
               <Avatar />{" "}
-              <Link to={{pathname:`MyStores/${user.storesManaged}`}} onClick={handleClose} underline="hover" >{'My Stores'}</Link>
+              <Link to={{pathname:`/MyStores`}} onClick={handleClose} underline="hover" >{'My Stores'}</Link>
             </MenuItem>
             <Divider />
             <MenuItem>

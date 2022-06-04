@@ -23,8 +23,7 @@ export default class MyStores extends Component {
             snackbar: null,
         }
         this.storeApi = new StoreApi();
-        console.log("user = "+this.props.user)
-        console.log("user stores list= "+this.props.user.lastname)
+        console.log("user = "+this.props.user);
        
     }
     async componentDidMount() {
@@ -45,7 +44,7 @@ export default class MyStores extends Component {
                 <h3>My Stores</h3>
           
               </Grid>
-              <MyStoresTable store_id = {this.props.user}></MyStoresTable>
+              <MyStoresTable></MyStoresTable>
               
    
 
