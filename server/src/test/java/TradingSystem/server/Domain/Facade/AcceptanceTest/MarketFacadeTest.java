@@ -60,6 +60,9 @@ class MarketFacadeTest {
         facade1.logout();
         facade1.register("check123457@email.com", "pass3Chec", "name", "last",birth_date);
         facade1.logout();
+        facade1.register("heck1234578@email.com", "pass3Chec", "name", "last",birth_date);
+        facade1.improve_security("pass3Chec", "What was your mother's maiden name?", "Sasson");
+        facade1.logout();
 
         uc = UserController.getInstance();
         pa = new PaymentAdapterImpl();
@@ -415,19 +418,35 @@ class MarketFacadeTest {
      * 2. edit name with user connected
      * 3. edit name to empty name with user connected
      * 4. edit name to invalid name with user connected
+     * 5. edit name of premium account with no security improvement
      */
     @Test
     void edit_name() {
         boolean result;
+
         result = check_was_exception(facade1.edit_name( "Eylon")); // edit name with no user connected
         assertTrue(result);
+
         facade1.login("check123456@email.com", "pass3Chec");
         result = check_was_exception(facade1.edit_name("Eylon")); // edit name with user connected
         assertFalse(result);
+        assertEquals("Eylon", facade1.get_user_name().getValue());
+
         result = check_was_exception(facade1.edit_name( "")); // edit name to empty name with user connected
         assertTrue(result);
+        assertEquals("Eylon", facade1.get_user_name().getValue());
+
         result = check_was_exception(facade1.edit_name("EylonintHamellonit")); // edit name to invalid name with user connected
         assertTrue(result);
+        assertEquals("Eylon", facade1.get_user_name().getValue());
+
+        facade1.logout();
+        facade1.login("heck1234578@email.com", "pass3Chec"); // premium account user
+
+        result = check_was_exception(facade1.edit_name( "Name")); // edit last name with user connected
+        assertTrue(result);
+        assertEquals("Eylon", facade1.get_user_name().getValue());
+
         facade1.logout();
     }
 
@@ -437,20 +456,174 @@ class MarketFacadeTest {
      * 2. edit last name with user connected
      * 3. edit last name to empty last name with user connected
      * 4. edit last name to invalid last name with user connected
+     * 5. edit last name of premium account with no security improvement
      */
     @Test
     void edit_last_name() {
         boolean result;
         result = check_was_exception(facade1.edit_last_name("Eylon")); // edit last name with no user connected
         assertTrue(result);
+
         facade1.login("check123456@email.com", "pass3Chec");
         result = check_was_exception(facade1.edit_last_name( "Eylon")); // edit last name with user connected
         assertFalse(result);
+        assertEquals("Eylon", facade1.get_user_last_name().getValue());
+
         result = check_was_exception(facade1.edit_last_name( "")); // edit last name to empty last name with user connected
         assertTrue(result);
+        assertEquals("Eylon", facade1.get_user_last_name().getValue());
+
         result = check_was_exception(facade1.edit_last_name( "EylonintHamellonit")); // edit last name to invalid last name with user connected
         assertTrue(result);
+        assertEquals("Eylon", facade1.get_user_last_name().getValue());
+
         facade1.logout();
+        facade1.login("heck1234578@email.com", "pass3Chec"); // premium account user
+
+        result = check_was_exception(facade1.edit_last_name( "Sade")); // edit last name with user connected
+        assertEquals("last", facade1.get_user_last_name().getValue());
+        assertTrue(result);
+
+        facade1.logout();
+
+    }
+
+    /*
+     * Cases checked:
+     * 1. edit last name with no user connected
+     * 2. edit last name with user connected- wrong security answer
+     * 3. edit last name with user connected- correct security answer
+     * 4. edit last name to empty last name with user connected
+     * 5. edit last name to invalid last name with user connected
+     */
+    @Test
+    void edit_last_name_premium() {
+        boolean result;
+        result = check_was_exception(facade1.edit_last_name_premium("Eylon", "Sasson")); // edit last name with no user connected
+        assertTrue(result);
+        facade1.login("heck1234578@email.com", "pass3Chec");
+        result = check_was_exception(facade1.edit_last_name_premium( "Eylon", "Sade")); // edit last name with user connected- wrong security answer
+        assertTrue(result);
+        assertEquals("last", facade1.get_user_last_name().getValue());
+        result = check_was_exception(facade1.edit_last_name_premium( "Eylon", "Sasson")); // edit last name with user connected- correct security answer
+        assertFalse(result);
+        assertEquals("Eylon", facade1.get_user_last_name().getValue());
+        result = check_was_exception(facade1.edit_last_name_premium( "", "Sasson")); // edit last name to empty last name with user connected
+        assertTrue(result);
+        assertEquals("Eylon", facade1.get_user_last_name().getValue());
+        result = check_was_exception(facade1.edit_last_name_premium( "EylonintHamellonit", "Sasson")); // edit last name to invalid last name with user connected
+        assertTrue(result);
+        assertEquals("Eylon", facade1.get_user_last_name().getValue());
+        facade1.logout();
+
+
+    }
+
+    /*
+     * Cases checked:
+     * 1. edit name with no user connected
+     * 2. edit name with user connected- wrong security answer
+     * 3. edit name with user connected- correct security answer
+     * 4. edit name to empty name with user connected
+     * 5. edit name to invalid name with user connected
+     */
+    @Test
+    void edit_name_premium() {
+        boolean result;
+        result = check_was_exception(facade1.edit_name_premium( "Eylon", "Sasson")); // edit name with no user connected
+        assertTrue(result);
+        facade1.login("heck1234578@email.com", "pass3Chec");
+        result = check_was_exception(facade1.edit_name_premium( "Eylon", "Sade")); // edit name with user connected- wrong security answer
+        assertTrue(result);
+        assertEquals("name", facade1.get_user_name().getValue());
+        result = check_was_exception(facade1.edit_name_premium( "Eylon", "Sasson")); // edit name with user connected- correct security answer
+        assertFalse(result);
+        assertEquals("Eylon", facade1.get_user_name().getValue());
+        result = check_was_exception(facade1.edit_name_premium( "", "Sasson")); // edit name to empty name with user connected
+        assertTrue(result);
+        assertEquals("Eylon", facade1.get_user_name().getValue());
+        result = check_was_exception(facade1.edit_name_premium("EylonintHamellonit", "Sasson")); // edit name to invalid name with user connected
+        assertTrue(result);
+        assertEquals("Eylon", facade1.get_user_name().getValue());
+        facade1.logout();
+    }
+
+
+    /**
+     * Cases checked:
+     * 1. edit password with no user connected
+     * 2. edit password with invalid new password
+     * 3. edit password with empty new password
+     * 4. edit password with wrong old password
+     * 5. edit password with wrong security answer
+     * 6. edit password
+     * 7. edit password
+     */
+    @Test
+    void edit_password_premium() {
+        boolean result = check_was_exception(facade1.edit_password_premium("pass3Chec", "pass12CH", "Sasson")); // edit password with no user connected
+        assertTrue(result);
+
+        facade1.login("heck1234578@email.com", "pass3Chec");
+        result = check_was_exception(facade1.edit_password_premium("pass3Chec", "pass12r", "Sasson")); // edit password with invalid new password
+        assertTrue(result);
+
+        result = check_was_exception(facade1.edit_password_premium("pass3Chec", "", "Sasson")); // edit password with empty new password
+        assertTrue(result);
+
+        result = check_was_exception(facade1.edit_password_premium("pass3ec", "pass12CH", "Sasson")); // edit password with invalid old password
+        assertTrue(result);
+
+        result = check_was_exception(facade1.edit_password_premium("pass3ec", "pass12CH", "Sade")); // edit password with wrong security answer
+        assertTrue(result);
+
+        facade1.logout();
+        facade1.login("heck1234578@email.com", "pass3Chec");
+        assertTrue(facade1.is_logged()); // checks that you can still login with old password
+
+        result = check_was_exception(facade1.edit_password_premium("pass3Chec", "pass12rT", "Sasson")); // edit password
+        assertFalse(result);
+        facade1.logout();
+        facade1.login("heck1234578@email.com", "pass12rT");
+        assertTrue(facade1.is_logged()); // checks that you can login with new password
+
+        result = check_was_exception(facade1.edit_password_premium("pass12rT", "pass3Chec", "Sasson")); // edit password
+        assertFalse(result);
+        facade1.logout();
+        facade1.login("heck1234578@email.com", "pass3Chec");
+        assertTrue(facade1.is_logged()); // checks that you can login with new password
+
+        facade1.logout();
+    }
+
+    /**
+     * Cases checked:
+     * 1. get question with no user connected
+     * 2. get question with premium account user connected
+     * 3. get question with regular user connected
+     */
+    @Test
+    void get_user_security_question(){
+        boolean result;
+
+        result = check_was_exception(facade1.get_user_security_question()); // get question with no user connected
+        assertTrue(result);
+
+        facade1.login("heck1234578@email.com", "pass3Chec");
+
+        Response response = facade1.get_user_security_question();
+        result = check_was_exception(response); // get question with premium account user connected
+        assertFalse(result);
+        assertEquals("What was your mother's maiden name?", response.getValue());
+
+        facade1.logout();
+        facade1.login("check1234@email.com", "pass3Chec");
+
+        result = check_was_exception(facade1.get_user_security_question()); // get question with regular user connected
+        assertTrue(result);
+
+        facade1.logout();
+
     }
 
     /**

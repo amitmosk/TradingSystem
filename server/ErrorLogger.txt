@@ -1,0 +1,10 @@
+Jun 04, 2022 5:13:16 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest does not have privacy question
+Jun 04, 2022 5:13:16 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: password should contain at least one upper & lower letter, and digit
+Jun 04, 2022 5:13:16 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: password length should be in range of 6-12
+Jun 04, 2022 5:13:16 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: password does not match to current password
+Jun 04, 2022 5:13:16 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Incorrect answer for the security question
