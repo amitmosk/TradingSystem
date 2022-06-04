@@ -2,13 +2,10 @@ package TradingSystem.server.Domain.Facade.AcceptanceTest;
 
 import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
-import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
-import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
-import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.AppointmentException;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 import TradingSystem.server.Domain.Utils.Response;
@@ -16,6 +13,7 @@ import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -660,16 +658,62 @@ class StoreMoudleTest {
     void send_question_to_store_happy() {
         //happy
         buy_product();
-        Response r = marketFacade.send_question_to_store(1, "how can i control the world");
+        String q = "how can i control the world";
+        Response r = marketFacade.send_question_to_store(1, q);
         check_was_not_exception("Question send to the store successfully", r);
-
+        Response questions = manager.manager_view_store_questions(1);
+        if(questions.getValue().getClass() == (new LinkedList<String>()).getClass()){ // manager views question list
+            boolean flag = false;
+            for(String s : ((LinkedList<String>)questions.getValue())){
+                if(s.contains(q)){
+                    flag = true;
+                }
+            }
+            assertTrue(flag);
+        }
     }
 
     @Test
     void send_question_to_store_sad() {
         //sad
-        Response rSad = marketFacade.send_question_to_store(1, "how can i control the world");
+        String q = "how can i control the worlds?";
+        Response rSad = marketFacade.send_question_to_store(1, q);
         check_was_exception(rSad);
+        Response questions = manager.manager_view_store_questions(1);
+        if(questions.getValue().getClass() == (new LinkedList<String>()).getClass()) { // manager views question list
+            boolean flag = false;
+            for(String s : ((LinkedList<String>)questions.getValue())){
+                if(s.contains(q)){
+                    flag = true;
+                }
+            }
+            assertFalse(flag);
+        }
+    }
+
+    @Test
+    void manager_view_store_questions() {
+        Response questions = manager.manager_view_store_questions(1);
+        assertEquals((new LinkedList<String>()).getClass(), questions.getValue().getClass()); // manager view empty list of questions
+
+        Response r = marketFacade.manager_view_store_questions(1);
+        check_was_exception(r); // not a manager, shouldn't be able to view
+
+        buy_product();
+        String q = "how can i control the world";
+        r = marketFacade.send_question_to_store(1, q);
+        check_was_not_exception("Question send to the store successfully", r);
+        questions = manager.manager_view_store_questions(1);
+        if(questions.getValue().getClass() == (new LinkedList<String>()).getClass()) { // manager views question list
+            boolean flag = false;
+            for(String s : ((LinkedList<String>)questions.getValue())){
+                if(s.contains(q)){
+                    flag = true;
+                }
+            }
+            assertTrue(flag);
+        }
+
     }
 
     private List<String> gen_key_words(List<String> key_words){

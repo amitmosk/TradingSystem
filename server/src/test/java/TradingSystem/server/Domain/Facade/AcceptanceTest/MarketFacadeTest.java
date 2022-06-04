@@ -441,13 +441,7 @@ class MarketFacadeTest {
         assertEquals("Eylon", facade1.get_user_name().getValue());
 
         facade1.logout();
-        facade1.login("heck1234578@email.com", "pass3Chec"); // premium account user
 
-        result = check_was_exception(facade1.edit_name( "Name")); // edit last name with user connected
-        assertTrue(result);
-        assertEquals("Eylon", facade1.get_user_name().getValue());
-
-        facade1.logout();
     }
 
     /*
@@ -456,7 +450,6 @@ class MarketFacadeTest {
      * 2. edit last name with user connected
      * 3. edit last name to empty last name with user connected
      * 4. edit last name to invalid last name with user connected
-     * 5. edit last name of premium account with no security improvement
      */
     @Test
     void edit_last_name() {
@@ -478,13 +471,7 @@ class MarketFacadeTest {
         assertEquals("Eylon", facade1.get_user_last_name().getValue());
 
         facade1.logout();
-        facade1.login("heck1234578@email.com", "pass3Chec"); // premium account user
 
-        result = check_was_exception(facade1.edit_last_name( "Sade")); // edit last name with user connected
-        assertEquals("last", facade1.get_user_last_name().getValue());
-        assertTrue(result);
-
-        facade1.logout();
 
     }
 

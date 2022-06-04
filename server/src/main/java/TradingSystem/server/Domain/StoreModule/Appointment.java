@@ -53,11 +53,11 @@ public class Appointment {
         this.permissions.put(edit_item_category, 1);
         this.permissions.put(edit_item_keywords, 1);
         this.permissions.put(view_permissions, 0);
-        this.permissions.put(view_users_questions, 0);
+        this.permissions.put(view_users_questions, 1);
         this.permissions.put(edit_store_policy, 0);
         this.permissions.put(edit_discount_policy, 0);
         this.permissions.put(edit_purchase_policy, 0);
-        this.permissions.put(view_purchases_history, 0);
+        this.permissions.put(view_purchases_history, 1);
         this.permissions.put(close_store_temporarily, 0);
         this.permissions.put(open_close_store, 0);
         this.permissions.put(add_manager, 0);
