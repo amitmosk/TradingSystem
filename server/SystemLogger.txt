@@ -1,66 +1,706 @@
-Jun 05, 2022 12:28:14 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:37 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 05, 2022 12:28:14 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:37 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store Checker Store with id = 1opened successfully
-Jun 05, 2022 12:28:14 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:37 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:38 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 05, 2022 5:14:38 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: New product (CheckItem) added to store (1)
-Jun 05, 2022 12:28:14 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User logged out from the system.
-Jun 05, 2022 12:28:15 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: name last has registered to the system
-Jun 05, 2022 12:28:15 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:38 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User added to cart 1 of product- 1 from store- 1
-Jun 05, 2022 12:28:15 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:38 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 05, 2022 12:28:15 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: name last has registered to the system
-Jun 05, 2022 12:28:15 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:38 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 05, 2022 12:28:15 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:38 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 05, 2022 12:28:15 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:38 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 05, 2022 12:28:15 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:38 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:38 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:38 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User's (heck1234578@email.com) security has been successfully improved.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User check1234@email.com logged-in
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store store number 2 with id = 2opened successfully
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store store number 2 with id = 3opened successfully
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (heck1234578@email.com) last name has been successfully changed to Eylon.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User check123456@email.com logged-in
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (check123456@email.com) name has been successfully changed to Eylon.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User quantity of product- 1 from store- 1 in cart to 1
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User removed from cart product- 1 from store- 1
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check12345@email.com logged-in
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's email successfully
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's email successfully
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: checker checkcheck has registered to the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's email successfully
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User admin@gmail.com logged-in
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin received store's (1) purchase history successfully.
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User viewed his cart successfully
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User viewed his cart successfully
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check123456@email.com logged-in
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check123456@email.com logged-in
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User admin@gmail.com logged-in
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Removed user (check123456@email.com) from the system.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's security question successfully
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User admin@gmail.com logged-in
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check123456@email.com logged-in
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User admin@gmail.com logged-in
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check123457@email.com logged-in
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin answered user's complaint successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin answered user's complaint successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin answered user's complaint successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1@email.com logged-in
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check2@email.com logged-in
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check3@email.com logged-in
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check123456@email.com logged-in
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (check123456@email.com) last name has been successfully changed to Eylon.
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User loginsame@gmail.com logged-in
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User removed from cart product- 1 from store- 1
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User removed from cart product- 1 from store- 1
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store store number 2 with id = 2opened successfully
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store store number 2 with id = 3opened successfully
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check123456@email.com logged-in
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store Store number 1 with id = 4opened successfully
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (check1234@email.com)  password has been changed successfully.
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (check1234@email.com)  password has been changed successfully.
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check123456@email.com logged-in
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User (check123456@email.com) has been successfully unregistered from the system.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (heck1234578@email.com) name has been successfully changed to Eylon.
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:14:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1234@email.com logged-in
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User received (check1234@email.com) store's (1) purchase history successfully.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store first store for this user with id = 5opened successfully
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User received (heck1234578@email.com) store's (5) purchase history successfully.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New product (CheckItem) added to store (5)
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 2 from store- 5
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User received (heck1234578@email.com) store's (5) purchase history successfully.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check123457@email.com logged-in
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (check123457@email.com) security has been successfully improved.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User admin@gmail.com logged-in
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin received user's (check123456@email.com) purchase history successfully.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin received user's (check12345@email.com) purchase history successfully.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check12345@email.com logged-in
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User viewed his purchase history successfully
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User viewed his purchase history successfully
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (heck1234578@email.com) password has been successfully changed.
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:15:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (heck1234578@email.com) password has been successfully changed.
+Jun 05, 2022 5:15:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 05, 2022 5:15:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User heck1234578@email.com logged-in
+Jun 05, 2022 5:15:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.

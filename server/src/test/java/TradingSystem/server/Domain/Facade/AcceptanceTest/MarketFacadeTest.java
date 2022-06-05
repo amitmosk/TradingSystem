@@ -5,21 +5,17 @@ import TradingSystem.server.Domain.ExternSystems.PaymentAdapterImpl;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapterImpl;
 import TradingSystem.server.Domain.Facade.MarketFacade;
-import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
-import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
-import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 
-import java.security.KeyStore;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -41,7 +37,7 @@ class MarketFacadeTest {
     private String password;
     private String birth_date;
     private final int num_of_threads = 100;
-
+    private int prod_counter = 0;
 
     private boolean check_was_exception(Response response) {
         return response.WasException();
@@ -55,15 +51,11 @@ class MarketFacadeTest {
         this.facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         this.facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
         facade1.register("check1234@email.com", "pass3Chec", "name", "last",birth_date);
-        facade1.open_store("Checker Store");
-        ArrayList<String> arraylist = new ArrayList<>();
-        arraylist.add("check_check");
-        facade1.add_product_to_store(1, 20, "CheckItem", 10.0, "checker", arraylist);
+        int id = open_store_get_id("Checker Store");
+        facade2.register("check12345@email.com", "pass3Chec", "name", "last",birth_date);
+        int prod = add_prod_make_purchase_get_id(id);
         facade1.logout();
-        facade1.register("check12345@email.com", "pass3Chec", "name", "last",birth_date);
-        facade1.add_product_to_cart(1, 1, 1);
-        facade1.buy_cart("credit", "address");
-        facade1.logout();
+        facade2.logout();
         facade1.register("check123456@email.com", "pass3Chec", "name", "last",birth_date);
         facade1.logout();
         facade1.register("check123457@email.com", "pass3Chec", "name", "last",birth_date);
@@ -103,7 +95,6 @@ class MarketFacadeTest {
         int stores_count = 0;
         if(res.getValue().getClass() == (new ArrayList<StoreInformation>()).getClass()) {
             stores_count = ((ArrayList<StoreInformation>) res.getValue()).size();
-            System.out.println("\n\n" + stores_count + "\n\n");
         }
         return stores_count;
     }
@@ -139,7 +130,264 @@ class MarketFacadeTest {
         }
         return "";
     }
+
+    private int open_store_get_id(String name){
+        facade1.open_store(name);
+        return num_of_stores();
+    }
+    private int add_prod_make_purchase_get_id(int sore_id){
+        ArrayList<String> arraylist = new ArrayList<>();
+        arraylist.add("check_check");
+        facade1.add_product_to_store(sore_id, 100, "CheckItem", 10.0, "checker", new ArrayList<>());
+        prod_counter++;
+        facade2.add_product_to_cart(sore_id, prod_counter, 1);
+        facade2.buy_cart("credit", "address");
+        return prod_counter;
+    }
+
+    private boolean check_if_purchase_exists(Response res, String email, int prod){
+        boolean flag = false;
+
+        if(res.getValue().getClass() == (new ConcurrentHashMap<Integer, StorePurchase>()).values().getClass()){
+            Collection<StorePurchase> his = (Collection<StorePurchase>)res.getValue();
+            for(StorePurchase p : his){
+                if(p.getBuyer_email() == email && p.getProduct_and_totalPrice().containsKey(prod))
+                    flag = true;
+            }
+            System.out.println("\n1\n");
+
+        }
+        else if(res.getValue().getClass() == StorePurchaseHistory.class){
+            StorePurchaseHistory his = (StorePurchaseHistory)res.getValue();
+            for(StorePurchase p : his.getPurchaseID_purchases().values()){
+                if(p.getBuyer_email() == email && p.getProduct_and_totalPrice().containsKey(prod))
+                    flag = true;
+            }
+            System.out.println("\n2\n");
+        }
+        return flag;
+    }
+
+    private boolean valid_purchase_history(Response res, String email, int prod){
+        return (!check_was_exception(res) && check_if_purchase_exists(res, email, prod));
+    }
+
+    private void valid_admin_questions(Response res, int num_of_question, String question, String email, boolean answered, String answer){
+        Object res_val = res.getValue();
+        assertFalse(check_was_exception(res));
+        assertEquals((new LinkedList<String>()).getClass(), res_val.getClass());
+        if(num_of_question == 0) {
+            assertTrue(((LinkedList<String>)res_val).isEmpty());
+        }
+        else{
+            if(res_val.getClass() == (new LinkedList<String>()).getClass()) {
+                assertTrue(num_of_question == ((LinkedList<String>)res_val).size());
+                boolean flag = false;
+                for(String s : ((LinkedList<String>)res_val)){
+                    if(s.contains(question) && s.contains(email) && !answered){
+                        flag = true;
+                    }
+                    else if(s.contains(question) && s.contains(email) && s.contains(answer)){
+                        flag = true;
+                    }
+                }
+                assertTrue(flag);
+            }
+        }
+    }
     // --------------------------------------------------------------------------------------------------------
+
+    // delete_owner
+    // add_manager
+    // delete_manager
+    // close_store_temporarily
+    // open_close_store
+    // view_store_management_information
+    // manager_answer_question
+    // get_market_stats
+    // get_products_by_store_id
+    // clear
+    // get_user_questions
+    // edit_product_quantity
+    // online_user
+    // close_store_permanently
+
+
+    /**
+     * Cases checked:
+     * 1. guest tries to view empty admin question list
+     * 2. guest tries to send admin question
+     * 3. admin views empty question list
+     * 4. connected user sends admin a question
+     * 5. guest tries to view admin question list
+     * 6. regular user tries to view admin question list
+     * 7. admin views question list of size 1
+     * 8. connected user sends admin another question
+     * 9. admin views question list of size 2 (all from same user)
+     * 10. user sends admin same question as different user
+     * 11. admin views question list of size 3 (2 from same user, 2 same question different user)
+     * 12. admin tries to answer question with an id that does not exist
+     * 13. regular user tries to answer question
+     * 14. admin answers a question
+     * 15. admin views question list of size 3 (one of them is answered)
+     * 16. admin re-answers user's question
+     * 17. admin views question list of size 3 (one of them is re-answered)
+     * 18. admin answers a different user's question
+     * 19. admin views question list of size 3 (one of them is re-answered, one is answered and one is not answered)
+     */
+    @Test
+    void send_to_admin_view_and_answer_questions(){
+        Response res;
+
+        res = facade2.admin_view_users_questions(); // no user is connected, no questions yet
+        assertTrue(check_was_exception(res));
+
+        String question1 = "guest sends question";
+        res = facade2.send_question_to_admin(question1);
+        assertTrue(check_was_exception(res)); // guest user can't send question to admin
+
+        facade1.login("admin@gmail.com", "12345678aA");
+
+        res = facade1.admin_view_users_questions(); // admin views empty question list
+        valid_admin_questions(res, 0, "", "",false,"");
+        facade1.logout();
+
+        facade2.login("check123456@email.com", "pass3Chec");
+        question1 = "user sends admin a question";
+        res = facade2.send_question_to_admin(question1);
+        assertFalse(check_was_exception(res)); // connected user sends admin a question
+
+        res = facade1.admin_view_users_questions(); // no user is connected, there is a question
+        assertTrue(check_was_exception(res));
+
+        res = facade2.admin_view_users_questions(); // regular user is connected, there is a question
+        assertTrue(check_was_exception(res));
+
+        facade1.login("admin@gmail.com", "12345678aA");
+
+        res = facade1.admin_view_users_questions(); // admin views question list of size 1
+        valid_admin_questions(res, 1, question1, "check123456@email.com",false,"");
+
+        String question2 = "this should work as well";
+        res = facade2.send_question_to_admin(question2);
+        assertFalse(check_was_exception(res)); // connected user sends admin a question
+
+        res = facade1.admin_view_users_questions(); // admin views question list of size 2
+        valid_admin_questions(res, 2, question1, "check123456@email.com",false,"");
+        valid_admin_questions(res, 2, question2, "check123456@email.com",false,"");
+
+        facade2.logout();
+        facade2.login("check123457@email.com", "pass3Chec");
+
+        String question3 = "this should work as well"; // different user same question
+        res = facade2.send_question_to_admin(question3);
+        assertFalse(check_was_exception(res)); // connected user sends admin same question as different user
+
+        res = facade1.admin_view_users_questions(); // admin views question list of size 3
+        valid_admin_questions(res, 3, question1, "check123456@email.com",false,"");
+        valid_admin_questions(res, 3, question2, "check123456@email.com",false,"");
+        valid_admin_questions(res, 3, question3, "check123457@email.com",false,"");
+
+        String answer = "i answer";
+
+        res = facade1.admin_answer_user_question(0, answer); // admin enters question id that does not exist
+        assertTrue(check_was_exception(res));
+
+        res = facade2.admin_answer_user_question(1, answer); // regular user tries to answer question
+        assertTrue(check_was_exception(res));
+
+        res = facade1.admin_view_users_questions(); // to make sure non of the 2 above worked
+        valid_admin_questions(res, 3, question1, "check123456@email.com",false,"");
+        valid_admin_questions(res, 3, question2, "check123456@email.com",false,"");
+        valid_admin_questions(res, 3, question3, "check123457@email.com",false,"");
+
+        res = facade1.admin_answer_user_question(1, answer); // admin answers a question
+        assertFalse(check_was_exception(res));
+
+        res = facade1.admin_view_users_questions(); // admin views question list of size 3 (one of them is answered)
+        valid_admin_questions(res, 3, question1, "check123456@email.com",true, answer);
+        valid_admin_questions(res, 3, question2, "check123456@email.com",false,"");
+        valid_admin_questions(res, 3, question3, "check123457@email.com",false,"");
+
+        answer += "!";
+
+        res = facade1.admin_answer_user_question(1, answer); // admin re-answers user's question
+        assertFalse(check_was_exception(res));
+
+        res = facade1.admin_view_users_questions(); // admin views question list of size 3 (one of them is re-answered)
+        valid_admin_questions(res, 3, question1, "check123456@email.com",true, answer);
+        valid_admin_questions(res, 3, question2, "check123456@email.com",false,"");
+        valid_admin_questions(res, 3, question3, "check123457@email.com",false,"");
+
+        res = facade1.admin_answer_user_question(3, answer); // admin answers different user's question
+        assertFalse(check_was_exception(res));
+
+        res = facade1.admin_view_users_questions(); // admin views question list of size 3 (one of them is re-answered, one is answered and one is not answered)
+        valid_admin_questions(res, 3, question1, "check123456@email.com",true, answer);
+        valid_admin_questions(res, 3, question2, "check123456@email.com",false,"");
+        valid_admin_questions(res, 3, question3, "check123457@email.com",true,answer);
+
+        facade2.logout();
+        facade1.logout();
+    }
+
+
+    /**
+     * Cases checked:
+     * 1. no one is connected
+     * 2. user connected is not the store owner
+     * 3. user enters a store id that does not exist
+     * 4. store founder views store's purchase history
+     * 5. store founder enters a store id that does not exist
+     * 6. store founder enters a store id that didn't doesn't have permissions to see
+     * 7. store founder views new store's empty purchase history
+     * 8. store founder views store's purchase history
+     */
+    @Test
+    void view_store_purchases_history() {
+        Response res;
+
+        res = facade1.view_store_purchases_history(1); // no one is connected
+        assertTrue(check_was_exception(res));
+
+        facade1.login("heck1234578@email.com", "pass3Chec");
+        res = facade1.view_store_purchases_history(1); // user connected is not the store owner
+        assertTrue(check_was_exception(res));
+
+        res = facade1.view_store_purchases_history(num_of_stores() + 2); // user enters a store id that does not exist
+        assertTrue(check_was_exception(res));
+
+        facade2.login("check1234@email.com", "pass3Chec");
+        res = facade2.view_store_purchases_history(1); // store founder views store's purchase history
+        assertTrue(valid_purchase_history(res, "check12345@email.com", 1));
+
+        res = facade2.view_store_purchases_history(num_of_stores() + 2); // store founder enters a store id that does not exist
+        assertTrue(check_was_exception(res));
+
+        int store_id = open_store_get_id("first store for this user"); // store founder opens first store
+
+        res = facade2.view_store_purchases_history(num_of_stores() + 2); // store founder enters a store id that didn't doesn't have permissions to see
+        assertTrue(check_was_exception(res));
+
+        res = facade1.view_store_purchases_history(store_id); // store founder views new store's empty purchase history
+        assertFalse(check_was_exception(res));
+        if(res.getValue().getClass() == (new ConcurrentHashMap<Integer, StorePurchase>()).values().getClass()){
+            Collection<StorePurchase> his = (Collection<StorePurchase>)res.getValue();
+            assertTrue(his.isEmpty());
+        }
+
+        int prod_id = add_prod_make_purchase_get_id(store_id);
+
+        res = facade1.view_store_purchases_history(store_id); // store founder views store's purchase history
+        System.out.println("\nStore: " + store_id + "\nProd: " + prod_id);
+        assertTrue(valid_purchase_history(res, "check1234@email.com", prod_id));
+
+
+        facade1.logout();
+        facade2.logout();
+
+
+    }
 
 
     /**
@@ -163,6 +411,7 @@ class MarketFacadeTest {
         name = "store number 2";
         facade1.login("check1234@email.com", "pass3Chec");
         res = facade1.open_store(name); // store founder opens store number 2
+
         assertFalse(check_was_exception(res));
         assertTrue(find_store(name, 1));
         stores_count++;
@@ -269,16 +518,8 @@ class MarketFacadeTest {
         assertTrue(check_was_exception(res));
 
         res = facade2.admin_view_store_purchases_history(1); // admin views store's purchase history
-        assertFalse(check_was_exception(res));
-        if(res.getValue().getClass() == StorePurchaseHistory.class){
-            StorePurchaseHistory his = (StorePurchaseHistory)res.getValue();
-            boolean flag = false;
-            for(StorePurchase p : his.getPurchaseID_purchases().values()){
-                if(p.getBuyer_email() == "check12345@email.com" && p.getProduct_and_totalPrice().containsKey(1))
-                    flag = true;
-            }
-            assertTrue(flag);
-        }
+        assertTrue(valid_purchase_history(res, "check12345@email.com", 1));
+
 
         facade1.logout();
         facade2.logout();

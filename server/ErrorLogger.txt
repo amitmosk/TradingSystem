@@ -1,2 +1,1448 @@
-Jun 05, 2022 12:28:16 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest does not have privacy question
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Incorrect answer for the security question
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Name cannot be null or empty spaces
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Name length is too long
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
 SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cant change is name
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Name cannot be null or empty spaces
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Name length is too long
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user havn't bought product from this store.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 5
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Basket.changeQuantity: the quantity less then 1. quantity = 0
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 5
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 5
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:39 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User email does not match to the password
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:40 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check2@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check3@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:41 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 2
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:42 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to remove due to the reason idontexist@email.com is not registered in the system.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User email does not match to the password
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest does not have privacy question
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Only premium security has security question
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:43 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Question does not exist
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:44 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot log in from logged in user
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot log in from logged in user
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot log in from logged in user
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:45 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cant change his last name
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Name cannot be null or empty spaces
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Name length is too long
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email somthing@gmail.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:46 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User already logged in.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Product already in the basket - product id: 1
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 5
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user dont have item's from specified store
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 5
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 5
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: there is no such store
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:47 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cant change is password
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: password should contain at least one upper & lower letter, and digit
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: password length should be in range of 6-12
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: password does not match to current password
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:48 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have name.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have last name.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:49 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest does not have privacy question
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Incorrect answer for the security question
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Name cannot be null or empty spaces
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Name length is too long
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:14:50 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:05 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 6
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 6
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 7
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:15:06 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot log in from logged in user
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest Hasn't made any purchases yet.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest Hasn't made any purchases yet.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot log in from logged in user
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check1234@email.com already exists in the system
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check12345@email.com already exists in the system
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123456@email.com already exists in the system
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email check123457@email.com already exists in the system
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user email heck1234578@email.com already exists in the system
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest cannot improve security
+Jun 05, 2022 5:15:07 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: failed to logout from guest
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: guest does not have privacy question
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: password should contain at least one upper & lower letter, and digit
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: password length should be in range of 6-12
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: password does not match to current password
+Jun 05, 2022 5:15:08 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Incorrect answer for the security question
