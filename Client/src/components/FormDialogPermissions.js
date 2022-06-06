@@ -78,7 +78,10 @@ localStorage.setItem("permission_selected", "add_item");
     console.log("in handle submit\n");
     let ans = [];
     fields.map((f) => ans.push(localStorage.getItem(f)))
-    ans.push(localStorage.getItem("permission_selected"));
+    const key = localStorage.getItem("permission_selected");
+    console.log("key");
+    console.log(key);
+    ans.push(permissions[key]);
     getValues(ans);
     setOpen(false);
 

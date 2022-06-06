@@ -331,11 +331,12 @@ export default class StoreManagment extends Component {
         console.log("in edit_manager_permissions!\n");
         const manager_email = values[0];
         const store_id = this.state.store_id;
-        const permissions = values[2];
+        const permissions_number = values[1];
         console.log(manager_email);
-        console.log(permissions);
+        console.log(permissions_number);
+        console.log(store_id);
 
-        const response = await this.storeApi.edit_manager_permissions(manager_email, store_id, permissions);
+        const response = await this.storeApi.edit_manager_permissions(manager_email, store_id, permissions_number);
         // alert(response.message);
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
@@ -409,8 +410,8 @@ export default class StoreManagment extends Component {
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_owner_fields} getValues={this.add_owner.bind(this)} name="Add Owner"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.remove_owner_appointment_fields} getValues={this.delete_owner.bind(this)} name="Delete Owner"></FormDialog></Item></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.remove_manager_appointment_fields} getValues={this.delete_manager.bind(this)} name="Remove Manager"></FormDialog></Item ></Grid >
-                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions"></FormDialog></Item ></Grid > */}
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialogPermissions outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions"></FormDialogPermissions></Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions Eylon"></FormDialog></Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialogPermissions outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions "></FormDialogPermissions></Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link to = {`ManagerViewStoreQuestions/${id}`} query={{store:1}}>Bid Item</Link></Item ></Grid >         */}
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ManagerViewStoreQuestions` }}   underline="hover" >{'View User Questions'}</Link>   </Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link href="/ViewStorePurchaseHistory"  underline="hover" >{'View Store Purchase History'}</Link>   </Item ></Grid > */}

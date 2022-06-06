@@ -44,6 +44,7 @@ import ViewStorePurchaseHistoryNevigator from "./components/ViewStorePurchaseHis
 import AllStores from "./components/AllStores";
 import MyStores from "./components/MyStores";
 import BuyCart from "./components/BuyCart";
+import ManagerPermissions from "./components/ManagerPermissions";
 export default class App extends Component {
   static displayName = App.name;
   constructor(props) {
@@ -174,7 +175,7 @@ export default class App extends Component {
           ></Route>
           <Route
             path="/StorePage/:id/StoreManagment/AddDiscount"
-            element={<AddDiscount store_id={1} />}
+            element={<AddDiscount/>} //have to pass store id
           ></Route>
           <Route
             path="/EditProfile"
@@ -222,6 +223,10 @@ export default class App extends Component {
           <Route
             path="/ViewUserPurchaseHistory"
             element={<ViewUserPurchaseHistory />}
+          ></Route>
+          <Route
+            path="/StorePage/:id/StoreManagment/ManagerPermissions"
+            element={<ManagerPermissions />}
           ></Route>
           
 
