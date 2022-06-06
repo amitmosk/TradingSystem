@@ -327,7 +327,7 @@ public class UserController {
 
     public Statistic get_statistics(int logged_user) throws MarketException {
         check_admin_permission(logged_user);
-        return statisticsManager.get_system_statistics();
+        return statisticsManager.get_system_statistics(users,onlineUsers);
     }
 
 
