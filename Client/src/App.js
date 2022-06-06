@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, React } from "react";
 import "./App.css";
 import { BrowserRouter, Link, Route, Router, Routes } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
@@ -7,8 +7,8 @@ import Alert from "@mui/material/Alert";
 import Login from "./components/Login";
 import HomePageSearch from "./components/HomePageSearch";
 import Register from "./components/Register";
-import Payment from "./components/Payment";
-import Supply from "./components/Supply";
+import Payment from "./components/PaymentPage";
+import Supply from "./components/SupplyPage";
 // import * as React from 'react';
 // import ReactDOM from 'react-dom';
 import Button from "@mui/material/Button";
@@ -43,7 +43,7 @@ import ViewStaffInformationNevigator from "./components/ViewStaffInformationNevi
 import ViewStorePurchaseHistoryNevigator from "./components/ViewStorePurchaseHistoryNevigator";
 import AllStores from "./components/AllStores";
 import MyStores from "./components/MyStores";
-
+import BuyCart from "./components/BuyCart";
 export default class App extends Component {
   static displayName = App.name;
   constructor(props) {
@@ -67,6 +67,8 @@ export default class App extends Component {
     this.connectApi = new ConnectApi();
     this.updateUserState = this.updateUserState.bind(this);
     this.get_online_user();
+    // const user = React.createContext('user');
+      
   }
   async componentDidMount() {
     this.get_online_user();
@@ -158,6 +160,7 @@ export default class App extends Component {
           <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
           {/* <Route path="/StorePage" element={<StorePageNevigator/>}></Route> */}
           <Route path="/StorePage/:id" element={<StorePageNevigator />}></Route>
+          <Route path="MyStores/StorePage/:id" element={<StorePageNevigator />}></Route>
           <Route path="/AllStores/StorePage/:id" element={<StorePageNevigator />}></Route>
           <Route
             path="/AdminSendMessage"
@@ -213,10 +216,14 @@ export default class App extends Component {
             path="/StorePage/:id/StoreManagment/ViewStaffInformation"
             element={<ViewStaffInformationNevigator />}
           ></Route>
+          <Route path="/ShoppingCart/BuyCart" element={<BuyCart/>}></Route>
+          {/* <Route path="/Payment" element={<PaymentPage/>}></Route>
+          <Route path="/Supply" element={<SupplyPage/>}></Route> */}
           <Route
             path="/ViewUserPurchaseHistory"
             element={<ViewUserPurchaseHistory />}
           ></Route>
+          
 
           <Route
             path="/StorePage/:id/StoreManagment/ViewStorePurchaseHistory"

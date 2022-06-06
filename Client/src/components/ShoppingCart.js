@@ -12,6 +12,7 @@ import { UserApi } from "../API/UserApi";
 import { CartApi } from "../API/CartApi";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Link } from "react-router-dom";
 
 export default class ShoppingCart extends Component {
   constructor(props) {
@@ -101,26 +102,7 @@ export default class ShoppingCart extends Component {
   };
 
 
-  buy_cart = async () => {
-    let response = await this.cartApi.buy_cart("", "");
-    if (response.was_exception)
-    {
-      this.setSnackbar({ children: response.message, severity: "error" });
-    }
 
-      
-    else
-    {
-      this.setSnackbar({
-        children: "buy cart worked succesfully",
-        severity: "success",
-      });
-      this.setItems([]);
-      this.setState({ price: 0 });
-
-    }
-      
-  };
 
   handleCloseSnackbar = () => this.setSnackbar(null);
 
@@ -223,8 +205,9 @@ export default class ShoppingCart extends Component {
             alignItems="center"
           >
             <h4>cart total price {this.state.price}</h4>
-            <Button width="5" variant="contained" onClick={this.buy_cart}>
-              buy cart
+            
+            <Button width="5" variant="contained" >
+            <Link to={{pathname:`BuyCart`}}   underline="hover" style={{ color: '#FFF' }} >{'Buy Cart'}</Link> 
             </Button>
           </Grid>
           {!!this.state.snackbar && (

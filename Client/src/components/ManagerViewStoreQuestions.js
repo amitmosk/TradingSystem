@@ -43,7 +43,7 @@ export default class ManagerViewStoreQuestions extends Component {
         if (!response.was_excecption) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in UserViewQuestions - success!\n");
-            console.log(response);
+            console.log(response.value);
             
                   //
                   //static create( question_id,  message_date,  answer_date,  message,  answer, has_answer) {
@@ -76,7 +76,7 @@ export default class ManagerViewStoreQuestions extends Component {
         const store_id = this.state.store_id;
         const question_id = values[0];
         const answer = values[1];
-
+        console.log(store_id +" , "+question_id+" , "+answer);
 
         const response = await this.storeApi.manager_answer_question(store_id, question_id, answer);
         // alert(response.message);

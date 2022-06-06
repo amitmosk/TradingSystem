@@ -245,7 +245,7 @@ export class StoreApi {
             {
                 params:{store_id : store_id,
                     question_id : question_id,
-                    answer : answer,}
+                    managerAnswer : answer,}
                 
 
             })

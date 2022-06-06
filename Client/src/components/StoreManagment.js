@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import FormDialog from './FormDialog';
+import FormDialogPermissions from './FormDialogPermissions';
 import { StoreApi } from '../API/StoreApi';
 import StoreManagmentProductsTable from './StoreManagmentProductsTable';
 import Snackbar from "@mui/material/Snackbar";
@@ -19,6 +20,8 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
+
+
 
 
 
@@ -41,7 +44,7 @@ export default class StoreManagment extends Component {
             appoint_owner_fields: ["user_email_to_appoint"],
             remove_owner_appointment_fields: ["user_email_to_appoint"],
             remove_manager_appointment_fields: ["user_email_to_appoint"],
-            change_manager_permissions_fields: ["manager_email", "permissions"],
+            change_manager_permissions_fields: ["manager_email"],
             answer_user_questions_fields: ["question_id", "answer"],
             user_massages_fields: [],
             store_purchase_history_fields: [],
@@ -328,8 +331,9 @@ export default class StoreManagment extends Component {
         console.log("in edit_manager_permissions!\n");
         const manager_email = values[0];
         const store_id = this.state.store_id;
-        const permissions = values[1];
-
+        const permissions = values[2];
+        console.log(manager_email);
+        console.log(permissions);
 
         const response = await this.storeApi.edit_manager_permissions(manager_email, store_id, permissions);
         // alert(response.message);
@@ -405,7 +409,8 @@ export default class StoreManagment extends Component {
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_owner_fields} getValues={this.add_owner.bind(this)} name="Add Owner"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.remove_owner_appointment_fields} getValues={this.delete_owner.bind(this)} name="Delete Owner"></FormDialog></Item></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.remove_manager_appointment_fields} getValues={this.delete_manager.bind(this)} name="Remove Manager"></FormDialog></Item ></Grid >
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions"></FormDialog></Item ></Grid >
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions"></FormDialog></Item ></Grid > */}
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialogPermissions outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions"></FormDialogPermissions></Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link to = {`ManagerViewStoreQuestions/${id}`} query={{store:1}}>Bid Item</Link></Item ></Grid >         */}
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ManagerViewStoreQuestions` }}   underline="hover" >{'View User Questions'}</Link>   </Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link href="/ViewStorePurchaseHistory"  underline="hover" >{'View Store Purchase History'}</Link>   </Item ></Grid > */}

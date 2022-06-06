@@ -91,12 +91,12 @@ export default class StorePage extends Component {
   async send_question_to_store(values) {
     const store_id = this.props.store_id;
     const question = values[0];
-    let response = await this.storeApi.send_question_to_store(
-      store_id,
-      question
-    );
+    let response = await this.storeApi.send_question_to_store(store_id,question);
     if (!response.was_exception) {
-    } else {
+      this.setState({ snackbar: { children: response.message, severity: "success" } });
+    } 
+    else {
+      this.setState({ snackbar: { children: response.message, severity: "error" } });
     }
   }
   async rate_store(rating) {
@@ -107,10 +107,12 @@ export default class StorePage extends Component {
     this.setState({ snackbar: { children: response.message, severity: "success" } });
 
     if (!response.was_exception) {
+      this.setState({ snackbar: { children: response.message, severity: "success" } });
       //get store
       //reload store
     } 
     else {
+      this.setState({ snackbar: { children: response.message, severity: "error" } });
     }
   }
 
@@ -196,7 +198,7 @@ export default class StorePage extends Component {
                   open
                   anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                   onClose={this.handleCloseSnackbar}
-                  autoHideDuration={6000}
+                  autoHideDuration={1}
                 >
                   <Alert
                     {...this.state.snackbar}

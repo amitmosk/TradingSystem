@@ -351,13 +351,13 @@ public class MarketFacade {
      * @precondition : GUI check store name is valid
      */
     //TODO: should we return the store ? or should we do something with the store id
-    public Response<String> open_store(String store_name) {
-        Response<String> response = null;
+    public Response<Integer> open_store(String store_name) {
+        Response<Integer> response = null;
         try {
             User online_user = user_controller.get_user(loggedUser);
             int store_id = this.store_controller.open_store(online_user, store_name);
-            response = new Response<>(null, "Store opened successfully");
-            system_logger.add_log("Store " + store_name + " with id = " + store_id + "opened successfully");
+            response = new Response<Integer>(store_id, "Store opened successfully");
+            system_logger.add_log("Store " + store_name + " with id = " + store_id + " opened successfully");
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
