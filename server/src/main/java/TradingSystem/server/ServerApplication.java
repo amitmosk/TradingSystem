@@ -1,5 +1,6 @@
 package TradingSystem.server;
 
+import TradingSystem.server.Service.Trying;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -11,10 +12,20 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 @SpringBootApplication (exclude = { SecurityAutoConfiguration.class })
 public class ServerApplication {
 
 	public static void main(String[] args) {
+		Trying trying = new Trying("hihihihi");
+		Trying try2 = new Trying("t2");
+		Trying try3 = new Trying("t3");
+		Repo.persist(trying);
+		Repo.persist(try2);
+		Repo.persist(try3);
 		SpringApplication.run(ServerApplication.class, args);
 	}
 //	@Bean
