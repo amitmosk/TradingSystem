@@ -26,6 +26,7 @@ public class NotificationHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
         System.out.println("new connection opened");
+        System.out.println("for enna");
         webSocketSessionList.add(session);
     }
 
