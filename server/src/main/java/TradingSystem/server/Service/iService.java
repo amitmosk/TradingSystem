@@ -2,6 +2,8 @@ package TradingSystem.server.Service;
 
 
 
+import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.Utils.Response;
 
@@ -62,7 +64,7 @@ public interface iService {
      * Requirement 2.2.5
      */
 
-    TradingSystem.server.Domain.Utils.Response buy_cart(String paymentInfo, String supplyInfo);
+    TradingSystem.server.Domain.Utils.Response buy_cart(PaymentInfo paymentInfo, SupplyInfo supplyInfo);
 
     /**
      * Requirement 2.3.2

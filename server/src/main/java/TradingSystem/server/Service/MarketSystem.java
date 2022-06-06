@@ -30,8 +30,8 @@ public class MarketSystem {
         this.supply_adapter = new SupplyAdapterImpl();
         try
         {
-            payment_adapter.connect_to_payment_system();
-            supply_adapter.connect_to_supply_system();
+            payment_adapter.handshake();
+            supply_adapter.handshake();
         }
         catch (Exception e)
         {

@@ -2,9 +2,13 @@ package TradingSystem.server.Service;
 
 import TradingSystem.server.Config.SystemStartConfig;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
+import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
+import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +28,9 @@ public class Service implements iService {
 
     private MarketFacade marketFacade;
     private NotificationHandler notificationHandler;
+
+
+
 
     private Service() {
         // -- Market init
@@ -159,7 +166,7 @@ public class Service implements iService {
     @RequestMapping(value = "/buy_cart")
     @CrossOrigin
     @Override
-    public Response buy_cart(String paymentInfo, String supplyInfo) {
+    public Response buy_cart(PaymentInfo paymentInfo, SupplyInfo supplyInfo) {
         Response answer = marketFacade.buy_cart(paymentInfo, supplyInfo);
         return answer;
     }

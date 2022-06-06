@@ -1,0 +1,8 @@
+Jun 06, 2022 7:25:19 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Product already in the basket - product id: 1
+Jun 06, 2022 7:25:19 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Product already in the basket - product id: 2
+Jun 06, 2022 7:25:19 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Product already in the basket - product id: 3
+Jun 06, 2022 7:25:19 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Product already in the basket - product id: 4

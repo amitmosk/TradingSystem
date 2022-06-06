@@ -1,11 +1,18 @@
 package TradingSystem.server.Service;
 
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.security.Principal;
 import java.util.*;
 
 public class NotificationHandler extends TextWebSocketHandler {
@@ -14,6 +21,9 @@ public class NotificationHandler extends TextWebSocketHandler {
     private final List<WebSocketSession> webSocketSessionList = new ArrayList<>();
     private final Map<String, WebSocketSession> webSocketSessionDict = new HashMap<>();
     private final Map<String, List<String>> users_notifications = new HashMap<>();
+
+    @Autowired
+    private SimpMessageSendingOperations messagingTemplate;
 
     public static NotificationHandler getInstance() {
         if (notificationHandler == null)
@@ -46,6 +56,25 @@ public class NotificationHandler extends TextWebSocketHandler {
     }
 
 
+
+
+
+
+    @MessageMapping("/message")
+    @SendToUser("/queue/reply")
+    public String processMessageFromClient(
+            @Payload String message,
+            Principal principal) throws Exception {
+        return "goodd";
+    }
+
+    @MessageExceptionHandler
+    @SendToUser("/queue/errors")
+    public String handleException(Throwable exception) {
+        return exception.getMessage();
+    }
+
+
     // -----------------------------------------------------------------------------------------------------------
 
 
@@ -69,11 +98,11 @@ public class NotificationHandler extends TextWebSocketHandler {
      */
     public boolean send_waiting_notifications(String email) {
         // step 1 : check that there is a connection & there are notifications to send.
-        if (this.webSocketSessionDict.containsKey(email))
-            return false;
+//        if (this.webSocketSessionDict.containsKey(email))
+//            return false;
         if (!this.users_notifications.containsKey(email))
             return false;
-        WebSocketSession session = this.webSocketSessionDict.get(email);
+//        WebSocketSession session = this.webSocketSessionDict.get(email);
         List<String> notificationsList = this.users_notifications.get(email);
         if (notificationsList.size() == 0)
             return false;
@@ -83,8 +112,9 @@ public class NotificationHandler extends TextWebSocketHandler {
         for (String notification : notificationsList) {
             flag_to_remove = true;
             try{
-                TextMessage message = new TextMessage(notification.getBytes());
-                session.sendMessage(message);
+                messagingTemplate.convertAndSend("/topic/amit", "message");
+//                TextMessage message = new TextMessage(notification.getBytes());
+//                session.sendMessage(message);
             }
             catch (Exception e){
                 // TODO: LOGGER

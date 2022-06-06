@@ -44,7 +44,7 @@ public class SystemStartConfig {
         marketFacade1.add_product_to_cart(5,6,20);
 
         // buy from store
-        marketFacade1.buy_cart("Payment Info", "Supply Info");
+//        marketFacade1.buy_cart("Payment Info", "Supply Info");
 
         //enter more products to cart after purchase
         marketFacade1.add_product_to_cart(1,1,20);

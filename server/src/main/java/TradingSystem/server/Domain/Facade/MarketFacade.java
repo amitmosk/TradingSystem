@@ -2,6 +2,8 @@ package TradingSystem.server.Domain.Facade;
 
 import java.util.List;
 
+import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
@@ -318,25 +320,29 @@ public class MarketFacade {
      * Requirement 2.2.5
      *
      * @param paymentInfo info of payment
-     * @param SupplyInfo  info of supply
+     * @param supplyInfo  info of supply
      * @return success/failure message
      */
-    //TODO: concurrent & edit
-    public Response<UserPurchase> buy_cart(String paymentInfo, String SupplyInfo) {
+
+
+    public Response<UserPurchase> buy_cart(PaymentInfo paymentInfo, SupplyInfo supplyInfo) {
         Response<UserPurchase> response = null;
+        int payment_transaction_id = -1;
+        int supply_transaction_id = -1;
         try {
             //if can pay & can supply then ->
             synchronized (lock) {
                 double cart_price = 0;
-                if (this.payment_adapter.can_pay(cart_price, paymentInfo) && this.supply_adapter.can_supply(SupplyInfo)) {
-                    // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
-                    UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser);
-                    this.payment_adapter.payment(userPurchase.getTotal_price(), paymentInfo);
-                    this.supply_adapter.supply(SupplyInfo);
-                    response = new Response<>(userPurchase, "Purchase done successfully");
-                }
+                // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
+                UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser);
+                payment_transaction_id = this.payment_adapter.payment(paymentInfo, userPurchase.getTotal_price());
+                supply_transaction_id = this.supply_adapter.supply(supplyInfo);
+                response = new Response<>(userPurchase, "Purchase done successfully");
             }
         } catch (Exception e) {
+            this.payment_adapter.cancel_pay(payment_transaction_id);
+            this.supply_adapter.cancel_supply(supply_transaction_id);
+            // TODO: rollback for buyCart > return the products to the store
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
