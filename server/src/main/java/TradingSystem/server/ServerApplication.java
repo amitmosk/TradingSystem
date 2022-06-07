@@ -1,20 +1,14 @@
 package TradingSystem.server;
 
+import TradingSystem.server.DAL.Repo;
+import TradingSystem.server.Service.ManyTrying;
 import TradingSystem.server.Service.Trying;
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication (exclude = { SecurityAutoConfiguration.class })
 public class ServerApplication {
@@ -23,6 +17,29 @@ public class ServerApplication {
 		Trying trying = new Trying("hihihihi");
 		Trying try2 = new Trying("t2");
 		Trying try3 = new Trying("t3");
+		List<Trying> lst = new ArrayList<>();
+
+		lst.add(trying);
+		lst.add(try2);
+		lst.add(try3);
+
+		ManyTrying manyTrying = new ManyTrying();
+		ManyTrying manyTrying2 = new ManyTrying();
+		ManyTrying manyTrying3 = new ManyTrying();
+		manyTrying.setLst(lst);
+
+		trying.setOne_to_one(manyTrying);
+		try2.setOne_to_one(manyTrying2);
+		try3.setOne_to_one(manyTrying3);
+
+		List<ManyTrying> manyTryingList = new ArrayList<>();
+		manyTryingList.add(manyTrying);
+		trying.setManyTryingList(manyTryingList);
+
+
+		Repo.persist(manyTrying);
+		Repo.persist(manyTrying2);
+		Repo.persist(manyTrying3);
 		Repo.persist(trying);
 		Repo.persist(try2);
 		Repo.persist(try3);

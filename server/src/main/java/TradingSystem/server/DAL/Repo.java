@@ -1,8 +1,10 @@
-package TradingSystem.server;
+package TradingSystem.server.DAL;
 
 import TradingSystem.server.Domain.StoreModule.Store.Store;
+
 import javax.persistence.*;
 import java.util.List;
+
 public class Repo {
 
     private static Repo repo = null;
@@ -20,6 +22,7 @@ public class Repo {
         Repo.repo = repo;
         Repo.em = em;
     }
+
     public static Repo getInstance() {
         if (repo == null) {
             repo = new Repo();
@@ -33,23 +36,6 @@ public class Repo {
             em = Persistence.createEntityManagerFactory(persistence_unit).createEntityManager();
         }
         return em;
-    }
-
-    public static <T> void merge(T obj) {
-        EntityTransaction et = null;
-        synchronized (getEm()) {
-            try {
-                et = getEm().getTransaction();
-                et.begin();
-                getEm().merge(obj);
-                et.commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-                if (et != null)
-                    et.rollback();
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     public static <T> void persist(T obj) {
@@ -69,19 +55,22 @@ public class Repo {
         }
     }
 
-    public static boolean isDBEmpty() {
-        getInstance();
-        getEm();
-        String query = "select c from Store c where c.Store is not null";
-        TypedQuery<Store> tq = em.createQuery(query, Store.class);
-        List<Store> list;
-        try {
-            list = tq.getResultList();
-            if (list.size() == 0)
-                return true;
-            return false;
-        } catch (NoResultException e) {
-            return true;
+    public static <T> void persist_list(List<T> obj_list) {
+        EntityTransaction et = null;
+        EntityManager em = getEm();
+        synchronized (em) {
+            try {
+                et = em.getTransaction();
+                et.begin();
+                for (T obj : obj_list) {
+                    em.persist(obj);
+                }
+                et.commit();
+            } catch (Exception e) {
+                if (et != null)
+                    et.rollback();
+                throw new RuntimeException(e);
+            }
         }
     }
 }
