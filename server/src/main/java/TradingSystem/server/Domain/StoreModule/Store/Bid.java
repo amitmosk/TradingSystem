@@ -13,12 +13,14 @@ public class Bid {
     private ProductInformation product;
     private double offer_price;
     private String buyer_email;
+    private double negotiation_price;
     private HashMap<String, BidManagerAnswer> managersEmail_answers;
     private BidStatus status; // 0 - waiting for answers, 1 - close & denied, 2 - close & confirm.
 
     public Bid(String buyer_email, int quantity, double offer_price, List<String> managers_emails, Product product) {
         this.status = open_waiting_for_answers;
         this.product = new ProductInformation(product, quantity);
+        this.negotiation_price = -1;
         this.offer_price = offer_price;
         this.buyer_email = buyer_email;
         this.managersEmail_answers = new HashMap<>();
@@ -38,18 +40,31 @@ public class Bid {
         this.managersEmail_answers.remove(email);
     }
 
-    public void add_manager_answer(String email, boolean answer){
-        this.managersEmail_answers.get(email).setHas_answer(true);
-        this.managersEmail_answers.get(email).setAnswer(answer);
-        if (!answer)
-            this.status = closed_denied;
+    public void add_manager_answer(String email, boolean answer, double negotiation_price){
+        if (negotiation_price > 0)
+        {
+            this.negotiation_price = negotiation_price;
+            this.managersEmail_answers.get(email).setHas_answer(true);
+            this.managersEmail_answers.get(email).setAnswer(true);
+            this.status = negotiation_mode;
+        }
         else
-            this.status = this.update_status();
+        {
+            this.managersEmail_answers.get(email).setHas_answer(true);
+            this.managersEmail_answers.get(email).setAnswer(answer);
+            if (!answer)
+                this.status = closed_denied;
+            else
+                this.status = this.update_status();
+        }
+
     }
 
     private BidStatus update_status() {
         if (this.status == closed_denied)
             return closed_denied;
+        if (this.status == negotiation_mode)
+            return negotiation_mode;
         for (BidManagerAnswer bid_answer : this.managersEmail_answers.values()){
             if (!bid_answer.get_has_answer())
                 return open_waiting_for_answers;
@@ -59,5 +74,12 @@ public class Bid {
 
     public BidStatus get_status(){
         return this.status;
+    }
+
+    public double get_offer_price(){
+        if (this.status == negotiation_mode)
+            return this.negotiation_price;
+        else
+            return this.offer_price;
     }
 }

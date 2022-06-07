@@ -465,9 +465,8 @@ public class StoreController {
 
     public void manager_answer_bid(int storeID, User user, boolean manager_answer, int bidID,
                                    double negotiation_price) throws Exception {
-        AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(storeID);
-        store.add_bid_answer(assignUser, manager_answer, bidID, negotiation_price);
+        store.add_bid_answer(user, manager_answer, bidID, negotiation_price);
     }
 
 

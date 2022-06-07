@@ -280,4 +280,9 @@ public class User {
     public List<Integer> stores_managers_list() {
         return state.stores_managers_list();
     }
+
+    public void add_product_to_cart_from_bid_offer() {
+        // TODO
+
+    }
 }

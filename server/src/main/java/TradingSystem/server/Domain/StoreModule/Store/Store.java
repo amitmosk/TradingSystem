@@ -23,6 +23,7 @@ import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.UserModule.AssignUser;
+import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Utils;
 
@@ -796,15 +797,29 @@ public class Store {
         return this.bids.values();
     }
 
-    public void add_bid_answer(AssignUser user, boolean manager_answer, int bidID,
+    public void add_bid_answer(User user, boolean manager_answer, int bidID,
                                double negotiation_price) throws Exception {
-        this.check_permission(user, StorePermission.answer_bid_offer);
+        AssignUser assignUser = user.state_if_assigned();
+        if (negotiation_price == -1) {
+            this.check_permission(assignUser, StorePermission.answer_bid_offer);
+        }
+        else
+            this.check_permission(assignUser, StorePermission.answer_bid_offer_negotiate);
+
         Bid bid = this.bids.get(bidID);
-        bid.add_manager_answer(user.get_user_email(), manager_answer);
-        if (bid.get_status() == BidStatus.closed_confirm)
-            user.add_notification("your bid is confirm by the store managers.");
+        bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
+        if (bid.get_status() == BidStatus.closed_confirm) {
+            user.add_notification("Your bid is confirm by the store managers.");
+            // TODO: have to buy the product - or adding to basket with the price
+            user.add_product_to_cart_from_bid_offer();
+        }
+
+        if (bid.get_status() == BidStatus.negotiation_mode){
+            user.add_notification("Your bid has received a counter-bid.");
+        }
+
         if (bid.get_status() == BidStatus.closed_denied)
-            user.add_notification("your bid is denied by the store managers.");
+            user.add_notification("Your bid is denied by the store managers.");
 
 
     }
