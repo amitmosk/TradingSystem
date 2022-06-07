@@ -12,7 +12,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-
 public class ExternPaymentSystemProxy {
 
     public int payment(double total_price, PaymentInfo paymentInfo)  {
@@ -39,7 +38,8 @@ public class ExternPaymentSystemProxy {
         return answer;
     }
 
-    public int cancel_payment(int transaction_id) {
+
+    public int cancel_payment(int transaction_id)  {
         int answer = 1;
         HashMap<String, String> postContent = new HashMap();
         postContent.put("action_type", "cancel_pay");

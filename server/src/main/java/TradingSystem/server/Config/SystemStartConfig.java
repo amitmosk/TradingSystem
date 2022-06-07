@@ -1,6 +1,8 @@
 package TradingSystem.server.Config;
 
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
+import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternSystems.Proxy.ExternPaymentSystemProxy;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 
@@ -58,5 +60,13 @@ public class SystemStartConfig {
         marketFacade3.logout();
         marketFacade4.logout();
         marketFacade5.logout();
+
+        ExternPaymentSystemProxy externPaymentSystemProxy;
+        PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
+        externPaymentSystemProxy = new ExternPaymentSystemProxy();
+        int answer = externPaymentSystemProxy.cancel_payment(10000);
+        boolean answer1 = externPaymentSystemProxy.handshake();
+        int answer2 = externPaymentSystemProxy.cancel_payment(50000);
+        int answer3 = externPaymentSystemProxy.payment(500, payment_info);
     }
 }

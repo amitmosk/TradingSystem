@@ -330,13 +330,21 @@ public class MarketFacade {
         int payment_transaction_id = -1;
         int supply_transaction_id = -1;
         try {
-            //if can pay & can supply then ->
+            // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             synchronized (lock) {
-                double cart_price = 0;
-                // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
                 UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser);
-                payment_transaction_id = this.payment_adapter.payment(paymentInfo, userPurchase.getTotal_price());
-                supply_transaction_id = this.supply_adapter.supply(supplyInfo);
+                PaymentThread paymentThread = new PaymentThread(this.payment_adapter, paymentInfo, userPurchase.getTotal_price());
+                SupplyThread supplyThread = new SupplyThread(this.supply_adapter, supplyInfo);
+                Thread t1 = new Thread(paymentThread);
+                Thread t2 = new Thread(supplyThread);
+                t1.start();
+                t2.start();
+                t1.join();
+                t2.join();
+                payment_transaction_id = paymentThread.get_value();
+                supply_transaction_id = supplyThread.get_value();
+                if (payment_transaction_id == -1 || supply_transaction_id == -1)
+                    throw new Exception();
                 response = new Response<>(userPurchase, "Purchase done successfully");
             }
         } catch (Exception e) {
