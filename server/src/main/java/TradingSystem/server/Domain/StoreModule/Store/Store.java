@@ -810,12 +810,16 @@ public class Store {
         bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
         if (bid.get_status() == BidStatus.closed_confirm) {
             user.add_notification("Your bid is confirm by the store managers.");
-            // TODO: have to buy the product - or adding to basket with the price
-            user.add_product_to_cart_from_bid_offer();
+            ProductInformation productInformation = bid.get_product_information();
+            user.add_product_to_cart_from_bid_offer(this, productInformation, productInformation.getQuantity(),
+                    bid.get_buyer_email(), bid.get_offer_price());
         }
 
         if (bid.get_status() == BidStatus.negotiation_mode){
             user.add_notification("Your bid has received a counter-bid.");
+            ProductInformation productInformation = bid.get_product_information();
+            user.add_product_to_cart_from_bid_offer(this, productInformation, productInformation.getQuantity(),
+                    bid.get_buyer_email(), bid.get_offer_price());
         }
 
         if (bid.get_status() == BidStatus.closed_denied)

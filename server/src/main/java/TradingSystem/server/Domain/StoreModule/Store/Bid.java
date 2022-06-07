@@ -82,4 +82,12 @@ public class Bid {
         else
             return this.offer_price;
     }
+
+    public ProductInformation get_product_information(){
+        return this.product;
+    }
+
+    public String get_buyer_email() {
+        return this.buyer_email;
+    }
 }

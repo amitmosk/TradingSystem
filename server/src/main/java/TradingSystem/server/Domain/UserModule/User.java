@@ -3,6 +3,7 @@ package TradingSystem.server.Domain.UserModule;
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -281,8 +282,10 @@ public class User {
         return state.stores_managers_list();
     }
 
-    public void add_product_to_cart_from_bid_offer() {
-        // TODO
+    public void add_product_to_cart_from_bid_offer(Store store, ProductInformation productInfo, int quantity,
+                                                   String buyer_email, double price_for_unit) throws MarketException {
+        Product product = new Product(productInfo.getName(), productInfo.getProduct_id()*(-1), price_for_unit, productInfo.getCategory(), productInfo.getKey_words(), productInfo.getStore_id());
+        this.cart.add_product_to_cart(store, product, quantity, buyer_email);
 
     }
 }
