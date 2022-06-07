@@ -47,5 +47,5 @@ public class ExternSupplySystemProxy {
         cancel_success = Utils.string_to_int(answer);
         return cancel_success;
     }
-    
+
 }

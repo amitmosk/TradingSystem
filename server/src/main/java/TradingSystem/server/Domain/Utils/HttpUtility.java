@@ -1,13 +1,8 @@
 package TradingSystem.server.Domain.Utils;
 
-import TradingSystem.server.Domain.Facade.ConnectThread;
-import TradingSystem.server.Domain.Facade.SupplyThread;
+import TradingSystem.server.Domain.Utils.Threads.ConnectThread;
 
-import java.io.*;
-import java.net.*;
 import java.util.HashMap;
-import java.util.Map;
-import static java.net.HttpURLConnection.HTTP_OK;
 
 public class HttpUtility {
 

@@ -30,15 +30,9 @@ public class MarketSystem {
         SystemLogger.getInstance().add_log("start init market");
         this.payment_adapter = new PaymentAdapterImpl();
         this.supply_adapter = new SupplyAdapterImpl();
-        try
-        {
-            payment_adapter.handshake();
-            supply_adapter.handshake();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+        boolean connect_to_external_systems = payment_adapter.handshake() && supply_adapter.handshake();
+        if (!connect_to_external_systems)
+            System.out.println("cant connect to the external systems");
 
         // load DB
         UserController.load();

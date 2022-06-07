@@ -1,4 +1,4 @@
-package TradingSystem.server.Domain.Facade;
+package TradingSystem.server.Domain.Utils.Threads;
 
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;

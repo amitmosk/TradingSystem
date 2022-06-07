@@ -1,7 +1,7 @@
 package TradingSystem.server.Domain.ExternSystems.Proxy;
 
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
-import org.junit.jupiter.api.BeforeEach;
+import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,23 +9,24 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class ExternPaymentSystemProxyTest {
+class ExternSupplySystemProxyTest {
 
-    private ExternPaymentSystemProxy externPaymentSystemProxy;
+    private ExternSupplySystemProxy externSupplySystemProxy;
 
 
     @Test
     void handshake(){
-        this.externPaymentSystemProxy = new ExternPaymentSystemProxy();
-        boolean answer = this.externPaymentSystemProxy.handshake();
+        this.externSupplySystemProxy = new ExternSupplySystemProxy();
+        boolean answer = this.externSupplySystemProxy.handshake();
         assertTrue(answer);
 
     }
 
-    static Stream<Arguments> payment_input() {
+    static Stream<Arguments> supply_input() {
         return Stream.of(
                 arguments(9999),
                 arguments(1),
@@ -141,16 +142,18 @@ class ExternPaymentSystemProxyTest {
 
 
     @ParameterizedTest
-    @MethodSource("payment_input")
-    void payment(int x){
-        this.externPaymentSystemProxy = new ExternPaymentSystemProxy();
-        PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
-        int answer3 = this.externPaymentSystemProxy.payment(500, payment_info);
+    @MethodSource("supply_input")
+    void supply(int x){
+        this.externSupplySystemProxy = new ExternSupplySystemProxy();
+        SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
+        int answer3 = this.externSupplySystemProxy.supply(supplyInfo);
         assertTrue(answer3-10000 > 0);
         assertTrue(answer3-100000 < 0);
     }
 
-    static Stream<Arguments> cancel_payment_bad_provider() {
+
+
+    static Stream<Arguments> cancel_supply_bad_provider() {
         return Stream.of(
                 arguments(9999),
                 arguments(1),
@@ -163,15 +166,15 @@ class ExternPaymentSystemProxyTest {
 
 
     @ParameterizedTest
-    @MethodSource("cancel_payment_bad_provider")
-    void cancel_payment_bad_input(int transaction_id){
-        this.externPaymentSystemProxy = new ExternPaymentSystemProxy();
-        int answer = this.externPaymentSystemProxy.cancel_payment(transaction_id);
+    @MethodSource("cancel_supply_bad_provider")
+    void cancel_supply_bad_input(int transaction_id){
+        this.externSupplySystemProxy = new ExternSupplySystemProxy();
+        int answer = this.externSupplySystemProxy.cancel_supply(transaction_id);
         assertEquals(answer, -1);
     }
 
 
-    static Stream<Arguments> cancel_payment_good_provider() {
+    static Stream<Arguments> cancel_supply_good_provider() {
         return Stream.of(
                 arguments(10000),
                 arguments(50000),
@@ -184,10 +187,10 @@ class ExternPaymentSystemProxyTest {
 
 
     @ParameterizedTest
-    @MethodSource("cancel_payment_good_provider")
+    @MethodSource("cancel_supply_good_provider")
     void cancel_payment_good_input(int transaction_id){
-        this.externPaymentSystemProxy = new ExternPaymentSystemProxy();
-        int answer = this.externPaymentSystemProxy.cancel_payment(transaction_id);
+        this.externSupplySystemProxy = new ExternSupplySystemProxy();
+        int answer = this.externSupplySystemProxy.cancel_supply(transaction_id);
         assertEquals(answer, 1);
     }
 }
