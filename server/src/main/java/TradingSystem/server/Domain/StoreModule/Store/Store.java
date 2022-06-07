@@ -780,14 +780,14 @@ public class Store {
 
     // amit - bid
 
-    public void add_bid_offer(int bid_id, Product product, int quantity, double offer_price, String buyer_email) {
+    public void add_bid_offer(int bid_id, Product product, int quantity, double offer_price, String buyer_email, User buyer) {
         List<String> managers_emails = new ArrayList<>();
         for (Appointment appointment : this.stuffs_and_appointments.values()){
             if (appointment.is_owner() || appointment.is_founder()){
                 managers_emails.add(appointment.getMember().get_user_email());
             }
         }
-        Bid bid = new Bid(buyer_email, quantity, offer_price, managers_emails, product);
+        Bid bid = new Bid(buyer_email, quantity, offer_price, managers_emails, product, buyer);
         this.bids.put(bid_id, bid);
         this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName() + " from user : " + buyer_email);
     }
@@ -808,22 +808,25 @@ public class Store {
 
         Bid bid = this.bids.get(bidID);
         bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
+
+        String buyer_email = bid.get_buyer_email();
+        User buyer = bid.get_buyer();
         if (bid.get_status() == BidStatus.closed_confirm) {
-            user.add_notification("Your bid is confirm by the store managers.");
+            buyer.add_notification("Your bid is confirm by the store managers.");
             ProductInformation productInformation = bid.get_product_information();
-            user.add_product_to_cart_from_bid_offer(this, productInformation, productInformation.getQuantity(),
-                    bid.get_buyer_email(), bid.get_offer_price());
+            buyer.add_product_to_cart_from_bid_offer(this, productInformation, productInformation.getQuantity(),
+                    buyer_email, bid.get_offer_price());
         }
 
         if (bid.get_status() == BidStatus.negotiation_mode){
-            user.add_notification("Your bid has received a counter-bid.");
+            buyer.add_notification("Your bid has received a counter-bid.");
             ProductInformation productInformation = bid.get_product_information();
-            user.add_product_to_cart_from_bid_offer(this, productInformation, productInformation.getQuantity(),
-                    bid.get_buyer_email(), bid.get_offer_price());
+            buyer.add_product_to_cart_from_bid_offer(this, productInformation, productInformation.getQuantity(),
+                    buyer_email, bid.get_offer_price());
         }
 
         if (bid.get_status() == BidStatus.closed_denied)
-            user.add_notification("Your bid is denied by the store managers.");
+            buyer.add_notification("Your bid is denied by the store managers.");
 
 
     }

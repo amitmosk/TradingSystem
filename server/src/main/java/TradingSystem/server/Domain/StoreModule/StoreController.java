@@ -470,12 +470,12 @@ public class StoreController {
     }
 
 
-    public void add_bid_offer(int productID, int storeID, int quantity, double offer_price, String buyer_email)
+    public void add_bid_offer(int productID, int storeID, int quantity, double offer_price, String buyer_email, User buyer)
             throws Exception {
         Store store = get_store_by_store_id(storeID);
         Product product = checkAvailablityAndGet(storeID, productID, quantity);
         int bid_id = this.bids_ids_counter.getAndIncrement();
-        store.add_bid_offer(bid_id, product, quantity, offer_price, buyer_email);
+        store.add_bid_offer(bid_id, product, quantity, offer_price, buyer_email, buyer);
     }
 }
 

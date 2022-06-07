@@ -2,6 +2,7 @@ package TradingSystem.server.Domain.StoreModule.Store;
 
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
+import TradingSystem.server.Domain.UserModule.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,16 +14,18 @@ public class Bid {
     private ProductInformation product;
     private double offer_price;
     private String buyer_email;
+    private User buyer;
     private double negotiation_price;
     private HashMap<String, BidManagerAnswer> managersEmail_answers;
     private BidStatus status; // 0 - waiting for answers, 1 - close & denied, 2 - close & confirm.
 
-    public Bid(String buyer_email, int quantity, double offer_price, List<String> managers_emails, Product product) {
+    public Bid(String buyer_email, int quantity, double offer_price, List<String> managers_emails, Product product, User buyer) {
         this.status = open_waiting_for_answers;
         this.product = new ProductInformation(product, quantity);
         this.negotiation_price = -1;
         this.offer_price = offer_price;
         this.buyer_email = buyer_email;
+        this.buyer = buyer;
         this.managersEmail_answers = new HashMap<>();
         for (String manager_email : managers_emails){
             BidManagerAnswer temp = new BidManagerAnswer();
@@ -89,5 +92,9 @@ public class Bid {
 
     public String get_buyer_email() {
         return this.buyer_email;
+    }
+
+    public User get_buyer() {
+        return buyer;
     }
 }

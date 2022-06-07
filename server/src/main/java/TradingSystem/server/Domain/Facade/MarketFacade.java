@@ -1650,8 +1650,9 @@ public class MarketFacade {
     public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
         Response<String> response = null;
         try {
-            String buyer_email = user_controller.get_user(loggedUser).getState().get_user_email();
-            this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer_email);
+            User buyer = user_controller.get_user(loggedUser);
+            String buyer_email = buyer.getState().get_user_email();
+            this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer_email, buyer);
             response = new Response<>("", "adding bid offer for product");
             system_logger.add_log("User added bid offer for " + quantity + " of product- " + productID + " from store- " + storeID);
         } catch (Exception e) {

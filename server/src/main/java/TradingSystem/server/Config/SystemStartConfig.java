@@ -38,21 +38,25 @@ public class SystemStartConfig {
 
         marketFacade5.add_product_to_store(5,50,"iphone",2999.9, "electronic",new LinkedList<>());
         // add products to cart
-        marketFacade1.add_product_to_cart(1,1,20);
-        marketFacade1.add_product_to_cart(2,2,20);
-        marketFacade1.add_product_to_cart(3,3,20);
-        marketFacade1.add_product_to_cart(4,4,20);
-        marketFacade1.add_product_to_cart(5,5,20);
-        marketFacade1.add_product_to_cart(5,6,20);
+//        marketFacade1.add_product_to_cart(1,1,20);
+//        marketFacade1.add_product_to_cart(2,2,20);
+//        marketFacade1.add_product_to_cart(3,3,20);
+//        marketFacade1.add_product_to_cart(4,4,20);
+//        marketFacade1.add_product_to_cart(5,5,20);
+//        marketFacade1.add_product_to_cart(5,6,20);
 
         // buy from store
 //        marketFacade1.buy_cart("Payment Info", "Supply Info");
 
         //enter more products to cart after purchase
-        marketFacade1.add_product_to_cart(1,1,20);
-        marketFacade1.add_product_to_cart(2,2,20);
-        marketFacade1.add_product_to_cart(3,3,20);
-        marketFacade1.add_product_to_cart(4,4,20);
+//        marketFacade1.add_product_to_cart(1,1,20);
+//        marketFacade1.add_product_to_cart(2,2,20);
+//        marketFacade1.add_product_to_cart(3,3,20);
+//        marketFacade1.add_product_to_cart(4,4,20);
+
+
+        marketFacade1.add_bid(2,2, 10, 1500);
+        marketFacade2.manager_answer_bid(2,1,true,-1);
 
         // logout
         marketFacade1.logout();
@@ -61,12 +65,9 @@ public class SystemStartConfig {
         marketFacade4.logout();
         marketFacade5.logout();
 
-        ExternPaymentSystemProxy externPaymentSystemProxy;
-        PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
-        externPaymentSystemProxy = new ExternPaymentSystemProxy();
-        int answer = externPaymentSystemProxy.cancel_payment(10000);
-        boolean answer1 = externPaymentSystemProxy.handshake();
-        int answer2 = externPaymentSystemProxy.cancel_payment(50000);
-        int answer3 = externPaymentSystemProxy.payment(500, payment_info);
+
+
+
+
     }
 }
