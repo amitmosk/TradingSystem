@@ -788,20 +788,23 @@ public class Store {
         }
         Bid bid = new Bid(buyer_email, quantity, offer_price, managers_emails, product);
         this.bids.put(bid_id, bid);
+        this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName() + " from user : " + buyer_email);
     }
 
     public Collection<Bid> view_bids_status(AssignUser user) throws NoPremssionException {
-        // TODO : change the permission - add "view bids"
         this.check_permission(user, StorePermission.view_bids_status);
         return this.bids.values();
     }
 
     public void add_bid_answer(AssignUser user, boolean manager_answer, int bidID,
                                double negotiation_price) throws Exception {
-        // TODO : change the permission - add "confirm bids"
         this.check_permission(user, StorePermission.answer_bid_offer);
-        // TODO : BUG - have to add bid id
-        this.bids.get(bidID).add_manager_answer(user.get_user_email(), manager_answer);
+        Bid bid = this.bids.get(bidID);
+        bid.add_manager_answer(user.get_user_email(), manager_answer);
+        if (bid.get_status() == BidStatus.closed_confirm)
+            user.add_notification("your bid is confirm by the store managers.");
+        if (bid.get_status() == BidStatus.closed_denied)
+            user.add_notification("your bid is denied by the store managers.");
 
 
     }

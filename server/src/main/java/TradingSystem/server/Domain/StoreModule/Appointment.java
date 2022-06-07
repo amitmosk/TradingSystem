@@ -88,7 +88,7 @@ public class Appointment {
         this.permissions.put(add_owner, 1);
         this.permissions.put(remove_owner, 1);
         this.permissions.put(edit_permissions, 1);
-        this.permissions.put(answer_bid_offer, 1);
+        this.permissions.put(answer_bid_offer, 0);
         this.permissions.put(view_bids_status, 1);
     }
     private void set_founder_permissions(){
