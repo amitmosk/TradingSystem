@@ -171,6 +171,24 @@ public class Service implements iService {
         return answer;
     }
 
+    @Override
+    public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
+        Response answer = marketFacade.add_bid(storeID, productID, quantity, offer_price);
+        return answer;
+    }
+
+    @Override
+    public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
+        Response answer = marketFacade.manager_answer_bid(storeID, bidID, manager_answer, negotiation_price);
+        return answer;
+    }
+
+    @Override
+    public Response view_bids_status(int storeID) {
+        Response answer = marketFacade.view_bids_status(storeID);
+        return answer;
+    }
+
     @RequestMapping(value = "/open_store")
     @CrossOrigin
     @Override

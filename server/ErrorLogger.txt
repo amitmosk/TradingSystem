@@ -940,3 +940,787 @@ Jun 07, 2022 11:26:05 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
 SEVERE: Guest Hasn't made any purchases yet.
 Jun 07, 2022 11:26:05 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
 SEVERE: cannot log in from logged in user
+Jun 07, 2022 11:26:48 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 07, 2022 11:26:48 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 07, 2022 11:26:48 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User has no permissions!
+Jun 07, 2022 11:26:48 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 07, 2022 11:26:49 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 07, 2022 11:26:49 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User has no permissions!
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:22 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:23 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 07, 2022 11:27:23 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 07, 2022 11:27:23 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User has no permissions!
+Jun 07, 2022 11:27:23 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 3
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 22
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The user has never bought from this store
+Jun 07, 2022 11:27:30 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have name.
+Jun 07, 2022 11:27:31 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have name.
+Jun 07, 2022 11:27:31 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 5
+Jun 07, 2022 11:27:32 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: store members can't rate their store
+Jun 07, 2022 11:27:33 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 2
+Jun 07, 2022 11:27:33 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: there is no such store
+Jun 07, 2022 11:27:33 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 07, 2022 11:27:34 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:34 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have last name.
+Jun 07, 2022 11:27:34 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 5
+Jun 07, 2022 11:27:34 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 10
+Jun 07, 2022 11:27:35 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 07, 2022 11:27:35 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 07, 2022 11:27:35 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User has no permissions!
+Jun 07, 2022 11:27:35 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The user has never bought from this store
+Jun 07, 2022 11:27:35 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 07, 2022 11:27:35 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User has no permissions!
+Jun 07, 2022 11:27:35 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: product already exists in the store
+Jun 07, 2022 11:27:35 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The user has never bought this product
+Jun 07, 2022 11:27:36 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 2
+Jun 07, 2022 11:27:36 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 100
+Jun 07, 2022 11:27:37 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 07, 2022 11:27:37 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 2
+Jun 07, 2022 11:27:37 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: there is no such store
+Jun 07, 2022 11:27:37 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 07, 2022 11:27:37 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have name.
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:46 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User to appoint is already store member
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:55 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:56 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:57 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:57 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 1
+Jun 07, 2022 11:27:57 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The user has never bought this product
+Jun 07, 2022 11:27:57 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 07, 2022 11:27:57 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 07, 2022 11:27:57 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: User has no permissions!
+Jun 07, 2022 11:27:58 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store.checkAvailablityAndGet: Product is not available
+Jun 07, 2022 11:27:58 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 100
+Jun 07, 2022 11:27:58 AM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.

@@ -18,6 +18,7 @@ import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.*;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
@@ -52,6 +53,7 @@ public class Store {
     private Object owners_lock;
     private Object managers_lock;
     private HashMap<String, Ipredict> predictList;
+    private HashMap<Integer, Bid> bids;
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder,AtomicInteger ai) {
@@ -70,6 +72,7 @@ public class Store {
         this.owners_lock = new Object();
         this.managers_lock = new Object();
         this.predictList = new HashMap<>();
+        this.bids = new HashMap<>();
     }
 
     public Store() {
@@ -768,4 +771,38 @@ public class Store {
         this.inventory.put(to_edit, quantity);
     }
 
+
+
+
+
+
+
+    // amit - bid
+
+    public void add_bid_offer(int bid_id, Product product, int quantity, double offer_price, String buyer_email) {
+        List<String> managers_emails = new ArrayList<>();
+        for (Appointment appointment : this.stuffs_and_appointments.values()){
+            if (appointment.is_owner() || appointment.is_founder()){
+                managers_emails.add(appointment.getMember().get_user_email());
+            }
+        }
+        Bid bid = new Bid(buyer_email, quantity, offer_price, managers_emails, product);
+        this.bids.put(bid_id, bid);
+    }
+
+    public Collection<Bid> view_bids_status(AssignUser user) throws NoPremssionException {
+        // TODO : change the permission - add "view bids"
+        this.check_permission(user, StorePermission.view_bids_status);
+        return this.bids.values();
+    }
+
+    public void add_bid_answer(AssignUser user, boolean manager_answer, int bidID,
+                               double negotiation_price) throws Exception {
+        // TODO : change the permission - add "confirm bids"
+        this.check_permission(user, StorePermission.answer_bid_offer);
+        // TODO : BUG - have to add bid id
+        this.bids.get(bidID).add_manager_answer(user.get_user_email(), manager_answer);
+
+
+    }
 }

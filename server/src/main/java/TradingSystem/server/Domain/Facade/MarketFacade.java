@@ -16,6 +16,7 @@ import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
+import TradingSystem.server.Domain.StoreModule.Store.Bid;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.UserModule.*;
@@ -1646,8 +1647,46 @@ public class MarketFacade {
     }
 
 
+    public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
+        Response<String> response = null;
+        try {
+            String buyer_email = user_controller.get_user(loggedUser).getState().get_user_email();
+            this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer_email);
+            response = new Response<>("", "adding bid offer for product");
+            system_logger.add_log("User added bid offer for " + quantity + " of product- " + productID + " from store- " + storeID);
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
 
+    public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
+        // if that the last positive answer -> buy.
+        Response<String> response = null;
+        try {
+            User user = user_controller.get_user(loggedUser);
+            this.store_controller.manager_answer_bid(storeID, user, manager_answer, bidID, negotiation_price);
+            response = new Response<>("", "manager answer bid offer successfully");
+            system_logger.add_log("manager answer bid offer successfully");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
 
-
-
+    public Response view_bids_status(int storeID) {
+        Response<String> response = null;
+        try {
+            User user = user_controller.get_user(loggedUser);
+           Collection<Bid> answer = this.store_controller.view_bids_status(storeID, user);
+            response = new Response(answer, "User view bids status successfully");
+            system_logger.add_log("User view bids status successfully");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
 }
