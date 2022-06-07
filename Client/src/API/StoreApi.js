@@ -4,13 +4,15 @@ import {CONNECTION_ERROR, CATCH, FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE,
       SET_STORE_DISCOUNT_POLICY, SET_STORE_PURCHASE_RULES, ADD_OWNER, DELETE_OWNER, 
       ADD_MANAGER, DELETE_MANAGER, CLOSE_STORE_TEMPORARILY, OPEN_CLOSE_STORE,
       VIEW_STORE_MANAGEMENT_INFORMATION, MANAGER_ANSWER_QUESTION, VIEW_STORE_PURCHASES_HISTORY, 
-      MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS, GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES, DELETE_PRODUCT_FROM_STORE} from "./ApiPaths";
+      MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS, 
+      GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES, DELETE_PRODUCT_FROM_STORE,GET_PERMISSIONS} from "./ApiPaths";
 import { Response } from "./Response";
 import { Store } from "../ServiceObjects/Store";
 import { Product } from "../ServiceObjects/Product";
 // const instance = axios.create(
 //     {withCredentials : true}
 // );
+var qs = require('qs');
 const instance = require('axios');
 
 export class StoreApi {
@@ -267,13 +269,16 @@ export class StoreApi {
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     edit_manager_permissions(manager_email, store_id, permissions){
+        console.log("permissions");
+        console.log(permissions);
+        console.log("permissions");
+        
+        
         return instance.get(EDIT_MANAGER_PERMISSIONS,
             {
                 params:{manager_email : manager_email,
                     store_id : store_id,
-                    permissions : permissions,}
-                
-
+                    permissions : permissions},
             })
             .then(res => {
                 return new Response(res.data)
@@ -309,6 +314,22 @@ export class StoreApi {
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
+    get_permissions(manager_email, store_id ){
+        return instance.get(GET_PERMISSIONS,
+            {
+                params:{
+                    manager_email : manager_email,
+                    store_id : store_id,}
+            })
+            .then(res => {
+                let response = res.data;
+                const permiisions = response.data;
+                console.log(permiisions);
+                return response
+                // return Response.create(arr,response.wasException,response.message);
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+        }
     
 
     

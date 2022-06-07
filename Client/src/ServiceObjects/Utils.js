@@ -36,6 +36,9 @@ export class Utils  {
     static check_all_digits(){   
         return 0;
     }
+    static check_email(){   
+        return 1;
+    }
    
 
 

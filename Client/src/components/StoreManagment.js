@@ -12,6 +12,7 @@ import { StoreApi } from '../API/StoreApi';
 import StoreManagmentProductsTable from './StoreManagmentProductsTable';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert"; 
+import { Utils } from '../ServiceObjects/Utils';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -328,25 +329,17 @@ export default class StoreManagment extends Component {
         }
     }
     async edit_manager_permissions(values) {
+        const user_email = values[0];
+        if (!Utils.check_email(user_email))
+        {
+            this.setState({ snackbar: { children: "Illegal email", severity: "error" } });
+            return;
+
+        }
+        console.log(user_email);
+        window.location.href+=`/ManagerPermissions/${user_email}`
         console.log("in edit_manager_permissions!\n");
-        const manager_email = values[0];
-        const store_id = this.state.store_id;
-        const permissions_number = values[1];
-        console.log(manager_email);
-        console.log(permissions_number);
-        console.log(store_id);
-
-        const response = await this.storeApi.edit_manager_permissions(manager_email, store_id, permissions_number);
-        // alert(response.message);
-        if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
-            console.log("in edit_manager_permissions - success!\n");
-            //show history
-        }
-        else {
-            this.setState({ snackbar: { children: response.message, severity: "error" } });
-
-        }
+        
     }
 
 
@@ -414,6 +407,7 @@ export default class StoreManagment extends Component {
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialogPermissions outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions "></FormDialogPermissions></Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link to = {`ManagerViewStoreQuestions/${id}`} query={{store:1}}>Bid Item</Link></Item ></Grid >         */}
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ManagerViewStoreQuestions` }}   underline="hover" >{'View User Questions'}</Link>   </Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ManagerPermissions` }}   underline="hover" >{'Change Manager Permissions111'}</Link>   </Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link href="/ViewStorePurchaseHistory"  underline="hover" >{'View Store Purchase History'}</Link>   </Item ></Grid > */}
 
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.close_store_temp_fields} getValues={this.close_store_temporarily.bind(this)} name="Close Store Temporarily"></FormDialog></Item ></Grid > */}

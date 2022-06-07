@@ -1626,4 +1626,16 @@ public class MarketFacade {
         }
         return response;
     }
+
+    public Response<List<String>> get_permissions(String manager_email, int store_id) {
+        Response<List<String>> response = null;
+        try {
+            List<String> permissions = store_controller.get_permissions(manager_email, store_id);
+            response = new Response<>(permissions, "permissions of user "+manager_email);
+        } catch (Exception e) {
+            response = Utils.CreateResponse(new MarketException("failed to fetch permissions of user "+manager_email));
+            error_logger.add_log(e);
+        }
+        return response;
+    }
 }

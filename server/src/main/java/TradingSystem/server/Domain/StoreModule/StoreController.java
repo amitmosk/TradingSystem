@@ -452,5 +452,10 @@ public class StoreController {
         Store store = get_store_by_store_id(store_id); //trows exceptions
         store.edit_product_quantity(assignUser, product_id, quantity);
     }
+
+    public List<String> get_permissions(String manager_email, int store_id) throws StoreException, AppointmentException {
+        Store store = get_store_by_store_id(store_id); //trows exceptions
+        return store.get_permissions(manager_email);
+    }
 }
 

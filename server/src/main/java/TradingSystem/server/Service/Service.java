@@ -7,14 +7,11 @@ import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
-
-import java.util.LinkedList;
+import java.util.*;
 
 
 @RestController
@@ -535,10 +532,36 @@ public class Service implements iService {
     @RequestMapping(value = "/edit_manager_permissions")
     @CrossOrigin
     @Override
-    public Response edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions) {
-        Response answer = marketFacade.edit_manager_permissions(manager_email, store_id, permissions);
+    public Response edit_manager_permissions( String manager_email, int store_id,  String permissions) {
+        String[] permissions_str = permissions.split("/");
+        List<Integer> permissions_numbers = new ArrayList<>();
+        for (int i=0;i<permissions_str.length;i++)
+        {
+            permissions_numbers.add(Integer.valueOf(permissions_str[i]));
+        }
+        List<StorePermission> permissions_enum = new ArrayList<>();
+        for (Integer i:permissions_numbers)
+        {
+            permissions_enum.add(StorePermission.values()[i]);
+        }
+        Response answer = marketFacade.edit_manager_permissions(manager_email, store_id, permissions_enum);
         return answer;
     }
+
+
+    @RequestMapping(value = "/get_permissions")
+    @CrossOrigin
+    @Override
+    public Response get_permissions( String manager_email, int store_id) {
+        Response answer = marketFacade.get_permissions(manager_email,store_id);
+        return answer;
+    }
+
+
+
+
+
+
 
     @RequestMapping(value = "/online_user")
     @CrossOrigin

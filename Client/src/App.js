@@ -225,9 +225,10 @@ export default class App extends Component {
             element={<ViewUserPurchaseHistory />}
           ></Route>
           <Route
-            path="/StorePage/:id/StoreManagment/ManagerPermissions"
+            path="/StorePage/:id/StoreManagment/ManagerPermissions/:user_email"
             element={<ManagerPermissions />}
           ></Route>
+
           
 
           <Route
@@ -256,16 +257,7 @@ export default class App extends Component {
         )}
       </BrowserRouter>
 
-      //   <div>
-      //   {/* <HomePageSearch />
-      //   <Payment/>
-      //   <Supply/>
-      //   <Register/>    */}
-      //   <Login isLoggedIn={this.state.isLoggedIn} loginUpdateHandler={this.updateLoginHandler}/>
-      //   {/* <StorePage/> */}
 
-      //   {/* <ShoppingCart/> */}
-      // </div>
     );
   }
 }

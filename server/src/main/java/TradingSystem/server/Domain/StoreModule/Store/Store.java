@@ -768,4 +768,22 @@ public class Store {
         this.inventory.put(to_edit, quantity);
     }
 
+    public List<String> get_permissions(String manager_email) throws AppointmentException {
+        List<String> permissions = new ArrayList<>();
+        if (!stuffs_and_appointments.containsKey(manager_email))
+        {
+            throw new AppointmentException("This Store Stuff doesn't contains the user "+manager_email);
+        }
+        Appointment appointment = this.stuffs_and_appointments.get(manager_email);
+        HashMap<StorePermission,Integer> manager_permissions = appointment.getPermissions();
+        for (StorePermission s: manager_permissions.keySet())
+        {
+            if (manager_permissions.get(s)==1)
+            {
+                permissions.add(s.toString());
+            }
+
+        }
+        return permissions;
+    }
 }
