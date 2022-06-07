@@ -282,9 +282,9 @@ public class User {
         return state.stores_managers_list();
     }
 
-    public void add_product_to_cart_from_bid_offer(Store store, ProductInformation productInfo, int quantity,
+    public void add_product_to_cart_from_bid_offer(Store store, Product product, int quantity,
                                                    String buyer_email, double price_for_unit) throws MarketException {
-        Product product = new Product(productInfo.getName(), productInfo.getProduct_id()*(-1), price_for_unit, productInfo.getCategory(), productInfo.getKey_words(), productInfo.getStore_id());
+        product.setPrice(price_for_unit);
         this.cart.add_product_to_cart(store, product, quantity, buyer_email);
 
     }

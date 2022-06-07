@@ -4,6 +4,7 @@ import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.Proxy.ExternPaymentSystemProxy;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
+import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 
 import java.time.LocalDate;
@@ -57,6 +58,9 @@ public class SystemStartConfig {
 
         marketFacade1.add_bid(2,2, 10, 1500);
         marketFacade2.manager_answer_bid(2,1,true,-1);
+        PaymentInfo paymentInfo = new PaymentInfo();
+        SupplyInfo supplyInfo = new SupplyInfo();
+        marketFacade1.buy_cart(paymentInfo, supplyInfo);
 
         // logout
         marketFacade1.logout();

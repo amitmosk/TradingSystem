@@ -813,15 +813,15 @@ public class Store {
         User buyer = bid.get_buyer();
         if (bid.get_status() == BidStatus.closed_confirm) {
             buyer.add_notification("Your bid is confirm by the store managers.");
-            ProductInformation productInformation = bid.get_product_information();
-            buyer.add_product_to_cart_from_bid_offer(this, productInformation, productInformation.getQuantity(),
+            Product product = bid.get_product();
+            buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(),
                     buyer_email, bid.get_offer_price());
         }
 
         if (bid.get_status() == BidStatus.negotiation_mode){
             buyer.add_notification("Your bid has received a counter-bid.");
-            ProductInformation productInformation = bid.get_product_information();
-            buyer.add_product_to_cart_from_bid_offer(this, productInformation, productInformation.getQuantity(),
+            Product product = bid.get_product();
+            buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(),
                     buyer_email, bid.get_offer_price());
         }
 

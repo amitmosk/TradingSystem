@@ -11,7 +11,8 @@ import static TradingSystem.server.Domain.StoreModule.Store.BidStatus.*;
 
 public class Bid {
 
-    private ProductInformation product;
+    private Product product;
+    private int quantity;
     private double offer_price;
     private String buyer_email;
     private User buyer;
@@ -21,7 +22,9 @@ public class Bid {
 
     public Bid(String buyer_email, int quantity, double offer_price, List<String> managers_emails, Product product, User buyer) {
         this.status = open_waiting_for_answers;
-        this.product = new ProductInformation(product, quantity);
+//        this.product = new ProductInformation(product, quantity);
+        this.product = product;
+        this.quantity = quantity;
         this.negotiation_price = -1;
         this.offer_price = offer_price;
         this.buyer_email = buyer_email;
@@ -86,7 +89,7 @@ public class Bid {
             return this.offer_price;
     }
 
-    public ProductInformation get_product_information(){
+    public Product get_product(){
         return this.product;
     }
 
@@ -96,5 +99,9 @@ public class Bid {
 
     public User get_buyer() {
         return buyer;
+    }
+
+    public int getQuantity() {
+        return this.quantity;
     }
 }
