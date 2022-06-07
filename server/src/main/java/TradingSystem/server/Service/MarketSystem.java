@@ -14,6 +14,8 @@ import TradingSystem.server.Domain.Utils.Exception.MarketException;
 public class MarketSystem {
     private PaymentAdapter payment_adapter;
     private SupplyAdapter supply_adapter;
+    public final static String external_system_url = "http://cs-bgu-wsep.herokuapp.com/";
+
 
     public MarketSystem() {
         this.init_market();

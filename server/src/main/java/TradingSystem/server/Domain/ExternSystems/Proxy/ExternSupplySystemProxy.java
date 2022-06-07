@@ -1,13 +1,16 @@
 package TradingSystem.server.Domain.ExternSystems.Proxy;
 
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
+import TradingSystem.server.Domain.Utils.Utils;
 
 import java.util.HashMap;
+import static TradingSystem.server.Service.MarketSystem.external_system_url;
 
 public class ExternSupplySystemProxy {
 
     public int supply(SupplyInfo supplyInfo) {
-        int answer = 1;
+        int supply_success;
+        // build params for post request
         HashMap<String, String> postContent = new HashMap();
         postContent.put("action_type", "supply");
         postContent.put("name", supplyInfo.getName());
@@ -16,30 +19,33 @@ public class ExternSupplySystemProxy {
         postContent.put("country", supplyInfo.getCountry());
         postContent.put("zip", supplyInfo.getZip());
 
-
-        this.send_http_post_request(postContent);
-        return answer;
+        // send the request
+        String answer = Utils.send_http_post_request(external_system_url, postContent);
+        supply_success = Utils.string_to_int(answer);
+        return supply_success;
     }
 
     public boolean handshake(){
+        // build params for post request
+        boolean hand_success;
         HashMap<String, String> postContent = new HashMap();
         postContent.put("action_type", "handshake");
-        this.send_http_post_request(postContent);
-        return true;
+        // send the request
+        String answer = Utils.send_http_post_request(external_system_url, postContent);
+        hand_success = Utils.string_to_boolean(answer);
+        return hand_success;
     }
 
     public int cancel_supply(int transaction_id) {
-        int answer = 1;
+        int cancel_success;
+        // build params for post request
         HashMap<String, String> postContent = new HashMap();
         postContent.put("action_type", "cancel_supply");
         postContent.put("transaction_id", ""+transaction_id);
-        this.send_http_post_request(postContent);
-        return answer;
+        // send the request
+        String answer = Utils.send_http_post_request(external_system_url, postContent);
+        cancel_success = Utils.string_to_int(answer);
+        return cancel_success;
     }
-
-
-    private void send_http_post_request(HashMap postContent){
-        String url = "https://cs-bgu-wsep.herokuapp.com/";
-
-    }
+    
 }
