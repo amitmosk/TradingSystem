@@ -957,12 +957,12 @@ public class MarketFacade {
 
     //TODO concurrency
 
-    public Response<SimpleporchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id, String nameOfRule) {
+    public Response<SimpleporchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
         Response<SimpleporchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
-                porchaseRule porchaseRule = store.addsimplePorchaseRule(nameOfRule, PredictName, NameOfRule);
+                porchaseRule porchaseRule = store.addsimplePorchaseRule(NameOfRule, PredictName);
                 response = new Response(porchaseRule, "simple purchase added successfully");
                 system_logger.add_log("Store's (" + store_id + ") simple purchase added successfully");
             }

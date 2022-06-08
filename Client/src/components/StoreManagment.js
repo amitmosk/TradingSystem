@@ -344,40 +344,7 @@ export default class StoreManagment extends Component {
 
 
 
-    async add_discount_rule(option) {
-        console.log("in add discount rule");
-        console.log(option);
-        switch (option) {
-            case "Simple":
-                this.add_simple_discount_rule()
-                break;
-            case "Complex":
-                this.add_complex_discount_rule()
-                break;
-            case "Composite Or":
-                this.add_composite_or_discount_rule()
-                break;
-            case "Composite And":
-                this.add_composite_and_discount_rule()
-                break;
-            case "Composite Xor":
-                this.add_composite_xor_discount_rule()
-                break;
-            default:
-                console.log("option is empty");
-        }
-
-    }
-    async add_simple_discount_rule(option) {
-    }
-    async add_complex_discount_rule(option) {
-    }
-    async add_composite_or_discount_rule(option) {
-    }
-    async add_composite_and_discount_rule(option) {
-    }
-    async add_composite_xor_discount_rule(option) {
-    }
+    
 
 
 
@@ -424,6 +391,8 @@ export default class StoreManagment extends Component {
 
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid> */}
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddDiscount` }} underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddPurchase` }} underline="hover" >{'Add Purchase Rule'}</Link></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`CreatePredict` }} underline="hover" >{'Create Predict'}</Link></Item ></Grid>
 
 
 

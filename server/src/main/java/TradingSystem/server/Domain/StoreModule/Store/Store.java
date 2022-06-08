@@ -318,10 +318,10 @@ public class Store {
         return (Predict) p;
     }
 
-    public SimpleporchaseRule addsimplePorchaseRule(String nameOfRule, String nameForule, String name) throws WrongPermterException {
-        Predict p = getSimplePredictsByName(name);
+    public SimpleporchaseRule addsimplePorchaseRule( String nameOfrule, String NameOfPredict) throws WrongPermterException {
+        Predict p = getSimplePredictsByName(NameOfPredict);
         SimpleporchaseRule Toreturn = new SimpleporchaseRule(p);
-        this.purchasePolicy.addRule(nameForule, Toreturn);
+        this.purchasePolicy.addRule(nameOfrule, Toreturn);
         return Toreturn;
     }
 
@@ -770,11 +770,21 @@ public class Store {
 
     public List<String> get_permissions(String manager_email) throws AppointmentException {
         List<String> permissions = new ArrayList<>();
-        if (!stuffs_and_appointments.containsKey(manager_email))
+        boolean user_exist = false;
+        AssignUser user_get_permission=null;
+        for (AssignUser user:stuffs_and_appointments.keySet())
+        {
+            if (user.get_user_email().equals(manager_email))
+            {
+                user_exist = true;
+                user_get_permission = user;
+            }
+        }
+        if (!user_exist)
         {
             throw new AppointmentException("This Store Stuff doesn't contains the user "+manager_email);
         }
-        Appointment appointment = this.stuffs_and_appointments.get(manager_email);
+        Appointment appointment = this.stuffs_and_appointments.get(user_get_permission);
         HashMap<StorePermission,Integer> manager_permissions = appointment.getPermissions();
         for (StorePermission s: manager_permissions.keySet())
         {

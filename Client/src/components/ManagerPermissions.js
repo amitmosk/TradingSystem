@@ -15,7 +15,7 @@ import { StoreApi } from '../API/StoreApi';
 import { useParams } from 'react-router-dom';
 import { Utils } from '../ServiceObjects/Utils';
 import { useEffect } from 'react';
-function not(a, b) {
+function not(a, b) {    
     return a.filter((value) => b.indexOf(value) === -1);
 }
 
@@ -28,7 +28,7 @@ function union(a, b) {
 }
 
 export default function ManagerPermissions() {
-    
+    const current_permissions=[];
     const storeApi = new StoreApi();
     const [snackbar, setSnackbar] = React.useState(null);
     const handleCloseSnackbar = () => setSnackbar(null);
@@ -37,7 +37,17 @@ export default function ManagerPermissions() {
     const get_permissionss = async () =>{
         const response = await storeApi.get_permissions(user_email, id);
         if (!response.was_exception) {
-            setSnackbar({ children: response.message, severity: 'success' });   
+
+            setSnackbar({ children: response.message, severity: 'success' });
+            console.log(response.value);
+            // current_permissions = response.value;
+            response.value.map((per) => {
+                let name =permissions_to_names(per);
+                if (!current_permissions.includes(name))
+                    current_permissions.push(name)
+            });
+           
+
         }
         else {
             setSnackbar({ children: response.message, severity: 'error' });   
@@ -53,7 +63,7 @@ export default function ManagerPermissions() {
         "Close Store Temporarily", "Open Closed Store", "Add Manager", "Remove Manager",
         "Add Owner", "Remove Owner", "Edit Permissions", "View Bids Status","Answer Bid Offer",
         "Answer Bid Offer Negotiate",   ]);
-    const [right, setRight] = React.useState([]);
+    const [right, setRight] = React.useState(current_permissions);
 
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
@@ -83,14 +93,22 @@ export default function ManagerPermissions() {
     };
 
     const handleCheckedRight = () => {
-        setRight(right.concat(leftChecked));
-        setLeft(not(left, leftChecked));
+
+        if (!right.includes(leftChecked[0]))
+        {
+            setRight(right.concat(leftChecked));
+            setLeft(not(left, leftChecked));
+            
+        }
         setChecked(not(checked, leftChecked));
     };
 
     const handleCheckedLeft = () => {
-        setLeft(left.concat(rightChecked));
-        setRight(not(right, rightChecked));
+        if (!left.includes(rightChecked[0]))
+        {
+            setLeft(left.concat(rightChecked));
+            setRight(not(right, rightChecked));
+        } 
         setChecked(not(checked, rightChecked));
     };
     const permissions_dict = {add_item :0,
@@ -125,6 +143,80 @@ export default function ManagerPermissions() {
     
         
         };   
+        // const hadleSubmit = async () => {
+        //     return (<Button>fffff</Button>);
+        // }
+    const permissions_to_names = (per) =>{
+        if (per === "add_item") {
+           return "Add Item";
+        }
+        else if (per === "remove_item") {
+            return "Remove Item";
+        }
+        else if (per === "edit_item_name") {
+            return "Edit Item Name";
+        }
+        else if (per === "edit_item_price") {
+            return "Edit Item Price";
+        }
+        else if (per === "edit_item_category") {
+            return "Edit Item Category";
+        }
+        else if (per === "edit_item_keywords") {
+            return "Edit Item Keywords";
+        }
+        else if (per === "view_permissions") {
+            return "View Permission";
+        }
+        else if (per === "view_users_questions") {
+            return "View User Questions";
+        }
+        else if (per === "edit_store_policy") {
+            return "Edit Store Policy";
+        }
+        else if (per === "edit_discount_policy") {
+            return "Edit Discount Policy";
+        }
+        else if (per === "edit_purchase_policy") {
+            return "Edit Purchase Policy";
+        }
+
+        else if (per === "view_purchases_history") {
+            return "View Purchase History";
+        }
+
+        else if (per === "close_store_temporarily") {
+            return "Close Store Temporarily";
+        }
+        else if (per === "open_close_store") {
+            return "Open Closed Store";
+        }
+        else if (per === "add_manager") {
+            return "Add Manager";
+        }
+        else if (per === "remove_manager") {
+            return "Remove Manager";
+        }
+        else if (per === "add_owner") {
+            return "Add Owner";
+        }
+        else if (per === "remove_owner") {
+            return "Remove Owner";
+        }
+        else if (per === "edit_permissions") {
+            return "Edit Permissions";
+        }
+        else if (per === "view_bids_status") {
+            return "View Bids Status";
+        }
+        else if (per === "answer_bid_offer") {
+            return "Answer Bid Offer";
+        }
+        else if (per === "answer_bid_offer_negotiate") {
+            return "Answer Bid Offer Negotiate";
+        }
+
+    }
     const hadleSubmit = async () => {
         let permissions = [];
         right.map((per) => {
