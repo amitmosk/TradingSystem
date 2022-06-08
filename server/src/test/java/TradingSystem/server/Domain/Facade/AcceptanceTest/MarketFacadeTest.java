@@ -255,7 +255,7 @@ class MarketFacadeTest {
 
     // --------------------------------------------------------------------------------------------------------
 
-    // delete_owner
+    // delete_owner (simple cases)
     // close_store_temporarily
     // open_close_store
     // view_store_management_information
@@ -276,6 +276,7 @@ class MarketFacadeTest {
         String manager2 = "user4@manager.com";
         int staff_size = 0;
 
+        // all test characters register the system
         res = facade1.register(founder, "paSs12", "one", "founder", birth_date);
         assertFalse(check_was_exception(res));
         res = facade2.register(owner, "paSs12", "two", "owner", birth_date);
@@ -285,16 +286,19 @@ class MarketFacadeTest {
         res = facade4.register(manager2, "paSs12", "four", "manager", birth_date);
         assertFalse(check_was_exception(res));
 
+        // founder opens store
         int store_id = open_store_get_id("new test store");
         founder_exist(founder, store_id);
         staff_size++;
 
+        // founder adds owner as store owner
         res = facade1.add_owner(owner, store_id);
         assertFalse(check_was_exception(res));
         staff_size++;
         founder_exist(founder, store_id);
         owner_exist(owner,store_id,false, staff_size);
 
+        // owner adds manager1 as store manager
         res = facade2.add_manager(manager1, store_id);
         assertFalse(check_was_exception(res));
         staff_size++;
@@ -302,6 +306,7 @@ class MarketFacadeTest {
         owner_exist(owner, store_id,false, staff_size);
         manager_exist(manager1, store_id,false, staff_size);
 
+        // manager1 tries to add manager2 as store manager
         res = facade3.add_manager(manager2, store_id);
         assertTrue(check_was_exception(res));
         founder_exist(founder, store_id);
@@ -309,6 +314,7 @@ class MarketFacadeTest {
         manager_exist(manager1, store_id,false, staff_size);
         manager_exist(manager2, store_id,true, staff_size);
 
+        // owner adds manager2 as store owner
         res = facade2.add_manager(manager2, store_id);
         assertFalse(check_was_exception(res));
         staff_size++;
@@ -317,6 +323,7 @@ class MarketFacadeTest {
         manager_exist(manager1, store_id,false, staff_size);
         manager_exist(manager2, store_id,false, staff_size);
 
+        // manager1 tries to remove owner's appointment as store owner
         res = facade3.delete_owner(owner, store_id);
         assertTrue(check_was_exception(res));
         founder_exist(founder, store_id);
@@ -324,6 +331,7 @@ class MarketFacadeTest {
         manager_exist(manager1, store_id,false, staff_size);
         manager_exist(manager2, store_id,false, staff_size);
 
+        // owner removes manager1's appointment as store manager
         res = facade2.delete_manager(manager1, store_id);
         assertFalse(check_was_exception(res));
         staff_size--;
@@ -332,13 +340,15 @@ class MarketFacadeTest {
         manager_exist(manager1, store_id,true, staff_size);
         manager_exist(manager2, store_id,false, staff_size);
 
-        res = facade3.delete_owner(owner, store_id);
+        // manager2 tries to remove owner's appointment as store owner
+        res = facade4.delete_owner(owner, store_id);
         assertTrue(check_was_exception(res));
         founder_exist(founder, store_id);
         owner_exist(owner, store_id,false, staff_size);
         manager_exist(manager1, store_id,true, staff_size);
         manager_exist(manager2, store_id,false, staff_size);
 
+        // founder removes owner's permissions as store owner
         res = facade1.delete_owner(owner, store_id);
         assertFalse(check_was_exception(res));
         staff_size = 1;
@@ -347,6 +357,7 @@ class MarketFacadeTest {
         manager_exist(manager1, store_id,true, staff_size);
         manager_exist(manager2, store_id,false, staff_size);
 
+        // all users logout
         facade1.logout();
         facade2.logout();
         facade3.logout();
@@ -361,6 +372,7 @@ class MarketFacadeTest {
         String owner1 = "user2@owner.com";
         String owner2 = "user3@owner.com";
 
+        // all test characters register the system
         res = facade1.register(founder, "paSs12", "one", "founder", birth_date);
         assertFalse(check_was_exception(res));
         res = facade2.register(owner1, "paSs12", "two", "owner", birth_date);
@@ -368,32 +380,38 @@ class MarketFacadeTest {
         res = facade3.register(owner2, "paSs12", "three", "owner", birth_date);
         assertFalse(check_was_exception(res));
 
+        // founder opens store
         int store_id = open_store_get_id("new test store");
         founder_exist(founder, store_id);
 
+        // founder adds owner1 as store owner
         res = facade1.add_owner(owner1, store_id);
         assertFalse(check_was_exception(res));
         founder_exist(founder, store_id);
         owner_exist(owner1,store_id,false, 2);
 
+        // owner1 adds owner2 as store owner
         res = facade2.add_owner(owner2, store_id);
         assertFalse(check_was_exception(res));
         founder_exist(founder, store_id);
         owner_exist(owner1, store_id,false, 3);
         owner_exist(owner2, store_id,false, 3);
 
+        // owner2 tries to remove owner1's permissions as store owner
         res = facade3.delete_owner(owner1, store_id);
         assertTrue(check_was_exception(res));
         founder_exist(founder, store_id);
         owner_exist(owner1, store_id,false, 3);
         owner_exist(owner2, store_id,false, 3);
 
+        // founder removes owner1's permissions as store owner
         res = facade1.delete_owner(owner1, store_id);
         assertFalse(check_was_exception(res));
         founder_exist(founder, store_id);
         owner_exist(owner1, store_id,true, 1);
         owner_exist(owner2, store_id,true, 1);
 
+        // all users logout
         facade1.logout();
         facade2.logout();
         facade3.logout();
