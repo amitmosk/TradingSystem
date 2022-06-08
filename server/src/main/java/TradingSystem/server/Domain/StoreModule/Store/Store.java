@@ -18,7 +18,6 @@ import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.*;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
@@ -500,7 +499,7 @@ public class Store {
     public void edit_product_price(AssignUser user, int product_id, double price) throws MarketException {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(user, StorePermission.edit_item_price);
-        to_edit.setPrice(price);
+        to_edit.setOriginal_price(price);
     }
 
     public void edit_product_category(AssignUser user, int product_id, String category) throws MarketException {
@@ -591,6 +590,7 @@ public class Store {
             Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner);
             this.stuffs_and_appointments.put(new_owner, appointment_to_add);
             new_owner.add_owner(this, appointment_to_add);
+            this.set_manager_in_bids(0, new_owner.get_user_email());
         }
     }
 
@@ -603,8 +603,11 @@ public class Store {
             Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager);
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
             new_manager.add_manager(this, appointment_to_add);
+            this.set_manager_in_bids(0, new_manager.get_user_email());
         }
     }
+
+
 
     public void remove_manager(AssignUser remover, AssignUser user_to_delete_appointment) throws MarketException {
         this.check_permission(remover, StorePermission.add_manager);
@@ -621,6 +624,7 @@ public class Store {
             }
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
+            this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
         }
     }
 
@@ -629,6 +633,7 @@ public class Store {
             if (appointment1.getAppointer().equals(user_to_delete_appointment)) {
                 this.remove_owner(user_to_delete_appointment, appointment1.getMember());
                 user_to_delete_appointment.remove_appointment(this);
+                this.set_manager_in_bids(1, appointment1.getMember().get_user_email());
             }
         }
     }
@@ -652,6 +657,7 @@ public class Store {
             remove_all_appointments_by_user(user_to_delete_appointment);
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
+            this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
         }
     }
 
@@ -748,7 +754,7 @@ public class Store {
     //TODO: pass
     public Double calc_product_price(Product product, int quantity) {
         //TODO :discount policy - version 2
-        return product.getPrice() * quantity;
+        return product.getOriginal_price() * quantity;
     }
 
     public void send_message_to_the_store_stuff(String message) {
@@ -780,16 +786,16 @@ public class Store {
 
     // amit - bid
 
-    public void add_bid_offer(int bid_id, Product product, int quantity, double offer_price, String buyer_email, User buyer) {
+    public void add_bid_offer(int bid_id, Product product, int quantity, double offer_price, User buyer) {
         List<String> managers_emails = new ArrayList<>();
         for (Appointment appointment : this.stuffs_and_appointments.values()){
-            if (appointment.is_owner() || appointment.is_founder()){
+            if (appointment.has_permission(StorePermission.answer_bid_offer)){
                 managers_emails.add(appointment.getMember().get_user_email());
             }
         }
-        Bid bid = new Bid(buyer_email, quantity, offer_price, managers_emails, product, buyer);
+        Bid bid = new Bid(quantity, offer_price, managers_emails, product, buyer);
         this.bids.put(bid_id, bid);
-        this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName() + " from user : " + buyer_email);
+        this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName());
     }
 
     public Collection<Bid> view_bids_status(AssignUser user) throws NoPremssionException {
@@ -809,25 +815,36 @@ public class Store {
         Bid bid = this.bids.get(bidID);
         bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
 
-        String buyer_email = bid.get_buyer_email();
         User buyer = bid.get_buyer();
         if (bid.get_status() == BidStatus.closed_confirm) {
             buyer.add_notification("Your bid is confirm by the store managers.");
             Product product = bid.get_product();
-            buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(),
-                    buyer_email, bid.get_offer_price());
+            buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
         }
 
         if (bid.get_status() == BidStatus.negotiation_mode){
             buyer.add_notification("Your bid has received a counter-bid.");
             Product product = bid.get_product();
-            buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(),
-                    buyer_email, bid.get_offer_price());
+            buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
         }
 
         if (bid.get_status() == BidStatus.closed_denied)
             buyer.add_notification("Your bid is denied by the store managers.");
 
 
+    }
+
+    /**
+     *
+     * @param i - 0 for add, 1 - for remove
+     * @param user_email - to set
+     */
+    private void set_manager_in_bids(int i, String user_email) {
+        for (Bid bid : this.bids.values()){
+            if (i == 0)
+                bid.add_manager_of_store(user_email);
+            if (i == 1)
+                bid.remove_manager(user_email);
+        }
     }
 }

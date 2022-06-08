@@ -39,7 +39,7 @@ public class SystemStartConfig {
 
         marketFacade5.add_product_to_store(5,50,"iphone",2999.9, "electronic",new LinkedList<>());
         // add products to cart
-//        marketFacade1.add_product_to_cart(1,1,20);
+        marketFacade1.add_product_to_cart(1,1,20);
 //        marketFacade1.add_product_to_cart(2,2,20);
 //        marketFacade1.add_product_to_cart(3,3,20);
 //        marketFacade1.add_product_to_cart(4,4,20);

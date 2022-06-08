@@ -3,7 +3,6 @@ package TradingSystem.server.Domain.UserModule;
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -13,7 +12,6 @@ import TradingSystem.server.Domain.Utils.Utils;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -240,8 +238,14 @@ public class User {
     }
 
     public void add_product_to_cart(Store store, Product p, int quantity) throws MarketException {
-        String basket_identifer = get_identifier_for_basket();
-        this.cart.add_product_to_cart(store, p, quantity, basket_identifer);
+        String basket_identifier = get_identifier_for_basket();
+        this.cart.add_product_to_cart(store, p, quantity, basket_identifier, p.getOriginal_price());
+    }
+
+    public void add_product_to_cart_from_bid_offer(Store store, Product product, int quantity, double price_per_unit) throws MarketException {
+        String basket_identifier = get_identifier_for_basket();
+        this.cart.add_product_to_cart(store, product, quantity, basket_identifier, price_per_unit);
+
     }
 
     public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws MarketException {
@@ -282,10 +286,5 @@ public class User {
         return state.stores_managers_list();
     }
 
-    public void add_product_to_cart_from_bid_offer(Store store, Product product, int quantity,
-                                                   String buyer_email, double price_for_unit) throws MarketException {
-        product.setPrice(price_for_unit);
-        this.cart.add_product_to_cart(store, product, quantity, buyer_email);
 
-    }
 }

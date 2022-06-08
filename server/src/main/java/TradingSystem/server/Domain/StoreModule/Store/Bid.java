@@ -20,7 +20,7 @@ public class Bid {
     private HashMap<String, BidManagerAnswer> managersEmail_answers;
     private BidStatus status; // 0 - waiting for answers, 1 - close & denied, 2 - close & confirm.
 
-    public Bid(String buyer_email, int quantity, double offer_price, List<String> managers_emails, Product product, User buyer) {
+    public Bid(int quantity, double offer_price, List<String> managers_emails, Product product, User buyer) {
         this.status = open_waiting_for_answers;
 //        this.product = new ProductInformation(product, quantity);
         this.product = product;

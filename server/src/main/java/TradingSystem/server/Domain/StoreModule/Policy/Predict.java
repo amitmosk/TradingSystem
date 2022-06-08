@@ -2,7 +2,6 @@ package TradingSystem.server.Domain.StoreModule.Policy;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.UserModule.User;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -64,7 +63,7 @@ public class Predict implements Ipredict {
     public boolean CanApply(int age, Basket b) {
         Map<Product, Integer> map = b.getProducts_and_quantities();
         for (Map.Entry<Product, Integer> entry : map.entrySet())
-            if (CanApply(age, entry.getKey(), entry.getValue(), entry.getKey().getPrice()))
+            if (CanApply(age, entry.getKey(), entry.getValue(), entry.getKey().getOriginal_price()))
                 return true;
         return false;
     }
@@ -72,7 +71,7 @@ public class Predict implements Ipredict {
     public boolean CanApply(Basket b) {
         Map<Product, Integer> map = b.getProducts_and_quantities();
         for (Map.Entry<Product, Integer> entry : map.entrySet())
-            if (CanApply(entry.getKey(), entry.getValue(), entry.getKey().getPrice()))
+            if (CanApply(entry.getKey(), entry.getValue(), entry.getKey().getOriginal_price()))
                 return true;
         return false;
     }

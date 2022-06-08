@@ -2,13 +2,10 @@ package TradingSystem.server.Domain.Facade.AcceptanceTest;
 
 import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
-import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
-import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
-import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
-import TradingSystem.server.Domain.UserModule.User;
+import TradingSystem.server.Domain.UserModule.CartInformation;
 import TradingSystem.server.Domain.Utils.Exception.AppointmentException;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 import TradingSystem.server.Domain.Utils.Response;
@@ -408,13 +405,13 @@ class StoreMoudleTest {
     void edit_product_price_happy() {
         Response<Product> product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
-        double prev_price = product_res.getValue().getPrice();
+        double prev_price = product_res.getValue().getOriginal_price();
         //step 1 edit product price - should work (check new product name)
         Response res = marketFacade.edit_product_price(productId, 1, prev_price+10);
         check_was_not_exception("failed to edit product price while it should work. - step 1", res);
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
-        double new_price = product_res.getValue().getPrice();
+        double new_price = product_res.getValue().getOriginal_price();
         assertTrue(new_price == prev_price+10,"product price haven't changed - step 1");
         prev_price = new_price;
         //step 2 log out -> edit product price - should fail.
@@ -424,7 +421,7 @@ class StoreMoudleTest {
         assertTrue(check_was_exception(res),"succeed to edit product price while it should fail. - step 2");
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 2", product_res);
-        new_price = product_res.getValue().getPrice();
+        new_price = product_res.getValue().getOriginal_price();
         assertFalse(new_price == prev_price+10,"product price has changed - step 2");
         //step 3 log back in change product price - should work.
         res = marketFacade.login(email,password);
@@ -433,7 +430,7 @@ class StoreMoudleTest {
         check_was_not_exception("failed to edit product price while it should work. - step 3", res);
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 3", product_res);
-        new_price = product_res.getValue().getPrice();
+        new_price = product_res.getValue().getOriginal_price();
         assertTrue(new_price == prev_price+10,"product price haven't changed - step 3");
         prev_price = new_price;
         //step 4 try to edit product price with general user
@@ -441,14 +438,14 @@ class StoreMoudleTest {
         assertTrue(check_was_exception(res),"succeed to edit product price while it should fail. - step 4");
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 4", product_res);
-        new_price = product_res.getValue().getPrice();
+        new_price = product_res.getValue().getOriginal_price();
         assertFalse(new_price == prev_price+10,"product price haven't changed - step 4");
         //step 5 try to edit product price with store member.
         res = manager.edit_product_price(productId, 1, prev_price+10);
         check_was_not_exception("failed to edit product price while it should work. - step 5", res);
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 5", product_res);
-        new_price = product_res.getValue().getPrice();
+        new_price = product_res.getValue().getOriginal_price();
         assertTrue(new_price == prev_price+10,"product price haven't changed - step 5");
         prev_price = new_price;
         //step 6 try to edit product price with store member without permissions.
@@ -457,7 +454,7 @@ class StoreMoudleTest {
         assertTrue(check_was_exception(res),"succeed to edit product price while it should fail. - step 6");
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 6", product_res);
-        new_price = product_res.getValue().getPrice();
+        new_price = product_res.getValue().getOriginal_price();
         assertFalse(new_price == prev_price+10,"product price haven't changed - step 6");
     }
 
@@ -943,4 +940,70 @@ class StoreMoudleTest {
         assertTrue(num_of_success.get() == 1,"concurency fail, success count: "+num_of_success.get());
         //TODO: check user is manager.
     }
+
+
+    @Test
+    void bid_without_nego_guest(){
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.add_bid(1,1,3,80);
+        marketFacade.manager_answer_bid(1,1,true,-1);
+        CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
+        assertTrue(cartInformation.getPrice() == 240);
+
+    }
+
+    /**
+     * this test check adding bid by buyer, confirm by all the store managers without negotiation
+     */
+    @Test
+    void bid_without_nego_assign_user(){
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
+        marketFacade1.add_bid(1,1,3,80);
+        marketFacade.manager_answer_bid(1,1,true,-1);
+        CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
+        assertTrue(cartInformation.getPrice() == 240);
+
+    }
+
+
+    @Test
+    void bid_uncofirm(){
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
+        marketFacade1.add_bid(1,1,3,80);
+        marketFacade.manager_answer_bid(1,1,false,-1);
+        CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
+        assertTrue(cartInformation.getPrice() == 0);
+
+    }
+
+    /**
+     * this test check adding bid by buyer, confirm by all the store managers with negotiation from the store founder
+     */
+    @Test
+    void bid_with_nego_assign_user(){
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
+        marketFacade1.add_bid(1,1,3,80);
+        marketFacade.manager_answer_bid(1,1,true,85);
+        CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
+        assertTrue(cartInformation.getPrice() == 255);
+
+    }
+
+    /**
+     * this test check adding bid by buyer, confirm by all the store managers with negotiation from the store manager - no permission
+     */
+    @Test
+    void bid_with_nego_assign_user_no_permission(){
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
+        marketFacade1.add_bid(1,1,3,80);
+        marketFacade.manager_answer_bid(1,1,true,-1);
+        Response response = manager.manager_answer_bid(1,1,true,50);
+        assertTrue(check_was_exception(response));
+
+    }
 }
+
