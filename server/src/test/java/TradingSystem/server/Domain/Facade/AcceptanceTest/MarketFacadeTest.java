@@ -5,10 +5,13 @@ import TradingSystem.server.Domain.ExternSystems.PaymentAdapterImpl;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapterImpl;
 import TradingSystem.server.Domain.Facade.MarketFacade;
+import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
+import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
+import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
@@ -30,6 +33,8 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class MarketFacadeTest {
     private MarketFacade facade1;
     private MarketFacade facade2;
+    private MarketFacade facade3;
+    private MarketFacade facade4;
     private UserController uc;
     private PaymentAdapter pa;
     private SupplyAdapter sa;
@@ -50,6 +55,8 @@ class MarketFacadeTest {
         SupplyAdapter supplyAdapter = new SupplyAdapterImpl();
         this.facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         this.facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
+        this.facade3 = new MarketFacade(paymentAdapter, supplyAdapter);
+        this.facade4 = new MarketFacade(paymentAdapter, supplyAdapter);
         facade1.register("check1234@email.com", "pass3Chec", "name", "last",birth_date);
         int id = open_store_get_id("Checker Store");
         facade2.register("check12345@email.com", "pass3Chec", "name", "last",birth_date);
@@ -135,6 +142,7 @@ class MarketFacadeTest {
         facade1.open_store(name);
         return num_of_stores();
     }
+
     private int add_prod_make_purchase_get_id(int sore_id){
         ArrayList<String> arraylist = new ArrayList<>();
         arraylist.add("check_check");
@@ -195,23 +203,201 @@ class MarketFacadeTest {
             }
         }
     }
+
+    private void founder_exist(String founder, int store_id) throws MarketException {
+        boolean founder_exist = false;
+        Store store = facade1.get_store(store_id);
+        Map<AssignUser, Appointment> staff = store.getStuffs_and_appointments();
+        for(AssignUser u : staff.keySet()){
+            if(u.get_user_email() == founder){
+                founder_exist = true;
+                break;
+            }
+        }
+        assertTrue(founder_exist);
+    }
+
+    private void owner_exist(String owner, int store_id, boolean not, int staff_size) throws MarketException {
+        boolean owner_exist = false;
+        Store store = facade1.get_store(store_id);
+        Map<AssignUser, Appointment> staff = store.getStuffs_and_appointments();
+        for(AssignUser u : staff.keySet()){
+            if(u.get_user_email() == owner){
+                owner_exist = true;
+                break;
+            }
+        }
+        if(!not)
+            assertTrue(owner_exist);
+        else
+            assertFalse(owner_exist);
+
+        assertTrue(staff.size() == staff_size);
+    }
+
+    private void manager_exist(String manager, int store_id, boolean not, int staff_size) throws MarketException {
+        boolean manager_exist = false;
+        Store store = facade1.get_store(store_id);
+        Map<AssignUser, Appointment> staff = store.getStuffs_and_appointments();
+        for(AssignUser u : staff.keySet()){
+            if(u.get_user_email() == manager){
+                manager_exist = true;
+                break;
+            }
+        }
+        if(!not)
+            assertTrue(manager_exist);
+        else
+            assertFalse(manager_exist);
+
+        assertTrue(staff.size() == staff_size);
+    }
+
     // --------------------------------------------------------------------------------------------------------
 
     // delete_owner
-    // add_manager
-    // delete_manager
     // close_store_temporarily
     // open_close_store
     // view_store_management_information
     // manager_answer_question
     // get_market_stats
     // get_products_by_store_id
-    // clear
     // get_user_questions
     // edit_product_quantity
     // online_user
     // close_store_permanently
 
+    @Test
+    void add_remove_manager() throws MarketException {
+        Response res;
+        String founder = "user1@founder.com";
+        String owner = "user2@owner.com";
+        String manager1 = "user3@manager.com";
+        String manager2 = "user4@manager.com";
+        int staff_size = 0;
+
+        res = facade1.register(founder, "paSs12", "one", "founder", birth_date);
+        assertFalse(check_was_exception(res));
+        res = facade2.register(owner, "paSs12", "two", "owner", birth_date);
+        assertFalse(check_was_exception(res));
+        res = facade3.register(manager1, "paSs12", "three", "manager", birth_date);
+        assertFalse(check_was_exception(res));
+        res = facade4.register(manager2, "paSs12", "four", "manager", birth_date);
+        assertFalse(check_was_exception(res));
+
+        int store_id = open_store_get_id("new test store");
+        founder_exist(founder, store_id);
+        staff_size++;
+
+        res = facade1.add_owner(owner, store_id);
+        assertFalse(check_was_exception(res));
+        staff_size++;
+        founder_exist(founder, store_id);
+        owner_exist(owner,store_id,false, staff_size);
+
+        res = facade2.add_manager(manager1, store_id);
+        assertFalse(check_was_exception(res));
+        staff_size++;
+        founder_exist(founder, store_id);
+        owner_exist(owner, store_id,false, staff_size);
+        manager_exist(manager1, store_id,false, staff_size);
+
+        res = facade3.add_manager(manager2, store_id);
+        assertTrue(check_was_exception(res));
+        founder_exist(founder, store_id);
+        owner_exist(owner, store_id,false, staff_size);
+        manager_exist(manager1, store_id,false, staff_size);
+        manager_exist(manager2, store_id,true, staff_size);
+
+        res = facade2.add_manager(manager2, store_id);
+        assertFalse(check_was_exception(res));
+        staff_size++;
+        founder_exist(founder, store_id);
+        owner_exist(owner, store_id,false, staff_size);
+        manager_exist(manager1, store_id,false, staff_size);
+        manager_exist(manager2, store_id,false, staff_size);
+
+        res = facade3.delete_owner(owner, store_id);
+        assertTrue(check_was_exception(res));
+        founder_exist(founder, store_id);
+        owner_exist(owner, store_id,false, staff_size);
+        manager_exist(manager1, store_id,false, staff_size);
+        manager_exist(manager2, store_id,false, staff_size);
+
+        res = facade2.delete_manager(manager1, store_id);
+        assertFalse(check_was_exception(res));
+        staff_size--;
+        founder_exist(founder, store_id);
+        owner_exist(owner, store_id,false, staff_size);
+        manager_exist(manager1, store_id,true, staff_size);
+        manager_exist(manager2, store_id,false, staff_size);
+
+        res = facade3.delete_owner(owner, store_id);
+        assertTrue(check_was_exception(res));
+        founder_exist(founder, store_id);
+        owner_exist(owner, store_id,false, staff_size);
+        manager_exist(manager1, store_id,true, staff_size);
+        manager_exist(manager2, store_id,false, staff_size);
+
+        res = facade1.delete_owner(owner, store_id);
+        assertFalse(check_was_exception(res));
+        staff_size = 1;
+        founder_exist(founder, store_id);
+        owner_exist(owner, store_id,false, staff_size);
+        manager_exist(manager1, store_id,true, staff_size);
+        manager_exist(manager2, store_id,false, staff_size);
+
+        facade1.logout();
+        facade2.logout();
+        facade3.logout();
+        facade4.logout();
+    }
+
+    // Bar's test from version 2 meeting
+    @Test
+    void recursive_appointment_removal() throws MarketException {
+        Response res;
+        String founder = "user1@founder.com";
+        String owner1 = "user2@owner.com";
+        String owner2 = "user3@owner.com";
+
+        res = facade1.register(founder, "paSs12", "one", "founder", birth_date);
+        assertFalse(check_was_exception(res));
+        res = facade2.register(owner1, "paSs12", "two", "owner", birth_date);
+        assertFalse(check_was_exception(res));
+        res = facade3.register(owner2, "paSs12", "three", "owner", birth_date);
+        assertFalse(check_was_exception(res));
+
+        int store_id = open_store_get_id("new test store");
+        founder_exist(founder, store_id);
+
+        res = facade1.add_owner(owner1, store_id);
+        assertFalse(check_was_exception(res));
+        founder_exist(founder, store_id);
+        owner_exist(owner1,store_id,false, 2);
+
+        res = facade2.add_owner(owner2, store_id);
+        assertFalse(check_was_exception(res));
+        founder_exist(founder, store_id);
+        owner_exist(owner1, store_id,false, 3);
+        owner_exist(owner2, store_id,false, 3);
+
+        res = facade3.delete_owner(owner1, store_id);
+        assertTrue(check_was_exception(res));
+        founder_exist(founder, store_id);
+        owner_exist(owner1, store_id,false, 3);
+        owner_exist(owner2, store_id,false, 3);
+
+        res = facade1.delete_owner(owner1, store_id);
+        assertFalse(check_was_exception(res));
+        founder_exist(founder, store_id);
+        owner_exist(owner1, store_id,true, 1);
+        owner_exist(owner2, store_id,true, 1);
+
+        facade1.logout();
+        facade2.logout();
+        facade3.logout();
+    }
 
     /**
      * Cases checked:
