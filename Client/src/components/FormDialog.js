@@ -13,7 +13,7 @@ FormDialog.defaultProps = {
   submit_button: "Submit",
 }
 
-export default function FormDialog({ fields, getValues, name, outlinedVar, title, submit_button }) {
+export default function FormDialog({ fields, getValues, name, outlinedVar, title, submit_button , params}) {
 
 
   const [open, setOpen] = React.useState(false);
@@ -29,6 +29,11 @@ export default function FormDialog({ fields, getValues, name, outlinedVar, title
     console.log("in handle submit\n");
     let ans = [];
     fields.map((f) => ans.push(localStorage.getItem(f)))
+    if (params !== undefined)
+    {
+      params.map((p)=>ans.push(p));
+    }
+    console.log(params);
     getValues(ans);
     setOpen(false);
 

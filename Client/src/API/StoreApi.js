@@ -5,7 +5,7 @@ import {CONNECTION_ERROR, CATCH, FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE,
       ADD_MANAGER, DELETE_MANAGER, CLOSE_STORE_TEMPORARILY, OPEN_CLOSE_STORE,
       VIEW_STORE_MANAGEMENT_INFORMATION, MANAGER_ANSWER_QUESTION, VIEW_STORE_PURCHASES_HISTORY, 
       MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS, 
-      GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES, DELETE_PRODUCT_FROM_STORE,GET_PERMISSIONS} from "./ApiPaths";
+      GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES, DELETE_PRODUCT_FROM_STORE,GET_PERMISSIONS, ADD_BID, MANAGER_ANSWER_BID, VIEW_BIDS_STATUS} from "./ApiPaths";
 import { Response } from "./Response";
 import { Store } from "../ServiceObjects/Store";
 import { Product } from "../ServiceObjects/Product";
@@ -322,11 +322,50 @@ export class StoreApi {
                     store_id : store_id,}
             })
             .then(res => {
-                let response = res.data;
-                const permiisions = response.data;
-                console.log(permiisions);
-                return response
-                // return Response.create(arr,response.wasException,response.message);
+                return new Response(res.data)
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+        }
+    add_bid(storeID, productID, quantity, offer_price ){
+    return instance.get(ADD_BID,
+        {
+            params:{
+                storeID : storeID,
+                productID : productID,
+                quantity : quantity,
+                offer_price : offer_price,
+            }
+        })
+        .then(res => {
+            return new Response(res.data)
+        })
+        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    }
+    manager_answer_bid(storeID, bidID, manager_answer, negotiation_price ){
+        return instance.get(MANAGER_ANSWER_BID,
+            {
+                params:{
+                    storeID : storeID,
+                    bidID : bidID,
+                    manager_answer : manager_answer,
+                    negotiation_price : negotiation_price,
+                    }
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+        }
+
+ view_bids_status(storeID ){
+        return instance.get(VIEW_BIDS_STATUS,
+            {
+                params:{
+                    storeID : storeID,
+                 }
+            })
+            .then(res => {
+                return new Response(res.data)
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
         }

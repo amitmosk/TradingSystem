@@ -45,6 +45,8 @@ import AllStores from "./components/AllStores";
 import MyStores from "./components/MyStores";
 import BuyCart from "./components/BuyCart";
 import ManagerPermissions from "./components/ManagerPermissions";
+import ViewBidsStatusNevigator from "./components/ViewBidsStatusNevigator";
+
 export default class App extends Component {
   static displayName = App.name;
   constructor(props) {
@@ -190,6 +192,10 @@ export default class App extends Component {
           <Route
             path="/StorePage/:store_id/ProductPage/:product_id"
             element={<ProductPageNevigator />}
+          ></Route>
+          <Route
+            path="/StorePage/:id/ViewBidsStatus"
+            element={<ViewBidsStatusNevigator />}
           ></Route>
           <Route
             path="/AllStores"

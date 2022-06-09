@@ -8,36 +8,42 @@ import Alert from "@mui/material/Alert";
 import { CartApi } from '../API/CartApi';
 
 export default function BuyCart() {
+    const [payment, setPayment] = React.useState(null);
+    const [supply, setSupply] = React.useState(null);
     const update_payment_info = (payment) => {
-    localStorage.setItem("payment", payment);
+      console.log(JSON.stringify(payment));
+      setPayment(payment);
+      setSnackbar({ children: "Payment Information Recieved Successfully", severity: 'success' }); 
+      // localStorage.setItem("payment", payment);
     };
     const update_supply_info = (supply) => {
-        localStorage.setItem("supply", supply);
+      setSupply(supply);
+      console.log(JSON.stringify(supply));
+      setSnackbar({ children: "Supply Information Recieved Successfully", severity: 'success' });
+        // localStorage.setItem("supply", supply);
     };
     const cartApi = new CartApi();
     const buy_cart = async () => {
-        if (localStorage.getItem('payment') === null) 
+        if (payment === null) 
         {
-            this.setSnackbar({ children: "Please complete Payment Information", severity: "error" });
+            setSnackbar({ children: "Please complete Payment Information", severity: 'error' });   
             return;
         }
-        if (localStorage.getItem('supply') === null) 
+        if (supply === null) 
         {
-            this.setSnackbar({ children: "Please complete Supply Information", severity: "error" });
+            setSnackbar({ children: "Please complete Supply Information", severity: 'error' }); 
             return;
         }
-        const payment_info = localStorage.getItem('payment');
-        const supply_info = localStorage.getItem('supply');
-        console.log(payment_info);
-        console.log(supply_info);
+        const payment_info = JSON.stringify(payment);
+        const supply_info = JSON.stringify(supply);
         let response = await cartApi.buy_cart(payment_info,supply_info);
         if (response.was_exception)
         {
-            this.setSnackbar({ children: response.message, severity: "success" });
+            setSnackbar({ children: response.message, severity: 'success' }); 
         }  
         else
         {
-            this.setSnackbar({ children: response.message, severity: "error" });
+          setSnackbar({ children: response.message, severity: 'error' }); 
     
         }
             

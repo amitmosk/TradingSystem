@@ -7,36 +7,44 @@ export class Utils  {
 
     // ----------------------------------- Payment -------------------------------------------------------
     static check_credit_number(){   
-        return 0;
+        return 1;
     }
     static check_holder(){   
-        return 0;
+        return 1;
     }
     static check_id(){   
-        return 0;
+        return 1;
     }
     static check_ccv(){   
-        return 0;
+        return 1;
     }
     static check_month(){   
-        return 0;
+        return 1;
     }
     static check_year_later(){   
-        return 0;
+        return 1;
     }
 
     // ----------------------------------- General -------------------------------------------------------
     static check_all_english_letters(){   
-        return 0;
+        return 1;
     }
     
     static check_not_empty(){   
-        return 0;
+        return 1;
     }
     static check_all_digits(){   
-        return 0;
+        return 1;
     }
     static check_email(){   
+        return 1;
+    }
+
+    // ----------------------------------- Show Bids -------------------------------------------------------
+
+
+    static check_yes_no()
+    {
         return 1;
     }
    
@@ -56,23 +64,23 @@ export class Utils  {
     
     
     static check_yaer_earlier(){   
-        return 0;
+        return 1;
     }
     
     
     // ----------------------------------- Birth Date -------------------------------------------------------
     
     static check_address(){   
-        return 0;
+        return 1;
     }
     static check_city(){   
-        return 0;
+        return 1;
     }
     static check_country(){   
-        return 0;
+        return 1;
     }
     static check_zip(){   
-        return 0;
+        return 1;
     }
    
 }

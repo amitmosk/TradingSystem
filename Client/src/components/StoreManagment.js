@@ -330,7 +330,7 @@ export default class StoreManagment extends Component {
     }
     async edit_manager_permissions(values) {
         const user_email = values[0];
-        if (!Utils.check_email(user_email))
+        if (Utils.check_email(user_email)== 0)
         {
             this.setState({ snackbar: { children: "Illegal email", severity: "error" } });
             return;

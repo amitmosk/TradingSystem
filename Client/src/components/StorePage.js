@@ -13,6 +13,8 @@ import BasicRating from "./Rating";
 import Grid from "@mui/material/Grid";
 import FormDialog from "./FormDialog";
 import StoreProductsTable from "./StoreProductsTable";
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import IconButton from "@mui/material/IconButton";
 
 export default class StorePage extends Component {
   static displayName = StorePage.name;
@@ -128,7 +130,7 @@ export default class StorePage extends Component {
             alignItems="center"
           >
             {/* <h3>Store Name goes here</h3> */}
-            <h3>{this.state.store_name}</h3>
+            <h1>{this.state.store_name}</h1>
             {/* <FormDialog fields={this.state.open_store_fields} getValues={this.open_store.bind(this)} name="Open Store"></FormDialog> */}
             {/* <FormDialog fields={this.state.send_question_to_store_fields} getValues={this.send_question_to_store.bind(this)} name="Send question to store"></FormDialog> */}
             <Paper>
@@ -154,11 +156,12 @@ export default class StorePage extends Component {
                 ) : <h5 style={{ color: 'red' }}> No Rating for this store</h5>}
               </Typography>
             </Paper>
-            <h1>Products</h1>
+            <h3>Products</h3>
           </Grid>
           <StoreProductsTable
             store_id={this.state.store_id}
           ></StoreProductsTable>
+          <Link to={{pathname:`ViewBidsStatus` }}   underline="hover" >{"Show Store Bids"}</Link>
           <Box sx={{ "& > legend": { mt: 2 } }}></Box>
           <List
             sx={{

@@ -76,32 +76,32 @@ export default class PaymentPage extends Component {
         console.log(ccv)
         console.log(id)
         // TODO : check input
-        if (!Utils.check_credit_number(creditnumber))
+        if (Utils.check_credit_number(creditnumber) == 0)
         {
             this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
             return;
         }
-        if (!Utils.check_month(month))
+        if (Utils.check_month(month)== 0)
         {
             this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
             return;
         }
-        if (!Utils.check_year_later(year))
+        if (Utils.check_year_later(year)== 0)
         {
             this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
             return;
         }
-        if (!Utils.check_holder(holder))
+        if (Utils.check_holder(holder)== 0)
         {
             this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
             return;
         }
-        if (!Utils.check_ccv(ccv))
+        if (Utils.check_ccv(ccv)== 0)
         {
             this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
             return;
         }
-        if (!Utils.check_id(id))
+        if (Utils.check_id(id)== 0)
         {
             this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
             return;

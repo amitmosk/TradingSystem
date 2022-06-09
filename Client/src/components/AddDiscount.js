@@ -20,69 +20,72 @@ import Grid from '@mui/material/Grid';
 import HomeIcon from '@mui/icons-material/Home';
 import { Input } from "@mui/material";
 import FormDialog from './FormDialog';
-
+import { Category } from '@mui/icons-material';
 
 export default function AddDiscount() {
     const ADD = "Add ";
     const DISCOUNT_RULE = " Discount Rule";
-    
+    const [checked, setChecked] = React.useState(true);
+
+    const handleChange = (event) => {
+        setChecked(event.target.checked);
+    };
     // localStorage.setItem("option", "Simple");
     const [option, setOption] = React.useState("Simple");
-    useEffect(()=>{add_complex_discount_rule()}, option);
-    const add_simple_discount_rule_fields =["aaaa"]
+    const [simpleOptions, setSimpleOptions] = React.useState("Store");
+    // useEffect(()=>{add_complex_discount_rule()}, option);
+    const predict_list =[1, 2, 3,4 ,5  ];
+    const rules_list =[1, 2, 3,4 ,5  ];
+    const add_simple_discount_rule_for_store_fields =["Rule Name", "Discount Precent"];
+    const add_simple_discount_rule_for_category_fields =["Rule Name", "Discount Precent", "Category Name"];
+    const add_simple_discount_rule_for_product_fields =["Rule Name", "Discount Precent", "Product ID"];
+    const add_complex_and_discount_rule_fields=["Rule Name"];
+    const add_complex_or_discount_rule_fields=["a"];
+    const add_complex_xor_discount_rule_fields=["a"];
+    const add_complex_max_discount_rule_fields=["a"];
+    const add_complex_plus_discount_rule_fields=["a"];
     const handleCloseSnackbar = () => setSnackbar(null);
     const handleInputChange = event => {
         const name = event.target.name
         const value = event.target.value;
         console.log(name);
         console.log(value);
-        setOption(value);
+        setOption(value.toString());
         // localStorage.setItem(name, value);
       };
+    const handleInputChange_simple = event => {
+    const name = event.target.name
+    const value = event.target.value;
+    console.log(name);
+    console.log(value);
+    setSimpleOptions(value.toString());
+    // localStorage.setItem(name, value);
+    };
     const [snackbar, setSnackbar] = React.useState(null);
     const hadleSubmit = async () => {}
-    const add_discount_rule = () =>  {
-        console.log("in add discount rule");
-        switch (option) {
-            case "Simple":
-                console.log("option");
-                
-                // return AddDiscount.render(<FormDialog fields={state.add_simple_discount_rule_fields} getValues={add_simple_discount_rule.bind(this)} name="Close Store"></FormDialog>);
-                // this.add_simple_discount_rule()
-                break;
-            
-            case "Complex Or":
-                add_composite_or_discount_rule()
-                break;
-            case "Complex And":
-                add_composite_and_discount_rule()
-                break;
-            case "Complex Xor":
-                add_composite_xor_discount_rule()
-                break;
-            case "Complex Max":
-                add_complex_discount_rule()
-                break;
-            case "Complex Plus":
-                add_complex_discount_rule()
-                break;
-            default:
-                console.log("option is empty");
-        }
 
+    const  add_simple_discount_rule_for_store = async () => {
     }
-    const  add_simple_discount_rule = async () => {
+    const  add_simple_discount_rule_for_category = async () => {
     }
-    const add_complex_discount_rule = async() => {
+    const  add_simple_discount_rule_for_product = async () => {
+    }
+    const add_complex_and_discount_rule = async() => {
         console.log("yessssssssssssssssssssssssssssssss");
     }
-    const add_composite_or_discount_rule = async () => {
+    const add_complex_or_discount_rule = async() => {
+        console.log("yessssssssssssssssssssssssssssssss");
     }
-    const add_composite_and_discount_rule = async () => {
+    const add_complex_xor_discount_rule = async() => {
+        console.log("yessssssssssssssssssssssssssssssss");
     }
-    const add_composite_xor_discount_rule = async () =>{
+    const add_complex_max_discount_rule = async() => {
+        console.log("yessssssssssssssssssssssssssssssss");
     }
-
+    const add_complex_plus_discount_rule = async() => {
+        console.log("yessssssssssssssssssssssssssssssss");
+    }
+    
     return (
         <>
 
@@ -90,22 +93,7 @@ export default function AddDiscount() {
 
             <h3>Add Discount Rule</h3>
 
-            <Grid container spacing={20}>
-                
-           
-                    {/* <Input name="val" placeholder={ADD + option+ DISCOUNT_RULE} onChange={handleInputChange} required/> */}
-                    <Button onClick={() => add_discount_rule} variant="contained">Add </Button>
-                    
-                    {/* <FormDialog fields={this.state.close_store_fields} getValues={this.close_store_permanently.bind(this)} name="Close Store"></FormDialog> */}
-                    
 
-
-            </Grid>
-           
-
-            <Box sx={{ flexGrow: 3 }}>
-
-            </Box>
             <h3> </h3>
             </Box>
             
@@ -122,12 +110,15 @@ export default function AddDiscount() {
 
 
                     </select>
-                    {/* {option == "Simple" ? <FormDialog fields={add_simple_discount_rule_fields} getValues={add_discount_rule} name="Close Store"></FormDialog> : null} */}
-                    {option == "Simple" ? <Button>kkkkkkkkkkk</Button> : null}
-                    {/* {option == 1 ? <FormDialog fields={add_simple_discount_rule_fields} getValues={add_discount_rule} name="Close Store"></FormDialog> : null}
-                    {option == 1 ? <FormDialog fields={add_simple_discount_rule_fields} getValues={add_discount_rule} name="Close Store"></FormDialog> : null}
-                    {option == 1 ? <FormDialog fields={add_simple_discount_rule_fields} getValues={add_discount_rule} name="Close Store"></FormDialog> : null}
-                    {option == 1 ? <FormDialog fields={add_simple_discount_rule_fields} getValues={add_discount_rule} name="Close Store"></FormDialog> : null} */}
+                    {option == "Simple" ? <select name="simpleOptions"  onChange={handleInputChange_simple} required>
+                        <option value="Store">Store</option>
+                        <option value="Category">Category</option>
+                        <option value="Product">Product</option>
+
+
+                    </select>
+                    : null}
+                    
                 </Grid>
                 <Grid item>
                     <Grid container direction="column" alignItems="center">
@@ -136,12 +127,38 @@ export default function AddDiscount() {
                     </Grid>
                 </Grid>
                 <Grid item>
-                    hhhhhhhhhhhhhhhhhhhhhh
+                {option == "Simple" && simpleOptions === "Store" ? <FormDialog fields={add_simple_discount_rule_for_store_fields} getValues={add_simple_discount_rule_for_store} name="Add Simple Discount Rule For Store"></FormDialog>: null}
+                {option == "Simple" && simpleOptions === "Category" ? <FormDialog fields={add_simple_discount_rule_for_category_fields} getValues={add_simple_discount_rule_for_category} name="Add Simple Discount Rule For Category"></FormDialog>: null}
+                {option == "Simple" && simpleOptions === "Product" ? <FormDialog fields={add_simple_discount_rule_for_product_fields} getValues={add_simple_discount_rule_for_product} name="Add Simple Discount Rule For Product"></FormDialog>: null}
+                {option == "Complex And" ? <FormDialog fields={add_complex_and_discount_rule_fields} getValues={add_complex_and_discount_rule} name="Add Complex And Discount Rule"></FormDialog> : null}
+                    {option == "Complex Or" ? <FormDialog fields={add_complex_or_discount_rule_fields} getValues={add_complex_or_discount_rule} name="Add Complex Or Discount Rule"></FormDialog> : null}
+                    {option == "Complex Xor" ? <FormDialog fields={add_complex_xor_discount_rule_fields} getValues={add_complex_xor_discount_rule} name="Add Complex Xor Discount Rule"></FormDialog> : null}
+                    {option == "Complex Max" ? <FormDialog fields={add_complex_max_discount_rule_fields} getValues={add_complex_max_discount_rule} name="Add Complex Max Discount Rule"></FormDialog> : null}
+                    {option == "Complex Plus" ? <FormDialog fields={add_complex_plus_discount_rule_fields} getValues={add_complex_plus_discount_rule} name="Add Complex Plus Discount Rule"></FormDialog> : null}
                 </Grid>
                 <Grid item>
-                    hhhhhhhhhhhhhhhhhhhhhh
+                {option == "Complex And" ? <select name="And"  required>
+                    {predict_list.map((p)=><option value={p.toString()}>  {p}</option>)} 
+                         </select> : null}
+                {option == "Complex Or" ? <select name="Or"  required>
+                    {predict_list.map((p)=><option value={p.toString()}>  {p}</option>)} 
+                         </select> : null}
+                {option == "Complex Xor" ? <select name="Xor"  required>
+                    {rules_list.map((p)=><option value={p.toString()}>  {p}</option>)} 
+                         </select> : null}
+                {option == "Complex Max" ? <select name="Max"  required>
+                    {rules_list.map((p)=><option value={p.toString()}>  {p}</option>)} 
+                         </select> : null}
+                {option == "Complex Plus" ? <select name="Plus"  required>
+                    {rules_list.map((p)=><option value={p.toString()}>  {p}</option>)} 
+                         </select> : null}
+                        
+                        
+                    {/* {option == "Complex Or" ? <FormDialog fields={add_complex_or_discount_rule_fields} getValues={add_complex_or_discount_rule} name="Add Complex Or Discount Rule"></FormDialog> : null}
+                    {option == "Complex Xor" ? <FormDialog fields={add_complex_xor_discount_rule_fields} getValues={add_complex_xor_discount_rule} name="Add Complex Xor Discount Rule"></FormDialog> : null}
+                    {option == "Complex Max" ? <FormDialog fields={add_complex_max_discount_rule_fields} getValues={add_complex_max_discount_rule} name="Add Complex Max Discount Rule"></FormDialog> : null}
+                    {option == "Complex Plus" ? <FormDialog fields={add_complex_plus_discount_rule_fields} getValues={add_complex_plus_discount_rule} name="Add Complex Plus Discount Rule"></FormDialog> : null} */}
                 </Grid>
-                <Grid item><Button variant="contained" onClick={add_discount_rule}>Submit</Button></Grid>
                 <Grid item>
 
                 </Grid>

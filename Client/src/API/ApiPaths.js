@@ -56,6 +56,9 @@ export const CLOSE_STORE_PERMANENTLY= API_PATH + '/close_store_permanently';
 export const GET_PRODUCTS_BY_STORE_ID= API_PATH + '/get_products_by_store_id';
 export const GET_ALL_STORES= API_PATH + '/get_all_stores';
 export const GET_PERMISSIONS= API_PATH + '/get_permissions';
+export const ADD_BID= API_PATH + '/add_bid';
+export const MANAGER_ANSWER_BID= API_PATH + '/manager_answer_bid';
+export const VIEW_BIDS_STATUS= API_PATH + '/view_bids_status';
 
 
 

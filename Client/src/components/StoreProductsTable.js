@@ -6,9 +6,10 @@ import Alert from "@mui/material/Alert";
 import { Link } from "react-router-dom";
 import { StoreApi } from "../API/StoreApi";
 import { Component } from "react";
+
 import IconButton from "@mui/material/IconButton";
 import AddShoppingCartOutlined from "@mui/icons-material/AddShoppingCartOutlined";
-
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 export default class StoreProductsTable extends Component {
   constructor(props) {
     super(props);
@@ -66,11 +67,12 @@ export default class StoreProductsTable extends Component {
               color="primary"
               aria-label="store"
             >
-              <AddShoppingCartOutlined />
+              <ProductionQuantityLimitsIcon />
             </IconButton>}</Link>
           </>
         ),
       },
+
       
     ];
   }

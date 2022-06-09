@@ -13,7 +13,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import { StoreApi } from '../API/StoreApi';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert"; 
-import HomeIcon from '@mui/icons-material/Home';
+import FormDialog from './FormDialog';
+import { Utils } from '../ServiceObjects/Utils';
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -21,56 +22,73 @@ const Demo = styled('div')(({ theme }) => ({
 
 
 
-export default class ViewStaffInformation extends Component {
+export default class ViewBidsStatus extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             store_id:this.props.store_id,
-            staff: [],
+            bids: [],
+            manager_answer_bid_fields:["Bid ID", "'Yes' for confirm , 'No' for reject", "Negotiation Price"],
             snackbar: null,
         };
         this.storeApi = new StoreApi();
-        console.log("in view stuff information, id = "+this.props.store_id);
+        console.log("ViewBidsStatus, id = "+this.props.store_id);
 
 
 
     }
 
-    async get_staff_info() {
-        console.log("get store staff info\n");
-
-        let response = await this.storeApi.view_store_management_information(this.state.store_id);
+    async view_bids_status() {
+        let response = await this.storeApi.view_bids_status(this.state.store_id);
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in get store staff info - success!\n");
-            // return response.message;
-            console.log(response.value.appointmentInformationList);
-            // return response;
-            this.setState({ staff: response.value.appointmentInformationList });
+            this.setState({ bids: response.value });
         }
         else {
             this.setState({ snackbar: { children: response.message, severity: "error" } });
-            // alert(response.message);
+
+
+        }
+    }
+    async manager_answer_bid(values) {
+        const bid_id = values[0]; 
+        const manager_answer = values[1];
+        if (Utils.check_yes_no() == 0)
+        {
+            this.setState({ snackbar: { children: "Answer must only be 'Yes' or 'No' ", severity: "error" } });
+            return;
+        } 
+        const price = values[2]; 
+        console.log(bid_id);
+        console.log(manager_answer);
+        console.log(price);
+        let response = await this.storeApi.manager_answer_bid(this.state.store_id, bid_id, manager_answer, price);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
+        }
+        else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
 
         }
     }
 
     async componentDidMount() {
-        this.get_staff_info();
+        this.view_bids_status();
     }
 
     render() {
         return (
 
             <>
-       
+
                 <Box position='center' align='center'>
                     <Grid position='center' row-spacing={3}>
                         <Grid item>
                             <h3 class="Header" align="center">
-                                Staff Information
+                                Bids Status
                             </h3>
                         </Grid>
 
@@ -80,7 +98,7 @@ export default class ViewStaffInformation extends Component {
                                 <List>
                                     {
 
-                                        this.state.staff.map((staf) => (
+                                        this.state.bids.map((bid) => (
                                             <ListItem>
                                                 <ListItemAvatar>
                                                     <Avatar>
@@ -88,11 +106,14 @@ export default class ViewStaffInformation extends Component {
                                                     </Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText
-                                                    primary={staf.type + ': ' + staf.member_email}
-                                                    secondary={'Appointed by: ' + staf.appointer_email}
+                                                    // primary={bid.type + ': ' + staf.member_email}
+                                                    // secondary={'Appointed by: ' + staf.appointer_email}
+
+////////////////////////////////////////////////////////////////////??????//////////////////////////////////////////////////
                                                 // primary='fsdf'
                                                 />
                                             </ListItem>
+                                            
 
                                         ))
 
@@ -100,6 +121,7 @@ export default class ViewStaffInformation extends Component {
 
 
                                     }
+                                    <FormDialog fields={this.state.manager_answer_bid_fields} getValues={this.manager_answer_bid.bind(this)}  name="Answer Bid"></FormDialog>
                                 </List>
                             </Demo>
                         </Grid>

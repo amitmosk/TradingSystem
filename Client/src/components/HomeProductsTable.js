@@ -9,6 +9,9 @@ import { Component } from "react";
 import IconButton from "@mui/material/IconButton";
 import AddShoppingCartOutlined from "@mui/icons-material/AddShoppingCartOutlined";
 import Store from "@mui/icons-material/Store";
+import MonetizationOn from "@mui/icons-material/MonetizationOn";
+import FormDialog from './FormDialog';
+
 export default class HomeProductsTable extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +23,7 @@ export default class HomeProductsTable extends Component {
       selected_item: [],
       selected_row: [],
       edited: null,
+      add_bid_fields:["Quantity", "Price"],
     };
     this.productApi = new ProductApi();
     this.storeApi = new StoreApi();
@@ -79,7 +83,55 @@ export default class HomeProductsTable extends Component {
           </>
         ),
       },
+      {
+        field: "add_bid",
+        headerName: "ADD BID",
+        width: 150,
+        // Important: passing id from customers state so I can delete or edit each user
+        renderCell: (id) => (
+          <>
+
+            <FormDialog fields={this.state.add_bid_fields} getValues={this.add_bid} params={[this.state.items.find((i) => id.id === i.id).store,id.id]} name={   <IconButton
+              color="primary"
+              aria-label="store"
+            >
+              <MonetizationOn />
+            </IconButton>}></FormDialog>
+             {/* <Link to={{pathname:`StorePage/${this.state.items.find((i) => id.id === i.id).store}`}}   underline="hover" >{   <IconButton
+              color="primary"
+              aria-label="store"
+            >
+              <Store />
+            </IconButton>}</Link>  */}
+          </>
+        ),
+      },
     ];
+  }
+  async add_bid(values)
+  {
+    const quantity = values[0];
+    const price = values[1];
+    const store_id = values[2];
+    const product_id = values[3];
+    console.log(values);
+    console.log(quantity);
+    console.log(price);
+    // const response = await this.storeApi.add_bid(store_id, product_id, quantity, price);
+    // if (!response.was_exception) {
+    //   this.setSnackbar({
+    //     children: response.message,
+    //     severity: "success",
+    //   });
+    // }
+    // else {
+    //   this.setSnackbar({
+    //     children: response.message,
+    //     severity: "error",
+    //   });
+
+    // }
+
   }
 
   async componentDidMount() {
