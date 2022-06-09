@@ -8,7 +8,7 @@ import java.util.List;
 
 import static TradingSystem.server.Domain.StoreModule.Bid.BidStatus.*;
 
-public class Bid {
+public class Bid implements iBid {
 
     private Product product;
     private int quantity;
@@ -37,14 +37,17 @@ public class Bid {
     }
 
 
+    @Override
     public void add_manager_of_store(String manager_email){
         this.managersEmail_answers.put(manager_email, new BidManagerAnswer());
     }
 
+    @Override
     public void remove_manager(String email){
         this.managersEmail_answers.remove(email);
     }
 
+    @Override
     public void add_manager_answer(String email, boolean answer, double negotiation_price){
         if (negotiation_price > 0)
         {
@@ -77,6 +80,7 @@ public class Bid {
         return closed_confirm;
     }
 
+    @Override
     public BidStatus get_status(){
         return this.status;
     }
