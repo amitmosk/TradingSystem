@@ -1,4 +1,4 @@
-package TradingSystem.server.Domain.StoreModule.Store;
+package TradingSystem.server.Domain.StoreModule.Bid;
 
 public class BidManagerAnswer {
     private boolean has_answer;

@@ -1,13 +1,12 @@
-package TradingSystem.server.Domain.StoreModule.Store;
+package TradingSystem.server.Domain.StoreModule.Bid;
 
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.UserModule.User;
 
 import java.util.HashMap;
 import java.util.List;
 
-import static TradingSystem.server.Domain.StoreModule.Store.BidStatus.*;
+import static TradingSystem.server.Domain.StoreModule.Bid.BidStatus.*;
 
 public class Bid {
 
