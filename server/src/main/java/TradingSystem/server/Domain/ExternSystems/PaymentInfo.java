@@ -8,6 +8,9 @@ public class PaymentInfo {
     private String ccv;
     private String id;
 
+    public PaymentInfo() {
+    }
+
     public PaymentInfo(String card_number, String month, String year, String holder, String ccv, String id) {
         this.card_number = card_number;
         this.month = month;
@@ -65,6 +68,5 @@ public class PaymentInfo {
         return id;
     }
 
-    public PaymentInfo() {
-    }
+
 }

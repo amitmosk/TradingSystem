@@ -8,6 +8,9 @@ public class SupplyInfo {
     private String country;
     private String zip;
 
+    public SupplyInfo() {
+    }
+
     public SupplyInfo(String name ,String address,String city,String country,String zip) {
         this.name = name;
         this.address = address;
@@ -56,6 +59,5 @@ public class SupplyInfo {
         this.zip = zip;
     }
 
-    public SupplyInfo() {
-    }
+
 }
