@@ -811,10 +811,16 @@ public class Store implements Observable {
         AssignUser assignUser = user.state_if_assigned();
         if (negotiation_price == -1) {
             this.check_permission(assignUser, StorePermission.answer_bid_offer);
-        }
-        else
-            this.check_permission(assignUser, StorePermission.answer_bid_offer_negotiate);
 
+        }
+        else {
+            this.check_permission(assignUser, StorePermission.answer_bid_offer_negotiate);
+            if (!manager_answer)
+                throw new Exception("illegal combination - negative answer with negotiation offer");
+            if (negotiation_price < 0)
+                throw new Exception("illegal price");
+
+        }
         Bid bid = this.bids.get(bidID);
         bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
 
