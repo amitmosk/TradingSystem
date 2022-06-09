@@ -5,6 +5,7 @@ import TradingSystem.server.Domain.StoreModule.Store.StoreManagerType;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,13 +13,26 @@ import java.util.List;
 import static TradingSystem.server.Domain.StoreModule.Store.StoreManagerType.*;
 import static TradingSystem.server.Domain.StoreModule.StorePermission.*;
 
+@Entity
 public class Appointment {
     // -- fields
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
     private AssignUser member;
+    @ManyToOne
     private AssignUser appointer;
+    @ManyToOne
     private Store store;
-
+    @Enumerated
     private StoreManagerType type;
+
+
+//    @CollectionTable(name = "permissions")
+//    @MapKeyColumn(name="permission_name")
+//    @Column(name="on/off")
+    @Transient
     private HashMap<StorePermission,Integer> permissions;
 
     // -- constructors
@@ -188,6 +202,14 @@ public class Appointment {
 
     public boolean is_manager() {
         return this.type == store_manager;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
 /*    @Override

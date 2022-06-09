@@ -2,10 +2,20 @@ package TradingSystem.server.Domain.StoreModule.Store;
 
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
 public class StoreReview {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ElementCollection
+    @CollectionTable(name = "ratings")
+    @MapKeyColumn(name="user_email")
+    @Column(name="rating")
     private Map<String, Integer> rating; // user_email & rating
     private int avg_rating;
 
@@ -54,4 +64,11 @@ public class StoreReview {
             return avg_rating;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

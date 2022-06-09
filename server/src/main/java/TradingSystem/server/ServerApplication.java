@@ -7,8 +7,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication (exclude = { SecurityAutoConfiguration.class })
 public class ServerApplication {
@@ -37,12 +41,24 @@ public class ServerApplication {
 		trying.setManyTryingList(manyTryingList);
 
 
+		Map<Integer,ManyTrying> map_many_trying = new HashMap<>();
+		map_many_trying.put(1,manyTrying);
+		map_many_trying.put(2,manyTrying2);
+		map_many_trying.put(3,manyTrying3);
+
+		trying.setManyTryingMap(map_many_trying);
+
+		trying.add_many_trying(manyTrying2,manyTrying3);
+
+		trying.add_to_map_complex_non(manyTrying3,5);
+
 		Repo.persist(manyTrying);
 		Repo.persist(manyTrying2);
 		Repo.persist(manyTrying3);
 		Repo.persist(trying);
 		Repo.persist(try2);
 		Repo.persist(try3);
+
 		SpringApplication.run(ServerApplication.class, args);
 	}
 //	@Bean

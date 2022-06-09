@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
+import TradingSystem.server.DAL.Repo;
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
@@ -10,6 +11,7 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Utils;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -17,11 +19,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
+@Entity
 public class User {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @OneToOne
     private AssignState state;
+    @OneToOne
     private Cart cart;
+    @Transient
     private AtomicBoolean isGuest;
+    @Transient
     private AtomicBoolean isLogged;
     private String birth_date;
 
@@ -86,6 +95,9 @@ public class User {
         this.state = new AssignUser(email, pw, name, lastName);
         this.birth_date = birth_date;
         isGuest.set(false);
+        Repo.persist(this.cart);
+        Repo.persist(this.state);
+        Repo.persist(this);
     }
 
     public synchronized void login(String password) throws MarketException {
@@ -279,5 +291,13 @@ public class User {
 
     public List<Integer> stores_managers_list() {
         return state.stores_managers_list();
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

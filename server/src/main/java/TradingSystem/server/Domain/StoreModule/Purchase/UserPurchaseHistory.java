@@ -1,13 +1,23 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
+import TradingSystem.server.DAL.Repo;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.UserNeverBoughtInTheStoreException;
+import net.bytebuddy.asm.Advice;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@Entity
 public class UserPurchaseHistory {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long purchase_history_id;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<UserPurchase> historyList;
+
 
     // ------------------------------ constructors ------------------------------
     public UserPurchaseHistory() {
@@ -45,5 +55,13 @@ public class UserPurchaseHistory {
                 return true;
         }
         throw new UserNeverBoughtInTheStoreException("The user has never bought this product");
+    }
+
+    public void setPurchase_history_id(Long purchase_history_id) {
+        this.purchase_history_id = purchase_history_id;
+    }
+
+    public Long getPurchase_history_id() {
+        return purchase_history_id;
     }
 }

@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
+import TradingSystem.server.DAL.Repo;
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -8,21 +9,29 @@ import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Service.NotificationHandler;
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 // TODO: everytime user creates/appoint a store make an appointment
+@Entity
+@DiscriminatorValue("1")
 public class AssignUser extends AssignState {
     private String email;
+    @OneToOne
     private Security security;
     private String name;
     private String lastName;
+    @OneToOne
     private UserPurchaseHistory userPurchaseHistory;
 
+    @Transient
     private Map<Store, Appointment> founder;
+    @Transient
     private Map<Store, Appointment> owner;
+    @Transient
     private Map<Store,Appointment> manager;
 
     // ------------------------------ constructors ------------------------------
@@ -35,6 +44,9 @@ public class AssignUser extends AssignState {
         this.founder = new HashMap<>();
         this.owner = new HashMap<>();
         this.manager = new HashMap<>();
+        Repo.persist(this.security);
+        Repo.persist(this.userPurchaseHistory);
+        Repo.persist(this);
     }
 
     public AssignUser() {
