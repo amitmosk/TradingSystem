@@ -36,6 +36,10 @@ public class Bid implements iBid {
 
     }
 
+    public BidInformation get_bid_information() {
+        return new BidInformation(this);
+    }
+
 
     @Override
     public void add_manager_of_store(String manager_email){

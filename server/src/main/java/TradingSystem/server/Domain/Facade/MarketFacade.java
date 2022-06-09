@@ -4,6 +4,7 @@ import java.util.List;
 
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
+import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
@@ -1680,7 +1681,7 @@ public class MarketFacade {
         Response<String> response = null;
         try {
             User user = user_controller.get_user(loggedUser);
-           Collection<Bid> answer = this.store_controller.view_bids_status(storeID, user);
+           List<BidInformation> answer = this.store_controller.view_bids_status(storeID, user);
             response = new Response(answer, "User view bids status successfully");
             system_logger.add_log("User view bids status successfully");
         } catch (Exception e) {

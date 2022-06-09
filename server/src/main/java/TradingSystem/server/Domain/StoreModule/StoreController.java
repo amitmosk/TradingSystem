@@ -1,6 +1,7 @@
 package TradingSystem.server.Domain.StoreModule;
 
 
+import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
@@ -456,7 +457,7 @@ public class StoreController {
         store.edit_product_quantity(assignUser, product_id, quantity);
     }
 
-    public Collection<Bid> view_bids_status(int store_id, User user) throws Exception {
+    public List<BidInformation> view_bids_status(int store_id, User user) throws Exception {
         AssignUser user_state = user.state_if_assigned();
         Store store = this.get_store_by_store_id(store_id);
         return store.view_bids_status(user_state);

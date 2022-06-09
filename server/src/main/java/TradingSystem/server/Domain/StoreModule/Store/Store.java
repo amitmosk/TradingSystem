@@ -3,6 +3,7 @@ package TradingSystem.server.Domain.StoreModule.Store;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
 import TradingSystem.server.Domain.StoreModule.Bid.Bid;
+import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Bid.BidStatus;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
@@ -801,9 +802,14 @@ public class Store implements Observable {
         this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName());
     }
 
-    public Collection<Bid> view_bids_status(AssignUser user) throws NoPremssionException {
+    public List<BidInformation> view_bids_status(AssignUser user) throws NoPremssionException {
         this.check_permission(user, StorePermission.view_bids_status);
-        return this.bids.values();
+        List<BidInformation> answer = new ArrayList<>();
+        for (Bid bid : this.bids.values()){
+            BidInformation temp = bid.get_bid_information();
+            answer.add(temp);
+        }
+        return answer;
     }
 
     public void add_bid_answer(User user, boolean manager_answer, int bidID,
