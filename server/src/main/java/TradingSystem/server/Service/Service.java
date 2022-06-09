@@ -7,15 +7,13 @@ import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Map;
 
 
 import java.util.LinkedList;
@@ -27,7 +25,6 @@ public class Service implements iService {
     private static Service service = null;
 
     private MarketFacade marketFacade;
-    private NotificationHandler notificationHandler;
 
 
 
@@ -38,7 +35,6 @@ public class Service implements iService {
         PaymentAdapter paymentAdapter = system.getPayment_adapter();
         SupplyAdapter supplyAdapter = system.getSupply_adapter();
         this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
-        this.notificationHandler = new NotificationHandler();
         // -- amit code, TODO: remove after checks
          SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
 
@@ -68,7 +64,7 @@ public class Service implements iService {
         Response answer = marketFacade.login(email, password);
         // have to write new method that will be send onopen in the client to the server,
         // and the server will send all the waiting notifications
-        this.notificationHandler.send_waiting_notifications(email);
+//        this.notificationHandler.send_waiting_notifications(email);
         return answer;
     }
 
@@ -79,6 +75,8 @@ public class Service implements iService {
         Response answer = marketFacade.logout();
         return answer;
     }
+
+
 
     @RequestMapping(value = "/register")
     @CrossOrigin
