@@ -2,11 +2,14 @@ package TradingSystem.server.Service;
 
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -14,16 +17,20 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.security.Principal;
 import java.util.*;
-
+@Controller
 public class NotificationHandler extends TextWebSocketHandler {
 
     private static NotificationHandler notificationHandler = null;
-    private final List<WebSocketSession> webSocketSessionList = new ArrayList<>();
-    private final Map<String, WebSocketSession> webSocketSessionDict = new HashMap<>();
+    protected ApplicationContext context;
+    protected MessageController messageController;
     private final Map<String, List<String>> users_notifications = new HashMap<>();
 
-    @Autowired
-    private SimpMessageSendingOperations messagingTemplate;
+
+    private NotificationHandler(){
+        context = MessageController.getAppContext();
+        messageController = (MessageController) context.getBean("messageController");
+    }
+
 
     public static NotificationHandler getInstance() {
         if (notificationHandler == null)
@@ -31,30 +38,30 @@ public class NotificationHandler extends TextWebSocketHandler {
         return notificationHandler;
     }
 
-    // TODO : ADD LOGGER, BUILD DICTIONARY
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        super.afterConnectionEstablished(session);
-        System.out.println("new connection opened");
-        webSocketSessionList.add(session);
-    }
-
-    @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        super.handleTextMessage(session, message);
-        System.out.println(message.getPayload());
-        for (WebSocketSession webSocketSession : webSocketSessionList) {
-            webSocketSession.sendMessage(message);
-        }
-    }
-
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        super.afterConnectionClosed(session, status);
-        System.out.println("connection closed");
-        webSocketSessionList.remove(session);
-    }
-
+//    // TODO : ADD LOGGER, BUILD DICTIONARY
+//    @Override
+//    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+//        super.afterConnectionEstablished(session);
+//        System.out.println("new connection opened");
+//        webSocketSessionList.add(session);
+//    }
+//
+//    @Override
+//    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+//        super.handleTextMessage(session, message);
+//        System.out.println(message.getPayload());
+//        for (WebSocketSession webSocketSession : webSocketSessionList) {
+//            webSocketSession.sendMessage(message);
+//        }
+//    }
+//
+//    @Override
+//    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+//        super.afterConnectionClosed(session, status);
+//        System.out.println("connection closed");
+//        webSocketSessionList.remove(session);
+//    }
+//
 
 
 
@@ -65,6 +72,7 @@ public class NotificationHandler extends TextWebSocketHandler {
     public String processMessageFromClient(
             @Payload String message,
             Principal principal) throws Exception {
+        System.out.println("got message from client");
         return "goodd";
     }
 
@@ -88,12 +96,12 @@ public class NotificationHandler extends TextWebSocketHandler {
             this.users_notifications.put(email, new ArrayList<>());
         }
         this.users_notifications.get(email).add(notification);
-        this.send_waiting_notifications(email);
+//        this.send_waiting_notifications(email);
     }
 
     /**
-     * this method is for sending await notifications when user login / after add notification.
-     * @param email of the assign user who just logged in.
+     * this method is responsible for sending await notifications when user login / after add notification.
+     * @param email of the assign user who just logged in / just got a new message.
      * @return true if we send notifications, false if there is no open connection / no notifications to send.
      */
     public boolean send_waiting_notifications(String email) {
@@ -112,7 +120,9 @@ public class NotificationHandler extends TextWebSocketHandler {
         for (String notification : notificationsList) {
             flag_to_remove = true;
             try{
-                messagingTemplate.convertAndSend("/topic/amit", "message");
+                // TODO : Add sendTo field who tell us where send the message
+                this.messageController.sendNotification(email, "message");
+//                messagingTemplate.convertAndSend("/topic/amit", "message");
 //                TextMessage message = new TextMessage(notification.getBytes());
 //                session.sendMessage(message);
             }
