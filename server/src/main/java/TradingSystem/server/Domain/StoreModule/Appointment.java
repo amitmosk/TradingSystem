@@ -12,7 +12,7 @@ import java.util.List;
 import static TradingSystem.server.Domain.StoreModule.Store.StoreManagerType.*;
 import static TradingSystem.server.Domain.StoreModule.StorePermission.*;
 
-public class Appointment {
+public class Appointment implements iAppointment {
     // -- fields
     private AssignUser member;
     private AssignUser appointer;
@@ -121,21 +121,26 @@ public class Appointment {
     // -- getters
 
 
+    @Override
     public AssignUser getMember() {
         return member; }
 
+    @Override
     public AssignUser getAppointer() {
         return appointer;
     }
 
+    @Override
     public Store getStore() {
         return store;
     }
 
+    @Override
     public StoreManagerType getType() {
         return type;
     }
 
+    @Override
     public HashMap<StorePermission, Integer> getPermissions() {
         return permissions;
     }
@@ -174,6 +179,7 @@ public class Appointment {
       * @param permission who ask to know
      * @return if this manager allowed to do it.
      */
+    @Override
     public boolean has_permission(StorePermission permission){
         return this.permissions.get(permission) == 1;
     }
@@ -187,14 +193,17 @@ public class Appointment {
         }
     }
 
+    @Override
     public boolean is_owner() {
         return this.type == store_owner;
     }
 
+    @Override
     public boolean is_founder() {
         return this.type == store_founder;
     }
 
+    @Override
     public boolean is_manager() {
         return this.type == store_manager;
     }
