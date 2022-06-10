@@ -47,8 +47,20 @@ export class Utils  {
     {
         return 1;
     }
-   
 
+
+    // ----------------------------------- Discount Policy -------------------------------------------------------
+    static check_rule_name()
+    {
+        return 1;
+    }
+    static check_precent()
+    {
+        return 1;
+    }
+    
+   
+    
 
 
 

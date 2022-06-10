@@ -15,7 +15,7 @@ FormDialog.defaultProps = {
 
 export default function FormDialog({ fields, getValues, name, outlinedVar, title, submit_button , params}) {
 
-
+  // fields.map(f=> localStorage.setItem(f, undefined));
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -41,6 +41,7 @@ export default function FormDialog({ fields, getValues, name, outlinedVar, title
   const handleInputChange = event => {
     const name = event.target.name
     const value = event.target.value;
+    console.log(value);
     localStorage.setItem(name, value);
   };
 

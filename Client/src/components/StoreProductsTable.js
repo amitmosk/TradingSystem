@@ -77,8 +77,9 @@ export default class StoreProductsTable extends Component {
     ];
   }
   async componentDidMount() {
+    console.log(this.props);
     let products = await this.storeApi.get_products_by_store_id(
-      this.state.store_id
+      this.props.store_id
     );
     let products_list = [];
     products.value.map((p) =>

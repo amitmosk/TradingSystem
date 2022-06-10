@@ -175,6 +175,7 @@ public interface iService {
      */
     TradingSystem.server.Domain.Utils.Response edit_manager_permissions(String manager_email, int store_id, String permissions);
     TradingSystem.server.Domain.Utils.Response get_permissions(String manager_email, int store_id);
+    TradingSystem.server.Domain.Utils.Response get_all_categories(int store_id);
 
     /**
      * Requirement 2.4.8

@@ -4,7 +4,10 @@ import TradingSystem.server.Config.SystemStartConfig;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.Facade.MarketFacade;
+import TradingSystem.server.Domain.PaymentInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
+import TradingSystem.server.Domain.SupplyInfo;
+import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -157,6 +160,8 @@ public class Service implements iService {
     @CrossOrigin
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo) {
+        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
+        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
         Response answer = marketFacade.buy_cart(paymentInfo, supplyInfo);
         return answer;
     }
@@ -556,6 +561,16 @@ public class Service implements iService {
         Response answer = marketFacade.get_permissions(manager_email,store_id);
         return answer;
     }
+
+
+    @RequestMapping(value = "/get_all_categories")
+    @CrossOrigin
+    @Override
+    public Response get_all_categories(int store_id) {
+        Response answer = marketFacade.get_all_categories(store_id);
+        return answer;
+    }
+
 
 
 

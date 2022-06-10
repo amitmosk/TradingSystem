@@ -5,7 +5,8 @@ import {CONNECTION_ERROR, CATCH, FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE,
       ADD_MANAGER, DELETE_MANAGER, CLOSE_STORE_TEMPORARILY, OPEN_CLOSE_STORE,
       VIEW_STORE_MANAGEMENT_INFORMATION, MANAGER_ANSWER_QUESTION, VIEW_STORE_PURCHASES_HISTORY, 
       MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS, 
-      GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES, DELETE_PRODUCT_FROM_STORE,GET_PERMISSIONS, ADD_BID, MANAGER_ANSWER_BID, VIEW_BIDS_STATUS} from "./ApiPaths";
+      GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES, DELETE_PRODUCT_FROM_STORE,
+      GET_PERMISSIONS, ADD_BID, MANAGER_ANSWER_BID, VIEW_BIDS_STATUS, GET_ALL_CATEGORIES} from "./ApiPaths";
 import { Response } from "./Response";
 import { Store } from "../ServiceObjects/Store";
 import { Product } from "../ServiceObjects/Product";
@@ -369,6 +370,24 @@ export class StoreApi {
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
         }
+        get_all_categories(store_id ){
+            return instance.get(GET_ALL_CATEGORIES,
+                {
+                    params:{
+                        store_id : store_id,
+                     }
+                })
+                .then(res => {
+                    return new Response(res.data)
+                })
+                .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            }
+    
+
+        
+
+
+        
     
 
     

@@ -796,4 +796,18 @@ public class Store {
         }
         return permissions;
     }
+
+    public List<String> get_all_categories() {
+        //  private Map<Product, Integer> inventory; // product & quantity
+        List<String> categories = new ArrayList<>();
+        for (Product p:inventory.keySet())
+        {
+            String cat = p.getCategory();
+            if (!categories.contains(cat))
+            {
+                categories.add(cat);
+            }
+        }
+        return categories;
+    }
 }

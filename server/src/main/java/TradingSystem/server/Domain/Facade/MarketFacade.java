@@ -1638,4 +1638,16 @@ public class MarketFacade {
         }
         return response;
     }
+
+    public Response get_all_categories(int store_id) {
+        Response<List<String>> response = null;
+        try {
+            List<String> categories = store_controller.get_all_categories(store_id);
+            response = new Response<>(categories, "categories of store "+store_id+" received successfully");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(new MarketException("failed to fetch categories of store "+store_id));
+            error_logger.add_log(e);
+        }
+        return response;
+    }
 }

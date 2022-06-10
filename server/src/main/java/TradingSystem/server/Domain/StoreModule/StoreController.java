@@ -457,5 +457,10 @@ public class StoreController {
         Store store = get_store_by_store_id(store_id); //trows exceptions
         return store.get_permissions(manager_email);
     }
+
+    public List<String> get_all_categories(int store_id) throws StoreException {
+        Store store = get_store_by_store_id(store_id);
+        return store.get_all_categories();
+    }
 }
 
