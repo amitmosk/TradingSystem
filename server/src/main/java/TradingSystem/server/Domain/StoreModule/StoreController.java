@@ -38,6 +38,7 @@ public class StoreController {
     @Transient
     private Object storesLock;
 
+    @OneToOne
     private static StoreController instance = null;
 
 

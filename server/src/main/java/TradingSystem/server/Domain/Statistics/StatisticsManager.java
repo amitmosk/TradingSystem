@@ -1,11 +1,18 @@
 package TradingSystem.server.Domain.Statistics;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Entity
 public class StatisticsManager implements iStatisticsManager {
+    @Id
+    @GeneratedValue
+    private Long id;
     private String init_time;
     private AtomicInteger login_count;
     private AtomicInteger logout_count;
@@ -89,5 +96,13 @@ public class StatisticsManager implements iStatisticsManager {
         long register_per_minutes = get_register_statistics();
         long buy_cart__per_minutes = get_buy_cart_statistics();
         return new Statistic(init_system_time, login_per_minutes, logout_per_minutes, connect_per_minutes, register_per_minutes, buy_cart__per_minutes);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
