@@ -15,7 +15,7 @@ The config file path should be:
 ..\server\Config\start_config.txt
 
 If one of the instructions will failed logicilly or because a wrong format,
-All of the instructions in the configuration file will canceld.
+All of the instructions in the configuration file will cancelled.
  
 Available functions (pay attention to copy the instruction name exactly) :
  * register
