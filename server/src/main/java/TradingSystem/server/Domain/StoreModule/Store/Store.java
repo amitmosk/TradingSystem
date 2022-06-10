@@ -623,8 +623,10 @@ public class Store {
     private void remove_all_appointments_by_user(AssignUser user_to_delete_appointment) throws MarketException {
         for (Appointment appointment1 : this.stuffs_and_appointments.values()) {
             if (appointment1.getAppointer().equals(user_to_delete_appointment)) {
-                this.remove_owner(user_to_delete_appointment, appointment1.getMember());
-                user_to_delete_appointment.remove_appointment(this);
+                if(appointment1.is_owner())
+                    this.remove_owner(user_to_delete_appointment, appointment1.getMember());
+                else if(appointment1.is_manager())
+                    this.remove_manager(user_to_delete_appointment, appointment1.getMember());
             }
         }
     }
