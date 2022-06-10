@@ -52,9 +52,7 @@ class MarketFacadeTest {
     private String user_admin_email;
 
 
-    private boolean check_was_exception(Response response) {
-        return response.WasException();
-    }
+    //------------------------- Initialization --------------------------------------------------------------------------
 
     @BeforeEach
     void setUp() throws MarketException {
@@ -106,7 +104,12 @@ class MarketFacadeTest {
         password = "aA12345";
     }
 
-    // --------------------------------------------- Helper functions -----------------------------
+    //------------------------------- Helper functions --------------------------------------------------------------------------
+
+    private boolean check_was_exception(Response response) {
+        return response.WasException();
+    }
+
     private void start_threads(List<Thread> threads) {
         for (Thread t : threads) {
             t.start();
@@ -198,6 +201,18 @@ class MarketFacadeTest {
         facade2.add_product_to_cart(sore_id, prod_counter, 1);
         facade2.buy_cart("credit", "address");
         return prod_counter;
+    }
+
+    private Response add_prod_make_purchase_closed_store(int sore_id){
+        ArrayList<String> arraylist = new ArrayList<>();
+        Response res;
+        arraylist.add("check_check");
+        res = facade1.add_product_to_store(sore_id, 100, "CheckItem", 10.0, "checker", new ArrayList<>());
+        assertTrue(check_was_exception(res), "Store founder added products to a temporarily \\ permanently closed store");
+        prod_counter++;
+        res = facade2.add_product_to_cart(sore_id, prod_counter, 1);
+        assertTrue(check_was_exception(res), "User added products to cart from a temporarily \\ permanently closed store");
+        return  facade2.buy_cart("credit", "address");
     }
 
     private boolean check_if_purchase_exists(Response res, String email, int prod){
@@ -440,6 +455,7 @@ class MarketFacadeTest {
                     "Test case: " + test_case + " failed, " +
                     "store (" + store_name + ") not found in system");
     }
+
     private void close_store_temporarily_helper(boolean no_success, int facade_num, String test_name, int store_counter, String test_case, int store_id, String store_name, int stores_same_name, boolean closed) {
             String message;
             Response res;
@@ -476,10 +492,10 @@ class MarketFacadeTest {
                         "Test case: " + test_case + " failed, " +
                         "store (" + store_name + ") found inactive in system");
     }
-    // --------------------------------------------------------------------------------------------------------
 
-    // close_store_temporarily
-    // open_close_store
+
+    //------------------------------- Testing functions --------------------------------------------------------------------------
+
     // view_store_management_information
     // manager_answer_question
     // get_market_stats
@@ -487,7 +503,8 @@ class MarketFacadeTest {
     // get_user_questions
     // edit_product_quantity
     // online_user
-    // close_store_permanently
+
+    //------------------------------- Open \ Close store --------------------------------------------------------------------------
 
     @Test
     void open_and_close_store(){
@@ -496,16 +513,15 @@ class MarketFacadeTest {
         boolean suppose_to_throw = true;
         String test_name = "open_and_close_store";
         int store_counter = num_of_stores();
-        int stores_in_market;
         String message, test_case;
-        boolean store_found = false;
-        String fail_name, store1_name, store2_name, store3_name;
-        int store1_id, store2_id, store3_id, store4_id;
+        String fail_name, f1_store1_name, f1_f2_same_store_name, f2_store1_name;
+        int f1_store1_id, f1_store2_id, f2_store1_id, f1_store3_id;
         int founder1 = 1,
             founder2 = 2,
             admin = 3,
             guest = 4;
 
+        // ------------------------------ All users register ------------------------------
         message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
         res = facade1.register(founder+"1@founder.com", password, founder, founder, birth_date);
         assertFalse(check_was_exception(res), message);
@@ -520,96 +536,229 @@ class MarketFacadeTest {
         test_case = "guest tries to open store: " + fail_name;
         open_store_helper(suppose_to_throw, guest, test_name, store_counter, test_case, fail_name, 0);
 
-
-        store1_name = "Store 1 - open close store";
-        test_case = "assigned user tries to open store: " + store1_name;
+        // ------------------------------ Founder1 opens store f1_store1 ------------------------------
+        f1_store1_name = "Store 1 - open close store";
+        test_case = "assigned user tries to open store: " + f1_store1_name;
         store_counter++;
-        store1_id = open_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, store1_name, 1);
+        f1_store1_id = open_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store1_name, 1);
 
-        store2_name = "Store 2 - open close store";
-        test_case = "assigned user tries to open store: " + store2_name;
+        // ------------------------------ Founder1 opens store f1_store2 ------------------------------
+        f1_f2_same_store_name = "Store 2 - open close store";
+        test_case = "assigned user tries to open store: " + f1_f2_same_store_name;
         store_counter++;
-        store2_id = open_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, store2_name, 1);
+        f1_store2_id = open_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_f2_same_store_name, 1);
 
         test_case = "guest user tries to close store temporarily";
-        close_store_temporarily_helper(suppose_to_throw, guest, test_name, store_counter, test_case, store1_id, store1_name, 1, false);
+        close_store_temporarily_helper(suppose_to_throw, guest, test_name, store_counter, test_case, f1_store1_id, f1_store1_name, 1, false);
 
         test_case = "random assigned user tries to close store temporarily";
-        close_store_temporarily_helper(suppose_to_throw, founder2, test_name, store_counter, test_case, store1_id, store1_name, 1, false);
+        close_store_temporarily_helper(suppose_to_throw, founder2, test_name, store_counter, test_case, f1_store1_id, f1_store1_name, 1, false);
 
         test_case = "admin tries to close store temporarily";
-        close_store_temporarily_helper(suppose_to_throw, admin, test_name, store_counter, test_case, store1_id, store1_name, 1, false);
+        close_store_temporarily_helper(suppose_to_throw, admin, test_name, store_counter, test_case, f1_store1_id, f1_store1_name, 1, false);
 
+        // ------------------------------ Founder1 closes store f1_store1 temporarily ------------------------------
         test_case = "store founder closes store temporarily";
-        close_store_temporarily_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, store1_id, store1_name, 1, true);
+        close_store_temporarily_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store1_id, f1_store1_name, 1, true);
 
         test_case = "store founder tires to close temporarily a store he already closed temporarily";
-        close_store_temporarily_helper(suppose_to_throw, founder1, test_name, store_counter, test_case, store1_id, store1_name, 1, true);
+        close_store_temporarily_helper(suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store1_id, f1_store1_name, 1, true);
 
         test_case = "guest user tries to open closed store";
-        open_closed_store_helper(suppose_to_throw, guest, test_name, store_counter, test_case, store1_name, 1, store1_id, true);
+        open_closed_store_helper(suppose_to_throw, guest, test_name, store_counter, test_case, f1_store1_name, 1, f1_store1_id, true);
 
         test_case = "random assigned user tries to open closed store";
-        open_closed_store_helper(suppose_to_throw, founder2, test_name, store_counter, test_case, store1_name, 1, store1_id, true);
+        open_closed_store_helper(suppose_to_throw, founder2, test_name, store_counter, test_case, f1_store1_name, 1, f1_store1_id, true);
 
         test_case = "admin tries to open closed store";
-        open_closed_store_helper(suppose_to_throw, admin, test_name, store_counter, test_case, store1_name, 1, store1_id, true);
+        open_closed_store_helper(suppose_to_throw, admin, test_name, store_counter, test_case, f1_store1_name, 1, f1_store1_id, true);
 
+        // ------------------------------ Founder1 re-opens store f1_store1 ------------------------------
         test_case = "store founder opens closed store";
-        open_closed_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, store1_name, 1, store1_id, false);
+        open_closed_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store1_name, 1, f1_store1_id, false);
 
         test_case = "store founder tries to re-open the closed store he opened already";
-        open_closed_store_helper(suppose_to_throw, founder1, test_name, store_counter, test_case, store1_name, 1, store1_id, false);
+        open_closed_store_helper(suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store1_name, 1, f1_store1_id, false);
 
-        test_case = "assigned user tries to open store with same name as another store founded by a different user: " + store2_name;
+        // ------------------------------ Founder2 opens store f2_store1 ------------------------------
+        test_case = "assigned user tries to open store with same name as another store founded by a different user: " + f1_f2_same_store_name;
         store_counter++;
-        store3_id = open_store_helper(!suppose_to_throw, founder2, test_name, store_counter, test_case, store2_name, 2);
+        f2_store1_id = open_store_helper(!suppose_to_throw, founder2, test_name, store_counter, test_case, f1_f2_same_store_name, 2);
 
-        test_case = "assigned user tries to open store with same name as two other stores founded by this user and another: " + store2_name;
+        // ------------------------------ Founder1 opens store f1_store3 ------------------------------
+        test_case = "assigned user tries to open store with same name as two other stores founded by this user and another: " + f1_f2_same_store_name;
         store_counter++;
-        store4_id = open_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, store2_name, 3);
+        f1_store3_id = open_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_f2_same_store_name, 3);
+
+        /*
+            Test summary - contained in system: (up to this point)
+
+                Founder1: (facade1)
+                    1.  f1_store1 - active
+                    2.  f1_store2 - active (f1_f2_same_store_name)
+                    3.  f1_store3 - active (f1_f2_same_store_name)
+
+                Founder2: (facade2)
+                    1.  f2_store1 - active (f1_f2_same_store_name)
+
+         */
 
         test_case = "store founder tries to close temporarily a store with same name as his stores";
-        close_store_temporarily_helper(suppose_to_throw, founder1, test_name, store_counter, test_case, store3_id, store2_name, 3, false);
+        close_store_temporarily_helper(suppose_to_throw, founder1, test_name, store_counter, test_case, f2_store1_id, f1_f2_same_store_name, 3, false);
 
         test_case = "store founder tries to close temporarily a store with same name as his stores";
-        close_store_temporarily_helper(suppose_to_throw, founder2, test_name, store_counter, test_case, store4_id, store2_name, 3, false);
+        close_store_temporarily_helper(suppose_to_throw, founder2, test_name, store_counter, test_case, f1_store3_id, f1_f2_same_store_name, 3, false);
 
         test_case = "admin tries to close store temporarily";
-        close_store_temporarily_helper(suppose_to_throw, admin, test_name, store_counter, test_case, store3_id, store2_name, 3, false);
+        close_store_temporarily_helper(suppose_to_throw, admin, test_name, store_counter, test_case, f2_store1_id, f1_f2_same_store_name, 3, false);
 
+        // ------------------------------ Founder1 closes store f2_store2 temporarily ------------------------------
         test_case = "store founder closes store temporarily";
-        close_store_temporarily_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, store2_id, store2_name, 1, true);
+        close_store_temporarily_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store2_id, f1_f2_same_store_name, 1, true);
+        assertTrue(find_store(f1_f2_same_store_name, 2,true));
+        res = add_prod_make_purchase_closed_store(f1_store2_id); // founder2 tries to make purchase from f2_store2
+        assertTrue(check_was_exception(res), "User bought products from temporarily closed store successfuly");
 
+        // ------------------------------ Founder2 closes store f2_store1 temporarily ------------------------------
         test_case = "store founder closes store temporarily";
-        close_store_temporarily_helper(!suppose_to_throw, founder2, test_name, store_counter, test_case, store3_id, store2_name, 2, true);
+        close_store_temporarily_helper(!suppose_to_throw, founder2, test_name, store_counter, test_case, f2_store1_id, f1_f2_same_store_name, 2, true);
+
+         /*
+            Test summary - contained in system: (up to this point)
+
+                Founder1: (facade1)
+                    1.  f1_store1 - active
+                    2.  f1_store2 - not active (f1_f2_same_store_name)
+                    3.  f1_store3 - active (f1_f2_same_store_name)
+
+                Founder2: (facade2)
+                    1.  f2_store1 - not active (f1_f2_same_store_name)
+
+         */
 
         test_case = "store founder tries to close store permanently";
-        close_store_permanently_helper(suppose_to_throw, founder2, test_name, store_counter, test_case, store3_id, store2_name, 2, true);
+        close_store_permanently_helper(suppose_to_throw, founder2, test_name, store_counter, test_case, f2_store1_id, f1_f2_same_store_name, 2, true);
 
         test_case = "guest user tries to close store permanently";
-        close_store_permanently_helper(suppose_to_throw, guest, test_name, store_counter, test_case, store3_id, store2_name, 2, true);
+        close_store_permanently_helper(suppose_to_throw, guest, test_name, store_counter, test_case, f2_store1_id, f1_f2_same_store_name, 2, true);
 
         test_case = "different store founder tries to close store permanently";
-        close_store_permanently_helper(suppose_to_throw, founder1, test_name, store_counter, test_case, store3_id, store2_name, 2, true);
+        close_store_permanently_helper(suppose_to_throw, founder1, test_name, store_counter, test_case, f2_store1_id, f1_f2_same_store_name, 2, true);
 
-        test_case = "admin tries to close a store that is not closed temporarily permanently";
-        close_store_permanently_helper(suppose_to_throw, admin, test_name, store_counter, test_case, store2_id, store2_name, 2, true);
+        test_case = "admin closes a store that is not closed temporarily permanently";
+        close_store_permanently_helper(!suppose_to_throw, admin, test_name, store_counter, test_case, f1_store3_id, f1_f2_same_store_name, 3, true);
+        res = add_prod_make_purchase_closed_store(f1_store3_id); // founder2 tries to make purchase from f1_store3
+        assertTrue(check_was_exception(res), "User bought products from permanintly closed store successfuly");
 
-        test_case = "admin closes a store permanently";
-        close_store_permanently_helper(!suppose_to_throw, admin, test_name, store_counter, test_case, store3_id, store2_name, 2, true);
+          /*
+            Test summary - contained in system: (up to this point)
 
-        test_case = "store founder opens a permanently closed store";
-        open_closed_store_helper(suppose_to_throw, founder2, test_name, store_counter, test_case, store2_name, 1, store3_id, true);
+                Founder1: (facade1)
+                    1.  f1_store1 - active
+                    2.  f1_store2 - not active (f1_f2_same_store_name)
+                    3.  f1_store3 - permanently not active (f1_f2_same_store_name)
+
+                Founder2: (facade2)
+                    1.  f2_store1 - not active (f1_f2_same_store_name)
+
+         */
+
+    //    test_case = "admin closes a store permanently";
+    //    close_store_permanently_helper(!suppose_to_throw, admin, test_name, store_counter, test_case, f2_store1_id, f1_f2_same_store_name, 2, true);
+
+        test_case = "store founder tries to open a permanently closed store";
+        open_closed_store_helper(suppose_to_throw, founder1, test_name, store_counter, test_case, f1_f2_same_store_name, 3, f1_store3_id, true);
+        res = add_prod_make_purchase_closed_store(f1_store3_id); // founder2 tries to make purchase from f1_store3
+        assertTrue(check_was_exception(res), "User bought products from permanintly closed store successfuly");
 
         test_case = "admin tries to open a permanently closed store";
-        open_closed_store_helper(suppose_to_throw, admin, test_name, store_counter, test_case, store2_name, 1, store3_id, true);
+        open_closed_store_helper(suppose_to_throw, admin, test_name, store_counter, test_case, f1_f2_same_store_name, 3, f2_store1_id, true);
+        res = add_prod_make_purchase_closed_store(f1_store3_id); // founder2 tries to make purchase from f1_store3
+        assertTrue(check_was_exception(res), "User bought products from permanintly closed store successfuly");
+
+        facade1.logout();
+        facade2.logout();
+        facade3.logout();
+    }
+
+    /**
+     * Cases checked:
+     * 1. no user is connected
+     * 2. store founder opens store number 2
+     * 3. store founder opens store with same name
+     * 4. store founder opens first store
+     */
+    @Test
+    void open_store(){
+        Response res;
+        int stores_count = num_of_stores();
+        String name;
+        String test_name = "open_store";
+        boolean suppose_to_throw = true;
+        String message;
+
+        name = "this shouldn't work";
+        message = make_assert_exception_message(test_name, "no user is connected", suppose_to_throw);
+        res = facade1.open_store(name); // no user is connected
+        assertTrue(check_was_exception(res), message);
+        assertEquals(stores_count, num_of_stores()); // todo
+        assertFalse(find_store(name, 1)); // todo
+
+        name = "store number 2";
+        message = make_assert_exception_message(test_name, "store founder opens store number 2", !suppose_to_throw);
+        facade1.login(user_founder_email, user_password);
+        res = facade1.open_store(name); // store founder opens store number 2
+        assertFalse(check_was_exception(res), message);
+        assertTrue(find_store(name, 1)); // todo
+        stores_count++;
+        assertEquals(stores_count, num_of_stores()); // todo
+        assertEquals(user_founder_email, get_store_founder("store number 2", 1)); // todo
+
+        message = make_assert_exception_message(test_name, "store founder opens store with same name", !suppose_to_throw);
+        res = facade1.open_store(name); // store founder opens store with same name
+        assertFalse(check_was_exception(res), message);
+        stores_count++;
+        assertEquals(stores_count, num_of_stores()); // todo
+        assertTrue(find_store(name, 2)); // todo
+        assertEquals(user_founder_email, get_store_founder("store number 2", 2)); // todo
+
+        facade1.logout();
+        facade1.login(user_regular_email_1, user_password);
+
+        name = "Store number 1";
+        message = make_assert_exception_message(test_name, "store founder opens first store", !suppose_to_throw);
+        res = facade1.open_store(name); // store founder opens first store
+        assertFalse(check_was_exception(res), message);
+        stores_count++;
+        assertEquals(stores_count, num_of_stores()); // todo
+        assertTrue(find_store(name, 1)); // todo
+        assertEquals(user_regular_email_1, get_store_founder("Store number 1", 1));  // todo
+
+        facade1.logout();
+    }
+
+    /**
+     * Cases checked:
+     * 1. get all stores
+     */
+    @Test
+    void get_all_stores(){
+        Response res;
+        String test_name = "get_all_stores";
+        boolean suppose_to_throw = true;
+        String message;
+
+        message = make_assert_exception_message(test_name, "get all stores", !suppose_to_throw);
+        res = facade1.get_all_stores();
+        assertFalse(check_was_exception(res), message);
+        if(res.getValue().getClass() == (new ArrayList<StoreInformation>()).getClass()){
+            assertEquals(num_of_stores() ,((ArrayList<StoreInformation>)res.getValue()).size()); // todo
+        }
 
 
     }
 
-
-
+    //------------------------------- Staff operations \ appointments --------------------------------------------------------------------------
 
     @Test
     void add_remove_manager() throws MarketException {
@@ -805,6 +954,73 @@ class MarketFacadeTest {
 
     /**
      * Cases checked:
+     * 1. no one is connected
+     * 2. user connected is not the store owner
+     * 3. user enters a store id that does not exist
+     * 4. store founder views store's purchase history
+     * 5. store founder enters a store id that does not exist
+     * 6. store founder enters a store id that didn't doesn't have permissions to see
+     * 7. store founder views new store's empty purchase history
+     * 8. store founder views store's purchase history
+     */
+    @Test
+    void view_store_purchases_history() {
+        Response res;
+        boolean suppose_to_throw = true;
+        String test_name = "view_store_purchases_history";
+        String message = make_assert_exception_message(test_name, "guest tries to view store's purchase history list", suppose_to_throw);
+
+        res = facade1.view_store_purchases_history(1); // no one is connected
+        assertTrue(check_was_exception(res), message);
+
+        message = make_assert_exception_message(test_name, "user (with no permissions) tries to view store's purchase history list", suppose_to_throw);
+        facade1.login(user_premium_security_email, user_password);
+        res = facade1.view_store_purchases_history(1); // user connected is not the store owner
+        assertTrue(check_was_exception(res), message);
+
+        message = make_assert_exception_message(test_name, "user tries to view store's purchase history list with store id that does not exist", suppose_to_throw);
+        res = facade1.view_store_purchases_history(num_of_stores() + 2); // user enters a store id that does not exist
+        assertTrue(check_was_exception(res), message);
+
+
+        facade2.login(user_founder_email, user_password);
+        res = facade2.view_store_purchases_history(1); // store founder views store's purchase history
+        valid_purchase_history(res, user_buyer_email, 1, test_name, "store founder views store's purchase history");
+
+        message = make_assert_exception_message(test_name, "store founder enters a store id that does not exist", suppose_to_throw);
+        res = facade2.view_store_purchases_history(num_of_stores() + 2); // store founder enters a store id that does not exist
+        assertTrue(check_was_exception(res), message);
+
+        int store_id = open_store_get_id("first store for this user"); // store founder opens first store
+
+        message = make_assert_exception_message(test_name, "store founder enters a store id that didn't doesn't have permissions to see", suppose_to_throw);
+        res = facade2.view_store_purchases_history(num_of_stores() + 2); // store founder enters a store id that didn't doesn't have permissions to see
+        assertTrue(check_was_exception(res), message);
+
+        message = make_assert_exception_message(test_name, "store founder views new store's empty purchase history", !suppose_to_throw);
+        res = facade1.view_store_purchases_history(store_id); // store founder views new store's empty purchase history
+        assertFalse(check_was_exception(res));
+        if(res.getValue().getClass() == (new ConcurrentHashMap<Integer, StorePurchase>()).values().getClass()){
+            Collection<StorePurchase> his = (Collection<StorePurchase>)res.getValue();
+            assertTrue(his.isEmpty());
+        }
+
+        int prod_id = add_prod_make_purchase_get_id(store_id);
+
+        res = facade1.view_store_purchases_history(store_id); // store founder views store's purchase history
+        valid_purchase_history(res, user_founder_email, prod_id, test_name, "store founder views store's purchase history");
+
+        // all users logout
+        facade1.logout();
+        facade2.logout();
+
+
+    }
+
+    //------------------------------- Admin operations --------------------------------------------------------------------------
+
+    /**
+     * Cases checked:
      * 1. guest tries to view empty admin question list
      * 2. guest tries to send admin question
      * 3. admin views empty question list
@@ -945,150 +1161,6 @@ class MarketFacadeTest {
         facade1.logout();
     }
 
-
-    /**
-     * Cases checked:
-     * 1. no one is connected
-     * 2. user connected is not the store owner
-     * 3. user enters a store id that does not exist
-     * 4. store founder views store's purchase history
-     * 5. store founder enters a store id that does not exist
-     * 6. store founder enters a store id that didn't doesn't have permissions to see
-     * 7. store founder views new store's empty purchase history
-     * 8. store founder views store's purchase history
-     */
-    @Test
-    void view_store_purchases_history() {
-        Response res;
-        boolean suppose_to_throw = true;
-        String test_name = "view_store_purchases_history";
-        String message = make_assert_exception_message(test_name, "guest tries to view store's purchase history list", suppose_to_throw);
-
-        res = facade1.view_store_purchases_history(1); // no one is connected
-        assertTrue(check_was_exception(res), message);
-
-        message = make_assert_exception_message(test_name, "user (with no permissions) tries to view store's purchase history list", suppose_to_throw);
-        facade1.login(user_premium_security_email, user_password);
-        res = facade1.view_store_purchases_history(1); // user connected is not the store owner
-        assertTrue(check_was_exception(res), message);
-
-        message = make_assert_exception_message(test_name, "user tries to view store's purchase history list with store id that does not exist", suppose_to_throw);
-        res = facade1.view_store_purchases_history(num_of_stores() + 2); // user enters a store id that does not exist
-        assertTrue(check_was_exception(res), message);
-
-
-        facade2.login(user_founder_email, user_password);
-        res = facade2.view_store_purchases_history(1); // store founder views store's purchase history
-        valid_purchase_history(res, user_buyer_email, 1, test_name, "store founder views store's purchase history");
-
-        message = make_assert_exception_message(test_name, "store founder enters a store id that does not exist", suppose_to_throw);
-        res = facade2.view_store_purchases_history(num_of_stores() + 2); // store founder enters a store id that does not exist
-        assertTrue(check_was_exception(res), message);
-
-        int store_id = open_store_get_id("first store for this user"); // store founder opens first store
-
-        message = make_assert_exception_message(test_name, "store founder enters a store id that didn't doesn't have permissions to see", suppose_to_throw);
-        res = facade2.view_store_purchases_history(num_of_stores() + 2); // store founder enters a store id that didn't doesn't have permissions to see
-        assertTrue(check_was_exception(res), message);
-
-        message = make_assert_exception_message(test_name, "store founder views new store's empty purchase history", !suppose_to_throw);
-        res = facade1.view_store_purchases_history(store_id); // store founder views new store's empty purchase history
-        assertFalse(check_was_exception(res));
-        if(res.getValue().getClass() == (new ConcurrentHashMap<Integer, StorePurchase>()).values().getClass()){
-            Collection<StorePurchase> his = (Collection<StorePurchase>)res.getValue();
-            assertTrue(his.isEmpty());
-        }
-
-        int prod_id = add_prod_make_purchase_get_id(store_id);
-
-        res = facade1.view_store_purchases_history(store_id); // store founder views store's purchase history
-        valid_purchase_history(res, user_founder_email, prod_id, test_name, "store founder views store's purchase history");
-
-        // all users logout
-        facade1.logout();
-        facade2.logout();
-
-
-    }
-
-
-    /**
-     * Cases checked:
-     * 1. no user is connected
-     * 2. store founder opens store number 2
-     * 3. store founder opens store with same name
-     * 4. store founder opens first store
-     */
-    @Test
-    void open_store(){
-        Response res;
-        int stores_count = num_of_stores();
-        String name;
-        String test_name = "open_store";
-        boolean suppose_to_throw = true;
-        String message;
-
-        name = "this shouldn't work";
-        message = make_assert_exception_message(test_name, "no user is connected", suppose_to_throw);
-        res = facade1.open_store(name); // no user is connected
-        assertTrue(check_was_exception(res), message);
-        assertEquals(stores_count, num_of_stores()); // todo
-        assertFalse(find_store(name, 1)); // todo
-
-        name = "store number 2";
-        message = make_assert_exception_message(test_name, "store founder opens store number 2", !suppose_to_throw);
-        facade1.login(user_founder_email, user_password);
-        res = facade1.open_store(name); // store founder opens store number 2
-        assertFalse(check_was_exception(res), message);
-        assertTrue(find_store(name, 1)); // todo
-        stores_count++;
-        assertEquals(stores_count, num_of_stores()); // todo
-        assertEquals(user_founder_email, get_store_founder("store number 2", 1)); // todo
-
-        message = make_assert_exception_message(test_name, "store founder opens store with same name", !suppose_to_throw);
-        res = facade1.open_store(name); // store founder opens store with same name
-        assertFalse(check_was_exception(res), message);
-        stores_count++;
-        assertEquals(stores_count, num_of_stores()); // todo
-        assertTrue(find_store(name, 2)); // todo
-        assertEquals(user_founder_email, get_store_founder("store number 2", 2)); // todo
-
-        facade1.logout();
-        facade1.login(user_regular_email_1, user_password);
-
-        name = "Store number 1";
-        message = make_assert_exception_message(test_name, "store founder opens first store", !suppose_to_throw);
-        res = facade1.open_store(name); // store founder opens first store
-        assertFalse(check_was_exception(res), message);
-        stores_count++;
-        assertEquals(stores_count, num_of_stores()); // todo
-        assertTrue(find_store(name, 1)); // todo
-        assertEquals(user_regular_email_1, get_store_founder("Store number 1", 1));  // todo
-
-        facade1.logout();
-    }
-
-    /**
-     * Cases checked:
-     * 1. get all stores
-     */
-    @Test
-    void get_all_stores(){
-        Response res;
-        String test_name = "get_all_stores";
-        boolean suppose_to_throw = true;
-        String message;
-
-        message = make_assert_exception_message(test_name, "get all stores", !suppose_to_throw);
-        res = facade1.get_all_stores();
-        assertFalse(check_was_exception(res), message);
-        if(res.getValue().getClass() == (new ArrayList<StoreInformation>()).getClass()){
-            assertEquals(num_of_stores() ,((ArrayList<StoreInformation>)res.getValue()).size()); // todo
-        }
-
-
-    }
-
     /**
      * Cases checked:
      * 1. no one is connected
@@ -1181,7 +1253,6 @@ class MarketFacadeTest {
 
     }
 
-
     /**
      * Cases checked:
      * 1. no one is connected
@@ -1233,129 +1304,7 @@ class MarketFacadeTest {
     }
 
 
-    static Stream<Arguments> user_info_provider1() {
-        return Stream.of(
-                arguments("check1@email.com", "pass3Chec", "name", "last"),
-                arguments("check2@email.com", "pass1Chec", "name", "last"),
-                arguments("check3@email.com", "Ch3ckPsw0rd", "checker", "checkcheck")
-        );
-    }
-
-    /**
-     * Cases checked:
-     * 1. regular register
-     * 2. register with registered user from different facade
-     * 3. register with registered user from same facade
-     * 4. register with registered user from same facade while logged in
-     */
-    @ParameterizedTest
-    @MethodSource("user_info_provider1")
-    void register(String email, String pw, String name, String lastName) {
-        Response res;
-        boolean suppose_to_throw = true;
-        String test_name = "register";
-        String message;
-        Response<String> user_email_res;
-
-        // case 1
-        message = make_assert_exception_message(test_name, "regular register", !suppose_to_throw);
-        res = facade1.register(email, pw, name, lastName, birth_date);
-        boolean was_exception = check_was_exception(res); // regular register
-        assertFalse(was_exception, message);
-        user_email_res = facade1.get_user_email();
-        assertEquals(user_email_res.getValue(),email,"case 1 - failed to add user to system , got different user"); // todo
-
-        //case 2
-        message = make_assert_exception_message(test_name, "register with registered user from different facade", suppose_to_throw);
-        was_exception = check_was_exception(facade2.register(email, pw, name, lastName, birth_date)); // register with registered user from different facade
-        assertTrue(was_exception, message);
-        facade1.logout();
-
-        //case 3
-        message = make_assert_exception_message(test_name, "register with registered user from same facade", suppose_to_throw);
-        was_exception = check_was_exception(facade1.register("check1@email.com", user_password, "name", "last", birth_date)); // register with registered user from same facade
-        assertTrue(was_exception, message);
-
-        //case 4
-        message = make_assert_exception_message(test_name, "register with registered user from same facade while logged in", suppose_to_throw);
-        facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date);
-        was_exception = check_was_exception(facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date)); // register with registered user from same facade while logged in
-        assertTrue(was_exception, message);
-
-        facade1.logout();
-    }
-
-    /**
-     * Cases checked:
-     * 1. regular login
-     * 2. login with connected user different facade
-     * 3. login with same facade different but user
-     */
-    static Stream<Arguments> user_info_provider2() {
-        return Stream.of(
-                arguments("check1@email.com", "pass3Chec"),
-                arguments("check2@email.com", "pass1Chec"),
-                arguments("check3@email.com", "Ch3ckPsw0rd")
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("user_info_provider2")
-    void login(String email, String pw) {
-        boolean result;
-        boolean suppose_to_throw = true;
-        String test_name = "login";
-        String message;
-
-        message = make_assert_exception_message(test_name, "regular login", !suppose_to_throw);
-        result = check_was_exception(facade1.login(email, pw)); // regular login
-        assertFalse(result, message);
-
-        message = make_assert_exception_message(test_name, "same user tries to login from different facade", suppose_to_throw);
-        result = check_was_exception(facade2.login(email, pw)); // same user different facade
-        assertTrue(result, message);
-
-        message = make_assert_exception_message(test_name, "another user tries to login from on the same facade", suppose_to_throw);
-        result = check_was_exception(facade1.login("check1@email.com", user_password)); // same facade different user
-        assertTrue(result, message);
-
-        facade1.logout();
-    }
-
-    /**
-     * Cases checked:
-     * 1. logout with no user connected
-     * 2. regular logout
-     * 3. logout second time in a row
-     * 4. logout after login failed
-     */
-    @Test
-    void logout() {
-        boolean result;
-        boolean suppose_to_throw = true;
-        String test_name = "logout";
-        String message;
-
-        message = make_assert_exception_message(test_name, "logout with no user connected", suppose_to_throw);
-        result = check_was_exception(facade1.logout()); // logout with no user connected
-        assertTrue(result, message);
-
-        facade1.login(user_founder_email, user_password);
-
-        message = make_assert_exception_message(test_name, "regular logout", !suppose_to_throw);
-        result = check_was_exception(facade1.logout()); // regular logout
-        assertFalse(result, message);
-
-        message = make_assert_exception_message(test_name, "logout second time in a row", suppose_to_throw);
-        result = check_was_exception(facade1.logout()); // logout second time in a row
-        assertTrue(result);
-
-        facade1.login("checrr@email.com", "pass3hec"); // login will fail
-
-        message = make_assert_exception_message(test_name, "logout after login failed", suppose_to_throw);
-        result = check_was_exception(facade1.logout()); // logout after login failed
-        assertTrue(result, message);
-    }
+    //------------------------------- User information --------------------------------------------------------------------------
 
     /*
      * Cases checked:
@@ -1450,182 +1399,6 @@ class MarketFacadeTest {
         facade1.logout();
     }
 
-    /**
-     * Cases checked:
-     * ADD-
-     * 1. add product when no user is logged in
-     * 2. add product when user is logged in
-     * 3. add product that doesn't exist
-     * 4. add product with negative quantity
-     * 5. add product with larger quantity then possible
-     * 6. add product that was already added
-     * 7. add product from a store that doesn't exist
-     *
-     * REMOVE-
-     * 1. remove product when no user is logged in
-     * 2. remove product when user is logged in
-     * 3. remove product that doesn't exist in cart
-     */
-    @Test
-    void add_and_remove_product_from_cart() {
-        boolean result;
-        boolean suppose_to_throw = true;
-        String test_name = "add_and_remove_product_from_cart";
-        String message;
-
-        message = make_assert_exception_message(test_name, "add product when no user is logged in", !suppose_to_throw);
-        result = check_was_exception(facade1.add_product_to_cart(1, 1, 1)); // add product when no user is logged in
-        assertFalse(result, message);
-
-        message = make_assert_exception_message(test_name, "add product that was already added", suppose_to_throw);
-        result = check_was_exception(facade1.add_product_to_cart(1, 1, 1)); // add product that was already added
-        assertTrue(result, message);
-
-        message = make_assert_exception_message(test_name, "remove product when no user is logged in", !suppose_to_throw);
-        result = check_was_exception(facade1.remove_product_from_cart(1, 1)); // remove product when no user is logged in
-        assertFalse(result, message);
-
-        facade1.login(user_founder_email, user_password);
-
-        message = make_assert_exception_message(test_name, "add product when user is logged in", !suppose_to_throw);
-        result = check_was_exception(facade1.add_product_to_cart(1, 1, 1)); // add product when user is logged in
-        assertFalse(result, message);
-
-        message = make_assert_exception_message(test_name, "remove product when user is logged in", !suppose_to_throw);
-        result = check_was_exception(facade1.remove_product_from_cart(1, 1)); // remove product when user is logged in
-        assertFalse(result, message);
-
-        message = make_assert_exception_message(test_name, "add product that doesn't exist", suppose_to_throw);
-        result = check_was_exception(facade1.add_product_to_cart(1, 5, 1));  // add product that doesn't exist
-        assertTrue(result, message);
-
-        message = make_assert_exception_message(test_name, "remove product that doesn't exist in cart", suppose_to_throw);
-        result = check_was_exception(facade1.remove_product_from_cart(1, 1)); // remove product that doesn't exist in cart
-        assertTrue(result, message);
-
-        message = make_assert_exception_message(test_name, "add product with negative quantity", suppose_to_throw);
-        result = check_was_exception(facade1.add_product_to_cart(1, 5, -1)); // add product with negative quantity
-        assertTrue(result, message);
-
-        message = make_assert_exception_message(test_name, "add product with larger quantity then possible", suppose_to_throw);
-        result = check_was_exception(facade1.add_product_to_cart(1, 5, 11)); // add product with larger quantity then possible
-        assertTrue(result, message);
-
-        message = make_assert_exception_message(test_name, "add product from a store that doesn't exist", suppose_to_throw);
-        result = check_was_exception(facade1.add_product_to_cart(30, 1, 1));  // add product from a store that doesn't exist
-        assertTrue(result, message);
-
-        facade1.logout();
-    }
-
-    /*
-     * Cases checked:
-     * 1. edit quantity when no product is in cart
-     * 2. edit quantity when user is logged in
-     * 3. edit quantity of a product that doesn't exist
-     * 4. edit quantity of a product from a store that doesn't exist
-     * 5. edit to negative quantity
-     * 6. edit to zero quantity
-     */
-    @Test
-    void edit_product_quantity_in_cart() {
-        boolean result;
-        boolean suppose_to_throw = true;
-        String test_name = "edit_product_quantity_in_cart";
-        String message;
-
-        message = make_assert_exception_message(test_name, "edit quantity when no product is in cart", suppose_to_throw);
-        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 1, 1)); // edit quantity when no product is in cart
-        assertTrue(result, message);
-
-        facade1.login(user_founder_email, user_password);
-        facade1.add_product_to_cart(1, 1, 1);
-
-        message = make_assert_exception_message(test_name, "edit quantity when user is logged in", !suppose_to_throw);
-        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 1, 1)); // edit quantity when user is logged in
-        assertFalse(result, message);
-
-        message = make_assert_exception_message(test_name, "edit quantity of a product that doesn't exist", suppose_to_throw);
-        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 5, 1));  // edit quantity of a product that doesn't exist
-        assertTrue(result, message);
-
-        message = make_assert_exception_message(test_name, "edit quantity of a product from a store that doesn't exist", suppose_to_throw);
-        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 1, 0)); // edit quantity of a product from a store that doesn't exist
-        assertTrue(result, message);
-
-        message = make_assert_exception_message(test_name, "edit quantity of product to negative number", suppose_to_throw);
-        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 5, -1)); // edit to negative quantity
-        assertTrue(result, message);
-
-        message = make_assert_exception_message(test_name, "edit quantity of product to zero", suppose_to_throw);
-        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 5, 11)); // edit to zero quantity
-        assertTrue(result, message);
-
-        facade1.remove_product_from_cart(1, 1);
-        facade1.logout();
-    }
-
-    /*
-     * Cases checked:
-     * 1. view cart with guest user
-     * 2. view cart with assigned user
-     */
-    @Test
-    void view_user_cart() {
-        boolean result;
-        boolean suppose_to_throw = true;
-        String test_name = "view_user_cart";
-        String message;
-
-        message = make_assert_exception_message(test_name, "view purchase history with guest user no purchases", !suppose_to_throw);
-        result = check_was_exception(facade1.view_user_cart()); // view cart with guest user
-        assertFalse(result, message);
-
-        facade1.login(user_founder_email, user_password);
-
-        message = make_assert_exception_message(test_name, "view purchase history with guest user no purchases", !suppose_to_throw);
-        result = check_was_exception(facade1.view_user_cart()); // view cart with assigned user
-        assertFalse(result, message);
-
-        facade1.logout();
-    }
-
-    /*
-     * Cases checked:
-     * 1. buy cart with guest user
-     * 2. buy cart with assigned user
-     * 3. buy cart with empty cart
-     */
-    @Test
-    void buy_cart() {
-        boolean result;
-        boolean suppose_to_throw = true;
-        String test_name = "buy_cart";
-        String message;
-
-        facade1.add_product_to_cart(1, 1, 1);
-
-        message = make_assert_exception_message(test_name, "buy cart with guest user", !suppose_to_throw);
-        result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with guest user
-        assertFalse(result, message);
-
-        facade1.login(user_founder_email, user_password);
-        facade1.add_product_to_cart(1, 1, 1);
-
-        message = make_assert_exception_message(test_name, "buy cart with assigned user", !suppose_to_throw);
-        result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with assigned user
-        assertFalse(result, message);
-
-        facade1.logout();
-        facade1.login(user_buyer_email, user_password);
-
-        message = make_assert_exception_message(test_name, "buy cart with empty cart", suppose_to_throw);
-        result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with empty cart
-        assertTrue(result, message);
-
-        facade1.logout();
-    }
-
     /*
      * Cases checked:
      * 1. view purchase history with guest user no purchases
@@ -1663,37 +1436,6 @@ class MarketFacadeTest {
         result = check_was_exception(facade1.view_user_purchase_history()); // view purchase history with assigned user no purchases
         assertFalse(result, message);
 
-        facade1.logout();
-    }
-
-    /*
-     * Cases checked:
-     * 1. unregister guest user
-     * 2. unregister assigned user
-     * 3. unregister guest user after assigned user unregistered
-     */
-    @Test
-    void unregister() {
-        boolean result;
-        boolean suppose_to_throw = true;
-        String test_name = "unregister";
-        String message;
-
-        message = make_assert_exception_message(test_name, "unregister guest user", suppose_to_throw);
-        result = check_was_exception(facade1.unregister(user_password)); // unregister guest user
-        assertTrue(result, message);
-
-        facade1.login(user_regular_email_1, user_password);
-
-        message = make_assert_exception_message(test_name, "unregister assigned user", !suppose_to_throw);
-        result = check_was_exception(facade1.unregister(user_password)); // unregister assigned user
-        assertFalse(result, message);
-
-        message = make_assert_exception_message(test_name, "unregister guest user after assigned user unregistered", suppose_to_throw);
-        result = check_was_exception(facade1.unregister(user_password)); // unregister guest user after assigned user unregistered
-        assertTrue(result, message);
-
-        facade1.register(user_regular_email_1, user_password, "name", "last", birth_date);
         facade1.logout();
     }
 
@@ -1889,7 +1631,6 @@ class MarketFacadeTest {
         facade1.logout();
     }
 
-
     /**
      * Cases checked:
      * 1. edit password with no user connected
@@ -1985,6 +1726,166 @@ class MarketFacadeTest {
 
     }
 
+
+    //------------------------------- User registration --------------------------------------------------------------------------
+
+    static Stream<Arguments> user_info_provider1() {
+        return Stream.of(
+                arguments("check1@email.com", "pass3Chec", "name", "last"),
+                arguments("check2@email.com", "pass1Chec", "name", "last"),
+                arguments("check3@email.com", "Ch3ckPsw0rd", "checker", "checkcheck")
+        );
+    }
+
+    /**
+     * Cases checked:
+     * 1. regular register
+     * 2. register with registered user from different facade
+     * 3. register with registered user from same facade
+     * 4. register with registered user from same facade while logged in
+     */
+    @ParameterizedTest
+    @MethodSource("user_info_provider1")
+    void register(String email, String pw, String name, String lastName) {
+        Response res;
+        boolean suppose_to_throw = true;
+        String test_name = "register";
+        String message;
+        Response<String> user_email_res;
+
+        // case 1
+        message = make_assert_exception_message(test_name, "regular register", !suppose_to_throw);
+        res = facade1.register(email, pw, name, lastName, birth_date);
+        boolean was_exception = check_was_exception(res); // regular register
+        assertFalse(was_exception, message);
+        user_email_res = facade1.get_user_email();
+        assertEquals(user_email_res.getValue(),email,"case 1 - failed to add user to system , got different user"); // todo
+
+        //case 2
+        message = make_assert_exception_message(test_name, "register with registered user from different facade", suppose_to_throw);
+        was_exception = check_was_exception(facade2.register(email, pw, name, lastName, birth_date)); // register with registered user from different facade
+        assertTrue(was_exception, message);
+        facade1.logout();
+
+        //case 3
+        message = make_assert_exception_message(test_name, "register with registered user from same facade", suppose_to_throw);
+        was_exception = check_was_exception(facade1.register("check1@email.com", user_password, "name", "last", birth_date)); // register with registered user from same facade
+        assertTrue(was_exception, message);
+
+        //case 4
+        message = make_assert_exception_message(test_name, "register with registered user from same facade while logged in", suppose_to_throw);
+        facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date);
+        was_exception = check_was_exception(facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date)); // register with registered user from same facade while logged in
+        assertTrue(was_exception, message);
+
+        facade1.logout();
+    }
+
+    /**
+     * Cases checked:
+     * 1. regular login
+     * 2. login with connected user different facade
+     * 3. login with same facade different but user
+     */
+    static Stream<Arguments> user_info_provider2() {
+        return Stream.of(
+                arguments("check1@email.com", "pass3Chec"),
+                arguments("check2@email.com", "pass1Chec"),
+                arguments("check3@email.com", "Ch3ckPsw0rd")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("user_info_provider2")
+    void login(String email, String pw) {
+        boolean result;
+        boolean suppose_to_throw = true;
+        String test_name = "login";
+        String message;
+
+        message = make_assert_exception_message(test_name, "regular login", !suppose_to_throw);
+        result = check_was_exception(facade1.login(email, pw)); // regular login
+        assertFalse(result, message);
+
+        message = make_assert_exception_message(test_name, "same user tries to login from different facade", suppose_to_throw);
+        result = check_was_exception(facade2.login(email, pw)); // same user different facade
+        assertTrue(result, message);
+
+        message = make_assert_exception_message(test_name, "another user tries to login from on the same facade", suppose_to_throw);
+        result = check_was_exception(facade1.login("check1@email.com", user_password)); // same facade different user
+        assertTrue(result, message);
+
+        facade1.logout();
+    }
+
+    /**
+     * Cases checked:
+     * 1. logout with no user connected
+     * 2. regular logout
+     * 3. logout second time in a row
+     * 4. logout after login failed
+     */
+    @Test
+    void logout() {
+        boolean result;
+        boolean suppose_to_throw = true;
+        String test_name = "logout";
+        String message;
+
+        message = make_assert_exception_message(test_name, "logout with no user connected", suppose_to_throw);
+        result = check_was_exception(facade1.logout()); // logout with no user connected
+        assertTrue(result, message);
+
+        facade1.login(user_founder_email, user_password);
+
+        message = make_assert_exception_message(test_name, "regular logout", !suppose_to_throw);
+        result = check_was_exception(facade1.logout()); // regular logout
+        assertFalse(result, message);
+
+        message = make_assert_exception_message(test_name, "logout second time in a row", suppose_to_throw);
+        result = check_was_exception(facade1.logout()); // logout second time in a row
+        assertTrue(result);
+
+        facade1.login("checrr@email.com", "pass3hec"); // login will fail
+
+        message = make_assert_exception_message(test_name, "logout after login failed", suppose_to_throw);
+        result = check_was_exception(facade1.logout()); // logout after login failed
+        assertTrue(result, message);
+    }
+
+    /*
+     * Cases checked:
+     * 1. unregister guest user
+     * 2. unregister assigned user
+     * 3. unregister guest user after assigned user unregistered
+     */
+    @Test
+    void unregister() {
+        boolean result;
+        boolean suppose_to_throw = true;
+        String test_name = "unregister";
+        String message;
+
+        message = make_assert_exception_message(test_name, "unregister guest user", suppose_to_throw);
+        result = check_was_exception(facade1.unregister(user_password)); // unregister guest user
+        assertTrue(result, message);
+
+        facade1.login(user_regular_email_1, user_password);
+
+        message = make_assert_exception_message(test_name, "unregister assigned user", !suppose_to_throw);
+        result = check_was_exception(facade1.unregister(user_password)); // unregister assigned user
+        assertFalse(result, message);
+
+        message = make_assert_exception_message(test_name, "unregister guest user after assigned user unregistered", suppose_to_throw);
+        result = check_was_exception(facade1.unregister(user_password)); // unregister guest user after assigned user unregistered
+        assertTrue(result, message);
+
+        facade1.register(user_regular_email_1, user_password, "name", "last", birth_date);
+        facade1.logout();
+    }
+
+    //----------------------- Concurrent -----------------------
+
     /**
      * trying to register num_of_threads with same email:
      * 1. make sure the email is not registered already.
@@ -2015,7 +1916,6 @@ class MarketFacadeTest {
         assertTrue(uc.contains_user_email(email), "failed to register user");
         assertTrue(num_of_exceptions.get() == num_of_threads - 1, "parallel bug");
     }
-
 
     /**
      * trying to register num_of_threads with different email:
@@ -2053,7 +1953,6 @@ class MarketFacadeTest {
         }
         assertTrue(num_of_exceptions.get() == 0, "parallel bug");
     }
-
 
     /**
      * trying to login num_of_threads with same email:
@@ -2093,5 +1992,183 @@ class MarketFacadeTest {
         assertTrue(num_of_logged_after_operation.get() == 1, num_of_logged_after_operation.get() + " logging operation succeed");
     }
 
+
+    //------------------------------- User cart operations --------------------------------------------------------------------------
+
+    /**
+     * Cases checked:
+     * ADD-
+     * 1. add product when no user is logged in
+     * 2. add product when user is logged in
+     * 3. add product that doesn't exist
+     * 4. add product with negative quantity
+     * 5. add product with larger quantity then possible
+     * 6. add product that was already added
+     * 7. add product from a store that doesn't exist
+     *
+     * REMOVE-
+     * 1. remove product when no user is logged in
+     * 2. remove product when user is logged in
+     * 3. remove product that doesn't exist in cart
+     */
+    @Test
+    void add_and_remove_product_from_cart() {
+        boolean result;
+        boolean suppose_to_throw = true;
+        String test_name = "add_and_remove_product_from_cart";
+        String message;
+
+        message = make_assert_exception_message(test_name, "add product when no user is logged in", !suppose_to_throw);
+        result = check_was_exception(facade1.add_product_to_cart(1, 1, 1)); // add product when no user is logged in
+        assertFalse(result, message);
+
+        message = make_assert_exception_message(test_name, "add product that was already added", suppose_to_throw);
+        result = check_was_exception(facade1.add_product_to_cart(1, 1, 1)); // add product that was already added
+        assertTrue(result, message);
+
+        message = make_assert_exception_message(test_name, "remove product when no user is logged in", !suppose_to_throw);
+        result = check_was_exception(facade1.remove_product_from_cart(1, 1)); // remove product when no user is logged in
+        assertFalse(result, message);
+
+        facade1.login(user_founder_email, user_password);
+
+        message = make_assert_exception_message(test_name, "add product when user is logged in", !suppose_to_throw);
+        result = check_was_exception(facade1.add_product_to_cart(1, 1, 1)); // add product when user is logged in
+        assertFalse(result, message);
+
+        message = make_assert_exception_message(test_name, "remove product when user is logged in", !suppose_to_throw);
+        result = check_was_exception(facade1.remove_product_from_cart(1, 1)); // remove product when user is logged in
+        assertFalse(result, message);
+
+        message = make_assert_exception_message(test_name, "add product that doesn't exist", suppose_to_throw);
+        result = check_was_exception(facade1.add_product_to_cart(1, 5, 1));  // add product that doesn't exist
+        assertTrue(result, message);
+
+        message = make_assert_exception_message(test_name, "remove product that doesn't exist in cart", suppose_to_throw);
+        result = check_was_exception(facade1.remove_product_from_cart(1, 1)); // remove product that doesn't exist in cart
+        assertTrue(result, message);
+
+        message = make_assert_exception_message(test_name, "add product with negative quantity", suppose_to_throw);
+        result = check_was_exception(facade1.add_product_to_cart(1, 5, -1)); // add product with negative quantity
+        assertTrue(result, message);
+
+        message = make_assert_exception_message(test_name, "add product with larger quantity then possible", suppose_to_throw);
+        result = check_was_exception(facade1.add_product_to_cart(1, 5, 11)); // add product with larger quantity then possible
+        assertTrue(result, message);
+
+        message = make_assert_exception_message(test_name, "add product from a store that doesn't exist", suppose_to_throw);
+        result = check_was_exception(facade1.add_product_to_cart(30, 1, 1));  // add product from a store that doesn't exist
+        assertTrue(result, message);
+
+        facade1.logout();
+    }
+
+    /*
+     * Cases checked:
+     * 1. edit quantity when no product is in cart
+     * 2. edit quantity when user is logged in
+     * 3. edit quantity of a product that doesn't exist
+     * 4. edit quantity of a product from a store that doesn't exist
+     * 5. edit to negative quantity
+     * 6. edit to zero quantity
+     */
+    @Test
+    void edit_product_quantity_in_cart() {
+        boolean result;
+        boolean suppose_to_throw = true;
+        String test_name = "edit_product_quantity_in_cart";
+        String message;
+
+        message = make_assert_exception_message(test_name, "edit quantity when no product is in cart", suppose_to_throw);
+        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 1, 1)); // edit quantity when no product is in cart
+        assertTrue(result, message);
+
+        facade1.login(user_founder_email, user_password);
+        facade1.add_product_to_cart(1, 1, 1);
+
+        message = make_assert_exception_message(test_name, "edit quantity when user is logged in", !suppose_to_throw);
+        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 1, 1)); // edit quantity when user is logged in
+        assertFalse(result, message);
+
+        message = make_assert_exception_message(test_name, "edit quantity of a product that doesn't exist", suppose_to_throw);
+        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 5, 1));  // edit quantity of a product that doesn't exist
+        assertTrue(result, message);
+
+        message = make_assert_exception_message(test_name, "edit quantity of a product from a store that doesn't exist", suppose_to_throw);
+        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 1, 0)); // edit quantity of a product from a store that doesn't exist
+        assertTrue(result, message);
+
+        message = make_assert_exception_message(test_name, "edit quantity of product to negative number", suppose_to_throw);
+        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 5, -1)); // edit to negative quantity
+        assertTrue(result, message);
+
+        message = make_assert_exception_message(test_name, "edit quantity of product to zero", suppose_to_throw);
+        result = check_was_exception(facade1.edit_product_quantity_in_cart(1, 5, 11)); // edit to zero quantity
+        assertTrue(result, message);
+
+        facade1.remove_product_from_cart(1, 1);
+        facade1.logout();
+    }
+
+    /*
+     * Cases checked:
+     * 1. view cart with guest user
+     * 2. view cart with assigned user
+     */
+    @Test
+    void view_user_cart() {
+        boolean result;
+        boolean suppose_to_throw = true;
+        String test_name = "view_user_cart";
+        String message;
+
+        message = make_assert_exception_message(test_name, "view purchase history with guest user no purchases", !suppose_to_throw);
+        result = check_was_exception(facade1.view_user_cart()); // view cart with guest user
+        assertFalse(result, message);
+
+        facade1.login(user_founder_email, user_password);
+
+        message = make_assert_exception_message(test_name, "view purchase history with guest user no purchases", !suppose_to_throw);
+        result = check_was_exception(facade1.view_user_cart()); // view cart with assigned user
+        assertFalse(result, message);
+
+        facade1.logout();
+    }
+
+    /*
+     * Cases checked:
+     * 1. buy cart with guest user
+     * 2. buy cart with assigned user
+     * 3. buy cart with empty cart
+     */
+    @Test
+    void buy_cart() {
+        boolean result;
+        boolean suppose_to_throw = true;
+        String test_name = "buy_cart";
+        String message;
+
+        facade1.add_product_to_cart(1, 1, 1);
+
+        message = make_assert_exception_message(test_name, "buy cart with guest user", !suppose_to_throw);
+        result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with guest user
+        assertFalse(result, message);
+
+        facade1.login(user_founder_email, user_password);
+        facade1.add_product_to_cart(1, 1, 1);
+
+        message = make_assert_exception_message(test_name, "buy cart with assigned user", !suppose_to_throw);
+        result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with assigned user
+        assertFalse(result, message);
+
+        facade1.logout();
+        facade1.login(user_buyer_email, user_password);
+
+        message = make_assert_exception_message(test_name, "buy cart with empty cart", suppose_to_throw);
+        result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with empty cart
+        assertTrue(result, message);
+
+        facade1.logout();
+    }
 
 }

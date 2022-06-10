@@ -1,150 +1,168 @@
-Jun 10, 2022 2:58:02 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:34 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 10, 2022 2:58:02 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store Checker Store with id = 1opened successfully
-Jun 10, 2022 2:58:02 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:02 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 10, 2022 2:58:02 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: New product (CheckItem) added to store (1)
-Jun 10, 2022 2:58:02 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User added to cart 1 of product- 1 from store- 1
-Jun 10, 2022 2:58:02 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 10, 2022 2:58:02 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 10, 2022 2:58:03 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 10, 2022 2:58:03 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 10, 2022 2:58:03 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 10, 2022 2:58:03 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 10, 2022 2:58:03 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:35 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 10, 2022 2:58:03 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User's (heck1234578@email.com) security has been successfully improved.
-Jun 10, 2022 2:58:03 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: founder founder has registered to the system
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: founder founder has registered to the system
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User admin@gmail.com logged-in
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store Store 1 - open close store with id = 2opened successfully
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store Store 2 - open close store with id = 3opened successfully
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store (2) has been closed temporarily by user (founder1@founder.com)
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store (2) has been re-opened by user (founder1@founder.com)
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store Store 2 - open close store with id = 4opened successfully
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store Store 2 - open close store with id = 5opened successfully
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store (3) has been closed temporarily by user (founder1@founder.com)
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store (4) has been closed temporarily by user (founder2@founder.com)
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store (5) closed permanently.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 10, 2022 2:58:04 AM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.

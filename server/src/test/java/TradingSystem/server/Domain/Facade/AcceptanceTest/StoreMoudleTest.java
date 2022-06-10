@@ -37,7 +37,7 @@ class StoreMoudleTest {
     private MarketFacade general_user = new MarketFacade(paymentAdapter,supplyAdapter);
     private String birth_date;
 
-    //------------------------------- helper functions --------------------------------------------------------------------------
+    //------------------------------- Helper functions --------------------------------------------------------------------------
 
     private void check_was_not_exception(String msg, Response response) { Assertions.assertFalse(response.WasException(), msg); }
 
@@ -73,13 +73,15 @@ class StoreMoudleTest {
         }
         return false;
     }
-    //helper function which starts all threads
+
+    // helper function which starts all threads
     private void start_threads(List<Thread> threads) {
         for (Thread t : threads) {
             t.start();
         } // running all the threads parallel
     }
-    //helper function which join all threads
+
+    // helper function which join all threads
     private void join_threads(List<Thread> threads) {
         try {
             for (Thread t : threads) {
@@ -89,7 +91,8 @@ class StoreMoudleTest {
             Assertions.fail( "there was error while running the threads");
         }
     }
-    //helper function which creates num_of_threads users represented by market facades
+
+    // helper function which creates num_of_threads users represented by market facades
     private List<MarketFacade> createUsers(String starting) {
         String ending = "@gmail.com";
         List<MarketFacade> facades = new ArrayList<>();
@@ -103,7 +106,14 @@ class StoreMoudleTest {
         return facades;
     }
 
-    //------------------------- end of helper functions  --------------------------------------------------------------------------
+    private List<String> gen_key_words(List<String> key_words){
+        List<String> res = new ArrayList<>();
+        String word = key_words.get(0)+"a";
+        res.add(word);
+        return res;
+    }
+
+    //------------------------- Initialization --------------------------------------------------------------------------
 
     @BeforeEach
     void SetUp() {
@@ -121,8 +131,13 @@ class StoreMoudleTest {
         marketFacade.add_manager(manager_email,1);
     }
 
+    //------------------------------- Testing functions --------------------------------------------------------------------------
+
+
+    //------------------------------- Get user information --------------------------------------------------------------------------
 
     /**
+     * Get user email
      * 1. register to user and get his email
      * 2. log out and get email - make sure it fails
      * 3. log in to the same user and try to get his email
@@ -144,14 +159,16 @@ class StoreMoudleTest {
         assertEquals(email,res.getValue(),"after re-login expected to get email - "+email+ "but got - "+res.getValue());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void get_user_email_sad() {
         marketFacade.logout();
         Response sBad = marketFacade.get_user_email();
         check_was_exception(sBad); // TODO: specify exception
     }
 
+
     /**
+     * Get user name
      * 1. register to user and get his name
      * 2. log out and get name - make sure it fails
      * 3. log in to the same user and try to get his name
@@ -173,7 +190,7 @@ class StoreMoudleTest {
         assertEquals(name,res.getValue(),"after re-login expected to get name - "+name+ "but got - "+res.getValue());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void get_user_name_sad() {
         //sad
         marketFacade.logout();
@@ -181,7 +198,9 @@ class StoreMoudleTest {
         check_was_exception(sBad);
     }
 
+
     /**
+     * Get user last name
      * 1. register to user and get his last name
      * 2. log out and get last name - make sure it fails
      * 3. log in to the same user and try to get his last name
@@ -203,20 +222,24 @@ class StoreMoudleTest {
         assertEquals(last_name,res.getValue(),"after re-login expected to get name - "+last_name+ "but got - "+res.getValue());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void get_user_last_name_sad() {
         marketFacade.logout();
         Response sBad = marketFacade.get_user_name();
         check_was_exception(sBad);
     }
 
+
+    //------------------------------- User makes purchase --------------------------------------------------------------------------
+
     /**
+     * Buy cart
      * 1. user add product to cart and buy - check purchase
      * 2. user try to buy cart again - verify fail because cart is empty
      * 2. user add product to cart log out and buy - should fail
      * 3. user log back in, and buy cart - check purchase
      * */
-    @org.junit.jupiter.api.Test
+    @Test
     void buyCart() {
         //step 1
         marketFacade.add_product_to_cart(1,productId,2);
@@ -236,7 +259,160 @@ class StoreMoudleTest {
         assertTrue(res.getValue().getTotal_price() == 2 * price);
     }
 
+    @Test
+    void BuyHappy() {
+        marketFacade.open_store("Amit Store2");
+        marketFacade.add_product_to_store(2, 100, "tmp", 100, "tmp", new ArrayList<>());
+        marketFacade.add_product_to_cart(2, 2, 100);
+        Response res = marketFacade.buy_cart("", "");
+        check_was_not_exception("", res);
+    }
+
+    @Test
+    void BuyTooMuch() {
+        marketFacade.add_product_to_store(2, 100, "tmp", 100, "tmp", new ArrayList<>());
+        Response res = marketFacade.add_product_to_cart(2, 1, 120);
+        marketFacade.buy_cart("", "");
+        check_was_exception(res);
+    }
+
+    @Test
+    void BuySadminus1() {
+        marketFacade.add_product_to_store(2, 100, "tmp", 100, "tmp", new ArrayList<>());
+        Response res = marketFacade.add_product_to_cart(2, 1, -1);
+        marketFacade.buy_cart("", "");
+        check_was_exception(res);
+    }
+
+    @Test
+    void two_users_buying_the_same_product() {
+        SupplyAdapter supply = new SupplyAdapterImpl();
+        PaymentAdapter payment = new PaymentAdapterImpl();
+        marketFacade.add_product_to_cart(1, productId, 30);
+        MarketFacade tmpMarket = new MarketFacade(payment, supply);
+        tmpMarket.register("amit1@gmail.com", password, "amit", "mosko", birth_date);
+        tmpMarket.add_product_to_cart(1, productId, 50);
+        Response goodR = marketFacade.buy_cart("", "");
+        Response BadR = tmpMarket.buy_cart("", "");
+        check_was_not_exception("Purchase done successfully", goodR);
+        check_was_exception(BadR);
+    }
+
+    //----------------------- Concurrent -----------------------
+
+    //scenario - there is num of products of specified product in store
+    //there is num of threads users who tries to buy all the amount of this product at once.
+    //only one user should succeed
+    @Test
+    void concurrent_buy_same_product_one_user_success() {
+        List<MarketFacade> marketFacadeList = createUsers("oneusersuccess");
+        for (MarketFacade mf : marketFacadeList) { // add all products to cart
+            mf.add_product_to_cart(1, productId, num_of_products);
+            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
+            boolean contains = false;
+            for (ProductInformation p : res) {
+                if (p.getProduct_id() == productId)
+                    contains = true;
+            }
+            assertTrue(contains, "failed to add product to users cart");
+        }
+
+        AtomicInteger num_of_success = new AtomicInteger(0);
+        AtomicInteger num_of_exceptions = new AtomicInteger(0);
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < num_of_threads; i++) {
+            int num_of_market_facade = i;
+            threads.add(new Thread(() -> {
+                Response res = marketFacadeList.get(num_of_market_facade).buy_cart("", "");
+                if (res.WasException() && res.getValue().getClass().equals(ObjectDoesntExsitException.class))
+                    num_of_exceptions.incrementAndGet();
+                else if(!res.WasException())
+                    num_of_success.getAndIncrement();
+            }));
+        }
+        start_threads(threads);
+        join_threads(threads);
+        assertTrue(num_of_exceptions.get() == num_of_threads-1,"concurency fail, fail count: "+num_of_exceptions.get());
+        assertTrue(num_of_success.get() == 1,"concurency fail, success count: "+num_of_success.get());
+    }
+
+    // scenario - there is num of products of specified product in store
+    // there is num of threads users who tries to buy 1 item of this product at once.
+    // (num of products) users should succeed and the other fails
+    @Test
+    void concurrent_buy_same_product_half_user_success() {
+        List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
+        for (MarketFacade mf : marketFacadeList) { // add all products to cart
+            mf.add_product_to_cart(1, productId, 1);
+            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
+            boolean contains = false;
+            for (ProductInformation p : res) {
+                if (p.getProduct_id() == productId)
+                    contains = true;
+            }
+            assertTrue(contains, "failed to add product to users cart");
+        }
+
+        AtomicInteger num_of_success = new AtomicInteger(0);
+        AtomicInteger num_of_exceptions = new AtomicInteger(0);
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < num_of_threads; i++) {
+            int num_of_market_facade = i;
+            threads.add(new Thread(() -> {
+                Response res = marketFacadeList.get(num_of_market_facade).buy_cart("", "");
+                if (res.WasException() && res.getValue().getClass().equals(ObjectDoesntExsitException.class))
+                    num_of_exceptions.incrementAndGet();
+                else if(!res.WasException())
+                    num_of_success.getAndIncrement();
+            }));
+        }
+        start_threads(threads);
+        join_threads(threads);
+        assertTrue(num_of_exceptions.get() == num_of_threads-num_of_products,"concurency fail, fail count: "+num_of_exceptions.get());
+        assertTrue(num_of_success.get() == num_of_products,"concurency fail, success count: "+num_of_success.get());
+    }
+
+    // scenario - there is num of products of specified product in store
+    // there is num of threads users who tries to buy 1 item of this product at once.
+    // all users should succeed.
+    @Test
+    void concurrent_buy_same_product_all_user_success() {
+        List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
+        for (MarketFacade mf : marketFacadeList) { // add all products to cart
+            mf.add_product_to_cart(1, productId, 1);
+            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
+            boolean contains = false;
+            for (ProductInformation p : res) {
+                if (p.getProduct_id() == productId)
+                    contains = true;
+            }
+            assertTrue(contains, "failed to add product to users cart");
+        }
+
+        AtomicInteger num_of_success = new AtomicInteger(0);
+        AtomicInteger num_of_exceptions = new AtomicInteger(0);
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < num_of_products; i++) {
+            int num_of_market_facade = i;
+            threads.add(new Thread(() -> {
+                Response res = marketFacadeList.get(num_of_market_facade).buy_cart("", "");
+                if (res.WasException() && res.getValue().getClass().equals(ObjectDoesntExsitException.class))
+                    num_of_exceptions.incrementAndGet();
+                else if(!res.WasException())
+                    num_of_success.getAndIncrement();
+            }));
+        }
+        start_threads(threads);
+        join_threads(threads);
+        assertTrue(num_of_exceptions.get() == 0,"concurency fail, fail count: "+num_of_exceptions.get());
+        assertTrue(num_of_success.get() == num_of_products,"concurency fail, success count: "+num_of_success.get());
+    }
+
+
+    //------------------------------- Manage products --------------------------------------------------------------------------
+
     /**
+     * Add products to store
      * 1. user add product to his own store - should succeed
      * 2. user logout and try to add product to his own store - should fail
      * 3. user log in back and try to add product to his store - succeed
@@ -244,7 +420,7 @@ class StoreMoudleTest {
      * 5. add product with store member without permissions - fail
      * 6. add product of existing product - fail
      */
-    @org.junit.jupiter.api.Test
+    @Test
     void add_product_to_store_test_happy() {
         ArrayList<String> arraylist = new ArrayList<>();
         arraylist.add("fruits");
@@ -277,7 +453,7 @@ class StoreMoudleTest {
         assertTrue(check_was_exception(res),"succeed to add product to store while it should fail - step 6");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void add_product_to_store_test_sad() {
         //sad-no product
         Response rSad = marketFacade.add_product_to_store(5, 50, "apple", 100, "fruits", new ArrayList<>());
@@ -285,6 +461,7 @@ class StoreMoudleTest {
     }
 
     /**
+     * Delete products from store
      * 1. checks if apple belongs in store.
      * 2. removes apple from store - should work.
      * 3. add apple back to store and verify
@@ -294,7 +471,7 @@ class StoreMoudleTest {
      * 7. remove with store member - succeed(than add back)
      * 8. remove with store member with no permission - fail.
      * */
-    @org.junit.jupiter.api.Test
+    @Test
     void delete_product_from_store_happy() {
         //step 1
         ArrayList<String> arraylist = new ArrayList<>();
@@ -338,15 +515,15 @@ class StoreMoudleTest {
         assertTrue(check_if_product_exists_find("apple"),"cannot add product to store - step 3");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void delete_product_from_store_sad() {
         //sad-no product
         Response rSad = marketFacade.delete_product_from_store(productId, 22);
         check_was_exception(rSad);
     }
 
-
     /**
+     * Edit product
      * 1. edit product name - should work (check new product name)
      * 2. log out - edit product name - should fail.
      * 3. log back in change product name - should work.
@@ -354,7 +531,7 @@ class StoreMoudleTest {
      * 5. try to edit product name with store member.
      * 6. try to edit product name with store member without permissions.
      * */
-    @org.junit.jupiter.api.Test
+    @Test
     void edit_product_name_happy() {
         //step 1 edit product name - should work (check new product name)
         Response res = marketFacade.edit_product_name(productId, 1, "orange");
@@ -393,14 +570,14 @@ class StoreMoudleTest {
         assertFalse(check_if_product_exists_find("banana"), "banana added to the system while it shouldn't - step 6");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void edit_product_name_sad() {
         //sad-no product
         Response rSad = marketFacade.edit_product_name(productId, 5, "orange");
         check_was_exception(rSad);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void edit_product_price_happy() {
         Response<Product> product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
@@ -457,14 +634,14 @@ class StoreMoudleTest {
         assertFalse(new_price == prev_price+10,"product price haven't changed - step 6");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void edit_product_price_sad() {
         //sad
         Response rSad = marketFacade.edit_product_price(productId, 3, 90);
         check_was_exception(rSad);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void edit_product_category_happy() {
         Response<Product> product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
@@ -521,206 +698,11 @@ class StoreMoudleTest {
         assertFalse(new_category.equals(prev_category+"a"),"product category haven't changed - step 6");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void edit_product_category_sad() {
         //sad
         Response rSad = marketFacade.edit_product_category(productId, 10, "food");
         check_was_exception(rSad);
-    }
-
-    @org.junit.jupiter.api.Test
-    void find_store_information_happy() {
-        Response<StoreInformation> res = marketFacade.find_store_information(1);
-        check_was_not_exception("Store information received successfully", res);
-        StoreInformation store = res.getValue();
-        assertEquals(email,store.getFounder_email());
-        assertEquals("amit store",store.getName());
-    }
-
-    @org.junit.jupiter.api.Test
-    void find_store_information_sad() {
-        Response rSad = marketFacade.find_store_information(100);
-        check_was_exception(rSad);
-    }
-
-
-    @Test
-    void find_product_information_happy() {
-        Response<Product> product_information = marketFacade.find_product_information(productId, 1);
-        check_was_not_exception("Product information received successfully", product_information);
-        assertEquals(product_information.getValue().getName(),"apple","couldn't find properly product name");
-        assertEquals(product_information.getValue().getCategory(),"fruits","couldn't find properly product category");
-    }
-
-    @Test
-    void find_product_information_sad() {
-        //sad
-        Response rSad = marketFacade.find_product_information(productId, 2);
-        check_was_exception(rSad);
-    }
-
-    @Test
-    void find_products_by_name_happy() {
-        Response<List<Product>> response = marketFacade.find_products_by_name("apple");
-        check_was_not_exception("Product list received successfully", response);
-        assertEquals(response.getValue().stream().findAny().get().getName(),"apple","couldn't find existing product");
-    }
-
-
-    @Test
-    void find_products_by_category_happy() {
-        //happy
-        Response r = marketFacade.find_products_by_category("fruits");
-        check_was_not_exception("Products received successfully", r);
-
-    }
-
-
-    @Test
-    void find_products_by_keywords_happy() {
-        //happy
-        Response r = marketFacade.find_products_by_keywords("fruits");
-        check_was_not_exception("Products received successfully", r);
-    }
-
-
-    @Test
-    void add_product_review_happy() {
-        //happy
-        buy_product();
-        Response r = marketFacade.add_product_review(productId, 1, "great product");
-        check_was_not_exception("Review added successfully", r);
-    }
-
-    @Test
-    void add_product_review_sad() {
-        //sad
-        Response rSad = marketFacade.add_product_review(productId, 2, "great product");
-        check_was_exception(rSad);
-    }
-
-    @Test
-    void rate_product_happy() {
-        //happy
-        buy_product();
-        Response r = marketFacade.rate_product(productId, 1, 5);
-        check_was_not_exception("Rating added successfully to the product", r);
-    }
-
-    @Test
-    void rate_product_sad() {
-        //sad
-        Response rSad = marketFacade.rate_product(productId, 10, 5);
-        check_was_exception(rSad);
-    }
-
-    @Test
-    void rate_my_store() {
-        //happy
-        buy_product();
-        Response r = marketFacade.rate_store(1, 5);
-        check_was_exception(r);
-    }
-
-    @Test
-    void rate_store_sad() {
-        //sad
-        Response rSAd = marketFacade.rate_store(1, 5);
-        check_was_exception(rSAd);
-    }
-
-    @Test
-    void BuyHappy() {
-        marketFacade.open_store("Amit Store2");
-        marketFacade.add_product_to_store(2, 100, "tmp", 100, "tmp", new ArrayList<>());
-        marketFacade.add_product_to_cart(2, 2, 100);
-        Response res = marketFacade.buy_cart("", "");
-        check_was_not_exception("", res);
-    }
-
-    @Test
-    void BuyTooMuch() {
-        marketFacade.add_product_to_store(2, 100, "tmp", 100, "tmp", new ArrayList<>());
-        Response res = marketFacade.add_product_to_cart(2, 1, 120);
-        marketFacade.buy_cart("", "");
-        check_was_exception(res);
-    }
-
-    @Test
-    void BuySadminus1() {
-        marketFacade.add_product_to_store(2, 100, "tmp", 100, "tmp", new ArrayList<>());
-        Response res = marketFacade.add_product_to_cart(2, 1, -1);
-        marketFacade.buy_cart("", "");
-        check_was_exception(res);
-    }
-
-    @Test
-    void send_question_to_store_happy() {
-        //happy
-        buy_product();
-        String q = "how can i control the world";
-        Response r = marketFacade.send_question_to_store(1, q);
-        check_was_not_exception("Question send to the store successfully", r);
-        Response questions = manager.manager_view_store_questions(1);
-        if(questions.getValue().getClass() == (new LinkedList<String>()).getClass()){ // manager views question list
-            boolean flag = false;
-            for(String s : ((LinkedList<String>)questions.getValue())){
-                if(s.contains(q)){
-                    flag = true;
-                }
-            }
-            assertTrue(flag);
-        }
-    }
-
-    @Test
-    void send_question_to_store_sad() {
-        //sad
-        String q = "how can i control the worlds?";
-        Response rSad = marketFacade.send_question_to_store(1, q);
-        check_was_exception(rSad);
-        Response questions = manager.manager_view_store_questions(1);
-        if(questions.getValue().getClass() == (new LinkedList<String>()).getClass()) { // manager views question list
-            boolean flag = false;
-            for(String s : ((LinkedList<String>)questions.getValue())){
-                if(s.contains(q)){
-                    flag = true;
-                }
-            }
-            assertFalse(flag);
-        }
-    }
-
-    @Test
-    void manager_view_store_questions() {
-        Response questions = manager.manager_view_store_questions(1);
-        assertEquals((new LinkedList<String>()).getClass(), questions.getValue().getClass()); // manager view empty list of questions
-
-        Response r = marketFacade.manager_view_store_questions(1);
-        check_was_exception(r); // not a manager, shouldn't be able to view
-
-        buy_product();
-        String q = "how can i control the world";
-        r = marketFacade.send_question_to_store(1, q);
-        check_was_not_exception("Question send to the store successfully", r);
-        questions = manager.manager_view_store_questions(1);
-        if(questions.getValue().getClass() == (new LinkedList<String>()).getClass()) { // manager views question list
-            boolean flag = false;
-            for(String s : ((LinkedList<String>)questions.getValue())){
-                if(s.contains(q)){
-                    flag = true;
-                }
-            }
-            assertTrue(flag);
-        }
-
-    }
-
-    private List<String> gen_key_words(List<String> key_words){
-        List<String> res = new ArrayList<>();
-        String word = key_words.get(0)+"a";
-        res.add(word);
-        return res;
     }
 
     @Test
@@ -787,22 +769,179 @@ class StoreMoudleTest {
         check_was_exception(rSad);
     }
 
+
+    //------------------------------- Find store \ product information --------------------------------------------------------------------------
+
     @Test
-    void two_users_buying_the_same_product() {
-        SupplyAdapter supply = new SupplyAdapterImpl();
-        PaymentAdapter payment = new PaymentAdapterImpl();
-        marketFacade.add_product_to_cart(1, productId, 30);
-        MarketFacade tmpMarket = new MarketFacade(payment, supply);
-        tmpMarket.register("amit1@gmail.com", password, "amit", "mosko", birth_date);
-        tmpMarket.add_product_to_cart(1, productId, 50);
-        Response goodR = marketFacade.buy_cart("", "");
-        Response BadR = tmpMarket.buy_cart("", "");
-        check_was_not_exception("Purchase done successfully", goodR);
-        check_was_exception(BadR);
+    void find_store_information_happy() {
+        Response<StoreInformation> res = marketFacade.find_store_information(1);
+        check_was_not_exception("Store information received successfully", res);
+        StoreInformation store = res.getValue();
+        assertEquals(email,store.getFounder_email());
+        assertEquals("amit store",store.getName());
     }
 
     @Test
-    void adding_the_same_user_to_manegment() {
+    void find_store_information_sad() {
+        Response rSad = marketFacade.find_store_information(100);
+        check_was_exception(rSad);
+    }
+
+    @Test
+    void find_product_information_happy() {
+        Response<Product> product_information = marketFacade.find_product_information(productId, 1);
+        check_was_not_exception("Product information received successfully", product_information);
+        assertEquals(product_information.getValue().getName(),"apple","couldn't find properly product name");
+        assertEquals(product_information.getValue().getCategory(),"fruits","couldn't find properly product category");
+    }
+
+    @Test
+    void find_product_information_sad() {
+        //sad
+        Response rSad = marketFacade.find_product_information(productId, 2);
+        check_was_exception(rSad);
+    }
+
+    @Test
+    void find_products_by_name_happy() {
+        Response<List<Product>> response = marketFacade.find_products_by_name("apple");
+        check_was_not_exception("Product list received successfully", response);
+        assertEquals(response.getValue().stream().findAny().get().getName(),"apple","couldn't find existing product");
+    }
+
+    @Test
+    void find_products_by_category_happy() {
+        //happy
+        Response r = marketFacade.find_products_by_category("fruits");
+        check_was_not_exception("Products received successfully", r);
+
+    }
+
+    @Test
+    void find_products_by_keywords_happy() {
+        //happy
+        Response r = marketFacade.find_products_by_keywords("fruits");
+        check_was_not_exception("Products received successfully", r);
+    }
+
+
+    //---------------------------------------------- Rating and reviews --------------------------------------------------------------------------
+
+    @Test
+    void rate_store_sad() {
+        //sad
+        Response rSAd = marketFacade.rate_store(1, 5);
+        check_was_exception(rSAd);
+    }
+
+    @Test
+    void add_product_review_happy() {
+        //happy
+        buy_product();
+        Response r = marketFacade.add_product_review(productId, 1, "great product");
+        check_was_not_exception("Review added successfully", r);
+    }
+
+    @Test
+    void add_product_review_sad() {
+        //sad
+        Response rSad = marketFacade.add_product_review(productId, 2, "great product");
+        check_was_exception(rSad);
+    }
+
+    @Test
+    void rate_product_happy() {
+        //happy
+        buy_product();
+        Response r = marketFacade.rate_product(productId, 1, 5);
+        check_was_not_exception("Rating added successfully to the product", r);
+    }
+
+    @Test
+    void rate_product_sad() {
+        //sad
+        Response rSad = marketFacade.rate_product(productId, 10, 5);
+        check_was_exception(rSad);
+    }
+
+    @Test
+    void rate_my_store() {
+        //happy
+        buy_product();
+        Response r = marketFacade.rate_store(1, 5);
+        check_was_exception(r);
+    }
+
+
+    //------------------------------------------------ Questions --------------------------------------------------------------------------
+
+    @Test
+    void send_question_to_store_happy() {
+        //happy
+        buy_product();
+        String q = "how can i control the world";
+        Response r = marketFacade.send_question_to_store(1, q);
+        check_was_not_exception("Question send to the store successfully", r);
+        Response questions = manager.manager_view_store_questions(1);
+        if(questions.getValue().getClass() == (new LinkedList<String>()).getClass()){ // manager views question list
+            boolean flag = false;
+            for(String s : ((LinkedList<String>)questions.getValue())){
+                if(s.contains(q)){
+                    flag = true;
+                }
+            }
+            assertTrue(flag);
+        }
+    }
+
+    @Test
+    void send_question_to_store_sad() {
+        //sad
+        String q = "how can i control the worlds?";
+        Response rSad = marketFacade.send_question_to_store(1, q);
+        check_was_exception(rSad);
+        Response questions = manager.manager_view_store_questions(1);
+        if(questions.getValue().getClass() == (new LinkedList<String>()).getClass()) { // manager views question list
+            boolean flag = false;
+            for(String s : ((LinkedList<String>)questions.getValue())){
+                if(s.contains(q)){
+                    flag = true;
+                }
+            }
+            assertFalse(flag);
+        }
+    }
+
+    @Test
+    void manager_view_store_questions() {
+        Response questions = manager.manager_view_store_questions(1);
+        assertEquals((new LinkedList<String>()).getClass(), questions.getValue().getClass()); // manager view empty list of questions
+
+        Response r = marketFacade.manager_view_store_questions(1);
+        check_was_exception(r); // not a manager, shouldn't be able to view
+
+        buy_product();
+        String q = "how can i control the world";
+        r = marketFacade.send_question_to_store(1, q);
+        check_was_not_exception("Question send to the store successfully", r);
+        questions = manager.manager_view_store_questions(1);
+        if(questions.getValue().getClass() == (new LinkedList<String>()).getClass()) { // manager views question list
+            boolean flag = false;
+            for(String s : ((LinkedList<String>)questions.getValue())){
+                if(s.contains(q)){
+                    flag = true;
+                }
+            }
+            assertTrue(flag);
+        }
+
+    }
+
+
+    //------------------------------------------------ Manager \ Owner --------------------------------------------------------------------------
+
+    @Test
+    void adding_the_same_user_to_management() {
         SupplyAdapter supply = new SupplyAdapterImpl();
         PaymentAdapter payment = new PaymentAdapterImpl();
         MarketFacade owner = new MarketFacade(payment, supply);
@@ -816,113 +955,7 @@ class StoreMoudleTest {
         check_was_exception(bad);
     }
 
-    //scenario - there is num of products of specified product in store
-    //there is num of threads users who tries to buy all the amount of this product at once.
-    //only one user should succeed
-    @Test
-    void concurrent_buy_same_product_one_user_success() {
-        List<MarketFacade> marketFacadeList = createUsers("oneusersuccess");
-        for (MarketFacade mf : marketFacadeList) { // add all products to cart
-            mf.add_product_to_cart(1, productId, num_of_products);
-            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
-            boolean contains = false;
-            for (ProductInformation p : res) {
-                if (p.getProduct_id() == productId)
-                    contains = true;
-            }
-            assertTrue(contains, "failed to add product to users cart");
-        }
-
-        AtomicInteger num_of_success = new AtomicInteger(0);
-        AtomicInteger num_of_exceptions = new AtomicInteger(0);
-        List<Thread> threads = new ArrayList<>();
-        for (int i = 0; i < num_of_threads; i++) {
-            int num_of_market_facade = i;
-            threads.add(new Thread(() -> {
-                Response res = marketFacadeList.get(num_of_market_facade).buy_cart("", "");
-                if (res.WasException() && res.getValue().getClass().equals(ObjectDoesntExsitException.class))
-                    num_of_exceptions.incrementAndGet();
-                else if(!res.WasException())
-                    num_of_success.getAndIncrement();
-            }));
-        }
-        start_threads(threads);
-        join_threads(threads);
-        assertTrue(num_of_exceptions.get() == num_of_threads-1,"concurency fail, fail count: "+num_of_exceptions.get());
-        assertTrue(num_of_success.get() == 1,"concurency fail, success count: "+num_of_success.get());
-    }
-
-    //scenario - there is num of products of specified product in store
-    //there is num of threads users who tries to buy 1 item of this product at once.
-    //(num of products) users should succeed and the other fails
-    @Test
-    void concurrent_buy_same_product_half_user_success() {
-        List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
-        for (MarketFacade mf : marketFacadeList) { // add all products to cart
-            mf.add_product_to_cart(1, productId, 1);
-            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
-            boolean contains = false;
-            for (ProductInformation p : res) {
-                if (p.getProduct_id() == productId)
-                    contains = true;
-            }
-            assertTrue(contains, "failed to add product to users cart");
-        }
-
-        AtomicInteger num_of_success = new AtomicInteger(0);
-        AtomicInteger num_of_exceptions = new AtomicInteger(0);
-        List<Thread> threads = new ArrayList<>();
-        for (int i = 0; i < num_of_threads; i++) {
-            int num_of_market_facade = i;
-            threads.add(new Thread(() -> {
-                Response res = marketFacadeList.get(num_of_market_facade).buy_cart("", "");
-                if (res.WasException() && res.getValue().getClass().equals(ObjectDoesntExsitException.class))
-                    num_of_exceptions.incrementAndGet();
-                else if(!res.WasException())
-                    num_of_success.getAndIncrement();
-            }));
-        }
-        start_threads(threads);
-        join_threads(threads);
-        assertTrue(num_of_exceptions.get() == num_of_threads-num_of_products,"concurency fail, fail count: "+num_of_exceptions.get());
-        assertTrue(num_of_success.get() == num_of_products,"concurency fail, success count: "+num_of_success.get());
-    }
-
-    //scenario - there is num of products of specified product in store
-    //there is num of threads users who tries to buy 1 item of this product at once.
-    //all users should succeed.
-    @Test
-    void concurrent_buy_same_product_all_user_success() {
-        List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
-        for (MarketFacade mf : marketFacadeList) { // add all products to cart
-            mf.add_product_to_cart(1, productId, 1);
-            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
-            boolean contains = false;
-            for (ProductInformation p : res) {
-                if (p.getProduct_id() == productId)
-                    contains = true;
-            }
-            assertTrue(contains, "failed to add product to users cart");
-        }
-
-        AtomicInteger num_of_success = new AtomicInteger(0);
-        AtomicInteger num_of_exceptions = new AtomicInteger(0);
-        List<Thread> threads = new ArrayList<>();
-        for (int i = 0; i < num_of_products; i++) {
-            int num_of_market_facade = i;
-            threads.add(new Thread(() -> {
-                Response res = marketFacadeList.get(num_of_market_facade).buy_cart("", "");
-                if (res.WasException() && res.getValue().getClass().equals(ObjectDoesntExsitException.class))
-                    num_of_exceptions.incrementAndGet();
-                else if(!res.WasException())
-                    num_of_success.getAndIncrement();
-            }));
-        }
-        start_threads(threads);
-        join_threads(threads);
-        assertTrue(num_of_exceptions.get() == 0,"concurency fail, fail count: "+num_of_exceptions.get());
-        assertTrue(num_of_success.get() == num_of_products,"concurency fail, success count: "+num_of_success.get());
-    }
+    //----------------------- Concurrent -----------------------
 
     @Test
     void concurrent_add_new_owner(){
@@ -985,4 +1018,5 @@ class StoreMoudleTest {
         assertTrue(num_of_success.get() == 1,"concurency fail, success count: "+num_of_success.get());
         //TODO: check user is manager.
     }
+
 }
