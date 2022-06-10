@@ -9,7 +9,9 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -17,13 +19,15 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.security.Principal;
 import java.util.*;
+
+
 @Controller
 public class NotificationHandler extends TextWebSocketHandler {
 
     private static NotificationHandler notificationHandler = null;
     protected ApplicationContext context;
     protected MessageController messageController;
-    private final Map<String, List<String>> users_notifications = new HashMap<>();
+    private Map<String, List<String>> users_notifications = new HashMap<>();
 
 
     private NotificationHandler(){
@@ -37,33 +41,6 @@ public class NotificationHandler extends TextWebSocketHandler {
             notificationHandler = new NotificationHandler();
         return notificationHandler;
     }
-
-//    // TODO : ADD LOGGER, BUILD DICTIONARY
-//    @Override
-//    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-//        super.afterConnectionEstablished(session);
-//        System.out.println("new connection opened");
-//        webSocketSessionList.add(session);
-//    }
-//
-//    @Override
-//    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-//        super.handleTextMessage(session, message);
-//        System.out.println(message.getPayload());
-//        for (WebSocketSession webSocketSession : webSocketSessionList) {
-//            webSocketSession.sendMessage(message);
-//        }
-//    }
-//
-//    @Override
-//    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-//        super.afterConnectionClosed(session, status);
-//        System.out.println("connection closed");
-//        webSocketSessionList.remove(session);
-//    }
-//
-
-
 
 
 
@@ -96,7 +73,7 @@ public class NotificationHandler extends TextWebSocketHandler {
             this.users_notifications.put(email, new ArrayList<>());
         }
         this.users_notifications.get(email).add(notification);
-//        this.send_waiting_notifications(email);
+        this.send_waiting_notifications(email);
     }
 
     /**
@@ -105,37 +82,34 @@ public class NotificationHandler extends TextWebSocketHandler {
      * @return true if we send notifications, false if there is no open connection / no notifications to send.
      */
     public boolean send_waiting_notifications(String email) {
-        // step 1 : check that there is a connection & there are notifications to send.
-//        if (this.webSocketSessionDict.containsKey(email))
-//            return false;
+        // step 1 : check that there is a connection
+        if (!MessageController.has_open_connection(email))
+            return false;
+        // step 2 : check that there are notifications to send.
         if (!this.users_notifications.containsKey(email))
             return false;
-//        WebSocketSession session = this.webSocketSessionDict.get(email);
         List<String> notificationsList = this.users_notifications.get(email);
         if (notificationsList.size() == 0)
             return false;
 
-        // step 2 : sending messages
-        boolean flag_to_remove;
+        // step 3 : sending messages
+        List<String> to_remove = new ArrayList<>();
+        boolean flag_to_remove = false;
         for (String notification : notificationsList) {
             flag_to_remove = true;
             try{
-                // TODO : Add sendTo field who tell us where send the message
-                this.messageController.sendNotification(email, "message");
-//                messagingTemplate.convertAndSend("/topic/amit", "message");
-//                TextMessage message = new TextMessage(notification.getBytes());
-//                session.sendMessage(message);
+                this.messageController.sendNotification(email, notification);
             }
             catch (Exception e){
-                // TODO: LOGGER
                 flag_to_remove = false;
             }
-
-            // check if can remove inside the loop -> semester 1 BUG
             if (flag_to_remove) {
-                notificationsList.remove(notification);
+                to_remove.add(notification);
             }
         }
+
+        for (String noti : to_remove)
+            notificationsList.remove(noti);
         return true;
 
     }

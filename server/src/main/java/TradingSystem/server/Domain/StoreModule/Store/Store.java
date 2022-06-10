@@ -38,8 +38,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Store implements Observable {
 
-    //TODO: change all methods belongs to stuff_emails to point user.
-    //TODO: reviews - should contain users / users_email ? if user changes his email ?
 
     // -- fields
     private int store_id;
@@ -396,7 +394,7 @@ public class Store implements Observable {
 
     public void set_permissions(AssignUser user_who_set_permission, AssignUser manager, List<StorePermission> permissions) throws MarketException {
         // check that the manager appointed by the user
-        this.check_permission(user_who_set_permission, StorePermission.edit_permissions); //TODO: verify
+        this.check_permission(user_who_set_permission, StorePermission.edit_permissions);
         if (!this.get_appointer(manager).equals(user_who_set_permission))
             throw new AppointmentException("The manager is not appointed by user");
         // check that the user is not trying to change his permissions
@@ -595,6 +593,8 @@ public class Store implements Observable {
             this.stuffs_and_appointments.put(new_owner, appointment_to_add);
             new_owner.add_owner(this, appointment_to_add);
             this.set_manager_in_bids(0, new_owner.get_user_email());
+            this.send_message_to_the_store_stuff(new_owner.get_user_email()+" is a new owner in the store");
+
         }
     }
 
@@ -608,6 +608,7 @@ public class Store implements Observable {
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
             new_manager.add_manager(this, appointment_to_add);
             this.set_manager_in_bids(0, new_manager.get_user_email());
+            this.send_message_to_the_store_stuff(new_manager.get_user_email()+" is a new manager in the store");
         }
     }
 
@@ -629,6 +630,8 @@ public class Store implements Observable {
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
+            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from manage the store");
+
         }
     }
 
@@ -662,6 +665,7 @@ public class Store implements Observable {
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
+
         }
     }
 

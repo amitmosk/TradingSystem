@@ -61,6 +61,9 @@ public class SystemStartConfig {
         PaymentInfo paymentInfo = new PaymentInfo();
         SupplyInfo supplyInfo = new SupplyInfo();
         marketFacade1.buy_cart(paymentInfo, supplyInfo);
+        marketFacade2.add_product_to_cart(1,1,1);
+        marketFacade2.buy_cart(paymentInfo,supplyInfo);
+        marketFacade2.send_question_to_store(1,"why");
 
         // logout
         marketFacade1.logout();

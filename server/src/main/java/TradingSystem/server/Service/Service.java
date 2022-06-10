@@ -8,15 +8,19 @@ import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import org.springframework.context.ApplicationContext;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
 
+import java.security.Principal;
 import java.util.List;
 
 
 import java.util.LinkedList;
+
 
 
 @RestController
@@ -46,6 +50,8 @@ public class Service implements iService {
         return service;
     }
 
+
+
     @RequestMapping(value = "/amit")
     @CrossOrigin
     public String amit(String a) {
@@ -66,6 +72,13 @@ public class Service implements iService {
         // and the server will send all the waiting notifications
 //        this.notificationHandler.send_waiting_notifications(email);
         return answer;
+    }
+
+    @RequestMapping(value = "/get_notifications")
+    @CrossOrigin
+    public Response get_notifications(){
+        NotificationHandler.getInstance().send_waiting_notifications("amit@gmail.com");
+        return new Response("nice", "job");
     }
 
     @RequestMapping(value = "/logout")
