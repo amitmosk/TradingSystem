@@ -41,6 +41,7 @@ public class Service implements iService {
         this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         // -- amit code, TODO: remove after checks
          SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
+         SystemStartConfig.config_data("C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\main\\java\\TradingSystem\\server\\Config\\start_config.txt");
 
     }
 
@@ -68,8 +69,6 @@ public class Service implements iService {
     @Override
     public Response login(String email, String password) {
         Response answer = marketFacade.login(email, password);
-        // have to write new method that will be send onopen in the client to the server,
-        // and the server will send all the waiting notifications
 //        this.notificationHandler.send_waiting_notifications(email);
         return answer;
     }
