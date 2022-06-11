@@ -1,4 +1,4 @@
-package TradingSystem.server.Service;
+package TradingSystem.server.ConfigurationTests;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,19 +6,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.GenericMessage;
-import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import java.security.Principal;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 

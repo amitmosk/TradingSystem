@@ -1,0 +1,7 @@
+register#amit@walla.com#12345678aA#tomer#shtien#19.04.95
+register#tom@walla.com#12345678aA#tomer#shtien#19.04.95
+logout#amit@walla.com
+login#amit@walla.com#12345678aA
+open_store#amit@walla.com#COLBO
+open_store#tom@walla.com#HONDA
+

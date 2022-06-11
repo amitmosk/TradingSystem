@@ -28,7 +28,6 @@ All of the instructions in the configuration file will cancelled.
  
 Available functions (pay attention to copy the instruction name exactly) :
  * register
- * login
  * open_store
  * add_manager
  * add_owner
@@ -37,5 +36,7 @@ Available functions (pay attention to copy the instruction name exactly) :
  * close_store_temporarly
  * close_store_permanently
   * logout
+ * login
 
 Pay attention that all the instructions should keep this order.
+* after register action the user is automaticially login.

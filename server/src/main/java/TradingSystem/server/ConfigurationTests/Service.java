@@ -1,4 +1,4 @@
-package TradingSystem.server.Service;
+package TradingSystem.server.ConfigurationTests;
 
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
@@ -6,6 +6,7 @@ import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
+import TradingSystem.server.Domain.Utils.Exception.exitException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +17,8 @@ import java.util.List;
 
 import java.util.LinkedList;
 
-import static TradingSystem.server.Service.MarketSystem.services_config_path;
-import static TradingSystem.server.Service.MarketSystem.instructions_config_path;
+import static TradingSystem.server.ConfigurationTests.MarketSystem.services_config_path;
+import static TradingSystem.server.ConfigurationTests.MarketSystem.instructions_config_path;
 
 
 @RestController
@@ -32,10 +33,15 @@ public class Service implements iService {
 
     private Service() {
         // -- Market init
-        MarketSystem system = new MarketSystem(services_config_path, instructions_config_path);
-        PaymentAdapter paymentAdapter = system.getPayment_adapter();
-        SupplyAdapter supplyAdapter = system.getSupply_adapter();
-        this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
+        try{
+            MarketSystem system = new MarketSystem(services_config_path, instructions_config_path);
+            PaymentAdapter paymentAdapter = system.getPayment_adapter();
+            SupplyAdapter supplyAdapter = system.getSupply_adapter();
+            this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
+        }
+        catch (exitException e){
+            System.exit(3);
+        }
     }
 
     public synchronized static Service getInstance() {

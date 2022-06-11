@@ -1,14 +1,12 @@
-package TradingSystem.server.Service;
+package TradingSystem.server.ConfigurationTests;
 
 
 
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
-import TradingSystem.server.Domain.Utils.Response;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public interface iService {
 

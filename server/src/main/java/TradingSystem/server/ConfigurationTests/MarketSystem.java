@@ -1,9 +1,10 @@
-package TradingSystem.server.Service;
+package TradingSystem.server.ConfigurationTests;
 
 import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.UserModule.UserController;
+import TradingSystem.server.Domain.Utils.Exception.exitException;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Domain.Utils.SystemLogger;
 
@@ -29,7 +30,7 @@ public class MarketSystem {
     private SupplyAdapter supply_adapter;
 
 
-    public MarketSystem(String services_config_path, String instructions_config_path) {
+    public MarketSystem(String services_config_path, String instructions_config_path) throws exitException {
         this.init_market(services_config_path, instructions_config_path);
     }
 
@@ -37,22 +38,25 @@ public class MarketSystem {
     /**
      * Requirement 1.1
      */
-    public void init_market(String services_config_path, String instructions_config_path)  {
+    public void init_market(String services_config_path, String instructions_config_path) throws exitException {
         SystemLogger.getInstance().add_log("start init market");
         // set external services according config file -> test or real
         boolean config_external_services = this.config_external_services(services_config_path);
         if (!config_external_services){
+            throw new exitException();
             // TODO : logger & Exit
         }
         boolean connect_to_external_systems = payment_adapter.handshake() && supply_adapter.handshake();
         if (!connect_to_external_systems) // have to exit
         {
-            // TODO : logger & Exit
             System.out.println("cant connect to the external systems");
+            throw new exitException();
+            // TODO : logger & Exit
         }
         boolean config_instructions = this.config_instructions_data(instructions_config_path);
         if (!config_instructions){
             // TODO : BAR answer
+            throw new exitException();
         }
 
 
@@ -80,30 +84,32 @@ public class MarketSystem {
     }
 
     public boolean config_instructions_data(String instructions_config_path){
+        boolean answer = true;
         HashMap<String, MarketFacade> facades = new HashMap<>();
         try{
             File file = new File(instructions_config_path);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()){
                 String instruction = scanner.nextLine();
-                String[] instruction_params = instruction.split("#");
-                run_instruction(instruction_params, facades);
+                if (!instruction.equals("")){
+                    String[] instruction_params = instruction.split("#");
+                    run_instruction(instruction_params, facades);
+                }
             }
 
 
         } catch (Exception e) {
             // have to reset all the data of the market and stop the method.
             e.printStackTrace();
+            answer = false;
 
             // TODO: logger
-            for (MarketFacade marketFacade : facades.values()){
-                marketFacade.clear();
-            }
-            facades.clear();
-            return false;
-
         }
-        return true;
+        for (MarketFacade marketFacade : facades.values()){
+            marketFacade.clear();
+        }
+        facades.clear();
+        return answer;
 
     }
     private boolean config_external_services(String services_config_path){
