@@ -75,9 +75,10 @@ Pay attention that all the instructions should keep this order.
  4. Use external systems services according http requests to the external server, implemented with adapter & proxy design patterns.
  5. DB - <GAL>
  
-## Tests
+ ## Tests: 
  <here come Eylon words>
  
+  thank you for reading & hope you enjoy :)
 
 
 
