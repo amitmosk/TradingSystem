@@ -1,6 +1,5 @@
 package TradingSystem.server.Service;
 
-import TradingSystem.server.Config.SystemStartConfig;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,13 +18,15 @@ class ServiceTest {
 
     @Test
     void Empty_test_path() {
-        boolean answer = SystemStartConfig.config_instructions_data(empty_test_path);
+        MarketSystem marketSystem = new MarketSystem();
+        boolean answer = marketSystem.config_instructions_data(empty_test_path);
         assertTrue(answer);
     }
 
     @Test
     void Wrong_format_test_path(){
-        boolean answer = SystemStartConfig.config_instructions_data(wrong_format_test_path);
+        MarketSystem marketSystem = new MarketSystem();
+        boolean answer = marketSystem.config_instructions_data(wrong_format_test_path);
         assertFalse(answer);
     }
 }

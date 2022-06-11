@@ -30,17 +30,17 @@ public class MarketSystem {
 
 
     public MarketSystem() {
-        this.init_market();
+        this.init_market(services_config_path, instructions_config_path);
     }
 
 
     /**
      * Requirement 1.1
      */
-    public void init_market()  {
+    public void init_market(String services_config_path, String instructions_config_path)  {
         SystemLogger.getInstance().add_log("start init market");
         // set external services according config file -> test or real
-        boolean config_external_services = this.config_external_services();
+        boolean config_external_services = this.config_external_services(services_config_path);
         if (!config_external_services){
             // TODO : logger & Exit
         }
@@ -50,7 +50,7 @@ public class MarketSystem {
             // TODO : logger & Exit
             System.out.println("cant connect to the external systems");
         }
-        boolean config_instructions = this.config_instructions_data();
+        boolean config_instructions = this.config_instructions_data(instructions_config_path);
         if (!config_instructions){
             // TODO : BAR answer
         }
@@ -79,7 +79,7 @@ public class MarketSystem {
         return supply_adapter;
     }
 
-    public boolean config_instructions_data(){
+    public boolean config_instructions_data(String instructions_config_path){
         HashMap<String, MarketFacade> facades = new HashMap<>();
         try{
             File file = new File(instructions_config_path);
@@ -106,7 +106,7 @@ public class MarketSystem {
         return true;
 
     }
-    private boolean config_external_services(){
+    private boolean config_external_services(String services_config_path){
         try{
             File file = new File(services_config_path);
             Scanner scanner = new Scanner(file);
