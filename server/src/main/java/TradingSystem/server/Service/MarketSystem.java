@@ -29,7 +29,7 @@ public class MarketSystem {
     private SupplyAdapter supply_adapter;
 
 
-    public MarketSystem() {
+    public MarketSystem(String services_config_path, String instructions_config_path) {
         this.init_market(services_config_path, instructions_config_path);
     }
 
@@ -62,8 +62,8 @@ public class MarketSystem {
 
         // TODO : remove this try
         try {
-            this.add_admins();
-            this.init_data_to_market(this.payment_adapter, this.supply_adapter);
+//            this.add_admins();
+//            this.init_data_to_market(this.payment_adapter, this.supply_adapter);
         }
         catch (Exception e)
         {

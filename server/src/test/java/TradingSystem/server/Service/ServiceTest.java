@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServiceTest {
 
+    private final String external_services_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\test\\java\\TradingSystem" +
+            "\\server\\Service\\external_services.txt";
 
     private final String empty_test_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\test\\java\\TradingSystem" +
             "\\server\\Service\\empty_test.txt";
@@ -18,15 +20,14 @@ class ServiceTest {
 
     @Test
     void Empty_test_path() {
-        MarketSystem marketSystem = new MarketSystem();
-        boolean answer = marketSystem.config_instructions_data(empty_test_path);
-        assertTrue(answer);
+        MarketSystem marketSystem = new MarketSystem(external_services_path, empty_test_path);
+        int x = 5;
     }
 
     @Test
     void Wrong_format_test_path(){
-        MarketSystem marketSystem = new MarketSystem();
-        boolean answer = marketSystem.config_instructions_data(wrong_format_test_path);
-        assertFalse(answer);
+        MarketSystem marketSystem = new MarketSystem(external_services_path, wrong_format_test_path);
+        int x = 5;
+
     }
 }

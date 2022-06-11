@@ -16,6 +16,7 @@ import java.util.List;
 
 import java.util.LinkedList;
 
+import static TradingSystem.server.Service.MarketSystem.services_config_path;
 import static TradingSystem.server.Service.MarketSystem.instructions_config_path;
 
 
@@ -31,7 +32,7 @@ public class Service implements iService {
 
     private Service() {
         // -- Market init
-        MarketSystem system = new MarketSystem();
+        MarketSystem system = new MarketSystem(services_config_path, instructions_config_path);
         PaymentAdapter paymentAdapter = system.getPayment_adapter();
         SupplyAdapter supplyAdapter = system.getSupply_adapter();
         this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
