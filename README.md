@@ -1,32 +1,34 @@
-# TradingSystem
+# Trading System
+
 Workshop on Software Engineering Project -- 2022
--- Contrubutors:
-Eylon Sade 
-Gal Brown
-Amit Grumet
-Tom Nisim
-Amit Moskovitz
 
-Config files
-there are 2 configuration files for our system.
-first, the external services file, who will contatin one of the following values:
-* tests
-* real
-for tests, we will not connect to the external systems and managed the requests locally.
-for real time, we will connect to the external systems.
-The config file path should be:
-..\server\Config\services_config.txt
+## Contrubutors:
+Eylon Sade   
+Gal Brown  
+Amit Grumet  
+Tom Nisim  
+Amit Moskovitz  
 
-The second configuration file contatins instructions for initialized data for the market when we load the system.
-This file is a text file who contatins instructions in the next format :
-<instruction name>#<param1>#<param2>#<param3>..
-The config file path should be:
-..\server\Config\instructions_config.txt
+## Initialization
+there are 2 configuration files for our system.  
+first, the external services file, who will contatin one of the following values:  
+* tests  
+* real  
 
-If one of the instructions will failed logicilly or because a wrong format,
-All of the instructions in the configuration file will cancelled.
+for tests, we will not connect to the external systems and managed the requests locally.  
+for real time, we will connect to the external systems.  
+The config file path should be:  
+*..\server\Config\services_config.txt*  
+
+The second configuration file contatins instructions for initialized data for the market when we load the system.  
+This file is a text file who contatins instructions in the next format :  
+<-instruction name>#<-param1>#<-param2>#<-param3>..  
+The config file path should be:  
+*..\server\Config\instructions_config.txt*  
+If one of the instructions will failed logicilly or because a wrong format,  
+All of the instructions in the configuration file will cancelled.  
  
-API:
+## API:
 Available functions (pay attention to copy the instruction name exactly) :
  * register#<email>#<
  * open_store#<email>#<store name>
@@ -41,3 +43,8 @@ Available functions (pay attention to copy the instruction name exactly) :
 
 Pay attention that all the instructions should keep this order.
 * after register action the user is automaticially login.
+ 
+ ## How to use?
+ <Tom>
+ ## Tests
+ <Eylon>
