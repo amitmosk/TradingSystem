@@ -7,20 +7,17 @@ import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
-import org.springframework.context.ApplicationContext;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
 
-import java.security.Principal;
 import java.util.List;
 
 
 import java.util.LinkedList;
 
+import static TradingSystem.server.Service.MarketSystem.instructions_config_path;
 
 
 @RestController
@@ -41,7 +38,7 @@ public class Service implements iService {
         this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         // -- amit code, TODO: remove after checks
          SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
-         SystemStartConfig.config_data("C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\main\\java\\TradingSystem\\server\\Config\\start_config.txt");
+
 
     }
 
@@ -69,7 +66,6 @@ public class Service implements iService {
     @Override
     public Response login(String email, String password) {
         Response answer = marketFacade.login(email, password);
-//        this.notificationHandler.send_waiting_notifications(email);
         return answer;
     }
 

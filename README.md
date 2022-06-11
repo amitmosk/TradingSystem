@@ -7,12 +7,21 @@ Amit Grumet
 Tom Nisim
 Amit Moskovitz
 
-Config file 
-The configuration file contatins instructions for initialized data for the market when we load the system.
+Config files
+there are 2 configuration files for our system.
+first, the external services file, who will contatin one of the following values:
+* tests
+* real
+for tests, we will not connect to the external systems and managed the requests locally.
+for real time, we will connect to the external systems.
+The config file path should be:
+..\server\Config\services_config.txt
+
+The second configuration file contatins instructions for initialized data for the market when we load the system.
 This file is a text file who contatins instructions in the next format :
 <instruction name>#<param1>#<param2>#<param3>..
 The config file path should be:
-..\server\Config\start_config.txt
+..\server\Config\instructions_config.txt
 
 If one of the instructions will failed logicilly or because a wrong format,
 All of the instructions in the configuration file will cancelled.
