@@ -2,14 +2,19 @@
 
 Workshop on Software Engineering Project -- 2022
 
+A trading system is a system that enables trading infrastructure between sellers and buyers.  
+The system is composite from a collection of stores.  
+A store contains identifying details and stock of products, with each product having different characteristics.  
+System users visit the market for buying, selling, and managing the stores.  
+
 ## Initialization
-there are 2 configuration files for our system.  
-first, the external services file, who will contatin one of the following values:  
+There are 2 configuration files for our system.  
+First, the external services file, who will contatin one of the following values:  
 * tests  
 * real  
 
-for tests, we will not connect to the external systems and managed the requests locally.  
-for real time, we will connect to the external systems.  
+For tests, we will not connect to the external systems and managed the requests locally.  
+For real time, we will connect to the external systems.  
 The config file path should be:  
 *..\server\Config\services_config.txt*  
 
@@ -55,10 +60,10 @@ Available functions (pay attention to copy the instruction name exactly) :
  
  
 Pay attention that all the instructions should keep this order.
-* after register action the user is automaticially login.
+* After register action the user is automaticially login.
  
 ## How to use?
- <here come Tom video & words>
+ <Here come Tom video & words>
   
 ## Features:
  1. Statistics about the traffic in our system.
@@ -68,8 +73,7 @@ Pay attention that all the instructions should keep this order.
  5. DB - <GAL>
  
  ## Tests: 
- <here come Eylon words>
-
+ <Here come Eylon words>
 
 ## Contrubutors:
 Eylon Sade   
