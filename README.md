@@ -32,15 +32,15 @@ All of the instructions in the configuration file will cancelled.
 ## API:
 Available functions (pay attention to copy the instruction name exactly) :
  * register#<-email>#<-password>#<-name>#<-username>#<-last name>#<-birth date>
- * open_store#<email>#<store name>
+ * open_store#<-email>#<-store name>
  * add_manager#<-appointer email>#<-to appint email>#<-store id>
  * add_owner#<-appointer email>#<-to appint email>#<-store id>
  * remove_owner#<-remover email>#<-to remove email>#<-store id>
  * remove_manager#<-remover email>#<-to remove email>#<-store id>
  * close_store_temporarly#<-manager email>#<-store id>
  * close_store_permanently#<-admin email>#<-store id>
- * logout#<email>
- * login#<email>#<password>
+ * logout#<-email>
+ * login#<-email>#<-password>
  * add_product_to_cart#<-email>#<-store id>#<-product id>#<-quantity>
  * remove_product_from_cart#<-store id>#<-product id>
  * add_bid#<-email>#<-store id>#<-product id>#<-quantity>#<-offer price>
