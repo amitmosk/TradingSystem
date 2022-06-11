@@ -1,4 +1,4 @@
-package TradingSystem.server.ConfigurationTests;
+package TradingSystem.server.Service;
 
 import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;

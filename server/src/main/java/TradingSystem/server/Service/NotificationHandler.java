@@ -1,4 +1,4 @@
-package TradingSystem.server.ConfigurationTests;
+package TradingSystem.server.Service;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;

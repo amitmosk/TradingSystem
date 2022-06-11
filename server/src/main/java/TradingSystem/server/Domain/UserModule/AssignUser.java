@@ -6,7 +6,7 @@ import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.Utils.Exception.AppointmentException;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
-import TradingSystem.server.ConfigurationTests.NotificationHandler;
+import TradingSystem.server.Service.NotificationHandler;
 
 import java.util.HashMap;
 import java.util.LinkedList;

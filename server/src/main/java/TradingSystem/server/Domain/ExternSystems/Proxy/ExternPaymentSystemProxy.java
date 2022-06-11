@@ -5,7 +5,7 @@ import TradingSystem.server.Domain.Utils.Utils;
 
 import java.util.HashMap;
 
-import static TradingSystem.server.ConfigurationTests.MarketSystem.external_system_url;
+import static TradingSystem.server.Service.MarketSystem.external_system_url;
 
 public class ExternPaymentSystemProxy {
 

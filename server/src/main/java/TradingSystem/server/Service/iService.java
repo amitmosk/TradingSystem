@@ -1,4 +1,4 @@
-package TradingSystem.server.ConfigurationTests;
+package TradingSystem.server.Service;
 
 
 

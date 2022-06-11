@@ -1,4 +1,4 @@
-package TradingSystem.server.ConfigurationTests;
+package TradingSystem.server.Service;
 
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
@@ -17,8 +17,8 @@ import java.util.List;
 
 import java.util.LinkedList;
 
-import static TradingSystem.server.ConfigurationTests.MarketSystem.services_config_path;
-import static TradingSystem.server.ConfigurationTests.MarketSystem.instructions_config_path;
+import static TradingSystem.server.Service.MarketSystem.services_config_path;
+import static TradingSystem.server.Service.MarketSystem.instructions_config_path;
 
 
 @RestController
