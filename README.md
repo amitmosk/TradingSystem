@@ -2,14 +2,6 @@
 
 Workshop on Software Engineering Project -- 2022
 
-## Contrubutors:
-Eylon Sade   
-Gal Brown  
-Amit Grumet  
-Tom Nisim  
-Amit Moskovitz  
-© Copyright
-
 ## Initialization
 there are 2 configuration files for our system.  
 first, the external services file, who will contatin one of the following values:  
@@ -79,6 +71,12 @@ Pay attention that all the instructions should keep this order.
  <here come Eylon words>
 
 
-
+## Contrubutors:
+Eylon Sade   
+Gal Brown  
+Amit Grumet  
+Tom Nisim  
+Amit Moskovitz  
+© Copyright
 
 
