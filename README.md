@@ -77,8 +77,6 @@ Pay attention that all the instructions should keep this order.
  
  ## Tests: 
  <here come Eylon words>
- 
-  thank you for reading & hope you enjoy :)
 
 
 
