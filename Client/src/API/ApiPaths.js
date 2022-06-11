@@ -172,3 +172,5 @@ export const ADD_SIMPLE_PURCHASE = API_PATH + '/add_simple_purchase';
 export const ADD_AND_SIMPLE_PURCHASE = API_PATH + '/add_and_purchase_rule';
 export const ADD_OR_SIMPLE_PURCHASE = API_PATH + '/add_or_purchase_rule';
 
+//PREDICT
+export const ADD_PREDICT = API_PATH + '/add_predict';

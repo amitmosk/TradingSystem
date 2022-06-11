@@ -3,7 +3,7 @@ import {CONNECTION_ERROR, CATCH, ADD_SIMPLE_CATEGORY_DISCOUNT, ADD_SIMPLE_PRODUC
     ADD_COMPLEX_DISCOUNT, ADD_COMPLEX_AND_DISCOUNT, ADD_COMPLEX_OR_DISCOUNT, 
     ADD_COMPLEX_MAX_DISCOUNT, ADD_COMPLEX_PLUS_DISCOUNT, 
     ADD_COMPLEX_XOR_DISCOUNT, SEND_PREDDICTS, GET_DISCOUNT_POLICY,
-     ADD_SIMPLE_PURCHASE, ADD_AND_SIMPLE_PURCHASE, ADD_OR_SIMPLE_PURCHASE} from "./ApiPaths";
+     ADD_SIMPLE_PURCHASE, ADD_AND_SIMPLE_PURCHASE, ADD_OR_SIMPLE_PURCHASE, ADD_PREDICT} from "./ApiPaths";
 import { Response } from "./Response";
 import { Store } from "../ServiceObjects/Store";
 import { Product } from "../ServiceObjects/Product";
@@ -237,7 +237,35 @@ export class PoliciesApi {
         .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
-            
+
+
+             //---------------------------------Create Predict-------------------------------------       
+
+             add_predict(store_id,catgorey,product,above,equql,num,price,quantity,age,time,year,month,day,name){
+                return instance.get(ADD_PREDICT,
+                    {
+                        params:{
+                            store_id : store_id,
+                            catgorey : catgorey,
+                            product : product,
+                            above : above,
+                            equql : equql,
+                            num : num,
+                            price : price,
+                            quantity : quantity,
+                            age : age,
+                            time : time,
+                            year : year,
+                            month : month,
+                            day : day,
+                            name : name,
+                            }
+                    })
+                    .then(res => {
+                        return new Response(res.data)
+                    })
+                    .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+                }    
             
           
     
