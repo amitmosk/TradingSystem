@@ -78,32 +78,32 @@ export default class PaymentPage extends Component {
         // TODO : check input
         if (Utils.check_credit_number(creditnumber) == 0)
         {
-            this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal Card Number", severity: "error" } });
             return;
         }
         if (Utils.check_month(month)== 0)
         {
-            this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal month", severity: "error" } });
             return;
         }
         if (Utils.check_year_later(year)== 0)
         {
-            this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal Year", severity: "error" } });
             return;
         }
         if (Utils.check_holder(holder)== 0)
         {
-            this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal Name", severity: "error" } });
             return;
         }
         if (Utils.check_ccv(ccv)== 0)
         {
-            this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal CCV", severity: "error" } });
             return;
         }
         if (Utils.check_id(id)== 0)
         {
-            this.setState({ snackbar: { children: "Illegal Payment Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal ID", severity: "error" } });
             return;
         }
 

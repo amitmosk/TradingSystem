@@ -46,6 +46,7 @@ import MyStores from "./components/MyStores";
 import BuyCart from "./components/BuyCart";
 import ManagerPermissions from "./components/ManagerPermissions";
 import ViewBidsStatusNevigator from "./components/ViewBidsStatusNevigator";
+import Notifications from "./components/Notifications";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -235,7 +236,7 @@ export default class App extends Component {
             element={<ManagerPermissions />}
           ></Route>
 
-          
+          <Route path="/Notifications" element={<Notifications />}></Route>
 
           <Route
             path="/StorePage/:id/StoreManagment/ViewStorePurchaseHistory"

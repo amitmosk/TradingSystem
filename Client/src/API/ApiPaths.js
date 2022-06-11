@@ -146,6 +146,7 @@ export const IMPROVE_SECURITY = API_PATH + '/improve_security';
 
 // // ========= policies ========== //
 
+///DISCOUNT
 
 export const ADD_SIMPLE_CATEGORY_DISCOUNT = API_PATH + '/add_simple_categorey_discount_rule';
 export const ADD_SIMPLE_PRODUCT_DISCOUNT = API_PATH + '/add_simple_product_discount_rule';
@@ -165,6 +166,9 @@ export const GET_DISCOUNT_POLICY = API_PATH + '/get_discount_policy';
 
 
 
+///PURCHASE
 
-
+export const ADD_SIMPLE_PURCHASE = API_PATH + '/add_simple_purchase';
+export const ADD_AND_SIMPLE_PURCHASE = API_PATH + '/add_and_purchase_rule';
+export const ADD_OR_SIMPLE_PURCHASE = API_PATH + '/add_or_purchase_rule';
 

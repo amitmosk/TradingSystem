@@ -10,6 +10,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import SimpleBadge from "./SimpleBadge";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export default function AccountMenu({ log, state, user }) {
   console.log(user+"\n\n\n\n\n");
@@ -81,6 +83,12 @@ export default function AccountMenu({ log, state, user }) {
           {/* <Link href="/ShoppingCart" underline="hover"> */}
             
         </MenuItem>
+        {/* <MenuItem>
+          <Avatar />{" "}
+          
+          <Link to={{pathname:`/ShoppingCart`}} onClick={handleClose} underline="hover">{<ShoppingCartIcon></ShoppingCartIcon>} </Link>
+            
+        </MenuItem> */}
         {state !== 0 ? (
           <>
             <MenuItem>
@@ -101,10 +109,11 @@ export default function AccountMenu({ log, state, user }) {
               {/* <Link href="/UserViewQuestions" underline="hover"> */}
                 
             </MenuItem>
-            <MenuItem>
+            {/* <MenuItem>
               <Avatar />{" "}
               <Link to={{pathname:`/Notifications`}} onClick={handleClose} underline="hover"> {"Notifications"}</Link>
-            </MenuItem>
+            </MenuItem> */}
+            
             <MenuItem>
               <Avatar />{" "}
               <Link to={{pathname:`/MyStores`}} onClick={handleClose} underline="hover" >{'My Stores'}</Link>

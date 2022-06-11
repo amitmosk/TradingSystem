@@ -7,7 +7,8 @@ import AccountMenu from "./AccountMenu";
 import Grid from "@mui/material/Grid";
 import { ConnectApi } from "../API/ConnectApi";
 import { Navigate } from 'react-router-dom'; 
-
+import HomeIcon from '@mui/icons-material/Home';
+import SimpleBadge from "./SimpleBadge";
 
 export default function NavBar({updateUserState, user}) {
 
@@ -72,6 +73,30 @@ export default function NavBar({updateUserState, user}) {
             >
               Market Stores
             </Link>
+
+
+
+            {/* <MenuItem>
+              <Avatar />{" "}
+              <Link to={{pathname:`/Notifications`}} onClick={handleClose} underline="hover"> {<SimpleBadge num={6}></SimpleBadge>}</Link>
+            </MenuItem> */}
+
+            <Link
+            href="/Notifications"
+            component="button"
+            variant="body2"
+            position="right"
+            onClick={() => {
+              console.info("I'm Register button, add link.");
+            }}
+          >
+            <SimpleBadge num={6}></SimpleBadge>
+            
+          </Link>
+
+
+
+
           <Link
             href="/"
             component="button"
@@ -81,7 +106,8 @@ export default function NavBar({updateUserState, user}) {
               console.info("I'm Register button, add link.");
             }}
           >
-            Home
+            <HomeIcon></HomeIcon>
+            
           </Link>
           {login_register()}
           <AccountMenu log={logout} state={user.state} user={user}></AccountMenu>

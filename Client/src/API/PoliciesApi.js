@@ -1,7 +1,9 @@
 // import axios from "axios";
 import {CONNECTION_ERROR, CATCH, ADD_SIMPLE_CATEGORY_DISCOUNT, ADD_SIMPLE_PRODUCT_DISCOUNT, ADD_SIMPLE_STORE_DISCOUNT, 
     ADD_COMPLEX_DISCOUNT, ADD_COMPLEX_AND_DISCOUNT, ADD_COMPLEX_OR_DISCOUNT, 
-    ADD_COMPLEX_MAX_DISCOUNT, ADD_COMPLEX_PLUS_DISCOUNT, ADD_COMPLEX_XOR_DISCOUNT, SEND_PREDDICTS, GET_DISCOUNT_POLICY} from "./ApiPaths";
+    ADD_COMPLEX_MAX_DISCOUNT, ADD_COMPLEX_PLUS_DISCOUNT, 
+    ADD_COMPLEX_XOR_DISCOUNT, SEND_PREDDICTS, GET_DISCOUNT_POLICY,
+     ADD_SIMPLE_PURCHASE, ADD_AND_SIMPLE_PURCHASE, ADD_OR_SIMPLE_PURCHASE} from "./ApiPaths";
 import { Response } from "./Response";
 import { Store } from "../ServiceObjects/Store";
 import { Product } from "../ServiceObjects/Product";
@@ -11,7 +13,9 @@ import { Product } from "../ServiceObjects/Product";
 var qs = require('qs');
 const instance = require('axios');
 
+
 export class PoliciesApi {
+    //---------------------------------discount rules-------------------------------------
     add_simple_categorey_discount_rule(store_id, name, precent, nameOfRule ){
         return instance.get(ADD_SIMPLE_CATEGORY_DISCOUNT,
             {
@@ -74,8 +78,6 @@ export class PoliciesApi {
         })
         .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
-
-
     add_and_discount_rule(left, right, store_id,  nameOfRule ){
     return instance.get(ADD_COMPLEX_AND_DISCOUNT,
         {
@@ -159,37 +161,81 @@ export class PoliciesApi {
         }
 
 
-            send_predicts(store_id){
-            return instance.get(SEND_PREDDICTS,
-                {
-                    params:{
-                        store_id : store_id,
-                        }
-                })
-                .then(res => {
-                    return new Response(res.data)
-                })
-                .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-            }
-
-                get_discount_policy(store_id){
-                return instance.get(GET_DISCOUNT_POLICY,
-                    {
-                        params:{
-                            store_id : store_id,
-                            }
-                    })
-                    .then(res => {
-                        return new Response(res.data)
-                    })
-                    .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    send_predicts(store_id){
+    return instance.get(SEND_PREDDICTS,
+        {
+            params:{
+                store_id : store_id,
                 }
+        })
+        .then(res => {
+            return new Response(res.data)
+        })
+        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    }
+
+    get_discount_policy(store_id){
+    return instance.get(GET_DISCOUNT_POLICY,
+        {
+            params:{
+                store_id : store_id,
+                }
+        })
+        .then(res => {
+            return new Response(res.data)
+        })
+        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    }
 
 
-                
+         //---------------------------------discount rules-------------------------------------       
          
 
+    add_simple_purchase_rule(PredictName,  NameOfRule,  store_id){
+    return instance.get(ADD_SIMPLE_PURCHASE,
+        {
+            params:{
+                PredictName : PredictName,
+                NameOfRule : NameOfRule,
+                store_id : store_id,
+                }
+        })
+        .then(res => {
+            return new Response(res.data)
+        })
+        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    }
 
+    add_and_purchase_rule( left,  right,  store_id,  NameOfrule){
+        return instance.get(ADD_AND_SIMPLE_PURCHASE,
+            {
+                params:{
+                    left : left,
+                    right : right,
+                    store_id : store_id,
+                    NameOfrule : NameOfrule,
+                    }
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+        }
+    add_or_purchase_rule( left,  right,  store_id,  NameOfrule){
+    return instance.get(ADD_OR_SIMPLE_PURCHASE,
+        {
+            params:{
+                left : left,
+                right : right,
+                store_id : store_id,
+                NameOfrule : NameOfrule,
+                }
+        })
+        .then(res => {
+            return new Response(res.data)
+        })
+        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    }
 
             
             

@@ -76,27 +76,27 @@ export default class SupplyPage extends Component {
         //TODO: check input validity
         if (Utils.check_holder(name)== 0)
         {
-            this.setState({ snackbar: { children: "Illegal Supply Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal Name", severity: "error" } });
             return;
         }
         if (Utils.check_address(address)== 0)
         {
-            this.setState({ snackbar: { children: "Illegal Supply Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal address", severity: "error" } });
             return;
         }
         if (Utils.check_city(city)== 0)
         {
-            this.setState({ snackbar: { children: "Illegal Supply Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal city", severity: "error" } });
             return;
         }
         if (Utils.check_country(country)== 0)
         {
-            this.setState({ snackbar: { children: "Illegal Supply Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal country", severity: "error" } });
             return;
         }
         if (Utils.check_zip(zip)== 0)
         {
-            this.setState({ snackbar: { children: "Illegal Supply Info", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal zip code", severity: "error" } });
             return;
         }
         
