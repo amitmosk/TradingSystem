@@ -26,17 +26,18 @@ The config file path should be:
 If one of the instructions will failed logicilly or because a wrong format,
 All of the instructions in the configuration file will cancelled.
  
+API:
 Available functions (pay attention to copy the instruction name exactly) :
- * register
- * open_store
+ * register#<email>#<
+ * open_store#<email>#<store name>
  * add_manager
  * add_owner
  * remove_owner
  * remove_manager
  * close_store_temporarly
  * close_store_permanently
-  * logout
- * login
+  * logout#<email>
+ * login#<email>#<password>
 
 Pay attention that all the instructions should keep this order.
 * after register action the user is automaticially login.
