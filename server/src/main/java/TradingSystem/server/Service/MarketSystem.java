@@ -5,6 +5,7 @@ import TradingSystem.server.Domain.ExternSystems.Proxy.PaymentAdapterTests;
 import TradingSystem.server.Domain.ExternSystems.Proxy.SupplyAdapterTests;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StoreController;
+import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import TradingSystem.server.Domain.Utils.Response;
@@ -211,13 +212,14 @@ public class MarketSystem {
         } catch (Exception e) {
             e.printStackTrace();
             answer = false;
+            for (MarketFacade marketFacade : facades.values()){
+                marketFacade.clear();
+            }
+            facades.clear();
             // TODO: logger - why the method fail?
         }
         // have to reset all the data of the market and stop the method.
-        for (MarketFacade marketFacade : facades.values()){
-            marketFacade.clear();
-        }
-        facades.clear();
+
         return answer;
 
     }
@@ -248,6 +250,14 @@ public class MarketSystem {
             }
 
         }
+        else if (instruction.equals("add_admin")){
+            try{
+                this.add_admin(email);
+            }
+            catch (Exception e){
+                throw new IllegalArgumentException("Add admin fail.");
+            }
+        }
         else if (instruction.equals("logout")){
             Response answer = marketFacade.logout();
             if (answer.WasException()){
@@ -255,8 +265,9 @@ public class MarketSystem {
             }
         }
         else if (instruction.equals("register")){
-            Response answer = marketFacade.register(email, instruction_params[2], instruction_params[3], instruction_params[4], instruction_params[5]);
-            if (answer.WasException()){
+            Response answer1 = marketFacade.register(email, instruction_params[2], instruction_params[3], instruction_params[4], instruction_params[5]);
+            Response answer2 = marketFacade.logout();
+            if (answer1.WasException() || answer2.WasException()){
                 throw new IllegalArgumentException("Exception");
             }
         }
@@ -438,6 +449,13 @@ public class MarketSystem {
         }
     }
 
+
+    public void add_admin(String email) throws MarketException {
+        User user = UserController.getInstance().get_user_by_email(email);
+        String name = user.getState().get_user_name();
+        String last_name = user.getState().get_user_last_name();
+        user.set_admin(user.user_email(), "12345678aA", name, last_name);
+    }
 
     public void add_admins() throws MarketException {
         UserController.getInstance().add_admin("admin@gmail.com", "12345678aA", "Barak", "Bahar");
