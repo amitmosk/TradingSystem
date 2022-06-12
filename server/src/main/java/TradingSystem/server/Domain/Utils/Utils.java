@@ -3,8 +3,6 @@ package TradingSystem.server.Domain.Utils;
 
 import TradingSystem.server.Domain.Utils.Exception.*;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -181,15 +179,15 @@ public class Utils {
     public static void nameValidCheck(String name) throws MarketException {
         final int MaxNamesLength = 10;
         if (name == null || name.equals(""))
-            throw new UserExcpetion("Name cannot be null or empty spaces");
+            throw new UserException("Name cannot be null or empty spaces");
         //checks length of the name
         if (name.length() > MaxNamesLength)
-            throw new UserExcpetion("Name length is too long");
+            throw new UserException("Name length is too long");
         //check if contains only letters
         char[] arrayName = name.toLowerCase().toCharArray();
         for (char c : arrayName) {
             if (c < 'a' || c > 'z')
-                throw new UserExcpetion("The name must contain letters only");
+                throw new UserException("The name must contain letters only");
         }
     }
 

@@ -6,7 +6,7 @@ import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
-import TradingSystem.server.Domain.Utils.Exception.exitException;
+import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,8 +17,7 @@ import java.util.List;
 
 import java.util.LinkedList;
 
-import static TradingSystem.server.Service.MarketSystem.services_config_path;
-import static TradingSystem.server.Service.MarketSystem.instructions_config_path;
+import static TradingSystem.server.Service.MarketSystem.*;
 
 
 @RestController
@@ -33,15 +32,10 @@ public class Service implements iService {
 
     private Service() {
         // -- Market init
-        try{
-            MarketSystem system = new MarketSystem(services_config_path, instructions_config_path);
-            PaymentAdapter paymentAdapter = system.getPayment_adapter();
-            SupplyAdapter supplyAdapter = system.getSupply_adapter();
-            this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
-        }
-        catch (exitException e){
-            System.exit(3);
-        }
+        MarketSystem system = new MarketSystem(system_config_path, instructions_config_path);
+        PaymentAdapter paymentAdapter = system.getPayment_adapter();
+        SupplyAdapter supplyAdapter = system.getSupply_adapter();
+        this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
     }
 
     public synchronized static Service getInstance() {
@@ -49,20 +43,7 @@ public class Service implements iService {
             service = new Service();
         return service;
     }
-
-
-
-    @RequestMapping(value = "/amit")
-    @CrossOrigin
-    public String amit(String a) {
-        int e=4;
-        System.out.println("string amit");
-        Response<String> res  = new Response<String>("hello "+a,"yess" );
-//        return "hello "+a;
-        return "new Gson().toJson(res);";
-    }
-
-
+    
     @RequestMapping(value = "/login")
     @CrossOrigin
     @Override

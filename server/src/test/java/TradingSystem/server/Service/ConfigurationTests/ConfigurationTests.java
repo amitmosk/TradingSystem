@@ -1,7 +1,8 @@
 package TradingSystem.server.Service.ConfigurationTests;
 
-import TradingSystem.server.Domain.Utils.Exception.exitException;
+import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import TradingSystem.server.Service.MarketSystem;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -66,10 +67,10 @@ class ConfigurationTests {
 
             MarketSystem marketSystem = new MarketSystem(tests_external_services_path, instructions_config_path);
         }
-        catch (exitException e){
+        catch (ExitException e){
             answer = true;
         }
-        assertTrue(answer);
+        assertFalse(answer);
     }
 
 
@@ -98,7 +99,7 @@ class ConfigurationTests {
 
             MarketSystem marketSystem = new MarketSystem(tests_external_services_path, instructions_config_path);
         }
-        catch (exitException e){
+        catch (ExitException e){
             answer = true;
         }
         assertFalse(answer);
@@ -121,7 +122,7 @@ class ConfigurationTests {
 
             MarketSystem marketSystem = new MarketSystem(services_config_path, empty_test_path);
         }
-        catch (exitException e){
+        catch (ExitException e){
             answer = true;
         }
         assertFalse(answer);
@@ -141,9 +142,28 @@ class ConfigurationTests {
 
             MarketSystem marketSystem = new MarketSystem(services_config_path, empty_test_path);
         }
-        catch (exitException e){
+        catch (ExitException e){
             answer = true;
         }
+
         assertTrue(answer);
+    }
+
+
+
+
+    @Test
+    void read_config_file(){
+        String[] to_return = {"1", "1"};
+        try{
+
+            MarketSystem marketSystem = new MarketSystem(tests_external_services_path, empty_test_path);
+            to_return = marketSystem.read_config_file(tests_external_services_path);
+        }
+        catch (ExitException e){
+            fail();
+        }
+        assertEquals("external_services:demo", to_return[0]);
+        assertEquals("database:demo", to_return[1]);
     }
 }

@@ -1,0 +1,2 @@
+external_services::real/demo
+database:real/demo

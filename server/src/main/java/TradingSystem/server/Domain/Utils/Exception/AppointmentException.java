@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.Utils.Exception;
 
-public class AppointmentException extends UserExcpetion{
+public class AppointmentException extends UserException {
     public AppointmentException(String s) {
         super(s);
     }
