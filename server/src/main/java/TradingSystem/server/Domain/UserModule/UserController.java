@@ -23,7 +23,10 @@ public class UserController {
     private Long id;
 
     // ------------------- fields -------------------------------------
-    @Transient
+    @OneToMany
+    @JoinTable(name = "all_users",
+            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
+    @MapKeyColumn(name = "user_id") // the key column
     private Map<String, User> users;              // email,user
     @Transient
     private Map<Integer, User> onlineUsers;       // id,user
@@ -60,7 +63,7 @@ public class UserController {
     public UserController() {
         this.ID = new AtomicInteger(0);
         this.purchaseID = new AtomicInteger(0);
-        this.users = new ConcurrentHashMap<>();        //thread safe
+        this.users = new HashMap<>();        //thread safe
         this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
         this.usersLock = new Object();
         this.statisticsManager = new StatisticsManager();

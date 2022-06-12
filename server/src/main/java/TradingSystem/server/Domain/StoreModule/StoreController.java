@@ -25,13 +25,11 @@ public class StoreController {
     @GeneratedValue
     private Long id;
 
-//    @OneToMany
-//    @CollectionTable
-//    @JoinTable(name = "all_stores",
-//            joinColumns = {@JoinColumn(name = "store", referencedColumnName = "store_id")})
-//    @MapKeyColumn(name = "store_id") // the key column
-    @Transient
-    private ConcurrentHashMap<Integer, Store> stores;
+    @OneToMany
+    @JoinTable(name = "all_stores",
+            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
+    @MapKeyColumn(name = "store_id") // the key column
+    private Map<Integer, Store> stores;
     private AtomicInteger store_ids_counter;
     private AtomicInteger purchase_ids_counter;
     private AtomicInteger products_id;
@@ -51,7 +49,7 @@ public class StoreController {
     protected StoreController() {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
-        this.stores = new ConcurrentHashMap<>();
+        this.stores = new HashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
     }
