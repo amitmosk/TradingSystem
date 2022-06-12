@@ -1,2 +1,4 @@
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
-SEVERE: Guest doesnt have email.
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not exist - store id: 5
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Question does not exist

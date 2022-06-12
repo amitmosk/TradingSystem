@@ -1,66 +1,68 @@
-Jun 12, 2022 5:49:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:17 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Start Init Market
-Jun 12, 2022 5:49:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:17 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 12, 2022 5:49:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store Checker Store with id = 1opened successfully
-Jun 12, 2022 5:49:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 12, 2022 5:49:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 12, 2022 5:49:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: New product (CheckItem) added to store (1)
-Jun 12, 2022 5:49:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User added to cart 1 of product- 1 from store- 1
-Jun 12, 2022 5:49:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 5:49:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 5:49:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 12, 2022 5:49:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 5:49:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 12, 2022 5:49:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 5:49:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 12, 2022 5:49:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User's (heck1234578@email.com) security has been successfully improved.
-Jun 12, 2022 5:49:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 5:49:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 12, 2022 5:49:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: founder founder has registered to the system
-Jun 12, 2022 5:49:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: owner owner has registered to the system
-Jun 12, 2022 5:49:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: manager manager has registered to the system
-Jun 12, 2022 5:49:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store Store: view_store_management_information with id = 2opened successfully
-Jun 12, 2022 5:49:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check123456@email.com logged-in
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store new store for test: manager_answer_question with id = 2opened successfully
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 12, 2022 5:49:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: received market stores successfully.
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User- owner@owner.com has been appointed by user- founder@founder.com to store (2) owner
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store's (2) management information has been viewed by user (founder@founder.com)
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store's (2) management information has been viewed by user (founder@founder.com)
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User- manager@manager.com has been appointed by user- owner@owner.com to store (2) manager
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store's (2) management information has been viewed by user (founder@founder.com)
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User- owner@owner.com has been unappointed by user- founder@founder.com from store (2) owner
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store's (2) management information has been viewed by user (founder@founder.com)
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- owner@managerAnswerQuestion.com has been appointed by user- founder@managerAnswerQuestion.com to store (2) owner
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- manager@managerAnswerQuestion.com has been appointed by user- owner@managerAnswerQuestion.com to store (2) manager
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New product (CheckItem) added to store (2)
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 2 from store- 2
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (2)
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store's (2) questions has been viewed by user (manager@managerAnswerQuestion.com)
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store (2) question (1) has been answered by user (manager@managerAnswerQuestion.com)
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store's (2) questions has been viewed by user (manager@managerAnswerQuestion.com)
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.

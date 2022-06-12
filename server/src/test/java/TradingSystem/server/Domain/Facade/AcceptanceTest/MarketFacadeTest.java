@@ -12,7 +12,6 @@ import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.UserController;
-import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 
@@ -23,7 +22,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import TradingSystem.server.Service.MarketSystem;
-import TradingSystem.server.Service.NotificationHandler;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -262,9 +260,9 @@ class MarketFacadeTest {
         assertTrue(check_if_purchase_exists(res, email, prod), message);
     }
 
-    private void valid_admin_questions(Response res, int num_of_question, String question, String email, boolean answered, String answer, String test_case){
+    private void valid_questions(Response res, int num_of_question, String question, String email, boolean answered, String answer, String test_case, String test_name){
         Object res_val = res.getValue();
-        String message = make_assert_exception_message("send_to_admin_view_and_answer_questions", test_case, false);
+        String message = make_assert_exception_message(test_name, test_case, false);
         assertFalse(check_was_exception(res), message);
         assertEquals((new LinkedList<String>()).getClass(), res_val.getClass());
         if(num_of_question == 0) {
@@ -384,7 +382,7 @@ class MarketFacadeTest {
         message = make_equal_assert_message(test_name, test_case, stores_in_market, store_counter,"number of stores");
         assertEquals(store_counter, stores_in_market, message);
         store_found = find_store(store_name, stores_same_name, !success);
-
+        
         if(success)
             assertFalse(store_found, "Test: " + test_name + "\n" +
                     "Test case: " + test_case + " failed, " +
@@ -525,7 +523,6 @@ class MarketFacadeTest {
 
     //------------------------------- Testing functions --------------------------------------------------------------------------
 
-    // manager_answer_question
     // get_market_stats
     // get_products_by_store_id
     // get_user_questions
@@ -623,9 +620,71 @@ class MarketFacadeTest {
     }
 
 
+    @Test
+    void manager_answer_question() throws MarketException {
+        Response res;
+        String founder = "founder@managerAnswerQuestion.com";
+        String owner = "owner@managerAnswerQuestion.com";
+        String manager = "manager@managerAnswerQuestion.com";
+        boolean suppose_to_throw = true;
+        String test_name = "manager_answer_question";
+        String message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
+        String test_case, question;
 
+        // all test characters register the system
+        res = facade1.register(founder, user_password, "founder", "founder", birth_date);
+        assertFalse(check_was_exception(res), message);
+        res = facade4.register(owner, user_password, "owner", "owner", birth_date);
+        assertFalse(check_was_exception(res), message);
+        res = facade3.register(manager, user_password, "manager", "manager", birth_date);
+        assertFalse(check_was_exception(res), message);
+        res = facade2.login(user_regular_email_1, user_password);
+        assertFalse(check_was_exception(res), message);
 
+        // founder opens store
+        int store_id = open_store_get_id("new store for test: " + test_name);
+        founder_exist(founder, store_id);
 
+        // founder adds owner as store owner
+        message = make_assert_exception_message(test_name, "founder adds owner as store owner", !suppose_to_throw);
+        res = facade1.add_owner(owner, store_id);
+        assertFalse(check_was_exception(res), message);
+
+        // owner adds manager1 as store manager
+        message = make_assert_exception_message(test_name, "owner adds manager as store manager", !suppose_to_throw);
+        res = facade4.add_manager(manager, store_id);
+        assertFalse(check_was_exception(res), message);
+
+        question = "How are you my friends?";
+        test_case = "user tries sends store a question";
+        message = "Test: " + test_name + "\nTest case: " + test_case + " failed- exception thrown";
+        add_prod_make_purchase_get_id(store_id);
+        res = facade2.send_question_to_store(store_id,question);
+        assertFalse(check_was_exception(res), message);
+        res = facade3.manager_view_store_questions(store_id);
+        valid_questions(res, 1, question, user_regular_email_1, false, "", test_case, test_name);
+
+        message = "Test: " + test_name + "\nTest case: ";
+        test_case = "manager tried to answer a question from a store that does not exist";
+        res = facade3.manager_answer_question(store_id + 3, 1, "This shouldn't work");
+        assertTrue(check_was_exception(res), message + test_case + "\n");
+
+        test_case = "manager tried to answer a question from an ID that does not exist";
+        res = facade3.manager_answer_question(store_id, 9, "This shouldn't work");
+        assertTrue(check_was_exception(res), message + test_case + "\n");
+
+        test_case = "manager answers a question";
+        res = facade3.manager_answer_question(store_id, 1, "This should work");
+        assertFalse(check_was_exception(res), message + test_case + "\n");
+        res = facade3.manager_view_store_questions(store_id);
+        valid_questions(res, 1, question, user_regular_email_1, true, "This should work", test_case, test_name);
+
+        facade1.logout();
+        facade2.logout();
+        facade3.logout();
+        facade4.logout();
+
+    }
 
 
     //------------------------------- Open \ Close store --------------------------------------------------------------------------
@@ -1185,7 +1244,7 @@ class MarketFacadeTest {
         facade1.login(user_admin_email, user_password);
 
         res = facade1.admin_view_users_questions(); // admin views empty question list
-        valid_admin_questions(res, question_counter, "", "", !answered,"", "guest tries to view empty list of questions sent to admin");
+        valid_questions(res, question_counter, "", "", !answered,"", "guest tries to view empty list of questions sent to admin", test_name);
         facade1.logout();
 
         message = make_assert_exception_message(test_name, "assigned user tries to send admin a question", !suppose_to_throw);
@@ -1206,7 +1265,7 @@ class MarketFacadeTest {
         facade1.login(user_admin_email, user_password);
 
         res = facade1.admin_view_users_questions(); // admin views question list of size 1
-        valid_admin_questions(res, question_counter, question1, user_regular_email_1, !answered,"", "admin views question list of size 1");
+        valid_questions(res, question_counter, question1, user_regular_email_1, !answered,"", "admin views question list of size 1", test_name);
 
         message = make_assert_exception_message(test_name, "assigned user sends admin a question", !suppose_to_throw);
         String question2 = "this should work as well";
@@ -1216,8 +1275,8 @@ class MarketFacadeTest {
 
         message = "admin views question list of size 2";
         res = facade1.admin_view_users_questions(); // admin views question list of size 2
-        valid_admin_questions(res, question_counter, question1, user_regular_email_1, !answered,"", message);
-        valid_admin_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message);
+        valid_questions(res, question_counter, question1, user_regular_email_1, !answered,"", message, test_name);
+        valid_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message, test_name);
 
         facade2.logout();
         facade2.login(user_regular_email_2, user_password);
@@ -1230,9 +1289,9 @@ class MarketFacadeTest {
 
         message = "admin views question list of size 3";
         res = facade1.admin_view_users_questions(); // admin views question list of size 3
-        valid_admin_questions(res, question_counter, question1, user_regular_email_1, !answered,"", message);
-        valid_admin_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message);
-        valid_admin_questions(res, question_counter, question3, user_regular_email_2, !answered,"", message);
+        valid_questions(res, question_counter, question1, user_regular_email_1, !answered,"", message, test_name);
+        valid_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message, test_name);
+        valid_questions(res, question_counter, question3, user_regular_email_2, !answered,"", message, test_name);
 
         String answer = "i answer";
 
@@ -1246,9 +1305,9 @@ class MarketFacadeTest {
 
         message = "regular user tries to answer a question sent to admin";
         res = facade1.admin_view_users_questions(); // to make sure non of the 2 above worked
-        valid_admin_questions(res, question_counter, question1, user_regular_email_1, !answered,"", message);
-        valid_admin_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message);
-        valid_admin_questions(res, question_counter, question3, user_regular_email_2, !answered,"", message);
+        valid_questions(res, question_counter, question1, user_regular_email_1, !answered,"", message, test_name);
+        valid_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message, test_name);
+        valid_questions(res, question_counter, question3, user_regular_email_2, !answered,"", message, test_name);
 
         message = make_assert_exception_message(test_name, "admin answers user question", !suppose_to_throw);
         res = facade1.admin_answer_user_question(1, answer); // admin answers a question
@@ -1256,9 +1315,9 @@ class MarketFacadeTest {
 
         message = "admin views question list- one is answered";
         res = facade1.admin_view_users_questions(); // admin views question list of size 3 (one of them is answered)
-        valid_admin_questions(res, question_counter, question1, user_regular_email_1, answered, answer, message);
-        valid_admin_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message);
-        valid_admin_questions(res, question_counter, question3, user_regular_email_2, !answered,"", message);
+        valid_questions(res, question_counter, question1, user_regular_email_1, answered, answer, message, test_name);
+        valid_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message, test_name);
+        valid_questions(res, question_counter, question3, user_regular_email_2, !answered,"", message, test_name);
 
         answer += "!";
         message = make_assert_exception_message(test_name, "admin re-answers user's question", !suppose_to_throw);
@@ -1267,9 +1326,9 @@ class MarketFacadeTest {
 
         message = "admin views question list- one is re-answered";
         res = facade1.admin_view_users_questions(); // admin views question list of size 3 (one of them is re-answered)
-        valid_admin_questions(res, question_counter, question1, user_regular_email_1, answered, answer, message);
-        valid_admin_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message);
-        valid_admin_questions(res, question_counter, question3, user_regular_email_2, !answered,"", message);
+        valid_questions(res, question_counter, question1, user_regular_email_1, answered, answer, message, test_name);
+        valid_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message, test_name);
+        valid_questions(res, question_counter, question3, user_regular_email_2, !answered,"", message, test_name);
 
         message = make_assert_exception_message(test_name, "admin answers another user question", !suppose_to_throw);
         res = facade1.admin_answer_user_question(3, answer); // admin answers different user's question
@@ -1277,9 +1336,9 @@ class MarketFacadeTest {
 
         message = "admin views question list of size 3- one of them is re-answered, one is answered and one is not answered";
         res = facade1.admin_view_users_questions(); // admin views question list of size 3 (one of them is re-answered, one is answered and one is not answered)
-        valid_admin_questions(res, question_counter, question1, user_regular_email_1, answered, answer, message);
-        valid_admin_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message);
-        valid_admin_questions(res, question_counter, question3, user_regular_email_2, answered,answer, message);
+        valid_questions(res, question_counter, question1, user_regular_email_1, answered, answer, message, test_name);
+        valid_questions(res, question_counter, question2, user_regular_email_1, !answered,"", message, test_name);
+        valid_questions(res, question_counter, question3, user_regular_email_2, answered,answer, message, test_name);
 
         facade2.logout();
         facade1.logout();
