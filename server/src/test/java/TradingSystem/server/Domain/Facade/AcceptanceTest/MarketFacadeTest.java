@@ -12,6 +12,7 @@ import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.UserController;
+import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 
@@ -21,12 +22,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+import TradingSystem.server.Service.MarketSystem;
 import TradingSystem.server.Service.NotificationHandler;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import static TradingSystem.server.Service.MarketSystem.tests_config_file_path;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -56,11 +59,22 @@ class MarketFacadeTest {
 
     //------------------------- Initialization --------------------------------------------------------------------------
 
+    private PaymentAdapter paymentAdapter;
+    private SupplyAdapter supplyAdapter;
+
+    public MarketFacadeTest() {
+        try{
+            MarketSystem marketSystem = new MarketSystem(tests_config_file_path, "");
+            this.paymentAdapter = marketSystem.getPayment_adapter();
+            this.supplyAdapter = marketSystem.getSupply_adapter();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
     @BeforeEach
     void setUp() throws MarketException {
-        NotificationHandler.setTestsHandler();
-        PaymentAdapter paymentAdapter = new PaymentAdapterImpl();
-        SupplyAdapter supplyAdapter = new SupplyAdapterImpl();
+
 
         this.facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         this.facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
