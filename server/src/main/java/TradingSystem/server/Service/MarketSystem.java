@@ -114,6 +114,26 @@ public class MarketSystem {
             this.supply_adapter = new SupplyAdapterTests();
             NotificationHandler.setTestsHandler();
         }
+        else if (config.equals("external_services:fail_tests")){
+            this.payment_adapter = new PaymentAdapter() {
+                @Override
+                public boolean handshake() {
+                    return false;
+                }
+
+                @Override
+                public int payment(PaymentInfo paymentInfo, double price) {
+                    return -1;
+                }
+
+                @Override
+                public int cancel_pay(int transaction_id) {
+                    return -1;
+                }
+            };
+            this.supply_adapter = new SupplyAdapterTests();
+            NotificationHandler.setTestsHandler();
+        }
         else if (config.equals("external_services:real")){
             this.payment_adapter = new PaymentAdapterImpl();
             this.supply_adapter = new SupplyAdapterImpl();
@@ -417,24 +437,6 @@ public class MarketSystem {
             throw new Exception("Illegal Instruction Input");
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public void add_admins() throws MarketException {

@@ -1,5 +1,6 @@
 package TradingSystem.server.Service.ConfigurationTests;
 
+import TradingSystem.server.Domain.ExternSystems.Proxy.PaymentAdapterTests;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import TradingSystem.server.Service.MarketSystem;
 import org.junit.jupiter.api.Test;
@@ -19,11 +20,16 @@ class ConfigurationTests {
     private static final String tests_external_services_path =  "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem" +
             "\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\tests_external_services.txt";
 
+    private static final String demo_external_services_path =  "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\demo_external_services.txt";
+
     private static final String real_external_services_path =  "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem" +
             "\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\real_external_services.txt";
         // bad
     private static final String bad_external_services_path =  "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem" +
                 "\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\bad_external_services.txt";
+
+    private static final String denied_services_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\" +
+            "ConfigurationTests\\external_services\\denied_external_services.txt";
 
     // instructions
         // good
@@ -50,9 +56,14 @@ class ConfigurationTests {
             "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\bad_instructions\\wrong_order_test_path.txt";
 
 
- // -- Start
 
-    static Stream<Arguments> bad_instructions() {
+    /**
+     * this test check that the system will not initialize data because there are:
+     * 1. wrong format of the data-configuration file instructions.
+     * 2. instruction with bad parameters.
+     * 3. wrong logic order of the instructions.
+     */
+    static Stream<Arguments> bad_demo_instructions() {
         return Stream.of(
                 arguments(wrong_format_test_path),
                 arguments(wrong_instruction_test_path),
@@ -60,12 +71,12 @@ class ConfigurationTests {
         );
     }
     @ParameterizedTest
-    @MethodSource("bad_instructions")
-    void system_init_bad_instructions(String instructions_config_path){
+    @MethodSource("bad_demo_instructions")
+    void bad_demo_instructions(String instructions_config_path){
         boolean answer =  false;
         try{
 
-            MarketSystem marketSystem = new MarketSystem(tests_external_services_path, instructions_config_path);
+            MarketSystem marketSystem = new MarketSystem(demo_external_services_path, instructions_config_path);
         }
         catch (ExitException e){
             answer = true;
@@ -75,12 +86,13 @@ class ConfigurationTests {
 
 
     /**
-     * empty_test_path -> with 0 instructions
-     * goodIns1 : register & logout
-     * goodIns2 : with spaces, register & logout & login
-     * goodIns3 : more then 1 user.
+     * this test check that the system will initialize data with demo status:
+     * 1. empty_test_path -> with 0 instructions
+     * 2. goodIns1 : register & logout
+     * 3. goodIns2 : with spaces, register & logout & login
+     * 4. goodIns3 : more then 1 user.
      */
-    static Stream<Arguments> good_instructions() {
+    static Stream<Arguments> good_demo_instructions() {
         return Stream.of(
                 arguments(empty_test_path),
                 arguments(goodIns1_path),
@@ -92,54 +104,61 @@ class ConfigurationTests {
         );
     }
     @ParameterizedTest
-    @MethodSource("good_instructions")
-    void system_init_good_instructions(String instructions_config_path){
-        boolean answer =  false;
+    @MethodSource("good_demo_instructions")
+    void system_init_good_demo_instructions(String instructions_config_path){
         try{
 
-            MarketSystem marketSystem = new MarketSystem(tests_external_services_path, instructions_config_path);
+            MarketSystem marketSystem = new MarketSystem(demo_external_services_path, instructions_config_path);
         }
         catch (ExitException e){
-            answer = true;
+            fail();
         }
-        assertFalse(answer);
+        assertTrue(true);
     }
 
 
-
-
-    static Stream<Arguments> good_services() {
+    /**
+     * this test check that the system will load successfully and initialize database in the next 3 modes:
+     * 1. tests mode
+     * 2. real mode
+     * 3. demo mode
+     */
+    static Stream<Arguments> good_config_file() {
         return Stream.of(
                 arguments(tests_external_services_path),
-                arguments(real_external_services_path)
+                arguments(real_external_services_path),
+                arguments(demo_external_services_path)
         );
     }
     @ParameterizedTest
-    @MethodSource("good_services")
-    void system_init_good_services(String services_config_path){
-        boolean answer =  false;
+    @MethodSource("good_config_file")
+    void system_good_config_file(String services_config_path){
         try{
 
             MarketSystem marketSystem = new MarketSystem(services_config_path, empty_test_path);
         }
         catch (ExitException e){
-            answer = true;
+            fail();
         }
-        assertFalse(answer);
+        assertTrue(true);
     }
 
 
-    static Stream<Arguments> bad_services() {
+    /**
+     * this test check that the system will not load when the config file is:
+     * 1. with wrong format
+     * 2.
+     */
+    static Stream<Arguments> bad_config_file() {
         return Stream.of(
                 arguments(bad_external_services_path)
         );
     }
     @ParameterizedTest
-    @MethodSource("bad_services")
-    void system_init_bad_services(String services_config_path){
+    @MethodSource("bad_config_file")
+    void system_bad_config_file_format(String services_config_path){
         boolean answer =  false;
         try{
-
             MarketSystem marketSystem = new MarketSystem(services_config_path, empty_test_path);
         }
         catch (ExitException e){
@@ -150,6 +169,23 @@ class ConfigurationTests {
     }
 
 
+    /**
+     * this test check that the system is stop running if we got bad answer from the external services when we
+     * try to handshake.
+     */
+    @Test
+    void denied_external_systems(){
+        boolean answer =  false;
+        try{
+
+            MarketSystem marketSystem = new MarketSystem(denied_services_path, empty_test_path);
+        }
+        catch (ExitException e){
+            answer = true;
+        }
+
+        assertTrue(answer);
+    }
 
 
     @Test
