@@ -1,4 +1,4 @@
-package TradingSystem.server.Domain.Utils;
+package TradingSystem.server.Domain.Utils.Password;
 
 
 public interface iPasswordManager {

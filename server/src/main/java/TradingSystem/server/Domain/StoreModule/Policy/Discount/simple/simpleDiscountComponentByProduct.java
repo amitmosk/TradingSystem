@@ -20,7 +20,7 @@ public class simpleDiscountComponentByProduct extends simpleDiscountComponent {
         Map<Product, Integer> basketMap = basket.getProducts_and_quantities();
         try {
             int quantity = basketMap.get(ProductToDiscount);
-            double price = ProductToDiscount.getPrice();
+            double price = ProductToDiscount.getOriginal_price();
             return quantity * price * this.percentOfDiscount;
         } catch (NullPointerException e) {
             return 0;

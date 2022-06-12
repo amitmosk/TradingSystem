@@ -10,27 +10,20 @@ public class SupplyAdapterImpl implements SupplyAdapter {
         this.externSupplySystemProxy = new ExternSupplySystemProxy();
     }
 
+
     @Override
-    public boolean supply(String supplyInfo) {
+    public int supply(SupplyInfo supplyInfo) {
         return this.externSupplySystemProxy.supply(supplyInfo);
     }
 
-    public void setExternSupplySystemProxy(ExternSupplySystemProxy externSupplySystemProxy) {
-        this.externSupplySystemProxy = externSupplySystemProxy;
-    }
-
-    public ExternSupplySystemProxy getExternSupplySystemProxy() {
-        return externSupplySystemProxy;
+    @Override
+    public int cancel_supply(int transaction_id) {
+        return this.externSupplySystemProxy.cancel_supply(transaction_id);
     }
 
     @Override
-    public boolean can_supply(String supplyInfo) {
-        return this.externSupplySystemProxy.can_supply(supplyInfo);
-    }
-
-    @Override
-    public boolean connect_to_supply_system() {
+    public boolean handshake() {
         SystemLogger.getInstance().add_log("system connected to the supply system");
-        return this.externSupplySystemProxy.connect();
+        return this.externSupplySystemProxy.handshake();
     }
 }

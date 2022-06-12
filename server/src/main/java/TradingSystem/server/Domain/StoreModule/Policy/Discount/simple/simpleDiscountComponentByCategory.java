@@ -23,7 +23,7 @@ public class simpleDiscountComponentByCategory extends simpleDiscountComponent {
             Product product = entry.getKey();
             int quantities = entry.getValue();
             if (product.getCategory().equals(CategoryOfDiscount))
-                Discount += quantities * product.getPrice() * percentOfDiscount;
+                Discount += quantities * product.getOriginal_price() * percentOfDiscount;
         }
         return Discount;
     }

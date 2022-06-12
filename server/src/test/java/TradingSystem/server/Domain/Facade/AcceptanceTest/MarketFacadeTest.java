@@ -1,9 +1,6 @@
 package TradingSystem.server.Domain.Facade.AcceptanceTest;
 
-import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
-import TradingSystem.server.Domain.ExternSystems.PaymentAdapterImpl;
-import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
-import TradingSystem.server.Domain.ExternSystems.SupplyAdapterImpl;
+import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.AppointmentInformation;
@@ -52,6 +49,9 @@ class MarketFacadeTest {
     private String user_regular_email_1;
     private String user_regular_email_2;
     private String user_admin_email;
+    private SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
+    private PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
+
 
 
     //------------------------- Initialization --------------------------------------------------------------------------
@@ -86,6 +86,7 @@ class MarketFacadeTest {
         facade2.logout();
 
         facade1.register(user_regular_email_1, user_password, first_name, last_name,birth_date);
+
         facade1.logout();
         facade1.register(user_regular_email_2, user_password, first_name, last_name,birth_date);
         facade1.logout();
@@ -1880,6 +1881,7 @@ class MarketFacadeTest {
     @Test
     void logout() {
         boolean result;
+
         boolean suppose_to_throw = true;
         String test_name = "logout";
         String message;
@@ -1896,6 +1898,7 @@ class MarketFacadeTest {
 
         message = make_assert_exception_message(test_name, "logout second time in a row", suppose_to_throw);
         result = check_was_exception(facade1.logout()); // logout second time in a row
+
         assertTrue(result);
 
         facade1.login("checrr@email.com", "pass3hec"); // login will fail

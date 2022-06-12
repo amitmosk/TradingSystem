@@ -54,15 +54,24 @@ public class Cart {
         if (basket.isEmpty()) baskets.remove(store);
     }
 
-    public void add_product_to_cart(Store store, Product p, int quantity, String email) throws MarketException {
+    /**
+     * this method served both regular add product to cart & add product after confirm bid offer.
+     * @param store
+     * @param p
+     * @param quantity
+     * @param email
+     * @param price_per_unit -
+     * @throws MarketException
+     */
+    public void add_product_to_cart(Store store, Product p, int quantity, String email, double price_per_unit) throws MarketException {
         Basket basket = baskets.getOrDefault(store, new Basket(store.getStore_id(), email));
-        basket.addProduct(p, quantity);
+        basket.addProduct(p, quantity, price_per_unit);
         this.baskets.put(store, basket);
     }
 
     public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws MarketException {
         if (!baskets.containsKey(store))
-            throw new NoUserRegisterdException("user havn't bought product from this store.");
+            throw new NoUserRegisterdException("user haven't bought product from this store.");
         baskets.get(store).changeQuantity(p, quantity);
     }
 

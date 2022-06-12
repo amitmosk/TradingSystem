@@ -20,7 +20,7 @@ public class ProductInformation {
         this.name = prod.getName();
         this.category = prod.getCategory();
         this.key_words = prod.getKey_words();
-        this.price = prod.getPrice();
+        this.price = prod.getOriginal_price();
         this.productReview = prod.getProductReview();
         this.store_id = prod.getStore_id();
         this.quantity = quantity;

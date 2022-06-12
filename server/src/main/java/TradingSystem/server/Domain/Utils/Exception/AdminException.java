@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.Utils.Exception;
 
-public class AdminException extends UserExcpetion {
+public class AdminException extends UserException {
     public AdminException(String s) {
         super(s);
     }

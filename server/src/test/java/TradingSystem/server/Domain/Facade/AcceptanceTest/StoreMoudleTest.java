@@ -6,6 +6,7 @@ import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
+
 import TradingSystem.server.Domain.Utils.Exception.AppointmentException;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 import TradingSystem.server.Domain.Utils.Response;
@@ -36,6 +37,8 @@ class StoreMoudleTest {
     private MarketFacade manager = new MarketFacade(paymentAdapter,supplyAdapter);
     private MarketFacade general_user = new MarketFacade(paymentAdapter,supplyAdapter);
     private String birth_date;
+    private SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
+    private PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
 
     //------------------------------- Helper functions --------------------------------------------------------------------------
 
@@ -54,7 +57,7 @@ class StoreMoudleTest {
 
     private void buy_product() {
         marketFacade.add_product_to_cart(1, productId, 20);
-        Response res = marketFacade.buy_cart("", "");
+        Response res = marketFacade.buy_cart(payment_info, supplyInfo);
     }
 
     private boolean check_if_product_exists_inventory(Map<Product,Integer> products, String product_name){
@@ -258,6 +261,7 @@ class StoreMoudleTest {
         res = marketFacade.buy_cart("", "");
         assertTrue(res.getValue().getTotal_price() == 2 * price);
     }
+
 
     @Test
     void BuyHappy() {
@@ -581,13 +585,13 @@ class StoreMoudleTest {
     void edit_product_price_happy() {
         Response<Product> product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
-        double prev_price = product_res.getValue().getPrice();
+        double prev_price = product_res.getValue().getOriginal_price();
         //step 1 edit product price - should work (check new product name)
         Response res = marketFacade.edit_product_price(productId, 1, prev_price+10);
         check_was_not_exception("failed to edit product price while it should work. - step 1", res);
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 1", product_res);
-        double new_price = product_res.getValue().getPrice();
+        double new_price = product_res.getValue().getOriginal_price();
         assertTrue(new_price == prev_price+10,"product price haven't changed - step 1");
         prev_price = new_price;
         //step 2 log out -> edit product price - should fail.
@@ -597,7 +601,7 @@ class StoreMoudleTest {
         assertTrue(check_was_exception(res),"succeed to edit product price while it should fail. - step 2");
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 2", product_res);
-        new_price = product_res.getValue().getPrice();
+        new_price = product_res.getValue().getOriginal_price();
         assertFalse(new_price == prev_price+10,"product price has changed - step 2");
         //step 3 log back in change product price - should work.
         res = marketFacade.login(email,password);
@@ -606,7 +610,7 @@ class StoreMoudleTest {
         check_was_not_exception("failed to edit product price while it should work. - step 3", res);
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 3", product_res);
-        new_price = product_res.getValue().getPrice();
+        new_price = product_res.getValue().getOriginal_price();
         assertTrue(new_price == prev_price+10,"product price haven't changed - step 3");
         prev_price = new_price;
         //step 4 try to edit product price with general user
@@ -614,14 +618,14 @@ class StoreMoudleTest {
         assertTrue(check_was_exception(res),"succeed to edit product price while it should fail. - step 4");
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 4", product_res);
-        new_price = product_res.getValue().getPrice();
+        new_price = product_res.getValue().getOriginal_price();
         assertFalse(new_price == prev_price+10,"product price haven't changed - step 4");
         //step 5 try to edit product price with store member.
         res = manager.edit_product_price(productId, 1, prev_price+10);
         check_was_not_exception("failed to edit product price while it should work. - step 5", res);
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 5", product_res);
-        new_price = product_res.getValue().getPrice();
+        new_price = product_res.getValue().getOriginal_price();
         assertTrue(new_price == prev_price+10,"product price haven't changed - step 5");
         prev_price = new_price;
         //step 6 try to edit product price with store member without permissions.
@@ -630,7 +634,7 @@ class StoreMoudleTest {
         assertTrue(check_was_exception(res),"succeed to edit product price while it should fail. - step 6");
         product_res = marketFacade.find_product_information(productId,1);
         check_was_not_exception("failed to get product information - step 6", product_res);
-        new_price = product_res.getValue().getPrice();
+        new_price = product_res.getValue().getOriginal_price();
         assertFalse(new_price == prev_price+10,"product price haven't changed - step 6");
     }
 
@@ -874,6 +878,37 @@ class StoreMoudleTest {
 
 
     //------------------------------------------------ Questions --------------------------------------------------------------------------
+    @Test
+    void rate_store_sad() {
+        //sad
+        Response rSAd = marketFacade.rate_store(1, 5);
+        check_was_exception(rSAd);
+    }
+
+    @Test
+    void BuyHappy() {
+        marketFacade.open_store("Amit Store2");
+        marketFacade.add_product_to_store(2, 100, "tmp", 100, "tmp", new ArrayList<>());
+        marketFacade.add_product_to_cart(2, 2, 100);
+        Response res = marketFacade.buy_cart(payment_info, supplyInfo);
+        check_was_not_exception("", res);
+    }
+
+    @Test
+    void BuyTooMuch() {
+        marketFacade.add_product_to_store(2, 100, "tmp", 100, "tmp", new ArrayList<>());
+        Response res = marketFacade.add_product_to_cart(2, 1, 120);
+        marketFacade.buy_cart(payment_info, supplyInfo);
+        check_was_exception(res);
+    }
+
+    @Test
+    void BuySadminus1() {
+        marketFacade.add_product_to_store(2, 100, "tmp", 100, "tmp", new ArrayList<>());
+        Response res = marketFacade.add_product_to_cart(2, 1, -1);
+        marketFacade.buy_cart(payment_info, supplyInfo);
+        check_was_exception(res);
+    }
 
     @Test
     void send_question_to_store_happy() {
@@ -935,6 +970,19 @@ class StoreMoudleTest {
             assertTrue(flag);
         }
 
+
+    @Test
+    void two_users_buying_the_same_product() {
+        SupplyAdapter supply = new SupplyAdapterImpl();
+        PaymentAdapter payment = new PaymentAdapterImpl();
+        marketFacade.add_product_to_cart(1, productId, 30);
+        MarketFacade tmpMarket = new MarketFacade(payment, supply);
+        tmpMarket.register("amit1@gmail.com", password, "amit", "mosko", birth_date);
+        tmpMarket.add_product_to_cart(1, productId, 50);
+        Response goodR = marketFacade.buy_cart(payment_info, supplyInfo);
+        Response BadR = tmpMarket.buy_cart(payment_info, supplyInfo);
+        check_was_not_exception("Purchase done successfully", goodR);
+        check_was_exception(BadR);
     }
 
 
@@ -956,6 +1004,113 @@ class StoreMoudleTest {
     }
 
     //----------------------- Concurrent -----------------------
+    //scenario - there is num of products of specified product in store
+    //there is num of threads users who tries to buy all the amount of this product at once.
+    //only one user should succeed
+    @Test
+    void concurrent_buy_same_product_one_user_success() {
+        List<MarketFacade> marketFacadeList = createUsers("oneusersuccess");
+        for (MarketFacade mf : marketFacadeList) { // add all products to cart
+            mf.add_product_to_cart(1, productId, num_of_products);
+            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
+            boolean contains = false;
+            for (ProductInformation p : res) {
+                if (p.getProduct_id() == productId)
+                    contains = true;
+            }
+            assertTrue(contains, "failed to add product to users cart");
+        }
+
+        AtomicInteger num_of_success = new AtomicInteger(0);
+        AtomicInteger num_of_exceptions = new AtomicInteger(0);
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < num_of_threads; i++) {
+            int num_of_market_facade = i;
+            threads.add(new Thread(() -> {
+                Response res = marketFacadeList.get(num_of_market_facade).buy_cart(payment_info, supplyInfo);
+                if (res.WasException() && res.getValue().getClass().equals(ObjectDoesntExsitException.class))
+                    num_of_exceptions.incrementAndGet();
+                else if(!res.WasException())
+                    num_of_success.getAndIncrement();
+            }));
+        }
+        start_threads(threads);
+        join_threads(threads);
+        assertTrue(num_of_exceptions.get() == num_of_threads-1,"concurency fail, fail count: "+num_of_exceptions.get());
+        assertTrue(num_of_success.get() == 1,"concurency fail, success count: "+num_of_success.get());
+    }
+
+    //scenario - there is num of products of specified product in store
+    //there is num of threads users who tries to buy 1 item of this product at once.
+    //(num of products) users should succeed and the other fails
+    @Test
+    void concurrent_buy_same_product_half_user_success() {
+        List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
+        for (MarketFacade mf : marketFacadeList) { // add all products to cart
+            mf.add_product_to_cart(1, productId, 1);
+            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
+            boolean contains = false;
+            for (ProductInformation p : res) {
+                if (p.getProduct_id() == productId)
+                    contains = true;
+            }
+            assertTrue(contains, "failed to add product to users cart");
+        }
+
+        AtomicInteger num_of_success = new AtomicInteger(0);
+        AtomicInteger num_of_exceptions = new AtomicInteger(0);
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < num_of_threads; i++) {
+            int num_of_market_facade = i;
+            threads.add(new Thread(() -> {
+                Response res = marketFacadeList.get(num_of_market_facade).buy_cart(payment_info, supplyInfo);
+                if (res.WasException() && res.getValue().getClass().equals(ObjectDoesntExsitException.class))
+                    num_of_exceptions.incrementAndGet();
+                else if(!res.WasException())
+                    num_of_success.getAndIncrement();
+            }));
+        }
+        start_threads(threads);
+        join_threads(threads);
+        assertTrue(num_of_exceptions.get() == num_of_threads-num_of_products,"concurency fail, fail count: "+num_of_exceptions.get());
+        assertTrue(num_of_success.get() == num_of_products,"concurency fail, success count: "+num_of_success.get());
+    }
+
+    //scenario - there is num of products of specified product in store
+    //there is num of threads users who tries to buy 1 item of this product at once.
+    //all users should succeed.
+    @Test
+    void concurrent_buy_same_product_all_user_success() {
+        List<MarketFacade> marketFacadeList = createUsers("allusersuccess");
+        for (MarketFacade mf : marketFacadeList) { // add all products to cart
+            mf.add_product_to_cart(1, productId, 1);
+            List<ProductInformation> res = mf.view_user_cart().getValue().getProducts();
+            boolean contains = false;
+            for (ProductInformation p : res) {
+                if (p.getProduct_id() == productId)
+                    contains = true;
+            }
+            assertTrue(contains, "failed to add product to users cart");
+        }
+
+        AtomicInteger num_of_success = new AtomicInteger(0);
+        AtomicInteger num_of_exceptions = new AtomicInteger(0);
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < num_of_products; i++) {
+            int num_of_market_facade = i;
+            threads.add(new Thread(() -> {
+                Response res = marketFacadeList.get(num_of_market_facade).buy_cart(payment_info, supplyInfo);
+                if (res.WasException() && res.getValue().getClass().equals(ObjectDoesntExsitException.class))
+                    num_of_exceptions.incrementAndGet();
+                else if(!res.WasException())
+                    num_of_success.getAndIncrement();
+            }));
+        }
+        start_threads(threads);
+        join_threads(threads);
+        assertTrue(num_of_exceptions.get() == 0,"concurency fail, fail count: "+num_of_exceptions.get());
+        assertTrue(num_of_success.get() == num_of_products,"concurency fail, success count: "+num_of_success.get());
+    }
 
     @Test
     void concurrent_add_new_owner(){
@@ -1019,4 +1174,70 @@ class StoreMoudleTest {
         //TODO: check user is manager.
     }
 
+
+
+    @Test
+    void bid_without_nego_guest(){
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.add_bid(1,1,3,80);
+        marketFacade.manager_answer_bid(1,1,true,-1);
+        CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
+        assertTrue(cartInformation.getPrice() == 240);
+
+    }
+
+    /**
+     * this test check adding bid by buyer, confirm by all the store managers without negotiation
+     */
+    @Test
+    void bid_without_nego_assign_user(){
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
+        marketFacade1.add_bid(1,1,3,80);
+        marketFacade.manager_answer_bid(1,1,true,-1);
+        CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
+        assertTrue(cartInformation.getPrice() == 240);
+
+    }
+
+
+    @Test
+    void bid_uncofirm(){
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
+        marketFacade1.add_bid(1,1,3,80);
+        marketFacade.manager_answer_bid(1,1,false,-1);
+        CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
+        assertTrue(cartInformation.getPrice() == 0);
+
+    }
+
+    /**
+     * this test check adding bid by buyer, confirm by all the store managers with negotiation from the store founder
+     */
+    @Test
+    void bid_with_nego_assign_user(){
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
+        marketFacade1.add_bid(1,1,3,80);
+        marketFacade.manager_answer_bid(1,1,true,85);
+        CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
+        assertTrue(cartInformation.getPrice() == 255);
+
+    }
+
+    /**
+     * this test check adding bid by buyer, confirm by all the store managers with negotiation from the store manager - no permission
+     */
+    @Test
+    void bid_with_nego_assign_user_no_permission(){
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
+        marketFacade1.add_bid(1,1,3,80);
+        marketFacade.manager_answer_bid(1,1,true,-1);
+        Response response = manager.manager_answer_bid(1,1,true,50);
+        assertTrue(check_was_exception(response));
+
+    }
 }
+

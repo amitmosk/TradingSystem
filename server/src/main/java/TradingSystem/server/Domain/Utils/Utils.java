@@ -3,13 +3,12 @@ package TradingSystem.server.Domain.Utils;
 
 import TradingSystem.server.Domain.Utils.Exception.*;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -180,17 +179,55 @@ public class Utils {
     public static void nameValidCheck(String name) throws MarketException {
         final int MaxNamesLength = 10;
         if (name == null || name.equals(""))
-            throw new UserExcpetion("Name cannot be null or empty spaces");
+            throw new UserException("Name cannot be null or empty spaces");
         //checks length of the name
         if (name.length() > MaxNamesLength)
-            throw new UserExcpetion("Name length is too long");
+            throw new UserException("Name length is too long");
         //check if contains only letters
         char[] arrayName = name.toLowerCase().toCharArray();
         for (char c : arrayName) {
             if (c < 'a' || c > 'z')
-                throw new UserExcpetion("The name must contain letters only");
+                throw new UserException("The name must contain letters only");
         }
     }
 
+    public static String send_http_post_request(String url, HashMap<String, String> postContent) {
+        String answer = HttpUtility.newRequest(url,HttpUtility.METHOD_POST,postContent, new HttpUtility.Callback() {
+            @Override
+            public String OnSuccess(String response) {
+                // on success
+                System.out.println("Server OnSuccess response="+response);
+                return response;
+            }
+            @Override
+            public String OnError(int status_code, String message) {
+                // on error
+                System.out.println("Server OnError status_code="+status_code+" message="+message);
+                return message;
+            }
+        });
+        return answer;
+    }
 
+
+    public static int string_to_int(String str){
+        int number = -1;
+        try{
+            number = Integer.parseInt(str);
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
+        return number;
+    }
+
+    /**
+     * this method is for the external systems!
+     * @param str
+     * @return true for "OK" value as well.
+     */
+    public static boolean string_to_boolean(String str) {
+        return str.equals("t") || str.equals("T") || str.equals("true") || str.equals("TRUE") ||
+                str.equals("True") || str.equals("OK");
+    }
 }
