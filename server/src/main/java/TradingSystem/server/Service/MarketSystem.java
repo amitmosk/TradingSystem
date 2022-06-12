@@ -140,6 +140,7 @@ public class MarketSystem {
                     return true;
                 }
             };
+            NotificationHandler.setTestsHandler();
         }
         else if (config.equals("external_services:real")){
             this.payment_adapter = new PaymentAdapterImpl();

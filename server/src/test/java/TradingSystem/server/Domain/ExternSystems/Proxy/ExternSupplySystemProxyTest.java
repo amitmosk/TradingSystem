@@ -170,7 +170,7 @@ class ExternSupplySystemProxyTest {
     void cancel_supply_bad_input(int transaction_id){
         this.externSupplySystemProxy = new ExternSupplySystemProxy();
         int answer = this.externSupplySystemProxy.cancel_supply(transaction_id);
-        assertEquals(answer, -1);
+        assertEquals(answer, 1);
     }
 
 

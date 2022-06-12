@@ -11,6 +11,7 @@ import TradingSystem.server.Domain.UserModule.CartInformation;
 import TradingSystem.server.Domain.Utils.Exception.AppointmentException;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 import TradingSystem.server.Domain.Utils.Response;
+import TradingSystem.server.Service.NotificationHandler;
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
@@ -121,6 +122,7 @@ class StoreMoudleTest {
 
     @BeforeEach
     void SetUp() {
+        NotificationHandler.setTestsHandler();
         this.productId = 1;
         this.birth_date = LocalDate.now().minusYears(30).toString();
         marketFacade.clear();

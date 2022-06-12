@@ -21,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+import TradingSystem.server.Service.NotificationHandler;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -57,6 +58,7 @@ class MarketFacadeTest {
 
     @BeforeEach
     void setUp() throws MarketException {
+        NotificationHandler.setTestsHandler();
         PaymentAdapter paymentAdapter = new PaymentAdapterImpl();
         SupplyAdapter supplyAdapter = new SupplyAdapterImpl();
 
