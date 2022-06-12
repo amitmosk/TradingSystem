@@ -55,7 +55,7 @@ public class MessageController implements ApplicationContextAware {
         String s = nativeHeaders.toString();
         String e1 = s.split("]")[0].substring(8);
         emails_to_sockSessionMap.put(e1, session_id.toString());
-        NotificationHandler.getInstance().send_waiting_notifications(e1);
+//        NotificationHandler.getInstance().send_waiting_notifications(e1);
 
 
     }
