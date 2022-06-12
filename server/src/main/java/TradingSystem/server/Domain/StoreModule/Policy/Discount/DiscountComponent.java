@@ -11,7 +11,7 @@ import javax.persistence.*;
         discriminatorType = DiscriminatorType.INTEGER)
 public abstract class DiscountComponent {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     public abstract double CalculateDiscount(Basket basket);

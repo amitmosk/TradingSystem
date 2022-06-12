@@ -9,7 +9,7 @@ import java.util.Map;
 @Entity
 public class StoreReview {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ElementCollection

@@ -17,7 +17,7 @@ import java.util.Map;
 
 // TODO: everytime user creates/appoint a store make an appointment
 @Entity
-@DiscriminatorValue("1")
+@DiscriminatorValue("15")
 public class AssignUser extends AssignState {
     private String email;
     @OneToOne

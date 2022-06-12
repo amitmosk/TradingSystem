@@ -1,9 +1,6 @@
 package TradingSystem.server.Domain.Utils;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,7 +12,7 @@ import java.util.Set;
 public class Pair implements Serializable
 {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     public String first;       // the first field of a pair
     public Integer second;      // the second field of a pair

@@ -7,7 +7,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("2")
+@DiscriminatorValue("13")
 public class OrPurchaseRule extends purchaseLogicComponent {
 
     public OrPurchaseRule(PurchaseRule left, PurchaseRule right) {

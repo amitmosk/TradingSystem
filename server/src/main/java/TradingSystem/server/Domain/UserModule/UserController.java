@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Entity
 public class UserController {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // ------------------- fields -------------------------------------
