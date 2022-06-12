@@ -31,7 +31,7 @@ public class MarketSystem {
     private SupplyAdapter supply_adapter;
 
 
-    public MarketSystem(String system_config_path, String instructions_config_path1) {
+    public MarketSystem(String system_config_path, String instructions_config_path1) throws ExitException {
         instructions_config_path = instructions_config_path1;
         this.init_market(system_config_path);
         this.init_data_to_market_develop(payment_adapter, supply_adapter);
@@ -41,21 +41,17 @@ public class MarketSystem {
     /**
      * Requirement 1.1
      */
-    public void init_market(String config_file_path) {
+    public void init_market(String config_file_path) throws ExitException{
         SystemLogger.getInstance().add_log("Start Init Market");
         String[] instructions;
-        try{
-            instructions = read_config_file(config_file_path);
-            String external_services_instruction = instructions[0];
-            set_external_services(external_services_instruction);
-            connect_to_external_services();
-            String database_instruction = instructions[1];
-            set_database(database_instruction);
+        instructions = read_config_file(config_file_path);
+        String external_services_instruction = instructions[0];
+        set_external_services(external_services_instruction);
+        connect_to_external_services();
+        String database_instruction = instructions[1];
+        set_database(database_instruction);
 
-        } catch (ExitException e) {
-            SystemLogger.getInstance().add_log(e.getMessage());
-            System.exit(3);
-        }
+
     }
 
     public PaymentAdapter getPayment_adapter() {

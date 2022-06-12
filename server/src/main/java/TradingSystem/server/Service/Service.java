@@ -7,6 +7,7 @@ import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
+import TradingSystem.server.Domain.Utils.SystemLogger;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,10 +33,18 @@ public class Service implements iService {
 
     private Service() {
         // -- Market init
-        MarketSystem system = new MarketSystem(system_config_path, instructions_config_path);
-        PaymentAdapter paymentAdapter = system.getPayment_adapter();
-        SupplyAdapter supplyAdapter = system.getSupply_adapter();
-        this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
+        MarketSystem system;
+        try
+        {
+            system = new MarketSystem(system_config_path, instructions_config_path);
+            PaymentAdapter paymentAdapter = system.getPayment_adapter();
+            SupplyAdapter supplyAdapter = system.getSupply_adapter();
+            this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
+        }
+        catch (ExitException e) {
+            SystemLogger.getInstance().add_log(e.getMessage());
+            System.exit(3);
+        }
     }
 
     public synchronized static Service getInstance() {

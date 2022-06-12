@@ -1404,6 +1404,10 @@ public class MarketFacade {
 
     //TODO: function that clears system for testing
 
+    public Store get_store(int store_id) throws MarketException {
+        return store_controller.get_store(store_id);
+    }
+
     public void clear() {
         user_controller.clear();
         store_controller.clear();
