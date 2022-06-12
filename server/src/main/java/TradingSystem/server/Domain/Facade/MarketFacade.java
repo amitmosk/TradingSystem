@@ -821,13 +821,13 @@ public class MarketFacade {
     //discount policy
 
 
-    public Response add_predict(int store_id, String catgorey, Product product, boolean above, boolean equql,
+    public Response add_predict(int store_id, String category, Product product, boolean above, boolean equel,
                                 int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name) {
         Response<Predict> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
-                Predict predict = store.addPredict(catgorey, product, above, equql, num, price, quantity, age, time, year, month, day, name);
+                Predict predict = store.addPredict(category, product, above, equel, num, price, quantity, age, time, year, month, day, name);
                 response = new Response(predict, "predict added successfully");
                 system_logger.add_log("predict added deleted successfully");
             }
@@ -1036,10 +1036,37 @@ public class MarketFacade {
     }
 
 
-    public Response<String> remove_discount_rule(int store_id, String name) {
-        return new Response<String>("a", "check,");
+    public Response remove_discount_rule(int store_id, String name) {
+        Response<SimplePurchaseRule> response = null;
+        try {
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                String res = store.remove_discount_rule(name);
+                response = new Response(res, "discount rule removed successfully");
+                system_logger.add_log("Store's (" + store_id + ") discount removed successfully");
+            }
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
     }
 
+    public Response remove_purchase_rule(int store_id, String name) {
+        Response<SimplePurchaseRule> response = null;
+        try {
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                String res = store.remove_purchase_rule(name);
+                response = new Response(res, "purchase rule removed successfully");
+                system_logger.add_log("Store's (" + store_id + ") purchase removed successfully");
+            }
+        } catch (MarketException e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
 
 
     public Response<SimplePurchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {

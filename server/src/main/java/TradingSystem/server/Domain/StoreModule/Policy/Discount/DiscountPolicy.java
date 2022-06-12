@@ -21,15 +21,20 @@ public class DiscountPolicy {
         this.policy = new HashMap<>();
     }
 
-    public void addRule(String name, DiscountComponent rule) throws WrongPermterException {
-        if (policy.get(name) != null)
-            policy.put(name, rule);
-        else
-            throw new WrongPermterException("there is a rule with this name allready");
+    private void checkUniqName(String name, HashMap map) throws WrongPermterException {
+        if (map.keySet().contains(name))
+            throw new WrongPermterException("there is a predict with this name in the store,please choose another name");
     }
 
-    public void removeRule(String name) {
-        policy.remove(policy.get(name));
+    public void addRule(String name, DiscountComponent component) throws WrongPermterException {
+        checkUniqName(name, policy);
+        policy.put(name, component);
+    }
+
+    public void removeRule(String name) throws WrongPermterException {
+        DiscountComponent toRemove = policy.remove(policy.get(name));
+        if (toRemove == null)
+            throw new WrongPermterException("there is no discount with this name");
     }
 
 

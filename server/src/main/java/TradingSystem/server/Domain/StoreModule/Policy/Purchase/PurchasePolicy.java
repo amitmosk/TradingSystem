@@ -1,6 +1,7 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.Utils.Exception.PurchasePolicyException;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
@@ -25,11 +26,14 @@ public class PurchasePolicy {
         this.policy = new HashMap<String, PurchaseRule>();
     }
 
+    private void checkUniqName(String name, HashMap map) throws WrongPermterException {
+        if (map.keySet().contains(name))
+            throw new WrongPermterException("there is a predict with this name in the store,please choose another name");
+    }
+
     public void addRule(String name, PurchaseRule rule) throws WrongPermterException {
-        if (policy.get(name) != null)
-            policy.put(name, rule);
-        else
-            throw new WrongPermterException("there is a rule with this name allready");
+        checkUniqName(name, policy);
+        policy.put(name, rule);
     }
 
     public void checkPolicy(int userAge, Basket basket) throws PurchasePolicyException {
@@ -51,9 +55,12 @@ public class PurchasePolicy {
         return rule;
     }
 
-    public void removeRule(PurchaseRule rule) {
-        policy.remove(rule);
+    public void removeRule(String name) throws WrongPermterException {
+        PurchaseRule toRemove = policy.remove(policy.get(name));
+        if (toRemove == null)
+            throw new WrongPermterException("there is no rule with this name");
     }
+
 
     public void setPolicyId(Long policyId) {
         this.policyId = policyId;

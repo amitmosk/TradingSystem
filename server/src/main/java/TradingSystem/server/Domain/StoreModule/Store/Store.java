@@ -58,10 +58,10 @@ public class Store {
     @Column(name = "quantity")
     private Map<Product, Integer> inventory; // product & quantity
     private boolean active;
-//    @OneToOne
+    //    @OneToOne
     @Transient
     private DiscountPolicy discountPolicy;
-//    @OneToOne
+    //    @OneToOne
     @Transient
     private PurchasePolicy purchasePolicy;
     @OneToOne
@@ -194,8 +194,8 @@ public class Store {
             throw new WrongPermterException("the polices are the same");
         AndPurchaseRule and = new AndPurchaseRule(purchaseleft, purchaseright);
         purchasePolicy.addRule(nameOfRule, and);
-        purchasePolicy.removeRule(purchaseleft);
-        purchasePolicy.removeRule(purchaseright);
+        purchasePolicy.removeRule(left);
+        purchasePolicy.removeRule(right);
         return and;
     }
 
@@ -205,8 +205,8 @@ public class Store {
         if (purchaseLeft == purchaseRight)
             throw new WrongPermterException("the polices are the same");
         OrPurchaseRule or = new OrPurchaseRule(purchaseLeft, purchaseRight);
-        purchasePolicy.removeRule(purchaseRight);
-        purchasePolicy.removeRule(purchaseRight);
+        purchasePolicy.removeRule(left);
+        purchasePolicy.removeRule(right);
         purchasePolicy.addRule(name, or);
         return or;
     }
@@ -221,15 +221,19 @@ public class Store {
                               int num, boolean price, boolean quantity, boolean age, boolean time, int year,
                               int month, int day, String name) throws WrongPermterException {
         Predict predict = new Predict(catgorey, product, above, equql, num, price, quantity, age, time, year, month, day);
-        if (predictList.keySet().contains(name))
-            throw new WrongPermterException("there is already a predict with the same name");
+        checkUniqName(name, this.predictList);
         predictList.put(name, predict);
         return predict;
     }
 
     //start of discount policy
-    public void remove_discount_rule(String name) {
+    public String remove_discount_rule(String name) throws WrongPermterException {
         discountPolicy.removeRule(name);
+        return "the rule was removed";
+    }
+    public String remove_purchase_rule(String name) throws WrongPermterException {
+        discountPolicy.removeRule(name);
+        return "the rule was removed";
     }
 
     private void checkUniqName(String name, HashMap map) throws WrongPermterException {
@@ -267,7 +271,6 @@ public class Store {
             if (predictList.get(s) instanceof Predict)
                 list.add(s);
         return list;
-
     }
 
 
@@ -374,8 +377,6 @@ public class Store {
         this.purchasePolicy.addRule(nameOfrule, Toreturn);
         return Toreturn;
     }
-
-
 
 
     public void add_product_rating(String user_email, int product_id, int rate) throws MarketException {
