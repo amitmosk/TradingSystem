@@ -1,12 +1,10 @@
 package TradingSystem.server.Service;
 
-import TradingSystem.server.Config.SystemStartConfig;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
-import TradingSystem.server.Domain.PaymentInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 import java.util.List;
 
 import java.util.*;
@@ -158,9 +156,12 @@ public class Service implements iService {
     @CrossOrigin
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo) {
-        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
-        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
-        Response answer = marketFacade.buy_cart(paymentInfo, supplyInfo);
+        // TODO : GSON
+//        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
+//        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
+        PaymentInfo paymentInfo1 = new PaymentInfo();
+        SupplyInfo supplyInfo1 = new SupplyInfo();
+        Response answer = marketFacade.buy_cart(paymentInfo1, supplyInfo1);
         return answer;
     }
 
@@ -586,11 +587,6 @@ public class Service implements iService {
         Response answer = marketFacade.get_all_categories(store_id);
         return answer;
     }
-
-
-
-
-
 
 
 

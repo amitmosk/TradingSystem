@@ -63,7 +63,7 @@ public interface iService {
      * Requirement 2.2.5.1
      */
 
-    TradingSystem.server.Domain.Utils.Response buy_cart(PaymentInfo paymentInfo, SupplyInfo supplyInfo);
+    TradingSystem.server.Domain.Utils.Response buy_cart(String paymentInfo, String supplyInfo);
 
     /**
      * Requirement 2.2.5.2
