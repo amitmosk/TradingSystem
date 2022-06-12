@@ -25,7 +25,6 @@ public class MarketSystem {
     // const vars
     public final static String external_system_url = "http://cs-bgu-wsep.herokuapp.com/";
     public final static String tests_config_file_path = "..\\server\\src\\main\\java\\TradingSystem\\server\\Config\\tests_config.txt";
-
     public static String instructions_config_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
             "main\\java\\TradingSystem\\server\\Config\\instructions_config.txt";
     public final static String system_config_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +

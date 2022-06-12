@@ -1,2 +1,2 @@
-external_services:demo
-database:demo
+external_services:tests
+database:tests

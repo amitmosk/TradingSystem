@@ -163,7 +163,7 @@ class ConfigurationTests {
         catch (ExitException e){
             fail();
         }
-        assertEquals("external_services:demo", to_return[0]);
-        assertEquals("database:demo", to_return[1]);
+        assertEquals("external_services:tests", to_return[0]);
+        assertEquals("database:tests", to_return[1]);
     }
 }
