@@ -12,8 +12,10 @@ import TradingSystem.server.Domain.Utils.Exception.MarketException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 
@@ -32,6 +34,7 @@ public class MarketSystem {
     public MarketSystem(String system_config_path, String instructions_config_path1) {
         instructions_config_path = instructions_config_path1;
         this.init_market(system_config_path);
+        this.init_data_to_market_develop(payment_adapter, supply_adapter);
     }
 
 
@@ -467,70 +470,70 @@ public class MarketSystem {
 
 
     }
-//    public void init_data_to_market(PaymentAdapter paymentAdapter, SupplyAdapter supplyAdapter) {
-//        String birth_date = LocalDate.now().minusYears(22).toString();
-//        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
-//        MarketFacade marketFacade2 = new MarketFacade(paymentAdapter, supplyAdapter);
-//        MarketFacade marketFacade3 = new MarketFacade(paymentAdapter, supplyAdapter);
-//        MarketFacade marketFacade4 = new MarketFacade(paymentAdapter, supplyAdapter);
-//        MarketFacade marketFacade5 = new MarketFacade(paymentAdapter, supplyAdapter);
-//        // register
-//        marketFacade1.register("amit@gmail.com","12345678aA","amit","moskovitz",birth_date);
-//        marketFacade2.register("tom@gmail.com","12345678aA","amit","moskovitz",birth_date);
-//        marketFacade3.register("gal@gmail.com","12345678aA","amit","moskovitz",birth_date);
-//        marketFacade4.register("grumet@gmail.com","12345678aA","amit","moskovitz",birth_date);
-//        marketFacade5.register("eylon@gmail.com","12345678aA","amit","moskovitz",birth_date);
-//        // open store
-//        marketFacade1.open_store("amit store");
-//        marketFacade2.open_store("tom store");
-//        marketFacade3.open_store("gal store");
-//        marketFacade4.open_store("grumet store");
-//        marketFacade5.open_store("eylon store");
-//        // add products to stores
-//        marketFacade1.add_product_to_store(1,50,"iphone",2999.9, "electronic",new LinkedList<>());
-//        marketFacade2.add_product_to_store(2,50,"iphone",2999.9, "electronic",new LinkedList<>());
-//        marketFacade3.add_product_to_store(3,50,"iphone",2999.9, "electronic",new LinkedList<>());
-//        marketFacade4.add_product_to_store(4,50,"iphone",2999.9, "electronic",new LinkedList<>());
-//        marketFacade5.add_product_to_store(5,50,"iphoneS",2999.9, "electronic",new LinkedList<>());
-//
-//        marketFacade5.add_product_to_store(5,50,"iphone",2999.9, "electronic",new LinkedList<>());
-//        // add products to cart
+    public void init_data_to_market_develop(PaymentAdapter paymentAdapter, SupplyAdapter supplyAdapter) {
+        String birth_date = LocalDate.now().minusYears(22).toString();
+        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        MarketFacade marketFacade2 = new MarketFacade(paymentAdapter, supplyAdapter);
+        MarketFacade marketFacade3 = new MarketFacade(paymentAdapter, supplyAdapter);
+        MarketFacade marketFacade4 = new MarketFacade(paymentAdapter, supplyAdapter);
+        MarketFacade marketFacade5 = new MarketFacade(paymentAdapter, supplyAdapter);
+        // register
+        marketFacade1.register("amit@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        marketFacade2.register("tom@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        marketFacade3.register("gal@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        marketFacade4.register("grumet@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        marketFacade5.register("eylon@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        // open store
+        marketFacade1.open_store("amit store");
+        marketFacade2.open_store("tom store");
+        marketFacade3.open_store("gal store");
+        marketFacade4.open_store("grumet store");
+        marketFacade5.open_store("eylon store");
+        // add products to stores
+        marketFacade1.add_product_to_store(1,50,"iphone",2999.9, "electronic",new LinkedList<>());
+        marketFacade2.add_product_to_store(2,50,"iphone",2999.9, "electronic",new LinkedList<>());
+        marketFacade3.add_product_to_store(3,50,"iphone",2999.9, "electronic",new LinkedList<>());
+        marketFacade4.add_product_to_store(4,50,"iphone",2999.9, "electronic",new LinkedList<>());
+        marketFacade5.add_product_to_store(5,50,"iphoneS",2999.9, "electronic",new LinkedList<>());
+
+        marketFacade5.add_product_to_store(5,50,"iphone",2999.9, "electronic",new LinkedList<>());
+        // add products to cart
+        marketFacade1.add_product_to_cart(1,1,20);
+//        marketFacade1.add_product_to_cart(2,2,20);
+//        marketFacade1.add_product_to_cart(3,3,20);
+//        marketFacade1.add_product_to_cart(4,4,20);
+//        marketFacade1.add_product_to_cart(5,5,20);
+//        marketFacade1.add_product_to_cart(5,6,20);
+
+        // buy from store
+//        marketFacade1.buy_cart("Payment Info", "Supply Info");
+
+        //enter more products to cart after purchase
 //        marketFacade1.add_product_to_cart(1,1,20);
-////        marketFacade1.add_product_to_cart(2,2,20);
-////        marketFacade1.add_product_to_cart(3,3,20);
-////        marketFacade1.add_product_to_cart(4,4,20);
-////        marketFacade1.add_product_to_cart(5,5,20);
-////        marketFacade1.add_product_to_cart(5,6,20);
-//
-//        // buy from store
-////        marketFacade1.buy_cart("Payment Info", "Supply Info");
-//
-//        //enter more products to cart after purchase
-////        marketFacade1.add_product_to_cart(1,1,20);
-////        marketFacade1.add_product_to_cart(2,2,20);
-////        marketFacade1.add_product_to_cart(3,3,20);
-////        marketFacade1.add_product_to_cart(4,4,20);
-//
-//
-//        marketFacade1.add_bid(2,2, 10, 1500);
-//        marketFacade2.manager_answer_bid(2,1,true,-1);
-//        PaymentInfo paymentInfo = new PaymentInfo();
-//        SupplyInfo supplyInfo = new SupplyInfo();
-//        marketFacade1.buy_cart(paymentInfo, supplyInfo);
-//        marketFacade2.add_product_to_cart(1,1,1);
-//        marketFacade2.buy_cart(paymentInfo,supplyInfo);
-//        marketFacade2.send_question_to_store(1,"why");
-//
-//        // logout
-//        marketFacade1.logout();
-//        marketFacade2.logout();
-//        marketFacade3.logout();
-//        marketFacade4.logout();
-//        marketFacade5.logout();
-//
-//
-//
-//
-//
-//    }
+//        marketFacade1.add_product_to_cart(2,2,20);
+//        marketFacade1.add_product_to_cart(3,3,20);
+//        marketFacade1.add_product_to_cart(4,4,20);
+
+
+        marketFacade1.add_bid(2,2, 10, 1500);
+        marketFacade2.manager_answer_bid(2,1,true,-1);
+        PaymentInfo paymentInfo = new PaymentInfo();
+        SupplyInfo supplyInfo = new SupplyInfo();
+        marketFacade1.buy_cart(paymentInfo, supplyInfo);
+        marketFacade2.add_product_to_cart(1,1,1);
+        marketFacade2.buy_cart(paymentInfo,supplyInfo);
+        marketFacade2.send_question_to_store(1,"why");
+
+        // logout
+        marketFacade1.logout();
+        marketFacade2.logout();
+        marketFacade3.logout();
+        marketFacade4.logout();
+        marketFacade5.logout();
+
+
+
+
+
+    }
 }

@@ -1,2 +1,2 @@
-external_services::real/demo
-database:real/demo
+external_services:real
+database:real
