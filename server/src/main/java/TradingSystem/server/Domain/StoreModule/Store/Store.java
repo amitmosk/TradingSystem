@@ -25,7 +25,6 @@ import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Utils;
-import org.springframework.web.bind.annotation.Mapping;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -185,24 +184,24 @@ public class Store {
         p.add_review(user_email, review);
     }
 
-    public AndporchaseRule add_and_purchase_rule(String nameOfRule, String left, String right) throws WrongPermterException {
-        porchaseRule purchaseright = purchasePolicy.getPolicy(left);
-        porchaseRule purchaseleft = purchasePolicy.getPolicy(right);
+    public AndPurchaseRule add_and_purchase_rule(String nameOfRule, String left, String right) throws WrongPermterException {
+        PurchaseRule purchaseright = purchasePolicy.getPolicy(left);
+        PurchaseRule purchaseleft = purchasePolicy.getPolicy(right);
         if (purchaseleft == purchaseleft)
             throw new WrongPermterException("the polices are the same");
-        AndporchaseRule and = new AndporchaseRule(purchaseleft, purchaseright);
+        AndPurchaseRule and = new AndPurchaseRule(purchaseleft, purchaseright);
         purchasePolicy.addRule(nameOfRule, and);
         purchasePolicy.removeRule(purchaseleft);
         purchasePolicy.removeRule(purchaseright);
         return and;
     }
 
-    public OrporchaseRule add_or_purchase_rule(String name, String left, String right) throws WrongPermterException {
-        porchaseRule purchaseRight = purchasePolicy.getPolicy(left);
-        porchaseRule purchaseLeft = purchasePolicy.getPolicy(right);
+    public OrPurchaseRule add_or_purchase_rule(String name, String left, String right) throws WrongPermterException {
+        PurchaseRule purchaseRight = purchasePolicy.getPolicy(left);
+        PurchaseRule purchaseLeft = purchasePolicy.getPolicy(right);
         if (purchaseLeft == purchaseRight)
             throw new WrongPermterException("the polices are the same");
-        OrporchaseRule or = new OrporchaseRule(purchaseLeft, purchaseRight);
+        OrPurchaseRule or = new OrPurchaseRule(purchaseLeft, purchaseRight);
         purchasePolicy.removeRule(purchaseRight);
         purchasePolicy.removeRule(purchaseRight);
         purchasePolicy.addRule(name, or);
@@ -366,9 +365,9 @@ public class Store {
         return (Predict) p;
     }
 
-    public SimpleporchaseRule addsimplePorchaseRule(String nameOfrule, String NameOfPredict) throws WrongPermterException {
+    public SimplePurchaseRule addsimplePorchaseRule(String nameOfrule, String NameOfPredict) throws WrongPermterException {
         Predict p = getPredictByName(NameOfPredict);
-        SimpleporchaseRule Toreturn = new SimpleporchaseRule(p);
+        SimplePurchaseRule Toreturn = new SimplePurchaseRule(p);
         this.purchasePolicy.addRule(nameOfrule, Toreturn);
         return Toreturn;
     }

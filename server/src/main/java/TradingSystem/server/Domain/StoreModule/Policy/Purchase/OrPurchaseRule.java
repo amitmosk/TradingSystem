@@ -2,14 +2,11 @@ package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
 
 import TradingSystem.server.Domain.StoreModule.Basket;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 
-import java.util.List;
-
-public class OrporchaseRule extends purchaseLogicComponent implements porchaseRule {
+public class OrPurchaseRule extends purchaseLogicComponent  {
 
 
-        public OrporchaseRule(porchaseRule left, porchaseRule right) {
+        public OrPurchaseRule(PurchaseRule left, PurchaseRule right) {
             super(left, right);
         }
 

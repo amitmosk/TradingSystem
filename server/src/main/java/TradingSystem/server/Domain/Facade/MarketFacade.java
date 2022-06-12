@@ -11,8 +11,8 @@ import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
-import TradingSystem.server.Domain.StoreModule.Policy.Purchase.SimpleporchaseRule;
-import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.SimplePurchaseRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchaseRule;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -954,7 +954,7 @@ public class MarketFacade {
     }
 
     public Response add_and_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<porchaseRule> response = null;
+        Response<PurchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
@@ -970,7 +970,7 @@ public class MarketFacade {
     }
 
     public Response add_or_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<porchaseRule> response = null;
+        Response<PurchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
@@ -986,7 +986,7 @@ public class MarketFacade {
     }
 
     public Response add_max_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<porchaseRule> response = null;
+        Response<PurchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
@@ -1002,7 +1002,7 @@ public class MarketFacade {
     }
 
     public Response add_plus_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<porchaseRule> response = null;
+        Response<PurchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
@@ -1018,7 +1018,7 @@ public class MarketFacade {
     }
 
     public Response add_xor_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<porchaseRule> response = null;
+        Response<PurchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
@@ -1041,13 +1041,13 @@ public class MarketFacade {
 
     //TODO concurrency
 
-    public Response<SimpleporchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
-        Response<SimpleporchaseRule> response = null;
+    public Response<SimplePurchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
+        Response<SimplePurchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
-                porchaseRule porchaseRule = store.addsimplePorchaseRule(NameOfRule, PredictName);
-                response = new Response(porchaseRule, "simple purchase added successfully");
+                PurchaseRule PurchaseRule = store.addsimplePorchaseRule(NameOfRule, PredictName);
+                response = new Response(PurchaseRule, "simple purchase added successfully");
                 system_logger.add_log("Store's (" + store_id + ") simple purchase added successfully");
             }
         } catch (MarketException e) {
@@ -1059,13 +1059,13 @@ public class MarketFacade {
 
     //TODO concurrency
 
-    public Response<porchaseRule> add_and_purchase_rule(String left, String right, int store_id, String NameOfrule) {
-        Response<porchaseRule> response = null;
+    public Response<PurchaseRule> add_and_purchase_rule(String left, String right, int store_id, String NameOfrule) {
+        Response<PurchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
-                porchaseRule porchaseRule = store.add_and_purchase_rule(NameOfrule, left, right);
-                response = new Response(porchaseRule, "Store purchase and rule added successfully");
+                PurchaseRule PurchaseRule = store.add_and_purchase_rule(NameOfrule, left, right);
+                response = new Response(PurchaseRule, "Store purchase and rule added successfully");
                 system_logger.add_log("Store's (" + store_id + ") purchase and rule have been added");
             }
         } catch (MarketException e) {
@@ -1077,13 +1077,13 @@ public class MarketFacade {
 
     //TODO concurrency
 
-    public Response<porchaseRule> add_or_purchase_rule(String left, String right, int store_id, String nameOfrule) {
-        Response<porchaseRule> response = null;
+    public Response<PurchaseRule> add_or_purchase_rule(String left, String right, int store_id, String nameOfrule) {
+        Response<PurchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
-                porchaseRule porchaseRule = store.add_or_purchase_rule(nameOfrule, left, right);
-                response = new Response(porchaseRule, "Store purchase rules added successfully");
+                PurchaseRule PurchaseRule = store.add_or_purchase_rule(nameOfrule, left, right);
+                response = new Response(PurchaseRule, "Store purchase rules added successfully");
                 system_logger.add_log("Store's (" + store_id + ") purchase rules have been added");
             }
         } catch (MarketException e) {

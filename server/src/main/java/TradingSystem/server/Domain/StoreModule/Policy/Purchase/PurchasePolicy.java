@@ -4,7 +4,6 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.Utils.Exception.PurchasePolicyException;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
-import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Set;
 //@OneToMany(cascade = CascadeType.ALL)
@@ -18,14 +17,14 @@ public class PurchasePolicy {
     // referenced column name = the father PK
 
     // the value column
-    private HashMap<String, porchaseRule> policy;
+    private HashMap<String, PurchaseRule> policy;
     private Long policyId;
 
     public PurchasePolicy() {
-        this.policy = new HashMap<String, porchaseRule>();
+        this.policy = new HashMap<String, PurchaseRule>();
     }
 
-    public void addRule(String name, porchaseRule rule) throws WrongPermterException {
+    public void addRule(String name, PurchaseRule rule) throws WrongPermterException {
         if (policy.get(name) != null)
             policy.put(name, rule);
         else
@@ -33,7 +32,7 @@ public class PurchasePolicy {
     }
 
     public void checkPolicy(int userAge, Basket basket) throws PurchasePolicyException {
-        for (porchaseRule rule : policy.values()
+        for (PurchaseRule rule : policy.values()
         ) {
             if (!rule.predictCheck(userAge, basket))
                 throw new PurchasePolicyException("the purchase doesnt stands with the policy of the store");
@@ -44,14 +43,14 @@ public class PurchasePolicy {
         return policy.keySet();
     }
 
-    public porchaseRule getPolicy(String name) throws WrongPermterException {
-        porchaseRule rule = policy.get(name);
+    public PurchaseRule getPolicy(String name) throws WrongPermterException {
+        PurchaseRule rule = policy.get(name);
         if (rule == null)
             throw new WrongPermterException("no policy with this name");
         return rule;
     }
 
-    public void removeRule(porchaseRule rule) {
+    public void removeRule(PurchaseRule rule) {
         policy.remove(rule);
     }
 
