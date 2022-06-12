@@ -14,7 +14,7 @@ public abstract class Ipredict {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    public Long id;
 
     public abstract boolean CanApply(Basket b);
 
@@ -25,4 +25,5 @@ public abstract class Ipredict {
     public Long getId() {
         return id;
     }
+
 }

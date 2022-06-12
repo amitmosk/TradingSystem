@@ -58,23 +58,26 @@ public class Store {
     @Column(name = "quantity")
     private Map<Product, Integer> inventory; // product & quantity
     private boolean active;
-    //    @OneToOne
-    @Transient
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private DiscountPolicy discountPolicy;
-    //    @OneToOne
-    @Transient
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private PurchasePolicy purchasePolicy;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StorePurchaseHistory purchases_history;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StoreReview storeReview;
     private AtomicInteger product_ids_counter;
     @Transient
     private Object owners_lock;
     @Transient
     private Object managers_lock;
-    @Transient
-    private HashMap<String, Ipredict> predictList;
+
+
+    @OneToMany
+    @JoinTable(name = "predicts",
+            joinColumns = {@JoinColumn(name = "predict_id", referencedColumnName = "store_id")})
+    @MapKeyColumn(name = "name") // the key column
+    private Map<String, Ipredict> predictList;
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder, AtomicInteger ai) {
@@ -236,7 +239,7 @@ public class Store {
         return "the rule was removed";
     }
 
-    private void checkUniqName(String name, HashMap map) throws WrongPermterException {
+    private void checkUniqName(String name, Map map) throws WrongPermterException {
         if (map.keySet().contains(name))
             throw new WrongPermterException("there is a predict with this name in the store,please choose another name");
     }
@@ -817,4 +820,27 @@ public class Store {
         this.inventory.put(to_edit, quantity);
     }
 
+    public DiscountPolicy getDiscountPolicy() {
+        return discountPolicy;
+    }
+
+    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy;
+    }
+
+    public PurchasePolicy getPurchasePolicy() {
+        return purchasePolicy;
+    }
+
+    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
+        this.purchasePolicy = purchasePolicy;
+    }
+
+    public Map<String, Ipredict> getPredictList() {
+        return predictList;
+    }
+
+    public void setPredictList(Map<String, Ipredict> predictList) {
+        this.predictList = predictList;
+    }
 }

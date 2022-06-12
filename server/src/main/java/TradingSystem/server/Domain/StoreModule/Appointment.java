@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static TradingSystem.server.Domain.StoreModule.Store.StoreManagerType.*;
 import static TradingSystem.server.Domain.StoreModule.StorePermission.*;
@@ -29,11 +30,12 @@ public class Appointment {
     private StoreManagerType type;
 
 
-//    @CollectionTable(name = "permissions")
-//    @MapKeyColumn(name="permission_name")
-//    @Column(name="on/off")
-    @Transient
-    private HashMap<StorePermission,Integer> permissions;
+    @ElementCollection
+    @CollectionTable(name = "permissions")
+    @MapKeyColumn(name="permission_name")
+    @Column(name="onORoff")
+    @MapKeyEnumerated(EnumType.STRING)
+    private Map<StorePermission,Integer> permissions;
 
     // -- constructors
     public Appointment(AssignUser manager, AssignUser appointer, Store store, StoreManagerType type) {
@@ -141,7 +143,7 @@ public class Appointment {
         return type;
     }
 
-    public HashMap<StorePermission, Integer> getPermissions() {
+    public Map<StorePermission, Integer> getPermissions() {
         return permissions;
     }
     // -- setters
@@ -169,7 +171,7 @@ public class Appointment {
         this.type = type;
     }
 
-    public void setPermissions(HashMap<StorePermission, Integer> permissions) {
+    public void setPermissions(Map<StorePermission, Integer> permissions) {
         this.permissions = permissions;
     }
 

@@ -5,11 +5,16 @@ import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
 import javax.persistence.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 @Entity
 public class DiscountPolicy {
-    @Transient //sinlgetone
-    private HashMap<String, DiscountComponent> policy;
+
+    @OneToMany
+    @JoinTable(name = "discount_policy",
+            joinColumns = {@JoinColumn(name = "component_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "name") // the key column
+    private Map<String, DiscountComponent> policy;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +23,7 @@ public class DiscountPolicy {
         this.policy = new HashMap<>();
     }
 
-    private void checkUniqName(String name, HashMap map) throws WrongPermterException {
+    private void checkUniqName(String name, Map map) throws WrongPermterException {
         if (map.keySet().contains(name))
             throw new WrongPermterException("there is a predict with this name in the store,please choose another name");
     }
@@ -59,5 +64,13 @@ public class DiscountPolicy {
 
     public Long getId() {
         return id;
+    }
+
+    public Map<String, DiscountComponent> getPolicy() {
+        return policy;
+    }
+
+    public void setPolicy(Map<String, DiscountComponent> policy) {
+        this.policy = policy;
     }
 }

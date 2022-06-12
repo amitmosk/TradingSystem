@@ -28,7 +28,6 @@ public class User {
     private AssignState state;
     @OneToOne
     private Cart cart;
-    @Transient
     private AtomicBoolean isGuest;
     @Transient
     private AtomicBoolean isLogged;

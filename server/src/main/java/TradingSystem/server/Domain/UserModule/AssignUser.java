@@ -17,7 +17,7 @@ import java.util.Map;
 
 // TODO: everytime user creates/appoint a store make an appointment
 @Entity
-@DiscriminatorValue("15")
+@DiscriminatorValue("1")
 public class AssignUser extends AssignState {
     private String email;
     @OneToOne
@@ -27,11 +27,23 @@ public class AssignUser extends AssignState {
     @OneToOne
     private UserPurchaseHistory userPurchaseHistory;
 
-    @Transient
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "founder_table",
+            joinColumns = {@JoinColumn(name = "user", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "appointment_id", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "store_id")
     private Map<Store, Appointment> founder;
-    @Transient
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "owner_table",
+            joinColumns = {@JoinColumn(name = "user", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "appointment_id", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "store_id")
     private Map<Store, Appointment> owner;
-    @Transient
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "manager_table",
+            joinColumns = {@JoinColumn(name = "user", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "appointment_id", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "store_id")
     private Map<Store,Appointment> manager;
 
     // ------------------------------ constructors ------------------------------

@@ -5,11 +5,9 @@ import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent
 import TradingSystem.server.Domain.Utils.Exception.PurchasePolicyException;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -18,15 +16,18 @@ public class PurchasePolicy {
     @GeneratedValue
     private Long id;
 
-    @Transient
-    private HashMap<String, PurchaseRule> policy;
+    @OneToMany
+    @JoinTable(name = "purchase_policy",
+            joinColumns = {@JoinColumn(name = "rule_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "name") // the key column
+    private Map<String, PurchaseRule> policy;
     private Long policyId;
 
     public PurchasePolicy() {
         this.policy = new HashMap<String, PurchaseRule>();
     }
 
-    private void checkUniqName(String name, HashMap map) throws WrongPermterException {
+    private void checkUniqName(String name, Map map) throws WrongPermterException {
         if (map.keySet().contains(name))
             throw new WrongPermterException("there is a predict with this name in the store,please choose another name");
     }
@@ -76,5 +77,13 @@ public class PurchasePolicy {
 
     public Long getId() {
         return id;
+    }
+
+    public Map<String, PurchaseRule> getPolicy() {
+        return policy;
+    }
+
+    public void setPolicy(Map<String, PurchaseRule> policy) {
+        this.policy = policy;
     }
 }
