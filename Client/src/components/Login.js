@@ -8,7 +8,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import "./Login.css";
 const WEBSOCKETURL = "ws://localhost:8080/chat";
-
+import SocketProvider from './SocketProvider';
 
 export default class Login extends Component {
     static displayName = Login.name;
@@ -33,20 +33,6 @@ export default class Login extends Component {
     }
 
 
-    async open_web_socket(){
-        const websocket = require('ws');
-        var ws = new websocket(WEBSOCKETURL);
-        
-        ws.onopen = function(data) {ws.send("-client- want to open web socket with the server");};
-        ws.onmessage = function(data) {
-            // alert("new notification!");
-            this.setState({ snackbar: { children: "new notifications!", severity: "success" } });
-
-            // update notifications UI with the new notification 
-            console.log(data);
-         }
-    }
-
 
     async componentDidMount() {
     }
@@ -63,6 +49,8 @@ export default class Login extends Component {
             const user = response.value;
             this.props.updateUserState(user);
             console.log("in login, login success!\n");
+            const {createSocket} = SocketProvser("setMessge");
+            createSocket(user.email);
             // open seb socket
             // this.open_web_socket();
             // return to home page and update properties (change state of App to assign user).

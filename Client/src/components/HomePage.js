@@ -96,6 +96,19 @@ export default class HomePage extends Component {
     //    return (<ShoppingCart products={products}></ShoppingCart>);
     return <ShoppingCart products={this.state.products}></ShoppingCart>;
   }
+  get_notifications(){
+    console.log("goti");
+    let response = this.connectAPI.get_notifications("amit@gmail.com");
+    // alert(response.message);
+    if (!response.was_exception)
+    {
+
+        console.log("in noti, noti success!\n");
+    }
+    else{
+        console.log("in noti, noti failed!\n");
+    }
+}
 
   render() {
     return (
@@ -103,8 +116,9 @@ export default class HomePage extends Component {
         <Container>
           <Box sx={{ flexGrow: 1 }}>
             <h1 className="Header" align="center">
-              Welcome To Ebay
+              Welcome To Trading System
             </h1>
+            <Button onClick={()=>this.get_notifications()} varient="contained">noty</Button>
             {/* <HomePageSearch sx={{ height: '5%' }} /> */}
           </Box>
           <Grid

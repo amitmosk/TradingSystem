@@ -1,12 +1,8 @@
-// import axios from "axios";
-import {CONNECTION_ERROR, CATCH,ONLINE_USER_PATH, EMPLOYEE_BASE_REST_API_URL, LOGIN_PATH, REGISTER_PATH,LOGOUT_PATH} from "./ApiPaths";
+import {CONNECTION_ERROR, CATCH,ONLINE_USER_PATH, LOGIN_PATH, REGISTER_PATH,LOGOUT_PATH, NOTIFICATIONS_PATH} from "./ApiPaths";
 import { Response } from "./Response";
 import { User } from "../ServiceObjects/User";
-// const instance = axios.create(
-//     {withCredentials : true}
-// );
+
 const instance = require('axios');
-const WEBSOCKETURL = "ws://localhost:8080/chat";
 
 export class ConnectApi {
 
@@ -56,6 +52,20 @@ export class ConnectApi {
             .then(res => {
                 const user_guest = new User(res.data.value);
                 return Response.create(user_guest,res.data.was_exception,res.data.message);
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    }
+    get_notifications(email) {
+        return instance.get(NOTIFICATIONS_PATH,
+            {
+                params:{ email: email,
+                    }
+                
+            })
+            .then(res => {
+                console.log(res.data)
+                const user = new User(res.data.value);
+                return Response.create(user,res.data.was_exception,res.data.message);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }

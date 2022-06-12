@@ -12,7 +12,7 @@ export const LOGIN_PATH = API_PATH + '/login';
 export const LOGOUT_PATH = API_PATH + '/logout';
 export const REGISTER_PATH = API_PATH + '/register';
 export const ONLINE_USER_PATH = API_PATH + '/online_user'
-
+export const NOTIFICATIONS_PATH = API_PATH + '/get_notifications';
 // ========= Store ========== //
 
 export const FIND_STORE_INFORMATION = API_PATH + '/find_store_information';
