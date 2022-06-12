@@ -25,6 +25,7 @@ import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Utils;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,24 +38,40 @@ public class Store {
     //TODO: reviews - should contain users / users_email ? if user changes his email ?
 
     // -- fields
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int store_id;
+    @Transient
     private AssignUser founder;
+    @Transient
     private Map<AssignUser, Appointment> stuffs_and_appointments;
+
     private String name;
     public String foundation_date;
-    private Map<Product, Integer> inventory; // product & quantity
+    @Transient
+    private Map<Product, Integer> inventory;
+
+    // product & quantity
     private boolean active;
+    @Transient
     private DiscountPolicy discountPolicy;
+    @Transient
     private PurchasePolicy purchasePolicy;
+    @Transient
     private StorePurchaseHistory purchases_history;
+    @Transient
     private StoreReview storeReview;
+    @Transient
     private AtomicInteger product_ids_counter;
+    @Transient
     private Object owners_lock;
+    @Transient
     private Object managers_lock;
+    @Transient
     private HashMap<String, Ipredict> predictList;
 
     // -- constructors
-    public Store(int store_id, String name, AssignUser founder,AtomicInteger ai) {
+    public Store(int store_id, String name, AssignUser founder, AtomicInteger ai) {
         this.discountPolicy = new DiscountPolicy();
         this.purchasePolicy = new PurchasePolicy();
         this.store_id = store_id;
@@ -159,18 +176,26 @@ public class Store {
         p.add_review(user_email, review);
     }
 
-    public AndporchaseRule add_and_purchase_rule(String nameOfRule,String left, String right) throws WrongPermterException {
+    public AndporchaseRule add_and_purchase_rule(String nameOfRule, String left, String right) throws WrongPermterException {
         porchaseRule purchaseright = purchasePolicy.getPolicy(left);
         porchaseRule purchaseleft = purchasePolicy.getPolicy(right);
+        if (purchaseleft == purchaseleft)
+            throw new WrongPermterException("the polices are the same");
         AndporchaseRule and = new AndporchaseRule(purchaseleft, purchaseright);
-        purchasePolicy.addRule(nameOfRule,and);
+        purchasePolicy.addRule(nameOfRule, and);
+        purchasePolicy.removeRule(purchaseleft);
+        purchasePolicy.removeRule(purchaseright);
         return and;
     }
 
     public OrporchaseRule add_or_purchase_rule(String name, String left, String right) throws WrongPermterException {
-        porchaseRule purchaseright = purchasePolicy.getPolicy(left);
-        porchaseRule purchaseleft = purchasePolicy.getPolicy(right);
-        OrporchaseRule or = new OrporchaseRule(purchaseleft, purchaseright);
+        porchaseRule purchaseRight = purchasePolicy.getPolicy(left);
+        porchaseRule purchaseLeft = purchasePolicy.getPolicy(right);
+        if (purchaseLeft == purchaseRight)
+            throw new WrongPermterException("the polices are the same");
+        OrporchaseRule or = new OrporchaseRule(purchaseLeft, purchaseRight);
+        purchasePolicy.removeRule(purchaseRight);
+        purchasePolicy.removeRule(purchaseRight);
         purchasePolicy.addRule(name, or);
         return or;
     }
@@ -181,10 +206,12 @@ public class Store {
         this.storeReview.add_rating(user.get_user_email(), rating);
     }
 
-    public Predict addPredict(String catgorey, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name) throws WrongPermterException {
+    public Predict addPredict(String catgorey, Product product, boolean above, boolean equql,
+                              int num, boolean price, boolean quantity, boolean age, boolean time, int year,
+                              int month, int day, String name) throws WrongPermterException {
         Predict predict = new Predict(catgorey, product, above, equql, num, price, quantity, age, time, year, month, day);
         if (predictList.keySet().contains(name))
-            throw new WrongPermterException("there is alreay a predict with the same name");
+            throw new WrongPermterException("there is already a predict with the same name");
         predictList.put(name, predict);
         return predict;
     }
@@ -242,7 +269,7 @@ public class Store {
         return toreturn;
     }
 
-    public OrCompositePredict CreateOrDisocuntCompnent(String name, String left, String right, String complex) throws WrongPermterException {
+    public OrCompositePredict CreateOrDisocuntCompnent(String name, String left, String right) throws WrongPermterException {
         Ipredict leftPredict = predictList.get(left);
         Ipredict rightPredict = predictList.get(right);
         OrCompositePredict toreturn = new OrCompositePredict(leftPredict, rightPredict);
@@ -255,7 +282,11 @@ public class Store {
         DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
         DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
         xorDiscountComponent toreturn = new xorDiscountComponent(leftdiscount, rifhtdiscount);
-        this.discountPolicy.addRule(name, toreturn);
+        if (leftdiscount == rifhtdiscount)
+            throw new WrongPermterException("the discounts are the same");
+        discountPolicy.removeRule(left);
+        discountPolicy.removeRule(right);
+        discountPolicy.addRule(name, toreturn);
         return toreturn;
     }
 
@@ -263,7 +294,11 @@ public class Store {
         DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
         DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
         maxDiscountComponent toreturn = new maxDiscountComponent(leftdiscount, rifhtdiscount);
-        this.discountPolicy.addRule(name, toreturn);
+        if (leftdiscount == rifhtdiscount)
+            throw new WrongPermterException("the discounts are the same");
+        discountPolicy.removeRule(left);
+        discountPolicy.removeRule(right);
+        discountPolicy.addRule(name, toreturn);
         return toreturn;
     }
 
@@ -271,7 +306,11 @@ public class Store {
         DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
         DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
         plusDiscountComponent toreturn = new plusDiscountComponent(leftdiscount, rifhtdiscount);
-        this.discountPolicy.addRule(name, toreturn);
+        if (leftdiscount == rifhtdiscount)
+            throw new WrongPermterException("the discounts are the same");
+        discountPolicy.removeRule(left);
+        discountPolicy.removeRule(right);
+        discountPolicy.addRule(name, toreturn);
         return toreturn;
     }
 
@@ -285,7 +324,7 @@ public class Store {
     }
 
 
-    public simpleDiscountComponent add_simple_discount(String name, String type, String nameOfCategorey, double precent) throws WrongPermterException {
+    public simpleDiscountComponent add_simple_discount(String name, String type, double precent, String nameOfCategorey) throws WrongPermterException {
         simpleDiscountComponent simpleDiscountComponent;
         if (type == "c")
             simpleDiscountComponent = new simpleDiscountComponentByCategory(nameOfCategorey, precent);
@@ -295,15 +334,15 @@ public class Store {
         return simpleDiscountComponent;
     }
 
+
     public ComplexDiscountComponent add_complex_discount(String name, String nameOFPredict, String nameOfPolicy) throws WrongPermterException {
-        Ipredict predict = predictList.get(nameOFPredict);
+        Ipredict predict = getPredictByName(nameOFPredict);
         DiscountComponent simpleDiscountComponent = discountPolicy.getDiscountCompnentByName(nameOfPolicy);
         if (!(simpleDiscountComponent instanceof simpleDiscountComponent))
             throw new WrongPermterException("this polciy is not of type simple");
         ComplexDiscountComponent toreturn = new ComplexDiscountComponent(simpleDiscountComponent, predict);
         this.discountPolicy.addRule(name, toreturn);
         return toreturn;
-
     }
 
 
@@ -311,23 +350,20 @@ public class Store {
 
     //purchase policy
 
-    private Predict getSimplePredictsByName(String name) throws WrongPermterException {
+    private Predict getPredictByName(String name) throws WrongPermterException {
         Ipredict p = predictList.get(name);
-        if (!(p instanceof Predict))
-            throw new WrongPermterException("the name of the predict is wrong");
+        if (p == null)
+            throw new WrongPermterException("no predict with this name");
         return (Predict) p;
     }
 
-    public SimpleporchaseRule addsimplePorchaseRule(String nameOfRule, String nameForule, String name) throws WrongPermterException {
-        Predict p = getSimplePredictsByName(name);
+    public SimpleporchaseRule addsimplePorchaseRule(String nameOfrule, String NameOfPredict) throws WrongPermterException {
+        Predict p = getPredictByName(NameOfPredict);
         SimpleporchaseRule Toreturn = new SimpleporchaseRule(p);
-        this.purchasePolicy.addRule(nameForule, Toreturn);
+        this.purchasePolicy.addRule(nameOfrule, Toreturn);
         return Toreturn;
     }
 
-
-    //TODO add purchase or and
-    //end of purchase policy
 
     public void add_product_rating(String user_email, int product_id, int rate) throws MarketException {
         Product p = this.getProduct_by_product_id(product_id);//throws
@@ -761,8 +797,7 @@ public class Store {
     public void edit_product_quantity(AssignUser assignUser, int product_id, int quantity) throws MarketException {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(assignUser, StorePermission.edit_item_quantity);
-        if (quantity < 1)
-        {
+        if (quantity < 1) {
             throw new WrongPermterException("quantity must be positive number");
         }
         this.inventory.put(to_edit, quantity);
