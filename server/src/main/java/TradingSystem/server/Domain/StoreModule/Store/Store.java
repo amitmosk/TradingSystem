@@ -69,8 +69,11 @@ public class Store {
     @OneToOne
     private StoreReview storeReview;
     private AtomicInteger product_ids_counter;
+    @Transient
     private Object owners_lock;
+    @Transient
     private Object managers_lock;
+    @Transient
     private HashMap<String, Ipredict> predictList;
 
     // -- constructors
