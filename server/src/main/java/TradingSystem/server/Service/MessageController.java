@@ -1,5 +1,7 @@
 package TradingSystem.server.Service;
 
+import TradingSystem.server.Domain.Utils.Threads.ConnectThread;
+import TradingSystem.server.Domain.Utils.Threads.SendNotificationThread;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -41,6 +43,7 @@ public class MessageController implements ApplicationContextAware {
         }
         if (!email_to_remove.equals(""))
             emails_to_sockSessionMap.remove(email_to_remove);
+        // TODO : logger
         System.out.println("Disconnect Event :" + session_id);
     }
 
@@ -48,6 +51,7 @@ public class MessageController implements ApplicationContextAware {
     public void sessionConnectedHandler(SessionConnectedEvent sessionConnectedEvent){
         MessageHeaders m = sessionConnectedEvent.getMessage().getHeaders();
         Object session_id = m.get("simpSessionId");
+        // TODO: LOGGER
         System.out.println("Connect Event : "+session_id);
         GenericMessage connectMessage = (GenericMessage) m.get("simpConnectMessage");
         MessageHeaders headers = connectMessage.getHeaders();
@@ -69,10 +73,14 @@ public class MessageController implements ApplicationContextAware {
         myContext = context;
     }
 
-    // TODO : Add sendTo field who tell us where send the message
+    // TODO : LOGGER
     public void sendNotification(String email, String notification){
-        System.out.println("send notification - step 1 ");
-        smt.convertAndSend("/topic/"+email,"as1:"+notification);
-        System.out.println("send notification - step 2 ");
+        // destination according the user email
+        String dest = "/topic/"+email;
+        // message with the prefix for client knowledge
+        String message = "as1:"+notification;
+        SendNotificationThread sendNotificationThread = new SendNotificationThread(smt, dest, message);
+        Thread t1 = new Thread(sendNotificationThread);
+        t1.start();
     }
 }

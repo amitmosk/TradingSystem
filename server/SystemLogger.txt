@@ -1,98 +1,100 @@
-Jun 12, 2022 7:16:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: tomer shtien has registered to the system
-Jun 12, 2022 7:16:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User logged out from the system.
-Jun 12, 2022 7:16:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: tomer shtien has registered to the system
-Jun 12, 2022 7:16:44 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User logged out from the system.
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User amit@walla.com logged-in
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: tomer shtien has registered to the system
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: tomer shtien has registered to the system
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User logged out from the system.
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User amit@walla.com logged-in
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store COLBO with id = 1opened successfully
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store HONDA with id = 2opened successfully
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: tomer shtien has registered to the system
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: tomer shtien has registered to the system
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User logged out from the system.
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User amit@walla.com logged-in
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store COLBO with id = 1opened successfully
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store HONDA with id = 2opened successfully
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: tomer shtien has registered to the system
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: tomer shtien has registered to the system
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User logged out from the system.
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User amit@walla.com logged-in
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store COLBO with id = 1opened successfully
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store HONDA with id = 2opened successfully
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: tomer shtien has registered to the system
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: tomer shtien has registered to the system
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User logged out from the system.
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User amit@walla.com logged-in
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store COLBO with id = 1opened successfully
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store HONDA with id = 2opened successfully
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Start Init Market
-Jun 12, 2022 7:16:45 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: system connected to the payment system
-Jun 12, 2022 7:16:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:32:30 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: system connected to the supply system
-Jun 12, 2022 7:16:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: tomer shtien has registered to the system
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: tomer shtien has registered to the system
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User amit@walla.com logged-in
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: tomer shtien has registered to the system
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: tomer shtien has registered to the system
+Jun 12, 2022 7:32:31 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User amit@walla.com logged-in
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store COLBO with id = 1opened successfully
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store HONDA with id = 2opened successfully
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: tomer shtien has registered to the system
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: tomer shtien has registered to the system
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User amit@walla.com logged-in
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store COLBO with id = 1opened successfully
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store HONDA with id = 2opened successfully
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: tomer shtien has registered to the system
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: tomer shtien has registered to the system
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User amit@walla.com logged-in
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store COLBO with id = 1opened successfully
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store HONDA with id = 2opened successfully
+Jun 12, 2022 7:32:32 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: tomer shtien has registered to the system
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: tomer shtien has registered to the system
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User amit@walla.com logged-in
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store COLBO with id = 1opened successfully
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store HONDA with id = 2opened successfully
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: system connected to the payment system
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: system connected to the supply system
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: user controller load
-Jun 12, 2022 7:16:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: store controller load
-Jun 12, 2022 7:16:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Start Init Market
-Jun 12, 2022 7:16:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Start Init Market
-Jun 12, 2022 7:16:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Start Init Market
-Jun 12, 2022 7:16:46 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 12, 2022 7:32:33 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Start Init Market

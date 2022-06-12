@@ -140,7 +140,7 @@ class ConfigurationTests {
         catch (ExitException e){
             fail();
         }
-        assertTrue(true);
+        assertTrue(true, "The system start running after reading a nice configuration file.");
     }
 
 
@@ -165,7 +165,7 @@ class ConfigurationTests {
             answer = true;
         }
 
-        assertTrue(answer);
+        assertTrue(answer, "The system stop running after reading bad configuration file.");
     }
 
 
@@ -184,7 +184,7 @@ class ConfigurationTests {
             answer = true;
         }
 
-        assertTrue(answer);
+        assertTrue(answer, "The Server is stop running after external services handshake denied.");
     }
 
 
