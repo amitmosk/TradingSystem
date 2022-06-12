@@ -55,12 +55,12 @@ class MarketFacadeTest {
     private String user_admin_email;
     private SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
     private PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
-
+    private PaymentAdapter paymentAdapter;
+    private SupplyAdapter supplyAdapter;
 
     //------------------------- Initialization --------------------------------------------------------------------------
 
-    private PaymentAdapter paymentAdapter;
-    private SupplyAdapter supplyAdapter;
+
 
     public MarketFacadeTest() {
         try{
@@ -511,10 +511,20 @@ class MarketFacadeTest {
                     "store (" + store_name + ") found inactive in system");
     }
 
+    List<String> get_staff_names(Response res){
+        List<String> staff = new ArrayList<>();
+        if(res.getValue().getClass() == StoreManagersInfo.class){
+            List<AppointmentInformation> staff_info = ((StoreManagersInfo)res.getValue()).getAppointmentInformationList();
+            for(AppointmentInformation appoint : staff_info){
+                staff.add(appoint.getMember_email());
+            }
+        }
+        return staff;
+    }
+
 
     //------------------------------- Testing functions --------------------------------------------------------------------------
 
-    // view_store_management_information
     // manager_answer_question
     // get_market_stats
     // get_products_by_store_id
@@ -522,55 +532,101 @@ class MarketFacadeTest {
     // edit_product_quantity
     // online_user
 
-//    @Test
-//    void view_store_management_information(){
-//        Response res;
-//        boolean suppose_to_throw = true;
-//        String test_name = "view_store_management_information";
-//        int store_counter = num_of_stores();
-//        String message, test_case;
-//        List<String> staff = new ArrayList<>();
-//        String fail_name, f1_f2_same_store_name, f2_store1_name;
-//        String owner_email = "owner@owner.com";
-//        String founder_email = "founder@founder.com";
-//        int store_id, f1_store2_id, f2_store1_id, f1_store3_id;
-//        int founder = 1,
-//                owner = 2,
-//                admin = 3,
-//                guest = 4;
-//
-//        // --------------------------- All users register ---------------------------
-//        message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
-//        res = facade1.register(founder_email, password, "founder", "founder", birth_date);
-//        assertFalse(check_was_exception(res), message);
-//
-//        res = facade2.register("owner@owner.com", password, "owner", "owner", birth_date);
-//        assertFalse(check_was_exception(res), message);
-//
-//        res = facade3.login(user_admin_email, user_password);
-//        assertFalse(check_was_exception(res), message);
-//
-//
-//        // --------------------------- Founder opens store ---------------------------
-//        test_case = "Founder opens store";
-//        store_counter++;
-//        store_id = open_store_helper(!suppose_to_throw, founder, test_name, store_counter, test_case, "Store: " + test_name , 0);
-//        staff.add(founder_email);
-//
-//        // --------------------------- Founder appoints owner ---------------------------
-//        message ="Founder (" + founder + ") add user (" + owner + ") as store (" + store_id + ") owner";
-//        res = facade1.add_owner(owner_email,store_id);
-//        assertFalse(check_was_exception(res), message);
-//        staff.add(owner_email);
-//        res = facade1.view_store_management_information(store_id);
-//        if(res.getValue().getClass() == StoreManagersInfo.class){
-//            List<AppointmentInformation> staff_info = ((StoreManagersInfo)res.getValue()).getAppointmentInformationList();
-//            for(String worker : staff){
-//            }
-//        }
-//
-//
-//    }
+
+    @Test
+    void view_store_management_information(){
+        Response res;
+        boolean suppose_to_throw = true;
+        String test_name = "view_store_management_information";
+        int store_counter = num_of_stores();
+        String message, test_case;
+        List<String> staff = new ArrayList<>();
+        String owner_email = "owner@owner.com";
+        String founder_email = "founder@founder.com";
+        String manager_email = "manager@manager.com";
+        int store_id;
+        int founder = 1;
+
+        // --------------------------- All users register ---------------------------
+        message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
+        res = facade1.register(founder_email, password, "founder", "founder", birth_date);
+        assertFalse(check_was_exception(res), message);
+
+        res = facade2.register(owner_email, password, "owner", "owner", birth_date);
+        assertFalse(check_was_exception(res), message);
+
+        res = facade3.register(manager_email, user_password, "manager", "manager", birth_date);
+        assertFalse(check_was_exception(res), message);
+
+
+        // --------------------------- Founder opens store ---------------------------
+        test_case = "Founder opens store";
+        store_counter++;
+        store_id = open_store_helper(!suppose_to_throw, founder, test_name, store_counter, test_case, "Store: " + test_name , 1);
+        staff.add(founder_email);
+
+        // --------------------------- Founder appoints owner ---------------------------
+        message ="Founder (" + founder_email + ") add user (" + owner_email + ") as store (" + store_id + ") owner";
+        res = facade1.add_owner(owner_email,store_id);
+        assertFalse(check_was_exception(res), message);
+        staff.add(owner_email);
+        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
+        res = facade1.view_store_management_information(store_id);
+        List<String> staff_info = get_staff_names(res);
+        for(String worker : staff){
+            assertTrue(staff_info.contains(worker), message + worker + " not found in system");
+        }
+
+        // --------------------------- Guest user tries to appoint manager ---------------------------
+        message ="Guest (" + founder_email + ") tries to add user (" + manager_email + ") as store (" + store_id + ") manager";
+        res = facade4.add_manager(manager_email, store_id);
+        assertTrue(check_was_exception(res), message);
+        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: " + manager_email + "found in system";
+        res = facade1.view_store_management_information(store_id);
+        staff_info = get_staff_names(res);
+        assertFalse(staff_info.contains(manager_email), message);
+
+
+        // --------------------------- Owner appoints store manager ---------------------------
+        message ="Owner (" + owner_email + ") add user (" + manager_email + ") as store (" + store_id + ") manager";
+        res = facade2.add_manager(manager_email,store_id);
+        assertFalse(check_was_exception(res), message);
+        staff.add(manager_email);
+        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
+        res = facade1.view_store_management_information(store_id);
+        staff_info = get_staff_names(res);
+            for(String worker : staff){
+                assertTrue(staff_info.contains(worker), message + worker + " not found in system");
+            }
+
+
+        // --------------------------- Founder deletes store owner ---------------------------
+        message ="Founder (" + founder_email + ") removes owner (" + owner_email + ") as store (" + store_id + ") owner";
+        res = facade1.delete_owner(owner_email,store_id);
+        assertFalse(check_was_exception(res), message);
+        staff.remove(owner_email);
+        staff.remove(manager_email);
+        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
+        res = facade1.view_store_management_information(store_id);
+        staff_info = get_staff_names(res);
+            for(String worker : staff){
+                assertFalse(staff_info.contains(manager_email), message);
+                assertFalse(staff_info.contains(owner_email), message);
+            }
+
+
+        // --------------------------- All users logout ---------------------------
+        facade1.logout();
+        facade2.logout();
+        facade3.logout();
+
+    }
+
+
+
+
+
+
 
     //------------------------------- Open \ Close store --------------------------------------------------------------------------
 

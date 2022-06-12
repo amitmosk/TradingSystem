@@ -1,13 +1,2 @@
-Jun 12, 2022 3:46:00 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
-SEVERE: cannot get guest AssignUser
+Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
 SEVERE: Guest doesnt have email.
-Jun 12, 2022 3:46:00 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
-SEVERE: user is no a store member
-Jun 12, 2022 3:46:00 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
-SEVERE: User has no permissions!
-Jun 12, 2022 3:46:01 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
-SEVERE: cannot get guest AssignUser
-Jun 12, 2022 3:46:02 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
-SEVERE: user is no a store member
-Jun 12, 2022 3:46:02 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
-SEVERE: User has no permissions!
