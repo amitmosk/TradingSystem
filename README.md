@@ -9,21 +9,37 @@ System users visit the market for buying, selling, and managing the stores.
 
 ## Initialization
 There are 2 configuration files for our system.  
-First, the external services file, who will contatin one of the following values:  
+First, the system configuration file, who choose the way to initialize the external services & database.
+The text in the file should be in the format:
+  external_services:<-option1>
+  database:<-option2>
+  
+1) the external services will contain one of the following values:  
 * tests  
-* real  
+* real 
 
 For tests, we will not connect to the external systems and managed the requests locally.  
 For real time, we will connect to the external systems.  
-The config file path should be:  
-*..\server\Config\services_config.txt*  
 
-The second configuration file contatins instructions for initialized data for the market when we load the system.  
-This file is a text file who contatins instructions in the next format :  
+2) The database will contain one of the following values:
+* tests
+* real
+* demo
+
+The demo option is for running the application and test it manually, the data will load from data configuration file(see up next).
+The real option is for real-time use of the application, for loading the database.
+The tests option is for clean database.
+
+The configuration file path should be:  
+*..\server\Config\system_config.txt*  
+
+The second configuration file contains instructions for initialized data for the market when we load the system with demo.  
+This file is a text file who contains instructions in the next format :  
 <-instruction name>#<-param1>#<-param2>#<-param3>..  
-The config file path should be:  
+
+The configuration file path should be:  
 *..\server\Config\instructions_config.txt*  
-If one of the instructions will failed logicilly or because a wrong format,  
+If one of the instructions will failed logically or because a wrong format,  
 All of the instructions in the configuration file will cancelled.  
  
 ## API:
@@ -60,7 +76,7 @@ Available functions (pay attention to copy the instruction name exactly) :
  
  
 Pay attention that all the instructions should keep this order.
-* After register action the user is automaticially login.
+* After register action the user is automatically login.
  
 ## How to use?
  <Here come Tom video & words>
@@ -68,7 +84,7 @@ Pay attention that all the instructions should keep this order.
 ## Features:
  1. Statistics about the traffic in our system.
  2. Encrypt passwords with PBKDF2 with Hmac SHA1 Algorithm.
- 3. Realtime system & client notifications Web Socket-based (sockJS) & observer design pattern.
+ 3. Real-time system & client notifications Web Socket-based (sockJS) & observer design pattern.
  4. Use external systems services according http requests to the external server, implemented with adapter & proxy design patterns.
  5. DB - <GAL>
  
