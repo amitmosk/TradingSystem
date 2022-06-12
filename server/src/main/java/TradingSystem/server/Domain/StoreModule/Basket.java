@@ -6,20 +6,19 @@ import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 import TradingSystem.server.Domain.Utils.Pair;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.prefs.BackingStoreException;
 
 public class Basket {
     private Pair<String, Integer> basket_id; // <user_email, store_id>
     private Map<Product, Integer> products_and_quantities; //  product & quantity
+    private Map<Product, Double> products_and_price_per_unit; //  product & quantity
 
     // ------------------------------ constructors ------------------------------
     public Basket(int store_id, String buyer_email) {
         this.basket_id = new Pair<>(buyer_email, store_id);
         products_and_quantities = new HashMap<>();
+        products_and_price_per_unit = new HashMap<>();
     }
 
     public Basket() {
@@ -56,21 +55,25 @@ public class Basket {
     }
 
     public void removeProduct(Product product) throws MarketException {
-        if(!this.products_and_quantities.containsKey(product))
+        if(!this.products_and_quantities.containsKey(product) || !this.products_and_price_per_unit.containsKey(product))
         {
             throw new BasketException("Basket.removeProduct: Product isn't in the basket - product id: "+product.getProduct_id());
         }
         this.products_and_quantities.remove(product);
+        this.products_and_price_per_unit.remove(product);
     }
 
-    public void addProduct(Product p, int quantity)throws MarketException {
+    public void addProduct(Product p, int quantity, double price_per_unit) throws MarketException {
         if(quantity < 1)
             throw new WrongPermterException("cannot add quantity lower then 1");
-        if(this.products_and_quantities.containsKey(p))
+        if(price_per_unit < 1)
+            throw new WrongPermterException("cannot add price lower then 1");
+        if(this.products_and_quantities.containsKey(p) || this.products_and_price_per_unit.containsKey(p))
         {
             throw new BasketException("Product already in the basket - product id: "+p.getProduct_id());
         }
         this.products_and_quantities.put(p, quantity);
+        this.products_and_price_per_unit.put(p, price_per_unit);
     }
 
     //----------------------------------------Getters--------------------------------------------------
@@ -93,12 +96,14 @@ public class Basket {
     public Map<Product, Integer> getProducts_and_quantities() {
         return products_and_quantities;
     }
+
+
     public double getTotal_price() {
-        // TODO : calculate according discount policy
         double price=0;
         for (Product p: this.products_and_quantities.keySet())
         {
-            price += p.getPrice() * this.products_and_quantities.get(p);
+            double price_per_unit = this.products_and_price_per_unit.get(p);
+            price += price_per_unit * this.products_and_quantities.get(p);
         }
         return price;
     }

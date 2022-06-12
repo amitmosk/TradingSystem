@@ -1,1 +1,6 @@
 *.pack
+*.json
+server/ErrorLogger.txt
+server/SystemLogger.txt
+
+*.pack

@@ -11,15 +11,15 @@ private SupplyAdapterImpl supplyAdapter;
         supplyAdapter = new SupplyAdapterImpl();
     }
 
-    @Test
-    void supply() {
-        boolean answer = supplyAdapter.supply("address");
-        assertTrue(answer);
-    }
+//    @Test
+//    void supply() {
+//        boolean answer = supplyAdapter.supply("address");
+//        assertTrue(answer);
+//    }
 
     @Test
     void connect_to_payment_system() {
-        boolean answer = supplyAdapter.connect_to_supply_system();
+        boolean answer = supplyAdapter.handshake();
         assertTrue(answer);
     }
 }

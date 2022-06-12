@@ -12,7 +12,7 @@ import java.util.List;
 import static TradingSystem.server.Domain.StoreModule.Store.StoreManagerType.*;
 import static TradingSystem.server.Domain.StoreModule.StorePermission.*;
 
-public class Appointment {
+public class Appointment implements iAppointment {
     // -- fields
     private AssignUser member;
     private AssignUser appointer;
@@ -53,11 +53,11 @@ public class Appointment {
         this.permissions.put(edit_item_category, 1);
         this.permissions.put(edit_item_keywords, 1);
         this.permissions.put(view_permissions, 0);
-        this.permissions.put(view_users_questions, 0);
+        this.permissions.put(view_users_questions, 1);
         this.permissions.put(edit_store_policy, 0);
         this.permissions.put(edit_discount_policy, 0);
         this.permissions.put(edit_purchase_policy, 0);
-        this.permissions.put(view_purchases_history, 0);
+        this.permissions.put(view_purchases_history, 1);
         this.permissions.put(close_store_temporarily, 0);
         this.permissions.put(open_close_store, 0);
         this.permissions.put(add_manager, 0);
@@ -65,6 +65,9 @@ public class Appointment {
         this.permissions.put(add_owner, 0);
         this.permissions.put(remove_owner, 0);
         this.permissions.put(edit_permissions, 0);
+        this.permissions.put(answer_bid_offer, 0);
+        this.permissions.put(view_bids_status, 0);
+        this.permissions.put(answer_bid_offer_negotiate, 0);
     }
     private void set_owner_permissions(){
         this.permissions.put(add_item, 1);
@@ -86,6 +89,9 @@ public class Appointment {
         this.permissions.put(add_owner, 1);
         this.permissions.put(remove_owner, 1);
         this.permissions.put(edit_permissions, 1);
+        this.permissions.put(answer_bid_offer, 0);
+        this.permissions.put(view_bids_status, 1);
+        this.permissions.put(answer_bid_offer_negotiate, 0);
     }
     private void set_founder_permissions(){
         this.permissions.put(add_item, 1);
@@ -107,26 +113,34 @@ public class Appointment {
         this.permissions.put(add_owner, 1);
         this.permissions.put(remove_owner, 1);
         this.permissions.put(edit_permissions, 1);
+        this.permissions.put(answer_bid_offer, 1);
+        this.permissions.put(view_bids_status, 1);
+        this.permissions.put(answer_bid_offer_negotiate, 1);
     }
 
     // -- getters
 
 
+    @Override
     public AssignUser getMember() {
         return member; }
 
+    @Override
     public AssignUser getAppointer() {
         return appointer;
     }
 
+    @Override
     public Store getStore() {
         return store;
     }
 
+    @Override
     public StoreManagerType getType() {
         return type;
     }
 
+    @Override
     public HashMap<StorePermission, Integer> getPermissions() {
         return permissions;
     }
@@ -165,6 +179,7 @@ public class Appointment {
       * @param permission who ask to know
      * @return if this manager allowed to do it.
      */
+    @Override
     public boolean has_permission(StorePermission permission){
         return this.permissions.get(permission) == 1;
     }
@@ -178,14 +193,17 @@ public class Appointment {
         }
     }
 
+    @Override
     public boolean is_owner() {
         return this.type == store_owner;
     }
 
+    @Override
     public boolean is_founder() {
         return this.type == store_founder;
     }
 
+    @Override
     public boolean is_manager() {
         return this.type == store_manager;
     }

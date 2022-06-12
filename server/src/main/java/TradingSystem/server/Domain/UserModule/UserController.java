@@ -43,7 +43,9 @@ public class UserController {
     public UserController() {
         this.ID = new AtomicInteger(0);
         this.purchaseID = new AtomicInteger(0);
-        this.users = new ConcurrentHashMap<>();        //thread safe
+//        this.users = new ConcurrentHashMap<>();        //thread safe
+        this.users = new HashMap<>();
+
         this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
         this.usersLock = new Object();
         this.statisticsManager = new StatisticsManager();
@@ -327,7 +329,7 @@ public class UserController {
 
     public Statistic get_statistics(int logged_user) throws MarketException {
         check_admin_permission(logged_user);
-        return statisticsManager.get_system_statistics();
+        return statisticsManager.get_system_statistics(users,onlineUsers);
     }
 
 

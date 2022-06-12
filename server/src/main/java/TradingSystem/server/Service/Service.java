@@ -2,19 +2,24 @@ package TradingSystem.server.Service;
 
 import TradingSystem.server.Config.SystemStartConfig;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
+import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
+import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.PaymentInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
-import TradingSystem.server.Domain.SupplyInfo;
-import com.google.gson.Gson;
+import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
+import com.google.gson.Gson;
+import java.util.List;
 
 import java.util.*;
+
+import static TradingSystem.server.Service.MarketSystem.*;
 
 
 @RestController
@@ -23,18 +28,16 @@ public class Service implements iService {
     private static Service service = null;
 
     private MarketFacade marketFacade;
-    private NotificationHandler notificationHandler;
+
+
+
 
     private Service() {
         // -- Market init
-        MarketSystem system = new MarketSystem();
+        MarketSystem system = new MarketSystem(system_config_path, instructions_config_path);
         PaymentAdapter paymentAdapter = system.getPayment_adapter();
         SupplyAdapter supplyAdapter = system.getSupply_adapter();
         this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
-        this.notificationHandler = new NotificationHandler();
-        // -- amit code, TODO: remove after checks
-         SystemStartConfig.init_data_to_market(paymentAdapter, supplyAdapter);
-
     }
 
     public synchronized static Service getInstance() {
@@ -43,26 +46,19 @@ public class Service implements iService {
         return service;
     }
 
-    @RequestMapping(value = "/amit")
-    @CrossOrigin
-    public String amit(String a) {
-        int e=4;
-        System.out.println("string amit");
-        Response<String> res  = new Response<String>("hello "+a,"yess" );
-//        return "hello "+a;
-        return "new Gson().toJson(res);";
-    }
-
-
     @RequestMapping(value = "/login")
     @CrossOrigin
     @Override
     public Response login(String email, String password) {
         Response answer = marketFacade.login(email, password);
-        // have to write new method that will be send onopen in the client to the server,
-        // and the server will send all the waiting notifications
-        this.notificationHandler.send_waiting_notifications(email);
         return answer;
+    }
+
+    @RequestMapping(value = "/get_notifications")
+    @CrossOrigin
+    public Response get_notifications(){
+        NotificationHandler.getInstance().send_waiting_notifications("amit@gmail.com");
+        return new Response("nice", "job");
     }
 
     @RequestMapping(value = "/logout")
@@ -72,6 +68,8 @@ public class Service implements iService {
         Response answer = marketFacade.logout();
         return answer;
     }
+
+
 
     @RequestMapping(value = "/register")
     @CrossOrigin
@@ -163,6 +161,24 @@ public class Service implements iService {
         PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
         SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
         Response answer = marketFacade.buy_cart(paymentInfo, supplyInfo);
+        return answer;
+    }
+
+    @Override
+    public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
+        Response answer = marketFacade.add_bid(storeID, productID, quantity, offer_price);
+        return answer;
+    }
+
+    @Override
+    public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
+        Response answer = marketFacade.manager_answer_bid(storeID, bidID, manager_answer, negotiation_price);
+        return answer;
+    }
+
+    @Override
+    public Response view_bids_status(int storeID) {
+        Response answer = marketFacade.view_bids_status(storeID);
         return answer;
     }
 

@@ -2,12 +2,12 @@ package TradingSystem.server.Service;
 
 
 
+import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
-import TradingSystem.server.Domain.Utils.Response;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public interface iService {
 
@@ -60,10 +60,19 @@ public interface iService {
     TradingSystem.server.Domain.Utils.Response edit_product_quantity_in_cart(int storeID, int productID, int quantity);
 
     /**
-     * Requirement 2.2.5
+     * Requirement 2.2.5.1
      */
 
-    TradingSystem.server.Domain.Utils.Response buy_cart(String paymentInfo, String supplyInfo);
+    TradingSystem.server.Domain.Utils.Response buy_cart(PaymentInfo paymentInfo, SupplyInfo supplyInfo);
+
+    /**
+     * Requirement 2.2.5.2
+     */
+
+    TradingSystem.server.Domain.Utils.Response add_bid(int storeID, int productID, int quantity, double offer_price);
+    TradingSystem.server.Domain.Utils.Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price);
+    TradingSystem.server.Domain.Utils.Response view_bids_status(int storeID);
+
 
     /**
      * Requirement 2.3.2

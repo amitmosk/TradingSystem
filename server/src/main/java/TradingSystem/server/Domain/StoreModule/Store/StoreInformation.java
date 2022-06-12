@@ -18,7 +18,7 @@ public class StoreInformation {
     public String foundation_date;
     private List<ProductInformation> inventory; // product & quantity
     private StoreReview storeReview;
-
+    private boolean active;
 
     // ------------------------------ constructors ------------------------------
     public StoreInformation(Store store) {
@@ -30,6 +30,7 @@ public class StoreInformation {
         this.name = store.getName();
         this.foundation_date = store.getFoundation_date();
         this.storeReview = store.getStoreReview();
+        this.active = store.isActive();
         update_inv(store.getInventory());
     }
 
@@ -132,5 +133,9 @@ public class StoreInformation {
 
     public StoreReview getStoreReview() {
         return storeReview;
+    }
+
+    public boolean isActive(){
+        return this.active;
     }
 }

@@ -209,7 +209,7 @@ export default class App extends Component {
 
           <Route path="/ProductPage" element={<ProductPage />}></Route>
           {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
-          <Route path="/ViewStat" element={<ViewStat />}></Route>
+          <Route path="/ViewStat" element={<ViewStat user={this.state.user} />}></Route>
           <Route
             path="/AdminViewUserQuestions"
             element={<AdminViewUserQuestions />}
