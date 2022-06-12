@@ -1,0 +1,58 @@
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: cannot get guest AssignUser
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not active - store id: 2
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is already open
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not active - store id: 3
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 2
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: only admin have permissions for this operation.
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not active - store id: 5
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 3
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: null
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not active - store id: 5
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 4
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user is no a store member
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: The store is not active - store id: 5
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Store: Product is not exist - product id: 5
+Jun 10, 2022 8:48:36 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: user try to buy empty cart
