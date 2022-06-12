@@ -6,11 +6,13 @@ import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapterImpl;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.Appointment;
+import TradingSystem.server.Domain.StoreModule.AppointmentInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
+import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
@@ -504,6 +506,56 @@ class MarketFacadeTest {
     // edit_product_quantity
     // online_user
 
+    @Test
+    void view_store_management_information(){
+        Response res;
+        boolean suppose_to_throw = true;
+        String test_name = "view_store_management_information";
+        int store_counter = num_of_stores();
+        String message, test_case;
+        List<String> staff = new ArrayList<>();
+        String fail_name, f1_f2_same_store_name, f2_store1_name;
+        String owner_email = "owner@owner.com";
+        String founder_email = "founder@founder.com";
+        int store_id, f1_store2_id, f2_store1_id, f1_store3_id;
+        int founder = 1,
+                owner = 2,
+                admin = 3,
+                guest = 4;
+
+        // --------------------------- All users register ---------------------------
+        message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
+        res = facade1.register(founder_email, password, "founder", "founder", birth_date);
+        assertFalse(check_was_exception(res), message);
+
+        res = facade2.register("owner@owner.com", password, "owner", "owner", birth_date);
+        assertFalse(check_was_exception(res), message);
+
+        res = facade3.login(user_admin_email, user_password);
+        assertFalse(check_was_exception(res), message);
+
+
+        // --------------------------- Founder opens store ---------------------------
+        test_case = "Founder opens store";
+        store_counter++;
+        store_id = open_store_helper(!suppose_to_throw, founder, test_name, store_counter, test_case, "Store: " + test_name , 0);
+        staff.add(founder_email);
+
+        // --------------------------- Founder appoints owner ---------------------------
+        message ="Founder (" + founder + ") add user (" + owner + ") as store (" + store_id + ") owner";
+        res = facade1.add_owner(owner_email,store_id);
+        assertFalse(check_was_exception(res), message);
+        staff.add(owner_email);
+        res = facade1.view_store_management_information(store_id);
+        if(res.getValue().getClass() == StoreManagersInfo.class){
+            List<AppointmentInformation> staff_info = ((StoreManagersInfo)res.getValue()).getAppointmentInformationList();
+            for(String worker : staff){
+            }
+        }
+
+
+    }
+
     //------------------------------- Open \ Close store --------------------------------------------------------------------------
 
     @Test
@@ -521,7 +573,7 @@ class MarketFacadeTest {
             admin = 3,
             guest = 4;
 
-        // ------------------------------ All users register ------------------------------
+        // --------------------------- All users register ---------------------------
         message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
         res = facade1.register(founder+"1@founder.com", password, founder, founder, birth_date);
         assertFalse(check_was_exception(res), message);
@@ -536,13 +588,13 @@ class MarketFacadeTest {
         test_case = "guest tries to open store: " + fail_name;
         open_store_helper(suppose_to_throw, guest, test_name, store_counter, test_case, fail_name, 0);
 
-        // ------------------------------ Founder1 opens store f1_store1 ------------------------------
+        // --------------------------- Founder1 opens store f1_store1 ---------------------------
         f1_store1_name = "Store 1 - open close store";
         test_case = "assigned user tries to open store: " + f1_store1_name;
         store_counter++;
         f1_store1_id = open_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store1_name, 1);
 
-        // ------------------------------ Founder1 opens store f1_store2 ------------------------------
+        // --------------------------- Founder1 opens store f1_store2 ---------------------------
         f1_f2_same_store_name = "Store 2 - open close store";
         test_case = "assigned user tries to open store: " + f1_f2_same_store_name;
         store_counter++;
@@ -557,7 +609,7 @@ class MarketFacadeTest {
         test_case = "admin tries to close store temporarily";
         close_store_temporarily_helper(suppose_to_throw, admin, test_name, store_counter, test_case, f1_store1_id, f1_store1_name, 1, false);
 
-        // ------------------------------ Founder1 closes store f1_store1 temporarily ------------------------------
+        // --------------------------- Founder1 closes store f1_store1 temporarily ---------------------------
         test_case = "store founder closes store temporarily";
         close_store_temporarily_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store1_id, f1_store1_name, 1, true);
 
@@ -573,19 +625,19 @@ class MarketFacadeTest {
         test_case = "admin tries to open closed store";
         open_closed_store_helper(suppose_to_throw, admin, test_name, store_counter, test_case, f1_store1_name, 1, f1_store1_id, true);
 
-        // ------------------------------ Founder1 re-opens store f1_store1 ------------------------------
+        // --------------------------- Founder1 re-opens store f1_store1 ---------------------------
         test_case = "store founder opens closed store";
         open_closed_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store1_name, 1, f1_store1_id, false);
 
         test_case = "store founder tries to re-open the closed store he opened already";
         open_closed_store_helper(suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store1_name, 1, f1_store1_id, false);
 
-        // ------------------------------ Founder2 opens store f2_store1 ------------------------------
+        // --------------------------- Founder2 opens store f2_store1 ---------------------------
         test_case = "assigned user tries to open store with same name as another store founded by a different user: " + f1_f2_same_store_name;
         store_counter++;
         f2_store1_id = open_store_helper(!suppose_to_throw, founder2, test_name, store_counter, test_case, f1_f2_same_store_name, 2);
 
-        // ------------------------------ Founder1 opens store f1_store3 ------------------------------
+        // --------------------------- Founder1 opens store f1_store3 ---------------------------
         test_case = "assigned user tries to open store with same name as two other stores founded by this user and another: " + f1_f2_same_store_name;
         store_counter++;
         f1_store3_id = open_store_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_f2_same_store_name, 3);
@@ -612,14 +664,14 @@ class MarketFacadeTest {
         test_case = "admin tries to close store temporarily";
         close_store_temporarily_helper(suppose_to_throw, admin, test_name, store_counter, test_case, f2_store1_id, f1_f2_same_store_name, 3, false);
 
-        // ------------------------------ Founder1 closes store f2_store2 temporarily ------------------------------
+        // --------------------------- Founder1 closes store f2_store2 temporarily ---------------------------
         test_case = "store founder closes store temporarily";
         close_store_temporarily_helper(!suppose_to_throw, founder1, test_name, store_counter, test_case, f1_store2_id, f1_f2_same_store_name, 1, true);
         assertTrue(find_store(f1_f2_same_store_name, 2,true));
         res = add_prod_make_purchase_closed_store(f1_store2_id); // founder2 tries to make purchase from f2_store2
         assertTrue(check_was_exception(res), "User bought products from temporarily closed store successfuly");
 
-        // ------------------------------ Founder2 closes store f2_store1 temporarily ------------------------------
+        // --------------------------- Founder2 closes store f2_store1 temporarily ---------------------------
         test_case = "store founder closes store temporarily";
         close_store_temporarily_helper(!suppose_to_throw, founder2, test_name, store_counter, test_case, f2_store1_id, f1_f2_same_store_name, 2, true);
 
