@@ -1032,10 +1032,11 @@ class StoreMoudleTest {
     @Test
     void bid_without_nego_guest(){
         MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
-        marketFacade1.add_bid(1,1,3,80);
-        marketFacade.manager_answer_bid(1,1,true,-1);
+        Response<Integer> response = marketFacade1.add_bid(1,1,3,80);
+        int bid_id = response.getValue();
+        marketFacade.manager_answer_bid(1, bid_id,true,-1);
         CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
-        assertTrue(cartInformation.getPrice() == 240);
+        assertTrue(cartInformation.getPrice() == 240.0);
 
     }
 
@@ -1046,10 +1047,11 @@ class StoreMoudleTest {
     void bid_without_nego_assign_user(){
         MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
-        marketFacade1.add_bid(1,1,3,80);
-        marketFacade.manager_answer_bid(1,1,true,-1);
+        Response<Integer> response = marketFacade1.add_bid(1,1,3,80);
+        int bid_id = response.getValue();
+        marketFacade.manager_answer_bid(1,bid_id,true,-1);
         CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
-        assertTrue(cartInformation.getPrice() == 240);
+        assertTrue(cartInformation.getPrice() == 240.0);
 
     }
 
@@ -1058,8 +1060,9 @@ class StoreMoudleTest {
     void bid_uncofirm(){
         MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
-        marketFacade1.add_bid(1,1,3,80);
-        marketFacade.manager_answer_bid(1,1,false,-1);
+        Response<Integer> response = marketFacade1.add_bid(1,1,3,80);
+        int bid_id = response.getValue();
+        marketFacade.manager_answer_bid(1,bid_id,false,-1);
         CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
         assertTrue(cartInformation.getPrice() == 0);
 
@@ -1072,10 +1075,11 @@ class StoreMoudleTest {
     void bid_with_nego_assign_user(){
         MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
-        marketFacade1.add_bid(1,1,3,80);
-        marketFacade.manager_answer_bid(1,1,true,85);
+        Response<Integer> response = marketFacade1.add_bid(1,1,3,80);
+        int bid_id = response.getValue();
+        marketFacade.manager_answer_bid(1,bid_id,true,85);
         CartInformation cartInformation = marketFacade1.view_user_cart().getValue();
-        assertTrue(cartInformation.getPrice() == 255);
+        assertTrue(cartInformation.getPrice() == 255.0);
 
     }
 
@@ -1086,8 +1090,9 @@ class StoreMoudleTest {
     void bid_with_nego_assign_user_no_permission(){
         MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         marketFacade1.register("assign_user@gmail.com","12345678aA", "assign", "user", "15.01.95");
-        marketFacade1.add_bid(1,1,3,80);
-        marketFacade.manager_answer_bid(1,1,true,-1);
+        Response<Integer> response1 = marketFacade1.add_bid(1,1,3,80);
+        int bid_id = response1.getValue();
+        marketFacade.manager_answer_bid(1,bid_id,true,-1);
         Response response = manager.manager_answer_bid(1,1,true,50);
         assertTrue(check_was_exception(response));
 

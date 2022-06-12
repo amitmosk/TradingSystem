@@ -796,7 +796,7 @@ public class Store implements Observable {
 
     // amit - bid
 
-    public void add_bid_offer(int bid_id, Product product, int quantity, double offer_price, User buyer) {
+    public int add_bid_offer(int bid_id, Product product, int quantity, double offer_price, User buyer) {
         List<String> managers_emails = new ArrayList<>();
         for (Appointment appointment : this.stuffs_and_appointments.values()){
             if (appointment.has_permission(StorePermission.answer_bid_offer)){
@@ -806,6 +806,7 @@ public class Store implements Observable {
         Bid bid = new Bid(quantity, offer_price, managers_emails, product, buyer);
         this.bids.put(bid_id, bid);
         this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName());
+        return bid_id;
     }
 
     public List<BidInformation> view_bids_status(AssignUser user) throws NoPremssionException {

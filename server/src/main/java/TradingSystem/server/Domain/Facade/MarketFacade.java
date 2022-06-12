@@ -1463,8 +1463,8 @@ public class MarketFacade {
         Response<String> response = null;
         try {
             User buyer = user_controller.get_user(loggedUser);
-            this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer);
-            response = new Response<>("", "adding bid offer for product");
+            int bid_id = this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer);
+            response = new Response(bid_id, "adding bid offer for product");
             system_logger.add_log("User added bid offer for " + quantity + " of product- " + productID + " from store- " + storeID);
         } catch (Exception e) {
             response = Utils.CreateResponse(e);
