@@ -4,6 +4,7 @@ package TradingSystem.server.Service;
 
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
+import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 
 import java.util.ArrayList;
@@ -253,4 +254,43 @@ public interface iService {
     TradingSystem.server.Domain.Utils.Response get_all_stores();
     TradingSystem.server.Domain.Utils.Response online_user();
 
+
+    /**
+     *
+     */
+    TradingSystem.server.Domain.Utils.Response add_predict(int store_id, String categorey, int product_id, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name);
+    TradingSystem.server.Domain.Utils.Response get_purchase_policy(int store_id);
+    TradingSystem.server.Domain.Utils.Response send_predicts(int store_id);
+    TradingSystem.server.Domain.Utils.Response get_discount_policy(int store_id);
+
+
+
+
+    //--------------------------------------------------Discount Rules-----------------------------------
+
+    TradingSystem.server.Domain.Utils.Response add_complex_discount_rule(int store_id, String nameOfPredict, String nameOfPolicy, String nameOfRule);
+    TradingSystem.server.Domain.Utils.Response add_simple_category_discount_rule(int store_id, String nameOfCategory, double percent, String nameOfRule);
+    TradingSystem.server.Domain.Utils.Response add_simple_product_discount_rule(int store_id, int id, double percent, String nameOfrule);
+    TradingSystem.server.Domain.Utils.Response add_simple_store_discount_rule(int store_id, double percent, String nameOfRule);
+
+
+
+
+
+    TradingSystem.server.Domain.Utils.Response add_and_discount_rule(String left, String right, int store_id, String NameOfRule);
+    TradingSystem.server.Domain.Utils.Response add_or_discount_rule(String left, String right, int store_id, String NameOfRule);
+    TradingSystem.server.Domain.Utils.Response add_max_discount_rule(String left, String right, int store_id, String NameOfRule);
+    TradingSystem.server.Domain.Utils.Response add_plus_discount_rule(String left, String right, int store_id, String NameOfRule);
+    TradingSystem.server.Domain.Utils.Response add_xor_discount_rule(String left, String right, int store_id, String NameOfRule);
+    TradingSystem.server.Domain.Utils.Response remove_discount_rule(int store_id, String name);
+
+
+
+
+    //--------------------------------------------------Purchase Rules-----------------------------------
+
+    TradingSystem.server.Domain.Utils.Response add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id);
+    TradingSystem.server.Domain.Utils.Response add_and_purchase_rule(String left, String right, int store_id, String NameOfrule);
+    TradingSystem.server.Domain.Utils.Response add_or_purchase_rule(String left, String right, int store_id, String nameOfrule);
+    TradingSystem.server.Domain.Utils.Response remove_purchase_rule(int store_id, String name);
 }
