@@ -2,14 +2,19 @@ package TradingSystem.server.Domain.Questions;
 
 import TradingSystem.server.Domain.UserModule.AssignUser;
 
+import javax.persistence.Entity;
+
+@Entity
 public class BuyerQuestion extends Question {
-    private final int store_id;
+    private int store_id;
 
     // buyer -> store
     public BuyerQuestion(int question_id, String message, AssignUser sender, int store_id) {
         super(question_id, message, sender);
         this.store_id = store_id;
     }
+
+    public BuyerQuestion() { }
 
     public int get_store_id() {
         return store_id;
@@ -43,5 +48,11 @@ public class BuyerQuestion extends Question {
                 '}';
     }
 
+    public int getStore_id() {
+        return store_id;
+    }
 
+    public void setStore_id(int store_id) {
+        this.store_id = store_id;
+    }
 }

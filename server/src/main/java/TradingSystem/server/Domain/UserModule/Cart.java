@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
+import TradingSystem.server.DAL.Repo;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
@@ -7,10 +8,18 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.Utils.Exception.*;
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
 public class Cart {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @MapKeyJoinColumn(name = "basket_id")
     private Map<Store, Basket> baskets;                // storeID,Basket
 
     public Cart() {
@@ -24,8 +33,11 @@ public class Cart {
 
     // ------------------------------ methods ------------------------------
     public Basket getBasket(int storeID, String email) {
-        if (!baskets.containsKey(storeID))
-            return new Basket(storeID, email);
+        if (!baskets.containsKey(storeID)) {
+            Basket basket = new Basket(storeID, email);
+            Repo.persist(basket);
+            return basket;
+        }
         return baskets.get(storeID);
     }
 
@@ -56,6 +68,7 @@ public class Cart {
 
     public void add_product_to_cart(Store store, Product p, int quantity, String email) throws MarketException {
         Basket basket = baskets.getOrDefault(store, new Basket(store.getStore_id(), email));
+        Repo.persist(basket);
         basket.addProduct(p, quantity);
         this.baskets.put(store, basket);
     }
@@ -101,5 +114,13 @@ public class Cart {
             answer.put(temp, entry.getValue());
         }
         return new CartInformation(answer);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

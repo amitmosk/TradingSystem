@@ -3,6 +3,7 @@ package TradingSystem.server.Domain.Questions;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,8 +11,22 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Entity
 public class QuestionController implements iQuestionController {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long question_controller_id;
+
+    @OneToMany
+    @JoinTable(name = "buyer_to_store",
+            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
+    @MapKeyColumn(name = "question_id") // the key column
     private Map<Integer, BuyerQuestion> buyer_to_store;
+
+    @OneToMany
+    @JoinTable(name = "user_to_admin",
+            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
+    @MapKeyColumn(name = "question_id") // the key column
     private Map<Integer, UserQuestion> user_to_admin;
     private AtomicInteger question_ids_counter;
 
@@ -35,6 +50,15 @@ public class QuestionController implements iQuestionController {
         return answer;
     }
 
+    public void setQuestion_controller_id(Long question_controller_id) {
+        this.question_controller_id = question_controller_id;
+    }
+
+
+    public Long getQuestion_controller_id() {
+        return question_controller_id;
+    }
+
 
     private static class SingletonHolder{
         private static QuestionController instance = new QuestionController();
@@ -48,7 +72,7 @@ public class QuestionController implements iQuestionController {
     }
 
     public static QuestionController getInstance(){
-        return QuestionController.SingletonHolder.instance;
+        return SingletonHolder.instance;
     }
 
     @Override

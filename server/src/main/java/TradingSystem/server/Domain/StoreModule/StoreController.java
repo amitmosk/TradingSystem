@@ -14,18 +14,33 @@ import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.SystemLogger;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Entity
 public class StoreController {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+//    @OneToMany
+//    @CollectionTable
+//    @JoinTable(name = "all_stores",
+//            joinColumns = {@JoinColumn(name = "store", referencedColumnName = "store_id")})
+//    @MapKeyColumn(name = "store_id") // the key column
+    @Transient
     private ConcurrentHashMap<Integer, Store> stores;
     private AtomicInteger store_ids_counter;
     private AtomicInteger purchase_ids_counter;
     private AtomicInteger products_id;
+    @Transient
     private Object storesLock;
 
+    @OneToOne
     private static StoreController instance = null;
+
 
     public static StoreController get_instance() {
         if (instance == null)
@@ -33,7 +48,7 @@ public class StoreController {
         return instance;
     }
 
-    private StoreController() {
+    protected StoreController() {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
         this.stores = new ConcurrentHashMap<>();
@@ -327,26 +342,26 @@ public class StoreController {
     }
 
 
-    /**
-     * @param cart with all the items we should remove from inventory
-     * @return Map with stores id and purchase - for adding to user purchase history
-     */
-    public Map<Integer, Purchase> update_stores_inventory(Cart cart) throws MarketException {
-        Map<Integer, Purchase> store_id_purchase = new HashMap<>();
-        Map<Store, Basket> baskets_of_storesID = cart.getBaskets();
-        for (Basket basket : baskets_of_storesID.values()) {
-            int store_id = basket.getStore_id();
-            if (!stores.containsKey(store_id)) {
-                throw new ObjectDoesntExsitException("Store does not exist - store id: " + store_id);
-            }
-        }
-        for (Basket basket : baskets_of_storesID.values()) {
-            int store_id = basket.getStore_id();
-            Purchase purchase = this.stores.get(store_id).remove_basket_products_from_store(basket, this.purchase_ids_counter.getAndIncrement());
-            store_id_purchase.put(store_id, purchase);
-        }
-        return store_id_purchase;
-    }
+//    /**
+//     * @param cart with all the items we should remove from inventory
+//     * @return Map with stores id and purchase - for adding to user purchase history
+//     */
+////    public Map<Integer, Purchase> update_stores_inventory(Cart cart) throws MarketException {
+////        Map<Integer, Purchase> store_id_purchase = new HashMap<>();
+////        Map<Store, Basket> baskets_of_storesID = cart.getBaskets();
+////        for (Basket basket : baskets_of_storesID.values()) {
+////            int store_id = basket.getStore_id();
+////            if (!stores.containsKey(store_id)) {
+////                throw new ObjectDoesntExsitException("Store does not exist - store id: " + store_id);
+////            }
+////        }
+////        for (Basket basket : baskets_of_storesID.values()) {
+////            int store_id = basket.getStore_id();
+////            Purchase purchase = this.stores.get(store_id).remove_basket_products_from_store(basket, this.purchase_ids_counter.getAndIncrement());
+////            store_id_purchase.put(store_id, purchase);
+////        }
+////        return store_id_purchase;
+////    }
 
     public int open_store(User founder, String store_name) throws MarketException {
         AssignUser founder_state = founder.state_if_assigned();
@@ -451,6 +466,14 @@ public class StoreController {
         AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id); //trows exceptions
         store.edit_product_quantity(assignUser, product_id, quantity);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
 

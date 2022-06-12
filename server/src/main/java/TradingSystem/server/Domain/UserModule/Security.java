@@ -1,12 +1,22 @@
 package TradingSystem.server.Domain.UserModule;
 
+import TradingSystem.server.DAL.Repo;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
 import TradingSystem.server.Domain.Utils.PasswordManagerImpl;
 import TradingSystem.server.Domain.Utils.iPasswordManager;
 
+import javax.persistence.*;
+
+@Entity
 public class Security {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long security_id;
+
+    @Transient
     protected iPasswordManager passwordManager;
+
     protected String token;
 
     public Security(String password) {
@@ -61,4 +71,11 @@ public class Security {
 
     public void check_improvable() throws MarketException { }
 
+    public void setSecurity_id(Long security_id) {
+        this.security_id = security_id;
+    }
+
+    public Long getSecurity_id() {
+        return security_id;
+    }
 }

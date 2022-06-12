@@ -1,17 +1,32 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
+import TradingSystem.server.DAL.Repo;
+
+import javax.persistence.*;
 import java.util.Map;
 
+@Entity
 public class UserPurchase {
-    private int purchase_id;
+    @Id
+    private int user_purchase_id;
+
+    @OneToMany
+    @JoinTable(name = "user_purchases",
+            joinColumns = {@JoinColumn(name = "user_purchase_id", referencedColumnName = "user_purchase_id")})
+    @MapKeyColumn(name = "purchase_id") // the key column
     private Map<Integer, Purchase> store_id_purchase;
     private double total_price;
 
     // ------------------------------ constructors ------------------------------
-    public UserPurchase(int purchase_id, Map<Integer, Purchase> store_id_purchase, double total_price) {
-        this.purchase_id = purchase_id;
+    public UserPurchase(int user_purchase_id, Map<Integer, Purchase> store_id_purchase, double total_price) {
+        this.user_purchase_id = user_purchase_id;
         this.store_id_purchase = store_id_purchase;
         this.total_price = total_price;
+        Repo.persist(this);
+    }
+
+    public UserPurchase() {
+
     }
 
     // ------------------------------ getters ------------------------------
@@ -23,8 +38,8 @@ public class UserPurchase {
 
     // ------------------------------ setters ------------------------------
 
-    public void setPurchase_id(int purchase_id) {
-        this.purchase_id = purchase_id;
+    public void setUser_purchase_id(int purchase_id) {
+        this.user_purchase_id = purchase_id;
     }
 
     public void setStore_id_purchase(Map<Integer, Purchase> store_id_purchase) {
@@ -46,8 +61,8 @@ public class UserPurchase {
         return this.store_id_purchase.get(storeID).containsProduct(productID);
     }
 
-    public int getPurchase_id() {
-        return purchase_id;
+    public int getUser_purchase_id() {
+        return user_purchase_id;
     }
 
     public double getTotal_price() {

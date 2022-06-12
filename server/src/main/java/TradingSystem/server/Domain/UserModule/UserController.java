@@ -11,18 +11,27 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.SystemLogger;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Entity
 public class UserController {
+    @Id
+    @GeneratedValue
+    private Long id;
 
     // ------------------- fields -------------------------------------
+    @Transient
     private Map<String, User> users;              // email,user
+    @Transient
     private Map<Integer, User> onlineUsers;       // id,user
     private AtomicInteger ID;
     private AtomicInteger purchaseID;
+    @Transient
     private Object usersLock;
+    @OneToOne
     private StatisticsManager statisticsManager;
 
     public static void load() {
@@ -32,6 +41,14 @@ public class UserController {
 
     public User get_user_for_tests(int id) {
         return onlineUsers.get(id);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     // ------------------- singleton class ----------------------------
@@ -433,7 +450,7 @@ public class UserController {
     public void clear() {
         this.ID = new AtomicInteger(0);
         this.purchaseID = new AtomicInteger(0);
-        this.users = new ConcurrentHashMap<>();        //thread safe
+        this.users = new HashMap<>();        //thread safe
         this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
         this.usersLock = new Object();
         this.statisticsManager = new StatisticsManager();

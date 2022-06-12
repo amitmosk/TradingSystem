@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
+import TradingSystem.server.DAL.Repo;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
@@ -24,6 +25,7 @@ import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Utils;
+import org.springframework.web.bind.annotation.Mapping;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,7 +33,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+@Entity
 public class Store {
 
     //TODO: change all methods belongs to stuff_emails to point user.
@@ -39,35 +41,37 @@ public class Store {
 
     // -- fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int store_id;
-    @Transient
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private AssignUser founder;
-    @Transient
-    private Map<AssignUser, Appointment> stuffs_and_appointments;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "stuff_and_appointments",
+            joinColumns = {@JoinColumn(name = "store_id", referencedColumnName = "store_id")},
+            inverseJoinColumns = {@JoinColumn(name = "appointment", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "email")
+    private Map<AssignUser, Appointment> stuffs_and_appointments;
     private String name;
     public String foundation_date;
-    @Transient
-    private Map<Product, Integer> inventory;
 
-    // product & quantity
+    @ElementCollection
+    @MapKeyColumn(name = "product_id") // the key column
+    @Column(name = "quantity")
+    private Map<Product, Integer> inventory; // product & quantity
     private boolean active;
+//    @OneToOne
     @Transient
     private DiscountPolicy discountPolicy;
+//    @OneToOne
     @Transient
     private PurchasePolicy purchasePolicy;
-    @Transient
+    @OneToOne
     private StorePurchaseHistory purchases_history;
-    @Transient
+    @OneToOne
     private StoreReview storeReview;
-    @Transient
     private AtomicInteger product_ids_counter;
-    @Transient
     private Object owners_lock;
-    @Transient
     private Object managers_lock;
-    @Transient
     private HashMap<String, Ipredict> predictList;
 
     // -- constructors
@@ -87,9 +91,14 @@ public class Store {
         this.owners_lock = new Object();
         this.managers_lock = new Object();
         this.predictList = new HashMap<>();
+        Repo.persist(this.storeReview);
+        Repo.persist(this.purchases_history);
+        Repo.persist(this);
     }
 
     public Store() {
+        this.owners_lock = new Object();
+        this.managers_lock = new Object();
     }
 
     // ------------------------------ getters ------------------------------
@@ -334,7 +343,6 @@ public class Store {
         return simpleDiscountComponent;
     }
 
-
     public ComplexDiscountComponent add_complex_discount(String name, String nameOFPredict, String nameOfPolicy) throws WrongPermterException {
         Ipredict predict = getPredictByName(nameOFPredict);
         DiscountComponent simpleDiscountComponent = discountPolicy.getDiscountCompnentByName(nameOfPolicy);
@@ -343,6 +351,7 @@ public class Store {
         ComplexDiscountComponent toreturn = new ComplexDiscountComponent(simpleDiscountComponent, predict);
         this.discountPolicy.addRule(name, toreturn);
         return toreturn;
+
     }
 
 
@@ -363,6 +372,8 @@ public class Store {
         this.purchasePolicy.addRule(nameOfrule, Toreturn);
         return Toreturn;
     }
+
+
 
 
     public void add_product_rating(String user_email, int product_id, int rate) throws MarketException {
