@@ -45,6 +45,7 @@ All of the instructions in the configuration file will cancelled.
 ## API:
 Available functions (pay attention to copy the instruction name exactly) :
  * register#<-email>#<-password>#<-name>#<-username>#<-last name>#<-birth date>
+ * login#<-email>#<-password>
  * open_store#<-email>#<-store name>
  * add_manager#<-appointer email>#<-to appint email>#<-store id>
  * add_owner#<-appointer email>#<-to appint email>#<-store id>
@@ -52,8 +53,6 @@ Available functions (pay attention to copy the instruction name exactly) :
  * remove_manager#<-remover email>#<-to remove email>#<-store id>
  * close_store_temporarly#<-manager email>#<-store id>
  * close_store_permanently#<-admin email>#<-store id>
- * logout#<-email>
- * login#<-email>#<-password>
  * add_product_to_cart#<-email>#<-store id>#<-product id>#<-quantity>
  * remove_product_from_cart#<-store id>#<-product id>
  * add_bid#<-email>#<-store id>#<-product id>#<-quantity>#<-offer price>
@@ -72,11 +71,12 @@ Available functions (pay attention to copy the instruction name exactly) :
  * manager_answer_question#<-manager email>#<-store id>#<-question id>#<-email>
  * remove_user#<-admin email>#<-user to remove email>
  * admin_answer_question#<-admin email>#<-question id>#<-answer>
+ * logout#<-email>
+ * add_admin#<-email>
  
  
  
 Pay attention that all the instructions should keep this order.
-* After register action the user is automatically login.
  
 ## How to use?
  <Here come Tom video & words>
