@@ -15,15 +15,15 @@ private PaymentAdapterImpl paymentAdapter;
         paymentAdapter.setExternPaymentSystemProxy(proxy);
     }
 
-    @Test
-    void payment() {
-        boolean answer = paymentAdapter.payment(3434.3,"credit card details");
-        assertTrue(answer);
-    }
+//    @Test
+//    void payment() {
+//        boolean answer = paymentAdapter.payment(3434.3,"credit card details");
+//        assertTrue(answer);
+//    }
 
     @Test
     void connect_to_payment_system() {
-        boolean answer = paymentAdapter.connect_to_payment_system();
+        boolean answer = paymentAdapter.handshake();
         assertTrue(answer);
     }
 }

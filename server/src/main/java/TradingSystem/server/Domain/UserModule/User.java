@@ -12,7 +12,6 @@ import TradingSystem.server.Domain.Utils.Utils;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -239,8 +238,14 @@ public class User {
     }
 
     public void add_product_to_cart(Store store, Product p, int quantity) throws MarketException {
-        String basket_identifer = get_identifier_for_basket();
-        this.cart.add_product_to_cart(store, p, quantity, basket_identifer);
+        String basket_identifier = get_identifier_for_basket();
+        this.cart.add_product_to_cart(store, p, quantity, basket_identifier, p.getOriginal_price());
+    }
+
+    public void add_product_to_cart_from_bid_offer(Store store, Product product, int quantity, double price_per_unit) throws MarketException {
+        String basket_identifier = get_identifier_for_basket();
+        this.cart.add_product_to_cart(store, product, quantity, basket_identifier, price_per_unit);
+
     }
 
     public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws MarketException {
@@ -280,4 +285,6 @@ public class User {
     public List<Integer> stores_managers_list() {
         return state.stores_managers_list();
     }
+
+
 }

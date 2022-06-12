@@ -2,26 +2,24 @@ package TradingSystem.server.Domain.StoreModule.Product;
 
 import TradingSystem.server.Domain.Utils.Exception.ProductCreatingException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Product {
     private int product_id;
     private String name;
     private String category;
     private List<String> key_words;
-    private double price;
+    private double original_price;
     private ProductReview productReview;
     private int store_id;
 
     // --------------------------------- constructors --------------------------------------------
-    public Product(String name, int product_id, double price, String category, List<String> key_words, int store_id) throws ProductCreatingException {
+    public Product(String name, int product_id, double original_price, String category, List<String> key_words, int store_id) throws ProductCreatingException {
         this.name = name;
         this.product_id = product_id;
-        if (price <= 0)
+        if (original_price <= 0)
             throw new ProductCreatingException("price must be more then 0");
-        this.price = price;
+        this.original_price = original_price;
         this.productReview = new ProductReview();
         this.category = category;
         this.key_words = key_words;
@@ -53,8 +51,8 @@ public class Product {
         return name;
     }
 
-    public double getPrice() {
-        return price;
+    public double getOriginal_price() {
+        return original_price;
     }
 
     public int getProduct_id() {
@@ -78,8 +76,8 @@ public class Product {
         this.product_id = product_id;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setOriginal_price(double original_price) {
+        this.original_price = original_price;
     }
 
     public void setProductReview(ProductReview productReview) {

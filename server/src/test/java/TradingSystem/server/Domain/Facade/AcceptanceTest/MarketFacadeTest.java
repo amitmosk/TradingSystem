@@ -1,9 +1,6 @@
 package TradingSystem.server.Domain.Facade.AcceptanceTest;
 
-import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
-import TradingSystem.server.Domain.ExternSystems.PaymentAdapterImpl;
-import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
-import TradingSystem.server.Domain.ExternSystems.SupplyAdapterImpl;
+import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserController;
@@ -33,6 +30,9 @@ class MarketFacadeTest {
     private String password;
     private String birth_date;
     private final int num_of_threads = 100;
+    private SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
+    private PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
+
 
 
     private boolean check_was_exception(Response response) {
@@ -54,7 +54,7 @@ class MarketFacadeTest {
         facade1.logout();
         facade1.register("check12345@email.com", "pass3Chec", "name", "last",birth_date);
         facade1.add_product_to_cart(1, 1, 1);
-        facade1.buy_cart("credit", "address");
+        facade1.buy_cart(payment_info, supplyInfo);
         facade1.logout();
         facade1.register("check123456@email.com", "pass3Chec", "name", "last",birth_date);
         facade1.logout();
@@ -335,15 +335,15 @@ class MarketFacadeTest {
     void buy_cart() {
         boolean result;
         facade1.add_product_to_cart(1, 1, 1);
-        result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with guest user
+        result = check_was_exception(facade1.buy_cart(payment_info, supplyInfo)); // buy cart with guest user
         assertFalse(result);
         facade1.login("check1234@email.com", "pass3Chec");
         facade1.add_product_to_cart(1, 1, 1);
-        result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with assigned user
+        result = check_was_exception(facade1.buy_cart(payment_info, supplyInfo)); // buy cart with assigned user
         assertFalse(result);
         facade1.logout();
         facade1.login("check12345@email.com", "pass3Chec");
-        result = check_was_exception(facade1.buy_cart("credit card", "address place")); // buy cart with empty cart
+        result = check_was_exception(facade1.buy_cart(payment_info, supplyInfo)); // buy cart with empty cart
         assertTrue(result);
         facade1.logout();
     }
@@ -361,7 +361,7 @@ class MarketFacadeTest {
         result = check_was_exception(facade1.view_user_purchase_history()); // view purchase history with guest user no purchases
         assertTrue(result);
         facade1.add_product_to_cart(1, 1, 1);
-        facade1.buy_cart("credit", "address");
+        facade1.buy_cart(payment_info, supplyInfo);
         result = check_was_exception(facade1.view_user_purchase_history()); // view purchase history with guest user that had purchased
         assertTrue(result);
         facade1.login("check12345@email.com", "pass3Chec");

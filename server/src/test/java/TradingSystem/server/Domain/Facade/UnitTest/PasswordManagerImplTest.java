@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.Facade.UnitTest;
 
-import TradingSystem.server.Domain.Utils.PasswordManagerImpl;
+import TradingSystem.server.Domain.Utils.Password.PasswordManagerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

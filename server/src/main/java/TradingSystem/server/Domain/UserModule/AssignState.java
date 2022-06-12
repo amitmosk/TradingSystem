@@ -5,11 +5,12 @@ import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
+import TradingSystem.server.Domain.Utils.Observer;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class AssignState {
+public abstract class AssignState implements Observer {
     public AssignState() {
     }
 

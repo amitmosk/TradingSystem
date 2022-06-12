@@ -2,6 +2,9 @@ package TradingSystem.server.Domain.Facade;
 
 import java.util.List;
 
+import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
+import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
@@ -14,6 +17,7 @@ import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
+import TradingSystem.server.Domain.StoreModule.Bid.Bid;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.UserModule.*;
@@ -25,6 +29,8 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.Statistics.Statistic;
 import TradingSystem.server.Domain.Utils.SystemLogger;
+import TradingSystem.server.Domain.Utils.Threads.PaymentThread;
+import TradingSystem.server.Domain.Utils.Threads.SupplyThread;
 import TradingSystem.server.Domain.Utils.Utils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
@@ -318,25 +324,37 @@ public class MarketFacade {
      * Requirement 2.2.5
      *
      * @param paymentInfo info of payment
-     * @param SupplyInfo  info of supply
+     * @param supplyInfo  info of supply
      * @return success/failure message
      */
-    //TODO: concurrent & edit
-    public Response<UserPurchase> buy_cart(String paymentInfo, String SupplyInfo) {
+
+
+    public Response<UserPurchase> buy_cart(PaymentInfo paymentInfo, SupplyInfo supplyInfo) {
         Response<UserPurchase> response = null;
+        int payment_transaction_id = -1;
+        int supply_transaction_id = -1;
         try {
-            //if can pay & can supply then ->
+            // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             synchronized (lock) {
-                double cart_price = 0;
-                if (this.payment_adapter.can_pay(cart_price, paymentInfo) && this.supply_adapter.can_supply(SupplyInfo)) {
-                    // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
-                    UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser);
-                    this.payment_adapter.payment(userPurchase.getTotal_price(), paymentInfo);
-                    this.supply_adapter.supply(SupplyInfo);
-                    response = new Response<>(userPurchase, "Purchase done successfully");
-                }
+                UserPurchase userPurchase = this.user_controller.buyCart(this.loggedUser);
+                PaymentThread paymentThread = new PaymentThread(this.payment_adapter, paymentInfo, userPurchase.getTotal_price());
+                SupplyThread supplyThread = new SupplyThread(this.supply_adapter, supplyInfo);
+                Thread t1 = new Thread(paymentThread);
+                Thread t2 = new Thread(supplyThread);
+                t1.start();
+                t2.start();
+                t1.join();
+                t2.join();
+                payment_transaction_id = paymentThread.get_value();
+                supply_transaction_id = supplyThread.get_value();
+                if (payment_transaction_id == -1 || supply_transaction_id == -1)
+                    throw new Exception();
+                response = new Response<>(userPurchase, "Purchase done successfully");
             }
         } catch (Exception e) {
+            this.payment_adapter.cancel_pay(payment_transaction_id);
+            this.supply_adapter.cancel_supply(supply_transaction_id);
+            // TODO: rollback for buyCart > return the products to the store
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1630,7 +1648,48 @@ public class MarketFacade {
     }
 
 
+    public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
+        Response<String> response = null;
+        try {
+            User buyer = user_controller.get_user(loggedUser);
+            this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer);
+            response = new Response<>("", "adding bid offer for product");
+            system_logger.add_log("User added bid offer for " + quantity + " of product- " + productID + " from store- " + storeID);
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
 
+    public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
+        // if that the last positive answer -> buy.
+        Response<String> response = null;
+        try {
+            User user = user_controller.get_user(loggedUser);
+            this.store_controller.manager_answer_bid(storeID, user, manager_answer, bidID, negotiation_price);
+            response = new Response<>("", "manager answer bid offer successfully");
+            system_logger.add_log("manager answer bid offer successfully");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response view_bids_status(int storeID) {
+        Response<String> response = null;
+        try {
+            User user = user_controller.get_user(loggedUser);
+           List<BidInformation> answer = this.store_controller.view_bids_status(storeID, user);
+            response = new Response(answer, "User view bids status successfully");
+            system_logger.add_log("User view bids status successfully");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
 
 
 

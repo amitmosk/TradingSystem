@@ -22,5 +22,8 @@ public enum StorePermission
     add_owner,
     remove_owner,
     edit_permissions,
+    view_bids_status,
+    answer_bid_offer,
+    answer_bid_offer_negotiate,
 
 }

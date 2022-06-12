@@ -1,27 +1,55 @@
 package TradingSystem.server.Config;
 
-import TradingSystem.server.Service.NotificationHandler;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
-@EnableWebSocket
-public class WebSocketConfiguration implements WebSocketConfigurer {
+@EnableWebSocketMessageBroker
+public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry){
-        webSocketHandlerRegistry.addHandler(getChatWebSocketHandler(), "/chat");
+    public void configureMessageBroker(MessageBrokerRegistry config){
+        System.out.println("new connection broker");
+        config.enableSimpleBroker("/topic");
+        config.setApplicationDestinationPrefixes("/app");
+    }
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry){
+        System.out.println("new connection endpoint");
+        registry.addEndpoint( "/chat").setAllowedOriginPatterns("*").withSockJS();
+
 
     }
-
-    @Bean
-    public WebSocketHandler getChatWebSocketHandler()
-    {
-        return new NotificationHandler();
-    }
+//
+//    @Bean
+//    public WebSocketHandler getChatWebSocketHandler()
+//    {
+//        return new NotificationHandler();
+//    }
+//
+//    @Override
+//    public void registerStompEndpoints(StompEndpointRegistry registry) {
+//
+//        registry
+//                .addEndpoint("/greeting")
+//                .setHandshakeHandler(new DefaultHandshakeHandler() {
+//
+//                    public boolean beforeHandshake(
+//                            ServerHttpRequest request,
+//                            ServerHttpResponse response,
+//                            WebSocketHandler wsHandler,
+//                            Map attributes) throws Exception {
+//
+//                        if (request instanceof ServletServerHttpRequest) {
+//                            ServletServerHttpRequest servletRequest
+//                                    = (ServletServerHttpRequest) request;
+//                            HttpSession session = servletRequest
+//                                    .getServletRequest().getSession();
+//                            attributes.put("sessionId", session.getId());
+//                        }
+//                        return true;
+//                    }}).withSockJS();
+//    }
 
 }

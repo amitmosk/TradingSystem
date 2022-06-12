@@ -1,4 +1,4 @@
-package TradingSystem.server.Domain.Utils;
+package TradingSystem.server.Domain.Utils.Password;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
