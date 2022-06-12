@@ -1,42 +1,13 @@
 
      
 import React, { Component } from 'react';
-import Button from '@mui/material/Button';
 import Link from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';
-import { ConnectApi } from '../API/ConnectApi';
-import Register from "./Register.js";
-import Box from '@mui/material/Box';
-import ImageListItem from '@mui/material/Box';
-import ImageList from '@mui/material/Box';
-import { StoreApi } from '../API/StoreApi';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import { CartApi } from '../API/CartApi';
-import MenuListComposition from './MenuListComposition';
-import { Container, Row, Col } from 'react-grid-system';
-import { Paper } from '@mui/material';
-import { Typography } from '@mui/material';
-import Rating from '@mui/material/Rating';
-import BasicRating from './Rating';
-import ShoppingCart from './ShoppingCart';
-import { ThirtyFpsRounded } from '@mui/icons-material';
-import Grid from '@mui/material/Grid';
-import FormDialog from './FormDialog';
 import Card from '@mui/material/Card';
-import { experimentalStyled as styled } from '@mui/material/styles';
-import { AdminApi } from '../API/AdminApi';
 import { Question } from '../ServiceObjects/Question';
 import { UserApi } from '../API/UserApi';
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; 
   
 export default class UserViewQuestions extends Component {
     static displayName = UserViewQuestions.name;
@@ -44,6 +15,7 @@ export default class UserViewQuestions extends Component {
         super(props);
         this.state = { 
             questions:[],
+            snackbar: null,
         };
         this.userApi = new UserApi();
 
@@ -57,14 +29,11 @@ export default class UserViewQuestions extends Component {
         const response = await this.userApi.get_user_questions();
         const questions = response.value;
         console.log("questions = "+questions);
-        alert(response.message);
+        // alert(response.message);
         if (!response.was_excecption) {
-
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in UserViewQuestions - success!\n");
             console.log(response);
-            
-                  //
-                  //static create( question_id,  message_date,  answer_date,  message,  answer, has_answer) {
             const final_questions=[];
             let splitted_questions=[];
             questions.map(q=>{ splitted_questions = q.split(",");
@@ -82,22 +51,11 @@ export default class UserViewQuestions extends Component {
             this.setState({
                 questions:final_questions,
                     })
-            
-
-
-            // console.log("qqqqq");
-            // console.log(questions);
-            // console.log(questions[0]);
-            // console.log(questions[0].split(","));
-            // console.log(final_questions);
-            
-            // console.log(questions_arr);
-           
-
+        
 
         }
         else {
-
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
         }
     }
       
@@ -130,22 +88,22 @@ export default class UserViewQuestions extends Component {
                         ))}
 
 
-                       
-
-
-                        
-                        
-
-                           
-                      
-
-
-                     
-
-                                   
-                            
+     
                        
                     </div>
+                    {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
                 </main>
             );
         

@@ -13,6 +13,7 @@ export default class AdminViewUserQuestions extends Component {
         super(props);
         this.state = { 
             questions:[],
+            snackbar: null,
         };
         this.adminApi = new AdminApi();
 

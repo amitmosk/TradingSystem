@@ -790,7 +790,7 @@ public class MarketFacade {
 
     //TODO: integration between user
     public Response<Map<Product,Integer>> add_product_to_store(int store_id, int quantity,
-                                                 String name, double price, String category, List<String> key_words) {
+                                                               String name, double price, String category, List<String> key_words) {
         Response<Map<Product,Integer>> response = null;
         try {
             User user = user_controller.get_user(loggedUser);
@@ -1402,11 +1402,11 @@ public class MarketFacade {
         return user_controller.get_user_for_tests(loggedUser);
     }
 
+    //TODO: function that clears system for testing
+
     public Store get_store(int store_id) throws MarketException {
         return store_controller.get_store(store_id);
     }
-
-    //TODO: function that clears system for testing
 
     public void clear() {
         user_controller.clear();
@@ -1451,6 +1451,77 @@ public class MarketFacade {
             response = new Response<>(userInformation, "");
         } catch (Exception e) {
             response = Utils.CreateResponse(new MarketException("failed to fetch user - connection error"));
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+
+
+    public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
+        Response<String> response = null;
+        try {
+            User buyer = user_controller.get_user(loggedUser);
+            int bid_id = this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer);
+            response = new Response(bid_id, "adding bid offer for product");
+            system_logger.add_log("User added bid offer for " + quantity + " of product- " + productID + " from store- " + storeID);
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
+        // if that the last positive answer -> buy.
+        Response<String> response = null;
+        try {
+            User user = user_controller.get_user(loggedUser);
+            this.store_controller.manager_answer_bid(storeID, user, manager_answer, bidID, negotiation_price);
+            response = new Response<>("", "manager answer bid offer successfully");
+            system_logger.add_log("manager answer bid offer successfully");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response view_bids_status(int storeID) {
+        Response<String> response = null;
+        try {
+            User user = user_controller.get_user(loggedUser);
+            List<BidInformation> answer = this.store_controller.view_bids_status(storeID, user);
+            response = new Response(answer, "User view bids status successfully");
+            system_logger.add_log("User view bids status successfully");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response<List<String>> get_permissions(String manager_email, int store_id) {
+        Response<List<String>> response = null;
+        try {
+            List<String> permissions = store_controller.get_permissions(manager_email, store_id);
+            response = new Response<>(permissions, "permissions of user "+manager_email);
+        } catch (Exception e) {
+            response = Utils.CreateResponse(new MarketException("failed to fetch permissions of user "+manager_email));
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response get_all_categories(int store_id) {
+        Response<List<String>> response = null;
+        try {
+            List<String> categories = store_controller.get_all_categories(store_id);
+            response = new Response<>(categories, "categories of store "+store_id+" received successfully");
+        } catch (Exception e) {
+            response = Utils.CreateResponse(new MarketException("failed to fetch categories of store "+store_id));
             error_logger.add_log(e);
         }
         return response;
@@ -1599,12 +1670,12 @@ public class MarketFacade {
 
     //TODO concurrency
 
-    public Response<SimpleporchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id, String nameOfRule) {
+    public Response<SimpleporchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
         Response<SimpleporchaseRule> response = null;
         try {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
-                porchaseRule porchaseRule = store.addsimplePorchaseRule(nameOfRule, PredictName, NameOfRule);
+                porchaseRule porchaseRule = store.addsimplePorchaseRule(NameOfRule, PredictName);
                 response = new Response(porchaseRule, "simple purchase added successfully");
                 system_logger.add_log("Store's (" + store_id + ") simple purchase added successfully");
             }
@@ -1650,51 +1721,4 @@ public class MarketFacade {
         }
         return response;
     }
-
-
-    public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
-        Response<String> response = null;
-        try {
-            User buyer = user_controller.get_user(loggedUser);
-            this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer);
-            response = new Response<>("", "adding bid offer for product");
-            system_logger.add_log("User added bid offer for " + quantity + " of product- " + productID + " from store- " + storeID);
-        } catch (Exception e) {
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
-        // if that the last positive answer -> buy.
-        Response<String> response = null;
-        try {
-            User user = user_controller.get_user(loggedUser);
-            this.store_controller.manager_answer_bid(storeID, user, manager_answer, bidID, negotiation_price);
-            response = new Response<>("", "manager answer bid offer successfully");
-            system_logger.add_log("manager answer bid offer successfully");
-        } catch (Exception e) {
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    public Response view_bids_status(int storeID) {
-        Response<String> response = null;
-        try {
-            User user = user_controller.get_user(loggedUser);
-           List<BidInformation> answer = this.store_controller.view_bids_status(storeID, user);
-            response = new Response(answer, "User view bids status successfully");
-            system_logger.add_log("User view bids status successfully");
-        } catch (Exception e) {
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-
 }

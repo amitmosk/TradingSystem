@@ -9,9 +9,13 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { Button } from "@material-ui/core";
-import Link from "@mui/material/Button";
+import { Link } from "react-router-dom";
+import SimpleBadge from "./SimpleBadge";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-export default function AccountMenu({ log, state }) {
+export default function AccountMenu({ log, state, user }) {
+  console.log(user+"\n\n\n\n\n");
+  console.log(user.storesManaged+"\n\n\n\n\n");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -74,35 +78,45 @@ export default function AccountMenu({ log, state }) {
       >
         <MenuItem>
           <Avatar />{" "}
-          <Link href="/ShoppingCart" underline="hover">
-            {"My Cart"}
-          </Link>
+          
+          <Link to={{pathname:`/ShoppingCart`}} onClick={handleClose} underline="hover">{"My Cart"} </Link>
+          {/* <Link href="/ShoppingCart" underline="hover"> */}
+            
         </MenuItem>
+        {/* <MenuItem>
+          <Avatar />{" "}
+          
+          <Link to={{pathname:`/ShoppingCart`}} onClick={handleClose} underline="hover">{<ShoppingCartIcon></ShoppingCartIcon>} </Link>
+            
+        </MenuItem> */}
         {state !== 0 ? (
           <>
             <MenuItem>
               <Avatar />
-              <Link href="/EditProfile" underline="hover">
-                {"Edit Profile"}
-              </Link>
+              <Link to={{pathname:`/EditProfile`}} onClick={handleClose} underline="hover">{"Edit Profile"} </Link>
+              {/* <Link href="/EditProfile" underline="hover"> */}
+                
             </MenuItem>
             <MenuItem>
               <Avatar />{" "}
-              <Link href="/ViewUserPurchaseHistory" underline="hover">
-                {"My Purchases History"}
-              </Link>
+              <Link to={{pathname:`/ViewUserPurchaseHistory`}} onClick={handleClose} underline="hover">{"My Purchases History"} </Link>
+              {/* <Link href="/ViewUserPurchaseHistory" underline="hover"> */}
+                
             </MenuItem>
             <MenuItem>
               <Avatar />{" "}
-              <Link href="/UserViewQuestions" underline="hover">
-                {"My Questions"}
-              </Link>
+              <Link to={{pathname:`/UserViewQuestions`}} onClick={handleClose} underline="hover">{"My Questions"}  </Link>
+              {/* <Link href="/UserViewQuestions" underline="hover"> */}
+                
             </MenuItem>
+            {/* <MenuItem>
+              <Avatar />{" "}
+              <Link to={{pathname:`/Notifications`}} onClick={handleClose} underline="hover"> {"Notifications"}</Link>
+            </MenuItem> */}
+            
             <MenuItem>
               <Avatar />{" "}
-              <Link href="/Notifications" underline="hover">
-                {"Notifications"}
-              </Link>
+              <Link to={{pathname:`/MyStores`}} onClick={handleClose} underline="hover" >{'My Stores'}</Link>
             </MenuItem>
             <Divider />
             <MenuItem>

@@ -1,6 +1,8 @@
 package TradingSystem.server.Service;
 
 import TradingSystem.server.Domain.ExternSystems.*;
+import TradingSystem.server.Domain.ExternSystems.Proxy.PaymentAdapterTests;
+import TradingSystem.server.Domain.ExternSystems.Proxy.SupplyAdapterTests;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.UserModule.UserController;
@@ -22,6 +24,8 @@ import java.util.Scanner;
 public class MarketSystem {
     // const vars
     public final static String external_system_url = "http://cs-bgu-wsep.herokuapp.com/";
+    public final static String tests_config_file_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
+            "main\\java\\TradingSystem\\server\\Config\\tests_config.txt";
     public static String instructions_config_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
             "main\\java\\TradingSystem\\server\\Config\\instructions_config.txt";
     public final static String system_config_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
@@ -31,31 +35,27 @@ public class MarketSystem {
     private SupplyAdapter supply_adapter;
 
 
-    public MarketSystem(String system_config_path, String instructions_config_path1) {
+    public MarketSystem(String system_config_path, String instructions_config_path1) throws ExitException {
         instructions_config_path = instructions_config_path1;
         this.init_market(system_config_path);
-        this.init_data_to_market_develop(payment_adapter, supply_adapter);
+//        this.init_data_to_market_develop(payment_adapter, supply_adapter);
     }
 
 
     /**
      * Requirement 1.1
      */
-    public void init_market(String config_file_path) {
+    public void init_market(String config_file_path) throws ExitException{
         SystemLogger.getInstance().add_log("Start Init Market");
         String[] instructions;
-        try{
-            instructions = read_config_file(config_file_path);
-            String external_services_instruction = instructions[0];
-            set_external_services(external_services_instruction);
-            connect_to_external_services();
-            String database_instruction = instructions[1];
-            set_database(database_instruction);
+        instructions = read_config_file(config_file_path);
+        String external_services_instruction = instructions[0];
+        set_external_services(external_services_instruction);
+        connect_to_external_services();
+        String database_instruction = instructions[1];
+        set_database(database_instruction);
 
-        } catch (ExitException e) {
-            SystemLogger.getInstance().add_log(e.getMessage());
-            System.exit(3);
-        }
+
     }
 
     public PaymentAdapter getPayment_adapter() {
@@ -112,38 +112,9 @@ public class MarketSystem {
      */
     private void set_external_services(String config) throws ExitException {
         if (config.equals("external_services:demo")){
-            this.payment_adapter = new PaymentAdapter() {
-                @Override
-                public boolean handshake() {
-                    return true;
-                }
-
-                @Override
-                public int payment(PaymentInfo paymentInfo, double price) {
-                    return 55000;
-                }
-
-                @Override
-                public int cancel_pay(int transaction_id) {
-                    return 1;
-                }
-            };
-            this.supply_adapter = new SupplyAdapter() {
-                @Override
-                public int supply(SupplyInfo supplyInfo) {
-                    return 66000;
-                }
-
-                @Override
-                public int cancel_supply(int transaction_id) {
-                    return 1;
-                }
-
-                @Override
-                public boolean handshake() {
-                    return true;
-                }
-            };
+            this.payment_adapter = new PaymentAdapterTests();
+            this.supply_adapter = new SupplyAdapterTests();
+            NotificationHandler.setTestsHandler();
         }
         else if (config.equals("external_services:real")){
             this.payment_adapter = new PaymentAdapterImpl();
@@ -166,13 +137,6 @@ public class MarketSystem {
         // database:real/demo
         if (config.equals("database:demo")){
             // TODO: GAL - Mock database, no Exception allow here!
-            boolean flag = init_data_to_market(instructions_config_path);
-            if (flag){
-                // TODO: Logger
-            }
-            else{
-                // TODO: Logger
-            }
 
         }
         else if (config.equals("database:real")){
@@ -184,6 +148,15 @@ public class MarketSystem {
             }
             catch (Exception e){
                 throw new ExitException("Cant Connect To Database.");
+            }
+        }
+        else if (config.equals(("database:orders"))){
+            boolean flag = init_data_to_market(instructions_config_path);
+            if (flag){
+                // TODO: Logger
+            }
+            else{
+                // TODO: Logger
             }
         }
         else {

@@ -3,34 +3,19 @@ import { Component } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
-import BasicRating from "./Rating";
-
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ListItemButton from '@mui/material/ListItemButton';
 
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import FolderIcon from '@mui/icons-material/Folder';
-import DeleteIcon from '@mui/icons-material/Delete';
 import HomeIcon from '@mui/icons-material/Home';
 import Link from '@mui/material/Button';
-import PersonIcon from '@mui/icons-material/Person';
-import EditIcon from '@mui/icons-material/Edit';
-import { Store } from '../ServiceObjects/User';
 import { StoreApi } from '../API/StoreApi';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-
-// const staffy = [{ emaill1: "eylon@walla.com", emaill2: "eylon@eylon.eylon", type1: "typetype" },
-// { emaill1: "eylon@walla.com", emaill2: "eylon@eylon.eylon", type1: "typetype" }];
-
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; 
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -46,6 +31,7 @@ export default class ViewStorePurchaseHistory extends Component {
             store_id : this.props.store_id,
             history: [],
             open: false,
+            snackbar: null,
         };
         this.storeApi = new StoreApi();
 
@@ -60,28 +46,17 @@ export default class ViewStorePurchaseHistory extends Component {
         console.log("in view_store_purchases_history!\n");
         // const store_id = this.state.store_id;
         const response = await this.storeApi.view_store_purchases_history(this.state.store_id);
-        alert(response.message);
-        if (!response.was_execption) {
-            // console.log("in view_store_purchases_history - success!\n");
-            // console.log("response.value: ");
-            //  console.log(response.value.product_and_name[1]);
-
-
-
-            // console.log("response.value.purchaseID_purchases: " + response.value.purchaseID_purchases);
-            // console.log(response.value.purchaseID_purchases);
-
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             let res = [];
-            // (response.value.purchaseID_purchases).map((pur) => ())
             this.setState({ history: response.value });
             console.log("history: ");
             console.log(this.state.history);
-            //  console.log(this.state.history.product_and_name[1])
-            //  console.log(this.state.history.product_and_name[0])
-
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -161,10 +136,21 @@ export default class ViewStorePurchaseHistory extends Component {
                         </Grid>
                     </Grid>
                 </Box>
+                {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
             </>
         );
-        // )
-        // );
 
     }
 }

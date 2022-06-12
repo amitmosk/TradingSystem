@@ -470,12 +470,22 @@ public class StoreController {
     }
 
 
-    public void add_bid_offer(int productID, int storeID, int quantity, double offer_price, User buyer)
+    public int add_bid_offer(int productID, int storeID, int quantity, double offer_price, User buyer)
             throws Exception {
         Store store = get_store_by_store_id(storeID);
         Product product = checkAvailablityAndGet(storeID, productID, quantity);
         int bid_id = this.bids_ids_counter.getAndIncrement();
-        store.add_bid_offer(bid_id, product, quantity, offer_price, buyer);
+        return store.add_bid_offer(bid_id, product, quantity, offer_price, buyer);
+    }
+
+    public List<String> get_permissions(String manager_email, int store_id) throws StoreException, AppointmentException {
+        Store store = get_store_by_store_id(store_id); //trows exceptions
+        return store.get_permissions(manager_email);
+    }
+
+    public List<String> get_all_categories(int store_id) throws StoreException {
+        Store store = get_store_by_store_id(store_id);
+        return store.get_all_categories();
     }
 }
 

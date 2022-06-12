@@ -16,6 +16,7 @@ export default class AdminSendMessage extends Component {
             to: undefined,
             subject: undefined,
             content: undefined,
+            snackbar: null,
         };
         this.adminApi = new AdminApi();
         this.handleInputChange = this.handleInputChange.bind(this);

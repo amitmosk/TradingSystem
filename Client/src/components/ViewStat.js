@@ -55,6 +55,7 @@ export default class ViewStat extends Component {
       num_of_users: undefined,
       num_of_onlines: undefined,
       got_input: true,
+      snackbar: null,
     };
     this.adminApi = new AdminApi();
   }
@@ -69,6 +70,7 @@ export default class ViewStat extends Component {
       console.log("in get market stats - success!\n");
       console.log(response);
       this.setState({
+        snackbar: { children: response.message, severity: "success" },
         init_system_time: stats.init_system_time,
         login_per_minutes: stats.login_per_minutes,
         logout_per_minutes: stats.logout_per_minutes,
@@ -124,7 +126,26 @@ export default class ViewStat extends Component {
           </Card>
           {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid> */}
         </div>
+        {!!this.state.snackbar && (
+            <Snackbar
+            open
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            onClose={this.handleCloseSnackbar}
+            autoHideDuration={6000}
+            >
+            <Alert
+                {...this.state.snackbar}
+                onClose={this.handleCloseSnackbar}
+            />
+            </Snackbar>
+        )}
       </main>
     );
   }
 }
+
+
+
+
+
+

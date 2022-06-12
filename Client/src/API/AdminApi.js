@@ -3,7 +3,7 @@ import { sortAndDeduplicateDiagnostics } from "typescript";
 import { CONNECTION_ERROR, CATCH,SEND_QUESTION_TO_ADMIN, CLOSE_STORE_PERMANENTLY, REMOVE_USER, ADMIN_VIEW_USERS_QUESTION ,
      ADMIN_ANSWER_USERS_QUESTION, ADMIN_VIEW_STORE_PURCHASES_HISTORY, ADMIN_VIEW_USER_PURCHASES_HISTORY, GET_MARKET_STATS} from "./ApiPaths";
 import { Response } from "./Response";
-import {Statistic} from "../ServiceObjects/statistic"
+import {Statistic} from "../ServiceObjects/Statistic"
 // const instance = axios.create(
 //     {withCredentials : true}
 // );

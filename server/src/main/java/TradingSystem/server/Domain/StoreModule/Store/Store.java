@@ -323,10 +323,10 @@ public class Store implements Observable {
         return (Predict) p;
     }
 
-    public SimpleporchaseRule addsimplePorchaseRule(String nameOfRule, String nameForule, String name) throws WrongPermterException {
-        Predict p = getSimplePredictsByName(name);
+    public SimpleporchaseRule addsimplePorchaseRule( String nameOfrule, String NameOfPredict) throws WrongPermterException {
+        Predict p = getSimplePredictsByName(NameOfPredict);
         SimpleporchaseRule Toreturn = new SimpleporchaseRule(p);
-        this.purchasePolicy.addRule(nameForule, Toreturn);
+        this.purchasePolicy.addRule(nameOfrule, Toreturn);
         return Toreturn;
     }
 
@@ -796,7 +796,7 @@ public class Store implements Observable {
 
     // amit - bid
 
-    public void add_bid_offer(int bid_id, Product product, int quantity, double offer_price, User buyer) {
+    public int add_bid_offer(int bid_id, Product product, int quantity, double offer_price, User buyer) {
         List<String> managers_emails = new ArrayList<>();
         for (Appointment appointment : this.stuffs_and_appointments.values()){
             if (appointment.has_permission(StorePermission.answer_bid_offer)){
@@ -806,6 +806,7 @@ public class Store implements Observable {
         Bid bid = new Bid(quantity, offer_price, managers_emails, product, buyer);
         this.bids.put(bid_id, bid);
         this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName());
+        return bid_id;
     }
 
     public List<BidInformation> view_bids_status(AssignUser user) throws NoPremssionException {
@@ -867,5 +868,47 @@ public class Store implements Observable {
             if (i == 1)
                 bid.remove_manager(user_email);
         }
+    }
+    public List<String> get_permissions(String manager_email) throws AppointmentException {
+        List<String> permissions = new ArrayList<>();
+        boolean user_exist = false;
+        AssignUser user_get_permission=null;
+        for (AssignUser user:stuffs_and_appointments.keySet())
+        {
+            if (user.get_user_email().equals(manager_email))
+            {
+                user_exist = true;
+                user_get_permission = user;
+            }
+        }
+        if (!user_exist)
+        {
+            throw new AppointmentException("This Store Stuff doesn't contains the user "+manager_email);
+        }
+        Appointment appointment = this.stuffs_and_appointments.get(user_get_permission);
+        HashMap<StorePermission,Integer> manager_permissions = appointment.getPermissions();
+        for (StorePermission s: manager_permissions.keySet())
+        {
+            if (manager_permissions.get(s)==1)
+            {
+                permissions.add(s.toString());
+            }
+
+        }
+        return permissions;
+    }
+
+    public List<String> get_all_categories() {
+        //  private Map<Product, Integer> inventory; // product & quantity
+        List<String> categories = new ArrayList<>();
+        for (Product p:inventory.keySet())
+        {
+            String cat = p.getCategory();
+            if (!categories.contains(cat))
+            {
+                categories.add(cat);
+            }
+        }
+        return categories;
     }
 }

@@ -12,7 +12,7 @@ export const LOGIN_PATH = API_PATH + '/login';
 export const LOGOUT_PATH = API_PATH + '/logout';
 export const REGISTER_PATH = API_PATH + '/register';
 export const ONLINE_USER_PATH = API_PATH + '/online_user'
-
+export const NOTIFICATIONS_PATH = API_PATH + '/get_notifications';
 // ========= Store ========== //
 
 export const FIND_STORE_INFORMATION = API_PATH + '/find_store_information';
@@ -55,6 +55,11 @@ export const VIEW_STORE_PURCHASES_HISTORY= API_PATH + '/view_store_purchases_his
 export const CLOSE_STORE_PERMANENTLY= API_PATH + '/close_store_permanently';
 export const GET_PRODUCTS_BY_STORE_ID= API_PATH + '/get_products_by_store_id';
 export const GET_ALL_STORES= API_PATH + '/get_all_stores';
+export const GET_PERMISSIONS= API_PATH + '/get_permissions';
+export const ADD_BID= API_PATH + '/add_bid';
+export const MANAGER_ANSWER_BID= API_PATH + '/manager_answer_bid';
+export const VIEW_BIDS_STATUS= API_PATH + '/view_bids_status';
+export const GET_ALL_CATEGORIES= API_PATH + '/get_all_categories';
 
 
 
@@ -139,9 +144,33 @@ export const IMPROVE_SECURITY = API_PATH + '/improve_security';
 
 
 
+// // ========= policies ========== //
+
+///DISCOUNT
+
+export const ADD_SIMPLE_CATEGORY_DISCOUNT = API_PATH + '/add_simple_categorey_discount_rule';
+export const ADD_SIMPLE_PRODUCT_DISCOUNT = API_PATH + '/add_simple_product_discount_rule';
+export const ADD_SIMPLE_STORE_DISCOUNT = API_PATH + '/add_simple_store_discount_rule';
+
+
+export const ADD_COMPLEX_DISCOUNT = API_PATH + '/add_complex_discount_rule';
+export const ADD_COMPLEX_AND_DISCOUNT = API_PATH + '/add_and_discount_rule';
+export const ADD_COMPLEX_OR_DISCOUNT = API_PATH + '/add_or_discount_rule';
+export const ADD_COMPLEX_MAX_DISCOUNT = API_PATH + '/add_max_discount_rule';
+export const ADD_COMPLEX_PLUS_DISCOUNT = API_PATH + '/add_plus_discount_rule';
+export const ADD_COMPLEX_XOR_DISCOUNT = API_PATH + '/add_xor_discount_rule';
+
+
+export const SEND_PREDDICTS = API_PATH + '/send_predicts';
+export const GET_DISCOUNT_POLICY = API_PATH + '/get_discount_policy';
 
 
 
+///PURCHASE
 
+export const ADD_SIMPLE_PURCHASE = API_PATH + '/add_simple_purchase';
+export const ADD_AND_SIMPLE_PURCHASE = API_PATH + '/add_and_purchase_rule';
+export const ADD_OR_SIMPLE_PURCHASE = API_PATH + '/add_or_purchase_rule';
 
-
+//PREDICT
+export const ADD_PREDICT = API_PATH + '/add_predict';

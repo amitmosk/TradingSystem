@@ -167,7 +167,7 @@ class ExternPaymentSystemProxyTest {
     void cancel_payment_bad_input(int transaction_id){
         this.externPaymentSystemProxy = new ExternPaymentSystemProxy();
         int answer = this.externPaymentSystemProxy.cancel_payment(transaction_id);
-        assertEquals(answer, -1);
+        assertEquals(answer, 1);
     }
 
 

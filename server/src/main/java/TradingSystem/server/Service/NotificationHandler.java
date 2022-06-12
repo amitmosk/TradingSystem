@@ -19,11 +19,16 @@ public class NotificationHandler extends TextWebSocketHandler {
     protected ApplicationContext context;
     protected MessageController messageController;
     private Map<String, List<String>> users_notifications = new HashMap<>();
+    private static boolean tests_flag = false;
+
 
 
     private NotificationHandler(){
         context = MessageController.getAppContext();
         messageController = (MessageController) context.getBean("messageController");
+    }
+    private NotificationHandler(boolean flag){
+
     }
 
 
@@ -33,6 +38,10 @@ public class NotificationHandler extends TextWebSocketHandler {
         return notificationHandler;
     }
 
+    public static void setTestsHandler() {
+        notificationHandler = new NotificationHandler(false);
+        tests_flag = true;
+    }
 
 
     @MessageMapping("/message")
@@ -64,7 +73,8 @@ public class NotificationHandler extends TextWebSocketHandler {
             this.users_notifications.put(email, new ArrayList<>());
         }
         this.users_notifications.get(email).add(notification);
-        this.send_waiting_notifications(email);
+        if (!tests_flag)
+            this.send_waiting_notifications(email);
     }
 
     /**
