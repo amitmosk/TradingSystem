@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Entity
-@DiscriminatorValue("3")
+@DiscriminatorValue("11")
 public class Predict extends Ipredict {
     //on what
     private String category;
@@ -35,7 +35,7 @@ public class Predict extends Ipredict {
     private int month;
     private int day;
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Predict(String category, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day) {

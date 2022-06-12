@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-@DiscriminatorValue("2")
+@DiscriminatorValue("4")
 public class xorDiscountComponent extends DiscountComponent {
     @OneToOne
     DiscountComponent left;

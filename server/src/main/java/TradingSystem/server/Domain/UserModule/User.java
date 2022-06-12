@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Entity
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
     private AssignState state;

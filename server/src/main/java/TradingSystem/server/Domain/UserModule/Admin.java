@@ -6,7 +6,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("2")
+@DiscriminatorValue("16")
 public class Admin extends AssignUser {
     public Admin(String email, String pw, String name, String lastName) {
         super(email, pw, name, lastName);

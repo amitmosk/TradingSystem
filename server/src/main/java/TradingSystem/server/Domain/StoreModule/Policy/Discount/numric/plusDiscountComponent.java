@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-@DiscriminatorValue("4")
+@DiscriminatorValue("6")
 public class plusDiscountComponent extends DiscountComponent {
     @OneToOne
     DiscountComponent left;

@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-@DiscriminatorValue("1")
+@DiscriminatorValue("14")
 public class SimplePurchaseRule extends PurchaseRule {
     @ManyToOne
     Predict predict;

@@ -3,10 +3,7 @@ package TradingSystem.server.Domain.StoreModule.Policy.Discount;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Set;
 @Entity
@@ -14,7 +11,7 @@ public class DiscountPolicy {
     @Transient //sinlgetone
     private HashMap<String, DiscountComponent> policy;
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public DiscountPolicy() {

@@ -10,10 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.util.Map;
 
-@Entity
-@DiscriminatorValue("2")
+//@Entity
+//@DiscriminatorValue("9")
 public class simpleDiscountComponentByProduct extends simpleDiscountComponent {
-    @ManyToOne
+//    @ManyToOne
     Product ProductToDiscount;
 
     public simpleDiscountComponentByProduct(Product Product, double percentOfDiscount) throws WrongPermterException {

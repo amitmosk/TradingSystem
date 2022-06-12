@@ -16,7 +16,7 @@ import java.util.List;
         discriminatorType = DiscriminatorType.INTEGER)
 public abstract class AssignState {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
     public AssignState() {

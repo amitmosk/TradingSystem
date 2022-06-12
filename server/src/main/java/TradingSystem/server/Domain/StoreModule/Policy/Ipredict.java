@@ -13,7 +13,7 @@ import java.util.Map;
 public abstract class Ipredict {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
     public abstract boolean CanApply(Basket b);

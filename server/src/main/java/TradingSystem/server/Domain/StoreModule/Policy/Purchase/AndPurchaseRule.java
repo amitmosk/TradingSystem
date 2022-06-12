@@ -6,7 +6,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("3")
+@DiscriminatorValue("12")
 public class AndPurchaseRule extends purchaseLogicComponent {
 
     public AndPurchaseRule(PurchaseRule left, PurchaseRule right) {

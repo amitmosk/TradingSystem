@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Entity
 public class StoreController {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany
