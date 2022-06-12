@@ -74,8 +74,6 @@ class MarketFacadeTest {
     }
     @BeforeEach
     void setUp() throws MarketException {
-
-
         this.facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         this.facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
         this.facade3 = new MarketFacade(paymentAdapter, supplyAdapter);

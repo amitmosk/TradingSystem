@@ -24,8 +24,8 @@ import java.util.Scanner;
 public class MarketSystem {
     // const vars
     public final static String external_system_url = "http://cs-bgu-wsep.herokuapp.com/";
-    public final static String tests_config_file_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "main\\java\\TradingSystem\\server\\Config\\tests_config.txt";
+    public final static String tests_config_file_path = "..\\server\\src\\main\\java\\TradingSystem\\server\\Config\\tests_config.txt";
+
     public static String instructions_config_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
             "main\\java\\TradingSystem\\server\\Config\\instructions_config.txt";
     public final static String system_config_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
@@ -38,7 +38,6 @@ public class MarketSystem {
     public MarketSystem(String system_config_path, String instructions_config_path1) throws ExitException {
         instructions_config_path = instructions_config_path1;
         this.init_market(system_config_path);
-//        this.init_data_to_market_develop(payment_adapter, supply_adapter);
     }
 
 
@@ -111,7 +110,7 @@ public class MarketSystem {
      * @throws ExitException if the input is illegal.
      */
     private void set_external_services(String config) throws ExitException {
-        if (config.equals("external_services:demo")){
+        if (config.equals("external_services:tests")){
             this.payment_adapter = new PaymentAdapterTests();
             this.supply_adapter = new SupplyAdapterTests();
             NotificationHandler.setTestsHandler();
@@ -135,7 +134,7 @@ public class MarketSystem {
      */
     private void set_database(String config) throws ExitException{
         // database:real/demo
-        if (config.equals("database:demo")){
+        if (config.equals("database:tests")){
             // TODO: GAL - Mock database, no Exception allow here!
 
         }
@@ -150,8 +149,10 @@ public class MarketSystem {
                 throw new ExitException("Cant Connect To Database.");
             }
         }
-        else if (config.equals(("database:orders"))){
+        else if (config.equals(("database:demo"))){
             boolean flag = init_data_to_market(instructions_config_path);
+//            this.add_admins();
+//            this.init_data_to_market_develop(payment_adapter, supply_adapter);
             if (flag){
                 // TODO: Logger
             }
