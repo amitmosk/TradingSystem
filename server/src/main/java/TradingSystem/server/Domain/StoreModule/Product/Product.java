@@ -1,13 +1,10 @@
 package TradingSystem.server.Domain.StoreModule.Product;
 
-import TradingSystem.server.DAL.Repo;
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Utils.Exception.ProductCreatingException;
 
 import javax.persistence.*;
-import java.lang.annotation.Repeatable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 public class Product {
@@ -30,11 +27,11 @@ public class Product {
             throw new ProductCreatingException("price must be more then 0");
         this.price = price;
         this.productReview = new ProductReview();
-        Repo.persist(productReview);
+        HibernateUtils.persist(productReview);
         this.category = category;
         this.key_words = key_words;
         this.store_id = store_id;
-        Repo.persist(this);
+        HibernateUtils.persist(this);
     }
 
     public Product() {

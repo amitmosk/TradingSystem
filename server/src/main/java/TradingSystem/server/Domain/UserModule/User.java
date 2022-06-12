@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
-import TradingSystem.server.DAL.Repo;
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
@@ -14,7 +14,6 @@ import TradingSystem.server.Domain.Utils.Utils;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -94,9 +93,9 @@ public class User {
         this.state = new AssignUser(email, pw, name, lastName);
         this.birth_date = birth_date;
         isGuest.set(false);
-        Repo.persist(this.cart);
-        Repo.persist(this.state);
-        Repo.persist(this);
+        HibernateUtils.persist(this.cart);
+        HibernateUtils.persist(this.state);
+        HibernateUtils.persist(this);
     }
 
     public synchronized void login(String password) throws MarketException {

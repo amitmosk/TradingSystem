@@ -1,7 +1,5 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
-import TradingSystem.server.DAL.Repo;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Map;

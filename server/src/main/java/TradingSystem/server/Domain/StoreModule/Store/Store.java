@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
-import TradingSystem.server.DAL.Repo;
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
@@ -96,9 +96,9 @@ public class Store {
         this.owners_lock = new Object();
         this.managers_lock = new Object();
         this.predictList = new HashMap<>();
-        Repo.persist(this.storeReview);
-        Repo.persist(this.purchases_history);
-        Repo.persist(this);
+        HibernateUtils.persist(this.storeReview);
+        HibernateUtils.persist(this.purchases_history);
+        HibernateUtils.persist(this);
     }
 
     public Store() {
@@ -220,9 +220,10 @@ public class Store {
         this.storeReview.add_rating(user.get_user_email(), rating);
     }
 
-    public Predict addPredict(String catgorey, Product product, boolean above, boolean equql,
+    public Predict addPredict(String catgorey, int product_id, boolean above, boolean equql,
                               int num, boolean price, boolean quantity, boolean age, boolean time, int year,
-                              int month, int day, String name) throws WrongPermterException {
+                              int month, int day, String name) throws WrongPermterException, ObjectDoesntExsitException {
+        Product product=getProduct_by_product_id(product_id);
         Predict predict = new Predict(catgorey, product, above, equql, num, price, quantity, age, time, year, month, day);
         checkUniqName(name, this.predictList);
         predictList.put(name, predict);

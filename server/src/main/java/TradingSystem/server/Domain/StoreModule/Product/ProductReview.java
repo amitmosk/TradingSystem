@@ -1,7 +1,5 @@
 package TradingSystem.server.Domain.StoreModule.Product;
 
-import TradingSystem.server.DAL.Repo;
-
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;

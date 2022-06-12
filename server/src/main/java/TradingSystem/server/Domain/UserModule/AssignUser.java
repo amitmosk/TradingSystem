@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
-import TradingSystem.server.DAL.Repo;
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -56,9 +56,9 @@ public class AssignUser extends AssignState {
         this.founder = new HashMap<>();
         this.owner = new HashMap<>();
         this.manager = new HashMap<>();
-        Repo.persist(this.security);
-        Repo.persist(this.userPurchaseHistory);
-        Repo.persist(this);
+        HibernateUtils.persist(this.security);
+        HibernateUtils.persist(this.userPurchaseHistory);
+        HibernateUtils.persist(this);
     }
 
     public AssignUser() {

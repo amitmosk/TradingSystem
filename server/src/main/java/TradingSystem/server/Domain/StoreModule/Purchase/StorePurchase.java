@@ -1,9 +1,8 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
-import TradingSystem.server.DAL.Repo;
+import TradingSystem.server.DAL.HibernateUtils;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Map;
 
 @Entity
@@ -21,7 +20,7 @@ public class StorePurchase {
         this.buyer_email = buyer_email;
         this.purchase = purchase;
         this.purchase_id = purchase_id;
-        Repo.persist(this);
+        HibernateUtils.persist(this);
     }
 
     public StorePurchase() {

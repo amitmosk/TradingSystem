@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.StoreModule;
 
-import TradingSystem.server.DAL.Repo;
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.Utils.Exception.BasketException;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
@@ -9,11 +9,8 @@ import TradingSystem.server.Domain.Utils.Pair;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.prefs.BackingStoreException;
 
 @Entity
 public class Basket implements Serializable {
@@ -30,7 +27,7 @@ public class Basket implements Serializable {
     public Basket(int store_id, String buyer_email) {
         this.basket_id = new Pair(buyer_email, store_id);
         products_and_quantities = new HashMap<>();
-        Repo.persist(this.basket_id);
+        HibernateUtils.persist(this.basket_id);
     }
 
     public Basket() {

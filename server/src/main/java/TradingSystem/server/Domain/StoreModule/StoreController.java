@@ -1,15 +1,14 @@
 package TradingSystem.server.Domain.StoreModule;
 
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.UserModule.AssignUser;
-import TradingSystem.server.Domain.UserModule.Cart;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.SystemLogger;
@@ -26,8 +25,8 @@ public class StoreController {
     private Long id;
 
     @OneToMany
-    @JoinTable(name = "all_stores",
-            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
+//    @JoinTable(name = "all_stores",
+//            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
     @MapKeyColumn(name = "store_id") // the key column
     private Map<Integer, Store> stores;
     private AtomicInteger store_ids_counter;
@@ -41,8 +40,10 @@ public class StoreController {
 
 
     public static StoreController get_instance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new StoreController();
+            HibernateUtils.persist(instance);
+        }
         return instance;
     }
 

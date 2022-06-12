@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
-import TradingSystem.server.DAL.Repo;
+import TradingSystem.server.DAL.HibernateUtils;
 
 import javax.persistence.*;
 import java.util.Map;
@@ -22,7 +22,7 @@ public class UserPurchase {
         this.user_purchase_id = user_purchase_id;
         this.store_id_purchase = store_id_purchase;
         this.total_price = total_price;
-        Repo.persist(this);
+        HibernateUtils.persist(this);
     }
 
     public UserPurchase() {

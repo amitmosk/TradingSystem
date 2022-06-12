@@ -1,9 +1,7 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
-import TradingSystem.server.DAL.Repo;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.UserNeverBoughtInTheStoreException;
-import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
 import java.util.List;
