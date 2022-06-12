@@ -5,14 +5,21 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.util.Map;
-
+@Entity
+@DiscriminatorValue("1")
 public class simpleDiscountComponentByCategory extends simpleDiscountComponent {
     String CategoryOfDiscount = "";
 
     public simpleDiscountComponentByCategory(String nameOfCategory, double percentOfDiscount) throws WrongPermterException {
         super(percentOfDiscount);
         CategoryOfDiscount = nameOfCategory;
+    }
+
+    public simpleDiscountComponentByCategory() {
+
     }
 
     @Override

@@ -4,13 +4,22 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
+import javax.persistence.*;
 
-public abstract class simpleDiscountComponent implements DiscountComponent {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "simple_discount_type",
+        discriminatorType = DiscriminatorType.INTEGER)
+public abstract class simpleDiscountComponent extends DiscountComponent {
     protected double percentOfDiscount;
 
     public simpleDiscountComponent(double percentOfDiscount) throws WrongPermterException {
         checkPrecent(percentOfDiscount);
         this.percentOfDiscount = percentOfDiscount;
+
+    }
+
+    public simpleDiscountComponent() {
 
     }
 

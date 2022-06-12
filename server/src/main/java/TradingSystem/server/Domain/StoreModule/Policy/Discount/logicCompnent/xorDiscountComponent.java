@@ -4,13 +4,25 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
-public class xorDiscountComponent implements DiscountComponent {
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
+@Entity
+@DiscriminatorValue("2")
+public class xorDiscountComponent extends DiscountComponent {
+    @OneToOne
     DiscountComponent left;
+    @OneToOne
     DiscountComponent right;
 
     public xorDiscountComponent(DiscountComponent left, DiscountComponent right) throws WrongPermterException {
         this.right = right;
         this.left = left;
+    }
+
+    public xorDiscountComponent() {
+
     }
 
 

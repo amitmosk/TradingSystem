@@ -4,19 +4,20 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.Utils.Exception.PurchasePolicyException;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.HashMap;
 import java.util.Set;
-//@OneToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "order_item_mapping",
-//      joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
-//      inverseJoinColumns = {@JoinColumn(name = "item_id", referencedColumnName = "id")})
-//    @MapKey(name = "itemName")
-public class PurchasePolicy {
-    //name = the name of the table
-    //joincolumn - name - the name of the foreinkey of the map
-    // referenced column name = the father PK
 
-    // the value column
+@Entity
+public class PurchasePolicy {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Transient
     private HashMap<String, PurchaseRule> policy;
     private Long policyId;
 
@@ -60,5 +61,13 @@ public class PurchasePolicy {
 
     public Long getPolicyId() {
         return policyId;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

@@ -2,11 +2,19 @@ package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
 
-public class AndPurchaseRule extends purchaseLogicComponent {
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("3")
+public class AndPurchaseRule extends purchaseLogicComponent {
 
     public AndPurchaseRule(PurchaseRule left, PurchaseRule right) {
         super(left, right);
+    }
+
+    public AndPurchaseRule() {
+
     }
 
     @Override
