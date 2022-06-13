@@ -939,7 +939,7 @@ public class Store implements Observable{
             throw new AppointmentException("This Store Stuff doesn't contains the user "+manager_email);
         }
         Appointment appointment = this.stuffs_and_appointments.get(user_get_permission);
-        HashMap<StorePermission,Integer> manager_permissions = appointment.getPermissions();
+        Map<StorePermission,Integer> manager_permissions = appointment.getPermissions();
         for (StorePermission s: manager_permissions.keySet())
         {
             if (manager_permissions.get(s)==1)

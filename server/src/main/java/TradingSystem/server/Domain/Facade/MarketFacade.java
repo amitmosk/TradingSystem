@@ -943,7 +943,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 Predict predict = store.addPredict(category, product_id, above, equel, num, price, quantity, age, time, year, month, day, name);
                 response = new Response(predict, "predict added successfully");
-                system_logger.add_log("predict added deleted successfully");
+                market_logger.add_log("predict added deleted successfully");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -962,7 +962,7 @@ public class MarketFacade {
             Store store = store_controller.get_store(store_id);
             List<String> policy = store.getPurchasePolicyNames();
             response = new Response(policy, "purchase policy sent");
-            system_logger.add_log("purchase policy sent to user");
+            market_logger.add_log("purchase policy sent to user");
             HibernateUtils.commit();
         } catch (MarketException e) {
             HibernateUtils.rollback();
@@ -981,7 +981,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 List<String> policy = store.getPredicts();
                 response = new Response(policy, "predicts sent");
-                system_logger.add_log("predicts sent to user");
+                market_logger.add_log("predicts sent to user");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1001,7 +1001,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 List<String> policy = store.getDiscountPolicyNames();
                 response = new Response(policy, "discount policy sent");
-                system_logger.add_log("composite discount deleted successfully");
+                market_logger.add_log("composite discount deleted successfully");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1021,7 +1021,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 ComplexDiscountComponent complex = store.add_complex_discount(nameOfRule, nameOfPredict, nameOfComponent);
                 response = new Response(complex, "complex discount added successfully");
-                system_logger.add_log("complex discount added successfully");
+                market_logger.add_log("complex discount added successfully");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1041,7 +1041,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 simpleDiscountComponent simple = store.add_simple_discount(nameOfRule, "c", percent, nameOfCategory);
                 response = new Response(simple, "simple category discount added successfully");
-                system_logger.add_log("simple category discount added successfully");
+                market_logger.add_log("simple category discount added successfully");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1061,7 +1061,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 simpleDiscountComponent simple = store.add_simple_product_discount(nameOfrule, id, percent);
                 response = new Response(simple, "simple product discount added successfully");
-                system_logger.add_log("simple product discount added successfully");
+                market_logger.add_log("simple product discount added successfully");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1081,7 +1081,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 simpleDiscountComponent simple = store.add_simple_discount(nameOfRule, "store", percent, "");
                 response = new Response(simple, "store discount added successfully");
-                system_logger.add_log("Store's (" + store_id + ")discount deleted successfully");
+                market_logger.add_log("Store's (" + store_id + ")discount deleted successfully");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1100,7 +1100,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 Ipredict discount = store.CreateAndDisocuntCompnent(NameOfRule, left, right);
                 response = new Response(discount, "Store discount and rule added successfully");
-                system_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
+                market_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1119,7 +1119,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 Ipredict discount = store.CreateOrDisocuntCompnent(NameOfRule, left, right);
                 response = new Response(discount, "Store discount or rule added successfully");
-                system_logger.add_log("Store's (" + store_id + ") discount or rule have been added");
+                market_logger.add_log("Store's (" + store_id + ") discount or rule have been added");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1138,7 +1138,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 DiscountComponent discount = store.CreateMaxDisocuntCompnent(NameOfRule, left, right);
                 response = new Response(discount, "Store discount max rule added successfully");
-                system_logger.add_log("Store's (" + store_id + ") discount max rule have been added");
+                market_logger.add_log("Store's (" + store_id + ") discount max rule have been added");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1157,7 +1157,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 DiscountComponent discount = store.CreateplusDisocuntCompnent(NameOfRule, left, right);
                 response = new Response(discount, "Store discount plus rule added successfully");
-                system_logger.add_log("Store's (" + store_id + ") discount plus rule have been added");
+                market_logger.add_log("Store's (" + store_id + ") discount plus rule have been added");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1176,7 +1176,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 DiscountComponent discount = store.CreateXorDisocuntCompnent(NameOfRule, left, right);
                 response = new Response(discount, "Store discount and rule added successfully");
-                system_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
+                market_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1196,7 +1196,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 String res = store.remove_discount_rule(name);
                 response = new Response(res, "discount rule removed successfully");
-                system_logger.add_log("Store's (" + store_id + ") discount removed successfully");
+                market_logger.add_log("Store's (" + store_id + ") discount removed successfully");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1215,7 +1215,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 String res = store.remove_purchase_rule(name);
                 response = new Response(res, "purchase rule removed successfully");
-                system_logger.add_log("Store's (" + store_id + ") purchase removed successfully");
+                market_logger.add_log("Store's (" + store_id + ") purchase removed successfully");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1235,7 +1235,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 PurchaseRule PurchaseRule = store.addsimplePorchaseRule(NameOfRule, PredictName);
                 response = new Response(PurchaseRule, "simple purchase added successfully");
-                system_logger.add_log("Store's (" + store_id + ") simple purchase added successfully");
+                market_logger.add_log("Store's (" + store_id + ") simple purchase added successfully");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1255,7 +1255,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 PurchaseRule PurchaseRule = store.add_and_purchase_rule(NameOfrule, left, right);
                 response = new Response(PurchaseRule, "Store purchase and rule added successfully");
-                system_logger.add_log("Store's (" + store_id + ") purchase and rule have been added");
+                market_logger.add_log("Store's (" + store_id + ") purchase and rule have been added");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1275,7 +1275,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 PurchaseRule PurchaseRule = store.add_or_purchase_rule(nameOfrule, left, right);
                 response = new Response(PurchaseRule, "Store purchase rules added successfully");
-                system_logger.add_log("Store's (" + store_id + ") purchase rules have been added");
+                market_logger.add_log("Store's (" + store_id + ") purchase rules have been added");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
