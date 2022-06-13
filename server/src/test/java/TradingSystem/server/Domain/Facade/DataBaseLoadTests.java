@@ -45,7 +45,7 @@ public class DataBaseLoadTests {
 
     @BeforeAll
     void setClass(){
-        HibernateUtils.setPersistence_unit("TradingSystemTests");
+        HibernateUtils.set_load_tests_mode();
         em = HibernateUtils.getEntityManager();
         this.productId = 1;
         this.birth_date = LocalDate.now().minusYears(30).toString();

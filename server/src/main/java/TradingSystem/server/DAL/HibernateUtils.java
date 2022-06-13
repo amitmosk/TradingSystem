@@ -12,8 +12,8 @@ public class HibernateUtils {
 
     private static EntityManagerFactory emf;
     private static ThreadLocal<EntityManager> threadLocal;
-    private static String persistence_unit = "TradingSystem";
-    private static boolean allow_persist = true;
+    private static String persistence_unit = "TradingSystemTests";
+    private static boolean allow_persist = false;
     static {
         emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
@@ -21,6 +21,27 @@ public class HibernateUtils {
 
     public static void setPersistence_unit(String persistence_unit) {
         HibernateUtils.persistence_unit = persistence_unit;
+        emf = Persistence.createEntityManagerFactory(persistence_unit);
+        threadLocal = new ThreadLocal<EntityManager>();
+    }
+
+    public static void set_load_tests_mode() {
+        HibernateUtils.persistence_unit = "TradingSystemTests";
+        HibernateUtils.allow_persist = true;
+        emf = Persistence.createEntityManagerFactory(persistence_unit);
+        threadLocal = new ThreadLocal<EntityManager>();
+    }
+
+    public static void set_normal_use() {
+        HibernateUtils.persistence_unit = "TradingSystem";
+        HibernateUtils.allow_persist = true;
+        emf = Persistence.createEntityManagerFactory(persistence_unit);
+        threadLocal = new ThreadLocal<EntityManager>();
+    }
+
+    public static void set_demo_use() {
+        HibernateUtils.persistence_unit = "Demo";
+        HibernateUtils.allow_persist = true;
         emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
     }
