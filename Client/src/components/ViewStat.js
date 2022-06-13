@@ -85,7 +85,9 @@ export default class ViewStat extends Component {
         num_of_users: stats.num_of_users,
         got_input: true,
       });
-    } else {
+    } 
+    else {
+      console.log("Error View Stat");
       this.setState({ got_input: false });
       return (
         <>
@@ -100,16 +102,7 @@ export default class ViewStat extends Component {
     return (
       <main class="LoginMain">
         <div class="LoginWindow">
-          {this.props.user.state === ADMIN ? (
-            <>
-              <Navigate to="/" />
-            </>
-          ) : (
-            <></>
-          )}
-          <Link href="/">
-            <HomeIcon></HomeIcon>
-          </Link>
+  
           <row>
             <h3>Market Statistics</h3>
           </row>

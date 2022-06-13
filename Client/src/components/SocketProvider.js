@@ -18,21 +18,30 @@ const get_notifications = () => {
     }
 }
 
-function SocketProvider(setMessage) {
+function SocketProvider({setMessage, save_notification}) {
     function createSocket(userEmail) {
         const sock = new SockJS('http://localhost:8080/chat');
+
+        console.log(sock);
+        
         let stompClient = Stomp.over(sock);
+        console.log(stompClient);
         sock.addEventListener("open", event => {
             console.log("Open Web Socket !");
             
             
-        })``
+        })
         sock.addEventListener("message", event => {
             let tempi = event.data.split("s1:");
-            console.log(tempi);
+            console.log(tempi+"\n\n\n\n\n\n\n\n");
             if (tempi.length != 1)
-            // here come code for alert the user of new noticiation
-                alert("New Notification : "+tempi[1]);
+            {
+                console.log(tempi[1]+"\n\n\n\n\n\n\n\n");
+                save_notification(tempi[1]);
+            }
+            else{
+                console.log("no nessage\n\n\n\n\n\n\n\n");
+            }
 
             console.log(event);
         })

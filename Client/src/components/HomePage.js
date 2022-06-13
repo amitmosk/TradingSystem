@@ -38,7 +38,7 @@ export default class HomePage extends Component {
     console.log("in component did mount - user state = "+this.props.user.state);
   }
   async componentDidMount() {
-    this.get_notifications(this.props.user.email);
+    // this.get_notifications(this.props.user.email);
     // this.setState({
     //   state : this.props.user.state,
     //   username: this.props.user.name,
@@ -97,21 +97,21 @@ export default class HomePage extends Component {
     //    return (<ShoppingCart products={products}></ShoppingCart>);
     return <ShoppingCart products={this.state.products}></ShoppingCart>;
   }
-  async get_notifications(){
-    console.log("goti");
-    // let response = await this.connectAPI.get_notifications("amit@gmail.com");
-    let response = await this.connectAPI.get_notifications(this.props.user.email);
-    console.log(response);
-    if (!response.was_exception)
-    {
-        // alert(response.value);
-        this.props.user.notifications.push(response.value);
-        console.log("in noti, noti success!\n");
-    }
-    else{
-        console.log("in noti, noti failed!\n");
-    }
-}
+//   async get_notifications(){
+//     console.log("goti");
+//     // let response = await this.connectAPI.get_notifications("amit@gmail.com");
+//     let response = await this.connectAPI.get_notifications(this.props.user.email);
+//     console.log(response);
+//     if (!response.was_exception)
+//     {
+//         // alert(response.value);
+//         this.props.user.notifications.push(response.value);
+//         console.log("in noti, noti success!\n");
+//     }
+//     else{
+//         console.log("in noti, noti failed!\n");
+//     }
+// }
 
   render() {
     return (
@@ -144,12 +144,17 @@ export default class HomePage extends Component {
             getValues={this.open_store.bind(this)}
             name="Open Store"
           ></FormDialog>
-          <FormDialog
-            fields={this.state.send_question_to_admin_fields}
-            getValues={this.send_question_to_admin.bind(this)}
-            name="Send question to admin"
-          ></FormDialog></>):null}
-          {this.state.user.state === 2?<>
+         </>):null}
+         {
+           this.props.user.state !==0 && this.props.user.state !==2 ? 
+           <FormDialog
+           fields={this.state.send_question_to_admin_fields}
+           getValues={this.send_question_to_admin.bind(this)}
+           name="Send question to admin"
+         ></FormDialog>
+         :null
+         }
+          {this.props.user.state === 2?<>
             <Link href="/AdminPage" underline="hover">
             {"Admin Operations"}
           </Link></>:null}

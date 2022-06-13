@@ -17,8 +17,8 @@ public class UserQuestion extends Question {
                 ", question_id=" + question_id +
                 ", message_date=" + message_date +
                 ", answer_date=" + answer_date +
-                ", message='" + message + '\'' +
-                ", answer='" + answer + '\'' +
+                ", message=" + message +
+                ", answer=" + answer +
                 ", has_answer=" + has_answer +
                 '}';
     }
@@ -29,8 +29,8 @@ public class UserQuestion extends Question {
         return "Question to admin :" +
                 ", message_date=" + message_date +
                 ", answer_date=" + answer_date +
-                ", message='" + message + '\'' +
-                ", answer='" + answer + '\'' +
+                ", message=" + message +
+                ", answer=" + answer + 
                 '}';
     }
 }
