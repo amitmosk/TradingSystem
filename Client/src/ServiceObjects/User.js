@@ -19,7 +19,6 @@ export class User  {
     
     static guest(){
         
-
         return new User({
             state : GUEST,
             email :"",
@@ -27,7 +26,7 @@ export class User  {
             lastName : "",
             birth_date : "12-12-2021",
             cart : "",
-            storesManaged : "",
+            storesManaged : [],
             security_question : "what is the time?",
         })
     }
@@ -44,5 +43,10 @@ export class User  {
             security_question : security_question,
         })
 
+    }
+    add_store(store_id)
+    {
+        this.storesManaged.push(store_id);
+        console.log("stores of user is = "+this.state.storesManaged)
     }
 }

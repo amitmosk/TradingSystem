@@ -10,7 +10,8 @@ import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Exception.*;
-import TradingSystem.server.Domain.Utils.SystemLogger;
+import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
 import javax.persistence.*;
 import java.util.*;
@@ -282,8 +283,7 @@ public class UserController {
         user.check_admin_permission();
     }
 
-    public UserPurchaseHistory admin_view_user_purchase_history(int loggedUser, String email) throws
-            MarketException { //admin
+    public UserPurchaseHistory admin_view_user_purchase_history(int loggedUser, String email) throws MarketException { //admin
         check_admin_permission(loggedUser);
         if (!isRegistered(email))
             throw new NoUserRegisterdException("user " + email + "is not registered to the system.");
@@ -347,7 +347,7 @@ public class UserController {
 
     public Statistic get_statistics(int logged_user) throws MarketException {
         check_admin_permission(logged_user);
-        return statisticsManager.get_system_statistics();
+        return statisticsManager.get_system_statistics(users,onlineUsers);
     }
 
 
@@ -391,22 +391,19 @@ public class UserController {
         return get_email(loggedUser);
     }
 
-    public String edit_last_name_premium(int loggedUser, String new_last_name, String answer) throws
-            MarketException {
+    public String edit_last_name_premium(int loggedUser, String new_last_name, String answer) throws MarketException {
         User user = onlineUsers.get(loggedUser);
         user.edit_last_name_premium(new_last_name, answer);
         return get_email(loggedUser);
     }
 
-    public String edit_password_premium(int loggedUser, String old_password, String new_password, String answer) throws
-            MarketException {
+    public String edit_password_premium(int loggedUser, String old_password, String new_password, String answer) throws MarketException {
         User user = onlineUsers.get(loggedUser);
         user.edit_password_premium(old_password, new_password, answer);
         return get_email(loggedUser);
     }
 
-    public String improve_security(int loggedUser, String password, String question, String answer) throws
-            MarketException {
+    public String improve_security(int loggedUser, String password, String question, String answer) throws MarketException {
         User user = onlineUsers.get(loggedUser);
         user.improve_security(password, question, answer);
         return get_email(loggedUser);
@@ -424,8 +421,7 @@ public class UserController {
         user.add_product_to_cart(store, p, quantity);
     }
 
-    public void edit_product_quantity_in_cart(int loggedUser, Store store, Product p, int quantity) throws
-            MarketException {
+    public void edit_product_quantity_in_cart(int loggedUser, Store store, Product p, int quantity) throws MarketException {
         User user = onlineUsers.get(loggedUser);
         user.edit_product_quantity_in_cart(store, p, quantity);
     }
@@ -454,7 +450,6 @@ public class UserController {
     public boolean contains_user_email(String email) {
         return this.users.containsKey(email);
     }
-
     public void clear() {
         this.uc_id = new AtomicInteger(0);
         this.purchaseID = new AtomicInteger(0);

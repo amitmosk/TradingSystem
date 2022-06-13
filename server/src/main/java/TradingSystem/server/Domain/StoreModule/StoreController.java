@@ -2,6 +2,7 @@ package TradingSystem.server.Domain.StoreModule;
 
 
 import TradingSystem.server.DAL.HibernateUtils;
+import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
@@ -11,7 +12,8 @@ import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
-import TradingSystem.server.Domain.Utils.SystemLogger;
+import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
 import javax.persistence.*;
 import java.util.*;
@@ -31,13 +33,15 @@ public class StoreController {
     private Map<Integer, Store> stores;
     private AtomicInteger store_ids_counter;
     private AtomicInteger purchase_ids_counter;
+    //TODO:
+    @Transient
+    private AtomicInteger bids_ids_counter;
     private AtomicInteger products_id;
     @Transient
     private Object storesLock;
 
     @Transient
     private static StoreController instance = null;
-
 
     public static StoreController get_instance() {
         StoreController storeController;
@@ -55,6 +59,7 @@ public class StoreController {
     public StoreController() {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
+        this.bids_ids_counter = new AtomicInteger(1);
         this.stores = new HashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
@@ -349,26 +354,26 @@ public class StoreController {
     }
 
 
-//    /**
-//     * @param cart with all the items we should remove from inventory
-//     * @return Map with stores id and purchase - for adding to user purchase history
-//     */
-////    public Map<Integer, Purchase> update_stores_inventory(Cart cart) throws MarketException {
-////        Map<Integer, Purchase> store_id_purchase = new HashMap<>();
-////        Map<Store, Basket> baskets_of_storesID = cart.getBaskets();
-////        for (Basket basket : baskets_of_storesID.values()) {
-////            int store_id = basket.getStore_id();
-////            if (!stores.containsKey(store_id)) {
-////                throw new ObjectDoesntExsitException("Store does not exist - store id: " + store_id);
-////            }
-////        }
-////        for (Basket basket : baskets_of_storesID.values()) {
-////            int store_id = basket.getStore_id();
-////            Purchase purchase = this.stores.get(store_id).remove_basket_products_from_store(basket, this.purchase_ids_counter.getAndIncrement());
-////            store_id_purchase.put(store_id, purchase);
-////        }
-////        return store_id_purchase;
-////    }
+    /**
+     * @param cart with all the items we should remove from inventory
+     * @return Map with stores id and purchase - for adding to user purchase history
+     */
+    public Map<Integer, Purchase> update_stores_inventory(Cart cart) throws MarketException {
+        Map<Integer, Purchase> store_id_purchase = new HashMap<>();
+        Map<Store, Basket> baskets_of_storesID = cart.getBaskets();
+        for (Basket basket : baskets_of_storesID.values()) {
+            int store_id = basket.getStore_id();
+            if (!stores.containsKey(store_id)) {
+                throw new ObjectDoesntExsitException("Store does not exist - store id: " + store_id);
+            }
+        }
+        for (Basket basket : baskets_of_storesID.values()) {
+            int store_id = basket.getStore_id();
+            Purchase purchase = this.stores.get(store_id).remove_basket_products_from_store(basket, this.purchase_ids_counter.getAndIncrement());
+            store_id_purchase.put(store_id, purchase);
+        }
+        return store_id_purchase;
+    }
 
     public int open_store(User founder, String store_name) throws MarketException {
         AssignUser founder_state = founder.state_if_assigned();
@@ -528,6 +533,37 @@ public class StoreController {
 
     public static void setInstance(StoreController instance) {
         StoreController.instance = instance;
+    }
+
+    public List<BidInformation> view_bids_status(int store_id, User user) throws Exception {
+        AssignUser user_state = user.state_if_assigned();
+        Store store = this.get_store_by_store_id(store_id);
+        return store.view_bids_status(user_state);
+    }
+
+    public void manager_answer_bid(int storeID, User user, boolean manager_answer, int bidID,
+                                   double negotiation_price) throws Exception {
+        Store store = get_store_by_store_id(storeID);
+        store.add_bid_answer(user, manager_answer, bidID, negotiation_price);
+    }
+
+
+    public int add_bid_offer(int productID, int storeID, int quantity, double offer_price, User buyer)
+            throws Exception {
+        Store store = get_store_by_store_id(storeID);
+        Product product = checkAvailablityAndGet(storeID, productID, quantity);
+        int bid_id = this.bids_ids_counter.getAndIncrement();
+        return store.add_bid_offer(bid_id, product, quantity, offer_price, buyer);
+    }
+
+    public List<String> get_permissions(String manager_email, int store_id) throws StoreException, AppointmentException {
+        Store store = get_store_by_store_id(store_id); //trows exceptions
+        return store.get_permissions(manager_email);
+    }
+
+    public List<String> get_all_categories(int store_id) throws StoreException {
+        Store store = get_store_by_store_id(store_id);
+        return store.get_all_categories();
     }
 }
 

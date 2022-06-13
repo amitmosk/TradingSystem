@@ -2,8 +2,8 @@ package TradingSystem.server.Domain.UserModule;
 
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
-import TradingSystem.server.Domain.Utils.PasswordManagerImpl;
-import TradingSystem.server.Domain.Utils.iPasswordManager;
+import TradingSystem.server.Domain.Utils.Password.PasswordManagerImpl;
+import TradingSystem.server.Domain.Utils.Password.iPasswordManager;
 
 import javax.persistence.*;
 

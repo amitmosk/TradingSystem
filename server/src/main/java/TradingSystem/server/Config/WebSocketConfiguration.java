@@ -1,27 +1,25 @@
 package TradingSystem.server.Config;
 
-import TradingSystem.server.Service.NotificationHandler;
-import org.springframework.context.annotation.Bean;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
-@EnableWebSocket
-public class WebSocketConfiguration implements WebSocketConfigurer {
+@EnableWebSocketMessageBroker
+public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry){
-        webSocketHandlerRegistry.addHandler(getChatWebSocketHandler(), "/chat");
+    public void configureMessageBroker(MessageBrokerRegistry config){
+        SystemLogger.getInstance().add_log("WS : Configure Message Broker");
+        config.enableSimpleBroker("/topic");
+        config.setApplicationDestinationPrefixes("/app");
+    }
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry){
+        SystemLogger.getInstance().add_log("WS : Register Stomp End Points");
+        registry.addEndpoint( "/chat").setAllowedOriginPatterns("*").withSockJS();
+
 
     }
-
-    @Bean
-    public WebSocketHandler getChatWebSocketHandler()
-    {
-        return new NotificationHandler();
-    }
-
 }

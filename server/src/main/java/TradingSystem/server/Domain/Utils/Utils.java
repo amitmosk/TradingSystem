@@ -2,14 +2,14 @@ package TradingSystem.server.Domain.Utils;
 
 
 import TradingSystem.server.Domain.Utils.Exception.*;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -110,36 +110,6 @@ public class Utils {
         }
     }
 
-    /**
-     * Prints the message of the response in case of an exception or a success message
-     *
-     * @param response       response object
-     * @param successMessage the success message to print
-     */
-    public static void printMessageOrSuccess(Response<? extends Object> response, String successMessage) {
-        if (response.WasException())
-            System.out.println(response.getMessage());
-        else
-            System.out.println(successMessage);
-    }
-
-    /**
-     * Prints an error message in case of an error issued with the response object
-     * if no error, prints the value issued with the response object
-     *
-     * @param response reponse object
-     * @param <T>      The type of value the response object wraps
-     */
-    public static <T> void printErrorMessageOrListOfValues(Response<List<T>> response) {
-        if (response.WasException())
-            System.out.println(response.getMessage());
-        else {
-            for (T elem : response.getValue()) {
-                System.out.println(elem + "\n");
-            }
-        }
-    }
-
 
     public static void emailValidCheck(String email) throws MarketException {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
@@ -180,17 +150,55 @@ public class Utils {
     public static void nameValidCheck(String name) throws MarketException {
         final int MaxNamesLength = 10;
         if (name == null || name.equals(""))
-            throw new UserExcpetion("Name cannot be null or empty spaces");
+            throw new UserException("Name cannot be null or empty spaces");
         //checks length of the name
         if (name.length() > MaxNamesLength)
-            throw new UserExcpetion("Name length is too long");
+            throw new UserException("Name length is too long");
         //check if contains only letters
         char[] arrayName = name.toLowerCase().toCharArray();
         for (char c : arrayName) {
             if (c < 'a' || c > 'z')
-                throw new UserExcpetion("The name must contain letters only");
+                throw new UserException("The name must contain letters only");
         }
     }
 
+    public static String send_http_post_request(String url, HashMap<String, String> postContent) {
+        String answer = HttpUtility.newRequest(url,HttpUtility.METHOD_POST,postContent, new HttpUtility.Callback() {
+            @Override
+            public String OnSuccess(String response) {
+                // on success
+                SystemLogger.getInstance().add_log("HTTP POST On Success Response= "+response);
+                return response;
+            }
+            @Override
+            public String OnError(int status_code, String message) {
+                // on error
+                SystemLogger.getInstance().add_log("HTTP POST On Error Status Code= "+status_code+" Message= "+message);
+                return message;
+            }
+        });
+        return answer;
+    }
 
+
+    public static int string_to_int(String str){
+        int number = -1;
+        try{
+            number = Integer.parseInt(str);
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
+        return number;
+    }
+
+    /**
+     * this method is for the external systems!
+     * @param str
+     * @return true for "OK" value as well.
+     */
+    public static boolean string_to_boolean(String str) {
+        return str.equals("t") || str.equals("T") || str.equals("true") || str.equals("TRUE") ||
+                str.equals("True") || str.equals("OK");
+    }
 }

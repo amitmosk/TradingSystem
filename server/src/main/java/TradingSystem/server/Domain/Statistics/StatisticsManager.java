@@ -4,9 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import TradingSystem.server.Domain.UserModule.User;
+
 import java.time.LocalDate;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
@@ -22,7 +25,7 @@ public class StatisticsManager implements iStatisticsManager {
     private AtomicInteger buy_cart_count;
 
     public StatisticsManager() {
-        this.init_time = LocalDate.now().toString();
+        this.init_time = LocalDateTime.now().toString();
         this.login_count = new AtomicInteger(0);
         this.logout_count = new AtomicInteger(0);
         this.connect_system_count = new AtomicInteger(0);
@@ -31,7 +34,7 @@ public class StatisticsManager implements iStatisticsManager {
     }
 
     private long get_total_minutes_system_on() {
-        return ChronoUnit.MINUTES.between(LocalDate.parse(init_time), LocalDate.now());
+        return ChronoUnit.MINUTES.between(LocalDateTime.parse(init_time), LocalDateTime.now());
     }
 
     private long get_login_statistics() {
@@ -89,14 +92,14 @@ public class StatisticsManager implements iStatisticsManager {
         this.buy_cart_count.incrementAndGet();
     }
 
-    public Statistic get_system_statistics() {
-        LocalDate init_system_time = LocalDate.parse(init_time);
+    public Statistic get_system_statistics(Map<String, User> users, Map<Integer, User> onlineUsers) {
+        LocalDateTime init_system_time = LocalDateTime.parse(init_time);
         long login_per_minutes = get_login_statistics();
         long logout_per_minutes = get_logout_statistics();
         long connect_per_minutes = get_connect_system_statistics();
         long register_per_minutes = get_register_statistics();
         long buy_cart__per_minutes = get_buy_cart_statistics();
-        return new Statistic(init_system_time, login_per_minutes, logout_per_minutes, connect_per_minutes, register_per_minutes, buy_cart__per_minutes);
+        return new Statistic(init_system_time, login_per_minutes, logout_per_minutes, connect_per_minutes, register_per_minutes, buy_cart__per_minutes,users.size(),onlineUsers.size());
     }
 
     public void setId(Long id) {

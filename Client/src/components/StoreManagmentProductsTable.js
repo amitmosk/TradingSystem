@@ -1,13 +1,8 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
 import { ProductApi } from '../API/ProductApi';
-import { Row, Col } from 'react-grid-system';
-import Grid from '@mui/material/Grid';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import Link from '@mui/material/Button';
-import { map } from 'ramda';
 import { StoreApi } from '../API/StoreApi';
 import { Component } from 'react';
 import IconButton from '@mui/material/IconButton'
@@ -48,7 +43,8 @@ export default class StoreManagmentProductsTable extends Component{
                   <DeleteIcon />
                 </IconButton>
                 </>)
-            }];
+            },];
+            
     }
     async componentDidMount() {
         let products = await this.storeApi.get_products_by_store_id(this.state.store_id); 

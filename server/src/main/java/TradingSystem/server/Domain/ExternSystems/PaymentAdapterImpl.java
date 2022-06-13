@@ -1,7 +1,8 @@
 package TradingSystem.server.Domain.ExternSystems;
 
-import TradingSystem.server.Domain.Utils.SystemLogger;
+import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
 import TradingSystem.server.Domain.ExternSystems.Proxy.ExternPaymentSystemProxy;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
 public class PaymentAdapterImpl implements PaymentAdapter {
     private ExternPaymentSystemProxy externPaymentSystemProxy;
@@ -14,24 +15,23 @@ public class PaymentAdapterImpl implements PaymentAdapter {
         this.externPaymentSystemProxy = externPaymentSystemProxy;
     }
 
-    @Override
-    public boolean payment(double total_price, String paymentInfo) {
 
+    @Override
+    public boolean handshake() {
+        SystemLogger.getInstance().add_log("System Connected To The Payment System");
+        return externPaymentSystemProxy.handshake();
+    }
+
+    @Override
+    public int payment(PaymentInfo paymentInfo, double total_price) {
+        SystemLogger.getInstance().add_log("Payment Of: " + total_price);
         return externPaymentSystemProxy.payment(total_price, paymentInfo);
     }
 
     @Override
-    public boolean can_pay(double total_price, String paymentInfo) {
-        return externPaymentSystemProxy.can_pay(total_price, paymentInfo);
+    public int cancel_pay(int transaction_id) {
+        SystemLogger.getInstance().add_log("Cancel Payment Of Transaction : " + transaction_id);
+        return externPaymentSystemProxy.cancel_payment(transaction_id);
     }
 
-    @Override
-    public boolean connect_to_payment_system() {
-        SystemLogger.getInstance().add_log("system connected to the payment system");
-        return externPaymentSystemProxy.connect();
-    }
-
-    public ExternPaymentSystemProxy getExternPaymentSystemProxy() {
-        return externPaymentSystemProxy;
-    }
 }

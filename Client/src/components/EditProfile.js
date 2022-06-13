@@ -28,6 +28,7 @@ export default class EditProfile extends Component {
             security_question: this.props.security_question,
             improve_security_fields: ["question", "answer","password"],
             unregister_fields: ["password"],
+            snackbar: null,
         }
         console.log("start edit profile");
         this.userApi = new UserApi();
@@ -121,9 +122,7 @@ export default class EditProfile extends Component {
     render() {
         return (<>
             <Box sx={{ flexGrow: 1 }}>
-                <Link href="/">
-                    <HomeIcon></HomeIcon>
-                </Link>
+
                 <h3 class="Header" align="center">
                     Edit Profile
                 </h3>

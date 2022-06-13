@@ -5,6 +5,7 @@ import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
+import TradingSystem.server.Domain.Utils.Observer;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -14,7 +15,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="user_type",
         discriminatorType = DiscriminatorType.INTEGER)
-public abstract class AssignState {
+public abstract class AssignState implements Observer{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;

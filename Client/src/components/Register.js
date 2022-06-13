@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Button from '@mui/material/Button';
 import { ConnectApi } from '../API/ConnectApi';
-import { toBeInTheDocument } from '@testing-library/jest-dom/dist/matchers';
 import HomeIcon from '@mui/icons-material/Home';
 import { Navigate } from 'react-router-dom'; 
 import Link from '@mui/material/Button';
@@ -9,8 +8,8 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-const axios = require('axios');
-const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default class Register extends Component {
     static displayName = Register.name;
@@ -25,6 +24,7 @@ export default class Register extends Component {
             lastname: undefined,
             birthdate: undefined,
             b_d : new Date(),
+            snackbar: null,
         };
         this.connectApi = new ConnectApi(); 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -69,14 +69,16 @@ export default class Register extends Component {
         const {email, password, firstname, lastname, birthdate} = this.state;
         console.log("email is "+email+" , password is "+password+" firstname is "+firstname+" lastname is "+lastname+" birthdate is "+birthdate+"\n");
         let response = await this.connectApi.register(email, password, firstname, lastname, birthdate);
-        alert(response.message);
+        // alert(response.message);
         if (!response.was_exception)
         {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             const user = response.value;
             this.props.updateUserState(user);
             return (<Navigate to="/"/>)
         }
         else{
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -126,6 +128,19 @@ export default class Register extends Component {
                                 </Link>
                             </div>
                         </form>
+                        {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
                     </div>
                 </main>
             );

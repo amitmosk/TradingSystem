@@ -1,26 +1,18 @@
 import React, { Component } from 'react';
-import Button from '@mui/material/Button';
-// import Link from '@mui/material/Button';
-// import Link from '@mui/material/Link';
 import { Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
-import { ConnectApi } from '../API/ConnectApi';
-import Register from "./Register.js";
-import HomePageSearch from './HomePageSearch';
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
-import { withRouter } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 import { AdminApi } from '../API/AdminApi';
-import { TextField, makeStyles } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import FormDialog from './FormDialog';
+import FormDialogPermissions from './FormDialogPermissions';
 import { StoreApi } from '../API/StoreApi';
-import { Container, Row, Col } from 'react-grid-system';
-import { Input } from "@mui/material";
 import StoreManagmentProductsTable from './StoreManagmentProductsTable';
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; 
+import { Utils } from '../ServiceObjects/Utils';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -30,9 +22,6 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-
-const axios = require('axios');
-const EMPLOYEE_BASE_REST_API_URL = "http://localhost:8080/amit";
 
 
 
@@ -56,7 +45,7 @@ export default class StoreManagment extends Component {
             appoint_owner_fields: ["user_email_to_appoint"],
             remove_owner_appointment_fields: ["user_email_to_appoint"],
             remove_manager_appointment_fields: ["user_email_to_appoint"],
-            change_manager_permissions_fields: ["manager_email", "permissions"],
+            change_manager_permissions_fields: ["manager_email"],
             answer_user_questions_fields: ["question_id", "answer"],
             user_massages_fields: [],
             store_purchase_history_fields: [],
@@ -67,12 +56,14 @@ export default class StoreManagment extends Component {
             store_id: this.props.store_id,
 
             option: "Simple",
+            snackbar: null,
 
         };
       
         this.adminApi = new AdminApi();
         this.storeApi = new StoreApi();
         this.handleInputChange = this.handleInputChange.bind(this);
+        console.log("in store managemrnt , store page = "+this.props.store_id);
 
 
     }
@@ -99,12 +90,14 @@ export default class StoreManagment extends Component {
         const key_words = values[4];
 
         const response = await this.storeApi.add_product_to_store(store_id, quantity, name, price, category, key_words);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in add product - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -115,28 +108,32 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
 
         const response = await this.storeApi.delete_product_from_store(product_id, store_id);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in delete product - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
-    async store_puchase_policies(values) {
-        console.log("in store_puchase_policies!\n");
-        console.log("in store_puchase_policies!\n");
+    async store_purchase_policies(values) {
+        console.log("in store_purchase_policies!\n");
+        console.log("in store_purchase_policies!\n");
         const store_id = this.state.store_id;
         const policy = values[0];
 
         const response = await this.storeApi.puchase_policies_fields(store_id, policy);
-        alert(response.message);
-        if (!response.was_execption) {
-            console.log("in store_puchase_policies - success!\n");
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            console.log("in store_purchase_policies - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -147,12 +144,14 @@ export default class StoreManagment extends Component {
 
 
         const response = await this.storeApi.set_store_discount_policy(store_id, policy);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in store_discount_policy - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -162,13 +161,15 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
 
         const response = await this.storeApi.add_owner(user_email_to_appoint, store_id);
-        alert(response.message);
+        // alert(response.message);
 
-        if (!response.was_execption) {
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in add_owner - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -178,12 +179,14 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
 
         const response = await this.storeApi.delete_owner(user_email_to_delete_appointment, store_id);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in delete_owner - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -194,12 +197,14 @@ export default class StoreManagment extends Component {
 
 
         const response = await this.storeApi.add_manager(user_email_to_appoint, store_id);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in add_manager - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -212,12 +217,14 @@ export default class StoreManagment extends Component {
 
 
         const response = await this.storeApi.delete_manager(user_email_to_delete_appointment, store_id);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in delete_manager - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -226,12 +233,14 @@ export default class StoreManagment extends Component {
         console.log("in close_store_temporarily!\n");
         const store_id = this.state.store_id;
         const response = await this.storeApi.close_store_temporarily(store_id);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in close_store_temporarily - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -240,12 +249,14 @@ export default class StoreManagment extends Component {
         console.log("in open_close_store!\n");
         const store_id = this.state.store_id;
         const response = await this.storeApi.open_close_store(store_id);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in open_close_store - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -254,13 +265,15 @@ export default class StoreManagment extends Component {
         console.log("in view_store_management_information!\n");
         const store_id = this.state.store_id;
         const response = await this.storeApi.view_store_management_information(store_id);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in view_store_management_information - success!\n");
             return response.value;
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -269,12 +282,14 @@ export default class StoreManagment extends Component {
         console.log("in manager_view_store_questions!\n");
         const store_id = this.state.store_id;
         const response = await this.storeApi.manager_view_store_questions(store_id);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in manager_view_store_questions - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -287,12 +302,14 @@ export default class StoreManagment extends Component {
 
 
         const response = await this.storeApi.manager_answer_question(store_id, question_id, answer);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in manager_answer_question - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
@@ -300,69 +317,34 @@ export default class StoreManagment extends Component {
         console.log("in view_store_purchases_history!\n");
         const store_id = this.state.store_id;
         const response = await this.storeApi.view_store_purchases_history(store_id);
-        alert(response.message);
-        if (!response.was_execption) {
+        // alert(response.message);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in view_store_purchases_history - success!\n");
             //show history
         }
         else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
 
         }
     }
     async edit_manager_permissions(values) {
+        const user_email = values[0];
+        if (Utils.check_email(user_email)== 0)
+        {
+            this.setState({ snackbar: { children: "Illegal email", severity: "error" } });
+            return;
+
+        }
+        console.log(user_email);
+        window.location.href+=`/ManagerPermissions/${user_email}`
         console.log("in edit_manager_permissions!\n");
-        const manager_email = values[0];
-        const store_id = this.state.store_id;
-        const permissions = values[1];
-
-
-        const response = await this.storeApi.edit_manager_permissions(manager_email, store_id, permissions);
-        alert(response.message);
-        if (!response.was_execption) {
-            console.log("in edit_manager_permissions - success!\n");
-            //show history
-        }
-        else {
-
-        }
+        
     }
 
 
 
-    async add_discount_rule(option) {
-        console.log("in add discount rule");
-        console.log(option);
-        switch (option) {
-            case "Simple":
-                this.add_simple_discount_rule()
-                break;
-            case "Complex":
-                this.add_complex_discount_rule()
-                break;
-            case "Composite Or":
-                this.add_composite_or_discount_rule()
-                break;
-            case "Composite And":
-                this.add_composite_and_discount_rule()
-                break;
-            case "Composite Xor":
-                this.add_composite_xor_discount_rule()
-                break;
-            default:
-                console.log("option is empty");
-        }
-
-    }
-    async add_simple_discount_rule(option) {
-    }
-    async add_complex_discount_rule(option) {
-    }
-    async add_composite_or_discount_rule(option) {
-    }
-    async add_composite_and_discount_rule(option) {
-    }
-    async add_composite_xor_discount_rule(option) {
-    }
+    
 
 
 
@@ -374,23 +356,25 @@ export default class StoreManagment extends Component {
         return (
 
             <Box sx={{ flexGrow: 1 }}>
-                <Link to="/"><HomeIcon></HomeIcon></Link>
+                
                 <h3 align="center">Store Managment Page</h3>
                 <Grid>
-                    <StoreManagmentProductsTable store_id={1}></StoreManagmentProductsTable>
+                    <StoreManagmentProductsTable store_id={this.state.store_id}></StoreManagmentProductsTable>
                 </Grid>
                 <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.add_product_fields} getValues={this.add_product.bind(this)} name="Add Product"></FormDialog></Item>                    </Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.delete_product_fields} getValues={this.delete_product.bind(this)} name="Delete Product"></FormDialog></Item></Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.purchase_policies_fields} getValues={this.store_puchase_policies.bind(this)} name="Store Purchase Policies"></FormDialog></Item></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.purchase_policies_fields} getValues={this.store_purchase_policies.bind(this)} name="Store Purchase Policies"></FormDialog></Item></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.discount_policies_fields} getValues={this.store_discount_policy.bind(this)} name="Store Discount Policies"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_manager_fields} getValues={this.add_manager.bind(this)} name="Add Manager"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_owner_fields} getValues={this.add_owner.bind(this)} name="Add Owner"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.remove_owner_appointment_fields} getValues={this.delete_owner.bind(this)} name="Delete Owner"></FormDialog></Item></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.remove_manager_appointment_fields} getValues={this.delete_manager.bind(this)} name="Remove Manager"></FormDialog></Item ></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions"></FormDialog></Item ></Grid >
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialogPermissions outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions "></FormDialogPermissions></Item ></Grid > */}
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link to = {`ManagerViewStoreQuestions/${id}`} query={{store:1}}>Bid Item</Link></Item ></Grid >         */}
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ManagerViewStoreQuestions` }}   underline="hover" >{'View User Questions'}</Link>   </Item ></Grid >
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ManagerPermissions` }}   underline="hover" >{'Change Manager Permissions111'}</Link>   </Item ></Grid > */}
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link href="/ViewStorePurchaseHistory"  underline="hover" >{'View Store Purchase History'}</Link>   </Item ></Grid > */}
 
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.close_store_temp_fields} getValues={this.close_store_temporarily.bind(this)} name="Close Store Temporarily"></FormDialog></Item ></Grid > */}
@@ -407,6 +391,9 @@ export default class StoreManagment extends Component {
 
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid> */}
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddDiscount` }} underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddPurchase` }} underline="hover" >{'Add Purchase Rule'}</Link></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`CreatePredict` }} underline="hover" >{'Create Predict'}</Link></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ViewRules` }} underline="hover" >{'View Rules'}</Link></Item ></Grid>
 
 
 
@@ -414,9 +401,19 @@ export default class StoreManagment extends Component {
 
                 </Grid>
 
-                <Box sx={{ flexGrow: 3 }}>
-
-                </Box>
+                {!!this.state.snackbar && (
+                        <Snackbar
+                        open
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        onClose={this.handleCloseSnackbar}
+                        autoHideDuration={6000}
+                        >
+                        <Alert
+                            {...this.state.snackbar}
+                            onClose={this.handleCloseSnackbar}
+                        />
+                        </Snackbar>
+                    )}
                 <h3> </h3>
             </Box>
 

@@ -2,19 +2,17 @@ import * as React from "react";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import { ProductApi } from "../API/ProductApi";
-import { Row, Col } from "react-grid-system";
+import { Row } from "react-grid-system";
 import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import Link from "@mui/material/Button";
-import { map } from "ramda";
 import { StoreApi } from "../API/StoreApi";
 import { Component } from "react";
 import { UserApi } from "../API/UserApi";
 import { CartApi } from "../API/CartApi";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { responsiveFontSizes } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 export default class ShoppingCart extends Component {
   constructor(props) {
@@ -103,42 +101,8 @@ export default class ShoppingCart extends Component {
     this.setState({ edited: val });
   };
 
-  //   remove_products = async () => {
-  //     this.set_selected(this.state.items.filter(i=> this.state.selected_row.some(s=> s === i.id)))
-  //     if(this.state.selected_item.length > 0){
-  //       let selected = this.state.selected_item[0];
-  //       let response = await this.productApi.remove_product_from_cart(selected.store_id,selected.id);
-  //       if(response.was_exception)
-  //         alert(response.message)
-  //       else{
-  //         alert("product removed succesfully")
-  //         this.setItems(this.state.items.filter(i=> !this.state.selected_row.some(s=> s === i.id)))
-  //         this.set_selected([]);
-  //       }
-  //     }else
-  //       alert("you should select item to add")
-  //   }
 
-  buy_cart = async () => {
-    let response = await this.cartApi.buy_cart("", "");
-    if (response.was_exception)
-    {
-      this.setSnackbar({ children: response.message, severity: "error" });
-    }
 
-      
-    else
-    {
-      this.setSnackbar({
-        children: "buy cart worked succesfully",
-        severity: "success",
-      });
-      this.setItems([]);
-      this.setState({ price: 0 });
-
-    }
-      
-  };
 
   handleCloseSnackbar = () => this.setSnackbar(null);
 
@@ -225,14 +189,11 @@ export default class ShoppingCart extends Component {
             onSelectionModelChange={(newSelectionModel) => {
               this.set_row_selected(newSelectionModel);
             }}
-            // onEditRowsModelChange={(edit_row)=>{
-            // this.set_edited(edit_row);}}
+
             processRowUpdate={this.processRowUpdate}
             onProcessRowUpdateError={this.handleProcessRowUpdateError}
             experimentalFeatures={{ newEditingApi: true }}
-            // selectionModel={selected_row}
-            // editRowsModel = {edited}
-            // onEditRowsModelChange={(edit_row,details)=>edit_quantity(edit_row)}
+
           ></DataGrid>
           <Row>
             <h1 style={{ color: "white" }}> </h1>
@@ -244,8 +205,9 @@ export default class ShoppingCart extends Component {
             alignItems="center"
           >
             <h4>cart total price {this.state.price}</h4>
-            <Button width="5" variant="contained" onClick={this.buy_cart}>
-              buy cart
+            
+            <Button width="5" variant="contained" >
+            <Link to={{pathname:`BuyCart`}}   underline="hover" style={{ color: '#FFF' }} >{'Buy Cart'}</Link> 
             </Button>
           </Grid>
           {!!this.state.snackbar && (

@@ -9,9 +9,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert"; 
 import { StoreApi } from '../API/StoreApi';
-
-function not(a, b) {
+import { useParams } from 'react-router-dom';
+import { Utils } from '../ServiceObjects/Utils';
+import { useEffect } from 'react';
+function not(a, b) {    
     return a.filter((value) => b.indexOf(value) === -1);
 }
 
@@ -24,18 +28,46 @@ function union(a, b) {
 }
 
 export default function ManagerPermissions() {
-    const {store_id, user_email} = useParams();
+    const current_permissions=[];
+    const storeApi = new StoreApi();
+    const [snackbar, setSnackbar] = React.useState(null);
+    const handleCloseSnackbar = () => setSnackbar(null);
+    const {id, user_email} = useParams();
+    
+    const get_permissionss = async () =>{
+        const response = await storeApi.get_permissions(user_email, id);
+        if (!response.was_exception) {
+
+            setSnackbar({ children: response.message, severity: 'success' });
+            console.log(response.value);
+            // current_permissions = response.value;
+            response.value.map((per) => {
+                let name =permissions_to_names(per);
+                if (!current_permissions.includes(name))
+                    current_permissions.push(name)
+            });
+           
+
+        }
+        else {
+            setSnackbar({ children: response.message, severity: 'error' });   
+
+        }
+    }
+    useEffect(()=>{get_permissionss()}, []);
+    
     const [checked, setChecked] = React.useState([]);
     const [left, setLeft] = React.useState(["Add Item", "Remove Item", "Edit Item Name", "Edit Item Price",
         "Edit Item Category", "Edit Item Keywords", "View Permissions", "View User Questions",
         "Edit Store Policy", "Edit Discount Policy", "Edit Purchase Policy", "View Purchase History",
         "Close Store Temporarily", "Open Closed Store", "Add Manager", "Remove Manager",
-        "Add Owner", "Remove Owner", "Edit Permissions"]);
-    const [right, setRight] = React.useState([]);
+        "Add Owner", "Remove Owner", "Edit Permissions", "View Bids Status","Answer Bid Offer",
+        "Answer Bid Offer Negotiate",   ]);
+    const [right, setRight] = React.useState(current_permissions);
 
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
-    const storeApi = new StoreApi();
+    
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -61,18 +93,131 @@ export default function ManagerPermissions() {
     };
 
     const handleCheckedRight = () => {
-        setRight(right.concat(leftChecked));
-        setLeft(not(left, leftChecked));
+
+        if (!right.includes(leftChecked[0]))
+        {
+            setRight(right.concat(leftChecked));
+            setLeft(not(left, leftChecked));
+            
+        }
         setChecked(not(checked, leftChecked));
     };
 
     const handleCheckedLeft = () => {
-        setLeft(left.concat(rightChecked));
-        setRight(not(right, rightChecked));
+        if (!left.includes(rightChecked[0]))
+        {
+            setLeft(left.concat(rightChecked));
+            setRight(not(right, rightChecked));
+        } 
         setChecked(not(checked, rightChecked));
     };
+    const permissions_dict = {add_item :0,
+        remove_item:1,
+        edit_item_name:2,
+        edit_item_price:3,
+        edit_item_category:4,
+        edit_item_keywords:5,
+        edit_item_quantity:6,
+        view_permissions:7,
+        view_users_questions:8,
+        edit_store_policy:9,
+        edit_discount_policy:10,
+        edit_purchase_policy:11,
+        view_purchases_history:12,
+        close_store_temporarily:13,
+        open_close_store:14,
+        add_manager:15,
+        remove_manager:16,
+        add_owner:17,
+        remove_owner:18,
+        edit_permissions:19,
+        view_bids_status:20,
+        answer_bid_offer:21,
+        answer_bid_offer_negotiate:22,};
+    const handleInputChange = event => {
+        const name = event.target.name
+        const value = event.target.value;
+        console.log(value);
+        console.log(name);
+        localStorage.setItem(name, value);
+    
+        
+        };   
+        // const hadleSubmit = async () => {
+        //     return (<Button>fffff</Button>);
+        // }
+    const permissions_to_names = (per) =>{
+        if (per === "add_item") {
+           return "Add Item";
+        }
+        else if (per === "remove_item") {
+            return "Remove Item";
+        }
+        else if (per === "edit_item_name") {
+            return "Edit Item Name";
+        }
+        else if (per === "edit_item_price") {
+            return "Edit Item Price";
+        }
+        else if (per === "edit_item_category") {
+            return "Edit Item Category";
+        }
+        else if (per === "edit_item_keywords") {
+            return "Edit Item Keywords";
+        }
+        else if (per === "view_permissions") {
+            return "View Permission";
+        }
+        else if (per === "view_users_questions") {
+            return "View User Questions";
+        }
+        else if (per === "edit_store_policy") {
+            return "Edit Store Policy";
+        }
+        else if (per === "edit_discount_policy") {
+            return "Edit Discount Policy";
+        }
+        else if (per === "edit_purchase_policy") {
+            return "Edit Purchase Policy";
+        }
 
-    const hadleSubmit = () => {
+        else if (per === "view_purchases_history") {
+            return "View Purchase History";
+        }
+
+        else if (per === "close_store_temporarily") {
+            return "Close Store Temporarily";
+        }
+        else if (per === "open_close_store") {
+            return "Open Closed Store";
+        }
+        else if (per === "add_manager") {
+            return "Add Manager";
+        }
+        else if (per === "remove_manager") {
+            return "Remove Manager";
+        }
+        else if (per === "add_owner") {
+            return "Add Owner";
+        }
+        else if (per === "remove_owner") {
+            return "Remove Owner";
+        }
+        else if (per === "edit_permissions") {
+            return "Edit Permissions";
+        }
+        else if (per === "view_bids_status") {
+            return "View Bids Status";
+        }
+        else if (per === "answer_bid_offer") {
+            return "Answer Bid Offer";
+        }
+        else if (per === "answer_bid_offer_negotiate") {
+            return "Answer Bid Offer Negotiate";
+        }
+
+    }
+    const hadleSubmit = async () => {
         let permissions = [];
         right.map((per) => {
             if (per === "Add Item") {
@@ -134,11 +279,51 @@ export default function ManagerPermissions() {
             else if (per === "Edit Permissions") {
                 permissions.push("edit_permissions");
             }
+            else if (per === "View Bids Status") {
+                permissions.push("view_bids_status");
+            }
+            else if (per === "Answer Bid Offer") {
+                permissions.push("answer_bid_offer");
+            }
+            else if (per === "Answer Bid Offer Negotiate") {
+                permissions.push("answer_bid_offer_negotiate");
+            }
+
+    
 
 
         })
+        console.log(permissions);
+        let permissions_numbers = [];
+        permissions.map((p)=> permissions_numbers.push(permissions_dict[p]));
+        console.log(permissions_numbers);
+        console.log(id);
+        if (permissions_numbers.length == 0 )
+        {
+            setSnackbar({ children: "Have to choose al least one permission", severity: 'error' });   
+            return;
+        }
+        const user_email=localStorage.getItem("user_email");
+        if (Utils.check_email(user_email) == 0)
+        {
+            setSnackbar({ children: "Illegal email", severity: 'error' });   
+            return;
+        }
+        let permissions_str = "";
+        permissions_numbers.map((p)=>{
+            permissions_str = permissions_str.concat(p.toString()).concat("/")
+        });
+        console.log(permissions_str)
+        // storeApi.edit_manager_permissions(user_email, store_id, permissions_numbers)
+        const response = await storeApi.edit_manager_permissions(user_email, id, permissions_str);
+        if (!response.was_exception) {
+            setSnackbar({ children: response.message, severity: 'success' });   
+            console.log("in edit_manager_permissions - success!\n");
+        }
+        else {
+            setSnackbar({ children: response.message, severity: 'error' });   
 
-        storeApi.edit_manager_permissions(user_email, store_id, permissions)
+        }
     };
 
     const customList = (title, items) => (
@@ -206,7 +391,9 @@ export default function ManagerPermissions() {
 
     return (
         <>
+
             <Grid container spacing={3} justifyContent="center" alignItems="center">
+
                 <Grid item>{customList('Permission Choices', left)}</Grid>
                 <Grid item>
                     <Grid container direction="column" alignItems="center">
@@ -238,6 +425,16 @@ export default function ManagerPermissions() {
                 </Grid>
             </Grid>
             <Button variant="contained" onClick={hadleSubmit}>Submit</Button>
+            {!!snackbar && (
+            <Snackbar
+            open
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            onClose={handleCloseSnackbar}
+            autoHideDuration={6000}
+            >
+            <Alert {...snackbar} onClose={handleCloseSnackbar} />
+            </Snackbar>
+        )}
         </>
     );
 }

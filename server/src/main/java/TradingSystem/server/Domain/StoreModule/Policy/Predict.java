@@ -74,7 +74,7 @@ public class Predict extends Ipredict {
     public boolean CanApply(int age, Basket b) {
         Map<Product, Integer> map = b.getProducts_and_quantities();
         for (Map.Entry<Product, Integer> entry : map.entrySet())
-            if (CanApply(age, entry.getKey(), entry.getValue(), entry.getKey().getPrice()))
+            if (CanApply(age, entry.getKey(), entry.getValue(), entry.getKey().getOriginal_price()))
                 return true;
         return false;
     }
@@ -82,7 +82,7 @@ public class Predict extends Ipredict {
     public boolean CanApply(Basket b) {
         Map<Product, Integer> map = b.getProducts_and_quantities();
         for (Map.Entry<Product, Integer> entry : map.entrySet())
-            if (CanApply(entry.getKey(), entry.getValue(), entry.getKey().getPrice()))
+            if (CanApply(entry.getKey(), entry.getValue(), entry.getKey().getOriginal_price()))
                 return true;
         return false;
     }

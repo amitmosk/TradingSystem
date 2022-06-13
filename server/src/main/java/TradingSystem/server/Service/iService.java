@@ -2,14 +2,15 @@ package TradingSystem.server.Service;
 
 
 
+import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
+import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
-import TradingSystem.server.Domain.Utils.Response;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public interface iService {
-
 
 
     /**
@@ -24,6 +25,7 @@ public interface iService {
 
     /**
      * Requirement 2.1.4
+     *
      * @return
      */
     TradingSystem.server.Domain.Utils.Response login(String Email, String password);
@@ -59,10 +61,21 @@ public interface iService {
     TradingSystem.server.Domain.Utils.Response edit_product_quantity_in_cart(int storeID, int productID, int quantity);
 
     /**
-     * Requirement 2.2.5
+     * Requirement 2.2.5.1
      */
 
     TradingSystem.server.Domain.Utils.Response buy_cart(String paymentInfo, String supplyInfo);
+
+    /**
+     * Requirement 2.2.5.2
+     */
+
+    TradingSystem.server.Domain.Utils.Response add_bid(int storeID, int productID, int quantity, double offer_price);
+
+    TradingSystem.server.Domain.Utils.Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price);
+
+    TradingSystem.server.Domain.Utils.Response view_bids_status(int storeID);
+
 
     /**
      * Requirement 2.3.2
@@ -102,14 +115,18 @@ public interface iService {
      * Requirement 2.3.8
      */
     TradingSystem.server.Domain.Utils.Response get_user_email();
+
     TradingSystem.server.Domain.Utils.Response get_user_name();
+
     TradingSystem.server.Domain.Utils.Response get_user_last_name();
 
     TradingSystem.server.Domain.Utils.Response unregister(String password);
-    TradingSystem.server.Domain.Utils.Response edit_name(String new_name);
-    TradingSystem.server.Domain.Utils.Response edit_last_name(String new_last_name);
-    TradingSystem.server.Domain.Utils.Response edit_password(String pw, String password);
 
+    TradingSystem.server.Domain.Utils.Response edit_name(String new_name);
+
+    TradingSystem.server.Domain.Utils.Response edit_last_name(String new_last_name);
+
+    TradingSystem.server.Domain.Utils.Response edit_password(String pw, String password);
 
 
     /**
@@ -117,11 +134,14 @@ public interface iService {
      */
 
     TradingSystem.server.Domain.Utils.Response edit_name_premium(String new_name, String answer);
+
     TradingSystem.server.Domain.Utils.Response edit_last_name_premium(String new_last_name, String answer);
+
     TradingSystem.server.Domain.Utils.Response edit_password_premium(String pw, String password, String answer);
 
     TradingSystem.server.Domain.Utils.Response get_user_security_question();
-    TradingSystem.server.Domain.Utils.Response improve_security(String password,String question, String answer);
+
+    TradingSystem.server.Domain.Utils.Response improve_security(String password, String question, String answer);
 
     /**
      * Requirement 2.4.1
@@ -129,7 +149,7 @@ public interface iService {
 
 
     TradingSystem.server.Domain.Utils.Response add_product_to_store(int store_id, int quantity, String name, double price,
-                                String category, String key_words);
+                                                                    String category, String key_words);
 
     TradingSystem.server.Domain.Utils.Response delete_product_from_store(int product_id, int store_id);
 
@@ -140,6 +160,7 @@ public interface iService {
     TradingSystem.server.Domain.Utils.Response edit_product_category(int product_id, int store_id, String category);
 
     TradingSystem.server.Domain.Utils.Response edit_product_key_words(int product_id, int store_id, String key_words);
+
     TradingSystem.server.Domain.Utils.Response edit_product_quantity(int product_id, int store_id, int quantity);
 
     /**
@@ -172,7 +193,11 @@ public interface iService {
     /**
      * Requirement 2.4.7
      */
-    TradingSystem.server.Domain.Utils.Response edit_manager_permissions(String manager_email, int store_id, LinkedList<StorePermission> permissions);
+    TradingSystem.server.Domain.Utils.Response edit_manager_permissions(String manager_email, int store_id, String permissions);
+
+    TradingSystem.server.Domain.Utils.Response get_permissions(String manager_email, int store_id);
+
+    TradingSystem.server.Domain.Utils.Response get_all_categories(int store_id);
 
     /**
      * Requirement 2.4.8
@@ -228,6 +253,7 @@ public interface iService {
      * Requirement 2.6.4
      */
     TradingSystem.server.Domain.Utils.Response admin_view_store_purchases_history(int store_id);
+
     TradingSystem.server.Domain.Utils.Response admin_view_user_purchases_history(String user_email);
 
     /**
@@ -238,7 +264,45 @@ public interface iService {
     // additional methods
 
     TradingSystem.server.Domain.Utils.Response get_products_by_store_id(int store_id);
-    TradingSystem.server.Domain.Utils.Response get_all_stores();
-    TradingSystem.server.Domain.Utils.Response online_user();
 
+    TradingSystem.server.Domain.Utils.Response get_all_stores();
+
+    TradingSystem.server.Domain.Utils.Response online_user();
 }
+
+//    TradingSystem.server.Domain.Utils.Response add_predict(int store_id, String categorey, int product_id, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name);
+//    TradingSystem.server.Domain.Utils.Response get_purchase_policy(int store_id);
+//    TradingSystem.server.Domain.Utils.Response send_predicts(int store_id);
+//    TradingSystem.server.Domain.Utils.Response get_discount_policy(int store_id);
+//
+//
+//
+//
+//    //--------------------------------------------------Discount Rules-----------------------------------
+//
+//    TradingSystem.server.Domain.Utils.Response add_complex_discount_rule(int store_id, String nameOfPredict, String nameOfPolicy, String nameOfRule);
+//    TradingSystem.server.Domain.Utils.Response add_simple_category_discount_rule(int store_id, String nameOfCategory, double percent, String nameOfRule);
+//    TradingSystem.server.Domain.Utils.Response add_simple_product_discount_rule(int store_id, int id, double percent, String nameOfrule);
+//    TradingSystem.server.Domain.Utils.Response add_simple_store_discount_rule(int store_id, double percent, String nameOfRule);
+//
+//
+//
+//
+//
+//    TradingSystem.server.Domain.Utils.Response add_and_discount_rule(String left, String right, int store_id, String NameOfRule);
+//    TradingSystem.server.Domain.Utils.Response add_or_discount_rule(String left, String right, int store_id, String NameOfRule);
+//    TradingSystem.server.Domain.Utils.Response add_max_discount_rule(String left, String right, int store_id, String NameOfRule);
+//    TradingSystem.server.Domain.Utils.Response add_plus_discount_rule(String left, String right, int store_id, String NameOfRule);
+//    TradingSystem.server.Domain.Utils.Response add_xor_discount_rule(String left, String right, int store_id, String NameOfRule);
+//    TradingSystem.server.Domain.Utils.Response remove_discount_rule(int store_id, String name);
+//
+//
+//
+//
+//    //--------------------------------------------------Purchase Rules-----------------------------------
+//
+//    TradingSystem.server.Domain.Utils.Response add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id);
+//    TradingSystem.server.Domain.Utils.Response add_and_purchase_rule(String left, String right, int store_id, String NameOfrule);
+//    TradingSystem.server.Domain.Utils.Response add_or_purchase_rule(String left, String right, int store_id, String nameOfrule);
+//    TradingSystem.server.Domain.Utils.Response remove_purchase_rule(int store_id, String name);
+//}

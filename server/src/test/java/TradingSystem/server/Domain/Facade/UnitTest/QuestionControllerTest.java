@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
+import TradingSystem.server.Service.NotificationHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,7 @@ class QuestionControllerTest {
 
     @BeforeEach
     void setUp() {
+        NotificationHandler.setTestsHandler();
         User new_user = new User();
         try {
             new_user.register(email, "aA123456", "gal", "brown", LocalDate.now().minusYears(30).toString());
