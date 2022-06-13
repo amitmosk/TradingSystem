@@ -11,9 +11,12 @@ System users visit the market for buying, selling, and managing the stores.
 There are 2 configuration files for our system.  
 First, the system configuration file, who choose the way to initialize the external services & database.  
 The text in the file should be in the format:
->  external_services:<-option1>  
->  database:<-option2>
-  
+
+  ```diff
+  external_services:<-option1>  
+  database:<-option2>
+```
+
 1) the external services will contain one of the following values:  
 * tests  
 * real 
@@ -31,14 +34,20 @@ The real option is for real-time use of the application, for loading the databas
 The tests option is for clean database.
 
 The configuration file path should be:  
-> ..\server\Config\system_config.txt  
+```diff
+ ..\server\Config\system_config.txt 
+```
 
 The second configuration file contains instructions for initialized data for the market when we load the system with demo.  
 This file is a text file who contains instructions in the next format :  
-> <-instruction name>#<-param1>#<-param2>#<-param3>..  
+```diff
+ <-instruction name>#<-param1>#<-param2>#<-param3>..
+```
 
 The configuration file path should be:  
-> ..\server\Config\instructions_config.txt  
+```diff
+ ..\server\Config\instructions_config.txt  
+```
 
 If one of the instructions will failed logically or because a wrong format,  
 All of the instructions in the configuration file will cancelled.  
