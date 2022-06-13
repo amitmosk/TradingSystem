@@ -146,6 +146,14 @@ export const IMPROVE_SECURITY = API_PATH + '/improve_security';
 
 // // ========= policies ========== //
 
+
+//Getters
+export const ADD_PREDICT = API_PATH + '/add_predict';
+export const GET_PURCHASE_POLICY = API_PATH + '/get_purchase_policy';
+export const SEND_PREDDICTS = API_PATH + '/send_predicts';
+export const GET_DISCOUNT_POLICY = API_PATH + '/get_discount_policy';
+
+
 ///DISCOUNT
 
 export const ADD_SIMPLE_CATEGORY_DISCOUNT = API_PATH + '/add_simple_categorey_discount_rule';
@@ -159,10 +167,7 @@ export const ADD_COMPLEX_OR_DISCOUNT = API_PATH + '/add_or_discount_rule';
 export const ADD_COMPLEX_MAX_DISCOUNT = API_PATH + '/add_max_discount_rule';
 export const ADD_COMPLEX_PLUS_DISCOUNT = API_PATH + '/add_plus_discount_rule';
 export const ADD_COMPLEX_XOR_DISCOUNT = API_PATH + '/add_xor_discount_rule';
-
-
-export const SEND_PREDDICTS = API_PATH + '/send_predicts';
-export const GET_DISCOUNT_POLICY = API_PATH + '/get_discount_policy';
+export const REMOVEֹֹֹ_DISCOUNTֹ_RULE = API_PATH + '/remove_discount_rule';
 
 
 
@@ -171,6 +176,5 @@ export const GET_DISCOUNT_POLICY = API_PATH + '/get_discount_policy';
 export const ADD_SIMPLE_PURCHASE = API_PATH + '/add_simple_purchase';
 export const ADD_AND_SIMPLE_PURCHASE = API_PATH + '/add_and_purchase_rule';
 export const ADD_OR_SIMPLE_PURCHASE = API_PATH + '/add_or_purchase_rule';
+export const REMOVE_PURCHASE_RULE = API_PATH + '/remove_purchase_rule';
 
-//PREDICT
-export const ADD_PREDICT = API_PATH + '/add_predict';

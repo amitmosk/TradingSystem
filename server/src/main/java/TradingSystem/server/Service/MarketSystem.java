@@ -24,12 +24,9 @@ import java.util.Scanner;
 public class MarketSystem {
     // const vars
     public final static String external_system_url = "http://cs-bgu-wsep.herokuapp.com/";
-    public final static String tests_config_file_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "main\\java\\TradingSystem\\server\\Config\\tests_config.txt";
-    public static String instructions_config_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "main\\java\\TradingSystem\\server\\Config\\instructions_config.txt";
-    public final static String system_config_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "main\\java\\TradingSystem\\server\\Config\\system_config.txt";
+    public final static String tests_config_file_path = "..\\server\\src\\main\\java\\TradingSystem\\server\\Config\\tests_config.txt";
+    public static String instructions_config_path = "..\\server\\src\\main\\java\\TradingSystem\\server\\Config\\instructions_config.txt";
+    public final static String system_config_path = "..\\server\\src\\main\\java\\TradingSystem\\server\\Config\\system_config.txt";
     //
     private PaymentAdapter payment_adapter;
     private SupplyAdapter supply_adapter;
@@ -452,10 +449,10 @@ public class MarketSystem {
         MarketFacade marketFacade5 = new MarketFacade(paymentAdapter, supplyAdapter);
         // register
         marketFacade1.register("amit@gmail.com","12345678aA","amit","moskovitz",birth_date);
-        marketFacade2.register("tom@gmail.com","12345678aA","amit","moskovitz",birth_date);
-        marketFacade3.register("gal@gmail.com","12345678aA","amit","moskovitz",birth_date);
-        marketFacade4.register("grumet@gmail.com","12345678aA","amit","moskovitz",birth_date);
-        marketFacade5.register("eylon@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        marketFacade2.register("tom@gmail.com","12345678aA","Tom","moskovitz",birth_date);
+        marketFacade3.register("gal@gmail.com","12345678aA","Gal","moskovitz",birth_date);
+        marketFacade4.register("grumet@gmail.com","12345678aA","amitG","moskovitz",birth_date);
+        marketFacade5.register("eylon@gmail.com","12345678aA","Eylon","moskovitz",birth_date);
         // open store
         marketFacade1.open_store("amit store");
         marketFacade2.open_store("tom store");
@@ -463,13 +460,13 @@ public class MarketSystem {
         marketFacade4.open_store("grumet store");
         marketFacade5.open_store("eylon store");
         // add products to stores
-        marketFacade1.add_product_to_store(1,50,"iphone",2999.9, "electronic",new LinkedList<>());
-        marketFacade2.add_product_to_store(2,50,"iphone",2999.9, "electronic",new LinkedList<>());
-        marketFacade3.add_product_to_store(3,50,"iphone",2999.9, "electronic",new LinkedList<>());
-        marketFacade4.add_product_to_store(4,50,"iphone",2999.9, "electronic",new LinkedList<>());
-        marketFacade5.add_product_to_store(5,50,"iphoneS",2999.9, "electronic",new LinkedList<>());
+        marketFacade1.add_product_to_store(1,50,"iphoneA",2999.9, "electronic",new LinkedList<>());
+        marketFacade2.add_product_to_store(2,50,"iphoneT",2999.9, "electronic",new LinkedList<>());
+        marketFacade3.add_product_to_store(3,50,"iphoneG",2999.9, "electronic",new LinkedList<>());
+        marketFacade4.add_product_to_store(4,50,"iphoneAG",2999.9, "electronic",new LinkedList<>());
+        marketFacade5.add_product_to_store(5,50,"iphoneE",2999.9, "electronic",new LinkedList<>());
 
-        marketFacade5.add_product_to_store(5,50,"iphone",2999.9, "electronic",new LinkedList<>());
+        marketFacade5.add_product_to_store(5,50,"iphoneE2",2999.9, "electronic",new LinkedList<>());
         // add products to cart
         marketFacade1.add_product_to_cart(1,1,20);
 //        marketFacade1.add_product_to_cart(2,2,20);

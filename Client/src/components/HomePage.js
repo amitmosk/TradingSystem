@@ -14,6 +14,7 @@ import HomeProductsTable from "./HomeProductsTable";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { propSatisfies } from "ramda";
+import Button from "@mui/material/Button";
 
 
 export default class HomePage extends Component {
@@ -96,19 +97,19 @@ export default class HomePage extends Component {
     //    return (<ShoppingCart products={products}></ShoppingCart>);
     return <ShoppingCart products={this.state.products}></ShoppingCart>;
   }
-  get_notifications(){
-    console.log("goti");
-    let response = this.connectAPI.get_notifications("amit@gmail.com");
-    // alert(response.message);
-    if (!response.was_exception)
-    {
-
-        console.log("in noti, noti success!\n");
-    }
-    else{
-        console.log("in noti, noti failed!\n");
-    }
-}
+//   get_notifications(){
+//     console.log("goti");
+//     let response = this.connectAPI.get_notifications("amit@gmail.com");
+//     // alert(response.message);
+//     if (!response.was_exception)
+//     {
+//         alert(response.value);
+//         console.log("in noti, noti success!\n");
+//     }
+//     else{
+//         console.log("in noti, noti failed!\n");
+//     }
+// }
 
   render() {
     return (
@@ -116,9 +117,9 @@ export default class HomePage extends Component {
         <Container>
           <Box sx={{ flexGrow: 1 }}>
             <h1 className="Header" align="center">
-              Welcome To Trading System
+              Welcome To The Trading System
             </h1>
-            <Button onClick={()=>this.get_notifications()} varient="contained">noty</Button>
+            {/* <Button onClick={()=>this.get_notifications()} varient="contained">noty</Button> */}
             {/* <HomePageSearch sx={{ height: '5%' }} /> */}
           </Box>
           <Grid
@@ -135,7 +136,7 @@ export default class HomePage extends Component {
         <h1 style={{ color: "white" }}>-------------------------</h1>
         <h1 style={{ color: "white" }}>-------------------------</h1>
         <Grid container direction="row" justifyContent="space-evenly">
-          {this.state.user.state !== 0 ? (<>
+          {this.props.user.state !== 0 ? (<>
           <FormDialog
             fields={this.state.open_store_fields}
             getValues={this.open_store.bind(this)}

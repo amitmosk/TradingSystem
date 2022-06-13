@@ -24,6 +24,10 @@ export default function AccountMenu({ log, state, user }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const logout = () =>{
+    handleClose();
+    log();
+  }
 
   return (
     <React.Fragment>
@@ -123,7 +127,7 @@ export default function AccountMenu({ log, state, user }) {
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
-              <Button onClick={log}>Logout</Button>
+              <Button onClick={logout}>Logout</Button>
             </MenuItem>
           </>
         ) : null}

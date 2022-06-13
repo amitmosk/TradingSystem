@@ -8,6 +8,7 @@ import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import TradingSystem.server.Domain.Utils.SystemLogger;
+import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,11 +38,14 @@ public class Service implements iService {
         try
         {
             system = new MarketSystem(system_config_path, instructions_config_path);
+
             PaymentAdapter paymentAdapter = system.getPayment_adapter();
             SupplyAdapter supplyAdapter = system.getSupply_adapter();
+            system.add_admins();
+            system.init_data_to_market_develop(paymentAdapter, supplyAdapter);
             this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         }
-        catch (ExitException e) {
+        catch (Exception e) {
             SystemLogger.getInstance().add_log(e.getMessage());
             System.exit(3);
         }
@@ -166,8 +170,8 @@ public class Service implements iService {
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo) {
         // TODO : GSON
-//        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
-//        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
+        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
+        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
         PaymentInfo paymentInfo1 = new PaymentInfo();
         SupplyInfo supplyInfo1 = new SupplyInfo();
         Response answer = marketFacade.buy_cart(paymentInfo1, supplyInfo1);

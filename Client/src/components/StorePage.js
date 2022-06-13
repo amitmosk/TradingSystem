@@ -15,6 +15,7 @@ import FormDialog from "./FormDialog";
 import StoreProductsTable from "./StoreProductsTable";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import IconButton from "@mui/material/IconButton";
+import { ConnectApi } from "../API/ConnectApi";
 
 export default class StorePage extends Component {
   static displayName = StorePage.name;
@@ -31,8 +32,16 @@ export default class StorePage extends Component {
       ratings:[]
     };
     this.storeApi = new StoreApi();
+    this.connectApi = new ConnectApi();
     this.find_store_information(this.props.store_id);
-    console.log("store id = "+this.props.store_id);
+
+    console.log(this.props.store_id);
+    console.log(this.props.stores_managed);
+    let b = parseInt(this.props.store_id);
+    console.log(b);
+
+    let a= this.props.stores_managed.includes(b);
+    console.log(a);
   }
 
 
@@ -86,9 +95,8 @@ export default class StorePage extends Component {
     }
     
   } 
-
+  
   async componentDidMount() {
-
   }
   async send_question_to_store(values) {
     const store_id = this.props.store_id;
@@ -191,7 +199,7 @@ export default class StorePage extends Component {
                 ></FormDialog>
               }
               item3={
-                <Link to={{pathname:`StoreManagment`}}   underline="hover" >{'Manage Store'}</Link> 
+                this.props.stores_managed.includes(parseInt(this.props.store_id)) ? <Link to={{pathname:`StoreManagment`}}   underline="hover" >{'Manage Store'}</Link> : null
               }
             ></MenuListComposition>{" "}
           </Grid>

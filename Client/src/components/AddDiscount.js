@@ -26,33 +26,39 @@ import CheckboxesGroup from './CheckboxesGroup';
 import ControlledRadioButtonsGroup from './ControlledRadioButtonsGroup';
 import StoreProductsTable from './StoreProductsTable';
 import Checkbox from './Checkbox';
+import { Row, Col } from 'react-grid-system';
 
 export default function AddDiscount() {
-
-    const [checked, setChecked] = React.useState(true);
-    const [ruleName, setRuleName] = React.useState(undefined);
-    
     const {id} = useParams();
     const store_id =id;
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-    };
-    const list1 =[1, 2,3 ,4, 5];
-    const list2 =[11, 22,33 ,44, 55];
-    const list ={"1":false, "2":false, "3":false,"4":false ,'5':false  };
-    const categories =[1111, 2222, 3333,4444 ,5555  ];
-    const predict_list =[1, 2, 3,4 ,5  ];
-    const discount_rules_list =[11, 22, 33,44 ,55  ];
+
+    //fields
+    const add_simple_discount_rule_for_store_fields =["Rule Name", "Discount Precent(%)"];
+    const add_simple_discount_rule_for_category_fields =["Rule Name", "Discount Precent(%)"];
+    const add_simple_discount_rule_for_product_fields =["Rule Name", "Discount Precent(%)", "Product ID"];
+    const add_complex_discount_rule_fields=["Rule Name"];
+    const add_complex_and_discount_rule_fields=["Rule Name"];
+    const add_complex_or_discount_rule_fields=["Rule Name"];
+    const add_complex_xor_discount_rule_fields=["Rule Name"];
+    const add_complex_max_discount_rule_fields=["Rule Name"];
+    const add_complex_plus_discount_rule_fields=["Rule Name"];
+
+    //API 
     const policiesApi = new PoliciesApi();
     const storeApi = new StoreApi();
-    
+
+    // list of categories, Predicts, discounts
+
+    const [categories,setCategories ] =React.useState(["car1", "cat2", "cat3"]);
+    const [predicts,setPredicts ] =React.useState(["predicts1", "predicts2", "Predicts3"]);
+    const [discounts,setDiscounts ] =React.useState(["discount1", "discount2", "discount3"]);
     const get_categories_of_stores = async () =>
     {
         const response = await storeApi.get_all_categories(store_id);
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
-            categories = response.value;
+            setCategories(response.value);
         }
         else
         {
@@ -66,7 +72,7 @@ export default function AddDiscount() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
-            predict_list = response.value;
+            setPredicts(response.value);
         }
         else
         {
@@ -77,7 +83,7 @@ export default function AddDiscount() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
-            discount_rules_list = response.value;
+            setDiscounts(response.value);
         }
         else
         {
@@ -85,33 +91,40 @@ export default function AddDiscount() {
 
         }
     }
-    
-    // const [predictChosen, setPredictChosen] = React.useState(predict_list.length === 0? [] : predict_list[0]);
+    useEffect(()=>{get_discount_predict_lists()}, []);  
+    useEffect(()=>{get_categories_of_stores()}, []);
+
+
     const [predictChosen, setPredictChosen] = React.useState(null);
-    
-    // const [discountChosen, setDiscounChosen] = React.useState(discount_rules_list.length === 0? [] : discount_rules_list[0]);
     const [discountChosen, setDiscounChosen] = React.useState(null);
-    
     const [categoryChosen, setCategoryChosen] = React.useState(null);
     const save_predict = (perdict) =>{
         console.log(perdict);
         setPredictChosen(perdict);
-    }
-    
+    }  
     const save_discount_rule = (discount_rule) =>{
         console.log(discount_rule);
         setDiscounChosen(discount_rule);
-    }
-    
+    }  
     const save_category = (category) =>{
         console.log(category);
         setCategoryChosen(category);
     }
+
+    const [checked, setChecked] = React.useState(true);
+    const [ruleName, setRuleName] = React.useState(undefined);
+    
+    const handleChange = (event) => {setChecked(event.target.checked)};
+    
+    
+    
+    
+    
+
+
     //------------- complex and----------------------
     const [predictChosenAnd1, setPredictChosenAnd1] = React.useState(null);
     const [predictChosenAnd2, setPredictChosenAnd2] = React.useState(null);
-    
-
 
     const save_predictAnd1 = (perdict) =>{
         console.log(perdict);
@@ -177,30 +190,18 @@ export default function AddDiscount() {
     
     
     
-    useEffect(()=>{get_discount_predict_lists()}, []);  
-    useEffect(()=>{get_categories_of_stores()}, []);
+    
     const [option, setOption] = React.useState("Simple");
     const [simpleOptions, setSimpleOptions] = React.useState("Store");
-    // useEffect(()=>{add_complex_discount_rule()}, option);
     
-    const add_simple_discount_rule_for_store_fields =["Rule Name", "Discount Precent(%)"];
-    const add_simple_discount_rule_for_category_fields =["Rule Name", "Discount Precent(%)"];
-    const add_simple_discount_rule_for_product_fields =["Rule Name", "Discount Precent(%)", "Product ID"];
-    const add_complex_discount_rule_fields=["Rule Name"];
-    const add_complex_and_discount_rule_fields=["Rule Name"];
-    const add_complex_or_discount_rule_fields=["Rule Name"];
-    const add_complex_xor_discount_rule_fields=["Rule Name"];
-    const add_complex_max_discount_rule_fields=["Rule Name"];
-    const add_complex_plus_discount_rule_fields=["Rule Name"];
+    
     const handleCloseSnackbar = () => setSnackbar(null);
     const handleInputChange = event => {
         const name = event.target.name
         const value = event.target.value;
         console.log(name);
         console.log(value);
-        setOption(value.toString());
-        console.log(simpleOptions)
-      };
+        setOption(value.toString()); console.log(simpleOptions) };
     const handleInputChange_simple = event => {
         const name = event.target.name
         const value = event.target.value;
@@ -211,6 +212,8 @@ export default function AddDiscount() {
     const [snackbar, setSnackbar] = React.useState(null);
     const hadleSubmit = async () => {}
 
+
+    //Functions To Server
     const add_simple_discount_rule_for_store = async (values) => {
         const rule_name = values[0];
         const discount_precent = values[1];
@@ -283,7 +286,6 @@ export default function AddDiscount() {
             setSnackbar({ children: response.message, severity: 'error' });
         }
     }
-    
     const add_complex_discount_rule = async(values) => {
         console.log(values[0]);
         setRuleName(values[0]);
@@ -469,16 +471,18 @@ export default function AddDiscount() {
 
             <Box sx={{ flexGrow: 1 }}>
 
-            <h3>Add Discount Rule</h3>
-
-            <h3> </h3>
+            <h1 class="Header" align="center">
+                            </h1>
+            <h3 class="Header" align="center">
+            Add Discount Rule
+                            </h3>
             </Box>
             
             <Grid container spacing={3} justifyContent="center" alignItems="center">
 
                 <Grid item>
                     <div>Select Type Of Discount Rule</div>
-                <select name="option"  onChange={handleInputChange} required>
+                <Row><select name="option"  onChange={handleInputChange} required>
                         <option value="Simple">Simple</option>
                         <option value="Complex">Complex</option>
                         <option value="Complex And">Complex And</option>
@@ -489,7 +493,7 @@ export default function AddDiscount() {
 
               
                     </select>
-                    {option ==="Simple" ? <div>For</div> : null}
+                    {option ==="Simple" ? <div> For </div> : null}
                     {option == "Simple" ? <select name="simpleOptions" value={simpleOptions} onChange={handleInputChange_simple} required>
                         <option value="Store">Store</option>
                         <option value="Category">Category</option>
@@ -497,46 +501,35 @@ export default function AddDiscount() {
 
 
                     </select>
-                    : null}
+                    : null}</Row>
 
 
                     
                 </Grid>
                 <Grid item>
-                    {option ==="Complex"  ? <ControlledRadioButtonsGroup list={list1} name="Predicts" save={save_predict}></ControlledRadioButtonsGroup> : null}
-                    {option ==="Complex And"  ? <ControlledRadioButtonsGroup list={list1} name="Predicts" save={save_predictAnd1}></ControlledRadioButtonsGroup> : null}
-                    {option ==="Complex Or"  ? <ControlledRadioButtonsGroup list={list1} name="Predicts" save={save_predictOr1}></ControlledRadioButtonsGroup> : null}
-                    {option ==="Complex Xor"  ? <ControlledRadioButtonsGroup list={list1} name="Discounts" save={save_discountXor1}></ControlledRadioButtonsGroup> : null}
-                    {option ==="Complex Max"  ? <ControlledRadioButtonsGroup list={list1} name="Discounts" save={save_discountMax1}></ControlledRadioButtonsGroup> : null}
-                    {option ==="Complex Plus"  ? <ControlledRadioButtonsGroup list={list1} name="Discounts" save={save_discountPlus1}></ControlledRadioButtonsGroup> : null}
-                    {option ==="Simple"  && simpleOptions === "Category"  ? <ControlledRadioButtonsGroup list={categories} name="Categories" save={save_category}></ControlledRadioButtonsGroup> : null}
+                    {option ==="Complex"  ? <ControlledRadioButtonsGroup list={discounts} name="Predicts" save={save_predict}></ControlledRadioButtonsGroup> : null}
+                    {option ==="Complex And"  ? <ControlledRadioButtonsGroup list={discounts} name="Predicts" save={save_predictAnd1}></ControlledRadioButtonsGroup> : null}
+                    {option ==="Complex Or"  ? <ControlledRadioButtonsGroup list={discounts} name="Predicts" save={save_predictOr1}></ControlledRadioButtonsGroup> : null}
+                    {option ==="Complex Xor"  ? <ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountXor1}></ControlledRadioButtonsGroup> : null}
+                    {option ==="Complex Max"  ? <ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountMax1}></ControlledRadioButtonsGroup> : null}
+                    {option ==="Complex Plus"  ? <ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountPlus1}></ControlledRadioButtonsGroup> : null}
                 </Grid>
                 <Grid item>
-                    {option ==="Complex"  ?<ControlledRadioButtonsGroup list={list2} name="Discount Rules" save={save_discount_rule}></ControlledRadioButtonsGroup>: null}
-                    {option ==="Complex And"  ?<ControlledRadioButtonsGroup list={list2} name="Predicts" save={save_predictAnd2}></ControlledRadioButtonsGroup>: null}
-                    {option ==="Complex Or"  ?<ControlledRadioButtonsGroup list={list2} name="Predicts" save={save_predictOr2}></ControlledRadioButtonsGroup>: null}
-                    {option ==="Complex Xor"  ?<ControlledRadioButtonsGroup list={list2} name="Discounts" save={save_discountXor2}></ControlledRadioButtonsGroup>: null}
-                    {option ==="Complex Max"  ?<ControlledRadioButtonsGroup list={list2} name="Discounts" save={save_discountMax2}></ControlledRadioButtonsGroup>: null}
-                    {option ==="Complex Plus"  ?<ControlledRadioButtonsGroup list={list2} name="Discounts" save={save_discountPlus2}></ControlledRadioButtonsGroup>: null}
+                    {option ==="Complex"  ?<ControlledRadioButtonsGroup list={discounts} name="Discount Rules" save={save_discount_rule}></ControlledRadioButtonsGroup>: null}
+                    {option ==="Complex And"  ?<ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_predictAnd2}></ControlledRadioButtonsGroup>: null}
+                    {option ==="Complex Or"  ?<ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_predictOr2}></ControlledRadioButtonsGroup>: null}
+                    {option ==="Complex Xor"  ?<ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountXor2}></ControlledRadioButtonsGroup>: null}
+                    {option ==="Complex Max"  ?<ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountMax2}></ControlledRadioButtonsGroup>: null}
+                    {option ==="Complex Plus"  ?<ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountPlus2}></ControlledRadioButtonsGroup>: null}
+
                 </Grid>
                 
          
                 <Grid item>
-                
-                
-               
-  
-                
-                        
-                        
-                    {/* {option == "Complex Or" ? <FormDialog fields={add_complex_or_discount_rule_fields} getValues={add_complex_or_discount_rule} name="Add Complex Or Discount Rule"></FormDialog> : null}
-                    {option == "Complex Xor" ? <FormDialog fields={add_complex_xor_discount_rule_fields} getValues={add_complex_xor_discount_rule} name="Add Complex Xor Discount Rule"></FormDialog> : null}
-                    {option == "Complex Max" ? <FormDialog fields={add_complex_max_discount_rule_fields} getValues={add_complex_max_discount_rule} name="Add Complex Max Discount Rule"></FormDialog> : null}
-                    {option == "Complex Plus" ? <FormDialog fields={add_complex_plus_discount_rule_fields} getValues={add_complex_plus_discount_rule} name="Add Complex Plus Discount Rule"></FormDialog> : null} */}
+                {option ==="Simple"  && simpleOptions === "Category"  ? <ControlledRadioButtonsGroup list={categories} name="Categories" save={save_category}></ControlledRadioButtonsGroup> : null}  
                 </Grid>
                 <Grid item>
-                    {/* <CheckboxesGroup list={list} l={list1}></CheckboxesGroup>
-                    <Checkbox name="name" list={list1}></Checkbox> */}
+
                 </Grid>
                 <Grid item>
                     

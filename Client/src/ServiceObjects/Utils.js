@@ -104,13 +104,23 @@ export class Utils  {
 
 
     // ----------------------------------- Discount Policy -------------------------------------------------------
-    static check_rule_name()
+    static check_rule_name(rule_name)
     {
-        return 1;
+        return this.check_not_empty(rule_name);
     }
     static check_precent()
     {
         return 1;
+    }
+    // ----------------------------------- Crete Predict -------------------------------------------------------
+    static check_range(range)
+    {
+        if (range>0)
+            return 1;
+        else
+        {
+            return 0; 
+        }
     }
     
    
