@@ -449,6 +449,7 @@ public class MarketSystem {
         String name = user.getState().get_user_name();
         String last_name = user.getState().get_user_last_name();
         user.set_admin(user.user_email(), "12345678aA", name, last_name);
+        SystemLogger.getInstance().add_log("New Admin In The Market: "+email);
         MarketLogger.getInstance().add_log("New Admin In The Market: "+email);
     }
 
@@ -519,5 +520,6 @@ public class MarketSystem {
         UserController.get_instance().add_admin("admin@gmail.com", "12345678aA", "Barak", "Bahar");
         HibernateUtils.commit();
         SystemLogger.getInstance().add_log("admin added");
+        MarketLogger.getInstance().add_log("admin added");
     }
 }
