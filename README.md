@@ -53,7 +53,7 @@ If one of the instructions will failed logically or because a wrong format,
 All of the instructions in the configuration file will cancelled.  
  
 ## API:
-[API link](https://github.com/amitmosk/TradingSystem/blob/75-system-configuration-readme-file/Api.md)  
+[API link](https://github.com/amitmosk/TradingSystem/blob/main/Api.md)  
 
  
 Pay attention that all the instructions should keep this order.
@@ -66,7 +66,8 @@ Pay attention that all the instructions should keep this order.
  2. Encrypt passwords with PBKDF2 with Hmac SHA1 Algorithm.
  3. Real-time system & client notifications Web Socket-based (sockJS) & observer design pattern.
  4. Use external systems services according http requests to the external server, implemented with adapter & proxy design patterns.
- 5. DB - <GAL>
+ 5. DB - in our system we worked with Hibernate orm libary, Hibernate ORM (or simply Hibernate) is an object–relational mapping tool for  
+    the Java programming language. It provides a framework for mapping an object-oriented domain model to a relational database.
  
  ## Tests: 
  <Here come Eylon words>
