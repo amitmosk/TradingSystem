@@ -110,9 +110,9 @@ public class QuestionController implements iQuestionController {
         return questionsList_to_return;
     }
 
-
-
-
+    public int getQuestion_ids_counter() {
+        return question_ids_counter.get();
+    }
 }
 
 

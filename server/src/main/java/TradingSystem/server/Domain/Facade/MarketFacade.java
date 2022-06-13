@@ -350,6 +350,7 @@ public class MarketFacade {
                 if (payment_transaction_id == -1 || supply_transaction_id == -1)
                     throw new Exception();
                 response = new Response<>(userPurchase, "Purchase done successfully");
+                system_logger.add_log("User purchased his cart successfully");
             }
         } catch (Exception e) {
             this.payment_adapter.cancel_pay(payment_transaction_id);

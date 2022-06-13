@@ -1,68 +1,1652 @@
-Jun 12, 2022 7:28:17 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Start Init Market
-Jun 12, 2022 7:28:17 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 13, 2022 3:17:49 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: Store Checker Store with id = 1opened successfully
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: name last has registered to the system
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: New product (CheckItem) added to store (1)
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New product (l) added to store (1)
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User added to cart 1 of product- 1 from store- 1
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User purchased his cart successfully
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: name last has registered to the system
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (premiumSecurity@email.com) security has been successfully improved.
+Jun 13, 2022 3:17:50 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: name last has registered to the system
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User premiumSecurity@email.com logged-in
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (premiumSecurity@email.com) last name has been successfully changed to Eylon.
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 7:28:18 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: name last has registered to the system
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User's (heck1234578@email.com) security has been successfully improved.
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User logged out from the system.
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: founder founder has registered to the system
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: owner owner has registered to the system
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: manager manager has registered to the system
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User check123456@email.com logged-in
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store new store for test: manager_answer_question with id = 2opened successfully
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: received market stores successfully.
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User- owner@managerAnswerQuestion.com has been appointed by user- founder@managerAnswerQuestion.com to store (2) owner
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User- manager@managerAnswerQuestion.com has been appointed by user- owner@managerAnswerQuestion.com to store (2) manager
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: New product (CheckItem) added to store (2)
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: User added to cart 1 of product- 2 from store- 2
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: New question sent to store (2)
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store's (2) questions has been viewed by user (manager@managerAnswerQuestion.com)
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store (2) question (1) has been answered by user (manager@managerAnswerQuestion.com)
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
-INFO: Store's (2) questions has been viewed by user (manager@managerAnswerQuestion.com)
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User regular1@email.com logged-in
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (regular1@email.com) name has been successfully changed to Eylon.
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: founder founder has registered to the system
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: founder founder has registered to the system
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User admin@gmail.com logged-in
+Jun 13, 2022 3:17:51 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store Store 1 - open close store with id = 2opened successfully
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store Store 2 - open close store with id = 3opened successfully
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store (2) has been closed temporarily by user (founder1@founder.com)
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store (2) has been re-opened by user (founder1@founder.com)
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store Store 2 - open close store with id = 4opened successfully
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store Store 2 - open close store with id = 5opened successfully
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store (3) has been closed temporarily by user (founder1@founder.com)
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store (4) has been closed temporarily by user (founder2@founder.com)
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store (5) closed permanently.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
-Jun 12, 2022 7:28:19 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User quantity of product- 1 from store- 1 in cart to 1
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User removed from cart product- 1 from store- 1
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:52 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: founder founder has registered to the system
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: owner owner has registered to the system
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: manager manager has registered to the system
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User regular1@email.com logged-in
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store new store for test: manager_answer_question with id = 6opened successfully
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- owner@managerAnswerQuestion.com has been appointed by user- founder@managerAnswerQuestion.com to store (6) owner
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- manager@managerAnswerQuestion.com has been appointed by user- owner@managerAnswerQuestion.com to store (6) manager
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New product (ll) added to store (6)
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 2 from store- 6
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User purchased his cart successfully
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (6)
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store's (6) questions has been viewed by user (manager@managerAnswerQuestion.com)
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store (6) question (1) has been answered by user (manager@managerAnswerQuestion.com)
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store's (6) questions has been viewed by user (manager@managerAnswerQuestion.com)
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User purchased his cart successfully
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User purchased his cart successfully
+Jun 13, 2022 3:17:53 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User buyer@email.com logged-in
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: one founder has registered to the system
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: two owner has registered to the system
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: three manager has registered to the system
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: four manager has registered to the system
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store new test store with id = 7opened successfully
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- user22@owner.com has been appointed by user- user12@founder.com to store (7) owner
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- user32@manager.com has been appointed by user- user22@owner.com to store (7) manager
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- user42@manager.com has been appointed by user- user22@owner.com to store (7) manager
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- user32@manager.com has been unappointed by user- user22@owner.com from store (7) manager
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- user22@owner.com has been unappointed by user- user12@founder.com from store (7) owner
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:54 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: one founder has registered to the system
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: two owner has registered to the system
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: three owner has registered to the system
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store new test store with id = 8opened successfully
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- user2@owner.com has been appointed by user- user1@founder.com to store (8) owner
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- user3@owner.com has been appointed by user- user2@owner.com to store (8) owner
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- user2@owner.com has been unappointed by user- user1@founder.com from store (8) owner
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:55 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 13, 2022 3:17:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's email successfully
+Jun 13, 2022 3:17:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 13, 2022 3:17:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:56 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 13, 2022 3:17:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's email successfully
+Jun 13, 2022 3:17:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:57 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: checker checkcheck has registered to the system
+Jun 13, 2022 3:17:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's email successfully
+Jun 13, 2022 3:17:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:58 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User buyer@email.com logged-in
+Jun 13, 2022 3:17:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User admin@gmail.com logged-in
+Jun 13, 2022 3:17:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin received store's (1) purchase history successfully.
+Jun 13, 2022 3:17:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:17:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:17:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:17:59 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: founder founder has registered to the system
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: owner owner has registered to the system
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: manager manager has registered to the system
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store Store: view_store_management_information with id = 9opened successfully
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- owner@owner.com has been appointed by user- founder@founder.com to store (9) owner
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store's (9) management information has been viewed by user (founder@founder.com)
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store's (9) management information has been viewed by user (founder@founder.com)
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- manager@manager.com has been appointed by user- owner@owner.com to store (9) manager
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store's (9) management information has been viewed by user (founder@founder.com)
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User- owner@owner.com has been unappointed by user- founder@founder.com from store (9) owner
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store's (9) management information has been viewed by user (founder@founder.com)
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User viewed his cart successfully
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User viewed his cart successfully
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:00 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User regular1@email.com logged-in
+Jun 13, 2022 3:18:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User premiumSecurity@email.com logged-in
+Jun 13, 2022 3:18:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User regular1@email.com logged-in
+Jun 13, 2022 3:18:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User admin@gmail.com logged-in
+Jun 13, 2022 3:18:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Removed user (regular1@email.com) from the system.
+Jun 13, 2022 3:18:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:01 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User premiumSecurity@email.com logged-in
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's security question successfully
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User regular1@email.com logged-in
+Jun 13, 2022 3:18:02 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User admin@gmail.com logged-in
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User regular2@email.com logged-in
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin answered user's complaint successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin answered user's complaint successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin answered user's complaint successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin viewed users complains successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check1@email.com logged-in
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:03 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check2@email.com logged-in
+Jun 13, 2022 3:18:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:04 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User check3@email.com logged-in
+Jun 13, 2022 3:18:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:05 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User regular1@email.com logged-in
+Jun 13, 2022 3:18:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (regular1@email.com) last name has been successfully changed to Eylon.
+Jun 13, 2022 3:18:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 13, 2022 3:18:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 13, 2022 3:18:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 13, 2022 3:18:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:06 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 13, 2022 3:18:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: gal brown has registered to the system
+Jun 13, 2022 3:18:07 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User loginsame@gmail.com logged-in
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User removed from cart product- 1 from store- 1
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User removed from cart product- 1 from store- 1
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:08 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store store number 2 with id = 10opened successfully
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store store number 2 with id = 11opened successfully
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User regular1@email.com logged-in
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store Store number 1 with id = 12opened successfully
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:09 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:10 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:18:10 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (founder@email.com)  password has been changed successfully.
+Jun 13, 2022 3:18:10 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (founder@email.com)  password has been changed successfully.
+Jun 13, 2022 3:18:10 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:10 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:10 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User regular1@email.com logged-in
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User (regular1@email.com) has been successfully unregistered from the system.
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: name last has registered to the system
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:11 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's last name successfully
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User premiumSecurity@email.com logged-in
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (premiumSecurity@email.com) name has been successfully changed to Eylon.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Got user's name successfully
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User buyer@email.com logged-in
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User founder@email.com logged-in
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User received (founder@email.com) store's (1) purchase history successfully.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store first store for this user with id = 13opened successfully
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User received (founder@email.com) store's (13) purchase history successfully.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New product (ll) added to store (13)
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 3 from store- 13
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User purchased his cart successfully
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User received (founder@email.com) store's (13) purchase history successfully.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:12 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User regular2@email.com logged-in
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (regular2@email.com) security has been successfully improved.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: founder founder has registered to the system
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: user user has registered to the system
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Store Store for test: get_user_questions with id = 14opened successfully
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New product (ll) added to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 4 from store- 14
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User purchased his cart successfully
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to store (14)
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:13 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: New question sent to admin
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (new@user.com) questions has been viewed.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User premiumSecurity@email.com logged-in
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User admin@gmail.com logged-in
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin received user's (regular1@email.com) purchase history successfully.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Admin received user's (buyer@email.com) purchase history successfully.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User added to cart 1 of product- 1 from store- 1
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User purchased his cart successfully
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User buyer@email.com logged-in
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User viewed his purchase history successfully
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User viewed his purchase history successfully
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: Start Init Market
+Jun 13, 2022 3:18:14 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: received market stores successfully.
+Jun 13, 2022 3:18:15 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User premiumSecurity@email.com logged-in
+Jun 13, 2022 3:18:15 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:15 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User premiumSecurity@email.com logged-in
+Jun 13, 2022 3:18:15 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (premiumSecurity@email.com) password has been successfully changed.
+Jun 13, 2022 3:18:15 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:15 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User premiumSecurity@email.com logged-in
+Jun 13, 2022 3:18:16 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User's (premiumSecurity@email.com) password has been successfully changed.
+Jun 13, 2022 3:18:16 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User logged out from the system.
+Jun 13, 2022 3:18:16 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
+INFO: User premiumSecurity@email.com logged-in
+Jun 13, 2022 3:18:16 PM TradingSystem.server.Domain.Utils.SystemLogger add_log
 INFO: User logged out from the system.
