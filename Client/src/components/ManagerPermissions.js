@@ -303,12 +303,7 @@ export default function ManagerPermissions() {
             setSnackbar({ children: "Have to choose al least one permission", severity: 'error' });   
             return;
         }
-        const user_email=localStorage.getItem("user_email");
-        if (Utils.check_email(user_email) == 0)
-        {
-            setSnackbar({ children: "Illegal email", severity: 'error' });   
-            return;
-        }
+        
         let permissions_str = "";
         permissions_numbers.map((p)=>{
             permissions_str = permissions_str.concat(p.toString()).concat("/")
@@ -391,9 +386,11 @@ export default function ManagerPermissions() {
 
     return (
         <>
-
+        <Grid container spacing={3} justifyContent="center" alignItems="center" paddingTop={10}>
+            <h3 align="center">Change Permissions Of User {user_email}</h3>      
+            </Grid>
             <Grid container spacing={3} justifyContent="center" alignItems="center">
-
+            
                 <Grid item>{customList('Permission Choices', left)}</Grid>
                 <Grid item>
                     <Grid container direction="column" alignItems="center">
@@ -418,13 +415,17 @@ export default function ManagerPermissions() {
                             &lt;
                         </Button>
                     </Grid>
+                    
                 </Grid>
-                <Grid item>{customList('Permissions Chosen', right)}</Grid>
+                <Grid item>{customList('Current Permissions', right)}</Grid>
+                <Grid container direction="column" alignItems="center">
                 <Grid item>
-
-                </Grid>
+                    
+                    <Button variant="contained" onClick={hadleSubmit} >Submit</Button>
+                    </Grid>
+                    </Grid>
             </Grid>
-            <Button variant="contained" onClick={hadleSubmit}>Submit</Button>
+            
             {!!snackbar && (
             <Snackbar
             open

@@ -15,6 +15,7 @@ export class User  {
         this.cart = data.cart;
         this.storesManaged = data.storesManaged;
         this.security_question = data.security_question;
+        // this.notifications = [];
     }
     
     static guest(){
@@ -41,6 +42,7 @@ export class User  {
             cart :cart,
             storesManaged : storesManaged,
             security_question : security_question,
+            // notifications : [],
         })
 
     }

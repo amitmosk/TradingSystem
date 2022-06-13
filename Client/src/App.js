@@ -52,6 +52,7 @@ import {useState} from "react";
 import ViewRules from "./components/ViewRules";
 import AddPurchase from "./components/AddPurchase";
 import CreatePredict from "./components/CreatePredict";
+import StorePolicies from "./components/StorePolicies";
 
 
 
@@ -135,27 +136,96 @@ export default function App() {
             element={<AdminSendMessage />}
           ></Route>
           <Route path="/AdminPage" element={<AdminPage />}></Route>
-          <Route path="/ShopyingCart" element={<ShoppingCart />}></Route>
+          
+          {/* -------------------------------------- Store Managment---------------------------------- */}
           <Route
             path="/StorePage/:id/StoreManagment"
             element={<StoreManagmentNevigator />}
           ></Route>
-          <Route
-            path="/StorePage/:id/StoreManagment/AddDiscount"
-            element={<AddDiscount/>} 
+           <Route
+            path="/MyStores/StorePage/:id/StoreManagment"
+            element={<StoreManagmentNevigator />}
           ></Route>
           <Route
-            path="/StorePage/:id/StoreManagment/AddPurchase"
-            element={<AddPurchase></AddPurchase>} 
+            path="/AllStores/StorePage/:id/StoreManagment"
+            element={<StoreManagmentNevigator />}
+          ></Route>
+          
+         
+        
+         {/* -------------------------------------- Store Policies---------------------------------- */}
+          <Route
+            path="/StorePage/:id/StoreManagment/StorePolicies"
+            element={<StorePolicies/>} 
+          ></Route>
+            <Route
+            path="/AllStores/StorePage/:id/StoreManagment/StorePolicies"
+            element={<StorePolicies/>} 
+          ></Route>
+            <Route
+            path="/MyStores/StorePage/:id/StoreManagment/StorePolicies"
+            element={<StorePolicies/>} 
+          ></Route>
+
+ {/* -------------------------------------- Manager View Store Questions---------------------------------- */}
+          <Route
+            path="/StorePage/:id/StoreManagment/ManagerViewStoreQuestions"
+            element={<MangerViewStoreQuestionsNevigator />}
+          ></Route>
+           <Route
+            path="MyStores/StorePage/:id/StoreManagment/ManagerViewStoreQuestions"
+            element={<MangerViewStoreQuestionsNevigator />}
+          ></Route>
+           <Route
+            path="AllStores/StorePage/:id/StoreManagment/ManagerViewStoreQuestions"
+            element={<MangerViewStoreQuestionsNevigator />}
+          ></Route>
+    {/* -------------------------------------- View Staff Information---------------------------------- */}
+
+          <Route
+            path="/StorePage/:id/StoreManagment/ViewStaffInformation"
+            element={<ViewStaffInformationNevigator />}
           ></Route>
           <Route
-            path="/StorePage/:id/StoreManagment/CreatePredict"
-            element={<CreatePredict></CreatePredict>}
+            path="MyStores/StorePage/:id/StoreManagment/ViewStaffInformation"
+            element={<ViewStaffInformationNevigator />}
           ></Route>
           <Route
-            path="/StorePage/:id/StoreManagment/ViewRules"
-            element={<ViewRules/>} 
+            path="AllStores/StorePage/:id/StoreManagment/ViewStaffInformation"
+            element={<ViewStaffInformationNevigator />}
           ></Route>
+
+ {/* -------------------------------------- Manager Permissions---------------------------------- */}
+          <Route
+            path="/StorePage/:id/StoreManagment/ManagerPermissions/:user_email"
+            element={<ManagerPermissions />}
+          ></Route>
+          <Route
+            path="MyStores/StorePage/:id/StoreManagment/ManagerPermissions/:user_email"
+            element={<ManagerPermissions />}
+          ></Route>
+          <Route
+            path="AllStores/StorePage/:id/StoreManagment/ManagerPermissions/:user_email"
+            element={<ManagerPermissions />}
+          ></Route>
+ {/* -------------------------------------- View Store Purchase History---------------------------------- */}
+
+
+          <Route
+            path="/StorePage/:id/StoreManagment/ViewStorePurchaseHistory"
+            element={<ViewStorePurchaseHistoryNevigator />}
+          ></Route>
+          <Route
+            path="MyStores/StorePage/:id/StoreManagment/ViewStorePurchaseHistory"
+            element={<ViewStorePurchaseHistoryNevigator />}
+          ></Route>
+          <Route
+            path="AllStores/StorePage/:id/StoreManagment/ViewStorePurchaseHistory"
+            element={<ViewStorePurchaseHistoryNevigator />}
+          ></Route>
+
+ {/* -------------------------------------- End --- Policies---------------------------------- */}
+
           <Route
             path="/EditProfile"
             element={<EditProfile get_state={get_state} />}
@@ -190,16 +260,7 @@ export default function App() {
             path="/AdminViewUserQuestions"
             element={<AdminViewUserQuestions />}
           ></Route>
-          <Route
-            path="/StorePage/:id/StoreManagment/ManagerViewStoreQuestions"
-            element={<MangerViewStoreQuestionsNevigator />}
-          ></Route>
-          {/* <Route path="/StoreManagment/ManagerViewStoreQuestions/:id" element={<ManagerViewStoreQuestions />}></Route> */}
-          {/* <Route path="/UserViewQuestions" element={<UserViewQuestions />}></Route> */}
-          <Route
-            path="/StorePage/:id/StoreManagment/ViewStaffInformation"
-            element={<ViewStaffInformationNevigator />}
-          ></Route>
+         
           <Route path="/ShoppingCart/BuyCart" element={<BuyCart/>}></Route>
           {/* <Route path="/Payment" element={<PaymentPage/>}></Route>
           <Route path="/Supply" element={<SupplyPage/>}></Route> */}
@@ -207,34 +268,17 @@ export default function App() {
             path="/ViewUserPurchaseHistory"
             element={<ViewUserPurchaseHistory />}
           ></Route>
-          <Route
-            path="/StorePage/:id/StoreManagment/ManagerPermissions/:user_email"
-            element={<ManagerPermissions />}
-          ></Route>
+          
 
           <Route path="/Notifications" element={<Notifications />}></Route>
-
-          <Route
-            path="/StorePage/:id/StoreManagment/ViewStorePurchaseHistory"
-            element={<ViewStorePurchaseHistoryNevigator />}
-          ></Route>
-
+          
           {/* <Route path="/UserPurchaseHistory" element={<UserPurchaseHistory />}></Route> */}
           {/* <Route path="/UserQuestions" element={<?? />}></Route>
           // notificans
           <Route path="/Notifications" element={<?? />}></Route> } */}
         </Routes>
 
-        {!!snackbar && (
-            <Snackbar
-            open
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            onClose={handleCloseSnackbar}
-            autoHideDuration={6000}
-            >
-            <Alert {...snackbar} onClose={handleCloseSnackbar} />
-            </Snackbar>
-        )}
+        
       </BrowserRouter>
           {!!snackbar && (
           <Snackbar

@@ -152,6 +152,7 @@ export const ADD_PREDICT = API_PATH + '/add_predict';
 export const GET_PURCHASE_POLICY = API_PATH + '/get_purchase_policy';
 export const SEND_PREDDICTS = API_PATH + '/send_predicts';
 export const GET_DISCOUNT_POLICY = API_PATH + '/get_discount_policy';
+export const REMOVE_PREDICT = API_PATH + '/remove_predict';
 
 
 ///DISCOUNT

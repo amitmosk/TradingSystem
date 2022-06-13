@@ -4,7 +4,8 @@ import {CONNECTION_ERROR, CATCH, ADD_SIMPLE_CATEGORY_DISCOUNT, ADD_SIMPLE_PRODUC
     ADD_COMPLEX_MAX_DISCOUNT, ADD_COMPLEX_PLUS_DISCOUNT, 
     ADD_COMPLEX_XOR_DISCOUNT, SEND_PREDDICTS, GET_DISCOUNT_POLICY,
      ADD_SIMPLE_PURCHASE, ADD_AND_SIMPLE_PURCHASE, 
-     ADD_OR_SIMPLE_PURCHASE, ADD_PREDICT, GET_PURCHASE_POLICY, REMOVEֹֹֹ_DISCOUNTֹ_RULE, REMOVE_PURCHASE_RULE
+     ADD_OR_SIMPLE_PURCHASE, ADD_PREDICT, GET_PURCHASE_POLICY, 
+     REMOVEֹֹֹ_DISCOUNTֹ_RULE, REMOVE_PURCHASE_RULE, REMOVE_PREDICT
     } from "./ApiPaths";
 import { Response } from "./Response";
 import { Store } from "../ServiceObjects/Store";
@@ -234,19 +235,7 @@ export class PoliciesApi {
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
         }
 
-    remove_discount_rule(store_id, name){
-        return instance.get(REMOVEֹֹֹ_DISCOUNTֹ_RULE,
-            {
-                params:{
-                    store_id : store_id,
-                    name : name,
-                    }
-            })
-            .then(res => {
-                return new Response(res.data)
-            })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        }   
+      
 
 
     //---------------------------------Purchase rules-------------------------------------
@@ -296,6 +285,36 @@ export class PoliciesApi {
         })
         .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
+    
+
+
+        //Remove
+    remove_predict(store_id, predict_name){
+        return instance.get(REMOVE_PREDICT,
+            {
+                params:{
+                    store_id : store_id,
+                    predict_name : predict_name,
+                    }
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+        }
+    remove_discount_rule(store_id, name){
+        return instance.get(REMOVEֹֹֹ_DISCOUNTֹ_RULE,
+            {
+                params:{
+                    store_id : store_id,
+                    name : name,
+                    }
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+        } 
     remove_purchase_rule(store_id, name){
         return instance.get(REMOVE_PURCHASE_RULE,
             {
@@ -311,8 +330,7 @@ export class PoliciesApi {
         }
 
 
-
-
+        
             
           
     

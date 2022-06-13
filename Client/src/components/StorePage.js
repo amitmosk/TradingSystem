@@ -192,11 +192,12 @@ export default class StorePage extends Component {
           <Grid>
             <MenuListComposition
               item2={
+                !this.props.stores_managed.includes(parseInt(this.props.store_id)) ? 
                 <FormDialog
                   fields={this.state.send_question_to_store_fields}
                   getValues={this.send_question_to_store.bind(this)}
                   name="Send question to store"
-                ></FormDialog>
+                ></FormDialog>:null
               }
               item3={
                 this.props.stores_managed.includes(parseInt(this.props.store_id)) ? <Link to={{pathname:`StoreManagment`}}   underline="hover" >{'Manage Store'}</Link> : null

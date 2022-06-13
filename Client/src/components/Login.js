@@ -48,10 +48,9 @@ export default class Login extends Component {
             const user = response.value;
             this.props.updateUserState(user);
             console.log("in login, login success!\n");
-            // const {createSocket} = SocketProvider("setMessge");
-            // createSocket(user.email);
+            const {createSocket} = SocketProvider("setMessge");
+            createSocket(user.email);
             // open seb socket
-            // this.open_web_socket();
             // return to home page and update properties (change state of App to assign user).
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             return (<Navigate to="/"/>)
@@ -77,7 +76,7 @@ export default class Login extends Component {
             return (
                 <main className="LoginMain">
                     <div className="LoginWindow">
-                    <Link href="/"><HomeIcon></HomeIcon></Link>
+                    
                         <h3>Login</h3>
                         <form className="LoginForm" >
                             {this.state.loginError ?

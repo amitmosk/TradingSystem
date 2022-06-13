@@ -58,7 +58,8 @@ export default function AddDiscount() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
-            setCategories(response.value);
+            if(response.value.length !== 0)
+                setCategories(response.value);
         }
         else
         {
@@ -72,7 +73,8 @@ export default function AddDiscount() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
-            setPredicts(response.value);
+            if(response.value.length !== 0)
+                setPredicts(response.value);
         }
         else
         {
@@ -473,15 +475,17 @@ export default function AddDiscount() {
 
             <h1 class="Header" align="center">
                             </h1>
-            <h3 class="Header" align="center">
+            <h2 class="Header" align="center">
             Add Discount Rule
-                            </h3>
+                            </h2>
+                            <h5 class="Header" align="center"> 
+                Select Type Of Discount Rule
+                            </h5>
             </Box>
             
             <Grid container spacing={3} justifyContent="center" alignItems="center">
 
                 <Grid item>
-                    <div>Select Type Of Discount Rule</div>
                 <Row><select name="option"  onChange={handleInputChange} required>
                         <option value="Simple">Simple</option>
                         <option value="Complex">Complex</option>

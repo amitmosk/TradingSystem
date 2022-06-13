@@ -58,7 +58,8 @@ export default function AddPurchase() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
-            setPredicts(response.value);
+            if(response.value.length !== 0)
+                setPredicts(response.value);
         }
         else
         {
@@ -69,7 +70,8 @@ export default function AddPurchase() {
         if (!response_purchases.was_exception)
         {
             setSnackbar({ children: response_purchases.message, severity: 'success' });
-            setPurchases(response_purchases.value);
+            if(response_purchases.value.length !== 0)
+                setPurchases(response_purchases.value);
         }
         else
         {
@@ -222,15 +224,18 @@ export default function AddPurchase() {
 
             <h1 class="Header" align="center">
                             </h1>
-            <h3 class="Header" align="center">
+            <h2 class="Header" align="center">
             Add Purchase Rule
-                            </h3>
+                            </h2>
+                            <h5 class="Header" align="center">
+                            Select Type Of Purchase Rule
+                            </h5>
+                            
             </Box>
             
-            <Grid container spacing={3} justifyContent="center" alignItems="center">
+            <Grid container spacing={3} justifyContent="center" alignItems="center" paddingTop={8}> 
 
                 <Grid item>
-                    <div>Select Type Of Purchase Rule</div>
                     <select name="option"  onChange={handleInputChange} required>
                         <option value="Simple">Simple</option>
                         <option value="Complex And">Complex And</option>
