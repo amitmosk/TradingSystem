@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
@@ -7,10 +8,21 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
 import TradingSystem.server.Domain.Utils.Exception.*;
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
 public class Cart {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "table_name",
+            joinColumns = {@JoinColumn(name = "cart", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "basket", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "store")
     private Map<Store, Basket> baskets;                // storeID,Basket
 
     public Cart() {
@@ -110,5 +122,13 @@ public class Cart {
             answer.put(temp, entry.getValue());
         }
         return new CartInformation(answer);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

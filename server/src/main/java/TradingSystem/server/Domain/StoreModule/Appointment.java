@@ -5,21 +5,37 @@ import TradingSystem.server.Domain.StoreModule.Store.StoreManagerType;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static TradingSystem.server.Domain.StoreModule.Store.StoreManagerType.*;
 import static TradingSystem.server.Domain.StoreModule.StorePermission.*;
 
-public class Appointment implements iAppointment {
+@Entity
+public class Appointment {
     // -- fields
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private AssignUser member;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private AssignUser appointer;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Store store;
-
+    @Enumerated
     private StoreManagerType type;
-    private HashMap<StorePermission,Integer> permissions;
+
+
+    @ElementCollection
+    @CollectionTable(name = "permissions")
+    @MapKeyColumn(name="permission_name")
+    @Column(name="onORoff")
+    @MapKeyEnumerated(EnumType.STRING)
+    private Map<StorePermission,Integer> permissions;
 
     // -- constructors
     public Appointment(AssignUser manager, AssignUser appointer, Store store, StoreManagerType type) {
@@ -121,27 +137,22 @@ public class Appointment implements iAppointment {
     // -- getters
 
 
-    @Override
     public AssignUser getMember() {
         return member; }
 
-    @Override
     public AssignUser getAppointer() {
         return appointer;
     }
 
-    @Override
     public Store getStore() {
         return store;
     }
 
-    @Override
     public StoreManagerType getType() {
         return type;
     }
 
-    @Override
-    public HashMap<StorePermission, Integer> getPermissions() {
+    public Map<StorePermission, Integer> getPermissions() {
         return permissions;
     }
     // -- setters
@@ -169,7 +180,7 @@ public class Appointment implements iAppointment {
         this.type = type;
     }
 
-    public void setPermissions(HashMap<StorePermission, Integer> permissions) {
+    public void setPermissions(Map<StorePermission, Integer> permissions) {
         this.permissions = permissions;
     }
 
@@ -179,7 +190,6 @@ public class Appointment implements iAppointment {
       * @param permission who ask to know
      * @return if this manager allowed to do it.
      */
-    @Override
     public boolean has_permission(StorePermission permission){
         return this.permissions.get(permission) == 1;
     }
@@ -193,19 +203,24 @@ public class Appointment implements iAppointment {
         }
     }
 
-    @Override
     public boolean is_owner() {
         return this.type == store_owner;
     }
 
-    @Override
     public boolean is_founder() {
         return this.type == store_founder;
     }
 
-    @Override
     public boolean is_manager() {
         return this.type == store_manager;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
 /*    @Override

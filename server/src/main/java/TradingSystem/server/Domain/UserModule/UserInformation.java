@@ -8,6 +8,7 @@ import java.util.List;
 
 
 public class UserInformation {
+    private Long id;
     private int state;
     private String email;
     private String name;
@@ -21,6 +22,7 @@ public class UserInformation {
 
     public UserInformation(User user) throws MarketException {
         try {
+            this.id = user.getId();
             this.email = user.user_email();
             this.state = user.find_state().ordinal();
             this.name = user.user_name();
@@ -108,5 +110,13 @@ public class UserInformation {
 
     public String getSecurity_question() {
         return security_question;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -5,8 +5,18 @@ import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
 import TradingSystem.server.Domain.Utils.Password.PasswordManagerImpl;
 import TradingSystem.server.Domain.Utils.Password.iPasswordManager;
 
+import javax.persistence.*;
+
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Entity
 public class Security {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long security_id;
+
+    @Transient
     protected iPasswordManager passwordManager;
+
     protected String token;
 
     public Security(String password) {
@@ -61,4 +71,11 @@ public class Security {
 
     public void check_improvable() throws MarketException { }
 
+    public void setSecurity_id(Long security_id) {
+        this.security_id = security_id;
+    }
+
+    public Long getSecurity_id() {
+        return security_id;
+    }
 }

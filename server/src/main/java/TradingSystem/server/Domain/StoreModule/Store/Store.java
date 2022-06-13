@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
 import TradingSystem.server.Domain.StoreModule.Bid.Bid;
@@ -30,35 +31,62 @@ import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Observable;
 import TradingSystem.server.Domain.Utils.Utils;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
-public class Store implements Observable {
+@Entity
+public class Store implements Observable{
 
 
     // -- fields
+    @Id
     private int store_id;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private AssignUser founder;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "stuff_and_appointments",
+            joinColumns = {@JoinColumn(name = "store_id", referencedColumnName = "store_id")},
+            inverseJoinColumns = {@JoinColumn(name = "appointment", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "email")
     private Map<AssignUser, Appointment> stuffs_and_appointments;
     private String name;
     public String foundation_date;
+
+    @ElementCollection
+    @MapKeyColumn(name = "product_id") // the key column
+    @Column(name = "quantity")
     private Map<Product, Integer> inventory; // product & quantity
     private boolean active;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private DiscountPolicy discountPolicy;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private PurchasePolicy purchasePolicy;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StorePurchaseHistory purchases_history;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StoreReview storeReview;
     private AtomicInteger product_ids_counter;
+    @Transient
     private Object owners_lock;
+    @Transient
     private Object managers_lock;
-    private HashMap<String, Ipredict> predictList;
+
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "predicts",
+            joinColumns = {@JoinColumn(name = "predict_id", referencedColumnName = "store_id")})
+    @MapKeyColumn(name = "name") // the key column
+    private Map<String, Ipredict> predictList;
+
+    @Transient
     private HashMap<Integer, Bid> bids;
 
     // -- constructors
-    public Store(int store_id, String name, AssignUser founder,AtomicInteger ai) {
+    public Store(int store_id, String name, AssignUser founder, AtomicInteger ai) {
         this.discountPolicy = new DiscountPolicy();
         this.purchasePolicy = new PurchasePolicy();
         this.store_id = store_id;
@@ -75,9 +103,12 @@ public class Store implements Observable {
         this.managers_lock = new Object();
         this.predictList = new HashMap<>();
         this.bids = new HashMap<>();
+//        HibernateUtils.persist(this);
     }
 
     public Store() {
+        this.owners_lock = new Object();
+        this.managers_lock = new Object();
     }
 
     // ------------------------------ getters ------------------------------
@@ -164,18 +195,26 @@ public class Store implements Observable {
         p.add_review(user_email, review);
     }
 
-    public AndporchaseRule add_and_purchase_rule(String nameOfRule,String left, String right) throws WrongPermterException {
-        porchaseRule purchaseright = purchasePolicy.getPolicy(left);
-        porchaseRule purchaseleft = purchasePolicy.getPolicy(right);
-        AndporchaseRule and = new AndporchaseRule(purchaseleft, purchaseright);
-        purchasePolicy.addRule(nameOfRule,and);
+    public AndPurchaseRule add_and_purchase_rule(String nameOfRule, String left, String right) throws WrongPermterException {
+        PurchaseRule purchaseright = purchasePolicy.getPolicy(left);
+        PurchaseRule purchaseleft = purchasePolicy.getPolicy(right);
+        if (purchaseleft == purchaseleft)
+            throw new WrongPermterException("the polices are the same");
+        AndPurchaseRule and = new AndPurchaseRule(purchaseleft, purchaseright);
+        purchasePolicy.addRule(nameOfRule, and);
+        purchasePolicy.removeRule(left);
+        purchasePolicy.removeRule(right);
         return and;
     }
 
-    public OrporchaseRule add_or_purchase_rule(String name, String left, String right) throws WrongPermterException {
-        porchaseRule purchaseright = purchasePolicy.getPolicy(left);
-        porchaseRule purchaseleft = purchasePolicy.getPolicy(right);
-        OrporchaseRule or = new OrporchaseRule(purchaseleft, purchaseright);
+    public OrPurchaseRule add_or_purchase_rule(String name, String left, String right) throws WrongPermterException {
+        PurchaseRule purchaseRight = purchasePolicy.getPolicy(left);
+        PurchaseRule purchaseLeft = purchasePolicy.getPolicy(right);
+        if (purchaseLeft == purchaseRight)
+            throw new WrongPermterException("the polices are the same");
+        OrPurchaseRule or = new OrPurchaseRule(purchaseLeft, purchaseRight);
+        purchasePolicy.removeRule(left);
+        purchasePolicy.removeRule(right);
         purchasePolicy.addRule(name, or);
         return or;
     }
@@ -186,20 +225,27 @@ public class Store implements Observable {
         this.storeReview.add_rating(user.get_user_email(), rating);
     }
 
-    public Predict addPredict(String catgorey, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name) throws WrongPermterException {
+    public Predict addPredict(String catgorey, int product_id, boolean above, boolean equql,
+                              int num, boolean price, boolean quantity, boolean age, boolean time, int year,
+                              int month, int day, String name) throws WrongPermterException, ObjectDoesntExsitException {
+        Product product=getProduct_by_product_id(product_id);
         Predict predict = new Predict(catgorey, product, above, equql, num, price, quantity, age, time, year, month, day);
-        if (predictList.keySet().contains(name))
-            throw new WrongPermterException("there is alreay a predict with the same name");
+        checkUniqName(name, this.predictList);
         predictList.put(name, predict);
         return predict;
     }
 
     //start of discount policy
-    public void remove_discount_rule(String name) {
+    public String remove_discount_rule(String name) throws WrongPermterException {
         discountPolicy.removeRule(name);
+        return "the rule was removed";
+    }
+    public String remove_purchase_rule(String name) throws WrongPermterException {
+        discountPolicy.removeRule(name);
+        return "the rule was removed";
     }
 
-    private void checkUniqName(String name, HashMap map) throws WrongPermterException {
+    private void checkUniqName(String name, Map map) throws WrongPermterException {
         if (map.keySet().contains(name))
             throw new WrongPermterException("there is a predict with this name in the store,please choose another name");
     }
@@ -234,7 +280,6 @@ public class Store implements Observable {
             if (predictList.get(s) instanceof Predict)
                 list.add(s);
         return list;
-
     }
 
 
@@ -247,7 +292,7 @@ public class Store implements Observable {
         return toreturn;
     }
 
-    public OrCompositePredict CreateOrDisocuntCompnent(String name, String left, String right, String complex) throws WrongPermterException {
+    public OrCompositePredict CreateOrDisocuntCompnent(String name, String left, String right) throws WrongPermterException {
         Ipredict leftPredict = predictList.get(left);
         Ipredict rightPredict = predictList.get(right);
         OrCompositePredict toreturn = new OrCompositePredict(leftPredict, rightPredict);
@@ -260,7 +305,11 @@ public class Store implements Observable {
         DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
         DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
         xorDiscountComponent toreturn = new xorDiscountComponent(leftdiscount, rifhtdiscount);
-        this.discountPolicy.addRule(name, toreturn);
+        if (leftdiscount == rifhtdiscount)
+            throw new WrongPermterException("the discounts are the same");
+        discountPolicy.removeRule(left);
+        discountPolicy.removeRule(right);
+        discountPolicy.addRule(name, toreturn);
         return toreturn;
     }
 
@@ -268,7 +317,11 @@ public class Store implements Observable {
         DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
         DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
         maxDiscountComponent toreturn = new maxDiscountComponent(leftdiscount, rifhtdiscount);
-        this.discountPolicy.addRule(name, toreturn);
+        if (leftdiscount == rifhtdiscount)
+            throw new WrongPermterException("the discounts are the same");
+        discountPolicy.removeRule(left);
+        discountPolicy.removeRule(right);
+        discountPolicy.addRule(name, toreturn);
         return toreturn;
     }
 
@@ -276,7 +329,11 @@ public class Store implements Observable {
         DiscountComponent leftdiscount = discountPolicy.getDiscountCompnentByName(left);
         DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
         plusDiscountComponent toreturn = new plusDiscountComponent(leftdiscount, rifhtdiscount);
-        this.discountPolicy.addRule(name, toreturn);
+        if (leftdiscount == rifhtdiscount)
+            throw new WrongPermterException("the discounts are the same");
+        discountPolicy.removeRule(left);
+        discountPolicy.removeRule(right);
+        discountPolicy.addRule(name, toreturn);
         return toreturn;
     }
 
@@ -290,7 +347,7 @@ public class Store implements Observable {
     }
 
 
-    public simpleDiscountComponent add_simple_discount(String name, String type, String nameOfCategorey, double precent) throws WrongPermterException {
+    public simpleDiscountComponent add_simple_discount(String name, String type, double precent, String nameOfCategorey) throws WrongPermterException {
         simpleDiscountComponent simpleDiscountComponent;
         if (type == "c")
             simpleDiscountComponent = new simpleDiscountComponentByCategory(nameOfCategorey, precent);
@@ -301,7 +358,7 @@ public class Store implements Observable {
     }
 
     public ComplexDiscountComponent add_complex_discount(String name, String nameOFPredict, String nameOfPolicy) throws WrongPermterException {
-        Ipredict predict = predictList.get(nameOFPredict);
+        Ipredict predict = getPredictByName(nameOFPredict);
         DiscountComponent simpleDiscountComponent = discountPolicy.getDiscountCompnentByName(nameOfPolicy);
         if (!(simpleDiscountComponent instanceof simpleDiscountComponent))
             throw new WrongPermterException("this polciy is not of type simple");
@@ -316,23 +373,20 @@ public class Store implements Observable {
 
     //purchase policy
 
-    private Predict getSimplePredictsByName(String name) throws WrongPermterException {
+    private Predict getPredictByName(String name) throws WrongPermterException {
         Ipredict p = predictList.get(name);
-        if (!(p instanceof Predict))
-            throw new WrongPermterException("the name of the predict is wrong");
+        if (p == null)
+            throw new WrongPermterException("no predict with this name");
         return (Predict) p;
     }
 
-    public SimpleporchaseRule addsimplePorchaseRule( String nameOfrule, String NameOfPredict) throws WrongPermterException {
-        Predict p = getSimplePredictsByName(NameOfPredict);
-        SimpleporchaseRule Toreturn = new SimpleporchaseRule(p);
+    public SimplePurchaseRule addsimplePorchaseRule(String nameOfrule, String NameOfPredict) throws WrongPermterException {
+        Predict p = getPredictByName(NameOfPredict);
+        SimplePurchaseRule Toreturn = new SimplePurchaseRule(p);
         this.purchasePolicy.addRule(nameOfrule, Toreturn);
         return Toreturn;
     }
 
-
-    //TODO add purchase or and
-    //end of purchase policy
 
     public void add_product_rating(String user_email, int product_id, int rate) throws MarketException {
         Product p = this.getProduct_by_product_id(product_id);//throws
@@ -781,8 +835,7 @@ public class Store implements Observable {
     public void edit_product_quantity(AssignUser assignUser, int product_id, int quantity) throws MarketException {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(assignUser, StorePermission.edit_item_quantity);
-        if (quantity < 1)
-        {
+        if (quantity < 1) {
             throw new WrongPermterException("quantity must be positive number");
         }
         this.inventory.put(to_edit, quantity);
@@ -886,7 +939,7 @@ public class Store implements Observable {
             throw new AppointmentException("This Store Stuff doesn't contains the user "+manager_email);
         }
         Appointment appointment = this.stuffs_and_appointments.get(user_get_permission);
-        HashMap<StorePermission,Integer> manager_permissions = appointment.getPermissions();
+        Map<StorePermission,Integer> manager_permissions = appointment.getPermissions();
         for (StorePermission s: manager_permissions.keySet())
         {
             if (manager_permissions.get(s)==1)
@@ -910,5 +963,28 @@ public class Store implements Observable {
             }
         }
         return categories;
+    }
+    public DiscountPolicy getDiscountPolicy() {
+        return discountPolicy;
+    }
+
+    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy;
+    }
+
+    public PurchasePolicy getPurchasePolicy() {
+        return purchasePolicy;
+    }
+
+    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
+        this.purchasePolicy = purchasePolicy;
+    }
+
+    public Map<String, Ipredict> getPredictList() {
+        return predictList;
+    }
+
+    public void setPredictList(Map<String, Ipredict> predictList) {
+        this.predictList = predictList;
     }
 }

@@ -1,15 +1,21 @@
 package TradingSystem.server.Domain.StoreModule.Product;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Utils.Exception.ProductCreatingException;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Product {
+    @Id
     private int product_id;
     private String name;
     private String category;
+    @ElementCollection
     private List<String> key_words;
     private double original_price;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private ProductReview productReview;
     private int store_id;
 
@@ -24,6 +30,7 @@ public class Product {
         this.category = category;
         this.key_words = key_words;
         this.store_id = store_id;
+        HibernateUtils.persist(this);
     }
 
     public Product() {

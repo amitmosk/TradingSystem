@@ -3,6 +3,7 @@ package TradingSystem.server.Domain.Questions;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,8 +11,22 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Entity
 public class QuestionController implements iQuestionController {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long question_controller_id;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "buyer_to_store",
+            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
+    @MapKeyColumn(name = "question_id") // the key column
     private Map<Integer, BuyerQuestion> buyer_to_store;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_to_admin",
+            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
+    @MapKeyColumn(name = "question_id") // the key column
     private Map<Integer, UserQuestion> user_to_admin;
     private AtomicInteger question_ids_counter;
 
@@ -52,6 +67,17 @@ public class QuestionController implements iQuestionController {
         return answer;
     }
 
+    public void setQuestion_controller_id(Long question_controller_id) {
+        this.question_controller_id = question_controller_id;
+    }
+
+
+    public Long getQuestion_controller_id() {
+        return question_controller_id;
+    }
+
+
+    @Override
     public void add_buyer_question(String message, AssignUser sender, int store_id){
         int question_id = this.question_ids_counter.getAndIncrement();
         BuyerQuestion question_to_add = new BuyerQuestion(question_id, message, sender, store_id);
@@ -86,6 +112,7 @@ public class QuestionController implements iQuestionController {
 
     }
 
+    @Override
     public List<String> view_buyers_to_store_questions(int store_id) {
         List<String> questionsList_to_return = new LinkedList<String>();
         for (BuyerQuestion question : this.buyer_to_store.values())
@@ -99,6 +126,7 @@ public class QuestionController implements iQuestionController {
         return questionsList_to_return;
     }
 
+    @Override
     public List<String> view_users_to_admin_questions() {
         List<String> questionsList_to_return = new LinkedList<String>();
         for (UserQuestion question : this.user_to_admin.values())

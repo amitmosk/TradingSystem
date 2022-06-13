@@ -1,5 +1,6 @@
 package TradingSystem.server.Service;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.ExternSystems.*;
 import TradingSystem.server.Domain.ExternSystems.Proxy.PaymentAdapterTests;
 import TradingSystem.server.Domain.ExternSystems.Proxy.SupplyAdapterTests;
@@ -444,19 +445,13 @@ public class MarketSystem {
 
 
     public void add_admin(String email) throws MarketException {
-        User user = UserController.getInstance().get_user_by_email(email);
+        User user = UserController.get_instance().get_user_by_email(email);
         String name = user.getState().get_user_name();
         String last_name = user.getState().get_user_last_name();
         user.set_admin(user.user_email(), "12345678aA", name, last_name);
         MarketLogger.getInstance().add_log("New Admin In The Market: "+email);
     }
 
-    public void add_admins() throws MarketException {
-        UserController.getInstance().add_admin("admin@gmail.com", "12345678aA", "Barak", "Bahar");
-        MarketLogger.getInstance().add_log("Admin Added: admin@gmail.com");
-
-
-    }
     public void init_data_to_market_develop(PaymentAdapter paymentAdapter, SupplyAdapter supplyAdapter) {
         String birth_date = LocalDate.now().minusYears(22).toString();
         MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
@@ -517,10 +512,12 @@ public class MarketSystem {
         marketFacade3.logout();
         marketFacade4.logout();
         marketFacade5.logout();
+    }
 
-
-
-
-
+    public void add_admins() throws MarketException {
+        HibernateUtils.beginTransaction();
+        UserController.get_instance().add_admin("admin@gmail.com", "12345678aA", "Barak", "Bahar");
+        HibernateUtils.commit();
+        SystemLogger.getInstance().add_log("admin added");
     }
 }

@@ -4,13 +4,23 @@ import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 
-public class ComplexDiscountComponent implements DiscountComponent {
+import javax.persistence.*;
+
+@Entity
+@DiscriminatorValue("1")
+public class ComplexDiscountComponent extends DiscountComponent {
+    @OneToOne
     DiscountComponent rule;
+    @ManyToOne
     Ipredict predict;
 
     public ComplexDiscountComponent(DiscountComponent rule, Ipredict predict) {
         this.predict = predict;
         this.rule = rule;
+    }
+
+    public ComplexDiscountComponent() {
+
     }
 
     public boolean CanApply(Basket basket) {

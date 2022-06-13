@@ -1,31 +1,47 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.Utils.Exception.PurchasePolicyException;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
+import javax.persistence.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
+@Entity
 public class PurchasePolicy {
-    private HashMap<String, porchaseRule> policy;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "purchase_policy",
+            joinColumns = {@JoinColumn(name = "rule_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "name") // the key column
+    private Map<String, PurchaseRule> policy;
+    private Long policyId;
 
     public PurchasePolicy() {
-        this.policy = new HashMap<String, porchaseRule>();
+        this.policy = new HashMap<String, PurchaseRule>();
     }
 
-    public void addRule(String name, porchaseRule rule) throws WrongPermterException {
-        if (policy.get(name)!=null)
+    private void checkUniqName(String name, Map map) throws WrongPermterException {
+        if (map.keySet().contains(name))
+            throw new WrongPermterException("there is a predict with this name in the store,please choose another name");
+    }
+
+    public void addRule(String name, PurchaseRule rule) throws WrongPermterException {
+        checkUniqName(name, policy);
         policy.put(name, rule);
-        else
-            throw new WrongPermterException("there is a rule with this name allready");
     }
 
     public void checkPolicy(int userAge, Basket basket) throws PurchasePolicyException {
-        for (porchaseRule rule : policy.values()
+        for (PurchaseRule rule : policy.values()
         ) {
-            if (rule.predictCheck(userAge, basket) == false)
-                throw new PurchasePolicyException("check");
+            if (!rule.predictCheck(userAge, basket))
+                throw new PurchasePolicyException("the purchase doesnt stands with the policy of the store");
         }
     }
 
@@ -33,11 +49,41 @@ public class PurchasePolicy {
         return policy.keySet();
     }
 
-    public porchaseRule getPolicy(String name) {
-        return policy.get(name);
+    public PurchaseRule getPolicy(String name) throws WrongPermterException {
+        PurchaseRule rule = policy.get(name);
+        if (rule == null)
+            throw new WrongPermterException("no policy with this name");
+        return rule;
     }
 
-    public void removeRule(porchaseRule rule) {
-        policy.remove(rule);
+    public void removeRule(String name) throws WrongPermterException {
+        PurchaseRule toRemove = policy.remove(policy.get(name));
+        if (toRemove == null)
+            throw new WrongPermterException("there is no rule with this name");
+    }
+
+
+    public void setPolicyId(Long policyId) {
+        this.policyId = policyId;
+    }
+
+    public Long getPolicyId() {
+        return policyId;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Map<String, PurchaseRule> getPolicy() {
+        return policy;
+    }
+
+    public void setPolicy(Map<String, PurchaseRule> policy) {
+        this.policy = policy;
     }
 }

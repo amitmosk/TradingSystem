@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.Statistics.Statistic;
 import TradingSystem.server.Domain.Statistics.StatisticsManager;
@@ -12,42 +13,63 @@ import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Entity
 public class UserController {
-
     // ------------------- fields -------------------------------------
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "all_users",
+//            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
+    @MapKeyColumn(name = "user_id") // the key column
     private Map<String, User> users;              // email,user
+    @Transient
     private Map<Integer, User> onlineUsers;       // id,user
-    private AtomicInteger ID;
+    private AtomicInteger uc_id;
     private AtomicInteger purchaseID;
+    @Transient
     private Object usersLock;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StatisticsManager statisticsManager;
+    private static UserController instance = null;
+    @Id
+    @GeneratedValue
+    private Long id;
+
 
     public static void load() {
-        SystemLogger.getInstance().add_log("User Controller Load");
-
-
+//        HibernateUtils.beginTransaction();
+//        get_instance();
+//        HibernateUtils.commit();
+        SystemLogger.getInstance().add_log("user controller load");
     }
 
+    @Transient
     public User get_user_for_tests(int id) {
         return onlineUsers.get(id);
     }
 
-    // ------------------- singleton class ----------------------------
-    private static class SingletonHolder {
-        private static UserController instance = new UserController();
+    public static UserController get_instance() {
+        UserController userController;
+        if (instance == null) {
+            userController = HibernateUtils.getEntityManager().find(UserController.class, new Long(1));
+            if (userController != null) {
+                instance = userController;
+            } else
+                instance = new UserController();
+            HibernateUtils.persist(instance);
+        }
+        return instance;
     }
 
     // ------------------- constructors --------------------------------
     public UserController() {
-        this.ID = new AtomicInteger(0);
+        this.uc_id = new AtomicInteger(0);
         this.purchaseID = new AtomicInteger(0);
-//        this.users = new ConcurrentHashMap<>();        //thread safe
-        this.users = new HashMap<>();
-
+        this.users = new HashMap<>();        //thread safe
         this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
         this.usersLock = new Object();
         this.statisticsManager = new StatisticsManager();
@@ -57,19 +79,12 @@ public class UserController {
     // ------------------ methods --------------------------------------
 
     /**
-     * @return the instance of the user controller
-     */
-    public static UserController getInstance() {
-        return SingletonHolder.instance;
-    }
-
-    /**
      * function that connects new guest to the system.
      *
      * @return guest's online id
      */
     public int guest_login() {
-        int cur_guest_id = ID.getAndIncrement();    // synchronized
+        int cur_guest_id = uc_id.getAndIncrement();    // synchronized
         User newUser = new User();
         onlineUsers.put(cur_guest_id, newUser);
         statisticsManager.inc_connect_system_count();
@@ -105,13 +120,14 @@ public class UserController {
      * @param name     the user's name
      * @param lastName the user's last name
      */
-    public User register(int ID, String email, String pw, String name, String lastName, String birth_date) throws MarketException {
+    public User register(int ID, String email, String pw, String name, String lastName, String birth_date) throws
+            MarketException {
         User user;
         synchronized (usersLock) {
             if (isRegistered(email))
                 throw new RegisterException("user email " + email + " already exists in the system");
             user = onlineUsers.get(ID);
-            user.register(email, pw, name, lastName,birth_date);
+            user.register(email, pw, name, lastName, birth_date);
             users.put(email, user);
         }
         statisticsManager.inc_register_count();
@@ -128,7 +144,7 @@ public class UserController {
         if (isRegistered(email)) {
             User cur_user = onlineUsers.get(ID);
             User user = users.get(email);
-            if(cur_user.test_isLogged())
+            if (cur_user.test_isLogged())
                 throw new LoginException("cannot log in from logged in user");
             user.login(password); //verifies if the user is logged and password & changes state.
             onlineUsers.put(ID, user);
@@ -340,7 +356,7 @@ public class UserController {
         AssignUser assignUser = user.state_if_assigned();
         QuestionController.getInstance().add_user_question(question, assignUser);
         List<Admin> adminsList = this.get_admins();
-        for (Admin admin : adminsList){
+        for (Admin admin : adminsList) {
             admin.add_notification("user : " + assignUser.get_user_email() + " send new question");
         }
     }
@@ -420,11 +436,11 @@ public class UserController {
         return users.get(email);
     }
 
-    public List<Admin> get_admins(){
+    public List<Admin> get_admins() {
         List<Admin> admins = new ArrayList<>();
-        for(User user : users.values()){
+        for (User user : users.values()) {
             Admin user_state = null;
-            if(user_state != null)
+            if (user_state != null)
                 admins.add(user_state);
         }
         return admins;
@@ -435,11 +451,19 @@ public class UserController {
         return this.users.containsKey(email);
     }
     public void clear() {
-        this.ID = new AtomicInteger(0);
+        this.uc_id = new AtomicInteger(0);
         this.purchaseID = new AtomicInteger(0);
-        this.users = new ConcurrentHashMap<>();        //thread safe
+        this.users = new HashMap<>();        //thread safe
         this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
         this.usersLock = new Object();
         this.statisticsManager = new StatisticsManager();
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

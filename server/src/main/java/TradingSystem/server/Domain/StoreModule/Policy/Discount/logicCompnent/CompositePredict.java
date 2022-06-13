@@ -2,13 +2,25 @@ package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
 
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 
-public abstract class CompositePredict implements Ipredict {
+import javax.persistence.*;
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@DiscriminatorColumn(name = "composite_predict_type",
+//        discriminatorType = DiscriminatorType.INTEGER)
+public abstract class CompositePredict extends Ipredict {
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Ipredict left;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Ipredict right;
 
     public CompositePredict(Ipredict left, Ipredict right) {
         this.left = left;
         this.right = right;
     }
+
+    public CompositePredict() {
+
+    }
+
 }

@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -8,21 +9,41 @@ import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Service.NotificationHandler;
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 // TODO: everytime user creates/appoint a store make an appointment
+@Entity
+@DiscriminatorValue("1")
 public class AssignUser extends AssignState {
     private String email;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Security security;
     private String name;
     private String lastName;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private UserPurchaseHistory userPurchaseHistory;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "founder_table",
+            joinColumns = {@JoinColumn(name = "user", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "appointment_id", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "store_id")
     private Map<Store, Appointment> founder;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "owner_table",
+            joinColumns = {@JoinColumn(name = "user", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "appointment_id", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "store_id")
     private Map<Store, Appointment> owner;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "manager_table",
+            joinColumns = {@JoinColumn(name = "user", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "appointment_id", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "store_id")
     private Map<Store,Appointment> manager;
 
     // ------------------------------ constructors ------------------------------
@@ -35,6 +56,9 @@ public class AssignUser extends AssignState {
         this.founder = new HashMap<>();
         this.owner = new HashMap<>();
         this.manager = new HashMap<>();
+//        HibernateUtils.persist(this.security);
+//        HibernateUtils.persist(this.userPurchaseHistory);
+//        HibernateUtils.persist(this);
     }
 
     public AssignUser() {

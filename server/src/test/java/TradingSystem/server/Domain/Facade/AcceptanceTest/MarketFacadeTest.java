@@ -110,10 +110,8 @@ class MarketFacadeTest {
         facade1.logout();
 
         // add admin to  the system
-        UserController.getInstance().add_admin(user_admin_email, user_password, "Barak", "Bahar");
-
-
-        uc = UserController.getInstance();
+        UserController.get_instance().add_admin(user_admin_email, user_password, "Barak", "Bahar");
+        uc = UserController.get_instance();
         pa = new PaymentAdapterImpl();
         sa = new SupplyAdapterImpl();
         email = "somthing@gmail.com";
@@ -1333,7 +1331,6 @@ class MarketFacadeTest {
         assertTrue(res.WasException(), message);
 
         facade1.logout();
-
     }
 
     /**
@@ -1623,7 +1620,6 @@ class MarketFacadeTest {
         assertEquals("Eylon", facade1.get_user_name().getValue()); // todo
 
         facade1.logout();
-
     }
 
     /*
