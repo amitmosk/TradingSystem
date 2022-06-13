@@ -30,11 +30,13 @@ public class ConnectThread implements Runnable {
         this.callback = callback;
     }
 
+    /**
+     * this thread task is to connect the external services by http post requests, with different parameters.
+     */
     @Override
     public void run() {
 
         try {
-
             String url = web_url;
             // write GET params,append with url
             if (method == METHOD_GET && params != null) {
@@ -101,6 +103,9 @@ public class ConnectThread implements Runnable {
         }
     }
 
+    /**
+     * @return the answer we got from the external service.
+     */
     public String get_value(){
         return this.answer[0];
     }

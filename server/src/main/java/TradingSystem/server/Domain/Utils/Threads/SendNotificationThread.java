@@ -29,6 +29,9 @@ public class SendNotificationThread implements Runnable {
         this.message = message;
     }
 
+    /**
+     * this thread task is to send a notification WS-based to the client.
+     */
     @Override
     public void run() {
         System.out.println("send notification - step 1 ");
