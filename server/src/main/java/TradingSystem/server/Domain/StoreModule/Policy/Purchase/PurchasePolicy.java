@@ -18,7 +18,7 @@ public class PurchasePolicy {
         if (policy.get(name)!=null)
         policy.put(name, rule);
         else
-            throw new WrongPermterException("there is a rule with this name allready");
+            throw new WrongPermterException("there is a rule with this name already");
     }
 
     public void checkPolicy(int userAge, Basket basket) throws PurchasePolicyException {
