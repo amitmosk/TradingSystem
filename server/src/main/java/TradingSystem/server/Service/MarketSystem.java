@@ -210,13 +210,13 @@ public class MarketSystem {
             }
 
         } catch (Exception e) {
+            // TODO: logger - why the method fail?
             e.printStackTrace();
             answer = false;
             for (MarketFacade marketFacade : facades.values()){
                 marketFacade.clear();
             }
             facades.clear();
-            // TODO: logger - why the method fail?
         }
         // have to reset all the data of the market and stop the method.
 
@@ -242,11 +242,11 @@ public class MarketSystem {
             facades.put(email, marketFacade);
         }
 
-        // handle instruction
+        // handle instructions :
         if (instruction.equals("login")){
             Response answer = marketFacade.login(email,instruction_params[2]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Login Failed: " + answer.getMessage());
             }
 
         }
@@ -255,33 +255,33 @@ public class MarketSystem {
                 this.add_admin(email);
             }
             catch (Exception e){
-                throw new IllegalArgumentException("Add admin fail.");
+                throw new IllegalArgumentException("Add Admin Fail:" + e.getMessage());
             }
         }
         else if (instruction.equals("logout")){
             Response answer = marketFacade.logout();
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Logout Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("register")){
             Response answer1 = marketFacade.register(email, instruction_params[2], instruction_params[3], instruction_params[4], instruction_params[5]);
             Response answer2 = marketFacade.logout();
             if (answer1.WasException() || answer2.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Register Failed: " + answer1.getMessage());
             }
         }
         else if (instruction.equals("add_product_to_cart")){
             Response answer = marketFacade.add_product_to_cart(Integer.parseInt(instruction_params[2]), Integer.parseInt(instruction_params[3]),
                     Integer.parseInt(instruction_params[4]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Add Product To Cart Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("remove_product_from_cart")){
             Response answer = marketFacade.remove_product_from_cart(Integer.parseInt(instruction_params[2]), Integer.parseInt(instruction_params[3]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Remove Product From Cart Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("buy_cart")){
@@ -294,7 +294,7 @@ public class MarketSystem {
         else if (instruction.equals("open_store")){
             Response answer = marketFacade.open_store(instruction_params[2]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Open Store Failed: " + answer.getMessage());
             }
 
         }
@@ -302,56 +302,56 @@ public class MarketSystem {
             Response answer = marketFacade.add_bid(Integer.parseInt(instruction_params[2]), Integer.parseInt(instruction_params[3]),
                     Integer.parseInt(instruction_params[4]), Double.parseDouble(instruction_params[5]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Add Bid Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("rate_product")){
             Response answer = marketFacade.rate_product(Integer.parseInt(instruction_params[2]), Integer.parseInt(instruction_params[3]),
                     Integer.parseInt(instruction_params[4]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Rate Product Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("rate_store")){
             Response answer = marketFacade.rate_store(Integer.parseInt(instruction_params[2]), Integer.parseInt(instruction_params[3]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Rate Store Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("send_question_to_store")){
             Response answer = marketFacade.send_question_to_store(Integer.parseInt(instruction_params[2]),instruction_params[3]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Send Question To Store Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("send_question_to_admin")){
             Response answer = marketFacade.send_question_to_admin(instruction_params[2]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Send Question To Admin Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("edit_name")){
             Response answer = marketFacade.edit_name(instruction_params[2]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Edit Name Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("edit_last_name")){
             Response answer = marketFacade.edit_last_name(instruction_params[2]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Edit Last Name Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("edit_password")){
             Response answer = marketFacade.edit_password(instruction_params[2], instruction_params[3]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Edit Password Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("improve_security")){
             Response answer = marketFacade.improve_security(instruction_params[2], instruction_params[3], instruction_params[4]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Improve Security Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("add_product_to_store")){
@@ -362,57 +362,57 @@ public class MarketSystem {
             Response answer = marketFacade.add_product_to_store(Integer.parseInt(instruction_params[2]), Integer.parseInt(instruction_params[3]),
                     instruction_params[4] ,Double.parseDouble(instruction_params[5]), instruction_params[6],keywords);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Add Product To Store Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("delete_product_from_store")){
             Response answer = marketFacade.delete_product_from_store(Integer.parseInt(instruction_params[2]),Integer.parseInt(instruction_params[3]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Remove Product From Store Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("edit_product_name")){
             Response answer = marketFacade.edit_product_name(Integer.parseInt(instruction_params[2]), Integer.parseInt(instruction_params[3]),
                     instruction_params[4]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Edit Product Name Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("add_owner")){
             Response answer = marketFacade.add_owner(instruction_params[2], Integer.parseInt(instruction_params[3]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Add Owner Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("delete_owner")){
             Response answer = marketFacade.delete_owner(instruction_params[2], Integer.parseInt(instruction_params[3]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Remove Owner Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("add_manager")){
             Response answer = marketFacade.add_manager(instruction_params[2], Integer.parseInt(instruction_params[3]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Add Manager Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("delete_manager")){
             Response answer = marketFacade.delete_manager(instruction_params[2], Integer.parseInt(instruction_params[3]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Delete Manager Failed: " + answer.getMessage());
             }
         }
 
         else if (instruction.equals("close_store_temporarily")){
             Response answer = marketFacade.close_store_temporarily(Integer.parseInt(instruction_params[2]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Close Store Temporarily Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("open_close_store")){
             Response answer = marketFacade.open_close_store(Integer.parseInt(instruction_params[2]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Open Close Store Failed: " + answer.getMessage());
             }
 
         }
@@ -420,14 +420,14 @@ public class MarketSystem {
             Response answer = marketFacade.manager_answer_question(Integer.parseInt(instruction_params[2]),Integer.parseInt(instruction_params[3]),
                     instruction_params[4]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Manager Answer Question Failed: " + answer.getMessage());
             }
 
         }
         else if (instruction.equals("close_store_permanently")){
             Response answer = marketFacade.close_store_permanently(Integer.parseInt(instruction_params[2]));
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Close Store Permanently Failed: " + answer.getMessage());
             }
 
         }
@@ -435,13 +435,13 @@ public class MarketSystem {
         else if (instruction.equals("remove_user")){
             Response answer = marketFacade.remove_user(instruction_params[2]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Remove User Failed: " + answer.getMessage());
             }
         }
         else if (instruction.equals("admin_answer_user_question")){
             Response answer = marketFacade.admin_answer_user_question( Integer.parseInt(instruction_params[2]), instruction_params[3]);
             if (answer.WasException()){
-                throw new IllegalArgumentException("Exception");
+                throw new IllegalArgumentException("Admin Answer Question Failed: " + answer.getMessage());
             }
         }
         else{
