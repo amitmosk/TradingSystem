@@ -8,10 +8,14 @@ public class HibernateUtils {
 
     private static final EntityManagerFactory emf;
     private static final ThreadLocal<EntityManager> threadLocal;
-
+    private static String persistence_unit = "TradingSystemTests";
     static {
-        emf = Persistence.createEntityManagerFactory("TradingSystem");
+        emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
+    }
+
+    public static void setPersistence_unit(String persistence_unit) {
+        HibernateUtils.persistence_unit = persistence_unit;
     }
 
     public static EntityManager getEntityManager() {
@@ -38,18 +42,22 @@ public class HibernateUtils {
     }
 
     public static void beginTransaction() {
-        getEntityManager().getTransaction().begin();
+        if(!persistence_unit.equals("TradingSystemTests"))
+            getEntityManager().getTransaction().begin();
     }
 
     public static void rollback() {
-        getEntityManager().getTransaction().rollback();
+        if(!persistence_unit.equals("TradingSystemTests"))
+            getEntityManager().getTransaction().rollback();
     }
 
     public static void commit() {
-        getEntityManager().getTransaction().commit();
+        if(!persistence_unit.equals("TradingSystemTests"))
+            getEntityManager().getTransaction().commit();
     }
 
     public static <T> void persist(T obj){
-        getEntityManager().persist(obj);
+        if(!persistence_unit.equals("TradingSystemTests"))
+            getEntityManager().persist(obj);
     }
 }

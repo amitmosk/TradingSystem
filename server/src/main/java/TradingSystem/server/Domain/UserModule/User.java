@@ -23,9 +23,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private AssignState state;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Cart cart;
     private AtomicBoolean isGuest;
     @Transient
@@ -93,8 +93,8 @@ public class User {
         this.state = new AssignUser(email, pw, name, lastName);
         this.birth_date = birth_date;
         isGuest.set(false);
-        HibernateUtils.persist(this.cart);
-        HibernateUtils.persist(this.state);
+//        HibernateUtils.persist(this.cart);
+//        HibernateUtils.persist(this.state);
         HibernateUtils.persist(this);
     }
 

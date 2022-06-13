@@ -1,5 +1,6 @@
 package TradingSystem.server.Service;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.SystemLogger;
@@ -26,6 +27,7 @@ public class MarketSystem {
 
     public void init_market()  {
         SystemLogger.getInstance().add_log("start init market");
+        HibernateUtils.setPersistence_unit("TradingSystem");
         this.payment_adapter = new PaymentAdapterImpl();
         this.supply_adapter = new SupplyAdapterImpl();
         try

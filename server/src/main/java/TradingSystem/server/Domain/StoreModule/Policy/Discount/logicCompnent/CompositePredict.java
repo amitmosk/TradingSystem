@@ -6,12 +6,12 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "composite_predict_type",
-        discriminatorType = DiscriminatorType.INTEGER)
+//@DiscriminatorColumn(name = "composite_predict_type",
+//        discriminatorType = DiscriminatorType.INTEGER)
 public abstract class CompositePredict extends Ipredict {
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Ipredict left;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Ipredict right;
 
     public CompositePredict(Ipredict left, Ipredict right) {

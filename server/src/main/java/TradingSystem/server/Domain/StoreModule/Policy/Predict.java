@@ -12,7 +12,7 @@ import java.util.Map;
 public class Predict extends Ipredict {
     //on what
     private String category;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Product product;
 
     //what type < > =

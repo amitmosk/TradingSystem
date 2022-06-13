@@ -17,13 +17,13 @@ public class QuestionController implements iQuestionController {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long question_controller_id;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "buyer_to_store",
             joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
     @MapKeyColumn(name = "question_id") // the key column
     private Map<Integer, BuyerQuestion> buyer_to_store;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_to_admin",
             joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
     @MapKeyColumn(name = "question_id") // the key column

@@ -15,7 +15,7 @@ public abstract class Question {
     protected String message;
     protected String answer;
     protected boolean has_answer;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     protected AssignUser sender; // assign user
 
     // ---------------------- Constructor ---------------------------------------
@@ -28,7 +28,6 @@ public abstract class Question {
         this.message = message;
         this.has_answer = false;
         this.message_date = LocalDate.now().toString();
-
     }
 
     // --------------------- getters --------------------------------------------

@@ -20,11 +20,11 @@ import java.util.Map;
 @DiscriminatorValue("1")
 public class AssignUser extends AssignState {
     private String email;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Security security;
     private String name;
     private String lastName;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private UserPurchaseHistory userPurchaseHistory;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -56,9 +56,9 @@ public class AssignUser extends AssignState {
         this.founder = new HashMap<>();
         this.owner = new HashMap<>();
         this.manager = new HashMap<>();
-        HibernateUtils.persist(this.security);
-        HibernateUtils.persist(this.userPurchaseHistory);
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this.security);
+//        HibernateUtils.persist(this.userPurchaseHistory);
+//        HibernateUtils.persist(this);
     }
 
     public AssignUser() {

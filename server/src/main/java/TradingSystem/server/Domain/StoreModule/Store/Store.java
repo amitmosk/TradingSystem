@@ -73,7 +73,7 @@ public class Store {
     private Object managers_lock;
 
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "predicts",
             joinColumns = {@JoinColumn(name = "predict_id", referencedColumnName = "store_id")})
     @MapKeyColumn(name = "name") // the key column
@@ -96,9 +96,7 @@ public class Store {
         this.owners_lock = new Object();
         this.managers_lock = new Object();
         this.predictList = new HashMap<>();
-        HibernateUtils.persist(this.storeReview);
-        HibernateUtils.persist(this.purchases_history);
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
     }
 
     public Store() {

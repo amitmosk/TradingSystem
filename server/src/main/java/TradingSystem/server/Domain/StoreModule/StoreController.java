@@ -24,7 +24,7 @@ public class StoreController {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    @JoinTable(name = "all_stores",
 //            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
     @MapKeyColumn(name = "store_id") // the key column

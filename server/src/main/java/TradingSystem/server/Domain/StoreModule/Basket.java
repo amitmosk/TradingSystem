@@ -15,7 +15,10 @@ import java.util.Map;
 @Entity
 public class Basket implements Serializable {
     @Id
-    @OneToOne
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Pair basket_id; // <user_email, store_id>
 
     @ElementCollection
@@ -27,7 +30,7 @@ public class Basket implements Serializable {
     public Basket(int store_id, String buyer_email) {
         this.basket_id = new Pair(buyer_email, store_id);
         products_and_quantities = new HashMap<>();
-        HibernateUtils.persist(this.basket_id);
+//        HibernateUtils.persist(this.basket_id);
     }
 
     public Basket() {
@@ -119,5 +122,13 @@ public class Basket implements Serializable {
             productsIds_and_names.put(p.getProduct_id(), p.getName());
         }
         return productsIds_and_names;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

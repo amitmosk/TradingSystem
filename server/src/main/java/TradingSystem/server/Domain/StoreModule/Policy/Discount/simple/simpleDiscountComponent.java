@@ -6,11 +6,10 @@ import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
 import javax.persistence.*;
 
-//@Entity
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //@DiscriminatorColumn(name = "simple_discount_type",
 //        discriminatorType = DiscriminatorType.INTEGER)
-//@DiscriminatorValue("7")
 public abstract class simpleDiscountComponent extends DiscountComponent {
     protected double percentOfDiscount;
 

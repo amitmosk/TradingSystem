@@ -7,6 +7,7 @@ import TradingSystem.server.Domain.Utils.iPasswordManager;
 
 import javax.persistence.*;
 
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
 public class Security {
     @Id

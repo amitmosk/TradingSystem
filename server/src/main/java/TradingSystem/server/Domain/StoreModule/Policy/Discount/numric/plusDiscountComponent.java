@@ -3,6 +3,7 @@ package TradingSystem.server.Domain.StoreModule.Policy.Discount.numric;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -10,9 +11,9 @@ import javax.persistence.OneToOne;
 @Entity
 @DiscriminatorValue("6")
 public class plusDiscountComponent extends DiscountComponent {
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     DiscountComponent left;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     DiscountComponent right;
 
     public plusDiscountComponent(DiscountComponent left, DiscountComponent right) {

@@ -19,7 +19,10 @@ public class Cart {
     private Long id;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @MapKeyJoinColumn(name = "basket_id")
+    @JoinTable(name = "table_name",
+            joinColumns = {@JoinColumn(name = "cart", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "basket", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "store")
     private Map<Store, Basket> baskets;                // storeID,Basket
 
     public Cart() {
@@ -35,7 +38,7 @@ public class Cart {
     public Basket getBasket(int storeID, String email) {
         if (!baskets.containsKey(storeID)) {
             Basket basket = new Basket(storeID, email);
-            HibernateUtils.persist(basket);
+//            HibernateUtils.persist(basket);
             return basket;
         }
         return baskets.get(storeID);
@@ -68,7 +71,7 @@ public class Cart {
 
     public void add_product_to_cart(Store store, Product p, int quantity, String email) throws MarketException {
         Basket basket = baskets.getOrDefault(store, new Basket(store.getStore_id(), email));
-        HibernateUtils.persist(basket);
+//        HibernateUtils.persist(basket);
         basket.addProduct(p, quantity);
         this.baskets.put(store, basket);
     }

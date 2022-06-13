@@ -4,15 +4,12 @@ package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("14")
 public class SimplePurchaseRule extends PurchaseRule {
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Predict predict;
 
     public SimplePurchaseRule(Predict predict) {

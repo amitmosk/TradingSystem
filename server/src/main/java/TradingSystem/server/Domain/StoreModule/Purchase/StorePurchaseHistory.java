@@ -11,7 +11,7 @@ public class StorePurchaseHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long store_purchase_history;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "store_purchases",
             joinColumns = {@JoinColumn(name = "store_purchase_history", referencedColumnName = "store_purchase_history")})
     @MapKeyColumn(name = "purchase_id") // the key column

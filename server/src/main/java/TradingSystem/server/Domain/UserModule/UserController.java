@@ -23,10 +23,11 @@ public class UserController {
     private Long id;
 
     // ------------------- fields -------------------------------------
-    @OneToMany
-    @JoinTable(name = "all_users",
-            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
-    @MapKeyColumn(name = "user_id") // the key column
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "all_users",
+//            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
+//    @MapKeyColumn(name = "user_id") // the key column
+    @Transient
     private Map<String, User> users;              // email,user
     @Transient
     private Map<Integer, User> onlineUsers;       // id,user
@@ -34,12 +35,11 @@ public class UserController {
     private AtomicInteger purchaseID;
     @Transient
     private Object usersLock;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StatisticsManager statisticsManager;
 
     public static void load() {
         SystemLogger.getInstance().add_log("user controller load");
-
     }
 
     public User get_user_for_tests(int id) {
@@ -57,6 +57,7 @@ public class UserController {
     // ------------------- singleton class ----------------------------
     private static class SingletonHolder {
         private static UserController instance = new UserController();
+
     }
 
     // ------------------- constructors --------------------------------

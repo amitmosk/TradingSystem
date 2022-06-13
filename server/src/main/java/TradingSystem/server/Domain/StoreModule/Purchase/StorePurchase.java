@@ -20,7 +20,7 @@ public class StorePurchase {
         this.buyer_email = buyer_email;
         this.purchase = purchase;
         this.purchase_id = purchase_id;
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
     }
 
     public StorePurchase() {

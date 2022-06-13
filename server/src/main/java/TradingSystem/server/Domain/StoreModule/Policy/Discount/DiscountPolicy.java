@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 public class DiscountPolicy {
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "discount_policy",
             joinColumns = {@JoinColumn(name = "component_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "name") // the key column

@@ -12,7 +12,6 @@ public class UserQuestion extends Question {
     public UserQuestion(int question_id, String message, AssignUser sender) {
         super(question_id, message, sender);
     }
-
     public UserQuestion() {
 
     }

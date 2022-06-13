@@ -10,7 +10,7 @@ public class UserPurchase {
     @Id
     private int user_purchase_id;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_purchases",
             joinColumns = {@JoinColumn(name = "user_purchase_id", referencedColumnName = "user_purchase_id")})
     @MapKeyColumn(name = "purchase_id") // the key column
@@ -22,7 +22,7 @@ public class UserPurchase {
         this.user_purchase_id = user_purchase_id;
         this.store_id_purchase = store_id_purchase;
         this.total_price = total_price;
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
     }
 
     public UserPurchase() {

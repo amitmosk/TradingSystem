@@ -27,7 +27,7 @@ public class Product {
             throw new ProductCreatingException("price must be more then 0");
         this.price = price;
         this.productReview = new ProductReview();
-        HibernateUtils.persist(productReview);
+//        HibernateUtils.persist(productReview);
         this.category = category;
         this.key_words = key_words;
         this.store_id = store_id;

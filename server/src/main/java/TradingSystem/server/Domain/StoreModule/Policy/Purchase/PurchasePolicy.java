@@ -16,7 +16,7 @@ public class PurchasePolicy {
     @GeneratedValue
     private Long id;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "purchase_policy",
             joinColumns = {@JoinColumn(name = "rule_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "name") // the key column
