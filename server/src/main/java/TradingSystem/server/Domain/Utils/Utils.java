@@ -2,6 +2,7 @@ package TradingSystem.server.Domain.Utils;
 
 
 import TradingSystem.server.Domain.Utils.Exception.*;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -109,36 +110,6 @@ public class Utils {
         }
     }
 
-    /**
-     * Prints the message of the response in case of an exception or a success message
-     *
-     * @param response       response object
-     * @param successMessage the success message to print
-     */
-    public static void printMessageOrSuccess(Response<? extends Object> response, String successMessage) {
-        if (response.WasException())
-            System.out.println(response.getMessage());
-        else
-            System.out.println(successMessage);
-    }
-
-    /**
-     * Prints an error message in case of an error issued with the response object
-     * if no error, prints the value issued with the response object
-     *
-     * @param response reponse object
-     * @param <T>      The type of value the response object wraps
-     */
-    public static <T> void printErrorMessageOrListOfValues(Response<List<T>> response) {
-        if (response.WasException())
-            System.out.println(response.getMessage());
-        else {
-            for (T elem : response.getValue()) {
-                System.out.println(elem + "\n");
-            }
-        }
-    }
-
 
     public static void emailValidCheck(String email) throws MarketException {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
@@ -196,13 +167,13 @@ public class Utils {
             @Override
             public String OnSuccess(String response) {
                 // on success
-                System.out.println("Server OnSuccess response="+response);
+                SystemLogger.getInstance().add_log("HTTP POST On Success Response= "+response);
                 return response;
             }
             @Override
             public String OnError(int status_code, String message) {
                 // on error
-                System.out.println("Server OnError status_code="+status_code+" message="+message);
+                SystemLogger.getInstance().add_log("HTTP POST On Error Status Code= "+status_code+" Message= "+message);
                 return message;
             }
         });

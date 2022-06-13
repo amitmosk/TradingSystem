@@ -1,4 +1,4 @@
-package TradingSystem.server.Domain.Utils;
+package TradingSystem.server.Domain.Utils.Logger;
 
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -26,7 +26,9 @@ public class ErrorLogger {
     public ErrorLogger() {
         this.logger = Logger.getLogger("Error Logger");
         try {
-            this.handler = new FileHandler("ErrorLogger.txt");
+//            this.handler = new FileHandler("ErrorLogger.txt");
+            this.handler = new FileHandler("/LogFiles/NANALOGGER.txt");
+
             handler.setFormatter(new SimpleFormatter());
             logger.addHandler(handler);
 

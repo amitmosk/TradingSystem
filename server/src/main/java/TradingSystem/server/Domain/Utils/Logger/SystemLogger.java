@@ -1,4 +1,4 @@
-package TradingSystem.server.Domain.Utils;
+package TradingSystem.server.Domain.Utils.Logger;
 
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -24,7 +24,8 @@ public class SystemLogger {
     public SystemLogger() {
         this.logger = Logger.getLogger("System Logger");
         try {
-            this.handler = new FileHandler("SystemLogger.txt");
+//            this.handler = new FileHandler("SystemLogger.txt");
+            this.handler = new FileHandler("LogFiles/System/SystemLogger.txt");
             handler.setFormatter(new SimpleFormatter());
             logger.addHandler(handler);
 

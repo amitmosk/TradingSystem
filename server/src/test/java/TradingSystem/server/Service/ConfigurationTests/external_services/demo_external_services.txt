@@ -1,2 +1,2 @@
 external_services:tests
-database:tests
+database:demo
