@@ -1,6 +1,7 @@
 package TradingSystem.server.Domain.Utils.Threads;
 
 import TradingSystem.server.Domain.Utils.HttpUtility;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.io.BufferedReader;
@@ -34,10 +35,8 @@ public class SendNotificationThread implements Runnable {
      */
     @Override
     public void run() {
-        System.out.println("send notification - step 1 ");
+        SystemLogger.getInstance().add_log("System Send Notification To:" + dest);
         smt.convertAndSend(dest, message);
-        System.out.println("send notification - step 2 ");
-
     }
 
 }

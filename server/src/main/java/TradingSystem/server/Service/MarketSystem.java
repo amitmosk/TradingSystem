@@ -8,8 +8,9 @@ import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
+import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import TradingSystem.server.Domain.Utils.Response;
-import TradingSystem.server.Domain.Utils.SystemLogger;
 
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 
@@ -46,6 +47,7 @@ public class MarketSystem {
      */
     public void init_market(String config_file_path) throws ExitException{
         SystemLogger.getInstance().add_log("Start Init Market");
+        SystemLogger.getInstance().add_log("Configuration File Path: "+config_file_path);
         String[] instructions;
         instructions = read_config_file(config_file_path);
         String external_services_instruction = instructions[0];
@@ -97,6 +99,7 @@ public class MarketSystem {
      * @throws ExitException if the handshake fail.
      */
     private void connect_to_external_services() throws ExitException {
+        SystemLogger.getInstance().add_log("System Start Connect To External Services");
         boolean connect_to_external_systems = payment_adapter.handshake() && supply_adapter.handshake();
         if (!connect_to_external_systems) // have to exit
         {
@@ -111,11 +114,13 @@ public class MarketSystem {
      */
     private void set_external_services(String config) throws ExitException {
         if (config.equals("external_services:tests")){
+            SystemLogger.getInstance().add_log("Set Tests External Services");
             this.payment_adapter = new PaymentAdapterTests();
             this.supply_adapter = new SupplyAdapterTests();
             NotificationHandler.setTestsHandler();
         }
         else if (config.equals("external_services:fail_tests")){
+            SystemLogger.getInstance().add_log("Set Denied Tests External Services");
             this.payment_adapter = new PaymentAdapter() {
                 @Override
                 public boolean handshake() {
@@ -136,6 +141,7 @@ public class MarketSystem {
             NotificationHandler.setTestsHandler();
         }
         else if (config.equals("external_services:real")){
+            SystemLogger.getInstance().add_log("Set Real External Services");
             this.payment_adapter = new PaymentAdapterImpl();
             this.supply_adapter = new SupplyAdapterImpl();
         }
@@ -155,6 +161,7 @@ public class MarketSystem {
     private void set_database(String config) throws ExitException{
         // database:real/demo
         if (config.equals("database:tests")){
+            SystemLogger.getInstance().add_log("Init Data For Tests: Empty Database");
             // TODO: GAL - Mock database, no Exception allow here!
 
         }
@@ -162,6 +169,7 @@ public class MarketSystem {
             try
             {
                 // TODO: GAL - load DB, have to throw exception!
+                SystemLogger.getInstance().add_log("Init Data From Database");
                 UserController.load();
                 StoreController.load();
             }
@@ -170,21 +178,14 @@ public class MarketSystem {
             }
         }
         else if (config.equals(("database:demo"))){
-            boolean flag = init_data_to_market(instructions_config_path);
+            SystemLogger.getInstance().add_log("Init Data From Demo, Data File Path: "+instructions_config_path);
+            init_data_to_market(instructions_config_path);
 //            this.add_admins();
 //            this.init_data_to_market_develop(payment_adapter, supply_adapter);
-            if (flag){
-                // TODO: Logger
-            }
-            else{
-                // TODO: Logger
-            }
         }
         else {
             throw new ExitException("System Config File - Illegal Database Data.");
         }
-
-
     }
 
     /**
@@ -195,8 +196,7 @@ public class MarketSystem {
      * @return true if the system load data successfully.
      *  false if was illegal instructions order OR illegal format instruction.
      */
-    public boolean init_data_to_market(String instructions_config_path){
-        boolean answer = true;
+    public void init_data_to_market(String instructions_config_path){
         HashMap<String, MarketFacade> facades = new HashMap<>();
         try{
             File file = new File(instructions_config_path);
@@ -210,18 +210,13 @@ public class MarketSystem {
             }
 
         } catch (Exception e) {
-            // TODO: logger - why the method fail?
-            e.printStackTrace();
-            answer = false;
+            SystemLogger.getInstance().add_log("Init Data Demo Fail, The System Run With No Data :" + e.getMessage());
+            // have to reset all the data of the market and stop the method.
             for (MarketFacade marketFacade : facades.values()){
                 marketFacade.clear();
             }
             facades.clear();
         }
-        // have to reset all the data of the market and stop the method.
-
-        return answer;
-
     }
 
     /**
@@ -455,11 +450,12 @@ public class MarketSystem {
         String name = user.getState().get_user_name();
         String last_name = user.getState().get_user_last_name();
         user.set_admin(user.user_email(), "12345678aA", name, last_name);
+        MarketLogger.getInstance().add_log("New Admin In The Market: "+email);
     }
 
     public void add_admins() throws MarketException {
         UserController.getInstance().add_admin("admin@gmail.com", "12345678aA", "Barak", "Bahar");
-        SystemLogger.getInstance().add_log("admin added");
+        MarketLogger.getInstance().add_log("Admin Added: admin@gmail.com");
 
 
     }

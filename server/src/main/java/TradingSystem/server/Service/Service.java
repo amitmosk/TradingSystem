@@ -7,10 +7,9 @@ import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
-import TradingSystem.server.Domain.Utils.SystemLogger;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
 //import com.google.gson.Gson;
@@ -42,9 +41,10 @@ public class Service implements iService {
             this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         }
         catch (ExitException e) {
-            SystemLogger.getInstance().add_log(e.getMessage());
+            SystemLogger.getInstance().add_log("System Init Fail: "+e.getMessage());
             System.exit(3);
         }
+        SystemLogger.getInstance().add_log("System Init Done.");
     }
 
     public synchronized static Service getInstance() {

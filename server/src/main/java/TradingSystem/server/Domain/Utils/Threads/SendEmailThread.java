@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.Utils.Threads;
 
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import javax.mail.Message;
@@ -24,6 +25,7 @@ public class SendEmailThread implements Runnable {
 
     @Override
     public void run() {
+        SystemLogger.getInstance().add_log("System Send Email To:" +send_to);
         // Assuming you are sending email from localhost
         String host = "localhost";
 

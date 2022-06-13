@@ -1,5 +1,6 @@
 package TradingSystem.server.Service;
 
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import TradingSystem.server.Domain.Utils.Threads.ConnectThread;
 import TradingSystem.server.Domain.Utils.Threads.SendNotificationThread;
 import org.springframework.beans.BeansException;
@@ -31,7 +32,6 @@ public class MessageController implements ApplicationContextAware {
         return emails_to_sockSessionMap.containsKey(email);
     }
 
-
     @EventListener
     public void sessionDisconnectHandler(SessionDisconnectEvent sessionDisconnectEvent){
         String session_id = sessionDisconnectEvent.getSessionId();
@@ -43,22 +43,21 @@ public class MessageController implements ApplicationContextAware {
         }
         if (!email_to_remove.equals(""))
             emails_to_sockSessionMap.remove(email_to_remove);
-        // TODO : logger
-        System.out.println("Disconnect Event :" + session_id);
+        SystemLogger.getInstance().add_log("WS Disconnect Event, Session ID: "+session_id + "Email: "+email_to_remove);
     }
 
     @EventListener
     public void sessionConnectedHandler(SessionConnectedEvent sessionConnectedEvent){
         MessageHeaders m = sessionConnectedEvent.getMessage().getHeaders();
         Object session_id = m.get("simpSessionId");
-        // TODO: LOGGER
-        System.out.println("Connect Event : "+session_id);
         GenericMessage connectMessage = (GenericMessage) m.get("simpConnectMessage");
         MessageHeaders headers = connectMessage.getHeaders();
         Object nativeHeaders = headers.get("nativeHeaders");
         String s = nativeHeaders.toString();
-        String e1 = s.split("]")[0].substring(8);
-        emails_to_sockSessionMap.put(e1, session_id.toString());
+        String email = s.split("]")[0].substring(8);
+        emails_to_sockSessionMap.put(email, session_id.toString());
+        SystemLogger.getInstance().add_log("WS Connect Event, Session ID: "+session_id + "Email: "+email);
+        // TODO: solve first notification send problem
 //        NotificationHandler.getInstance().send_waiting_notifications(e1);
 
 
@@ -73,7 +72,6 @@ public class MessageController implements ApplicationContextAware {
         myContext = context;
     }
 
-    // TODO : LOGGER
     public void sendNotification(String email, String notification){
         // destination according the user email
         String dest = "/topic/"+email;

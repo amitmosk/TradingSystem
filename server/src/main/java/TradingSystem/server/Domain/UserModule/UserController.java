@@ -9,7 +9,8 @@ import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Exception.*;
-import TradingSystem.server.Domain.Utils.SystemLogger;
+import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,7 +27,8 @@ public class UserController {
     private StatisticsManager statisticsManager;
 
     public static void load() {
-        SystemLogger.getInstance().add_log("user controller load");
+        SystemLogger.getInstance().add_log("User Controller Load");
+
 
     }
 
