@@ -95,7 +95,7 @@ public class User {
         isGuest.set(false);
 //        HibernateUtils.persist(this.cart);
 //        HibernateUtils.persist(this.state);
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
     }
 
     public synchronized void login(String password) throws MarketException {

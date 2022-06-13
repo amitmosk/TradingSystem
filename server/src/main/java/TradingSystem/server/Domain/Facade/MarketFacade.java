@@ -50,7 +50,7 @@ public class MarketFacade {
 
     public MarketFacade(PaymentAdapter payment_adapter, SupplyAdapter supply_adapter) {
         this.isGuest = true;
-        this.user_controller = UserController.getInstance();
+        this.user_controller = UserController.get_instance();
         this.store_controller = StoreController.get_instance();
         //Requirement 2.1.1 - guest log in
         this.loggedUser = user_controller.guest_login();
@@ -391,13 +391,13 @@ public class MarketFacade {
      * @precondition : GUI check store name is valid
      */
     //TODO: should we return the store ? or should we do something with the store id
-    public Response<String> open_store(String store_name) {
-        Response<String> response = null;
+    public Response<Integer> open_store(String store_name) {
+        Response<Integer> response = null;
         try {
             HibernateUtils.beginTransaction();
             User online_user = user_controller.get_user(loggedUser);
             int store_id = this.store_controller.open_store(online_user, store_name);
-            response = new Response<>(null, "Store opened successfully");
+            response = new Response<>(store_id, "Store opened successfully");
             HibernateUtils.commit();
             system_logger.add_log("Store " + store_name + " with id = " + store_id + "opened successfully");
         } catch (Exception e) {

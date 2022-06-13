@@ -129,7 +129,6 @@ public class Service implements iService {
     public Response add_product_to_cart(int store_id, int product_id, int quantity) {
         Response answer = marketFacade.add_product_to_cart(store_id, product_id, quantity);
         return answer;
-
     }
 
     @RequestMapping(value = "/remove_product_from_cart")

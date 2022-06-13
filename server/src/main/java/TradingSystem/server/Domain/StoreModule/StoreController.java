@@ -35,13 +35,18 @@ public class StoreController {
     @Transient
     private Object storesLock;
 
-    @OneToOne
+    @Transient
     private static StoreController instance = null;
 
 
     public static StoreController get_instance() {
+        StoreController storeController;
         if (instance == null) {
-            instance = new StoreController();
+            storeController = HibernateUtils.getEntityManager().find(StoreController.class, new Long(1));
+            if (storeController != null) {
+                instance = storeController;
+            } else
+                instance = new StoreController();
             HibernateUtils.persist(instance);
         }
         return instance;
@@ -56,8 +61,9 @@ public class StoreController {
     }
 
     public static void load() {
-//        StoreController st = HibernateUtils.load();
-//        StoreController.setInstance(st);
+//        HibernateUtils.beginTransaction();
+//        get_instance();
+//        HibernateUtils.commit();
         SystemLogger.getInstance().add_log("store controller load");
     }
 
@@ -279,7 +285,7 @@ public class StoreController {
     //------------------------------------------------find product by - End ----------------------------------------------------
 
 
-    public Map<Product,Integer> add_product_to_store(User user, int store_id, int quantity, String name, double price, String category, List<String> key_words)
+    public Map<Product, Integer> add_product_to_store(User user, int store_id, int quantity, String name, double price, String category, List<String> key_words)
             throws MarketException {
         AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id);
@@ -367,7 +373,7 @@ public class StoreController {
     public int open_store(User founder, String store_name) throws MarketException {
         AssignUser founder_state = founder.state_if_assigned();
         int store_id = this.store_ids_counter.getAndIncrement();
-        Store store = new Store(store_id, store_name, founder_state,products_id);
+        Store store = new Store(store_id, store_name, founder_state, products_id);
         Appointment appointment = store.appoint_founder();
         founder.add_founder(store, appointment);
         this.stores.put(store_id, store);
@@ -449,15 +455,14 @@ public class StoreController {
         this.products_id = new AtomicInteger(1);
     }
 
-    public Map<Integer,Store> get_all_stores() {
+    public Map<Integer, Store> get_all_stores() {
         return this.stores;
     }
 
     public List<Product> get_products_by_store_id(int store_id) throws MarketException {
         Store store = this.get_store_by_store_id(store_id);
-        List<Product> to_return=new LinkedList<>();
-        for(Product p:store.getInventory().keySet())
-        {
+        List<Product> to_return = new LinkedList<>();
+        for (Product p : store.getInventory().keySet()) {
             to_return.add(p);
         }
         return to_return;

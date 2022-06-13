@@ -61,7 +61,7 @@ class MarketFacadeTest {
         facade1.register("check123457@email.com", "pass3Chec", "name", "last",birth_date);
         facade1.logout();
 
-        uc = UserController.getInstance();
+        uc = UserController.get_instance();
         pa = new PaymentAdapterImpl();
         sa = new SupplyAdapterImpl();
         email = "somthing@gmail.com";

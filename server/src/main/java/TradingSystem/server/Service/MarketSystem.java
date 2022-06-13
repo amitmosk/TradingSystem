@@ -62,9 +62,9 @@ public class MarketSystem {
     }
 
     public void add_admins() throws MarketException {
-        UserController.getInstance().add_admin("admin@gmail.com", "12345678aA", "Barak", "Bahar");
+        HibernateUtils.beginTransaction();
+        UserController.get_instance().add_admin("admin@gmail.com", "12345678aA", "Barak", "Bahar");
+        HibernateUtils.commit();
         SystemLogger.getInstance().add_log("admin added");
-
-
     }
 }
