@@ -11,6 +11,7 @@ import TradingSystem.server.Domain.UserModule.CartInformation;
 import TradingSystem.server.Domain.Utils.Exception.AppointmentException;
 import TradingSystem.server.Domain.Utils.Exception.ObjectDoesntExsitException;
 import TradingSystem.server.Domain.Utils.Response;
+import TradingSystem.server.Service.MarketSystem;
 import TradingSystem.server.Service.NotificationHandler;
 import org.junit.jupiter.api.*;
 
@@ -20,6 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static TradingSystem.server.Service.MarketSystem.tests_config_file_path;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -33,8 +36,8 @@ class StoreMoudleTest {
     private String name = "amit";
     private String last_name = "grumet";
     private String password = "aA123456";
-    private final SupplyAdapter supplyAdapter = new SupplyAdapterImpl();
-    private final PaymentAdapter paymentAdapter = new PaymentAdapterImpl();
+    private PaymentAdapter paymentAdapter;
+    private SupplyAdapter supplyAdapter;
     private MarketFacade marketFacade = new MarketFacade(paymentAdapter,supplyAdapter);
     private MarketFacade manager = new MarketFacade(paymentAdapter,supplyAdapter);
     private MarketFacade general_user = new MarketFacade(paymentAdapter,supplyAdapter);
@@ -119,6 +122,17 @@ class StoreMoudleTest {
     }
 
     //------------------------- Initialization --------------------------------------------------------------------------
+
+    public StoreMoudleTest() {
+        try{
+            MarketSystem marketSystem = new MarketSystem(tests_config_file_path, "");
+            this.paymentAdapter = marketSystem.getPayment_adapter();
+            this.supplyAdapter = marketSystem.getSupply_adapter();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 
     @BeforeEach
     void SetUp() {

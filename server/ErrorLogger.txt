@@ -1,0 +1,2 @@
+Jun 12, 2022 5:49:09 PM TradingSystem.server.Domain.Utils.ErrorLogger add_log
+SEVERE: Guest doesnt have email.

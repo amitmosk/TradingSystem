@@ -17,43 +17,30 @@ class ConfigurationTests {
 
     // services
         // good
-    private static final String tests_external_services_path =  "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem" +
-            "\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\tests_external_services.txt";
+    private static final String tests_external_services_path =  "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\tests_external_services.txt";
 
     private static final String demo_external_services_path =  "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\demo_external_services.txt";
 
-    private static final String real_external_services_path =  "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem" +
-            "\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\real_external_services.txt";
+    private static final String real_external_services_path =  "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\real_external_services.txt";
         // bad
-    private static final String bad_external_services_path =  "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem" +
-                "\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\bad_external_services.txt";
+    private static final String bad_external_services_path =  "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\bad_external_services.txt";
 
     private static final String denied_services_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\" +
             "ConfigurationTests\\external_services\\denied_external_services.txt";
 
     // instructions
         // good
-    private static final String empty_test_path =  "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\empty_test.txt";
-    private static final String goodIns1_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst1.txt";
-    private static final String goodIns2_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst2.txt";
-    private static final String goodIns3_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst3.txt";
-    private static final String goodIns4_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst4.txt";
-    private static final String goodIns5_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst5.txt";
-    private static final String goodIns6_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst6.txt";
+    private static final String empty_test_path =  "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\empty_test.txt";
+    private static final String goodIns1_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst1.txt";
+    private static final String goodIns2_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst2.txt";
+    private static final String goodIns3_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst3.txt";
+    private static final String goodIns4_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst4.txt";
+    private static final String goodIns5_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst5.txt";
+    private static final String goodIns6_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\good_instructions\\good_inst6.txt";
         // bad
-    private static final String wrong_format_test_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-                "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\bad_instructions\\wrong_format_test.txt";
-    private static final String wrong_instruction_test_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\bad_instructions\\wrong_instruction_test.txt";
-    private static final String wrong_order_test_path = "C:\\Users\\Amit\\Desktop\\SemF\\Sadna\\TradingSystem\\server\\src\\" +
-            "test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\bad_instructions\\wrong_order_test_path.txt";
+    private static final String wrong_format_test_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\bad_instructions\\wrong_format_test.txt";
+    private static final String wrong_instruction_test_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\bad_instructions\\wrong_instruction_test.txt";
+    private static final String wrong_order_test_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\bad_instructions\\wrong_order_test_path.txt";
 
 
 
