@@ -1,14 +1,19 @@
 package TradingSystem.server.DAL;
 
+import TradingSystem.server.Domain.StoreModule.StoreController;
+import com.mysql.cj.Session;
+import net.bytebuddy.asm.Advice;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class HibernateUtils {
 
-    private static final EntityManagerFactory emf;
-    private static final ThreadLocal<EntityManager> threadLocal;
-    private static String persistence_unit = "TradingSystemTests";
+    private static EntityManagerFactory emf;
+    private static ThreadLocal<EntityManager> threadLocal;
+    private static String persistence_unit = "TradingSystem";
+    private static boolean allow_persist = true;
     static {
         emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
@@ -16,6 +21,8 @@ public class HibernateUtils {
 
     public static void setPersistence_unit(String persistence_unit) {
         HibernateUtils.persistence_unit = persistence_unit;
+        emf = Persistence.createEntityManagerFactory(persistence_unit);
+        threadLocal = new ThreadLocal<EntityManager>();
     }
 
     public static EntityManager getEntityManager() {
@@ -42,22 +49,22 @@ public class HibernateUtils {
     }
 
     public static void beginTransaction() {
-        if(!persistence_unit.equals("TradingSystemTests"))
+        if(allow_persist)
             getEntityManager().getTransaction().begin();
     }
 
     public static void rollback() {
-        if(!persistence_unit.equals("TradingSystemTests"))
+        if(allow_persist)
             getEntityManager().getTransaction().rollback();
     }
 
     public static void commit() {
-        if(!persistence_unit.equals("TradingSystemTests"))
+        if(allow_persist)
             getEntityManager().getTransaction().commit();
     }
 
     public static <T> void persist(T obj){
-        if(!persistence_unit.equals("TradingSystemTests"))
+        if(allow_persist)
             getEntityManager().persist(obj);
     }
 }

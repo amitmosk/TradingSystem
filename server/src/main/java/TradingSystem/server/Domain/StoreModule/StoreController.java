@@ -47,7 +47,7 @@ public class StoreController {
         return instance;
     }
 
-    protected StoreController() {
+    public StoreController() {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
         this.stores = new HashMap<>();
@@ -56,6 +56,8 @@ public class StoreController {
     }
 
     public static void load() {
+//        StoreController st = HibernateUtils.load();
+//        StoreController.setInstance(st);
         SystemLogger.getInstance().add_log("store controller load");
     }
 
@@ -473,6 +475,54 @@ public class StoreController {
 
     public Long getId() {
         return id;
+    }
+
+    public Map<Integer, Store> getStores() {
+        return stores;
+    }
+
+    public void setStores(Map<Integer, Store> stores) {
+        this.stores = stores;
+    }
+
+    public AtomicInteger getStore_ids_counter() {
+        return store_ids_counter;
+    }
+
+    public void setStore_ids_counter(AtomicInteger store_ids_counter) {
+        this.store_ids_counter = store_ids_counter;
+    }
+
+    public AtomicInteger getPurchase_ids_counter() {
+        return purchase_ids_counter;
+    }
+
+    public void setPurchase_ids_counter(AtomicInteger purchase_ids_counter) {
+        this.purchase_ids_counter = purchase_ids_counter;
+    }
+
+    public AtomicInteger getProducts_id() {
+        return products_id;
+    }
+
+    public void setProducts_id(AtomicInteger products_id) {
+        this.products_id = products_id;
+    }
+
+    public Object getStoresLock() {
+        return storesLock;
+    }
+
+    public void setStoresLock(Object storesLock) {
+        this.storesLock = storesLock;
+    }
+
+    public static StoreController getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(StoreController instance) {
+        StoreController.instance = instance;
     }
 }
 
