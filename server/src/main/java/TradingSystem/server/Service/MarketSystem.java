@@ -427,7 +427,15 @@ public class MarketSystem {
             }
 
         }
+        else if (instruction.equals("buy_cart")){
+            PaymentInfo p = new PaymentInfo();
+            SupplyInfo s = new SupplyInfo();
+            Response answer = marketFacade.buy_cart(p, s);
+            if (answer.WasException()){
+                throw new IllegalArgumentException("Buy Cart Failed: " + answer.getMessage());
+            }
 
+        }
         else if (instruction.equals("remove_user")){
             Response answer = marketFacade.remove_user(instruction_params[2]);
             if (answer.WasException()){
