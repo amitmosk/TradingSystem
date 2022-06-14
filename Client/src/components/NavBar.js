@@ -90,7 +90,7 @@ export default function NavBar({updateUserState, user}) {
               console.info("I'm Register button, add link.");
             }}
           >
-            <SimpleBadge num={6}></SimpleBadge>
+            <SimpleBadge num={3}></SimpleBadge>
             
           </Link>
 

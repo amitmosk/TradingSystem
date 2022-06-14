@@ -126,6 +126,7 @@ export default function App() {
               <Register updateUserState={updateUserState} />
             }
           ></Route>
+          <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
           <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
           {/* <Route path="/StorePage" element={<StorePageNevigator/>}></Route> */}
           <Route path="/StorePage/:id" element={<StorePageNevigator />}></Route>
@@ -417,7 +418,7 @@ export default function App() {
 //             element={<AdminSendMessage />}
 //           ></Route>
 //           <Route path="/AdminPage" element={<AdminPage />}></Route>
-//           <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
+          // <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
 //           <Route
 //             path="/StorePage/:id/StoreManagment"
 //             element={<StoreManagmentNevigator />}

@@ -158,8 +158,11 @@ export default function StorePolicies() {
         return (
 
             <Box sx={{ flexGrow: 1 }}>
-                
-                <h3 align="center">Store Policies</h3>
+                <Grid container spacing={5} paddingRight={25} paddingLeft={25} paddingTop={10}>
+
+                    
+                </Grid>
+                <h1 align="center">Store Policies</h1>
                 <Grid>
                 </Grid>
                 <Grid container spacing={5} paddingRight={25} paddingLeft={25} paddingTop={10}>

@@ -18,11 +18,17 @@ export class Utils  {
         return 1;
     }
     static check_holder(name){   
-        if(this.check_all_english_letters(name) == 0 || this.check_not_empty(name)==0)
+        if (/^[a-zA-Z ]+$/.test(name))
         {
-            return 0;
+            return 1;
         }
-        return 1;
+        return 0;
+        // if(this.check_not_empty(name)==0)
+        // {
+        //     console.log(name);
+        //     return 0;
+        // }
+        // return 1;
     }
     static check_id(id){   
         if (this.check_all_digits(id) == 0)
