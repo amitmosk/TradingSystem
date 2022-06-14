@@ -118,12 +118,13 @@ class MarketFacadeTest {
     }
     @BeforeEach
     void setUp() throws MarketException {
-
+        
         // make sure no user is logged in
         facade1.logout();
         facade2.logout();
         facade3.logout();
         facade4.logout();
+
 
     }
 
@@ -1741,7 +1742,6 @@ class MarketFacadeTest {
         assertEquals("Eylon", facade1.get_user_name().getValue()); // todo
 
         facade1.logout();
-
     }
 
     /*

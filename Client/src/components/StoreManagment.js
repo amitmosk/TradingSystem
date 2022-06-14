@@ -349,7 +349,6 @@ export default class StoreManagment extends Component {
 
 
     render() {
-        const id=1;
         const { redirectTo } = this.state
         // { this.state.redirect ? (<Redirect push to="/"/>) : null }
 
@@ -357,15 +356,15 @@ export default class StoreManagment extends Component {
 
             <Box sx={{ flexGrow: 1 }}>
                 
-                <h3 align="center">Store Managment Page</h3>
+                <h2 align="center">Store Managment</h2>
                 <Grid>
                     <StoreManagmentProductsTable store_id={this.state.store_id}></StoreManagmentProductsTable>
                 </Grid>
                 <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.add_product_fields} getValues={this.add_product.bind(this)} name="Add Product"></FormDialog></Item>                    </Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.delete_product_fields} getValues={this.delete_product.bind(this)} name="Delete Product"></FormDialog></Item></Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.purchase_policies_fields} getValues={this.store_purchase_policies.bind(this)} name="Store Purchase Policies"></FormDialog></Item></Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.discount_policies_fields} getValues={this.store_discount_policy.bind(this)} name="Store Discount Policies"></FormDialog></Item></Grid >
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.purchase_policies_fields} getValues={this.store_purchase_policies.bind(this)} name="Store Purchase Policies"></FormDialog></Item></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.discount_policies_fields} getValues={this.store_discount_policy.bind(this)} name="Store Discount Policies"></FormDialog></Item></Grid > */}
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_manager_fields} getValues={this.add_manager.bind(this)} name="Add Manager"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_owner_fields} getValues={this.add_owner.bind(this)} name="Add Owner"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.remove_owner_appointment_fields} getValues={this.delete_owner.bind(this)} name="Delete Owner"></FormDialog></Item></Grid>
@@ -390,10 +389,10 @@ export default class StoreManagment extends Component {
                     <Grid item xs={3}>  <Item variant="outlined"> <Link outlinedVar="text" to={{pathname:`ViewStaffInformation` }} >{'View Staff Information'}</Link></Item ></Grid >
 
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid> */}
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddDiscount` }} underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid>
+                    {/* <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddDiscount` }} underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddPurchase` }} underline="hover" >{'Add Purchase Rule'}</Link></Item ></Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`CreatePredict` }} underline="hover" >{'Create Predict'}</Link></Item ></Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ViewRules` }} underline="hover" >{'View Rules'}</Link></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`CreatePredict` }} underline="hover" >{'Create Predict'}</Link></Item ></Grid> */}
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`StorePolicies` }} underline="hover" >{'Store Policies'}</Link></Item ></Grid>
 
 
 

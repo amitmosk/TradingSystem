@@ -1,7 +1,8 @@
 package TradingSystem.server.Domain.ExternSystems;
 
-import TradingSystem.server.Domain.Utils.SystemLogger;
+import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
 import TradingSystem.server.Domain.ExternSystems.Proxy.ExternSupplySystemProxy;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
 public class SupplyAdapterImpl implements SupplyAdapter {
     private ExternSupplySystemProxy externSupplySystemProxy;
@@ -18,12 +19,13 @@ public class SupplyAdapterImpl implements SupplyAdapter {
 
     @Override
     public int cancel_supply(int transaction_id) {
+        SystemLogger.getInstance().add_log("Cancel Supply Of Transaction : " + transaction_id);
         return this.externSupplySystemProxy.cancel_supply(transaction_id);
     }
 
     @Override
     public boolean handshake() {
-        SystemLogger.getInstance().add_log("system connected to the supply system");
+        SystemLogger.getInstance().add_log("System Connected To The Supply System");
         return this.externSupplySystemProxy.handshake();
     }
 }

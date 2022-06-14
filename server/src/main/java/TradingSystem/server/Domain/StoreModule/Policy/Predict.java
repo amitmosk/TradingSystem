@@ -3,12 +3,16 @@ package TradingSystem.server.Domain.StoreModule.Policy;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class Predict implements Ipredict {
+@Entity
+@DiscriminatorValue("11")
+public class Predict extends Ipredict {
     //on what
-    private String catgorey;
+    private String category;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Product product;
 
     //what type < > =
@@ -30,13 +34,16 @@ public class Predict implements Ipredict {
     private int year;
     private int month;
     private int day;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Predict(String catgorey, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day) {
-        this.catgorey = catgorey;
+    public Predict(String category, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day) {
+        this.category = category;
         this.product = product;
         this.above = above;
         this.equql = equql;
-        this.category_constraint = catgorey != "";
+        this.category_constraint = category != "";
         this.product_constraint = product != null;
         this.num = num;
         this.price_constraint = price;
@@ -46,6 +53,10 @@ public class Predict implements Ipredict {
         this.year = year;
         this.month = month;
         this.day = day;
+    }
+
+    public Predict() {
+
     }
 
 
@@ -128,9 +139,9 @@ public class Predict implements Ipredict {
     private boolean check_valid_category(String product_category) {
         if (category_constraint)
             if (equql)
-                return product_category.equals(this.catgorey);
+                return product_category.equals(this.category);
             else
-                return !product_category.equals(this.catgorey);
+                return !product_category.equals(this.category);
         return false;
     }
 
@@ -144,5 +155,13 @@ public class Predict implements Ipredict {
         if (price_constraint)
             return checkField(price);
         return false;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

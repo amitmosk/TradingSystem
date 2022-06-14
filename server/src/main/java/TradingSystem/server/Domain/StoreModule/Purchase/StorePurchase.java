@@ -1,18 +1,26 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
-import java.time.LocalDate;
+import TradingSystem.server.DAL.HibernateUtils;
+
+import javax.persistence.*;
 import java.util.Map;
 
+@Entity
 public class StorePurchase {
-    private String buyer_email;
-    private Purchase purchase;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long store_purchase_id;
     private int purchase_id;
+    private String buyer_email;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Purchase purchase;
 
     // ------------------------------ constructors ------------------------------
     public StorePurchase(Purchase purchase, String buyer_email, int purchase_id) {
         this.buyer_email = buyer_email;
         this.purchase = purchase;
         this.purchase_id = purchase_id;
+//        HibernateUtils.persist(this);
     }
 
     public StorePurchase() {
@@ -80,6 +88,14 @@ public class StorePurchase {
                 ", product_and_name=" + this.getProduct_and_name() +
 
                 '}';
+    }
+
+    public void setStore_purchase_id(Long store_purchase_id) {
+        this.store_purchase_id = store_purchase_id;
+    }
+
+    public Long getStore_purchase_id() {
+        return store_purchase_id;
     }
 }
 

@@ -7,10 +7,10 @@ import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
-import TradingSystem.server.Domain.Utils.SystemLogger;
+import com.google.gson.Gson;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
 //import com.google.gson.Gson;
@@ -42,9 +42,10 @@ public class Service implements iService {
             this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         }
         catch (ExitException e) {
-            SystemLogger.getInstance().add_log(e.getMessage());
+            SystemLogger.getInstance().add_log("System Init Fail: "+e.getMessage());
             System.exit(3);
         }
+        SystemLogger.getInstance().add_log("System Init Done.");
     }
 
     public synchronized static Service getInstance() {
@@ -166,8 +167,8 @@ public class Service implements iService {
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo) {
         // TODO : GSON
-//        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
-//        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
+        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
+        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
         PaymentInfo paymentInfo1 = new PaymentInfo();
         SupplyInfo supplyInfo1 = new SupplyInfo();
         Response answer = marketFacade.buy_cart(paymentInfo1, supplyInfo1);

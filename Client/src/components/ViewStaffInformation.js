@@ -20,7 +20,6 @@ const Demo = styled('div')(({ theme }) => ({
 }));
 
 
-
 export default class ViewStaffInformation extends Component {
 
     constructor(props) {

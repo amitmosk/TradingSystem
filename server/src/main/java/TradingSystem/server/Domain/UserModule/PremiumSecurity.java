@@ -3,6 +3,11 @@ package TradingSystem.server.Domain.UserModule;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Entity
 public class PremiumSecurity extends Security{
     private String question;
     private String answer;

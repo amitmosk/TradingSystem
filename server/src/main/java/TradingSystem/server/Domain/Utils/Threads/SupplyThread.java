@@ -23,6 +23,9 @@ public class SupplyThread implements Runnable {
         value = this.supplyAdapter.supply(supplyInfo);
     }
 
+    /**
+     * @return the answer we got from the external service.
+     */
     public int get_value(){
         return this.value;
     }

@@ -64,8 +64,7 @@ export class ConnectApi {
             })
             .then(res => {
                 console.log(res.data)
-                const user = new User(res.data.value);
-                return Response.create(user,res.data.was_exception,res.data.message);
+                return new Response(res.data);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }

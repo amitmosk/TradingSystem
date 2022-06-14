@@ -15,45 +15,66 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert"; 
 import HomeIcon from '@mui/icons-material/Home';
 import SocketProvider from './SocketProvider';
+import { ConnectApi } from '../API/ConnectApi';
+import { useEffect } from 'react';
+import {useState} from "react";
+
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
 }));
 
 
+export default function Notifications() {
 
-export default class Notifications extends Component {
+    const [user, setUser] = useState(null);
+    const connectApi = new ConnectApi();
+    useEffect(()=>{get_online_user()}, []);
+    // useEffect(()=>{get_notifications()}, []);
+    const get_online_user = async () => {
+      let response = await connectApi.get_online_user()
+      if(!response.was_exception)
+      {
+          console.log(response.value);
+        setUser(response.value);
+        get_notifications(response.value);
+      }
+      else
+      {
+  
+      }
+      
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            notifications: [],
-            snackbar: null,
-        };
-        console.log("in view stuff information, id = "+this.props.store_id);
 
+    const [snackbar, setSnackbar] = React.useState(null);
+    const handleCloseSnackbar = () => setSnackbar(null);
 
+    
+    const [notifications, setNotifications] = React.useState([]);
+    const save_notification = (notification) =>{
 
+        console.log(notification);
+        notifications.push(notification)
+        setNotifications(notifications);
+    }
+    const get_notifications = (u)=> {
+        const {createSocket} = SocketProvider("setMessge", save_notification);
+        createSocket(u.email);
+        
     }
 
-    get_notifications() {
-        this.setState({ notifications : SocketProvider.get_notifications() });
-    }
+    
 
-    async componentDidMount() {
-        this.get_notifications();
-    }
-
-    render() {
         return (
 
-            <>
+            
        
                 <Box position='center' align='center'>
-                    <Grid position='center' row-spacing={3}>
+                    <Grid position='center' row-spacing={3} paddingTop={10}>
                         <Grid item>
-                            <h3 class="Header" align="center">
+                            <h2 class="Header" align="center" > 
                                 Notifications
-                            </h3>
+                            </h2>
                         </Grid>
 
                         <Grid position='center' align='center'>
@@ -62,7 +83,7 @@ export default class Notifications extends Component {
                                 <List>
                                     {
 
-                                        this.state.notifications.map((n) => (
+                                        notifications.length !==0 ? notifications.map((n) => (
                                             <ListItem>
                                                 <ListItemAvatar>
                                                     <Avatar>
@@ -76,7 +97,7 @@ export default class Notifications extends Component {
                                                 />
                                             </ListItem>
 
-                                        ))
+                                        )) : <h8 style={{ color: 'red' }}> No Notifications</h8>
 
 
 
@@ -86,25 +107,21 @@ export default class Notifications extends Component {
                             </Demo>
                         </Grid>
                     </Grid>
+                    {!!snackbar && (
+            <Snackbar
+            open
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            onClose={handleCloseSnackbar}
+            autoHideDuration={6000}
+            >
+            <Alert {...snackbar} onClose={handleCloseSnackbar} />
+            </Snackbar>
+        )}
                 </Box>
-                {!!this.state.snackbar && (
-                        <Snackbar
-                        open
-                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                        onClose={this.handleCloseSnackbar}
-                        autoHideDuration={6000}
-                        >
-                        <Alert
-                            {...this.state.snackbar}
-                            onClose={this.handleCloseSnackbar}
-                        />
-                        </Snackbar>
-                    )}
+                
 
-            </>
-        );
-        // )
-        // );
+    
+    );
 
-    }
-}
+
+}          

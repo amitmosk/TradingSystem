@@ -1,10 +1,20 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Entity
 public class StorePurchaseHistory {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long store_purchase_history;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "store_purchases",
+            joinColumns = {@JoinColumn(name = "store_purchase_history", referencedColumnName = "store_purchase_history")})
+    @MapKeyColumn(name = "purchase_id") // the key column
     private Map<Integer, StorePurchase> purchaseID_purchases;
     private String store_name;
 
@@ -53,5 +63,13 @@ public class StorePurchaseHistory {
             ans.append(p.toString());
         }
         return ans.toString();
+    }
+
+    public void setStore_purchase_history(Long store_purchase_history) {
+        this.store_purchase_history = store_purchase_history;
+    }
+
+    public Long getStore_purchase_history() {
+        return store_purchase_history;
     }
 }

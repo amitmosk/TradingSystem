@@ -5,12 +5,19 @@ import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountCo
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.util.List;
-
+@Entity
+@DiscriminatorValue("3")
 public class andCompsoitePredict extends CompositePredict {
 
     public andCompsoitePredict(Ipredict left, Ipredict right) {
         super(left, right);
+    }
+
+    public andCompsoitePredict() {
+
     }
 
 
