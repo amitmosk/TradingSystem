@@ -13,7 +13,8 @@ public class HibernateUtils {
     private static EntityManagerFactory emf;
     private static ThreadLocal<EntityManager> threadLocal;
     private static String persistence_unit = "TradingSystemTests";
-    private static boolean allow_persist = false;
+    private static boolean allow_persist = true;
+
     static {
         emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
@@ -65,9 +66,9 @@ public class HibernateUtils {
         }
     }
 
-  public static void clear_db(String schemeName){
-        getEntityManager().createQuery("DROP SCHEMA "+schemeName).executeUpdate();
-        getEntityManager().createQuery("Create SCHEMA   "+schemeName).executeUpdate();
+    public static void clear_db(String schemeName) {
+        getEntityManager().createQuery("DROP SCHEMA " + schemeName).executeUpdate();
+        getEntityManager().createQuery("Create SCHEMA   " + schemeName).executeUpdate();
     }
 
     public static void closeEntityManagerFactory() {
@@ -75,26 +76,35 @@ public class HibernateUtils {
     }
 
     public static void beginTransaction() {
-        if(allow_persist)
-            getEntityManager().getTransaction().begin();
+        if (allow_persist)
+            if (!getEntityManager().getTransaction().isActive())
+                getEntityManager().getTransaction().begin();
+
     }
 
     public static void rollback() {
-        if(allow_persist)
+        if (allow_persist)
             getEntityManager().getTransaction().rollback();
     }
 
     public static void commit() {
-        if(allow_persist)
-            getEntityManager().getTransaction().commit();
+        if (allow_persist)
+            if (getEntityManager().getTransaction().isActive())
+                getEntityManager().getTransaction().commit();
     }
 
-    public static <T> void persist(T obj){
-        if(allow_persist)
+    public static <T> void persist(T obj) {
+        if (allow_persist)
             getEntityManager().persist(obj);
     }
 
-    public static void main(String[] args) {
-        HibernateUtils.clear_db("datatests");
+    public static <T> void remove(T obj) {
+        if (allow_persist)
+            getEntityManager().remove(obj);
     }
+
+//   public static void main(String[] args) {
+//        HibernateUtils.clear_db("datatests")
+// ;
+//    }
 }

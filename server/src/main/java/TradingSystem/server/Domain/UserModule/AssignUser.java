@@ -201,7 +201,9 @@ public class AssignUser extends AssignState {
     public void improve_security(String password, String question, String answer) throws MarketException {
         security.check_correct_password(password);
         security.check_improvable();
+        Security toRemove=this.security;
         security = new PremiumSecurity(password, question, answer);
+        HibernateUtils.remove(toRemove);
     }
 
     public void add_founder(Store store,Appointment appointment) throws MarketException {

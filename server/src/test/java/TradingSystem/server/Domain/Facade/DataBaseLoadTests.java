@@ -8,6 +8,8 @@ import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.StoreController;
+import TradingSystem.server.Domain.UserModule.PremiumSecurity;
+import TradingSystem.server.Domain.UserModule.Security;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserInformation;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
@@ -16,6 +18,7 @@ import TradingSystem.server.Service.MarketSystem;
 import org.junit.jupiter.api.*;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
 
 import static TradingSystem.server.Service.MarketSystem.tests_config_file_path;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,10 +30,10 @@ import java.util.Map;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DataBaseLoadTests {
-    private EntityManager em;
+    private EntityManager em = HibernateUtils.getEntityManager();
     private SupplyAdapter supplyAdapter;
     private PaymentAdapter paymentAdapter;
-    private MarketFacade marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
+    private MarketFacade marketFacade;
     private String birth_date;
     private final int price = 100;
     private int productId;
@@ -58,6 +61,9 @@ public class DataBaseLoadTests {
     @BeforeAll
     void setClass() {
         HibernateUtils.set_load_tests_mode();
+        HibernateUtils.beginTransaction();
+        this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
+        HibernateUtils.commit();
         em = HibernateUtils.getEntityManager();
         this.productId = 1;
         this.birth_date = LocalDate.now().minusYears(30).toString();
@@ -112,8 +118,25 @@ public class DataBaseLoadTests {
     }
 
     @Test
+    void product_creation_sad() {
+        Response<UserInformation> res = marketFacade.register("email123@gmail.com", password, name, last_name, birth_date);
+        assertFalse(res.WasException(), "error while trying to register valid user");
+        Response<Integer> open_store_res = marketFacade.open_store("store2");
+        assertFalse(open_store_res.WasException(), "error while trying to open new store");
+        int store_id = open_store_res.getValue();
+        Response<Map<Product, Integer>> add_prod_res = marketFacade.add_product_to_store(store_id, 50, "banana", 100.0, "fruits", new ArrayList<>());
+        Map.Entry<Product, Integer> entry = add_prod_res.getValue().entrySet().stream().findAny().get();
+        assertFalse(res.WasException(), "error while trying to add valid product to store");
+        Product product = HibernateUtils.getEntityManager().find(Product.class, new Long(1));
+        assertEquals(product, null);
+    }
+
+    /**
+     * register user opening store adding product and buying it
+     * check:if the purchase id from the db is correct
+     */
+    @Test
     void buy_cart() {
-        int t = 5;
         Response<UserInformation> res = marketFacade.register("email123@gmail.com", password, name, last_name, birth_date);
         assertFalse(res.WasException(), "error while trying to register valid user");
         Response<Integer> open_store_res = marketFacade.open_store("store2");
@@ -130,6 +153,70 @@ public class DataBaseLoadTests {
         Purchase purchase = userPurchas.getStore_id_purchase().get(store_id);
         Purchase load = HibernateUtils.getEntityManager().find(Purchase.class, purchase.getPurchase_id());
         assertEquals(purchase.getPurchase_id(), load.getPurchase_id());
+    }
+
+    /**
+     * register user opening store adding product and buying it
+     * check:if the db returning null if the id is wrong
+     */
+    @Test
+    //wrong purchase id
+    void buy_cart_sad() {
+        Response<UserInformation> res = marketFacade.register("email123@gmail.com", password, name, last_name, birth_date);
+        assertFalse(res.WasException(), "error while trying to register valid user");
+        Response<Integer> open_store_res = marketFacade.open_store("store2");
+        assertFalse(open_store_res.WasException(), "error while trying to open new store");
+        int store_id = open_store_res.getValue();
+        Response<Map<Product, Integer>> add_prod_res = marketFacade.add_product_to_store(store_id, 50, "banana", 100.0, "fruits", new ArrayList<>());
+        Map.Entry<Product, Integer> entry = add_prod_res.getValue().entrySet().stream().findAny().get();
+        assertFalse(res.WasException(), "error while trying to add valid product to store");
+        Product product = HibernateUtils.getEntityManager().find(Product.class, entry.getKey().getProduct_id());
+        marketFacade.add_product_to_cart(store_id, productId, 10);
+        assertEquals(product, entry.getKey(), "failed to load product properly from database");
+        Response<UserPurchase> res_userPurchase = marketFacade.buy_cart(new PaymentInfo(), new SupplyInfo());
+        UserPurchase userPurchas = res_userPurchase.getValue();
+        Purchase purchase = userPurchas.getStore_id_purchase().get(store_id);
+        Purchase load = HibernateUtils.getEntityManager().find(Purchase.class, new Long(-1));
+        assertEquals(null, load);
+    }
+
+    /**
+     * register user opening store adding product and buying it
+     * check:if the purchase id from the db is correct
+     */
+    @Test
+    void buy_cart_inventory_check() throws MarketException {
+        Response<UserInformation> res = marketFacade.register("email123@gmail.com", password, name, last_name, birth_date);
+        assertFalse(res.WasException(), "error while trying to register valid user");
+        Response<Integer> open_store_res = marketFacade.open_store("store2");
+        assertFalse(open_store_res.WasException(), "error while trying to open new store");
+        int store_id = open_store_res.getValue();
+        Response<Map<Product, Integer>> add_prod_res = marketFacade.add_product_to_store(store_id, 50, "banana", 100.0, "fruits", new ArrayList<>());
+        Map.Entry<Product, Integer> entry = add_prod_res.getValue().entrySet().stream().findAny().get();
+        assertFalse(res.WasException(), "error while trying to add valid product to store");
+        Product product = HibernateUtils.getEntityManager().find(Product.class, entry.getKey().getProduct_id());
+        marketFacade.add_product_to_cart(store_id, productId, 10);
+        assertEquals(product, entry.getKey(), "failed to load product properly from database");
+        Response<UserPurchase> res_userPurchase = marketFacade.buy_cart(new PaymentInfo(), new SupplyInfo());
+        UserPurchase userPurchas = res_userPurchase.getValue();
+        Purchase purchase = userPurchas.getStore_id_purchase().get(store_id);
+        Purchase load = HibernateUtils.getEntityManager().find(Purchase.class, purchase.getPurchase_id());
+        assertEquals(purchase.getPurchase_id(), load.getPurchase_id());
+        Map<Product, Integer> inventory = marketFacade.get_store(store_id).getInventory();
+        int inventory_for_product_banana = inventory.get(entry.getKey());
+        assertEquals(inventory_for_product_banana, 40);
+    }
+
+
+    @Test
+    public void security_upgrade() {
+        Response<UserInformation> res = marketFacade.register("email123@gmail.com", password, name, last_name, birth_date);
+        assertFalse(res.WasException(), "error while trying to register valid user");
+        Security security = HibernateUtils.getEntityManager().find(Security.class, new Long(1));
+        marketFacade.improve_security(password, "where", "yes");
+        Security improve_security = HibernateUtils.getEntityManager().find(PremiumSecurity.class,new Long(2));
+        assertNull(HibernateUtils.getEntityManager().find(Security.class,new Long(1)));
+        assertNotNull(improve_security);
     }
 
 

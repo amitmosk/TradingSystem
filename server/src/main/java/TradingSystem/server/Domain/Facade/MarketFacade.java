@@ -37,6 +37,7 @@ import TradingSystem.server.Domain.Utils.Utils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
+
 import java.util.*;
 
 // TODO: when we leave the system - should call logout()
@@ -80,7 +81,7 @@ public class MarketFacade {
             UserInformation user_inform = new UserInformation(user);
             response = new Response(user_inform, "Logout Successfully");
             HibernateUtils.commit();
-            market_logger.add_log(user_inform.getEmail()+ " logged out from the system.");
+            market_logger.add_log(user_inform.getEmail() + " logged out from the system.");
         } catch (Exception e) {
             HibernateUtils.rollback();
             response = Utils.CreateResponse(e);
@@ -1988,8 +1989,6 @@ public class MarketFacade {
     }
 
 
-
-
     public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
         Response<String> response = null;
         try {
@@ -2038,9 +2037,9 @@ public class MarketFacade {
         Response<List<String>> response = null;
         try {
             List<String> permissions = store_controller.get_permissions(manager_email, store_id);
-            response = new Response<>(permissions, "permissions of user "+manager_email);
+            response = new Response<>(permissions, "permissions of user " + manager_email);
         } catch (Exception e) {
-            response = Utils.CreateResponse(new MarketException("failed to fetch permissions of user "+manager_email));
+            response = Utils.CreateResponse(new MarketException("failed to fetch permissions of user " + manager_email));
             error_logger.add_log(e);
         }
         return response;
@@ -2050,9 +2049,9 @@ public class MarketFacade {
         Response<List<String>> response = null;
         try {
             List<String> categories = store_controller.get_all_categories(store_id);
-            response = new Response<>(categories, "categories of store "+store_id+" received successfully");
+            response = new Response<>(categories, "categories of store " + store_id + " received successfully");
         } catch (Exception e) {
-            response = Utils.CreateResponse(new MarketException("failed to fetch categories of store "+store_id));
+            response = Utils.CreateResponse(new MarketException("failed to fetch categories of store " + store_id));
             error_logger.add_log(e);
         }
         return response;

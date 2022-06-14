@@ -233,6 +233,7 @@ public class User {
 
     public void improve_security(String password, String question, String answer) throws MarketException {
         this.state.improve_security(password, question, answer);
+
     }
 
     public void remove_product_from_cart(Store store, Product p) throws MarketException {
