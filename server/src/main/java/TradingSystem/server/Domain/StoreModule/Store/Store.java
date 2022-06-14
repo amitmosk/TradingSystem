@@ -890,16 +890,16 @@ public class Store implements Observable{
         Bid bid = this.bids.get(bidID);
         bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
 
-        User buyer = bid.get_buyer();
+        User buyer = bid.getBuyer();
         if (bid.get_status() == BidStatus.closed_confirm) {
             buyer.add_notification("Your bid is confirm by the store managers.");
-            Product product = bid.get_product();
+            Product product = bid.getProduct();
             buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
         }
 
         if (bid.get_status() == BidStatus.negotiation_mode){
             buyer.add_notification("Your bid has received a counter-bid.");
-            Product product = bid.get_product();
+            Product product = bid.getProduct();
             buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
         }
 

@@ -20,7 +20,6 @@ public class Bid implements iBid {
     private Product product;
     private int quantity;
     private double offer_price;
-    private String buyer_email;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private User buyer;
@@ -42,7 +41,6 @@ public class Bid implements iBid {
         this.quantity = quantity;
         this.negotiation_price = -1;
         this.offer_price = offer_price;
-        this.buyer_email = buyer_email;
         this.buyer = buyer;
         this.managersEmail_answers = new HashMap<>();
         for (String manager_email : managers_emails){
@@ -116,28 +114,12 @@ public class Bid implements iBid {
             return this.offer_price;
     }
 
-    public Product get_product(){
-        return this.product;
-    }
-
-    public String get_buyer_email() {
-        return this.buyer_email;
-    }
-
-    public User get_buyer() {
-        return buyer;
-    }
-
-    public int getQuantity() {
-        return this.quantity;
+    public Long getBid_id() {
+        return bid_id;
     }
 
     public void setBid_id(Long bid_id) {
         this.bid_id = bid_id;
-    }
-
-    public Long getBid_id() {
-        return bid_id;
     }
 
     public Product getProduct() {
@@ -146,6 +128,10 @@ public class Bid implements iBid {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public void setQuantity(int quantity) {
@@ -158,14 +144,6 @@ public class Bid implements iBid {
 
     public void setOffer_price(double offer_price) {
         this.offer_price = offer_price;
-    }
-
-    public String getBuyer_email() {
-        return buyer_email;
-    }
-
-    public void setBuyer_email(String buyer_email) {
-        this.buyer_email = buyer_email;
     }
 
     public User getBuyer() {
