@@ -107,6 +107,8 @@ public class MarketSystem {
     }
 
     /**
+     * Requirement 1.3 & 1.4
+     *
      * this method crate adapters to the external services.
      * @param config - "external_services:demo" or "external_services:real"
      * @throws ExitException if the input is illegal.
