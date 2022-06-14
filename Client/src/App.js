@@ -53,6 +53,8 @@ import ViewRules from "./components/ViewRules";
 import AddPurchase from "./components/AddPurchase";
 import CreatePredict from "./components/CreatePredict";
 import StorePolicies from "./components/StorePolicies";
+import AdminViewStorePurchaseHistory from "./components/AdminViewStorePurchaseHistory";
+import AdminViewUserPurchaseHistory from "./components/AdminViewUserPurchaseHistory";
 
 
 
@@ -68,7 +70,8 @@ export default function App() {
 
   const connectApi = new ConnectApi();
   const get_online_user = async () => {
-      let response = await connectApi.get_online_user()
+      let response = await connectApi.get_online_user();
+      console.log(response.value);
       if(!response.was_exception)
       {
         setUser(response.value);
@@ -101,6 +104,9 @@ export default function App() {
           
         ></NavBar>
 
+
+          {/* --------------------------------------From Home Page---------------------------------- */}
+
         <Routes>
           <Route
             path="/"
@@ -127,8 +133,11 @@ export default function App() {
             }
           ></Route>
           <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
-          <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
-          {/* <Route path="/StorePage" element={<StorePageNevigator/>}></Route> */}
+          <Route path="/UserViewQuestions" element={<UserViewQuestions />}></Route>
+
+          {/* --------------------------------------Store Page---------------------------------- */}
+
+
           <Route path="/StorePage/:id" element={<StorePageNevigator />}></Route>
           <Route path="MyStores/StorePage/:id" element={<StorePageNevigator />}></Route>
           <Route path="/AllStores/StorePage/:id" element={<StorePageNevigator />}></Route>
@@ -137,6 +146,17 @@ export default function App() {
             element={<AdminSendMessage />}
           ></Route>
           <Route path="/AdminPage" element={<AdminPage />}></Route>
+
+          {/* -------------------------------------- Admin Page---------------------------------- */}
+
+          <Route
+            path="/AdminPage/AdminViewStorePurchaseHistory/:id"
+            element={<AdminViewStorePurchaseHistory />}
+          ></Route>
+          <Route
+            path="/AdminPage/AdminViewUserPurchaseHistory/:user_email"
+            element={<AdminViewUserPurchaseHistory />}
+          ></Route>
           
           {/* -------------------------------------- Store Managment---------------------------------- */}
           <Route

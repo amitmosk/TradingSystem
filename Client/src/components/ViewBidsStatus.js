@@ -41,6 +41,8 @@ export default class ViewBidsStatus extends Component {
 
     async view_bids_status() {
         let response = await this.storeApi.view_bids_status(this.state.store_id);
+        console.log(response.value);
+        response.value.map(a=>console.log(a));
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in get store staff info - success!\n");
@@ -102,15 +104,14 @@ export default class ViewBidsStatus extends Component {
                                             <ListItem>
                                                 <ListItemAvatar>
                                                     <Avatar>
-                                                        <PersonIcon />
+                                                    bid.id
                                                     </Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText
-                                                    // primary={bid.type + ': ' + staf.member_email}
-                                                    // secondary={'Appointed by: ' + staf.appointer_email}
+                                                    
+                                                    primary={"Offered "  + bid.price +"$"+" for "+bid.quantity+" "+bid.product_info.name+" Products"  }
+                                                    secondary={"bid status: "+bid.status}
 
-////////////////////////////////////////////////////////////////////??????//////////////////////////////////////////////////
-                                                // primary='fsdf'
                                                 />
                                             </ListItem>
                                             

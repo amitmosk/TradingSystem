@@ -7,6 +7,7 @@ import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
+import TradingSystem.server.Domain.Utils.Utils;
 import com.google.gson.Gson;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,6 +40,8 @@ public class Service implements iService {
             system = new MarketSystem(system_config_path, instructions_config_path);
             PaymentAdapter paymentAdapter = system.getPayment_adapter();
             SupplyAdapter supplyAdapter = system.getSupply_adapter();
+            //system.add_admins();
+            //system.init_data_to_market_develop(paymentAdapter, supplyAdapter);
             this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         }
         catch (ExitException e) {
@@ -64,8 +67,8 @@ public class Service implements iService {
 
     @RequestMapping(value = "/get_notifications")
     @CrossOrigin
-    public Response get_notifications(){
-        NotificationHandler.getInstance().send_waiting_notifications("amit@gmail.com");
+    public Response get_notifications(String email){
+        NotificationHandler.getInstance().send_waiting_notifications(email);
         return new Response("nice", "job");
     }
 
@@ -167,26 +170,37 @@ public class Service implements iService {
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo) {
         // TODO : GSON
-        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
-        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
-        PaymentInfo paymentInfo1 = new PaymentInfo();
-        SupplyInfo supplyInfo1 = new SupplyInfo();
-        Response answer = marketFacade.buy_cart(paymentInfo1, supplyInfo1);
-        return answer;
-    }
+        PaymentInfo p=null;
+        SupplyInfo s=null;
+        try{
+            p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
+            s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
+            Response answer = marketFacade.buy_cart(p, s);
+            return answer;
+        }
+        catch(Exception e)
+        {
+            return Utils.CreateResponse(e);
+        }
 
+
+    }
+    @RequestMapping(value = "/add_bid")
+    @CrossOrigin
     @Override
     public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
         Response answer = marketFacade.add_bid(storeID, productID, quantity, offer_price);
         return answer;
     }
-
+    @RequestMapping(value = "/manager_answer_bid")
+    @CrossOrigin
     @Override
     public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
         Response answer = marketFacade.manager_answer_bid(storeID, bidID, manager_answer, negotiation_price);
         return answer;
     }
-
+    @RequestMapping(value = "/view_bids_status")
+    @CrossOrigin
     @Override
     public Response view_bids_status(int storeID) {
         Response answer = marketFacade.view_bids_status(storeID);

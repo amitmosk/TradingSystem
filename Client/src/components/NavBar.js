@@ -81,7 +81,9 @@ export default function NavBar({updateUserState, user}) {
               <Link to={{pathname:`/Notifications`}} onClick={handleClose} underline="hover"> {<SimpleBadge num={6}></SimpleBadge>}</Link>
             </MenuItem> */}
 
-            <Link
+            {
+              user.state !== 0 ? 
+              <Link
             href="/Notifications"
             component="button"
             variant="body2"
@@ -92,7 +94,8 @@ export default function NavBar({updateUserState, user}) {
           >
             <SimpleBadge num={3}></SimpleBadge>
             
-          </Link>
+          </Link>: null
+            }
 
 
 

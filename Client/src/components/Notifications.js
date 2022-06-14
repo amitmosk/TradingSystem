@@ -53,12 +53,12 @@ export default function Notifications() {
     const [notifications, setNotifications] = React.useState([]);
     const save_notification = (notification) =>{
 
-        console.log(notification);
+        console.log(notification+"\n\n\n\n\n\n\n");
         notifications.push(notification)
         setNotifications(notifications);
     }
     const get_notifications = (u)=> {
-        const {createSocket} = SocketProvider("setMessge", save_notification);
+        const {createSocket} = SocketProvider({save_notification});
         createSocket(u.email);
         
     }
