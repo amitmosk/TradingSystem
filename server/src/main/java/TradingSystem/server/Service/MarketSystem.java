@@ -448,6 +448,7 @@ public class MarketSystem {
         User user = UserController.get_instance().get_user_by_email(email);
         String name = user.getState().get_user_name();
         String last_name = user.getState().get_user_last_name();
+
         user.set_admin(user.user_email(), "12345678aA", name, last_name);
         SystemLogger.getInstance().add_log("New Admin In The Market: "+email);
         MarketLogger.getInstance().add_log("New Admin In The Market: "+email);
