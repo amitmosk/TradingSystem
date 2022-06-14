@@ -7,15 +7,17 @@ public class BidInformation {
     private double price;
     private int quantity;
     private String status;
+    private int id;
 
     public BidInformation() {
     }
 
-    public BidInformation(Bid bid) {
+    public BidInformation(Bid bid, int id) {
         this.price = bid.get_offer_price();
         this.quantity = bid.getQuantity();
         this.status = bid.get_status().toString();
         this.product_info = new ProductInformation(bid.get_product(), quantity);
+        this.id = id;
     }
 
     public ProductInformation getProduct_info() {
@@ -48,5 +50,13 @@ public class BidInformation {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }
