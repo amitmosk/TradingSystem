@@ -33,6 +33,14 @@ public class HibernateUtils {
         threadLocal = new ThreadLocal<EntityManager>();
     }
 
+    public static void set_tests_mode() {
+        HibernateUtils.persistence_unit = "TradingSystemTests";
+        HibernateUtils.allow_persist = false;
+        emf = Persistence.createEntityManagerFactory(persistence_unit);
+        threadLocal = new ThreadLocal<EntityManager>();
+    }
+
+
     public static void set_normal_use() {
         HibernateUtils.persistence_unit = "TradingSystem";
         HibernateUtils.allow_persist = true;
@@ -41,7 +49,7 @@ public class HibernateUtils {
     }
 
     public static void set_demo_use() {
-        HibernateUtils.persistence_unit = "Demo";
+        HibernateUtils.persistence_unit = "TradingSystem";
         HibernateUtils.allow_persist = true;
         emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();

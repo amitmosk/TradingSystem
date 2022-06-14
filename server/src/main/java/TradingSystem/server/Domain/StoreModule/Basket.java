@@ -22,7 +22,7 @@ public class Basket implements Serializable {
     private Pair basket_id; // <user_email, store_id>
 
     @ElementCollection
-    @MapKeyColumn(name = "product_id") // the key column
+    @MapKeyJoinColumn(name = "product_id") // the key column
     @Column(name = "quantity")
     private Map<Product, Integer> products_and_quantities; //  product & quantity
     //TODO:

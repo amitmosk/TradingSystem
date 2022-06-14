@@ -57,8 +57,10 @@ public class Store implements Observable{
     public String foundation_date;
 
     @ElementCollection
-    @MapKeyColumn(name = "product_id") // the key column
     @Column(name = "quantity")
+    @MapKeyClass(value = Product.class)
+//    @MapKeyColumn(name = "product_id") // the key column
+    @MapKeyJoinColumn(name = "product_id")
     private Map<Product, Integer> inventory; // product & quantity
     private boolean active;
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
