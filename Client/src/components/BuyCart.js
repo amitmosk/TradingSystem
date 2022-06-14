@@ -6,6 +6,8 @@ import SupplyPage from './SupplyPage';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert"; 
 import { CartApi } from '../API/CartApi';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 export default function BuyCart() {
     const [payment, setPayment] = React.useState(null);
@@ -37,7 +39,7 @@ export default function BuyCart() {
         const payment_info = JSON.stringify(payment);
         const supply_info = JSON.stringify(supply);
         let response = await cartApi.buy_cart(payment_info,supply_info);
-        if (response.was_exception)
+        if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' }); 
         }  
@@ -52,9 +54,35 @@ export default function BuyCart() {
     const handleCloseSnackbar = () => setSnackbar(null);
     return (
         <main>
-        <PaymentPage update={update_payment_info.bind(this)}></PaymentPage>
-        <SupplyPage update={update_supply_info.bind(this)}></SupplyPage> 
-         <Button onClick={() => buy_cart()} variant="contained">Buy Cart </Button>
+          <Box sx={{ flexGrow: 1 }}>
+
+            <h1 class="Header" align="center">
+                            </h1>
+            <h2 class="Header" align="center">
+            Buy Cart
+                            </h2>
+                            <h5 class="Header" align="center"> 
+                Please complete your supply and payment information
+                            </h5>
+            </Box>
+
+          <Grid container spacing={10} justifyContent="center" alignItems="center">
+          
+                        
+          <PaymentPage update={update_payment_info.bind(this)}></PaymentPage>  
+          <SupplyPage update={update_supply_info.bind(this)}></SupplyPage>                 
+          
+          </Grid>
+          <Grid container spacing={3} justifyContent="center" alignItems="center" paddingBottom={20}>
+
+          <Button onClick={() => buy_cart()} variant="contained" >Buy Cart </Button>   
+        
+
+
+          </Grid>
+        
+        
+         
         {!!snackbar && (
         <Snackbar
           open

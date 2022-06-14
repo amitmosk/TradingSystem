@@ -12,10 +12,11 @@ import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import SimpleBadge from "./SimpleBadge";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { ConnectApi } from '../API/ConnectApi';
+import { useEffect } from 'react';
+import {useState} from "react";
 
-export default function AccountMenu({ log, state, user }) {
-  console.log(user+"\n\n\n\n\n");
-  console.log(user.storesManaged+"\n\n\n\n\n");
+export default function AccountMenu({ log, state }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,6 +25,26 @@ export default function AccountMenu({ log, state, user }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const logout = () =>{
+    handleClose();
+    log();
+  }
+  const [user, setUser] = useState(null);
+  const connectApi = new ConnectApi();
+  useEffect(()=>{get_online_user()}, []);
+  const get_online_user = async () => {
+    let response = await connectApi.get_online_user()
+    if(!response.was_exception)
+    {
+      setUser(response.value);
+
+    }
+    else
+    {
+
+    }
+    
+}
 
   return (
     <React.Fragment>
@@ -123,7 +144,7 @@ export default function AccountMenu({ log, state, user }) {
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
-              <Button onClick={log}>Logout</Button>
+              <Button onClick={logout}>Logout</Button>
             </MenuItem>
           </>
         ) : null}

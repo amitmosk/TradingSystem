@@ -175,7 +175,7 @@ export default class ShoppingCart extends Component {
             </Row>
             <Row>
               <h6>
-                you can edit your products quantity by double click on quantity.
+                You can edit your products quantity by double click on quantity.
               </h6>
             </Row>
           </Grid>

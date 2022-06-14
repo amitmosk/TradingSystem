@@ -449,6 +449,7 @@ public class MarketSystem {
         String name = user.getState().get_user_name();
         String last_name = user.getState().get_user_last_name();
         user.set_admin(user.user_email(), "12345678aA", name, last_name);
+        SystemLogger.getInstance().add_log("New Admin In The Market: "+email);
         MarketLogger.getInstance().add_log("New Admin In The Market: "+email);
     }
 
@@ -461,10 +462,10 @@ public class MarketSystem {
         MarketFacade marketFacade5 = new MarketFacade(paymentAdapter, supplyAdapter);
         // register
         marketFacade1.register("amit@gmail.com","12345678aA","amit","moskovitz",birth_date);
-        marketFacade2.register("tom@gmail.com","12345678aA","amit","moskovitz",birth_date);
-        marketFacade3.register("gal@gmail.com","12345678aA","amit","moskovitz",birth_date);
-        marketFacade4.register("grumet@gmail.com","12345678aA","amit","moskovitz",birth_date);
-        marketFacade5.register("eylon@gmail.com","12345678aA","amit","moskovitz",birth_date);
+        marketFacade2.register("tom@gmail.com","12345678aA","Tom","moskovitz",birth_date);
+        marketFacade3.register("gal@gmail.com","12345678aA","Gal","moskovitz",birth_date);
+        marketFacade4.register("grumet@gmail.com","12345678aA","amitG","moskovitz",birth_date);
+        marketFacade5.register("eylon@gmail.com","12345678aA","Eylon","moskovitz",birth_date);
         // open store
         marketFacade1.open_store("amit store");
         marketFacade2.open_store("tom store");
@@ -472,13 +473,13 @@ public class MarketSystem {
         marketFacade4.open_store("grumet store");
         marketFacade5.open_store("eylon store");
         // add products to stores
-        marketFacade1.add_product_to_store(1,50,"iphone",2999.9, "electronic",new LinkedList<>());
-        marketFacade2.add_product_to_store(2,50,"iphone",2999.9, "electronic",new LinkedList<>());
-        marketFacade3.add_product_to_store(3,50,"iphone",2999.9, "electronic",new LinkedList<>());
-        marketFacade4.add_product_to_store(4,50,"iphone",2999.9, "electronic",new LinkedList<>());
-        marketFacade5.add_product_to_store(5,50,"iphoneS",2999.9, "electronic",new LinkedList<>());
+        marketFacade1.add_product_to_store(1,50,"iphoneA",2999.9, "electronic",new LinkedList<>());
+        marketFacade2.add_product_to_store(2,50,"iphoneT",2999.9, "electronic",new LinkedList<>());
+        marketFacade3.add_product_to_store(3,50,"iphoneG",2999.9, "electronic",new LinkedList<>());
+        marketFacade4.add_product_to_store(4,50,"iphoneAG",2999.9, "electronic",new LinkedList<>());
+        marketFacade5.add_product_to_store(5,50,"iphoneE",2999.9, "electronic",new LinkedList<>());
 
-        marketFacade5.add_product_to_store(5,50,"iphone",2999.9, "electronic",new LinkedList<>());
+        marketFacade5.add_product_to_store(5,50,"iphoneE2",2999.9, "electronic",new LinkedList<>());
         // add products to cart
         marketFacade1.add_product_to_cart(1,1,20);
 //        marketFacade1.add_product_to_cart(2,2,20);
@@ -519,5 +520,6 @@ public class MarketSystem {
         UserController.get_instance().add_admin("admin@gmail.com", "12345678aA", "Barak", "Bahar");
         HibernateUtils.commit();
         SystemLogger.getInstance().add_log("admin added");
+        MarketLogger.getInstance().add_log("admin added");
     }
 }

@@ -18,14 +18,16 @@ public class UserQuestion extends Question {
 
     @Override
     public String toString() {
+        String ans = has_answer ? answer : "No Answer Yet";
+        String has_ans = has_answer ? "Yes" : "No";
         return "UserQuestion{" +
                 "buyer_email='" + sender.get_user_email() + '\'' +
                 ", question_id=" + question_id +
                 ", message_date=" + message_date +
                 ", answer_date=" + answer_date +
-                ", message='" + message + '\'' +
-                ", answer='" + answer + '\'' +
-                ", has_answer=" + has_answer +
+                ", message=" + message +
+                ", answer=" + ans +
+                ", has_answer=" + has_ans +
                 '}';
     }
 
@@ -35,8 +37,8 @@ public class UserQuestion extends Question {
         return "Question to admin :" +
                 ", message_date=" + message_date +
                 ", answer_date=" + answer_date +
-                ", message='" + message + '\'' +
-                ", answer='" + answer + '\'' +
+                ", message=" + message +
+                ", answer=" + answer +
                 '}';
     }
 }

@@ -17,18 +17,15 @@ export default function ControlledRadioButtonsGroup({list, name, save}) {
 
   return (
     <FormControl>
-      <FormLabel id="demo-controlled-radio-buttons-group">{name}</FormLabel>
+      <FormLabel id="demo-controlled-radio-buttons-group" >{name}</FormLabel>
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
         value={value}
         onChange={handleChange}
       >
-          {list.map(a=> <FormControlLabel value={a} control={<Radio />} label={a}/>)}
-          {/* {list.map(a => <FormControlLabel value={"a"+a.toString()} control={<Radio />} label={"{a}"+a.toString()}/>)} */}
-          {/* {list.map((a)=>{<FormControlLabel value={"a"+a.toString()} control={<Radio />} label={"{a}"+a.toString()}/>})} */}
-         {/* <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" /> */}
+          {list.length!==0 ? list.map(a=> <FormControlLabel value={a} control={<Radio />} label={a}/>) : <h8 style={{ color: 'red' }}> No {name} To This Store</h8>}
+         
       </RadioGroup>
     </FormControl>
   );
