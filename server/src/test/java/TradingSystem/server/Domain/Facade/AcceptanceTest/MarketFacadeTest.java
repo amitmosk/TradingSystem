@@ -568,256 +568,6 @@ class MarketFacadeTest {
 
     //------------------------------- Testing functions --------------------------------------------------------------------------
 
-    // get_market_stats
-    // get_products_by_store_id
-    // edit_product_quantity
-    // online_user
-    // add_predict
-    // send_to_user_purchase_policy
-    // send_predicts
-    // send_to_user_discount_policy
-    // add_complex_discount_rule
-    // add_simple_categorey_discount_rule
-    // add_simple_product_discount_rule
-    // add_simple_store_discount_rule
-    // remove_discount_rule
-    // add_simple_purchase_rule
-    // add_and_purchase_rule
-    // add_or_purchase_rule
-
-
-    @Test
-    void get_user_questions(){
-        Response res;
-        boolean suppose_to_throw = true;
-        String test_name = "get_user_questions";
-        int store_counter = num_of_stores();
-        String message, test_case, question;
-        List<String> questions = new ArrayList<>();
-        String founder_email = "founder@user.com";
-        String new_user = "new@user.com";
-        int store_id;
-
-        // --------------------------- All users register ---------------------------
-        message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
-        res = facade1.register(founder_email, password, "founder", "founder", birth_date);
-        assertFalse(check_was_exception(res), message);
-
-        res = facade2.register(new_user, password, "user", "user", birth_date);
-        assertFalse(check_was_exception(res), message);
-
-        message = "Test: " + test_name + "\nFounder opens store\n";
-        res = facade1.open_store("Store for test: " + test_name);
-        assertFalse(check_was_exception(res), message);
-        store_id = num_of_stores();
-
-        question = "This shouldn't work";
-        test_case = "user tries to send question to store with no purchase- this should not work";
-        facade2.send_question_to_store(store_id, question);
-        valid_all_user_questions(questions, test_case);
-
-        question = "I made a purchase so this should work";
-        test_case = "user sends question to store- this should work";
-        add_prod_make_purchase_get_id(store_id);
-        facade2.send_question_to_store(store_id, question);
-        questions.add(question);
-        valid_all_user_questions(questions, test_case);
-
-        question = "Hello admin, how are you?";
-        test_case = "user sends question to admin- this should work";
-        facade2.send_question_to_admin(question);
-        questions.add(question);
-        valid_all_user_questions(questions, test_case);
-
-        question = "I made a mistake with the store ID so this shouldn't work";
-        test_case = "user sends question to invalid store ID- this shouldn't work";
-        facade2.send_question_to_store(store_id + 3, question);
-        valid_all_user_questions(questions, test_case);
-
-        question = "I made a purchase so this should work (100)";
-        test_case = "user sends question to store- this should work";
-        for(int i = 0; i < 100; i++){
-           facade2.send_question_to_store(store_id, i + question);
-           questions.add(i + question);
-           valid_all_user_questions(questions, test_case);
-        }
-
-        question = "I'm sending lots of messages to admin, HAHA (100)";
-        test_case = "user sends question to admin- this should work";
-        for(int i = 0; i < 100; i++){
-            facade2.send_question_to_admin(i + question);
-            questions.add(i + question);
-            valid_all_user_questions(questions, test_case);
-        }
-
-        facade1.logout();
-        facade2.logout();
-
-
-    }
-
-    @Test
-    void view_store_management_information(){
-        Response res;
-        boolean suppose_to_throw = true;
-        String test_name = "view_store_management_information";
-        int store_counter = num_of_stores();
-        String message, test_case;
-        List<String> staff = new ArrayList<>();
-        String owner_email = "owner@owner.com";
-        String founder_email = "founder@founder.com";
-        String manager_email = "manager@manager.com";
-        int store_id;
-        int founder = 1;
-
-        // --------------------------- All users register ---------------------------
-        message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
-        res = facade1.register(founder_email, password, "founder", "founder", birth_date);
-        assertFalse(check_was_exception(res), message);
-
-        res = facade2.register(owner_email, password, "owner", "owner", birth_date);
-        assertFalse(check_was_exception(res), message);
-
-        res = facade3.register(manager_email, user_password, "manager", "manager", birth_date);
-        assertFalse(check_was_exception(res), message);
-
-
-        // --------------------------- Founder opens store ---------------------------
-        test_case = "Founder opens store";
-        store_counter++;
-        store_id = open_store_helper(!suppose_to_throw, founder, test_name, store_counter, test_case, "Store: " + test_name , 1);
-        staff.add(founder_email);
-
-        // --------------------------- Founder appoints owner ---------------------------
-        message ="Founder (" + founder_email + ") add user (" + owner_email + ") as store (" + store_id + ") owner";
-        res = facade1.add_owner(owner_email,store_id);
-        assertFalse(check_was_exception(res), message);
-        staff.add(owner_email);
-        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
-        res = facade1.view_store_management_information(store_id);
-        List<String> staff_info = get_staff_names(res);
-        for(String worker : staff){
-            assertTrue(staff_info.contains(worker), message + worker + " not found in system");
-        }
-
-        // --------------------------- Guest user tries to appoint manager ---------------------------
-        message ="Guest (" + founder_email + ") tries to add user (" + manager_email + ") as store (" + store_id + ") manager";
-        res = facade4.add_manager(manager_email, store_id);
-        assertTrue(check_was_exception(res), message);
-        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: " + manager_email + "found in system";
-        res = facade1.view_store_management_information(store_id);
-        staff_info = get_staff_names(res);
-        assertFalse(staff_info.contains(manager_email), message);
-
-
-        // --------------------------- Owner appoints store manager ---------------------------
-        message ="Owner (" + owner_email + ") add user (" + manager_email + ") as store (" + store_id + ") manager";
-        res = facade2.add_manager(manager_email,store_id);
-        assertFalse(check_was_exception(res), message);
-        staff.add(manager_email);
-        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
-        res = facade1.view_store_management_information(store_id);
-        staff_info = get_staff_names(res);
-            for(String worker : staff){
-                assertTrue(staff_info.contains(worker), message + worker + " not found in system");
-            }
-
-
-        // --------------------------- Founder deletes store owner ---------------------------
-        message ="Founder (" + founder_email + ") removes owner (" + owner_email + ") as store (" + store_id + ") owner";
-        res = facade1.delete_owner(owner_email,store_id);
-        assertFalse(check_was_exception(res), message);
-        staff.remove(owner_email);
-        staff.remove(manager_email);
-        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
-        res = facade1.view_store_management_information(store_id);
-        staff_info = get_staff_names(res);
-            for(String worker : staff){
-                assertFalse(staff_info.contains(manager_email), message);
-                assertFalse(staff_info.contains(owner_email), message);
-            }
-
-
-        // --------------------------- All users logout ---------------------------
-        facade1.logout();
-        facade2.logout();
-        facade3.logout();
-
-    }
-
-
-    @Test
-    void manager_answer_question() throws MarketException {
-        Response res;
-        String founder = "founder@managerAnswerQuestion.com";
-        String owner = "owner@managerAnswerQuestion.com";
-        String manager = "manager@managerAnswerQuestion.com";
-        boolean suppose_to_throw = true;
-        String test_name = "manager_answer_question";
-        String message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
-        String test_case, question;
-        int question_counter = num_of_questions()-1;
-        int Qid1;
-
-        // all test characters register the system
-        res = facade1.register(founder, user_password, "founder", "founder", birth_date);
-        assertFalse(check_was_exception(res), message);
-        res = facade4.register(owner, user_password, "owner", "owner", birth_date);
-        assertFalse(check_was_exception(res), message);
-        res = facade3.register(manager, user_password, "manager", "manager", birth_date);
-        assertFalse(check_was_exception(res), message);
-        res = facade2.login(user_regular_email_1, user_password);
-        assertFalse(check_was_exception(res), message);
-
-        // founder opens store
-        int store_id = open_store_get_id("new store for test: " + test_name);
-        founder_exist(founder, store_id);
-
-        // founder adds owner as store owner
-        message = make_assert_exception_message(test_name, "founder adds owner as store owner", !suppose_to_throw);
-        res = facade1.add_owner(owner, store_id);
-        assertFalse(check_was_exception(res), message);
-
-        // owner adds manager1 as store manager
-        message = make_assert_exception_message(test_name, "owner adds manager as store manager", !suppose_to_throw);
-        res = facade4.add_manager(manager, store_id);
-        assertFalse(check_was_exception(res), message);
-
-        question = "How are you my friends?";
-        test_case = "user tries sends store a question";
-        message = "Test: " + test_name + "\nTest case: " + test_case + " failed- exception thrown";
-        add_prod_make_purchase_get_id(store_id);
-        res = facade2.send_question_to_store(store_id,question);
-        assertFalse(check_was_exception(res), message);
-        question_counter++;
-        Qid1 = question_counter;
-
-
-        res = facade3.manager_view_store_questions(store_id);
-        valid_questions(res, question_counter, question, user_regular_email_1, false, "", test_case, test_name);
-
-        message = "Test: " + test_name + "\nTest case: ";
-        test_case = "manager tried to answer a question from a store that does not exist";
-        res = facade3.manager_answer_question(store_id + 3, Qid1, "This shouldn't work");
-        assertTrue(check_was_exception(res), message + test_case + "\n");
-
-        test_case = "manager tried to answer a question from an ID that does not exist";
-        res = facade3.manager_answer_question(store_id, Qid1 + 9, "This shouldn't work");
-        assertTrue(check_was_exception(res), message + test_case + "\n");
-
-        test_case = "manager answers a question";
-        res = facade3.manager_answer_question(store_id, Qid1, "This should work");
-        assertFalse(check_was_exception(res), message + test_case + "\n");
-        res = facade3.manager_view_store_questions(store_id);
-        valid_questions(res, question_counter, question, user_regular_email_1, true, "This should work", test_case, test_name);
-
-        facade1.logout();
-        facade2.logout();
-        facade3.logout();
-        facade4.logout();
-
-    }
-
 
     //------------------------------- Open \ Close store --------------------------------------------------------------------------
 
@@ -1329,6 +1079,168 @@ class MarketFacadeTest {
         facade1.logout();
         facade2.logout();
 
+
+    }
+
+    @Test
+    void view_store_management_information(){
+        Response res;
+        boolean suppose_to_throw = true;
+        String test_name = "view_store_management_information";
+        int store_counter = num_of_stores();
+        String message, test_case;
+        List<String> staff = new ArrayList<>();
+        String owner_email = "owner@owner.com";
+        String founder_email = "founder@founder.com";
+        String manager_email = "manager@manager.com";
+        int store_id;
+        int founder = 1;
+
+        // --------------------------- All users register ---------------------------
+        message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
+        res = facade1.register(founder_email, password, "founder", "founder", birth_date);
+        assertFalse(check_was_exception(res), message);
+
+        res = facade2.register(owner_email, password, "owner", "owner", birth_date);
+        assertFalse(check_was_exception(res), message);
+
+        res = facade3.register(manager_email, user_password, "manager", "manager", birth_date);
+        assertFalse(check_was_exception(res), message);
+
+
+        // --------------------------- Founder opens store ---------------------------
+        test_case = "Founder opens store";
+        store_counter++;
+        store_id = open_store_helper(!suppose_to_throw, founder, test_name, store_counter, test_case, "Store: " + test_name , 1);
+        staff.add(founder_email);
+
+        // --------------------------- Founder appoints owner ---------------------------
+        message ="Founder (" + founder_email + ") add user (" + owner_email + ") as store (" + store_id + ") owner";
+        res = facade1.add_owner(owner_email,store_id);
+        assertFalse(check_was_exception(res), message);
+        staff.add(owner_email);
+        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
+        res = facade1.view_store_management_information(store_id);
+        List<String> staff_info = get_staff_names(res);
+        for(String worker : staff){
+            assertTrue(staff_info.contains(worker), message + worker + " not found in system");
+        }
+
+        // --------------------------- Guest user tries to appoint manager ---------------------------
+        message ="Guest (" + founder_email + ") tries to add user (" + manager_email + ") as store (" + store_id + ") manager";
+        res = facade4.add_manager(manager_email, store_id);
+        assertTrue(check_was_exception(res), message);
+        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: " + manager_email + "found in system";
+        res = facade1.view_store_management_information(store_id);
+        staff_info = get_staff_names(res);
+        assertFalse(staff_info.contains(manager_email), message);
+
+
+        // --------------------------- Owner appoints store manager ---------------------------
+        message ="Owner (" + owner_email + ") add user (" + manager_email + ") as store (" + store_id + ") manager";
+        res = facade2.add_manager(manager_email,store_id);
+        assertFalse(check_was_exception(res), message);
+        staff.add(manager_email);
+        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
+        res = facade1.view_store_management_information(store_id);
+        staff_info = get_staff_names(res);
+        for(String worker : staff){
+            assertTrue(staff_info.contains(worker), message + worker + " not found in system");
+        }
+
+
+        // --------------------------- Founder deletes store owner ---------------------------
+        message ="Founder (" + founder_email + ") removes owner (" + owner_email + ") as store (" + store_id + ") owner";
+        res = facade1.delete_owner(owner_email,store_id);
+        assertFalse(check_was_exception(res), message);
+        staff.remove(owner_email);
+        staff.remove(manager_email);
+        message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
+        res = facade1.view_store_management_information(store_id);
+        staff_info = get_staff_names(res);
+        for(String worker : staff){
+            assertFalse(staff_info.contains(manager_email), message);
+            assertFalse(staff_info.contains(owner_email), message);
+        }
+
+
+        // --------------------------- All users logout ---------------------------
+        facade1.logout();
+        facade2.logout();
+        facade3.logout();
+
+    }
+
+
+    @Test
+    void manager_answer_question() throws MarketException {
+        Response res;
+        String founder = "founder@managerAnswerQuestion.com";
+        String owner = "owner@managerAnswerQuestion.com";
+        String manager = "manager@managerAnswerQuestion.com";
+        boolean suppose_to_throw = true;
+        String test_name = "manager_answer_question";
+        String message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
+        String test_case, question;
+        int question_counter = num_of_questions()-1;
+        int Qid1;
+
+        // all test characters register the system
+        res = facade1.register(founder, user_password, "founder", "founder", birth_date);
+        assertFalse(check_was_exception(res), message);
+        res = facade4.register(owner, user_password, "owner", "owner", birth_date);
+        assertFalse(check_was_exception(res), message);
+        res = facade3.register(manager, user_password, "manager", "manager", birth_date);
+        assertFalse(check_was_exception(res), message);
+        res = facade2.login(user_regular_email_1, user_password);
+        assertFalse(check_was_exception(res), message);
+
+        // founder opens store
+        int store_id = open_store_get_id("new store for test: " + test_name);
+        founder_exist(founder, store_id);
+
+        // founder adds owner as store owner
+        message = make_assert_exception_message(test_name, "founder adds owner as store owner", !suppose_to_throw);
+        res = facade1.add_owner(owner, store_id);
+        assertFalse(check_was_exception(res), message);
+
+        // owner adds manager1 as store manager
+        message = make_assert_exception_message(test_name, "owner adds manager as store manager", !suppose_to_throw);
+        res = facade4.add_manager(manager, store_id);
+        assertFalse(check_was_exception(res), message);
+
+        question = "How are you my friends?";
+        test_case = "user tries sends store a question";
+        message = "Test: " + test_name + "\nTest case: " + test_case + " failed- exception thrown";
+        add_prod_make_purchase_get_id(store_id);
+        res = facade2.send_question_to_store(store_id,question);
+        assertFalse(check_was_exception(res), message);
+        question_counter++;
+        Qid1 = question_counter;
+
+
+        res = facade3.manager_view_store_questions(store_id);
+        valid_questions(res, question_counter, question, user_regular_email_1, false, "", test_case, test_name);
+
+        message = "Test: " + test_name + "\nTest case: ";
+        test_case = "manager tried to answer a question from a store that does not exist";
+        res = facade3.manager_answer_question(store_id + 3, Qid1, "This shouldn't work");
+        assertTrue(check_was_exception(res), message + test_case + "\n");
+
+        test_case = "manager tried to answer a question from an ID that does not exist";
+        res = facade3.manager_answer_question(store_id, Qid1 + 9, "This shouldn't work");
+        assertTrue(check_was_exception(res), message + test_case + "\n");
+
+        test_case = "manager answers a question";
+        res = facade3.manager_answer_question(store_id, Qid1, "This should work");
+        assertFalse(check_was_exception(res), message + test_case + "\n");
+        res = facade3.manager_view_store_questions(store_id);
+        valid_questions(res, question_counter, question, user_regular_email_1, true, "This should work", test_case, test_name);
+
+        facade1.logout();
+        facade2.logout();
+        facade3.logout();
+        facade4.logout();
 
     }
 
@@ -2051,6 +1963,76 @@ class MarketFacadeTest {
         assertTrue(result, message);
 
         facade1.logout();
+
+    }
+
+    @Test
+    void get_user_questions(){
+        Response res;
+        boolean suppose_to_throw = true;
+        String test_name = "get_user_questions";
+        int store_counter = num_of_stores();
+        String message, test_case, question;
+        List<String> questions = new ArrayList<>();
+        String founder_email = "founder@user.com";
+        String new_user = "new@user.com";
+        int store_id;
+
+        // --------------------------- All users register ---------------------------
+        message = "Test: " + test_name + "\nexception thrown while: all test characters register the system";
+        res = facade1.register(founder_email, password, "founder", "founder", birth_date);
+        assertFalse(check_was_exception(res), message);
+
+        res = facade2.register(new_user, password, "user", "user", birth_date);
+        assertFalse(check_was_exception(res), message);
+
+        message = "Test: " + test_name + "\nFounder opens store\n";
+        res = facade1.open_store("Store for test: " + test_name);
+        assertFalse(check_was_exception(res), message);
+        store_id = num_of_stores();
+
+        question = "This shouldn't work";
+        test_case = "user tries to send question to store with no purchase- this should not work";
+        facade2.send_question_to_store(store_id, question);
+        valid_all_user_questions(questions, test_case);
+
+        question = "I made a purchase so this should work";
+        test_case = "user sends question to store- this should work";
+        add_prod_make_purchase_get_id(store_id);
+        facade2.send_question_to_store(store_id, question);
+        questions.add(question);
+        valid_all_user_questions(questions, test_case);
+
+        question = "Hello admin, how are you?";
+        test_case = "user sends question to admin- this should work";
+        facade2.send_question_to_admin(question);
+        questions.add(question);
+        valid_all_user_questions(questions, test_case);
+
+        question = "I made a mistake with the store ID so this shouldn't work";
+        test_case = "user sends question to invalid store ID- this shouldn't work";
+        facade2.send_question_to_store(store_id + 3, question);
+        valid_all_user_questions(questions, test_case);
+
+        question = "I made a purchase so this should work (100)";
+        test_case = "user sends question to store- this should work";
+        for(int i = 0; i < 100; i++){
+            facade2.send_question_to_store(store_id, i + question);
+            questions.add(i + question);
+            valid_all_user_questions(questions, test_case);
+        }
+
+        question = "I'm sending lots of messages to admin, HAHA (100)";
+        test_case = "user sends question to admin- this should work";
+        for(int i = 0; i < 100; i++){
+            facade2.send_question_to_admin(i + question);
+            questions.add(i + question);
+            valid_all_user_questions(questions, test_case);
+        }
+
+        facade1.logout();
+        facade2.logout();
+
 
     }
 

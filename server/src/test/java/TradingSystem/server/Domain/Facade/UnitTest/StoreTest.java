@@ -575,7 +575,7 @@
 //            Product p = store.getProduct_by_product_id(1);
 //            store.edit_product_price(founder, 1, 600);
 //            Basket basket = new Basket(1, "6");
-//            basket.addProduct(p, 1);
+//            basket.addProduct(p, 1, 600);
 //            price = store.check_available_products_and_calc_price(OverAge, basket);
 //
 //
@@ -609,7 +609,7 @@
 //            store.add_product(founder, "phone", 1990.90, "electronic", keywords, 6);
 //            Product p = store.getProduct_by_product_id(1);
 //            Basket basket = new Basket(1, "6");
-//            basket.addProduct(p, 1);
+//            basket.addProduct(p, 1, p.getOriginal_price());
 //            price = store.check_available_products_and_calc_price(OverAge,basket);
 //        } catch (Exception e) {
 //            fail("edit product fail");
@@ -630,9 +630,9 @@
 //            Product p2 = store.getProduct_by_product_id(2);
 //            Product p3 = store.getProduct_by_product_id(3);
 //            Basket basket = new Basket(1, "6");
-//            basket.addProduct(p1, 3);
-//            basket.addProduct(p2, 2);
-//            basket.addProduct(p3, 1);
+//            basket.addProduct(p1, 3, p1.getOriginal_price());
+//            basket.addProduct(p2, 2, p2.getOriginal_price());
+//            basket.addProduct(p3, 1, p3.getOriginal_price());
 //            price = store.check_available_products_and_calc_price(OverAge,basket);
 //            System.out.println(price);
 //        } catch (Exception e) {
@@ -652,7 +652,7 @@
 //            Product p = store.getProduct_by_product_id(1);
 //            store.edit_product_price(founder, 1, 600);
 //            Basket basket = new Basket(1, "6");
-//            basket.addProduct(p, 60);
+//            basket.addProduct(p, 60, 600);
 //            price = store.check_available_products_and_calc_price(OverAge,basket);
 //        } catch (Exception e) {
 //            was_exception = true;
