@@ -107,6 +107,8 @@ public class MarketSystem {
     }
 
     /**
+     * Requirement 1.3 & 1.4
+     *
      * this method crate adapters to the external services.
      * @param config - "external_services:demo" or "external_services:real"
      * @throws ExitException if the input is illegal.
@@ -425,7 +427,15 @@ public class MarketSystem {
             }
 
         }
+        else if (instruction.equals("buy_cart")){
+            PaymentInfo p = new PaymentInfo();
+            SupplyInfo s = new SupplyInfo();
+            Response answer = marketFacade.buy_cart(p, s);
+            if (answer.WasException()){
+                throw new IllegalArgumentException("Buy Cart Failed: " + answer.getMessage());
+            }
 
+        }
         else if (instruction.equals("remove_user")){
             Response answer = marketFacade.remove_user(instruction_params[2]);
             if (answer.WasException()){
@@ -448,6 +458,7 @@ public class MarketSystem {
         User user = UserController.get_instance().get_user_by_email(email);
         String name = user.getState().get_user_name();
         String last_name = user.getState().get_user_last_name();
+
         user.set_admin(user.user_email(), "12345678aA", name, last_name);
         SystemLogger.getInstance().add_log("New Admin In The Market: "+email);
         MarketLogger.getInstance().add_log("New Admin In The Market: "+email);

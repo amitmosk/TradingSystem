@@ -31,6 +31,7 @@ public class SendNotificationThread implements Runnable {
     }
 
     /**
+     * Requirement 6
      * this thread task is to send a notification WS-based to the client.
      */
     @Override

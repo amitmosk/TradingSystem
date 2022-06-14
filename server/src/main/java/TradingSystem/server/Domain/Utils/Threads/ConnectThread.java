@@ -31,6 +31,7 @@ public class ConnectThread implements Runnable {
     }
 
     /**
+     * Requirement 6
      * this thread task is to connect the external services by http post requests, with different parameters.
      */
     @Override
