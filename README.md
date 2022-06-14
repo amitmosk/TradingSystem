@@ -68,9 +68,6 @@ Pay attention that all the instructions should keep this order.
  4. Use external systems services according http requests to the external server, implemented with adapter & proxy design patterns.
  5. DB - in our system we worked with Hibernate orm libary, Hibernate ORM (or simply Hibernate) is an object–relational mapping tool for  
     the Java programming language. It provides a framework for mapping an object-oriented domain model to a relational database.
- 
- ## Tests: 
- <Here come Eylon words>
 
 ## Contrubutors:
 Eylon Sade   

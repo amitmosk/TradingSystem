@@ -7,6 +7,10 @@ import java.util.HashMap;
 
 import static TradingSystem.server.Service.MarketSystem.external_system_url;
 
+/**
+ * Requirement 1.3
+ */
+
 public class ExternPaymentSystemProxy {
 
     public int payment(double total_price, PaymentInfo paymentInfo)  {
