@@ -12,10 +12,9 @@
 //import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByStore;
 //import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 //import TradingSystem.server.Domain.StoreModule.Policy.Predict;
-//import TradingSystem.server.Domain.StoreModule.Policy.Purchase.AndporchaseRule;
-//import TradingSystem.server.Domain.StoreModule.Policy.Purchase.OrporchaseRule;
-//import TradingSystem.server.Domain.StoreModule.Policy.Purchase.SimpleporchaseRule;
-//import TradingSystem.server.Domain.StoreModule.Policy.Purchase.porchaseRule;
+//import TradingSystem.server.Domain.StoreModule.Policy.Purchase.OrPurchaseRule;
+//import TradingSystem.server.Domain.StoreModule.Policy.Purchase.SimplePurchaseRule;
+//import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchaseRule;
 //import TradingSystem.server.Domain.StoreModule.Product.Product;
 //import TradingSystem.server.Domain.Utils.Exception.MarketException;
 //import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
@@ -271,19 +270,19 @@
 //        Product apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(),1);
 //        simpleDiscountComponentByStore ByStore = new simpleDiscountComponentByStore(0.5);
 //
-//        SimpleporchaseRule only_above_hunderd_shkals = new SimpleporchaseRule(only_below_hunderd_shkal);
-//        SimpleporchaseRule only_above_five_productss = new SimpleporchaseRule(only_below_hunderd_shkal);
-//        SimpleporchaseRule only_in_catgyorey_fruitss = new SimpleporchaseRule(only_below_hunderd_shkal);
+//        SimplePurchaseRule only_above_hunderd_shkals = new SimplePurchaseRule(only_below_hunderd_shkal);
+//        SimplePurchaseRule only_above_five_productss = new SimplePurchaseRule(only_below_hunderd_shkal);
+//        SimplePurchaseRule only_in_catgyorey_fruitss = new SimplePurchaseRule(only_below_hunderd_shkal);
 //
 //
 //        Basket TestBasket = new Basket(1, "amit");
 //        TestBasket.addProduct(apple, 7);
-//        OrporchaseRule above5above100 = new OrporchaseRule(only_above_hunderd_shkals, only_above_five_productss);
-//        OrporchaseRule above5infruits = new OrporchaseRule(only_in_catgyorey_fruitss, above5above100);
+//        OrPurchaseRule above5above100 = new OrPurchaseRule(only_above_hunderd_shkals, only_above_five_productss);
+//        OrPurchaseRule above5infruits = new OrPurchaseRule(only_in_catgyorey_fruitss, above5above100);
 //
-//        OrporchaseRule onlyintechorabove100 = new OrporchaseRule(above5infruits, above5above100);
-//        OrporchaseRule above5above100inftuits = new OrporchaseRule(onlyintechorabove100, above5above100);
-//        OrporchaseRule above5above100infruitsorintech = new OrporchaseRule(above5above100inftuits, onlyintechorabove100);
+//        OrPurchaseRule onlyintechorabove100 = new OrPurchaseRule(above5infruits, above5above100);
+//        OrPurchaseRule above5above100inftuits = new OrPurchaseRule(onlyintechorabove100, above5above100);
+//        OrPurchaseRule above5above100infruitsorintech = new OrPurchaseRule(above5above100inftuits, onlyintechorabove100);
 //
 //
 //        return Stream.of(
@@ -308,7 +307,7 @@
 //
 //    @ParameterizedTest
 //    @MethodSource("purchase")
-//    void purchaseRule(porchaseRule rule, Basket b, boolean res) {
+//    void purchaseRule(PurchaseRule rule, Basket b, boolean res) {
 //        boolean ans = rule.predictCheck(18, b);
 //        assertEquals(res, ans);
 //    }

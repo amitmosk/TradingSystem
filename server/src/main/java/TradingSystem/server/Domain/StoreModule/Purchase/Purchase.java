@@ -1,14 +1,34 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Map;
 
+@Entity
 public class Purchase {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long purchase_id;
     private String transaction_date;
+
+    @ElementCollection
+    @CollectionTable(name = "purchases_product_and_quantity")
+    @MapKeyColumn(name="product_id")
+    @Column(name="quantity")
     private Map<Integer, Integer> product_and_quantity;
+
+    @ElementCollection
+    @CollectionTable(name = "purchases_product_and_totalPrice")
+    @MapKeyColumn(name="product_id")
+    @Column(name="totalPrice")
     private Map<Integer, Double> product_and_totalPrice;
+
+    @ElementCollection
+    @CollectionTable(name = "purchases_product_and_name")
+    @MapKeyColumn(name="product_id")
+    @Column(name="name")
     private Map<Integer, String> product_and_name;
+
 
     // ------------------------------ constructors ------------------------------
     public Purchase(Map<Integer, Integer> product_and_quantity,
@@ -69,4 +89,14 @@ public class Purchase {
             answer = answer + price;
         return answer;
     }
+
+    public void setPurchase_id(Long purchase_id) {
+        this.purchase_id = purchase_id;
+    }
+
+    public Long getPurchase_id() {
+        return purchase_id;
+    }
+
+
 }

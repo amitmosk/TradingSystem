@@ -22,6 +22,9 @@ public class PaymentThread implements Runnable {
         value = this.paymentAdapter.payment(paymentInfo, total_price);
     }
 
+    /**
+     * @return the answer we got from the external service.
+     */
     public int get_value(){
         return this.value;
     }

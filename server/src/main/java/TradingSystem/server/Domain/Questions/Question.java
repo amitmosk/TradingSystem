@@ -2,15 +2,20 @@ package TradingSystem.server.Domain.Questions;
 
 import TradingSystem.server.Domain.UserModule.AssignUser;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Question {
+    @Id
     protected int question_id;
     protected String message_date;
     protected String answer_date;
     protected String message;
     protected String answer;
     protected boolean has_answer;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     protected AssignUser sender; // assign user
 
     // ---------------------- Constructor ---------------------------------------
@@ -23,7 +28,6 @@ public abstract class Question {
         this.message = message;
         this.has_answer = false;
         this.message_date = LocalDate.now().toString();
-
     }
 
     // --------------------- getters --------------------------------------------

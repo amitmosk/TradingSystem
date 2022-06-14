@@ -1,51 +1,76 @@
 package TradingSystem.server.Domain.StoreModule;
 
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
-import TradingSystem.server.Domain.StoreModule.Bid.Bid;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.Cart;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
-import TradingSystem.server.Domain.Utils.SystemLogger;
+import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Entity
 public class StoreController {
-    private ConcurrentHashMap<Integer, Store> stores;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "all_stores",
+//            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
+    @MapKeyColumn(name = "store_id") // the key column
+    private Map<Integer, Store> stores;
     private AtomicInteger store_ids_counter;
     private AtomicInteger purchase_ids_counter;
+    //TODO:
+    @Transient
     private AtomicInteger bids_ids_counter;
     private AtomicInteger products_id;
+    @Transient
     private Object storesLock;
 
+    @Transient
     private static StoreController instance = null;
 
     public static StoreController get_instance() {
-        if (instance == null)
-            instance = new StoreController();
+        StoreController storeController;
+        if (instance == null) {
+            storeController = HibernateUtils.getEntityManager().find(StoreController.class, new Long(1));
+            if (storeController != null) {
+                instance = storeController;
+            } else
+                instance = new StoreController();
+            HibernateUtils.persist(instance);
+        }
         return instance;
     }
 
-    private StoreController() {
+    public StoreController() {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
         this.bids_ids_counter = new AtomicInteger(1);
-        this.stores = new ConcurrentHashMap<>();
+        this.stores = new HashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
     }
 
     public static void load() {
+//        HibernateUtils.beginTransaction();
+//        get_instance();
+//        HibernateUtils.commit();
         SystemLogger.getInstance().add_log("store controller load");
     }
 
@@ -267,7 +292,7 @@ public class StoreController {
     //------------------------------------------------find product by - End ----------------------------------------------------
 
 
-    public Map<Product,Integer> add_product_to_store(User user, int store_id, int quantity, String name, double price, String category, List<String> key_words)
+    public Map<Product, Integer> add_product_to_store(User user, int store_id, int quantity, String name, double price, String category, List<String> key_words)
             throws MarketException {
         AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id);
@@ -355,7 +380,7 @@ public class StoreController {
     public int open_store(User founder, String store_name) throws MarketException {
         AssignUser founder_state = founder.state_if_assigned();
         int store_id = this.store_ids_counter.getAndIncrement();
-        Store store = new Store(store_id, store_name, founder_state,products_id);
+        Store store = new Store(store_id, store_name, founder_state, products_id);
         Appointment appointment = store.appoint_founder();
         founder.add_founder(store, appointment);
         this.stores.put(store_id, store);
@@ -437,15 +462,14 @@ public class StoreController {
         this.products_id = new AtomicInteger(1);
     }
 
-    public Map<Integer,Store> get_all_stores() {
+    public Map<Integer, Store> get_all_stores() {
         return this.stores;
     }
 
     public List<Product> get_products_by_store_id(int store_id) throws MarketException {
         Store store = this.get_store_by_store_id(store_id);
-        List<Product> to_return=new LinkedList<>();
-        for(Product p:store.getInventory().keySet())
-        {
+        List<Product> to_return = new LinkedList<>();
+        for (Product p : store.getInventory().keySet()) {
             to_return.add(p);
         }
         return to_return;
@@ -455,6 +479,62 @@ public class StoreController {
         AssignUser assignUser = user.state_if_assigned();
         Store store = get_store_by_store_id(store_id); //trows exceptions
         store.edit_product_quantity(assignUser, product_id, quantity);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Map<Integer, Store> getStores() {
+        return stores;
+    }
+
+    public void setStores(Map<Integer, Store> stores) {
+        this.stores = stores;
+    }
+
+    public AtomicInteger getStore_ids_counter() {
+        return store_ids_counter;
+    }
+
+    public void setStore_ids_counter(AtomicInteger store_ids_counter) {
+        this.store_ids_counter = store_ids_counter;
+    }
+
+    public AtomicInteger getPurchase_ids_counter() {
+        return purchase_ids_counter;
+    }
+
+    public void setPurchase_ids_counter(AtomicInteger purchase_ids_counter) {
+        this.purchase_ids_counter = purchase_ids_counter;
+    }
+
+    public AtomicInteger getProducts_id() {
+        return products_id;
+    }
+
+    public void setProducts_id(AtomicInteger products_id) {
+        this.products_id = products_id;
+    }
+
+    public Object getStoresLock() {
+        return storesLock;
+    }
+
+    public void setStoresLock(Object storesLock) {
+        this.storesLock = storesLock;
+    }
+
+    public static StoreController getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(StoreController instance) {
+        StoreController.instance = instance;
     }
 
     public List<BidInformation> view_bids_status(int store_id, User user) throws Exception {

@@ -1,5 +1,6 @@
 package TradingSystem.server.Service;
 
+import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -49,13 +50,14 @@ public class NotificationHandler extends TextWebSocketHandler {
     public String processMessageFromClient(
             @Payload String message,
             Principal principal) throws Exception {
-        System.out.println("got message from client");
+        SystemLogger.getInstance().add_log("WS : Got Message From Client");
         return "goodd";
     }
 
     @MessageExceptionHandler
     @SendToUser("/queue/errors")
     public String handleException(Throwable exception) {
+        SystemLogger.getInstance().add_log("WS Exception : "+exception.getMessage());
         return exception.getMessage();
     }
 

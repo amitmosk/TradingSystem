@@ -1,19 +1,24 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Purchase;
 
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.ComplexDiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
-import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
+import javax.persistence.*;
 
-import java.util.List;
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@DiscriminatorColumn(name = "purchase_logic_type",
+//        discriminatorType = DiscriminatorType.INTEGER)
+public abstract class purchaseLogicComponent extends PurchaseRule {
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public PurchaseRule left;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public PurchaseRule right;
 
-public class purchaseLogicComponent {
-    public porchaseRule left;
-    public porchaseRule right;
-
-    public purchaseLogicComponent(porchaseRule left, porchaseRule right) {
+    public purchaseLogicComponent(PurchaseRule left, PurchaseRule right) {
         this.left = left;
         this.right = right;
     }
 
+    public purchaseLogicComponent() {
+
+    }
 }
 

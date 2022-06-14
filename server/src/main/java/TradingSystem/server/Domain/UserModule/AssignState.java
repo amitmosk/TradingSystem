@@ -7,10 +7,19 @@ import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Observer;
 
+import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class AssignState implements Observer {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="user_type",
+        discriminatorType = DiscriminatorType.INTEGER)
+public abstract class AssignState implements Observer{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
+
     public AssignState() {
     }
 
@@ -96,4 +105,12 @@ public abstract class AssignState implements Observer {
     public UserState find_state(){return UserState.GUEST;}
 
     public List<Integer> stores_managers_list() {return new LinkedList<>();}
+
+    public void setId(Long id) {
+        this.id = id;
     }
+
+    public Long getId() {
+        return id;
+    }
+}

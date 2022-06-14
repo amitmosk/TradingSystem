@@ -3,11 +3,17 @@ package TradingSystem.server.Domain.Questions;
 
 import TradingSystem.server.Domain.UserModule.AssignUser;
 
+import javax.persistence.Entity;
+
+@Entity
 public class UserQuestion extends Question {
 
     // user -> admin
     public UserQuestion(int question_id, String message, AssignUser sender) {
         super(question_id, message, sender);
+    }
+    public UserQuestion() {
+
     }
 
     @Override
