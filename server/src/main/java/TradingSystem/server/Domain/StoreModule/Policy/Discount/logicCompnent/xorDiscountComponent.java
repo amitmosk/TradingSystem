@@ -17,6 +17,22 @@ public class xorDiscountComponent extends DiscountComponent {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     DiscountComponent right;
 
+    public DiscountComponent getLeft() {
+        return left;
+    }
+
+    public void setLeft(DiscountComponent left) {
+        this.left = left;
+    }
+
+    public DiscountComponent getRight() {
+        return right;
+    }
+
+    public void setRight(DiscountComponent right) {
+        this.right = right;
+    }
+
     public xorDiscountComponent(DiscountComponent left, DiscountComponent right) throws WrongPermterException {
         this.right = right;
         this.left = left;

@@ -103,6 +103,7 @@ public class Store implements Observable{
         this.managers_lock = new Object();
         this.predictList = new HashMap<>();
         this.bids = new HashMap<>();
+
 //        HibernateUtils.persist(this);
     }
 

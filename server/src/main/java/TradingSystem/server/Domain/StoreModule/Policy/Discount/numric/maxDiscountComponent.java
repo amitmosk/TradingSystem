@@ -35,4 +35,20 @@ public class maxDiscountComponent extends DiscountComponent {
     public boolean CanApply(Basket basket) {
         return true;
     }
+
+    public DiscountComponent getLeft() {
+        return left;
+    }
+
+    public void setLeft(DiscountComponent left) {
+        this.left = left;
+    }
+
+    public DiscountComponent getRight() {
+        return right;
+    }
+
+    public void setRight(DiscountComponent right) {
+        this.right = right;
+    }
 }

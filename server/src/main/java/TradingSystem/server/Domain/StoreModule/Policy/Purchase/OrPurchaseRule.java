@@ -20,7 +20,7 @@ public class OrPurchaseRule extends purchaseLogicComponent {
 
     @Override
     public boolean predictCheck(int age, Basket basket) {
-        return left.predictCheck(age, basket) && right.predictCheck(age, basket);
+        return left.predictCheck(age, basket) || right.predictCheck(age, basket);
     }
 }
 

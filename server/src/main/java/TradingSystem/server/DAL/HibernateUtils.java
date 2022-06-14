@@ -65,6 +65,11 @@ public class HibernateUtils {
         }
     }
 
+  public static void clear_db(String schemeName){
+        getEntityManager().createQuery("DROP SCHEMA "+schemeName).executeUpdate();
+        getEntityManager().createQuery("Create SCHEMA   "+schemeName).executeUpdate();
+    }
+
     public static void closeEntityManagerFactory() {
         emf.close();
     }
@@ -87,5 +92,9 @@ public class HibernateUtils {
     public static <T> void persist(T obj){
         if(allow_persist)
             getEntityManager().persist(obj);
+    }
+
+    public static void main(String[] args) {
+        HibernateUtils.clear_db("datatests");
     }
 }

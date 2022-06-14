@@ -28,7 +28,7 @@ mapped to database tables. Database driver, location, userid and pw
             <!-- Username -->
             <property name="javax.persistence.jdbc.user" value="root" />
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="12345678" />
+            <property name="javax.persistence.jdbc.password" value="AMIT134679852" />
             <!-- Drop and re-create the database schema on startup -->
         </properties>
     </persistence-unit>
@@ -54,7 +54,7 @@ complete transactions with the DB  -->
             <!-- Username -->
             <property name="javax.persistence.jdbc.user" value="root" />
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="12345678" />
+            <property name="javax.persistence.jdbc.password" value="AMIT134679852" />
             <!-- Drop and re-create the database schema on startup -->
         </properties>
     </persistence-unit>

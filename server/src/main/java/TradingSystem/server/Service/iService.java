@@ -6,6 +6,7 @@ import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
+import TradingSystem.server.Domain.Utils.Response;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -268,8 +269,9 @@ public interface iService {
     TradingSystem.server.Domain.Utils.Response get_all_stores();
 
     TradingSystem.server.Domain.Utils.Response online_user();
-}
 
+    TradingSystem.server.Domain.Utils.Response remove_predict(int store_id, String predict_name);
+}
 //    TradingSystem.server.Domain.Utils.Response add_predict(int store_id, String categorey, int product_id, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name);
 //    TradingSystem.server.Domain.Utils.Response get_purchase_policy(int store_id);
 //    TradingSystem.server.Domain.Utils.Response send_predicts(int store_id);
