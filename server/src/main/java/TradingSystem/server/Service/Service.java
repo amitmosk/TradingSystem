@@ -7,6 +7,7 @@ import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
+import com.google.gson.Gson;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -134,6 +135,7 @@ public class Service implements iService {
     public Response add_product_to_cart(int store_id, int product_id, int quantity) {
         Response answer = marketFacade.add_product_to_cart(store_id, product_id, quantity);
         return answer;
+
     }
 
     @RequestMapping(value = "/remove_product_from_cart")
@@ -165,8 +167,8 @@ public class Service implements iService {
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo) {
         // TODO : GSON
-//        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
-//        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
+        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
+        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
         PaymentInfo paymentInfo1 = new PaymentInfo();
         SupplyInfo supplyInfo1 = new SupplyInfo();
         Response answer = marketFacade.buy_cart(paymentInfo1, supplyInfo1);
