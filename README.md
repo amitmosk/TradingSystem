@@ -59,7 +59,9 @@ All of the instructions in the configuration file will cancelled.
 Pay attention that all the instructions should keep this order.
  
 ## How to use?
- <Here come Tom video & words>
+https://user-images.githubusercontent.com/63066271/173635367-a8ebe261-11e4-41d0-8417-594f29fdac6b.mp4
+
+
   
 ## Features:
  1. Statistics about the traffic in our system.
@@ -68,9 +70,6 @@ Pay attention that all the instructions should keep this order.
  4. Use external systems services according http requests to the external server, implemented with adapter & proxy design patterns.
  5. DB - in our system we worked with Hibernate orm libary, Hibernate ORM (or simply Hibernate) is an object–relational mapping tool for  
     the Java programming language. It provides a framework for mapping an object-oriented domain model to a relational database.
- 
- ## Tests: 
- <Here come Eylon words>
 
 ## Contrubutors:
 Eylon Sade   

@@ -23,6 +23,7 @@ public class PaymentThread implements Runnable {
     }
 
     /**
+     * Requirement 6
      * @return the answer we got from the external service.
      */
     public int get_value(){

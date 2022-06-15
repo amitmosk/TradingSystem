@@ -558,17 +558,17 @@ public class Store implements Observable {
         this.check_permission(user, StorePermission.remove_item);
         inventory.remove(product_to_remove);
         // remove all bids related to product
-        for (Map.Entry<Integer, Bid> bid : bids.entrySet()) {
-            // TODO: remove bid from database
-            if (bid.getValue().getProduct().getProduct_id() == product_id)
-                bids.remove(bid.getKey());
-        }
-        // remove all predicts related to product
-        for (Map.Entry<String, Ipredict> entry : predictList.entrySet()) {
-            // TODO: remove predict from database
-            if (entry.getValue().getProduct().getProduct_id() == product_id)
-                predictList.remove(entry.getKey());
-        }
+//        for (Map.Entry<Integer, Bid> bid : bids.entrySet()) {
+//            // TODO: remove bid from database
+//            if (bid.getValue().getProduct().getProduct_id() == product_id)
+//                bids.remove(bid.getKey());
+//        }
+//        // remove all predicts related to product
+//        for (Map.Entry<String, Ipredict> entry : predictList.entrySet()) {
+//            // TODO: remove predict from database
+//            if (entry.getValue().getProduct().getProduct_id() == product_id)
+//                predictList.remove(entry.getKey());
+//        }
         return inventory;
     }
 
@@ -887,8 +887,9 @@ public class Store implements Observable {
     public List<BidInformation> view_bids_status(AssignUser user) throws NoPremssionException {
         this.check_permission(user, StorePermission.view_bids_status);
         List<BidInformation> answer = new ArrayList<>();
-        for (Bid bid : this.bids.values()) {
-            BidInformation temp = bid.get_bid_information();
+
+        for (Map.Entry<Integer, Bid> entry : this.bids.entrySet()){
+            BidInformation temp = entry.getValue().get_bid_information(entry.getKey());
             answer.add(temp);
         }
         return answer;

@@ -6,6 +6,9 @@ import TradingSystem.server.Domain.Utils.Utils;
 import java.util.HashMap;
 import static TradingSystem.server.Service.MarketSystem.external_system_url;
 
+/**
+ * Requirement 1.4
+ */
 public class ExternSupplySystemProxy {
 
     public int supply(SupplyInfo supplyInfo) {
