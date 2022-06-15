@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Link from '@mui/material/Button';
-import HomeIcon from '@mui/icons-material/Home';
-import Card from '@mui/material/Card';
+import FormDialog from './FormDialog';
 import { AdminApi } from '../API/AdminApi';
 import { Question } from '../ServiceObjects/Question';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import BasicTable from './BasicTable';
+import Grid from '@mui/material/Grid';
+
   
 export default class AdminViewUserQuestions extends Component {
     static displayName = AdminViewUserQuestions.name;
@@ -18,13 +18,27 @@ export default class AdminViewUserQuestions extends Component {
             rows:[], 
         };
         this.adminApi = new AdminApi();
+        this.admin_answer_user_question_fields = ["Question ID", "Answer"];
 
     }    
 
     
-    
+    async admin_answer_user_question (values) {
+        console.log("in admin answer user question user!\n");
+        const question_id = values[0];
+        const answer = values[1];
+        const response = await this.adminApi.admin_answer_user_question(question_id, answer);
+        if (!response.was_exception) {
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            window.location.reload();
+        }
+        else {
+            this.setState({ snackbar: { children: response.message, severity: "error" } });
+        }
+    }
     
     async componentDidMount() {
+        this.setState({rows:[]});
         console.log("in admin_view_users_questions!\n");
         const response = await this.adminApi.admin_view_users_questions();
         const questions = response.value;
@@ -36,7 +50,8 @@ export default class AdminViewUserQuestions extends Component {
             console.log(response);
             const final_questions=[];
             let splitted_questions=[];
-            const rows = [];
+            let rows = [];
+            const all_rows=[];
             questions.map(q=>{ splitted_questions = q.split(",");
             console.log("spplited= "+splitted_questions);
             
@@ -53,15 +68,15 @@ export default class AdminViewUserQuestions extends Component {
             const left_side = [];
             const right_side = [];
             
-
-            rows.push(user_email.split("="));
             rows.push(question_id.split("="));
+            rows.push(user_email.split("="));
             rows.push(message_date.split("="));
+            rows.push(message.split("="));
             rows.push(answer_date.split("="));
             rows.push(answer.split("="));
             rows.push(has_answer.split("="));
-            console.log(rows);
-
+            all_rows.push(rows);
+            rows=[];
 
 
             left_side.push(user_email.split("=")[0]);
@@ -92,11 +107,13 @@ export default class AdminViewUserQuestions extends Component {
             const que=new Question (question_id, message_date, answer_date, message, answer, has_answer, user_email);
             final_questions.push(que);
                 });
+                console.log(all_rows);
+
             this.setState({
                 questions:final_questions,
                     })
             this.setState({
-                rows:rows,
+                rows:all_rows,
                     })
 
 
@@ -108,35 +125,19 @@ export default class AdminViewUserQuestions extends Component {
       
 
     render() {
-        const {redirectTo} = this.state
             return (
-                <main class="LoginMain">
+                <main >
                     <div class="LoginWindow">
                     
                         <row><h1>User Questions (Admin)</h1></row>
-                        <BasicTable rowss = {this.state.rows}></BasicTable>
-                        {/* {[0,1,2,3,4,5,6,7].map((item) => (
-                            <Card >
-                            {item}
-                            </Card>
-                        ))} */}
-                        {this.state.questions.length == 0 ? <h3 style={{ color: 'red' }}>No Questions To Show</h3> : 
-                        this.state.questions.map((question) => (
-                            <Card >
-                            <h3 style={{ color: 'blue' }}> {question.email}</h3>
-                            {/* (question_id, message_date, answer_date, message, answer, has_answer, user_email); */}
-                            <div> {question.question_id}</div>
-                            <div> {question.message_date}</div>
-                            <div> {question.answer_date}</div>
-                            <div> {question.message}</div>
-                            <div> {question.answer}</div>
-                            <div> {question.has_answer}</div>
-                            {/* <div> question : {question}</div> */}
-                           
-
-                            </Card>
-                        ))}
-
+                        
+                        <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
+                        {this.state.questions.length == 0 ? <h3 style={{ color: 'red' }}>No Questions To Show</h3> :
+                        this.state.rows.map(rows => <BasicTable rowss = {rows}></BasicTable>) 
+                          }
+                          
+                          </Grid>
+                          {this.state.questions.length !==0? <FormDialog fields={this.admin_answer_user_question_fields} getValues={this.admin_answer_user_question.bind(this)} name="Answer Question"></FormDialog> : null}
 
                         {!!this.state.snackbar && (
                             <Snackbar

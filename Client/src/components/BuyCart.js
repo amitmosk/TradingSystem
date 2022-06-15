@@ -1,5 +1,4 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import PaymentPage from './PaymentPage';
 import Button from '@mui/material/Button';
 import SupplyPage from './SupplyPage';
@@ -16,13 +15,11 @@ export default function BuyCart() {
       console.log(JSON.stringify(payment));
       setPayment(payment);
       setSnackbar({ children: "Payment Information Recieved Successfully", severity: 'success' }); 
-      // localStorage.setItem("payment", payment);
     };
     const update_supply_info = (supply) => {
       setSupply(supply);
       console.log(JSON.stringify(supply));
       setSnackbar({ children: "Supply Information Recieved Successfully", severity: 'success' });
-        // localStorage.setItem("supply", supply);
     };
     const cartApi = new CartApi();
     const buy_cart = async () => {

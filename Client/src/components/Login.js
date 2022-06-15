@@ -48,8 +48,8 @@ export default class Login extends Component {
             const user = response.value;
             this.props.updateUserState(user);
             console.log("in login, login success!\n");
-            // const {createSocket} = SocketProvider("setMessge");
-            // createSocket(user.email);
+            const {createSocket} = SocketProvider(this.props.save);
+            createSocket(user.email);
             // open seb socket
             // return to home page and update properties (change state of App to assign user).
             this.setState({ snackbar: { children: response.message, severity: "success" } });

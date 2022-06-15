@@ -3,7 +3,6 @@ import Link from '@mui/material/Button';
 import { AdminApi } from '../API/AdminApi';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import HomeIcon from '@mui/icons-material/Home';
 import FormDialog from './FormDialog';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -28,16 +27,8 @@ export default function AdminPage() {
     const admin_view_store_purchases_history = async (values) => {
         console.log("in admin view store purchases history\n");
         const store_id = values[0];
-        // const response = await adminApi.admin_view_store_purchases_history(store_id);
-        // if (!response.was_exception) {
         window.location.href+=`/AdminViewStorePurchaseHistory/${store_id}`
         console.log("in admin view store purchases history - success!\n");
-        // setSnackbar({ children: response.message, severity: 'success' }); 
-            //show history
-        // }
-        // else {
-        //     setSnackbar({ children: response.message, severity: 'error' }); 
-        // }
     }
     const admin_view_user_purchases_history = async(values) => {
         console.log("in admin view user purchases history!\n");
@@ -80,11 +71,9 @@ export default function AdminPage() {
         console.log("in close store permanently \n");
         const store_id = values[0];
         const response = await adminApi.close_store_permanently(store_id);
-        // alert(response.message);
         if (!response.was_exception) {
             setSnackbar({ children: response.message, severity: 'success' }); 
             console.log("in close store permanently - success!\n");
-            //show history
         }
         else {
             setSnackbar({ children: response.message, severity: 'error' }); 
@@ -93,19 +82,7 @@ export default function AdminPage() {
     }
 
 
-    const admin_answer_user_question = async(values)=> {
-        console.log("in admin answer user question user!\n");
-        const question_id = values[0];
-        const answer = values[1];
-        const response = await adminApi.admin_answer_user_question(question_id, answer);
-        if (!response.was_exception) {
-            setSnackbar({ children: response.message, severity: 'success' }); 
-            //show history
-        }
-        else {
-            setSnackbar({ children: response.message, severity: 'error' }); 
-        }
-    }
+    
 
 
     

@@ -6,7 +6,7 @@ import { EMPLOYEE_BASE_REST_API_URL } from "../API/ApiPaths";
 import { ConnectApi } from "../API/ConnectApi";
 
 export default function SocketProvider(props) {
-
+    const connectApi = new ConnectApi();
     const setMessage ="";
     console.log(props);
     console.log(props.save_notification);
@@ -33,8 +33,9 @@ export default function SocketProvider(props) {
             if (tempi.length != 1)
             {
                 console.log(tempi[1]+"\n\n\n\n\n\n\n\n");
-                // alert("New Notification: "+tempi[1]);
-                props.save_notification(tempi[1]);
+                alert("New Notification: "+tempi[1]);
+                connectApi.save_notifications(tempi[1]);
+                props(tempi[1]);
             }
             else{
                 console.log("message of connect\n\n\n\n\n\n\n\n");
@@ -59,7 +60,6 @@ export default function SocketProvider(props) {
                     console.log("cleared")
                 }, 3000)
             });
-            let connectApi = new ConnectApi();
             connectApi.get_notifications(userEmail);
 
         });

@@ -36,14 +36,7 @@ export default class AllStoresTable extends Component {
         // Important: passing id from customers state so I can delete or edit each user
         renderCell: (id) => (
           <>
-            {/* <IconButton
-              color="primary"
-              aria-label="store"
-              // onClick={() => this.go_to_store_page(id)}
-              onClick={() => this.go_to_store_page(id)}
-            >
-              <Store />
-            </IconButton> */}
+            
               
              <Link to={{pathname:`StorePage/${this.state.items.find((i) => id.id === i.id).id}`}}  underline="hover" >{   <IconButton
               color="primary"

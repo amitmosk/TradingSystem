@@ -10,8 +10,6 @@ import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import SimpleBadge from "./SimpleBadge";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { ConnectApi } from '../API/ConnectApi';
 import { useEffect } from 'react';
 import {useState} from "react";
@@ -101,39 +99,26 @@ export default function AccountMenu({ log, state }) {
           <Avatar />{" "}
           
           <Link to={{pathname:`/ShoppingCart`}} onClick={handleClose} underline="hover">{"My Cart"} </Link>
-          {/* <Link href="/ShoppingCart" underline="hover"> */}
             
         </MenuItem>
-        {/* <MenuItem>
-          <Avatar />{" "}
-          
-          <Link to={{pathname:`/ShoppingCart`}} onClick={handleClose} underline="hover">{<ShoppingCartIcon></ShoppingCartIcon>} </Link>
-            
-        </MenuItem> */}
         {state !== 0 ? (
           <>
             <MenuItem>
               <Avatar />
               <Link to={{pathname:`/EditProfile`}} onClick={handleClose} underline="hover">{"Edit Profile"} </Link>
-              {/* <Link href="/EditProfile" underline="hover"> */}
                 
             </MenuItem>
             <MenuItem>
               <Avatar />{" "}
               <Link to={{pathname:`/ViewUserPurchaseHistory`}} onClick={handleClose} underline="hover">{"My Purchases History"} </Link>
-              {/* <Link href="/ViewUserPurchaseHistory" underline="hover"> */}
                 
             </MenuItem>
             <MenuItem>
               <Avatar />{" "}
               <Link to={{pathname:`/UserViewQuestions`}} onClick={handleClose} underline="hover">{"My Questions"}  </Link>
-              {/* <Link href="/UserViewQuestions" underline="hover"> */}
                 
             </MenuItem>
-            {/* <MenuItem>
-              <Avatar />{" "}
-              <Link to={{pathname:`/Notifications`}} onClick={handleClose} underline="hover"> {"Notifications"}</Link>
-            </MenuItem> */}
+           
             
             <MenuItem>
               <Avatar />{" "}

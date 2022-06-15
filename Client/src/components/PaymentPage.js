@@ -75,7 +75,6 @@ export default class PaymentPage extends Component {
         console.log(holder)
         console.log(ccv)
         console.log(id)
-        // TODO : check input
         if (Utils.check_credit_number(creditnumber) == 0)
         {
             this.setState({ snackbar: { children: "Illegal Card Number", severity: "error" } });

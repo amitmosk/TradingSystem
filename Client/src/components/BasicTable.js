@@ -7,7 +7,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 import { PoliciesApi } from '../API/PoliciesApi';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert"; 
@@ -20,6 +19,7 @@ function createData(left, right) {
 
 export default function BasicTable({rowss}) {
   console.log(rowss);
+  rowss.map(a=> console.log(a[0]+" "+a[1]));
 const policiesApi = new PoliciesApi();
 const {id} = useParams();
 //SnackBar
@@ -29,14 +29,12 @@ const handleCloseSnackbar = () => setSnackbar(null);
 
 
 
-const rows = [
-  rowss.map(row => createData(row[0], row[1]))
-  // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  // createData('Eclair', 262, 16.0, 24, 6.0),
-  // createData('Cupcake', 305, 3.7, 67, 4.3),
-  // createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+const rows = [];
+rowss.map(row => 
+  {
+    rows.push(createData(row[0], row[1]))
+});
+
 console.log(rows);
   return (
     <TableContainer component={Paper}>
@@ -55,7 +53,7 @@ console.log(rows);
               <TableCell component="th" scope="row">
                 {row.left}
               </TableCell>
-              <TableCell align="right">{row.left}</TableCell>
+              {/* <TableCell align="right">{row.left}</TableCell> */}
               <TableCell align="right">{row.right}</TableCell>
               
             </TableRow>

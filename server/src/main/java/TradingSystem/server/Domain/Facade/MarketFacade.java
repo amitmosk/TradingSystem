@@ -1001,7 +1001,7 @@ public class MarketFacade {
                 Store store = store_controller.get_store(store_id);
                 List<String> policy = store.getDiscountPolicyNames();
                 response = new Response(policy, "discount policy sent");
-                market_logger.add_log("composite discount deleted successfully");
+                market_logger.add_log("receive discount policy successfully");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {
@@ -1175,8 +1175,8 @@ public class MarketFacade {
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 DiscountComponent discount = store.CreateXorDisocuntCompnent(NameOfRule, left, right);
-                response = new Response(discount, "Store discount and rule added successfully");
-                market_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
+                response = new Response(discount, "Store discount xor rule added successfully");
+                market_logger.add_log("Store's (" + store_id + ") discount xor rule have been added");
             }
             HibernateUtils.commit();
         } catch (MarketException e) {

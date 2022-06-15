@@ -1,41 +1,21 @@
-import List from '@mui/material/List';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-// import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
+
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert"; 
 import { StoreApi } from '../API/StoreApi';
 import { useParams } from 'react-router-dom';
 import { Utils } from '../ServiceObjects/Utils';
 import { useEffect } from 'react';
-import React, { Component } from 'react';
-import Link from '@mui/material/Button';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import HomeIcon from '@mui/icons-material/Home';
-import { Input } from "@mui/material";
-import FormDialog from './FormDialog';
-import { Category } from '@mui/icons-material';
 import { PoliciesApi } from '../API/PoliciesApi';
-import CheckboxesGroup from './CheckboxesGroup';
 import ControlledRadioButtonsGroup from './ControlledRadioButtonsGroup';
 import StoreProductsTable from './StoreProductsTable';
-import Checkbox from './Checkbox';
-import { Row, Col } from 'react-grid-system';
 import AddPredictFormDialog from './AddPredictFormDialog';
 
 export default function CreatePredict() {
     const {id} = useParams();
     const store_id =id;
-//    add_predict(store_id,catgorey,product_id,above,equql,num,price,quantity,age,time,year,month,day,name){
-    //fields
-
-
     const add_predict_for_category_fields =["Rule Name"];
     const add_predict_for_time_fields =["Rule Name"];
     const add_predict_for_quantity_fields =["Rule Name", "Quantity"];
@@ -86,16 +66,6 @@ export default function CreatePredict() {
     
     
     
-    
-    
-
-
-  
-    
-    
-    
-    
-    
     const [option, setOption] = React.useState("Category");
     
     
@@ -114,6 +84,7 @@ export default function CreatePredict() {
     //Functions To Server
     //    add_predict(store_id,catgorey,product_id,above,equql,num,price,quantity,age,time,year,month,day,name){
     const add_predict_for_category = async(values) => {
+        console.log(values);
         const rule_name = values[0];
         const inside = values[1];
         console.log(inside);
@@ -406,7 +377,7 @@ export default function CreatePredict() {
     );
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 

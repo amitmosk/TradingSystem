@@ -73,7 +73,6 @@ export default class SupplyPage extends Component {
         console.log(city);
         console.log(country);
         console.log(zip);
-        //TODO: check input validity
         if (Utils.check_holder(name)== 0)
         {
             this.setState({ snackbar: { children: "Illegal Name", severity: "error" } });

@@ -22,6 +22,7 @@ export default function NavBar({updateUserState, user}) {
       const user_logout = response.value;
       console.log("in logout - user is "+user_logout);
       updateUserState(user_logout);
+      window.location.href=`/`
       // return (<Navigate to="/"/>)
     }
   };

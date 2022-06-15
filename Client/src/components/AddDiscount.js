@@ -1,32 +1,17 @@
-import List from '@mui/material/List';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-// import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert"; 
 import { StoreApi } from '../API/StoreApi';
 import { useParams } from 'react-router-dom';
 import { Utils } from '../ServiceObjects/Utils';
 import { useEffect } from 'react';
-import React, { Component } from 'react';
-import Link from '@mui/material/Button';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import HomeIcon from '@mui/icons-material/Home';
-import { Input } from "@mui/material";
 import FormDialog from './FormDialog';
-import { Category } from '@mui/icons-material';
 import { PoliciesApi } from '../API/PoliciesApi';
-import CheckboxesGroup from './CheckboxesGroup';
 import ControlledRadioButtonsGroup from './ControlledRadioButtonsGroup';
 import StoreProductsTable from './StoreProductsTable';
-import Checkbox from './Checkbox';
-import { Row, Col } from 'react-grid-system';
+import { Row } from 'react-grid-system';
 
 export default function AddDiscount() {
     const {id} = useParams();
@@ -49,9 +34,11 @@ export default function AddDiscount() {
 
     // list of categories, Predicts, discounts
 
-    const [categories,setCategories ] =React.useState(["car1", "cat2", "cat3"]);
-    const [predicts,setPredicts ] =React.useState(["predicts1", "predicts2", "Predicts3"]);
-    const [discounts,setDiscounts ] =React.useState(["discount1", "discount2", "discount3"]);
+    const [categories,setCategories ] =React.useState(["cat1", "cat2", "cat3"]);
+    // const [predicts,setPredicts ] =React.useState(["predicts1", "predicts2", "Predicts3"]);
+    const [predicts,setPredicts ] =React.useState([]);
+    // const [discounts,setDiscounts ] =React.useState(["discount1", "discount2", "discount3"]);
+    const [discounts,setDiscounts ] =React.useState([]);
     const get_categories_of_stores = async () =>
     {
         const response = await storeApi.get_all_categories(store_id);
@@ -67,21 +54,10 @@ export default function AddDiscount() {
 
         }
     }
-    const get_discount_predict_lists = async () =>
+    const get_discount_lists = async () =>
     {
-        const response = await policiesApi.send_predicts(store_id);
-        if (!response.was_exception)
-        {
-            setSnackbar({ children: response.message, severity: 'success' });
-            if(response.value.length !== 0)
-                setPredicts(response.value);
-        }
-        else
-        {
-            setSnackbar({ children: response.message, severity: 'error' });
-
-        }
-        response = await policiesApi.get_discount_policy(store_id);
+        
+        let response = await policiesApi.get_discount_policy(store_id);
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
@@ -93,7 +69,26 @@ export default function AddDiscount() {
 
         }
     }
-    useEffect(()=>{get_discount_predict_lists()}, []);  
+    const get_predicts_lists = async () =>
+    {
+        let response = await policiesApi.send_predicts(store_id);
+        if (!response.was_exception)
+        {
+            setSnackbar({ children: response.message, severity: 'success' });
+            if(response.value.length !== 0)
+                setPredicts(response.value);
+        }
+        else
+        {
+            setSnackbar({ children: response.message, severity: 'error' });
+
+        }
+    }
+
+
+    
+    useEffect(()=>{get_discount_lists()}, []);  
+    useEffect(()=>{get_predicts_lists()}, []);  
     useEffect(()=>{get_categories_of_stores()}, []);
 
 
@@ -117,10 +112,6 @@ export default function AddDiscount() {
     const [ruleName, setRuleName] = React.useState(undefined);
     
     const handleChange = (event) => {setChecked(event.target.checked)};
-    
-    
-    
-    
     
 
 
@@ -219,20 +210,23 @@ export default function AddDiscount() {
     const add_simple_discount_rule_for_store = async (values) => {
         const rule_name = values[0];
         const discount_precent = values[1];
+        const discount = discount_precent / 100;
         if (Utils.check_rule_name(rule_name) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
-        if (Utils.check_precent(discount_precent) == 0)
+        if (Utils.check_precent(discount) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
-        const response = await policiesApi.add_simple_store_discount_rule(store_id, discount_precent, rule_name); 
+        
+        const response = await policiesApi.add_simple_store_discount_rule(store_id, discount, rule_name); 
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -243,20 +237,22 @@ export default function AddDiscount() {
     const  add_simple_discount_rule_for_category = async (values) => {
         const rule_name = values[0];
         const discount_precent = values[1];
+        const discount = discount_precent / 100;
         if (Utils.check_rule_name(rule_name) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
-        if (Utils.check_precent(discount_precent) == 0)
+        if (Utils.check_precent(discount) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
-        const response = await policiesApi.add_simple_categorey_discount_rule(store_id, categoryChosen, discount_precent, rule_name); 
+        const response = await policiesApi.add_simple_categorey_discount_rule(store_id, categoryChosen, discount, rule_name); 
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -266,22 +262,24 @@ export default function AddDiscount() {
     const  add_simple_discount_rule_for_product = async (values) => {
         const rule_name = values[0];
         const discount_precent = values[1];
+        const precent = discount_precent/100;
         const product_id = values[2];
         if (Utils.check_rule_name(rule_name) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
-        if (Utils.check_precent(discount_precent) == 0)
+        if (Utils.check_precent(precent) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
         //TODO: check if product id is legal
-        const response = await policiesApi.add_simple_product_discount_rule(store_id, product_id, categoryChosen, discount_precent, rule_name); 
+        const response = await policiesApi.add_simple_product_discount_rule(store_id, product_id, precent, rule_name); 
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -315,6 +313,7 @@ export default function AddDiscount() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -345,6 +344,7 @@ export default function AddDiscount() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -370,10 +370,11 @@ export default function AddDiscount() {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
-        const response = await policiesApi.add_or_discount_rule(predictChosenOr1, predictChosenAnd2, store_id, ruleName);
+        const response = await policiesApi.add_or_discount_rule(predictChosenOr1, predictChosenAnd2, store_id, rule_name);
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -384,25 +385,27 @@ export default function AddDiscount() {
         const rule_name = values[0];
         console.log(values[0]);
         setRuleName(values[0]);
-        if (predictChosenOr1 == null || predictChosenOr2==null)
+        if (discountChosenXor1 == null || discountChosenXor2==null)
         {
-            setSnackbar({ children: "Have to choose Predict", severity: 'error' });
+            setSnackbar({ children: "Have to choose Discount Rule", severity: 'error' });
             return;
         }
-        if (ruleName == null)
+        if (rule_name == null)
         {
             setSnackbar({ children: "Have to choose Name For Rule", severity: 'error' });
             return;
         }
-        if (Utils.check_rule_name(ruleName) == 0)
+        if (Utils.check_rule_name(rule_name) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
-        const response = await policiesApi.add_xor_discount_rule(discountChosenXor1, discountChosenXor2, store_id, ruleName);
+        console.log(rule_name);
+        const response = await policiesApi.add_xor_discount_rule(discountChosenXor1, discountChosenXor2, store_id, rule_name);
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -413,7 +416,7 @@ export default function AddDiscount() {
         const rule_name = values[0];
         console.log(values[0]);
         setRuleName(values[0]);
-        if (predictChosenOr1 == null || predictChosenOr2==null)
+        if (discountChosenMax1 == null || discountChosenMax2==null)
         {
             setSnackbar({ children: "Have to choose Predict", severity: 'error' });
             return;
@@ -428,10 +431,11 @@ export default function AddDiscount() {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
-        const response = await policiesApi.add_xor_discount_rule(discountChosenMax1, discountChosenMax2, store_id, ruleName);
+        const response = await policiesApi.add_max_discount_rule(discountChosenMax1, discountChosenMax2, store_id, rule_name);
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -442,7 +446,7 @@ export default function AddDiscount() {
         const rule_name = values[0];
         console.log(values[0]);
         setRuleName(values[0]);
-        if (predictChosenOr1 == null || predictChosenOr2==null)
+        if (discountChosenPlus1 == null || discountChosenPlus2==null)
         {
             setSnackbar({ children: "Have to choose Predict", severity: 'error' });
             return;
@@ -457,10 +461,11 @@ export default function AddDiscount() {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
-        const response = await policiesApi.add_xor_discount_rule(discountChosenPlus1, discountChosenPlus2, store_id, ruleName);
+        const response = await policiesApi.add_plus_discount_rule(discountChosenPlus1, discountChosenPlus2, store_id, rule_name);
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -511,9 +516,9 @@ export default function AddDiscount() {
                     
                 </Grid>
                 <Grid item>
-                    {option ==="Complex"  ? <ControlledRadioButtonsGroup list={discounts} name="Predicts" save={save_predict}></ControlledRadioButtonsGroup> : null}
-                    {option ==="Complex And"  ? <ControlledRadioButtonsGroup list={discounts} name="Predicts" save={save_predictAnd1}></ControlledRadioButtonsGroup> : null}
-                    {option ==="Complex Or"  ? <ControlledRadioButtonsGroup list={discounts} name="Predicts" save={save_predictOr1}></ControlledRadioButtonsGroup> : null}
+                    {option ==="Complex"  ? <ControlledRadioButtonsGroup list={predicts} name="Predicts" save={save_predict}></ControlledRadioButtonsGroup> : null}
+                    {option ==="Complex And"  ? <ControlledRadioButtonsGroup list={predicts} name="Predicts" save={save_predictAnd1}></ControlledRadioButtonsGroup> : null}
+                    {option ==="Complex Or"  ? <ControlledRadioButtonsGroup list={predicts} name="Predicts" save={save_predictOr1}></ControlledRadioButtonsGroup> : null}
                     {option ==="Complex Xor"  ? <ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountXor1}></ControlledRadioButtonsGroup> : null}
                     {option ==="Complex Max"  ? <ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountMax1}></ControlledRadioButtonsGroup> : null}
                     {option ==="Complex Plus"  ? <ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountPlus1}></ControlledRadioButtonsGroup> : null}
@@ -574,61 +579,4 @@ export default function AddDiscount() {
         </>
     );
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
