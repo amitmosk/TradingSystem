@@ -996,4 +996,10 @@ public class Store implements Observable{
     public void setPredictList(Map<String, Ipredict> predictList) {
         this.predictList = predictList;
     }
+    public String remove_predict(String name) throws WrongPermterException {
+        if (predictList.get(name) != null)
+            predictList.remove(name);
+        else throw new WrongPermterException("no predict with this name");
+        return "predict " + name + "removed" + "from store";
+    }
 }
