@@ -1,4 +1,6 @@
-import {CONNECTION_ERROR, CATCH,ONLINE_USER_PATH, LOGIN_PATH, REGISTER_PATH,LOGOUT_PATH, NOTIFICATIONS_PATH} from "./ApiPaths";
+import {CONNECTION_ERROR, CATCH,ONLINE_USER_PATH, 
+    LOGIN_PATH, REGISTER_PATH,LOGOUT_PATH, 
+    NOTIFICATIONS_PATH, SAVE_NOTIFICATIONS, GET_NOTIFICATIONS_LIST} from "./ApiPaths";
 import { Response } from "./Response";
 import { User } from "../ServiceObjects/User";
 
@@ -64,6 +66,30 @@ export class ConnectApi {
             })
             .then(res => {
                 console.log(res.data)
+                return new Response(res.data);
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    }
+    save_notifications(notification) {
+        return instance.get(SAVE_NOTIFICATIONS,
+            {
+                params:{ notification: notification,
+                    }
+                
+            })
+            .then(res => {
+                console.log(res.data)
+                return new Response(res.data);
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+    }
+    get_notifications_list() {
+        return instance.get(GET_NOTIFICATIONS_LIST,
+            {
+                
+                
+            })
+            .then(res => {
                 return new Response(res.data);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));

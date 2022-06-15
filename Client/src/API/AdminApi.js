@@ -58,11 +58,11 @@ export class AdminApi {
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
    
-    admin_answer_user_question(question_id, answer){
+    admin_answer_user_question(question_id, adminAnswer){
         return instance.get(ADMIN_ANSWER_USERS_QUESTION,
             {
                 params:{question_id : question_id,
-                    answer : answer,}
+                    adminAnswer : adminAnswer,}
             })
             .then(res => {
                 return new Response(res.data)

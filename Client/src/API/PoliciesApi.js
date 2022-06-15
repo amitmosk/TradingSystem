@@ -153,14 +153,14 @@ export class PoliciesApi {
     }
 
     
-    add_and_discount_rule(left, right, store_id,  nameOfRule ){
+    add_and_discount_rule(left, right, store_id,  NameOfRule ){
     return instance.get(ADD_COMPLEX_AND_DISCOUNT,
         {
             params:{
                 left : left,
                 right : right,
                 store_id : store_id,
-                nameOfRule : nameOfRule,
+                NameOfRule : NameOfRule,
                 }
         })
         .then(res => {
@@ -169,14 +169,14 @@ export class PoliciesApi {
         .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
-    add_or_discount_rule(left, right, store_id,  nameOfRule ){
+    add_or_discount_rule(left, right, store_id,  NameOfRule ){
     return instance.get(ADD_COMPLEX_OR_DISCOUNT,
         {
             params:{
                 left : left,
                 right : right,
                 store_id : store_id,
-                nameOfRule : nameOfRule,
+                NameOfRule : NameOfRule,
                 }
         })
         .then(res => {
@@ -186,14 +186,14 @@ export class PoliciesApi {
     }
 
 
-    add_max_discount_rule(left, right, store_id,  nameOfRule ){
+    add_max_discount_rule(left, right, store_id,  NameOfRule ){
     return instance.get(ADD_COMPLEX_MAX_DISCOUNT,
         {
             params:{
                 left : left,
                 right : right,
                 store_id : store_id,
-                nameOfRule : nameOfRule,
+                NameOfRule : NameOfRule,
                 }
         })
         .then(res => {
@@ -202,14 +202,14 @@ export class PoliciesApi {
         .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
 
-    add_plus_discount_rule(left, right, store_id,  nameOfRule ){
+    add_plus_discount_rule(left, right, store_id,  NameOfRule ){
     return instance.get(ADD_COMPLEX_PLUS_DISCOUNT,
         {
             params:{
                 left : left,
                 right : right,
                 store_id : store_id,
-                nameOfRule : nameOfRule,
+                NameOfRule : NameOfRule,
                 }
         })
         .then(res => {
@@ -219,14 +219,14 @@ export class PoliciesApi {
     }
 
 
-    add_xor_discount_rule(left, right, store_id,  nameOfRule ){
+    add_xor_discount_rule(left, right, store_id,  NameOfRule ){
         return instance.get(ADD_COMPLEX_XOR_DISCOUNT,
             {
                 params:{
                     left : left,
                     right : right,
                     store_id : store_id,
-                    nameOfRule : nameOfRule,
+                    NameOfRule : NameOfRule,
                     }
             })
             .then(res => {

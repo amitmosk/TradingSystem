@@ -1,41 +1,21 @@
-import List from '@mui/material/List';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-// import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
+
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert"; 
 import { StoreApi } from '../API/StoreApi';
 import { useParams } from 'react-router-dom';
 import { Utils } from '../ServiceObjects/Utils';
 import { useEffect } from 'react';
-import React, { Component } from 'react';
-import Link from '@mui/material/Button';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import HomeIcon from '@mui/icons-material/Home';
-import { Input } from "@mui/material";
-import FormDialog from './FormDialog';
-import { Category } from '@mui/icons-material';
 import { PoliciesApi } from '../API/PoliciesApi';
-import CheckboxesGroup from './CheckboxesGroup';
 import ControlledRadioButtonsGroup from './ControlledRadioButtonsGroup';
 import StoreProductsTable from './StoreProductsTable';
-import Checkbox from './Checkbox';
-import { Row, Col } from 'react-grid-system';
 import AddPredictFormDialog from './AddPredictFormDialog';
 
 export default function CreatePredict() {
     const {id} = useParams();
     const store_id =id;
-//    add_predict(store_id,catgorey,product_id,above,equql,num,price,quantity,age,time,year,month,day,name){
-    //fields
-
-
     const add_predict_for_category_fields =["Rule Name"];
     const add_predict_for_time_fields =["Rule Name"];
     const add_predict_for_quantity_fields =["Rule Name", "Quantity"];
@@ -86,16 +66,6 @@ export default function CreatePredict() {
     
     
     
-    
-    
-
-
-  
-    
-    
-    
-    
-    
     const [option, setOption] = React.useState("Category");
     
     
@@ -114,12 +84,14 @@ export default function CreatePredict() {
     //Functions To Server
     //    add_predict(store_id,catgorey,product_id,above,equql,num,price,quantity,age,time,year,month,day,name){
     const add_predict_for_category = async(values) => {
+        console.log(values);
         const rule_name = values[0];
         const inside = values[1];
         console.log(inside);
         if (Utils.check_rule_name(rule_name) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
+            
             return;
         }
         
@@ -127,6 +99,7 @@ export default function CreatePredict() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -141,17 +114,21 @@ export default function CreatePredict() {
         const year = date[0];
         const month = date[1];
         const day = date[2];
-        const inside = values[1];
+        const inside = values[2];
         console.log(inside);
         if (Utils.check_rule_name(rule_name) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
+        console.log(parseInt(year));
+        console.log(parseInt(month));
+        console.log(parseInt(day));
         const response = await policiesApi.add_predict(store_id,"", -1, 0, inside, 0, 0, 0, 0, 1,parseInt(year) ,parseInt(month) ,parseInt(day) , rule_name )
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -177,6 +154,7 @@ export default function CreatePredict() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -215,14 +193,47 @@ export default function CreatePredict() {
         if(range==0)
         {
             response = await policiesApi.add_predict(store_id,"", -1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, rule_name )
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==1)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==2)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         if (!response.was_exception)
         {
@@ -256,24 +267,50 @@ export default function CreatePredict() {
         let response;
         if(range==0)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 0, 1, value, 1, 0, 0, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 0, 1, value, 1, 0, 0, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==1)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, value, 1, 0, 0, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, value, 1, 0, 0, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==2)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, value, 1, 0, 0, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, value, 1, 0, 0, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
-        if (!response.was_exception)
-        {
-            setSnackbar({ children: response.message, severity: 'success' });
-        }
-        else
-        {
-            setSnackbar({ children: response.message, severity: 'error' });
-        }
+       
     }
 
     const add_predict_for_age= async(values) => {
@@ -298,24 +335,50 @@ export default function CreatePredict() {
         let response;
         if(range==0)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 0, 1, age, 0, 0, 1, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 0, 1, age, 0, 0, 1, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==1)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, age, 0, 0, 1, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, age, 0, 0, 1, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==2)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, age, 0, 0, 1, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, age, 0, 0, 1, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
-        if (!response.was_exception)
-        {
-            setSnackbar({ children: response.message, severity: 'success' });
-        }
-        else
-        {
-            setSnackbar({ children: response.message, severity: 'error' });
-        }
+        
     }
     
     
@@ -406,7 +469,7 @@ export default function CreatePredict() {
     );
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 

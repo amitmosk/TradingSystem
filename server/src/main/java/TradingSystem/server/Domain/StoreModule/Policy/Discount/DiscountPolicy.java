@@ -34,7 +34,7 @@ public class DiscountPolicy {
     }
 
     public void removeRule(String name) throws WrongPermterException {
-        DiscountComponent toRemove = policy.remove(policy.get(name));
+        DiscountComponent toRemove = policy.remove(name);
         if (toRemove == null)
             throw new WrongPermterException("there is no discount with this name");
     }

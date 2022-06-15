@@ -53,6 +53,8 @@ import ViewRules from "./components/ViewRules";
 import AddPurchase from "./components/AddPurchase";
 import CreatePredict from "./components/CreatePredict";
 import StorePolicies from "./components/StorePolicies";
+import AdminViewStorePurchaseHistory from "./components/AdminViewStorePurchaseHistory";
+import AdminViewUserPurchaseHistory from "./components/AdminViewUserPurchaseHistory";
 
 
 
@@ -68,7 +70,8 @@ export default function App() {
 
   const connectApi = new ConnectApi();
   const get_online_user = async () => {
-      let response = await connectApi.get_online_user()
+      let response = await connectApi.get_online_user();
+      console.log(response.value);
       if(!response.was_exception)
       {
         setUser(response.value);
@@ -90,6 +93,12 @@ export default function App() {
   const get_state=() => {
     return user;
   }
+  const [notifications, setNotifications] = useState(["Shit"]);
+    const save_notification = (notification) =>{
+        console.log(notification+"\n\n\n\n\n\n\n");
+        notifications.push(notification)
+        setNotifications(notifications);
+    }
 
 
   return (
@@ -100,6 +109,9 @@ export default function App() {
           user = {user}
           
         ></NavBar>
+
+
+          {/* --------------------------------------From Home Page---------------------------------- */}
 
         <Routes>
           <Route
@@ -117,6 +129,7 @@ export default function App() {
               <Login
                 updateUserState={updateUserState}
                 user={user}
+                save = {save_notification}
               />
             }
           ></Route>
@@ -126,17 +139,36 @@ export default function App() {
               <Register updateUserState={updateUserState} />
             }
           ></Route>
+          <Route
+            path="/EditProfile"
+            element={<EditProfile user={user} updateUserState={updateUserState}/>}
+          ></Route>
           <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
-          <Route path="/HomePageSearch" element={<HomePageSearch />}></Route>
-          {/* <Route path="/StorePage" element={<StorePageNevigator/>}></Route> */}
+          <Route path="/UserViewQuestions" element={<UserViewQuestions />}></Route>
+          <Route path="/Notifications" element={<Notifications notifications={notifications} />}></Route>
+
+          {/* --------------------------------------Store Page---------------------------------- */}
+
+
           <Route path="/StorePage/:id" element={<StorePageNevigator />}></Route>
           <Route path="MyStores/StorePage/:id" element={<StorePageNevigator />}></Route>
           <Route path="/AllStores/StorePage/:id" element={<StorePageNevigator />}></Route>
-          <Route
+          {/* <Route
             path="/AdminSendMessage"
             element={<AdminSendMessage />}
-          ></Route>
+          ></Route> */}
           <Route path="/AdminPage" element={<AdminPage />}></Route>
+
+          {/* -------------------------------------- Admin Page---------------------------------- */}
+
+          <Route
+            path="/AdminPage/AdminViewStorePurchaseHistory/:id"
+            element={<AdminViewStorePurchaseHistory />}
+          ></Route>
+          <Route
+            path="/AdminPage/AdminViewUserPurchaseHistory/:user_email"
+            element={<AdminViewUserPurchaseHistory />}
+          ></Route>
           
           {/* -------------------------------------- Store Managment---------------------------------- */}
           <Route
@@ -227,10 +259,7 @@ export default function App() {
 
  {/* -------------------------------------- End --- Policies---------------------------------- */}
 
-          <Route
-            path="/EditProfile"
-            element={<EditProfile get_state={get_state} />}
-          ></Route>
+          
           <Route
             path="/EditProfilePremium"
             element={
@@ -271,7 +300,7 @@ export default function App() {
           ></Route>
           
 
-          <Route path="/Notifications" element={<Notifications />}></Route>
+         
           
           {/* <Route path="/UserPurchaseHistory" element={<UserPurchaseHistory />}></Route> */}
           {/* <Route path="/UserQuestions" element={<?? />}></Route>

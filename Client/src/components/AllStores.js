@@ -1,18 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import HomeIcon from "@mui/icons-material/Home";
-import Box from "@mui/material/Box";
 import { StoreApi } from "../API/StoreApi";
-import List from "@mui/material/List";
-import MenuListComposition from "./MenuListComposition";
-import { Paper } from "@mui/material";
-import { Typography } from "@mui/material";
-import BasicRating from "./Rating";
 import Grid from "@mui/material/Grid";
-import FormDialog from "./FormDialog";
-import StoreProductsTable from "./StoreProductsTable";
 import AllStoresTable from "./AllStoresTable";
 export default class AllStores extends Component {
     static displayName = AllStores.name;
