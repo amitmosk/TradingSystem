@@ -931,360 +931,6 @@ public class MarketFacade {
     }
 
 
-    //discount policy
-
-
-    public Response add_predict(int store_id, String category, int product_id, boolean above, boolean equel,
-                                int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name) {
-        Response response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                Predict predict = store.addPredict(category, product_id, above, equel, num, price, quantity, age, time, year, month, day, name);
-                response = new Response(predict, "predict added successfully");
-                market_logger.add_log("predict added successfully");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response get_purchase_policy(int store_id) {
-        Response<List<String>> response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            Store store = store_controller.get_store(store_id);
-            List<String> policy = store.getPurchasePolicyNames();
-            response = new Response(policy, "purchase policy sent");
-            market_logger.add_log("purchase policy sent to user");
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response send_predicts(int store_id) {
-        Response<List<String>> response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                List<String> policy = store.getPredicts();
-                response = new Response(policy, "predicts sent");
-                market_logger.add_log("predicts sent to user");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response get_discount_policy(int store_id) {
-        Response<List<String>> response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                List<String> policy = store.getDiscountPolicyNames();
-                response = new Response(policy, "discount policy sent");
-                market_logger.add_log("discount policy sent");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response add_complex_discount_rule(int store_id, String nameOfPredict, String nameOfComponent, String nameOfRule) {
-        Response<String> response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                ComplexDiscountComponent complex = store.add_complex_discount(nameOfRule, nameOfPredict, nameOfComponent);
-                response = new Response(complex, "complex discount added successfully");
-                market_logger.add_log("complex discount added successfully");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response add_simple_category_discount_rule(int store_id, String nameOfCategory, double percent, String nameOfRule) {
-        Response<String> response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                simpleDiscountComponent simple = store.add_simple_discount(nameOfRule, "c", percent, nameOfCategory);
-                response = new Response(simple, "simple category discount added successfully");
-                market_logger.add_log("simple category discount added successfully");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response add_simple_product_discount_rule(int store_id, int id, double percent, String nameOfrule) {
-        Response<String> response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                simpleDiscountComponent simple = store.add_simple_product_discount(nameOfrule, id, percent);
-                response = new Response(simple, "simple product discount added successfully");
-                market_logger.add_log("simple product discount added successfully");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response add_simple_store_discount_rule(int store_id, double percent, String nameOfRule) {
-        Response<DiscountComponent> response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                simpleDiscountComponent simple = store.add_simple_discount(nameOfRule, "store", percent, "");
-                response = new Response(simple, "store discount added successfully");
-                market_logger.add_log("Store's (" + store_id + ") discount added successfully");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    public Response add_and_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<DiscountComponent> response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                Ipredict discount = store.CreateAndDisocuntCompnent(NameOfRule, left, right);
-                response = new Response(discount, "Store discount and rule added successfully");
-                market_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    public Response add_or_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                Ipredict discount = store.CreateOrDisocuntCompnent(NameOfRule, left, right);
-                response = new Response(discount, "Store discount or rule added successfully");
-                market_logger.add_log("Store's (" + store_id + ") discount or rule have been added");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    public Response add_max_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                DiscountComponent discount = store.CreateMaxDisocuntCompnent(NameOfRule, left, right);
-                response = new Response(discount, "Store discount max rule added successfully");
-                market_logger.add_log("Store's (" + store_id + ") discount max rule have been added");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    public Response add_plus_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                DiscountComponent discount = store.CreateplusDisocuntCompnent(NameOfRule, left, right);
-                response = new Response(discount, "Store discount plus rule added successfully");
-                market_logger.add_log("Store's (" + store_id + ") discount plus rule have been added");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    public Response add_xor_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                DiscountComponent discount = store.CreateXorDisocuntCompnent(NameOfRule, left, right);
-                response = new Response(discount, "Store discount and rule added successfully");
-                market_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response remove_discount_rule(int store_id, String name) {
-        Response response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                String res = store.remove_discount_rule(name);
-                response = new Response(res, "discount rule removed successfully");
-                market_logger.add_log("Store's (" + store_id + ") discount removed successfully");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-    public Response remove_purchase_rule(int store_id, String name) {
-        Response response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                String res = store.remove_purchase_rule(name);
-                response = new Response(res, "purchase rule removed successfully");
-                market_logger.add_log("Store's (" + store_id + ") purchase removed successfully");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response<SimplePurchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
-        Response response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                PurchaseRule PurchaseRule = store.addsimplePorchaseRule(NameOfRule, PredictName);
-                response = new Response(PurchaseRule, "simple purchase added successfully");
-                market_logger.add_log("Store's (" + store_id + ") simple purchase added successfully");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response<PurchaseRule> add_and_purchase_rule(String left, String right, int store_id, String NameOfrule) {
-        Response response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                PurchaseRule PurchaseRule = store.add_and_purchase_rule(NameOfrule, left, right);
-                response = new Response(PurchaseRule, "Store purchase and rule added successfully");
-                market_logger.add_log("Store's (" + store_id + ") purchase and rule have been added");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
-
-
-    public Response<PurchaseRule> add_or_purchase_rule(String left, String right, int store_id, String nameOfrule) {
-        Response<PurchaseRule> response = null;
-        try {
-            HibernateUtils.beginTransaction();
-            synchronized (lock) {
-                Store store = store_controller.get_store(store_id);
-                PurchaseRule PurchaseRule = store.add_or_purchase_rule(nameOfrule, left, right);
-                response = new Response(PurchaseRule, "Store purchase or rule added successfully");
-                market_logger.add_log("Store's (" + store_id + ") purchase or rule have been added");
-            }
-            HibernateUtils.commit();
-        } catch (MarketException e) {
-            HibernateUtils.rollback();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
-        return response;
-    }
 
 
     /**
@@ -2053,6 +1699,387 @@ public class MarketFacade {
             response = new Response<>(categories, "categories of store "+store_id+" received successfully");
         } catch (Exception e) {
             response = Utils.CreateResponse(new MarketException("failed to fetch categories of store "+store_id));
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    //From here
+
+
+    //discount policy
+
+
+    public Response add_predict(int store_id, String category, int product_id, boolean above, boolean equel,
+                                int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                Predict predict = store.addPredict(category, product_id, above, equel, num, price, quantity, age, time, year, month, day, name);
+                response = new Response(predict, "predict added successfully");
+                market_logger.add_log("predict added successfully");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+
+
+
+    public Response get_purchase_policy(int store_id) {
+        Response<List<String>> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            Store store = store_controller.get_store(store_id);
+            List<String> policy = store.getPurchasePolicyNames();
+            response = new Response(policy, "purchase policy sent");
+            market_logger.add_log("purchase policy sent to user");
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response send_predicts(int store_id) {
+        Response<List<String>> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                List<String> policy = store.getPredicts();
+                response = new Response(policy, "predicts sent");
+                market_logger.add_log("predicts sent to user");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response get_discount_policy(int store_id) {
+        Response<List<String>> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                List<String> policy = store.getDiscountPolicyNames();
+                response = new Response(policy, "discount policy sent");
+                market_logger.add_log("discount policy sent");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response add_complex_discount_rule(int store_id, String nameOfPredict, String nameOfComponent, String nameOfRule) {
+        Response<String> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                ComplexDiscountComponent complex = store.add_complex_discount(nameOfRule, nameOfPredict, nameOfComponent);
+                response = new Response(complex, "complex discount added successfully");
+                market_logger.add_log("complex discount added successfully");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response add_simple_category_discount_rule(int store_id, String nameOfCategory, double percent, String nameOfRule) {
+        Response<String> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                simpleDiscountComponent simple = store.add_simple_discount(nameOfRule, "c", percent, nameOfCategory);
+                response = new Response(simple, "simple category discount added successfully");
+                market_logger.add_log("simple category discount added successfully");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response add_simple_product_discount_rule(int store_id, int id, double percent, String nameOfrule) {
+        Response<String> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                simpleDiscountComponent simple = store.add_simple_product_discount(nameOfrule, id, percent);
+                response = new Response(simple, "simple product discount added successfully");
+                market_logger.add_log("simple product discount added successfully");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response add_simple_store_discount_rule(int store_id, double percent, String nameOfRule) {
+        Response<DiscountComponent> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                simpleDiscountComponent simple = store.add_simple_discount(nameOfRule, "store", percent, "");
+                response = new Response(simple, "store discount added successfully");
+                market_logger.add_log("Store's (" + store_id + ") discount added successfully");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response add_and_discount_rule(String left, String right, int store_id, String NameOfRule) {
+        Response<DiscountComponent> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                Ipredict discount = store.CreateAndDisocuntCompnent(NameOfRule, left, right);
+                response = new Response(discount, "Store discount and rule added successfully");
+                market_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response add_or_discount_rule(String left, String right, int store_id, String NameOfRule) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                Ipredict discount = store.CreateOrDisocuntCompnent(NameOfRule, left, right);
+                response = new Response(discount, "Store discount or rule added successfully");
+                market_logger.add_log("Store's (" + store_id + ") discount or rule have been added");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response add_max_discount_rule(String left, String right, int store_id, String NameOfRule) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                DiscountComponent discount = store.CreateMaxDisocuntCompnent(NameOfRule, left, right);
+                response = new Response(discount, "Store discount max rule added successfully");
+                market_logger.add_log("Store's (" + store_id + ") discount max rule have been added");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response add_plus_discount_rule(String left, String right, int store_id, String NameOfRule) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                DiscountComponent discount = store.CreateplusDisocuntCompnent(NameOfRule, left, right);
+                response = new Response(discount, "Store discount plus rule added successfully");
+                market_logger.add_log("Store's (" + store_id + ") discount plus rule have been added");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response add_xor_discount_rule(String left, String right, int store_id, String NameOfRule) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                DiscountComponent discount = store.CreateXorDisocuntCompnent(NameOfRule, left, right);
+                response = new Response(discount, "Store discount and rule added successfully");
+                market_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response remove_discount_rule(int store_id, String name) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                String res = store.remove_discount_rule(name);
+                response = new Response(res, "discount rule removed successfully");
+                market_logger.add_log("Store's (" + store_id + ") discount removed successfully");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response remove_purchase_rule(int store_id, String name) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                String res = store.remove_purchase_rule(name);
+                response = new Response(res, "purchase rule removed successfully");
+                market_logger.add_log("Store's (" + store_id + ") purchase removed successfully");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response<SimplePurchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                PurchaseRule PurchaseRule = store.addsimplePorchaseRule(NameOfRule, PredictName);
+                response = new Response(PurchaseRule, "simple purchase added successfully");
+                market_logger.add_log("Store's (" + store_id + ") simple purchase added successfully");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response<PurchaseRule> add_and_purchase_rule(String left, String right, int store_id, String NameOfrule) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                PurchaseRule PurchaseRule = store.add_and_purchase_rule(NameOfrule, left, right);
+                response = new Response(PurchaseRule, "Store purchase and rule added successfully");
+                market_logger.add_log("Store's (" + store_id + ") purchase and rule have been added");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+    public Response<PurchaseRule> add_or_purchase_rule(String left, String right, int store_id, String nameOfrule) {
+        Response<PurchaseRule> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                PurchaseRule PurchaseRule = store.add_or_purchase_rule(nameOfrule, left, right);
+                response = new Response(PurchaseRule, "Store purchase or rule added successfully");
+                market_logger.add_log("Store's (" + store_id + ") purchase or rule have been added");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response remove_predict(int store_id, String name) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                String res = store.remove_predict(name);
+                response = new Response(res, "predict rule removed successfully");
+                market_logger.add_log("Store's (" + store_id + ") predict removed successfully");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
         return response;

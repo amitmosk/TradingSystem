@@ -86,7 +86,9 @@ export default function StorePolicies() {
         const response = await policiesApi.send_predicts(id);
         if(!response.was_exception)
         {
-            setSnackbar({ children: response.message, severity: 'success' });     }
+            setSnackbar({ children: response.message, severity: 'success' });    
+            setPredicts(response.value);
+         }
         else{
             setSnackbar({ children: response.message, severity: 'error' }); 
         }

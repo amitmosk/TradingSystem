@@ -273,6 +273,7 @@ public interface iService {
 
 
     TradingSystem.server.Domain.Utils.Response add_predict(int store_id, String categorey, int product_id, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name);
+    TradingSystem.server.Domain.Utils.Response remove_predict(int store_id, String predict_name);
     TradingSystem.server.Domain.Utils.Response get_purchase_policy(int store_id);
     TradingSystem.server.Domain.Utils.Response send_predicts(int store_id);
     TradingSystem.server.Domain.Utils.Response get_discount_policy(int store_id);

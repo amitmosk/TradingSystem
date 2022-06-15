@@ -114,13 +114,16 @@ export default function CreatePredict() {
         const year = date[0];
         const month = date[1];
         const day = date[2];
-        const inside = values[1];
+        const inside = values[2];
         console.log(inside);
         if (Utils.check_rule_name(rule_name) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
             return;
         }
+        console.log(parseInt(year));
+        console.log(parseInt(month));
+        console.log(parseInt(day));
         const response = await policiesApi.add_predict(store_id,"", -1, 0, inside, 0, 0, 0, 0, 1,parseInt(year) ,parseInt(month) ,parseInt(day) , rule_name )
         if (!response.was_exception)
         {

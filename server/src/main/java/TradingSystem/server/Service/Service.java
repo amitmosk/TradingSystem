@@ -650,6 +650,20 @@ public class Service implements iService {
         Response answer = marketFacade.add_predict(store_id, catgorey, product_id, above, equql, num, price, quantity, age, time, year, month, day, name);
         return answer;
     }
+
+    @RequestMapping(value = "/remove_predict")
+    @CrossOrigin
+    @Override
+    public Response remove_predict(int store_id, String predict_name){
+        Response answer = marketFacade.remove_predict(store_id, predict_name);
+        return answer;
+    }
+
+
+
+
+
+
     @RequestMapping(value = "/get_purchase_policy")
     @CrossOrigin
     @Override
