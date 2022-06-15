@@ -7,6 +7,7 @@ import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
+import TradingSystem.server.Domain.Utils.Utils;
 import com.google.gson.Gson;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,7 +28,7 @@ public class Service implements iService {
     private static Service service = null;
 
     private MarketFacade marketFacade;
-
+    private List notifications = new ArrayList();
 
 
 
@@ -39,6 +40,8 @@ public class Service implements iService {
             system = new MarketSystem(system_config_path, instructions_config_path);
             PaymentAdapter paymentAdapter = system.getPayment_adapter();
             SupplyAdapter supplyAdapter = system.getSupply_adapter();
+            //system.add_admins();
+            //system.init_data_to_market_develop(paymentAdapter, supplyAdapter);
             this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         }
         catch (ExitException e) {
@@ -64,8 +67,8 @@ public class Service implements iService {
 
     @RequestMapping(value = "/get_notifications")
     @CrossOrigin
-    public Response get_notifications(){
-        NotificationHandler.getInstance().send_waiting_notifications("amit@gmail.com");
+    public Response get_notifications(String email){
+        NotificationHandler.getInstance().send_waiting_notifications(email);
         return new Response("nice", "job");
     }
 
@@ -167,26 +170,37 @@ public class Service implements iService {
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo) {
         // TODO : GSON
-        PaymentInfo p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
-        SupplyInfo s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
-        PaymentInfo paymentInfo1 = new PaymentInfo();
-        SupplyInfo supplyInfo1 = new SupplyInfo();
-        Response answer = marketFacade.buy_cart(paymentInfo1, supplyInfo1);
-        return answer;
-    }
+        PaymentInfo p=null;
+        SupplyInfo s=null;
+        try{
+            p = new Gson().fromJson(paymentInfo, PaymentInfo.class);
+            s = new Gson().fromJson(supplyInfo, SupplyInfo.class);
+            Response answer = marketFacade.buy_cart(p, s);
+            return answer;
+        }
+        catch(Exception e)
+        {
+            return Utils.CreateResponse(e);
+        }
 
+
+    }
+    @RequestMapping(value = "/add_bid")
+    @CrossOrigin
     @Override
     public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
         Response answer = marketFacade.add_bid(storeID, productID, quantity, offer_price);
         return answer;
     }
-
+    @RequestMapping(value = "/manager_answer_bid")
+    @CrossOrigin
     @Override
     public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
         Response answer = marketFacade.manager_answer_bid(storeID, bidID, manager_answer, negotiation_price);
         return answer;
     }
-
+    @RequestMapping(value = "/view_bids_status")
+    @CrossOrigin
     @Override
     public Response view_bids_status(int storeID) {
         Response answer = marketFacade.view_bids_status(storeID);
@@ -604,148 +618,180 @@ public class Service implements iService {
         return answer;
     }
 
+    @RequestMapping(value = "/save_notifications")
+    @CrossOrigin
+    @Override
+    public Response save_notifications(String notification) {
+        this.notifications.add(notification);
+        return  new Response();
+
+    }
+
+    @RequestMapping(value = "/get_notifications_list")
+    @CrossOrigin
+    @Override
+    public Response get_notifications_list() {
+        return new Response(this.notifications, "Notifications received successfully");
+    }
 
 
-//
-//
-//
-//    // -- DISCOUNTS & POLICIES
-//
-//    @RequestMapping(value = "/add_predict")
-//    @CrossOrigin
-//    @Override
-//    public Response add_predict(int store_id, String catgorey, int product_id, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name) {
-//        Response answer = marketFacade.add_predict(store_id, catgorey, product_id, above, equql, num, price, quantity, age, time, year, month, day, name);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/get_purchase_policy")
-//    @CrossOrigin
-//    @Override
-//    public Response get_purchase_policy(int store_id) {
-//        Response answer = marketFacade.get_purchase_policy(store_id);
-//        return answer;
-//    }
-//
-//    @RequestMapping(value = "/send_predicts")
-//    @CrossOrigin
-//    @Override
-//    public Response send_predicts(int store_id) {
-//        Response answer = marketFacade.send_predicts(store_id);
-//        return answer;
-//    }
-//
-//    @RequestMapping(value = "/get_discount_policy")
-//    @CrossOrigin
-//    @Override
-//    public Response get_discount_policy(int store_id) {
-//        Response answer = marketFacade.get_discount_policy(store_id);
-//        return answer;
-//    }
-//
-//    //------------------------------------------------------ Discount Rules --------------------------------------------------------
-//
-//    @RequestMapping(value = "/add_complex_discount_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response add_complex_discount_rule(int store_id, String nameOfPredict, String nameOfComponent, String nameOfRule) {
-//        Response answer = marketFacade.add_complex_discount_rule(store_id, nameOfPredict, nameOfComponent, nameOfRule);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/add_simple_categorey_discount_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response add_simple_category_discount_rule(int store_id, String nameOfCategory, double percent, String nameOfRule) {
-//        Response answer = marketFacade.add_simple_categorey_discount_rule(store_id, nameOfCategory, percent, nameOfRule);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/add_simple_product_discount_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response add_simple_product_discount_rule(int store_id, int id, double percent, String nameOfrule) {
-//        Response answer = marketFacade.add_simple_product_discount_rule(store_id, id, percent, nameOfrule);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/add_simple_store_discount_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  add_simple_store_discount_rule(int store_id, double percent, String nameOfRule) {
-//        Response answer = marketFacade.add_simple_store_discount_rule(store_id, percent, nameOfRule);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/add_and_discount_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  add_and_discount_rule(String left, String right, int store_id, String NameOfRule) {
-//        Response answer = marketFacade.add_and_discount_rule(left, right, store_id, NameOfRule);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/add_or_discount_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  add_or_discount_rule(String left, String right, int store_id, String NameOfRule) {
-//        Response answer = marketFacade.add_or_discount_rule(left, right, store_id, NameOfRule);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/add_max_discount_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  add_max_discount_rule(String left, String right, int store_id, String NameOfRule) {
-//        Response answer = marketFacade.add_max_discount_rule(left, right, store_id, NameOfRule);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/add_plus_discount_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  add_plus_discount_rule(String left, String right, int store_id, String NameOfRule) {
-//        Response answer = marketFacade.add_plus_discount_rule(left, right, store_id, NameOfRule);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/add_xor_discount_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  add_xor_discount_rule(String left, String right, int store_id, String NameOfRule) {
-//        Response answer = marketFacade.add_xor_discount_rule(left, right, store_id, NameOfRule);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/remove_discount_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  remove_discount_rule(int store_id, String name) {
-//        Response answer = marketFacade.remove_discount_rule(store_id, name);
-//        return answer;
-//    }
-//
-//
-//
-//    //------------------------------------------------------ Purchase Rules --------------------------------------------------------
-//
-//    @RequestMapping(value = "/add_simple_purchase_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
-//        Response answer = marketFacade.add_simple_purchase_rule(PredictName, NameOfRule, store_id);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/add_and_purchase_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  add_and_purchase_rule(String left, String right, int store_id, String NameOfrule) {
-//        Response answer = marketFacade.add_and_purchase_rule(left, right, store_id, NameOfrule;
-//        return answer;
-//    }
-//    @RequestMapping(value = "/add_or_purchase_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  add_or_purchase_rule(String left, String right, int store_id, String nameOfrule) {
-//        Response answer = marketFacade.add_or_purchase_rule(left, right, store_id, nameOfrule);
-//        return answer;
-//    }
-//    @RequestMapping(value = "/remove_purchase_rule")
-//    @CrossOrigin
-//    @Override
-//    public Response  remove_purchase_rule(int store_id, String name){
-//        Response answer = marketFacade.remove_purchase_rule(store_id, name);
-//        return answer;
-//    }
+
+
+
+
+
+
+    // -- DISCOUNTS & POLICIES
+
+    @RequestMapping(value = "/add_predict")
+    @CrossOrigin
+    @Override
+    public Response add_predict(int store_id, String catgorey, int product_id, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, String name) {
+        Response answer = marketFacade.add_predict(store_id, catgorey, product_id, above, equql, num, price, quantity, age, time, year, month, day, name);
+        return answer;
+    }
+
+    @RequestMapping(value = "/remove_predict")
+    @CrossOrigin
+    @Override
+    public Response remove_predict(int store_id, String predict_name){
+        Response answer = marketFacade.remove_predict(store_id, predict_name);
+        return answer;
+    }
+
+
+
+
+
+
+    @RequestMapping(value = "/get_purchase_policy")
+    @CrossOrigin
+    @Override
+    public Response get_purchase_policy(int store_id) {
+        Response answer = marketFacade.get_purchase_policy(store_id);
+        return answer;
+    }
+
+    @RequestMapping(value = "/send_predicts")
+    @CrossOrigin
+    @Override
+    public Response send_predicts(int store_id) {
+        Response answer = marketFacade.send_predicts(store_id);
+        return answer;
+    }
+
+    @RequestMapping(value = "/get_discount_policy")
+    @CrossOrigin
+    @Override
+    public Response get_discount_policy(int store_id) {
+        Response answer = marketFacade.get_discount_policy(store_id);
+        return answer;
+    }
+
+    //------------------------------------------------------ Discount Rules --------------------------------------------------------
+
+    @RequestMapping(value = "/add_complex_discount_rule")
+    @CrossOrigin
+    @Override
+    public Response add_complex_discount_rule(int store_id, String nameOfPredict, String nameOfComponent, String nameOfRule) {
+        Response answer = marketFacade.add_complex_discount_rule(store_id, nameOfPredict, nameOfComponent, nameOfRule);
+        return answer;
+    }
+    @RequestMapping(value = "/add_simple_categorey_discount_rule")
+    @CrossOrigin
+    @Override
+    public Response add_simple_category_discount_rule(int store_id, String nameOfCategory, double percent, String nameOfRule) {
+        Response answer = marketFacade.add_simple_category_discount_rule(store_id, nameOfCategory, percent, nameOfRule);
+        return answer;
+    }
+    @RequestMapping(value = "/add_simple_product_discount_rule")
+    @CrossOrigin
+    @Override
+    public Response add_simple_product_discount_rule(int store_id, int id, double percent, String nameOfrule) {
+        Response answer = marketFacade.add_simple_product_discount_rule(store_id, id, percent, nameOfrule);
+        return answer;
+    }
+    @RequestMapping(value = "/add_simple_store_discount_rule")
+    @CrossOrigin
+    @Override
+    public Response  add_simple_store_discount_rule(int store_id, double percent, String nameOfRule) {
+        Response answer = marketFacade.add_simple_store_discount_rule(store_id, percent, nameOfRule);
+        return answer;
+    }
+    @RequestMapping(value = "/add_and_discount_rule")
+    @CrossOrigin
+    @Override
+    public Response  add_and_discount_rule(String left, String right, int store_id, String NameOfRule) {
+        Response answer = marketFacade.add_and_discount_rule(left, right, store_id, NameOfRule);
+        return answer;
+    }
+    @RequestMapping(value = "/add_or_discount_rule")
+    @CrossOrigin
+    @Override
+    public Response  add_or_discount_rule(String left, String right, int store_id, String NameOfRule) {
+        Response answer = marketFacade.add_or_discount_rule(left, right, store_id, NameOfRule);
+        return answer;
+    }
+    @RequestMapping(value = "/add_max_discount_rule")
+    @CrossOrigin
+    @Override
+    public Response  add_max_discount_rule(String left, String right, int store_id, String NameOfRule) {
+        Response answer = marketFacade.add_max_discount_rule(left, right, store_id, NameOfRule);
+        return answer;
+    }
+    @RequestMapping(value = "/add_plus_discount_rule")
+    @CrossOrigin
+    @Override
+    public Response  add_plus_discount_rule(String left, String right, int store_id, String NameOfRule) {
+        Response answer = marketFacade.add_plus_discount_rule(left, right, store_id, NameOfRule);
+        return answer;
+    }
+    @RequestMapping(value = "/add_xor_discount_rule")
+    @CrossOrigin
+    @Override
+    public Response  add_xor_discount_rule(String left, String right, int store_id, String NameOfRule) {
+        Response answer = marketFacade.add_xor_discount_rule(left, right, store_id, NameOfRule);
+        return answer;
+    }
+    @RequestMapping(value = "/remove_discount_rule")
+    @CrossOrigin
+    @Override
+    public Response  remove_discount_rule(int store_id, String name) {
+        Response answer = marketFacade.remove_discount_rule(store_id, name);
+        return answer;
+    }
+
+
+
+    //------------------------------------------------------ Purchase Rules --------------------------------------------------------
+
+    @RequestMapping(value = "/add_simple_purchase_rule")
+    @CrossOrigin
+    @Override
+    public Response  add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
+        Response answer = marketFacade.add_simple_purchase_rule(PredictName, NameOfRule, store_id);
+        return answer;
+    }
+    @RequestMapping(value = "/add_and_purchase_rule")
+    @CrossOrigin
+    @Override
+    public Response  add_and_purchase_rule(String left, String right, int store_id, String NameOfrule) {
+        Response answer = marketFacade.add_and_purchase_rule(left, right, store_id, NameOfrule);
+        return answer;
+    }
+    @RequestMapping(value = "/add_or_purchase_rule")
+    @CrossOrigin
+    @Override
+    public Response  add_or_purchase_rule(String left, String right, int store_id, String nameOfrule) {
+        Response answer = marketFacade.add_or_purchase_rule(left, right, store_id, nameOfrule);
+        return answer;
+    }
+    @RequestMapping(value = "/remove_purchase_rule")
+    @CrossOrigin
+    @Override
+    public Response  remove_purchase_rule(int store_id, String name){
+        Response answer = marketFacade.remove_purchase_rule(store_id, name);
+        return answer;
+    }
 }
 

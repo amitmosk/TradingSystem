@@ -5,20 +5,11 @@ import Stomp from 'stompjs';
 import { EMPLOYEE_BASE_REST_API_URL } from "../API/ApiPaths";
 import { ConnectApi } from "../API/ConnectApi";
 
-const get_notifications = () => {
-    console.log("goti");
-    let connectApi = new ConnectApi();
-    let response = connectApi.get_notifications("amit@gmail.com");
-    if (!response.was_exception)
-    {
-        console.log("in noti moti, noti success!\n");
-    }
-    else{
-        console.log("in noti moti, noti failed!\n");
-    }
-}
-
-function SocketProvider({setMessage, save_notification}) {
+export default function SocketProvider(props) {
+    const connectApi = new ConnectApi();
+    const setMessage ="";
+    console.log(props);
+    console.log(props.save_notification);
     function createSocket(userEmail) {
         const sock = new SockJS('http://localhost:8080/chat');
 
@@ -31,16 +22,23 @@ function SocketProvider({setMessage, save_notification}) {
             
             
         })
+        sock.addEventListener("close", event => {
+            console.log(" Web Socket Closed!");
+            
+            
+        })
         sock.addEventListener("message", event => {
             let tempi = event.data.split("s1:");
-            console.log(tempi+"\n\n\n\n\n\n\n\n");
+            // console.log(tempi+"\n\n\n\n\n\n\n\n");
             if (tempi.length != 1)
             {
                 console.log(tempi[1]+"\n\n\n\n\n\n\n\n");
-                save_notification(tempi[1]);
+                alert("New Notification: "+tempi[1]);
+                connectApi.save_notifications(tempi[1]);
+                props(tempi[1]);
             }
             else{
-                console.log("no nessage\n\n\n\n\n\n\n\n");
+                console.log("message of connect\n\n\n\n\n\n\n\n");
             }
 
             console.log(event);
@@ -58,14 +56,15 @@ function SocketProvider({setMessage, save_notification}) {
                 console.log("try to subsribe...");
                 console.log(greeting.body);
                 setTimeout(() => {
-                    setMessage(null)
+                    //setMessage(null)
                     console.log("cleared")
                 }, 3000)
             });
+            connectApi.get_notifications(userEmail);
+
         });
     }
 
     return { createSocket }
 }
 
-export default SocketProvider

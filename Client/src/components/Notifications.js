@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { Component } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -25,18 +26,33 @@ const Demo = styled('div')(({ theme }) => ({
 
 
 export default function Notifications() {
-
     const [user, setUser] = useState(null);
     const connectApi = new ConnectApi();
-    useEffect(()=>{get_online_user()}, []);
-    // useEffect(()=>{get_notifications()}, []);
+    // useEffect(()=>{get_online_user()}, []);
+    useEffect(()=>{get_notifications_list()}, []);
+    
+    const get_notifications_list = async () => {
+        let response = await connectApi.get_notifications_list();
+        if(!response.was_exception)
+        {
+            setNotifications(response.value);
+            setSnackbar({ children: response.message, severity: 'success' });
+        }
+        else
+        {
+            setSnackbar({ children: response.message, severity: 'error' });
+    
+        }
+        
+    }
+
     const get_online_user = async () => {
       let response = await connectApi.get_online_user()
       if(!response.was_exception)
       {
           console.log(response.value);
-        setUser(response.value);
-        get_notifications(response.value);
+            setUser(response.value);
+        // get_notifications(response.value);
       }
       else
       {
@@ -51,17 +67,7 @@ export default function Notifications() {
 
     
     const [notifications, setNotifications] = React.useState([]);
-    const save_notification = (notification) =>{
 
-        console.log(notification);
-        notifications.push(notification)
-        setNotifications(notifications);
-    }
-    const get_notifications = (u)=> {
-        const {createSocket} = SocketProvider("setMessge", save_notification);
-        createSocket(u.email);
-        
-    }
 
     
 

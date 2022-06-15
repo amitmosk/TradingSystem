@@ -91,7 +91,7 @@ export default class HomeProductsTable extends Component {
         renderCell: (id) => (
           <>
 
-            <FormDialog fields={this.state.add_bid_fields} getValues={this.add_bid} params={[this.state.items.find((i) => id.id === i.id).store,id.id]} name={   <IconButton
+            <FormDialog fields={this.state.add_bid_fields} getValues={this.add_bid.bind(this)} params={[this.state.items.find((i) => id.id === i.id).store,id.id]} name={   <IconButton
               color="primary"
               aria-label="store"
             >
@@ -110,6 +110,7 @@ export default class HomeProductsTable extends Component {
   }
   async add_bid(values)
   {
+    const storeApi = new StoreApi();
     const quantity = values[0];
     const price = values[1];
     const store_id = values[2];
@@ -117,20 +118,14 @@ export default class HomeProductsTable extends Component {
     console.log(values);
     console.log(quantity);
     console.log(price);
-    // const response = await this.storeApi.add_bid(store_id, product_id, quantity, price);
-    // if (!response.was_exception) {
-    //   this.setSnackbar({
-    //     children: response.message,
-    //     severity: "success",
-    //   });
-    // }
-    // else {
-    //   this.setSnackbar({
-    //     children: response.message,
-    //     severity: "error",
-    //   });
+    const response = await storeApi.add_bid(store_id, product_id, quantity, price);
+    if (!response.was_exception) {
+      this.setState({ snackbar: { children: response.message, severity: "success" } });
+    }
+    else {
+      this.setState({ snackbar: { children: response.message, severity: "error" } });
 
-    // }
+    }
 
   }
 

@@ -97,21 +97,21 @@ export default class HomePage extends Component {
     //    return (<ShoppingCart products={products}></ShoppingCart>);
     return <ShoppingCart products={this.state.products}></ShoppingCart>;
   }
-//   async get_notifications(){
-//     console.log("goti");
-//     // let response = await this.connectAPI.get_notifications("amit@gmail.com");
-//     let response = await this.connectAPI.get_notifications(this.props.user.email);
-//     console.log(response);
-//     if (!response.was_exception)
-//     {
-//         // alert(response.value);
-//         this.props.user.notifications.push(response.value);
-//         console.log("in noti, noti success!\n");
-//     }
-//     else{
-//         console.log("in noti, noti failed!\n");
-//     }
-// }
+  async get_notifications(){
+    console.log("goti");
+    // let response = await this.connectAPI.get_notifications("amit@gmail.com");
+    let response = await this.connectAPI.get_notifications(this.props.user.email);
+    console.log(response);
+    if (!response.was_exception)
+    {
+        alert(response.value);
+        // this.props.user.notifications.push(response.value);
+        console.log("in noti, noti success!\n");
+    }
+    else{
+        console.log("in noti, noti failed!\n");
+    }
+}
 
   render() {
     return (

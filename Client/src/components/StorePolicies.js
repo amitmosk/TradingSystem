@@ -36,6 +36,7 @@ import CreatePredict from './CreatePredict';
 import AddPurchase from './AddPurchase';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import { RemoveRoad, ReplayOutlined } from '@mui/icons-material';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -54,10 +55,7 @@ export default function StorePolicies() {
     const {id} = useParams();
     const store_id=id;
     const policiesApi = new PoliciesApi();
-    // const save_predict = (perdict) =>{
-    //     console.log(perdict);
-    //     setPredictChosen(perdict);
-    // }
+
 
     //Getters
     const [purchases,setPurchases ] =React.useState(["purchase1", "purchase2", "purchase3"]);
@@ -73,32 +71,43 @@ export default function StorePolicies() {
 
 
     const get_purchase_policy = async () => {
-        const response = policiesApi.get_purchase_policy(id);
+        const response = await policiesApi.get_purchase_policy(id);
         if(!response.was_exception)
         {
-            setSnackbar({ children: response.message, severity: 'success' });     }
+            setSnackbar({ children: response.message, severity: 'success' }); 
+            setPredicts(response.value);
+            
+        }
         else{
             setSnackbar({ children: response.message, severity: 'error' }); 
         }
     }
     const send_predicts = async () => {
-        const response = policiesApi.send_predicts(id);
+        const response = await policiesApi.send_predicts(id);
         if(!response.was_exception)
         {
-            setSnackbar({ children: response.message, severity: 'success' });     }
+            setSnackbar({ children: response.message, severity: 'success' });    
+            setPredicts(response.value);
+         }
         else{
             setSnackbar({ children: response.message, severity: 'error' }); 
         }
     }
     const get_discount_policy = async () => {
-        const response = policiesApi.get_discount_policy(id);
+        const response = await policiesApi.get_discount_policy(id);
         if(!response.was_exception)
         {
-            setSnackbar({ children: response.message, severity: 'success' });     }
+            setSnackbar({ children: response.message, severity: 'success' });    
+            console.log(response.value);
+            setDiscounts(response.value);
+        }
         else{
             setSnackbar({ children: response.message, severity: 'error' }); 
         }
     }
+
+
+
     useEffect(()=>{get_purchase_policy()}, []);
     useEffect(()=>{send_predicts()}, []);
     useEffect(()=>{get_discount_policy()}, []);
@@ -122,7 +131,7 @@ export default function StorePolicies() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
-
+            window.location.reload();
         }
         else{
             setSnackbar({ children: response.message, severity: 'error' });
@@ -135,6 +144,7 @@ export default function StorePolicies() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
 
         }
         else{
@@ -148,7 +158,7 @@ export default function StorePolicies() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
-
+            window.location.reload();
         }
         else{
             setSnackbar({ children: response.message, severity: 'error' });
