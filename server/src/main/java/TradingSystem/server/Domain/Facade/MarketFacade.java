@@ -917,7 +917,10 @@ public class MarketFacade {
             synchronized (lock) {
                 User user = user_controller.get_user(loggedUser);
                 String user_email = this.user_controller.get_email(this.loggedUser);
+                Product prod = store_controller.getProduct_by_product_id(store_id,product_id);
+                user_controller.remove_product_from_all_carts(prod,store_controller.get_store(store_id));
                 Map<Product, Integer> inv = this.store_controller.delete_product_from_store(user, product_id, store_id);
+                prod.remove();
                 response = new Response<>(inv, "Product deleted successfully");
                 market_logger.add_log("Product (" + product_id + ") was deleted from store (" + store_id + ")");
             }

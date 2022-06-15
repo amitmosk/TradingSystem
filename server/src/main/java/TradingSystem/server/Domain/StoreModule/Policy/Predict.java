@@ -164,4 +164,116 @@ public class Predict extends Ipredict {
     public Long getId() {
         return id;
     }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public boolean isAbove() {
+        return above;
+    }
+
+    public void setAbove(boolean above) {
+        this.above = above;
+    }
+
+    public boolean isEquql() {
+        return equql;
+    }
+
+    public void setEquql(boolean equql) {
+        this.equql = equql;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public boolean isPrice_constraint() {
+        return price_constraint;
+    }
+
+    public void setPrice_constraint(boolean price_constraint) {
+        this.price_constraint = price_constraint;
+    }
+
+    public boolean isQuantity_constraint() {
+        return quantity_constraint;
+    }
+
+    public void setQuantity_constraint(boolean quantity_constraint) {
+        this.quantity_constraint = quantity_constraint;
+    }
+
+    public boolean isAge_constraint() {
+        return age_constraint;
+    }
+
+    public void setAge_constraint(boolean age_constraint) {
+        this.age_constraint = age_constraint;
+    }
+
+    public boolean isTime_constraint() {
+        return time_constraint;
+    }
+
+    public void setTime_constraint(boolean time_constraint) {
+        this.time_constraint = time_constraint;
+    }
+
+    public boolean isCategory_constraint() {
+        return category_constraint;
+    }
+
+    public void setCategory_constraint(boolean category_constraint) {
+        this.category_constraint = category_constraint;
+    }
+
+    public boolean isProduct_constraint() {
+        return product_constraint;
+    }
+
+    public void setProduct_constraint(boolean product_constraint) {
+        this.product_constraint = product_constraint;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
 }

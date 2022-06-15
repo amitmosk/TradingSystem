@@ -466,4 +466,21 @@ public class UserController {
     public Long getId() {
         return id;
     }
+
+    public void remove_product_from_all_carts(Product product, Store store) throws MarketException {
+        for(User u : users.values()){
+            try {
+                u.remove_product_from_cart(store, product);
+            }catch (Exception e){
+                continue;
+            }
+        }
+        for(User u : onlineUsers.values()){
+            try {
+                u.remove_product_from_cart(store, product);
+            }catch (Exception e){
+                continue;
+            }
+        }
+    }
 }

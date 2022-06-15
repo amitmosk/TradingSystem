@@ -544,6 +544,18 @@ public class Store implements Observable{
         Product product_to_remove = this.getProduct_by_product_id(product_id);
         this.check_permission(user, StorePermission.remove_item);
         inventory.remove(product_to_remove);
+        // remove all bids related to product
+        for (Map.Entry<Integer,Bid> bid:bids.entrySet()) {
+            // TODO: remove bid from database
+            if(bid.getValue().getProduct().getProduct_id() == product_id)
+                bids.remove(bid.getKey());
+        }
+        // remove all predicts related to product
+        for(Map.Entry<String,Ipredict> entry : predictList.entrySet()){
+            // TODO: remove predict from database
+            if(entry.getValue().getProduct().getProduct_id() == product_id)
+                predictList.remove(entry.getKey());
+        }
         return inventory;
     }
 
@@ -688,7 +700,7 @@ public class Store implements Observable{
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
             this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from manage the store");
-
+            HibernateUtils.remove(appointment);
         }
     }
 
@@ -724,7 +736,7 @@ public class Store implements Observable{
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
-
+            HibernateUtils.remove(appointment);
         }
     }
 

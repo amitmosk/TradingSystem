@@ -1,6 +1,7 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
 
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
+import TradingSystem.server.Domain.StoreModule.Product.Product;
 
 import javax.persistence.*;
 
@@ -39,5 +40,12 @@ public abstract class CompositePredict extends Ipredict {
     public CompositePredict() {
 
     }
+
+    @Override
+    public Product getProduct() {
+        return null;
+    }
+
+
 
 }
