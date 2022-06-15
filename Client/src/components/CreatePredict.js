@@ -91,6 +91,7 @@ export default function CreatePredict() {
         if (Utils.check_rule_name(rule_name) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
+            
             return;
         }
         
@@ -98,6 +99,7 @@ export default function CreatePredict() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -123,6 +125,7 @@ export default function CreatePredict() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -148,6 +151,7 @@ export default function CreatePredict() {
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
+            window.location.reload();
         }
         else
         {
@@ -186,14 +190,47 @@ export default function CreatePredict() {
         if(range==0)
         {
             response = await policiesApi.add_predict(store_id,"", -1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, rule_name )
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==1)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==2)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         if (!response.was_exception)
         {
@@ -227,24 +264,50 @@ export default function CreatePredict() {
         let response;
         if(range==0)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 0, 1, value, 1, 0, 0, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 0, 1, value, 1, 0, 0, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==1)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, value, 1, 0, 0, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, value, 1, 0, 0, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==2)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, value, 1, 0, 0, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, value, 1, 0, 0, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
-        if (!response.was_exception)
-        {
-            setSnackbar({ children: response.message, severity: 'success' });
-        }
-        else
-        {
-            setSnackbar({ children: response.message, severity: 'error' });
-        }
+       
     }
 
     const add_predict_for_age= async(values) => {
@@ -269,24 +332,50 @@ export default function CreatePredict() {
         let response;
         if(range==0)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 0, 1, age, 0, 0, 1, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 0, 1, age, 0, 0, 1, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==1)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, age, 0, 0, 1, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 1, 0, age, 0, 0, 1, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
         else if(range==2)
         {
-            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, age, 0, 0, 1, 0, 0, 0, 0, rule_name )
+            response = await policiesApi.add_predict(store_id,"", -1, 0, 0, age, 0, 0, 1, 0, 0, 0, 0, rule_name );
+            if(!response.was_exception)
+            {
+                setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
+
+            }
+            else
+            {
+                setSnackbar({ children: response.message, severity: 'error' });
+
+            }
         }
-        if (!response.was_exception)
-        {
-            setSnackbar({ children: response.message, severity: 'success' });
-        }
-        else
-        {
-            setSnackbar({ children: response.message, severity: 'error' });
-        }
+        
     }
     
     
