@@ -383,7 +383,7 @@ public class MarketFacade {
                 payment_transaction_id = paymentThread.get_value();
                 supply_transaction_id = supplyThread.get_value();
                 if (payment_transaction_id == -1 || supply_transaction_id == -1)
-                    throw new Exception();
+                    throw new ExternalServicesException("Buy Cart Failed : External Services Denied");
                 response = new Response<>(userPurchase, "Purchase done successfully");
             }
             HibernateUtils.commit();

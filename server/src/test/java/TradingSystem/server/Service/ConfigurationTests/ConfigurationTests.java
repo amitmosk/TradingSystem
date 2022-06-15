@@ -1,13 +1,19 @@
 package TradingSystem.server.Service.ConfigurationTests;
 
+import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.Proxy.PaymentAdapterTests;
+import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
+import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
+import TradingSystem.server.Domain.Utils.Exception.ExternalServicesException;
+import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Service.MarketSystem;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.LinkedList;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -151,7 +157,6 @@ class ConfigurationTests {
         catch (ExitException e){
             answer = true;
         }
-
         assertTrue(answer, "The system stop running after reading bad configuration file.");
     }
 
@@ -173,6 +178,41 @@ class ConfigurationTests {
 
         assertTrue(answer, "The Server is stop running after external services handshake denied.");
     }
+
+    @Test
+    void buy_cart_denied(){
+        Response r = new Response();
+        boolean answer =  false;
+        try{
+
+            MarketSystem marketSystem = new MarketSystem(tests_external_services_path, empty_test_path);
+            marketSystem.set_external_services("external_services:fail_tests");
+            MarketFacade facade1 = new MarketFacade(marketSystem.getPayment_adapter(), marketSystem.getSupply_adapter());
+            MarketFacade facade2 = new MarketFacade(marketSystem.getPayment_adapter(), marketSystem.getSupply_adapter());
+            PaymentInfo paymentInfo = new PaymentInfo();
+            LinkedList<String> keywords = new LinkedList<>();
+            keywords.add("hasmal");
+            SupplyInfo supplyInfo = new SupplyInfo();
+            facade1.register("testts@gmail.com","12345678aA", "test", "tester", "19.04.95");
+            facade1.register("testts123213@gmail.com","12345678aA", "test", "tester", "19.04.95");
+            facade1.open_store("storeee");
+            facade1.add_product_to_store(1,50,"phone",250,"electronic",keywords);
+            facade2.add_product_to_cart(1, 1, 3);
+
+            r = facade2.buy_cart(paymentInfo, supplyInfo);
+        }
+//        catch (ExternalServicesException e){
+//            answer = true;
+//        }
+        catch (Exception e1){
+            answer = false;
+        }
+        assertTrue(r.getMessage().equals("Buy Cart Failed : External Services Denied"));
+
+//        assertTrue(answer, "The Server is stop running after external services handshake denied.");
+    }
+
+
 
 
     @Test
