@@ -871,7 +871,7 @@ public class Store implements Observable{
                 managers_emails.add(appointment.getMember().get_user_email());
             }
         }
-        Bid bid = new Bid(quantity, offer_price, managers_emails, product, buyer);
+        Bid bid = new Bid(bid_id, quantity, offer_price, managers_emails, product, buyer);
         this.bids.put(bid_id, bid);
         this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName());
         return bid_id;

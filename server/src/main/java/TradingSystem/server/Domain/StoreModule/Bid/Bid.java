@@ -13,9 +13,7 @@ import static TradingSystem.server.Domain.StoreModule.Bid.BidStatus.*;
 @Entity
 public class Bid implements iBid {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bid_id;
-
+    public int bid_id;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Product product;
     private int quantity;
@@ -34,9 +32,10 @@ public class Bid implements iBid {
     @Enumerated(EnumType.STRING)
     private BidStatus status; // 0 - waiting for answers, 1 - close & denied, 2 - close & confirm.
 
-    public Bid(int quantity, double offer_price, List<String> managers_emails, Product product, User buyer) {
+    public Bid(int bid_id, int quantity, double offer_price, List<String> managers_emails, Product product, User buyer) {
         this.status = open_waiting_for_answers;
 //        this.product = new ProductInformation(product, quantity);
+        this.bid_id = bid_id;
         this.product = product;
         this.quantity = quantity;
         this.negotiation_price = -1;
@@ -114,11 +113,11 @@ public class Bid implements iBid {
             return this.offer_price;
     }
 
-    public Long getBid_id() {
+    public int getBid_id() {
         return bid_id;
     }
 
-    public void setBid_id(Long bid_id) {
+    public void setBid_id(int bid_id) {
         this.bid_id = bid_id;
     }
 
