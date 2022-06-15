@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
-public class Store implements Observable{
+public class Store implements Observable {
 
 
     // -- fields
@@ -231,11 +231,23 @@ public class Store implements Observable{
     public Predict addPredict(String catgorey, int product_id, boolean above, boolean equql,
                               int num, boolean price, boolean quantity, boolean age, boolean time, int year,
                               int month, int day, String name) throws WrongPermterException, ObjectDoesntExsitException {
-        Product product=getProduct_by_product_id(product_id);
+        Product product;
+        if (product_id != -1)
+            product = getProduct_by_product_id(product_id);
+        else
+            product = null;
         Predict predict = new Predict(catgorey, product, above, equql, num, price, quantity, age, time, year, month, day);
         checkUniqName(name, this.predictList);
         predictList.put(name, predict);
         return predict;
+    }
+
+
+    public String remove_predict(String name) throws WrongPermterException {
+        if (predictList.get(name) != null)
+            predictList.remove(name);
+        else throw new WrongPermterException("no predict with this name");
+        return "predict " + name + "removed" + "from store";
     }
 
     //start of discount policy
@@ -243,6 +255,7 @@ public class Store implements Observable{
         discountPolicy.removeRule(name);
         return "the rule was removed";
     }
+
     public String remove_purchase_rule(String name) throws WrongPermterException {
         discountPolicy.removeRule(name);
         return "the rule was removed";
@@ -545,15 +558,15 @@ public class Store implements Observable{
         this.check_permission(user, StorePermission.remove_item);
         inventory.remove(product_to_remove);
         // remove all bids related to product
-        for (Map.Entry<Integer,Bid> bid:bids.entrySet()) {
+        for (Map.Entry<Integer, Bid> bid : bids.entrySet()) {
             // TODO: remove bid from database
-            if(bid.getValue().getProduct().getProduct_id() == product_id)
+            if (bid.getValue().getProduct().getProduct_id() == product_id)
                 bids.remove(bid.getKey());
         }
         // remove all predicts related to product
-        for(Map.Entry<String,Ipredict> entry : predictList.entrySet()){
+        for (Map.Entry<String, Ipredict> entry : predictList.entrySet()) {
             // TODO: remove predict from database
-            if(entry.getValue().getProduct().getProduct_id() == product_id)
+            if (entry.getValue().getProduct().getProduct_id() == product_id)
                 predictList.remove(entry.getKey());
         }
         return inventory;
@@ -662,7 +675,7 @@ public class Store implements Observable{
             this.stuffs_and_appointments.put(new_owner, appointment_to_add);
             new_owner.add_owner(this, appointment_to_add);
             this.set_manager_in_bids(0, new_owner.get_user_email());
-            this.send_message_to_the_store_stuff(new_owner.get_user_email()+" is a new owner in the store");
+            this.send_message_to_the_store_stuff(new_owner.get_user_email() + " is a new owner in the store");
 
         }
     }
@@ -677,10 +690,9 @@ public class Store implements Observable{
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
             new_manager.add_manager(this, appointment_to_add);
             this.set_manager_in_bids(0, new_manager.get_user_email());
-            this.send_message_to_the_store_stuff(new_manager.get_user_email()+" is a new manager in the store");
+            this.send_message_to_the_store_stuff(new_manager.get_user_email() + " is a new manager in the store");
         }
     }
-
 
 
     public void remove_manager(AssignUser remover, AssignUser user_to_delete_appointment) throws MarketException {
@@ -699,7 +711,7 @@ public class Store implements Observable{
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
-            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from manage the store");
+            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email() + " is removing from manage the store");
             HibernateUtils.remove(appointment);
         }
     }
@@ -707,9 +719,9 @@ public class Store implements Observable{
     private void remove_all_appointments_by_user(AssignUser user_to_delete_appointment) throws MarketException {
         for (Appointment appointment1 : this.stuffs_and_appointments.values()) {
             if (appointment1.getAppointer().equals(user_to_delete_appointment)) {
-                if(appointment1.is_owner())
+                if (appointment1.is_owner())
                     this.remove_owner(user_to_delete_appointment, appointment1.getMember());
-                else if(appointment1.is_manager())
+                else if (appointment1.is_manager())
                     this.remove_manager(user_to_delete_appointment, appointment1.getMember());
 
             }
@@ -857,17 +869,12 @@ public class Store implements Observable{
     }
 
 
-
-
-
-
-
     // amit - bid
 
     public int add_bid_offer(int bid_id, Product product, int quantity, double offer_price, User buyer) {
         List<String> managers_emails = new ArrayList<>();
-        for (Appointment appointment : this.stuffs_and_appointments.values()){
-            if (appointment.has_permission(StorePermission.answer_bid_offer)){
+        for (Appointment appointment : this.stuffs_and_appointments.values()) {
+            if (appointment.has_permission(StorePermission.answer_bid_offer)) {
                 managers_emails.add(appointment.getMember().get_user_email());
             }
         }
@@ -880,7 +887,7 @@ public class Store implements Observable{
     public List<BidInformation> view_bids_status(AssignUser user) throws NoPremssionException {
         this.check_permission(user, StorePermission.view_bids_status);
         List<BidInformation> answer = new ArrayList<>();
-        for (Bid bid : this.bids.values()){
+        for (Bid bid : this.bids.values()) {
             BidInformation temp = bid.get_bid_information();
             answer.add(temp);
         }
@@ -893,8 +900,7 @@ public class Store implements Observable{
         if (negotiation_price == -1) {
             this.check_permission(assignUser, StorePermission.answer_bid_offer);
 
-        }
-        else {
+        } else {
             this.check_permission(assignUser, StorePermission.answer_bid_offer_negotiate);
             if (!manager_answer)
                 throw new Exception("illegal combination - negative answer with negotiation offer");
@@ -912,7 +918,7 @@ public class Store implements Observable{
             buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
         }
 
-        if (bid.get_status() == BidStatus.negotiation_mode){
+        if (bid.get_status() == BidStatus.negotiation_mode) {
             buyer.add_notification("Your bid has received a counter-bid.");
             Product product = bid.getProduct();
             buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
@@ -925,40 +931,35 @@ public class Store implements Observable{
     }
 
     /**
-     *
-     * @param i - 0 for add, 1 - for remove
+     * @param i          - 0 for add, 1 - for remove
      * @param user_email - to set
      */
     private void set_manager_in_bids(int i, String user_email) {
-        for (Bid bid : this.bids.values()){
+        for (Bid bid : this.bids.values()) {
             if (i == 0)
                 bid.add_manager_of_store(user_email);
             if (i == 1)
                 bid.remove_manager(user_email);
         }
     }
+
     public List<String> get_permissions(String manager_email) throws AppointmentException {
         List<String> permissions = new ArrayList<>();
         boolean user_exist = false;
-        AssignUser user_get_permission=null;
-        for (AssignUser user:stuffs_and_appointments.keySet())
-        {
-            if (user.get_user_email().equals(manager_email))
-            {
+        AssignUser user_get_permission = null;
+        for (AssignUser user : stuffs_and_appointments.keySet()) {
+            if (user.get_user_email().equals(manager_email)) {
                 user_exist = true;
                 user_get_permission = user;
             }
         }
-        if (!user_exist)
-        {
-            throw new AppointmentException("This Store Stuff doesn't contains the user "+manager_email);
+        if (!user_exist) {
+            throw new AppointmentException("This Store Stuff doesn't contains the user " + manager_email);
         }
         Appointment appointment = this.stuffs_and_appointments.get(user_get_permission);
-        Map<StorePermission,Integer> manager_permissions = appointment.getPermissions();
-        for (StorePermission s: manager_permissions.keySet())
-        {
-            if (manager_permissions.get(s)==1)
-            {
+        Map<StorePermission, Integer> manager_permissions = appointment.getPermissions();
+        for (StorePermission s : manager_permissions.keySet()) {
+            if (manager_permissions.get(s) == 1) {
                 permissions.add(s.toString());
             }
 
@@ -969,16 +970,15 @@ public class Store implements Observable{
     public List<String> get_all_categories() {
         //  private Map<Product, Integer> inventory; // product & quantity
         List<String> categories = new ArrayList<>();
-        for (Product p:inventory.keySet())
-        {
+        for (Product p : inventory.keySet()) {
             String cat = p.getCategory();
-            if (!categories.contains(cat))
-            {
+            if (!categories.contains(cat)) {
                 categories.add(cat);
             }
         }
         return categories;
     }
+
     public DiscountPolicy getDiscountPolicy() {
         return discountPolicy;
     }

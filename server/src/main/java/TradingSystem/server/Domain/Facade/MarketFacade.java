@@ -1211,6 +1211,25 @@ public class MarketFacade {
         return response;
     }
 
+    public Response remove_predict(int store_id, String name) {
+        Response response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            synchronized (lock) {
+                Store store = store_controller.get_store(store_id);
+                String res = store.remove_predict(name);
+                response = new Response(res, "predict rule removed successfully");
+                market_logger.add_log("Store's (" + store_id + ") predict removed successfully");
+            }
+            HibernateUtils.commit();
+        } catch (MarketException e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
     public Response remove_purchase_rule(int store_id, String name) {
         Response<SimplePurchaseRule> response = null;
         try {

@@ -38,7 +38,9 @@ public class Predict extends Ipredict {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Predict(String category, Product product, boolean above, boolean equql, int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day) {
+    public Predict(String category, Product product, boolean above, boolean equql,
+                   int num, boolean price, boolean quantity, boolean age,
+                   boolean time, int year, int month, int day) {
         this.category = category;
         this.product = product;
         this.above = above;
