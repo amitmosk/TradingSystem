@@ -71,7 +71,6 @@ public class DataBaseLoadTests {
         em = HibernateUtils.getEntityManager();
         this.productId = 1;
         this.birth_date = LocalDate.now().minusYears(30).toString();
-        marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
     }
 
     @BeforeEach
@@ -297,11 +296,6 @@ public class DataBaseLoadTests {
     void remove_policy() {
         Response<UserInformation> res = marketFacade.register("email123@gmail.com", password, name, last_name, birth_date);
         assertFalse(res.WasException(), "error while trying to register valid user");
-        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
-        res = marketFacade1.register("manager@gmail.com", password, name, last_name, birth_date);
-        assertFalse(res.WasException(), "error while trying to register valid user");
-        Appointment appointment = HibernateUtils.getEntityManager().find(Appointment.class, new Long(2));
-        assertNull(appointment, "found a Appointment on uninitialized db test.");
         Response<Integer> open_store_res = marketFacade.open_store("store2");
         assertFalse(open_store_res.WasException(), "error while trying to open new store");
         int store_id = open_store_res.getValue();
@@ -311,11 +305,11 @@ public class DataBaseLoadTests {
         Product product = HibernateUtils.getEntityManager().find(Product.class, entry.getKey().getProduct_id());
         Ipredict predict = new Predict("", product, true, false, 10, false,
                 false, false, false, 0, 0, 0);
-        marketFacade1.add_predict(store_id, "", productId, true, false, 10, false,
+        marketFacade.add_predict(store_id, "", productId, true, false, 10, false,
                 false, false, false, 0, 0, 0, "predict_check");
         Ipredict ipredict = HibernateUtils.getEntityManager().find(Predict.class, new Long(1));
         assertNotNull(ipredict);
-        marketFacade1.remove_predict(store_id, "predict_check");
+        marketFacade.remove_predict(store_id, "predict_check");
         Ipredict ipredict1 = HibernateUtils.getEntityManager().find(Predict.class, new Long(1));
         assertNull(ipredict1);
     }
@@ -324,19 +318,13 @@ public class DataBaseLoadTests {
     void remove_discount() {
         Response<UserInformation> res = marketFacade.register("email123@gmail.com", password, name, last_name, birth_date);
         assertFalse(res.WasException(), "error while trying to register valid user");
-        MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
-        res = marketFacade1.register("manager@gmail.com", password, name, last_name, birth_date);
-        assertFalse(res.WasException(), "error while trying to register valid user");
-        Appointment appointment = HibernateUtils.getEntityManager().find(Appointment.class, new Long(2));
-        assertNull(appointment, "found a Appointment on uninitialized db test.");
         Response<Integer> open_store_res = marketFacade.open_store("store2");
         assertFalse(open_store_res.WasException(), "error while trying to open new store");
         int store_id = open_store_res.getValue();
-        assertFalse(res.WasException(), "error while trying to add valid product to store");
-        Response simple_res = marketFacade1.add_simple_category_discount_rule(store_id, "check", 0.3, "check");
+        Response simple_res = marketFacade.add_simple_category_discount_rule(store_id, "check", 0.3, "check");
         DiscountComponent discountComponent = HibernateUtils.getEntityManager().find(DiscountComponent.class, new Long(1));
         assertNotNull(discountComponent);
-        marketFacade1.remove_discount_rule(store_id, "predict_check");
+        marketFacade.remove_discount_rule(store_id, "check");
         discountComponent = HibernateUtils.getEntityManager().find(DiscountComponent.class, new Long(1));
         assertNull(discountComponent);
     }

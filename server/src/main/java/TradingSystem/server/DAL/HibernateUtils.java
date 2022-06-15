@@ -13,7 +13,7 @@ public class HibernateUtils {
     private static EntityManagerFactory emf;
     private static ThreadLocal<EntityManager> threadLocal;
     private static String persistence_unit = "TradingSystemTests";
-    private static boolean allow_persist = true;
+    private static boolean allow_persist = false;
 
     static {
         emf = Persistence.createEntityManagerFactory(persistence_unit);
