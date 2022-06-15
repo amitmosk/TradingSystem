@@ -16,7 +16,7 @@ public class BidInformation {
         this.price = bid.get_offer_price();
         this.quantity = bid.getQuantity();
         this.status = bid.get_status().toString();
-        this.product_info = new ProductInformation(bid.get_product(), quantity);
+        this.product_info = new ProductInformation(bid.getProduct(), quantity);
         this.id = id;
     }
 
