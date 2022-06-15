@@ -11,5 +11,5 @@ public interface Observable {
     void remove_owner(AssignUser remover, AssignUser user_to_delete_appointment) throws MarketException;
     void remove_manager(AssignUser remover, AssignUser user_to_delete_appointment) throws MarketException;
     // notify methods :
-    void send_message_to_the_store_stuff(String message);
+    void send_message_to_the_store_stuff(String message, String sender_email);
 }
