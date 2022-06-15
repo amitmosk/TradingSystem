@@ -14,27 +14,18 @@ public class HibernateUtils {
     private static ThreadLocal<EntityManager> threadLocal;
     private static String persistence_unit = "TradingSystemTests";
     private static boolean allow_persist = false;
+
     static {
         emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
     }
 
-    /**
-     * Requirement 8
-     *
-     * @param persistence_unit the data about which one of the database options have to load.
-     */
     public static void setPersistence_unit(String persistence_unit) {
         HibernateUtils.persistence_unit = persistence_unit;
         emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
     }
 
-    /**
-     * Requirement 8
-     *
-     * load database in tests mode.
-     */
     public static void set_load_tests_mode() {
         HibernateUtils.persistence_unit = "TradingSystemTests";
         HibernateUtils.allow_persist = true;
@@ -42,11 +33,6 @@ public class HibernateUtils {
         threadLocal = new ThreadLocal<EntityManager>();
     }
 
-    /**
-     * Requirement 8
-     *
-     * load database in real-time mode.
-     */
     public static void set_tests_mode() {
         HibernateUtils.persistence_unit = "TradingSystemTests";
         HibernateUtils.allow_persist = false;
@@ -62,11 +48,6 @@ public class HibernateUtils {
         threadLocal = new ThreadLocal<EntityManager>();
     }
 
-    /**
-     * Requirement 8
-     *
-     * load database in demo mode.
-     */
     public static void set_demo_use() {
         HibernateUtils.persistence_unit = "TradingSystem";
         HibernateUtils.allow_persist = true;
