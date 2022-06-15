@@ -73,7 +73,7 @@ class MarketFacadeTest {
             this.facade3 = new MarketFacade(paymentAdapter, supplyAdapter);
             this.facade4 = new MarketFacade(paymentAdapter, supplyAdapter);
 
-            uc = UserController.getInstance();
+            uc = UserController.get_instance();
             pa = new PaymentAdapterImpl();
             sa = new SupplyAdapterImpl();
 
