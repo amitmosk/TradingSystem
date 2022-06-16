@@ -1,7 +1,6 @@
-package TradingSystem.server.Domain.StoreModule;
+package TradingSystem.server.Domain.StoreModule.Appointment;
 
 import TradingSystem.server.Domain.StoreModule.Store.Store;
-import TradingSystem.server.Domain.StoreModule.Store.StoreManagerType;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 
 import java.util.HashMap;

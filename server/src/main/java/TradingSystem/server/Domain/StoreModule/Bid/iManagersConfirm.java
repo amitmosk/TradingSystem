@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.StoreModule.Bid;
 
-public interface iBid {
+public interface iManagersConfirm {
 
     void add_manager_of_store(String manager_email);
     void remove_manager(String email);

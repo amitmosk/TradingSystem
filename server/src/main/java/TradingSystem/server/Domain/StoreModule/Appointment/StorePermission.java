@@ -1,4 +1,4 @@
-package TradingSystem.server.Domain.StoreModule;
+package TradingSystem.server.Domain.StoreModule.Appointment;
 
 public enum StorePermission
 {
@@ -25,5 +25,6 @@ public enum StorePermission
     view_bids_status,
     answer_bid_offer,
     answer_bid_offer_negotiate,
+    answer_appointment,
 
 }

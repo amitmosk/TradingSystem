@@ -3,6 +3,7 @@ package TradingSystem.server.Domain.StoreModule.Store;
 import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
+import TradingSystem.server.Domain.StoreModule.Appointment.*;
 import TradingSystem.server.Domain.StoreModule.Bid.Bid;
 import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Bid.BidStatus;
@@ -30,13 +31,16 @@ import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Observable;
 import TradingSystem.server.Domain.Utils.Utils;
-import org.hibernate.annotations.Cascade;
+import org.springframework.expression.spel.ast.Assign;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.closed_confirm;
+import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.closed_denied;
 
 @Entity
 public class Store implements Observable {
@@ -225,7 +229,7 @@ public class Store implements Observable {
     }
 
     public void add_store_rating(AssignUser user, int rating) throws MarketException {
-        if (this.stuffs_and_appointments.containsKey(user))
+        if (this.stuffs_and_appointments.containsKey(user) && this.stuffs_and_appointments.get(user).getType() != StoreManagerType.candidate)
             throw new NoPremssionException("store members can't rate their store");
         this.storeReview.add_rating(user.get_user_email(), rating);
     }
@@ -414,7 +418,7 @@ public class Store implements Observable {
     }
 
     public Appointment appoint_founder() throws MarketException {
-        Appointment appointment = new Appointment(this.founder, this.founder, this, StoreManagerType.store_founder);
+        Appointment appointment = new Appointment(this.founder, this.founder, this, StoreManagerType.store_founder, this.get_managers_emails());
         this.stuffs_and_appointments.put(founder, appointment);
         this.founder.add_founder(this, appointment);
         HibernateUtils.merge(this);
@@ -456,14 +460,13 @@ public class Store implements Observable {
 
     public StoreManagersInfo view_store_management_information(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.view_permissions);
-        //TODO: added parse to emails - appointment map
         List<AppointmentInformation> answer = new LinkedList<>();
         for (Appointment appointment : stuffs_and_appointments.values()) {
-            AppointmentInformation temp = new AppointmentInformation(appointment.getMember().get_user_email(), appointment.getAppointer().get_user_email(),
-                    appointment.getType().toString());
-            answer.add(temp);
+            if (appointment.getType() != StoreManagerType.candidate){
+                AppointmentInformation temp = appointment.get_appointment_information();
+                answer.add(temp);
+            }
         }
-        //end
         return new StoreManagersInfo(this.name, answer);
     }
 
@@ -687,11 +690,9 @@ public class Store implements Observable {
                 throw new AppointmentException("User to appoint is already store member");
             }
 
-            Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner);
+            Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner, get_managers_emails());
             this.stuffs_and_appointments.put(new_owner, appointment_to_add);
-            new_owner.add_owner(this, appointment_to_add);
-            this.set_manager_in_bids(0, new_owner.get_user_email());
-            this.send_message_to_the_store_stuff(new_owner.get_user_email()+" is a new owner in the store", appointer.get_user_email());
+
             HibernateUtils.merge(this);
         }
     }
@@ -702,11 +703,8 @@ public class Store implements Observable {
             Appointment appointment = this.stuffs_and_appointments.get(new_manager);
             if (appointment != null)
                 throw new AppointmentException("User to appoint is already store member");
-            Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager);
+            Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager, get_managers_emails());
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
-            new_manager.add_manager(this, appointment_to_add);
-            this.set_manager_in_bids(0, new_manager.get_user_email());
-            this.send_message_to_the_store_stuff(new_manager.get_user_email()+" is a new manager in the store", appointer.get_user_email());
             HibernateUtils.merge(this);
         }
     }
@@ -728,7 +726,7 @@ public class Store implements Observable {
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
-            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from manage the store", remover.get_user_email());
+            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removed from manage the store", remover.get_user_email());
             HibernateUtils.remove(appointment);
             HibernateUtils.merge(this);
         }
@@ -765,7 +763,7 @@ public class Store implements Observable {
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
-            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from owns the store", remover.get_user_email());
+            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removed from owns the store", remover.get_user_email());
             HibernateUtils.remove(appointment);
             HibernateUtils.merge(this);
         }
@@ -871,7 +869,9 @@ public class Store implements Observable {
 
     public void send_message_to_the_store_stuff(String message, String sender_email) {
         for (AssignUser stuff_member : this.stuffs_and_appointments.keySet()) {
-            if (!stuff_member.get_user_email().equals(sender_email))
+            // check for not send the message to the sender & to the store candidates
+            if (!stuff_member.get_user_email().equals(sender_email) &&
+                    this.stuffs_and_appointments.get(stuff_member).getType()!=StoreManagerType.candidate)
                 stuff_member.add_notification(message);
         }
     }
@@ -889,6 +889,67 @@ public class Store implements Observable {
         }
         this.inventory.put(to_edit, quantity);
         HibernateUtils.merge(this);
+    }
+
+
+    public List<String> get_permissions(String manager_email) throws AppointmentException {
+        List<String> permissions = new ArrayList<>();
+        boolean user_exist = false;
+        AssignUser user_get_permission = null;
+        for (AssignUser user : stuffs_and_appointments.keySet()) {
+            if (user.get_user_email().equals(manager_email)) {
+                user_exist = true;
+                user_get_permission = user;
+            }
+        }
+        if (!user_exist) {
+            throw new AppointmentException("This Store Stuff doesn't contains the user " + manager_email);
+        }
+        Appointment appointment = this.stuffs_and_appointments.get(user_get_permission);
+        Map<StorePermission, Integer> manager_permissions = appointment.getPermissions();
+        for (StorePermission s : manager_permissions.keySet()) {
+            if (manager_permissions.get(s) == 1) {
+                permissions.add(s.toString());
+            }
+
+        }
+        return permissions;
+    }
+
+    public List<String> get_all_categories() {
+        //  private Map<Product, Integer> inventory; // product & quantity
+        List<String> categories = new ArrayList<>();
+        for (Product p : inventory.keySet()) {
+            String cat = p.getCategory();
+            if (!categories.contains(cat)) {
+                categories.add(cat);
+            }
+        }
+        return categories;
+    }
+
+    public DiscountPolicy getDiscountPolicy() {
+        return discountPolicy;
+    }
+
+    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy;
+    }
+
+    public PurchasePolicy getPurchasePolicy() {
+        return purchasePolicy;
+    }
+
+    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
+        this.purchasePolicy = purchasePolicy;
+    }
+
+    public Map<String, Ipredict> getPredictList() {
+        return predictList;
+    }
+
+    public void setPredictList(Map<String, Ipredict> predictList) {
+        this.predictList = predictList;
     }
 
 
@@ -955,75 +1016,71 @@ public class Store implements Observable {
     }
 
     /**
-     * @param i          - 0 for add, 1 - for remove
+     * @param i - 0 for add, 1 - for remove
      * @param user_email - to set
      */
     private void set_manager_in_bids(int i, String user_email) {
         for (Bid bid : this.bids.values()) {
+            if (bid.get_status() == BidStatus.open_waiting_for_answers){
+                if (i == 0)
+                    bid.add_manager_of_store(user_email);
+                if (i == 1)
+                    bid.remove_manager(user_email);
+            }
+
+        }
+        for (Appointment appointment : this.stuffs_and_appointments.values()){
+            if (appointment.get_status() == AppointmentStatus.open_waiting_for_answers)
             if (i == 0)
-                bid.add_manager_of_store(user_email);
+                appointment.add_manager_of_store(user_email);
             if (i == 1)
-                bid.remove_manager(user_email);
+                appointment.remove_manager(user_email);
         }
     }
 
-    public List<String> get_permissions(String manager_email) throws AppointmentException {
-        List<String> permissions = new ArrayList<>();
-        boolean user_exist = false;
-        AssignUser user_get_permission = null;
-        for (AssignUser user : stuffs_and_appointments.keySet()) {
-            if (user.get_user_email().equals(manager_email)) {
-                user_exist = true;
-                user_get_permission = user;
+
+    public void add_appointment_answer(AssignUser manager, AssignUser candidate , boolean manager_answer) throws Exception {
+        // TODO : this lines could throw exceptions, ASK GAL about hibernate
+        String manager_email = manager.get_user_email();
+        String candidate_email = candidate.get_user_email();
+        this.check_permission(manager, StorePermission.answer_appointment);
+        Appointment appointment = this.stuffs_and_appointments.get(candidate);
+        appointment.add_manager_answer(manager_email, manager_answer);
+        if (appointment.get_status() == closed_denied){
+            this.send_message_to_the_store_stuff("Appointment of: " + candidate_email + " is denied by: "+manager_email,manager_email);
+        }
+        else if (appointment.get_status() == closed_confirm){
+            if (appointment.getType() == StoreManagerType.store_owner){
+                candidate.add_owner(this, appointment);
+                this.set_manager_in_bids(0, candidate_email);
+                this.send_message_to_the_store_stuff(candidate_email+" is a new owner in the store, confirm by all the managers.", "");
+            }
+            else if (appointment.getType() == StoreManagerType.store_manager){
+                candidate.add_manager(this, appointment);
+                this.set_manager_in_bids(0, candidate_email);
+                this.send_message_to_the_store_stuff(candidate_email+" is a new manager in the store, confirm by all the managers.", "");
             }
         }
-        if (!user_exist) {
-            throw new AppointmentException("This Store Stuff doesn't contains the user " + manager_email);
+    }
+
+    public List<AppointmentInformation> view_waiting_appointments_status(AssignUser user) throws NoPremssionException {
+        this.check_permission(user, StorePermission.answer_appointment);
+        List<AppointmentInformation> answer = new ArrayList<>();
+
+        for (Appointment appointment : this.stuffs_and_appointments.values()){
+            AppointmentInformation temp = appointment.get_appointment_information();
+            answer.add(temp);
         }
-        Appointment appointment = this.stuffs_and_appointments.get(user_get_permission);
-        Map<StorePermission, Integer> manager_permissions = appointment.getPermissions();
-        for (StorePermission s : manager_permissions.keySet()) {
-            if (manager_permissions.get(s) == 1) {
-                permissions.add(s.toString());
-            }
+        return answer;
+    }
 
+    private List<String> get_managers_emails(){
+        List<String> managers_emails = new ArrayList<>();
+        for (Appointment appointment : this.stuffs_and_appointments.values()) {
+            String email = appointment.getMember().get_user_email();
+            if (appointment.getType()!=StoreManagerType.candidate)
+                managers_emails.add(email);
         }
-        return permissions;
-    }
-
-    public List<String> get_all_categories() {
-        //  private Map<Product, Integer> inventory; // product & quantity
-        List<String> categories = new ArrayList<>();
-        for (Product p : inventory.keySet()) {
-            String cat = p.getCategory();
-            if (!categories.contains(cat)) {
-                categories.add(cat);
-            }
-        }
-        return categories;
-    }
-
-    public DiscountPolicy getDiscountPolicy() {
-        return discountPolicy;
-    }
-
-    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
-        this.discountPolicy = discountPolicy;
-    }
-
-    public PurchasePolicy getPurchasePolicy() {
-        return purchasePolicy;
-    }
-
-    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
-        this.purchasePolicy = purchasePolicy;
-    }
-
-    public Map<String, Ipredict> getPredictList() {
-        return predictList;
-    }
-
-    public void setPredictList(Map<String, Ipredict> predictList) {
-        this.predictList = predictList;
+        return managers_emails;
     }
 }

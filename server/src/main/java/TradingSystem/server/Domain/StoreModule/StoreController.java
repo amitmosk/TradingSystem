@@ -2,6 +2,8 @@ package TradingSystem.server.Domain.StoreModule;
 
 
 import TradingSystem.server.DAL.HibernateUtils;
+import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
+import TradingSystem.server.Domain.StoreModule.Appointment.StorePermission;
 import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
@@ -14,7 +16,6 @@ import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.Cart;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
-import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
 import javax.persistence.*;

@@ -1,7 +1,7 @@
 package TradingSystem.server.Domain.UserModule;
 
 import TradingSystem.server.DAL.HibernateUtils;
-import TradingSystem.server.Domain.StoreModule.Appointment;
+import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;

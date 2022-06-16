@@ -1,11 +1,11 @@
 //package TradingSystem.server.Domain.Facade.UnitTest;
 //
-//import TradingSystem.server.Domain.StoreModule.Appointment;
+//import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
 //import TradingSystem.server.Domain.StoreModule.Basket;
 //import TradingSystem.server.Domain.StoreModule.Product.Product;
 //import TradingSystem.server.Domain.StoreModule.Store.Store;
 //import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
-//import TradingSystem.server.Domain.StoreModule.StorePermission;
+//import TradingSystem.server.Domain.StoreModule.Appointment.StorePermission;
 //
 //import static org.junit.jupiter.api.Assertions.*;
 //

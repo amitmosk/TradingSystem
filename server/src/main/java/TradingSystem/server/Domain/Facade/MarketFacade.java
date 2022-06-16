@@ -21,7 +21,7 @@ import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
-import TradingSystem.server.Domain.StoreModule.StorePermission;
+import TradingSystem.server.Domain.StoreModule.Appointment.StorePermission;
 import TradingSystem.server.Domain.UserModule.*;
 import TradingSystem.server.Domain.Utils.Logger.ErrorLogger;
 import TradingSystem.server.Domain.Utils.Exception.*;

@@ -3,7 +3,7 @@
 //
 //import TradingSystem.server.DAL.HibernateUtils;
 //import TradingSystem.server.Domain.ExternSystems.*;
-//import TradingSystem.server.Domain.StoreModule.Appointment;
+//import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
 //import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 //import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 //import TradingSystem.server.Domain.StoreModule.Policy.Predict;

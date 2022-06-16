@@ -1,15 +1,6 @@
 package TradingSystem.server.Service;
 
 
-
-import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
-import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
-import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.StorePermission;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 public interface iService {
 
 

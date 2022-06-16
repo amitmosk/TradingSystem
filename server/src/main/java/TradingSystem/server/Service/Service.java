@@ -5,7 +5,7 @@ import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
-import TradingSystem.server.Domain.StoreModule.StorePermission;
+import TradingSystem.server.Domain.StoreModule.Appointment.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import TradingSystem.server.Domain.Utils.Utils;
 import com.google.gson.Gson;
