@@ -1,6 +1,5 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
-import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 
 import javax.persistence.*;
@@ -52,7 +51,7 @@ public class StoreReview {
             this.avg_rating = rating;
         else
             this.avg_rating = (avg_rating * this.rating.size() - 1 + rating) / (this.rating.size());
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     public Map<String, Integer> getRating() {

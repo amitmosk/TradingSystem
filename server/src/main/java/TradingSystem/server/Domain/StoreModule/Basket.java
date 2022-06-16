@@ -1,6 +1,5 @@
 package TradingSystem.server.Domain.StoreModule;
 
-import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.Utils.Exception.BasketException;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
@@ -63,7 +62,6 @@ public class Basket implements Serializable {
             throw new BasketException("Basket.changeQuantity: Product isn't in the basket - product id: "+product.getProduct_id());
         }
         this.products_and_quantities.put(product, quantity);
-        HibernateUtils.merge(this);
     }
 
     public boolean isEmpty(){
@@ -77,7 +75,6 @@ public class Basket implements Serializable {
         }
         this.products_and_quantities.remove(product);
         this.products_and_price_per_unit.remove(product);
-        HibernateUtils.merge(this);
     }
 
     public void addProduct(Product p, int quantity, double price_per_unit) throws MarketException {
@@ -91,7 +88,6 @@ public class Basket implements Serializable {
         }
         this.products_and_quantities.put(p, quantity);
         this.products_and_price_per_unit.put(p, price_per_unit);
-        HibernateUtils.merge(this);
     }
 
     //----------------------------------------Getters--------------------------------------------------
