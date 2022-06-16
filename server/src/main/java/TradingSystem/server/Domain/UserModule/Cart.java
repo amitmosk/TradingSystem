@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
@@ -17,8 +18,9 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @MapKeyClass(value = Store.class)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "table_name",
+    @JoinTable(name = "cart_baskets",
             joinColumns = {@JoinColumn(name = "cart", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "basket", referencedColumnName = "id")})
     @MapKeyJoinColumn(name = "store")
@@ -47,6 +49,7 @@ public class Cart {
     public void removeBasketIfNeeded(int storeID, Basket storeBasket) {
         if (storeBasket.isEmpty())
             baskets.remove(storeID);
+        HibernateUtils.merge(this);
     }
 
     public Map<Store, Basket> getBaskets() {
@@ -54,7 +57,10 @@ public class Cart {
     }
 
     public void clear() {
-        baskets.clear();
+        for(Map.Entry entry : baskets.entrySet()){
+            baskets.remove(entry.getKey(),entry.getValue());
+        }
+        HibernateUtils.merge(this);
     }
 
     public void remove_product_from_cart(Store store, Product p) throws MarketException {
@@ -63,6 +69,7 @@ public class Cart {
         Basket basket = baskets.get(store);
         basket.removeProduct(p);
         if (basket.isEmpty()) baskets.remove(store);
+//        HibernateUtils.merge(this);
     }
 
     /**
@@ -76,14 +83,23 @@ public class Cart {
      */
     public void add_product_to_cart(Store store, Product p, int quantity, String email, double price_per_unit) throws MarketException {
         Basket basket = baskets.getOrDefault(store, new Basket(store.getStore_id(), email));
+        if(!email.equals("guest")) {
+            HibernateUtils.persist(basket);
+            HibernateUtils.commit();
+        }
+        HibernateUtils.beginTransaction();
         basket.addProduct(p, quantity, price_per_unit);
         this.baskets.put(store, basket);
+        if(!email.equals("guest")) {
+            HibernateUtils.merge(this);
+        }
     }
 
     public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws MarketException {
         if (!baskets.containsKey(store))
             throw new NoUserRegisterdException("user haven't bought product from this store.");
         baskets.get(store).changeQuantity(p, quantity);
+        HibernateUtils.merge(this);
     }
 
     public double check_cart_available_products_and_calc_price(int user_age) throws MarketException {

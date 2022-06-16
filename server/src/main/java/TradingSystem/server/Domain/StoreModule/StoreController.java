@@ -446,6 +446,9 @@ public class StoreController {
 
     public Product getProduct_by_product_id(int storeID, int productID) throws MarketException {
         Store store = this.get_store_by_store_id(storeID);
+        Product p = HibernateUtils.getEntityManager().find(Product.class,productID);
+        if(p!=null)
+            return p;
         return store.getProduct_by_product_id(productID);
     }
 

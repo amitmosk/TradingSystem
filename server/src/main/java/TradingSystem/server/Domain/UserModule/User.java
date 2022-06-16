@@ -158,6 +158,8 @@ public class User {
         this.state.addPurchase(purchase);
         //clear
         cart.clear();
+        if(!isGuest.get())
+            HibernateUtils.merge(cart);
         merge();
         return purchase;
     }
@@ -265,7 +267,6 @@ public class User {
     public void add_product_to_cart(Store store, Product p, int quantity) throws MarketException {
         String basket_identifier = get_identifier_for_basket();
         this.cart.add_product_to_cart(store, p, quantity, basket_identifier, p.getOriginal_price());
-        merge();
     }
 
     public void add_product_to_cart_from_bid_offer(Store store, Product product, int quantity, double price_per_unit) throws MarketException {

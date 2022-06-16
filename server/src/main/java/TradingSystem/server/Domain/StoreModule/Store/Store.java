@@ -31,6 +31,7 @@ import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Observable;
 import TradingSystem.server.Domain.Utils.Utils;
 import org.hibernate.annotations.Cascade;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -904,6 +905,7 @@ public class Store implements Observable {
         Bid bid = new Bid(bid_id, quantity, offer_price, managers_emails, product, buyer);
         this.bids.put(bid_id, bid);
         this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName(), "");
+        HibernateUtils.persist(this);
         return bid_id;
     }
 
@@ -951,7 +953,7 @@ public class Store implements Observable {
         if (bid.get_status() == BidStatus.closed_denied)
             buyer.add_notification("Your bid is denied by the store managers.");
 
-
+        HibernateUtils.persist(this);
     }
 
     /**
@@ -965,6 +967,7 @@ public class Store implements Observable {
             if (i == 1)
                 bid.remove_manager(user_email);
         }
+        HibernateUtils.persist(this);
     }
 
     public List<String> get_permissions(String manager_email) throws AppointmentException {

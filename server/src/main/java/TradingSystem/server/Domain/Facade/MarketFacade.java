@@ -274,6 +274,7 @@ public class MarketFacade {
             HibernateUtils.beginTransaction();
             Store store = store_controller.get_store(storeID);
             Product p = store_controller.checkAvailablityAndGet(storeID, productID, quantity);
+            p = store_controller.getProduct_by_product_id(storeID,productID);
             user_controller.add_product_to_cart(loggedUser, store, p, quantity);
             HibernateUtils.commit();
             response = new Response<>("", "product " + productID + " added to cart");
