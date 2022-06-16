@@ -12,14 +12,12 @@ import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDisc
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponentByStore;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.simple.simpleDiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
-import TradingSystem.server.Domain.StoreModule.Policy.Purchase.AndPurchaseRule;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.OrPurchaseRule;
-import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchaseRule;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.SimplePurchaseRule;
+import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchaseRule;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -33,7 +31,13 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class policyTesting {
+public class PolicyTesting {
+    private static final int apple_price = 100;
+    private static final int banana_price = 50;
+    private static final int grape_price = 75;
+    private static final int iphone_price = 150;
+    private static final int samsung_price = 200;
+    private static final int xiaomi_price = 300;
     Basket basket;
     Product apple;
     Product banana;
@@ -42,29 +46,24 @@ public class policyTesting {
     Product samsung;
     Product xiaomi;
 
-    @BeforeAll
-    void beforeAll() {
-
-    }
-
     @BeforeEach
     void SetUp() throws MarketException {
         basket = new Basket(1, "amit@gmail.com");
-        apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(), 1);
-        banana = new Product("banana", 1, 50, "fruits", new LinkedList<>(), 1);
-        grape = new Product("grape", 1, 75, "fruits", new LinkedList<>(), 1);
+        apple = new Product("apple", 1, apple_price, "fruits", new LinkedList<>(),1);
+        banana = new Product("banana", 1, banana_price, "fruits", new LinkedList<>(),1);
+        grape = new Product("grape", 1, grape_price, "fruits", new LinkedList<>(),1);
 
 
-        iphone = new Product("iphone", 1, 150, "tech", new LinkedList<>(), 1);
-        samsung = new Product("samsung", 1, 200, "tech", new LinkedList<>(), 1);
-        xiaomi = new Product("xiaomi", 1, 300, "tech", new LinkedList<>(), 1);
+        iphone = new Product("iphone", 1, iphone_price, "tech", new LinkedList<>(),1);
+        samsung = new Product("samsung", 1, samsung_price, "tech", new LinkedList<>(),1);
+        xiaomi = new Product("xiaomi", 1, xiaomi_price, "tech", new LinkedList<>(),1);
 
-        basket.addProduct(apple, 10, apple.getOriginal_price());
-        basket.addProduct(banana, 10, banana.getOriginal_price());
-        basket.addProduct(grape, 10, grape.getOriginal_price());
-        basket.addProduct(iphone, 10, iphone.getOriginal_price());
-        basket.addProduct(samsung, 10, samsung.getOriginal_price());
-        basket.addProduct(xiaomi, 10, xiaomi.getOriginal_price());
+        basket.addProduct(apple, 10,apple_price);
+        basket.addProduct(banana, 10, banana_price);
+        basket.addProduct(grape, 10, grape_price);
+        basket.addProduct(iphone, 10, iphone_price);
+        basket.addProduct(samsung, 10, samsung_price);
+        basket.addProduct(xiaomi, 10, xiaomi_price);
 
 
     }
@@ -152,12 +151,12 @@ public class policyTesting {
     }
 
     static Stream<Arguments> Predicts() throws MarketException {
-        Product apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(), 1);
+        Product apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(),1);
         simpleDiscountComponentByStore ByStore = new simpleDiscountComponentByStore(0.5);
 
 
         Basket TestBasket = new Basket(1, "amit");
-        TestBasket.addProduct(apple, 4, apple.getOriginal_price());
+        TestBasket.addProduct(apple, 4, apple_price);
         //SimpleDiscountComponent simpleDiscountComponent, String catgorey, Product product, boolean above, boolean equql,
         // int num, boolean price, boolean quantity, boolean age, boolean time, int year, int month, int day, double amountOfDiscount
 
@@ -222,12 +221,12 @@ public class policyTesting {
 
         Predict only_in_catgyorey_tech = new Predict("tech", null, false, true, 0,
                 false, false, false, false, 0, 0, 0);
-        Product apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(), 1);
+        Product apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(),1);
         simpleDiscountComponentByStore ByStore = new simpleDiscountComponentByStore(0.5);
 
 
         Basket TestBasket = new Basket(1, "amit");
-        TestBasket.addProduct(apple, 7, apple.getOriginal_price());
+        TestBasket.addProduct(apple, 7, apple_price);
         andCompsoitePredict above5above100 = new andCompsoitePredict(only_above_five_products, only_above_hunderd_shkal);
         andCompsoitePredict above5infruits = new andCompsoitePredict(only_above_five_products, only_in_catgyorey_fruits);
 
@@ -274,7 +273,7 @@ public class policyTesting {
 
         Predict only_in_catgyorey_tech = new Predict("tech", null, false, true, 0,
                 false, false, false, false, 0, 0, 0);
-        Product apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(), 1);
+        Product apple = new Product("apple", 1, 100, "fruits", new LinkedList<>(),1);
         simpleDiscountComponentByStore ByStore = new simpleDiscountComponentByStore(0.5);
 
         SimplePurchaseRule only_above_hunderd_shkals = new SimplePurchaseRule(only_below_hunderd_shkal);
@@ -283,7 +282,7 @@ public class policyTesting {
 
 
         Basket TestBasket = new Basket(1, "amit");
-        TestBasket.addProduct(apple, 7, apple.getOriginal_price());
+        TestBasket.addProduct(apple, 7, apple_price);
         OrPurchaseRule above5above100 = new OrPurchaseRule(only_above_hunderd_shkals, only_above_five_productss);
         OrPurchaseRule above5infruits = new OrPurchaseRule(only_in_catgyorey_fruitss, above5above100);
 

@@ -424,7 +424,7 @@ public class Store implements Observable {
     public void close_store_permanently() throws MarketException {
         this.active = false;
         String message = "Store was closed permanently at " + LocalDate.now().toString();
-        this.send_message_to_the_store_stuff(message);
+        this.send_message_to_the_store_stuff(message, "");
         for (AssignUser user : stuffs_and_appointments.keySet()) {
             user.remove_appointment(this);
         }
@@ -436,8 +436,9 @@ public class Store implements Observable {
     public void close_store_temporarily(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.close_store_temporarily);
         this.active = false;
+        String email = user.get_user_email();
         String message = "Store was closed close_store_temporarily at " + LocalDate.now().toString();
-        this.send_message_to_the_store_stuff(message);
+        this.send_message_to_the_store_stuff(message, email);
         HibernateUtils.merge(this);
     }
 
@@ -447,8 +448,9 @@ public class Store implements Observable {
         if (this.is_active())
             throw new StoreMethodException("The store is already open");
         this.active = true;
-        String message = "Store was re-open at " + LocalDate.now().toString();
-        this.send_message_to_the_store_stuff(message);
+        String email = user.get_user_email();
+        String message = "Store was re-open by : " + email + " at " + LocalDate.now().toString();
+        this.send_message_to_the_store_stuff(message, email);
         HibernateUtils.merge(this);
     }
 
@@ -491,7 +493,7 @@ public class Store implements Observable {
 
     public void add_question(AssignUser sender, String question_message) {
         QuestionController.getInstance().add_buyer_question(question_message, sender, store_id);
-        this.send_message_to_the_store_stuff("new user question from :" + sender.get_user_email() + " in store " + name);
+        this.send_message_to_the_store_stuff("new user question from :" + sender.get_user_email() + " in store " + name, sender.get_user_email());
     }
 
     public void answer_question(AssignUser user, int question_id, String answer) throws MarketException {
@@ -672,7 +674,7 @@ public class Store implements Observable {
         HibernateUtils.persist(purchase);
         StorePurchase purchase_to_add = new StorePurchase(purchase, buyer_email, purchase_id);
         this.purchases_history.insert(purchase_to_add);
-        this.send_message_to_the_store_stuff("new purchase, with id : " + purchase_id);
+        this.send_message_to_the_store_stuff("new purchase, with id : " + purchase_id, buyer_email);
         HibernateUtils.merge(this);
         return purchase;
     }
@@ -689,7 +691,7 @@ public class Store implements Observable {
             this.stuffs_and_appointments.put(new_owner, appointment_to_add);
             new_owner.add_owner(this, appointment_to_add);
             this.set_manager_in_bids(0, new_owner.get_user_email());
-            this.send_message_to_the_store_stuff(new_owner.get_user_email() + " is a new owner in the store");
+            this.send_message_to_the_store_stuff(new_owner.get_user_email()+" is a new owner in the store", appointer.get_user_email());
             HibernateUtils.merge(this);
         }
     }
@@ -704,7 +706,7 @@ public class Store implements Observable {
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
             new_manager.add_manager(this, appointment_to_add);
             this.set_manager_in_bids(0, new_manager.get_user_email());
-            this.send_message_to_the_store_stuff(new_manager.get_user_email() + " is a new manager in the store");
+            this.send_message_to_the_store_stuff(new_manager.get_user_email()+" is a new manager in the store", appointer.get_user_email());
             HibernateUtils.merge(this);
         }
     }
@@ -726,7 +728,7 @@ public class Store implements Observable {
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
-            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email() + " is removing from manage the store");
+            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from manage the store", remover.get_user_email());
             HibernateUtils.remove(appointment);
             HibernateUtils.merge(this);
         }
@@ -763,6 +765,7 @@ public class Store implements Observable {
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
+            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from owns the store", remover.get_user_email());
             HibernateUtils.remove(appointment);
             HibernateUtils.merge(this);
         }
@@ -866,9 +869,10 @@ public class Store implements Observable {
         return product.getOriginal_price() * quantity;
     }
 
-    public void send_message_to_the_store_stuff(String message) {
+    public void send_message_to_the_store_stuff(String message, String sender_email) {
         for (AssignUser stuff_member : this.stuffs_and_appointments.keySet()) {
-            stuff_member.add_notification(message);
+            if (!stuff_member.get_user_email().equals(sender_email))
+                stuff_member.add_notification(message);
         }
     }
 
@@ -899,7 +903,7 @@ public class Store implements Observable {
         }
         Bid bid = new Bid(bid_id, quantity, offer_price, managers_emails, product, buyer);
         this.bids.put(bid_id, bid);
-        this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName());
+        this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName(), "");
         return bid_id;
     }
 

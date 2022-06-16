@@ -113,7 +113,7 @@ public class MarketSystem {
      * @param config - "external_services:demo" or "external_services:real"
      * @throws ExitException if the input is illegal.
      */
-    private void set_external_services(String config) throws ExitException {
+    public void set_external_services(String config) throws ExitException {
         if (config.equals("external_services:tests")){
             SystemLogger.getInstance().add_log("Set Tests External Services");
             this.payment_adapter = new PaymentAdapterTests();

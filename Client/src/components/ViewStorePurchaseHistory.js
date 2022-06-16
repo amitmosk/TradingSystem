@@ -33,6 +33,7 @@ export default class ViewStorePurchaseHistory extends Component {
             open: false,
             snackbar: null,
         };
+        console.log(this.props.store_id);
         this.storeApi = new StoreApi();
 
 
@@ -71,9 +72,7 @@ export default class ViewStorePurchaseHistory extends Component {
         return (
 
             <>
-                <Link href="/">
-                    <HomeIcon></HomeIcon>
-                </Link>
+
                 <Box position='center' align='center'>
                     <Grid position='center' row-spacing={3}>
                         <Grid item>
@@ -86,7 +85,7 @@ export default class ViewStorePurchaseHistory extends Component {
 
                             <Demo>
                                 <List>
-                                    {this.state.history.map((his) => (
+                                    {this.state.history.length !== 0 ? this.state.history.map((his) => (
                                         <>
                                             <ListItemButton onClick={this.handleClick}
                                                 secondaryAction={
@@ -125,7 +124,7 @@ export default class ViewStorePurchaseHistory extends Component {
                                         </>
 
 
-                                    ))
+                                    )) : <h3 style={{ color: 'red' }}>No Purchase History To Store {this.state.store_id}</h3>
 
 
 

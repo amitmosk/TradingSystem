@@ -17,7 +17,7 @@ The text in the file should be in the format:
   database:<-option2>
 ```
 
-1) the external services will contain one of the following values:  
+1) The external services will contain one of the following values:  
 * tests  
 * real 
 

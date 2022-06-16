@@ -13,6 +13,8 @@ export const LOGOUT_PATH = API_PATH + '/logout';
 export const REGISTER_PATH = API_PATH + '/register';
 export const ONLINE_USER_PATH = API_PATH + '/online_user'
 export const NOTIFICATIONS_PATH = API_PATH + '/get_notifications';
+export const SAVE_NOTIFICATIONS = API_PATH + '/save_notifications';
+export const GET_NOTIFICATIONS_LIST = API_PATH + '/get_notifications_list';
 // ========= Store ========== //
 
 export const FIND_STORE_INFORMATION = API_PATH + '/find_store_information';
@@ -104,7 +106,7 @@ export const SEND_QUESTION_TO_ADMIN = API_PATH + '/send_question_to_admin';
 
 export const REMOVE_USER = API_PATH + '/remove_user';
 export const ADMIN_VIEW_USERS_QUESTION = API_PATH + '/admin_view_users_questions';
-export const ADMIN_ANSWER_USERS_QUESTION = API_PATH + '/admin_answer_users_questions';
+export const ADMIN_ANSWER_USERS_QUESTION = API_PATH + '/admin_answer_user_question';
 
 export const ADMIN_VIEW_STORE_PURCHASES_HISTORY = API_PATH + '/admin_view_store_purchases_history';
 export const ADMIN_VIEW_USER_PURCHASES_HISTORY = API_PATH + '/admin_view_user_purchases_history';
@@ -174,7 +176,7 @@ export const REMOVEֹֹֹ_DISCOUNTֹ_RULE = API_PATH + '/remove_discount_rule';
 
 ///PURCHASE
 
-export const ADD_SIMPLE_PURCHASE = API_PATH + '/add_simple_purchase';
+export const ADD_SIMPLE_PURCHASE = API_PATH + '/add_simple_purchase_rule';
 export const ADD_AND_SIMPLE_PURCHASE = API_PATH + '/add_and_purchase_rule';
 export const ADD_OR_SIMPLE_PURCHASE = API_PATH + '/add_or_purchase_rule';
 export const REMOVE_PURCHASE_RULE = API_PATH + '/remove_purchase_rule';

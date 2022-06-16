@@ -570,5 +570,10 @@ public class StoreController {
         Store store = get_store_by_store_id(store_id);
         return store.get_all_categories();
     }
+
+    public int getProduct_ids_counter() {
+        return products_id.get();
+    }
+
 }
 
