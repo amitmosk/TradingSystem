@@ -50,9 +50,13 @@ public class Product {
     // -- Getters
 
 
-    public int getStore_id() { return store_id; }
+    public int getStore_id() {
+        return store_id;
+    }
 
-    public void setStore_id(int store_id) { this.store_id = store_id; }
+    public void setStore_id(int store_id) {
+        this.store_id = store_id;
+    }
 
     public String getName() {
         return name;
@@ -81,10 +85,12 @@ public class Product {
     // -- Setters
     public void setProduct_id(int product_id) {
         this.product_id = product_id;
+        HibernateUtils.merge(this);
     }
 
     public void setOriginal_price(double original_price) {
         this.original_price = original_price;
+        HibernateUtils.merge(this);
     }
 
     public void setProductReview(ProductReview productReview) {
@@ -93,14 +99,17 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
+        HibernateUtils.merge(this);
     }
 
     public void setKey_words(List<String> key_words) {
         this.key_words = key_words;
+        HibernateUtils.merge(this);
     }
 
     public void setName(String name) {
         this.name = name;
+        HibernateUtils.merge(this);
     }
 
     public void remove() {

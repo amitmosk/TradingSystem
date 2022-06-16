@@ -16,4 +16,9 @@ add_product_to_store#u2@walla.com#1#20#Bamba#30#sweets#nicesweets
 add_manager#u2@walla.com#u3@walla.com#1
 add_owner#u2@walla.com#u4@walla.com#1
 add_owner#u2@walla.com#u5@walla.com#1
+logout#amit@walla.com#1
+logout#u2@walla.com#1
+logout#u3@walla.com#1
+logout#u4@walla.com#1
 logout#u5@walla.com#1
+logout#u6@walla.com#1

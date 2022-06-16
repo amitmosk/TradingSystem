@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Entity
 public class UserController {
     // ------------------- fields -------------------------------------
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},orphanRemoval = true)
 //    @JoinTable(name = "all_users",
 //            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
     @MapKeyColumn(name = "user_id") // the key column
@@ -129,6 +129,7 @@ public class UserController {
             user = onlineUsers.get(ID);
             user.register(email, pw, name, lastName, birth_date);
             users.put(email, user);
+            HibernateUtils.merge(this);
         }
         statisticsManager.inc_register_count();
         return user;

@@ -202,6 +202,8 @@ public class MarketSystem {
         try{
             File file = new File(instructions_config_path);
             Scanner scanner = new Scanner(file);
+            HibernateUtils.beginTransaction();
+            HibernateUtils.setBegin_transaction(false);
             while (scanner.hasNextLine()){
                 String instruction = scanner.nextLine();
                 if (!instruction.equals("")){
@@ -209,8 +211,11 @@ public class MarketSystem {
                     run_instruction(instruction_params, facades);
                 }
             }
-
+            HibernateUtils.setBegin_transaction(true);
+            HibernateUtils.commit();
         } catch (Exception e) {
+            HibernateUtils.setBegin_transaction(true);
+            HibernateUtils.rollback();
             SystemLogger.getInstance().add_log("Init Data Demo Fail, The System Run With No Data :" + e.getMessage());
             // have to reset all the data of the market and stop the method.
             for (MarketFacade marketFacade : facades.values()){

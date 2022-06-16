@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.StoreModule;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagerType;
 import TradingSystem.server.Domain.UserModule.AssignUser;
@@ -32,10 +33,10 @@ public class Appointment {
 
     @ElementCollection
     @CollectionTable(name = "permissions")
-    @MapKeyColumn(name="permission_name")
-    @Column(name="onORoff")
+    @MapKeyColumn(name = "permission_name")
+    @Column(name = "onORoff")
     @MapKeyEnumerated(EnumType.STRING)
-    private Map<StorePermission,Integer> permissions;
+    private Map<StorePermission, Integer> permissions;
 
     // -- constructors
     public Appointment(AssignUser manager, AssignUser appointer, Store store, StoreManagerType type) {
@@ -44,7 +45,7 @@ public class Appointment {
         this.store = store;
         this.permissions = new HashMap<>();
         this.type = type;
-        switch (type){
+        switch (type) {
             case store_founder:
                 this.set_founder_permissions();
                 break;
@@ -61,7 +62,7 @@ public class Appointment {
     }
 
     // -- init permissions methods
-    private void set_manager_permissions(){
+    private void set_manager_permissions() {
         this.permissions.put(add_item, 1);
         this.permissions.put(remove_item, 1);
         this.permissions.put(edit_item_name, 1);
@@ -84,8 +85,10 @@ public class Appointment {
         this.permissions.put(answer_bid_offer, 0);
         this.permissions.put(view_bids_status, 0);
         this.permissions.put(answer_bid_offer_negotiate, 0);
+        HibernateUtils.merge(this);
     }
-    private void set_owner_permissions(){
+
+    private void set_owner_permissions() {
         this.permissions.put(add_item, 1);
         this.permissions.put(remove_item, 1);
         this.permissions.put(edit_item_name, 1);
@@ -108,8 +111,10 @@ public class Appointment {
         this.permissions.put(answer_bid_offer, 0);
         this.permissions.put(view_bids_status, 1);
         this.permissions.put(answer_bid_offer_negotiate, 0);
+        HibernateUtils.merge(this);
     }
-    private void set_founder_permissions(){
+
+    private void set_founder_permissions() {
         this.permissions.put(add_item, 1);
         this.permissions.put(remove_item, 1);
         this.permissions.put(edit_item_name, 1);
@@ -132,13 +137,15 @@ public class Appointment {
         this.permissions.put(answer_bid_offer, 1);
         this.permissions.put(view_bids_status, 1);
         this.permissions.put(answer_bid_offer_negotiate, 1);
+        HibernateUtils.merge(this);
     }
 
     // -- getters
 
 
     public AssignUser getMember() {
-        return member; }
+        return member;
+    }
 
     public AssignUser getAppointer() {
         return appointer;
@@ -155,12 +162,14 @@ public class Appointment {
     public Map<StorePermission, Integer> getPermissions() {
         return permissions;
     }
+
     // -- setters
-    private void set_permission(StorePermission key, boolean value){
+    private void set_permission(StorePermission key, boolean value) {
         if (value)
             this.permissions.put(key, 1);
         else
             this.permissions.put(key, 0);
+        HibernateUtils.merge(this);
 
     }
 
@@ -185,22 +194,24 @@ public class Appointment {
     }
 
     // -- methods
+
     /**
-     *
-      * @param permission who ask to know
+     * @param permission who ask to know
      * @return if this manager allowed to do it.
      */
-    public boolean has_permission(StorePermission permission){
+    public boolean has_permission(StorePermission permission) {
         return this.permissions.get(permission) == 1;
     }
+
     public void set_permissions(List<StorePermission> permissions) {
         // reset all permissions
         for (StorePermission myVar : StorePermission.values()) {
             this.set_permission(myVar, false);
         }
-        for (StorePermission myVar : permissions){
+        for (StorePermission myVar : permissions) {
             this.set_permission(myVar, true);
         }
+        HibernateUtils.merge(this);
     }
 
     public boolean is_owner() {

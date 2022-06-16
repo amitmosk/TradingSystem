@@ -384,6 +384,7 @@ public class StoreController {
         Appointment appointment = store.appoint_founder();
         founder.add_founder(store, appointment);
         this.stores.put(store_id, store);
+        HibernateUtils.merge(this);
         return store_id;
     }
 
@@ -460,6 +461,7 @@ public class StoreController {
         this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
+        HibernateUtils.merge(this);
     }
 
     public Map<Integer, Store> get_all_stores() {
@@ -555,6 +557,7 @@ public class StoreController {
         Store store = get_store_by_store_id(storeID);
         Product product = checkAvailablityAndGet(storeID, productID, quantity);
         int bid_id = this.bids_ids_counter.getAndIncrement();
+        HibernateUtils.merge(this);
         return store.add_bid_offer(bid_id, product, quantity, offer_price, buyer);
     }
 

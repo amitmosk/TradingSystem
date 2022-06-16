@@ -1,5 +1,7 @@
 package TradingSystem.server.Domain.StoreModule.Bid;
 
+import TradingSystem.server.DAL.HibernateUtils;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +21,7 @@ public class BidManagerAnswer {
 
     public void setHas_answer(boolean has_answer) {
         this.has_answer = has_answer;
+        HibernateUtils.merge(this);
     }
 
     public boolean get_answer() {
@@ -27,6 +30,7 @@ public class BidManagerAnswer {
 
     public void setAnswer(boolean answer) {
         this.answer = answer;
+        HibernateUtils.merge(this);
     }
 
     public void setId(Long id) {

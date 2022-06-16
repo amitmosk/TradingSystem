@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.Questions;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 
 import javax.persistence.*;
@@ -76,6 +77,7 @@ public abstract class Question {
         this.answer = answer;
         this.has_answer = true;
         this.answer_date = LocalDate.now().toString();
+        HibernateUtils.merge(this);
     }
 
     public abstract String toString_for_user();
