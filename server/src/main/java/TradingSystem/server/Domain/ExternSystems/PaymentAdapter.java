@@ -14,15 +14,20 @@ public interface PaymentAdapter {
      * This action type is used for charging a payment for purchases.
      * @param paymentInfo of the payment method
      * @param price of the total cost to charge for the payment
-     * @return : transaction id - an integer in the range [10000, 100000] which indicates a
-     * transaction number if the transaction succeeds or -1 if the transaction has failed.
+     * @return transaction id -
+     * happy case: transaction number (an integer in the range [10000, 100000]) which indicates transaction success.
+     * sad case: -1 if the transaction has failed
+     * bad case: -2 for error
      */
     int payment(PaymentInfo paymentInfo, double price);
 
     /**
      * This action type is used for cancelling a payment transaction.
      * @param transaction_id
-     * @return 1 if the cancellation has been successful or -1 if the cancellation has failed.
+     * @return integer who indicates 1 if the cancellation has been successful:
+     * happy case: 1 - the cancellation succeed.
+     * sad case: -1 if the cancellation has failed.
+     * bad case: -2 for error.
      */
     int cancel_pay(int transaction_id);
 
