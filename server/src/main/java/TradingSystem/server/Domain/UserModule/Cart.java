@@ -135,4 +135,9 @@ public class Cart {
     public Long getId() {
         return id;
     }
+
+    public void merge(){
+        Cart load = HibernateUtils.getEntityManager().find(this.getClass(),id);
+        HibernateUtils.getEntityManager().merge(load);
+    }
 }

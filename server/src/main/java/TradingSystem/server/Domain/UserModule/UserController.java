@@ -484,4 +484,9 @@ public class UserController {
             }
         }
     }
+
+    public void merge(){
+        UserController load = HibernateUtils.getEntityManager().find(this.getClass(),id);
+        HibernateUtils.getEntityManager().merge(load);
+    }
 }

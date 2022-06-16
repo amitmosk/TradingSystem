@@ -82,4 +82,9 @@ public class Security {
     public Long getSecurity_id() {
         return security_id;
     }
+
+    public void merge(){
+        Security load = HibernateUtils.getEntityManager().find(this.getClass(),security_id);
+        HibernateUtils.getEntityManager().merge(load);
+    }
 }
