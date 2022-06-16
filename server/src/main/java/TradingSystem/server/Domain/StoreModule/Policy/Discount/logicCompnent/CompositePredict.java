@@ -1,6 +1,7 @@
 package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
 
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
+import TradingSystem.server.Domain.StoreModule.Product.Product;
 
 import javax.persistence.*;
 
@@ -11,6 +12,23 @@ import javax.persistence.*;
 public abstract class CompositePredict extends Ipredict {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Ipredict left;
+
+    public Ipredict getLeft() {
+        return left;
+    }
+
+    public void setLeft(Ipredict left) {
+        this.left = left;
+    }
+
+    public Ipredict getRight() {
+        return right;
+    }
+
+    public void setRight(Ipredict right) {
+        this.right = right;
+    }
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Ipredict right;
 
@@ -22,5 +40,12 @@ public abstract class CompositePredict extends Ipredict {
     public CompositePredict() {
 
     }
+
+    @Override
+    public Product getProduct() {
+        return null;
+    }
+
+
 
 }

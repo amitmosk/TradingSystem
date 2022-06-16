@@ -20,5 +20,21 @@ public abstract class purchaseLogicComponent extends PurchaseRule {
     public purchaseLogicComponent() {
 
     }
+
+    public PurchaseRule getLeft() {
+        return left;
+    }
+
+    public void setLeft(PurchaseRule left) {
+        this.left = left;
+    }
+
+    public PurchaseRule getRight() {
+        return right;
+    }
+
+    public void setRight(PurchaseRule right) {
+        this.right = right;
+    }
 }
 

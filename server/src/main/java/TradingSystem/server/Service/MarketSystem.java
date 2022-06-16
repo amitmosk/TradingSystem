@@ -163,13 +163,12 @@ public class MarketSystem {
         // database:real/demo
         if (config.equals("database:tests")){
             SystemLogger.getInstance().add_log("Init Data For Tests: Empty Database");
-            // TODO: GAL - Mock database, no Exception allow here!
-
+            HibernateUtils.set_tests_mode();
         }
         else if (config.equals("database:real")){
             try
             {
-                // TODO: GAL - load DB, have to throw exception!
+                HibernateUtils.set_normal_use();
                 SystemLogger.getInstance().add_log("Init Data From Database");
                 UserController.load();
                 StoreController.load();
@@ -179,6 +178,7 @@ public class MarketSystem {
             }
         }
         else if (config.equals(("database:demo"))){
+            HibernateUtils.set_demo_use();
             SystemLogger.getInstance().add_log("Init Data From Demo, Data File Path: "+instructions_config_path);
             init_data_to_market(instructions_config_path);
 //            this.add_admins();
@@ -202,6 +202,8 @@ public class MarketSystem {
         try{
             File file = new File(instructions_config_path);
             Scanner scanner = new Scanner(file);
+            HibernateUtils.beginTransaction();
+            HibernateUtils.setBegin_transaction(false);
             while (scanner.hasNextLine()){
                 String instruction = scanner.nextLine();
                 if (!instruction.equals("")){
@@ -209,8 +211,11 @@ public class MarketSystem {
                     run_instruction(instruction_params, facades);
                 }
             }
-
+            HibernateUtils.setBegin_transaction(true);
+            HibernateUtils.commit();
         } catch (Exception e) {
+            HibernateUtils.setBegin_transaction(true);
+            HibernateUtils.rollback();
             SystemLogger.getInstance().add_log("Init Data Demo Fail, The System Run With No Data :" + e.getMessage());
             // have to reset all the data of the market and stop the method.
             for (MarketFacade marketFacade : facades.values()){
@@ -244,7 +249,6 @@ public class MarketSystem {
             if (answer.WasException()){
                 throw new IllegalArgumentException("Login Failed: " + answer.getMessage());
             }
-
         }
         else if (instruction.equals("add_admin")){
             try{

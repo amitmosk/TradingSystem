@@ -1,5 +1,7 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
+import TradingSystem.server.DAL.HibernateUtils;
+
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +54,7 @@ public class StorePurchaseHistory {
     public void insert(StorePurchase purchase)
     {
         this.purchaseID_purchases.put(purchase.getPurchase_id(), purchase);
+        HibernateUtils.merge(this);
     }
 
     @Override

@@ -26,4 +26,6 @@ public abstract class Ipredict {
         return id;
     }
 
+    public abstract Product getProduct();
+
 }

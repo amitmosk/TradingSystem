@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.UserModule;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
 import TradingSystem.server.Domain.Utils.Password.PasswordManagerImpl;
@@ -25,6 +26,7 @@ public class Security {
     }
 
     public Security() {
+        this.passwordManager = new PasswordManagerImpl();
     }
 
     public iPasswordManager getPasswordManager() {
@@ -45,6 +47,7 @@ public class Security {
 
     private void set_token(String password) {
         this.token = this.passwordManager.hash(password);
+        HibernateUtils.merge(this);
     }
 
 
@@ -55,6 +58,7 @@ public class Security {
     public void edit_password(String old_password, String password) throws MarketException {
         this.check_correct_password(old_password);
         this.token = this.passwordManager.hash(password);
+        HibernateUtils.merge(this);
     }
 
     public boolean isImproved(){

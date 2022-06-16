@@ -3,6 +3,7 @@ package TradingSystem.server.Domain.StoreModule.Policy.Discount.logicCompnent;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
+import TradingSystem.server.Domain.StoreModule.Product.Product;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

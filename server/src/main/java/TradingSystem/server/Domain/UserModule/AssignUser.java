@@ -128,6 +128,7 @@ public class AssignUser extends AssignState {
 
     public void setManager(Map<Store, Appointment> manager) {
         this.manager = manager;
+        HibernateUtils.merge(this);
     }
 
     // ------------------------------ methods ------------------------------
@@ -179,11 +180,11 @@ public class AssignUser extends AssignState {
 
     public void edit_name(String new_name) {
         this.name = new_name;
+        HibernateUtils.merge(this);
     }
 
     public void edit_password(String old_password, String password) throws MarketException {
         this.security.edit_password(old_password, password);
-
     }
 
     public void edit_last_name(String new_last_name) {
@@ -201,11 +202,15 @@ public class AssignUser extends AssignState {
     public void improve_security(String password, String question, String answer) throws MarketException {
         security.check_correct_password(password);
         security.check_improvable();
+        Security toRemove=this.security;
         security = new PremiumSecurity(password, question, answer);
+        HibernateUtils.remove(toRemove);
+        HibernateUtils.merge(this);
     }
 
     public void add_founder(Store store,Appointment appointment) throws MarketException {
         this.founder.put(store,appointment);
+        HibernateUtils.merge(this);
     }
 
     //TODO: check methods of adding
@@ -213,12 +218,14 @@ public class AssignUser extends AssignState {
         if(this.owner.containsKey(store))
             throw new AppointmentException(email+" user already appointed");
         this.owner.put(store,appointment_to_add);
+        HibernateUtils.merge(this);
     }
 
     public void add_manager(Store store, Appointment appointment_to_add) throws MarketException {
         if(this.manager.containsKey(store))
             throw new AppointmentException(email+" user already appointed");
         this.manager.put(store,appointment_to_add);
+        HibernateUtils.merge(this);
     }
 
     public void remove_appointment(Store store) throws MarketException {
@@ -230,6 +237,7 @@ public class AssignUser extends AssignState {
             founder.remove(store);
         else
             throw new AppointmentException("user is not appointed to store");
+        HibernateUtils.merge(this);
     }
 
     public AssignUser is_assign(){

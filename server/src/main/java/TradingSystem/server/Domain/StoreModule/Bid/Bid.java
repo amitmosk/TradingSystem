@@ -1,38 +1,56 @@
 package TradingSystem.server.Domain.StoreModule.Bid;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.UserModule.User;
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static TradingSystem.server.Domain.StoreModule.Bid.BidStatus.*;
 
+@Entity
 public class Bid implements iBid {
-
+    @Id
+    public int bid_id;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Product product;
     private int quantity;
     private double offer_price;
-    private String buyer_email;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private User buyer;
     private double negotiation_price;
-    private HashMap<String, BidManagerAnswer> managersEmail_answers;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "managersEmail_answers",
+        joinColumns = {@JoinColumn(name = "bid_id", referencedColumnName = "bid_id")})
+    @MapKeyColumn(name = "manager_email") // the key column
+    private Map<String, BidManagerAnswer> managersEmail_answers;
+
+    @Enumerated(EnumType.STRING)
     private BidStatus status; // 0 - waiting for answers, 1 - close & denied, 2 - close & confirm.
 
-    public Bid(int quantity, double offer_price, List<String> managers_emails, Product product, User buyer) {
+    public Bid(int bid_id, int quantity, double offer_price, List<String> managers_emails, Product product, User buyer) {
         this.status = open_waiting_for_answers;
 //        this.product = new ProductInformation(product, quantity);
+        this.bid_id = bid_id;
         this.product = product;
         this.quantity = quantity;
         this.negotiation_price = -1;
         this.offer_price = offer_price;
-        this.buyer_email = buyer_email;
         this.buyer = buyer;
         this.managersEmail_answers = new HashMap<>();
         for (String manager_email : managers_emails){
             BidManagerAnswer temp = new BidManagerAnswer();
             this.managersEmail_answers.put(manager_email, temp);
         }
+
+    }
+
+    public Bid() {
 
     }
 
@@ -44,11 +62,13 @@ public class Bid implements iBid {
     @Override
     public void add_manager_of_store(String manager_email){
         this.managersEmail_answers.put(manager_email, new BidManagerAnswer());
+        HibernateUtils.merge(this);
     }
 
     @Override
     public void remove_manager(String email){
         this.managersEmail_answers.remove(email);
+        HibernateUtils.merge(this);
     }
 
     @Override
@@ -69,7 +89,7 @@ public class Bid implements iBid {
             else
                 this.status = this.update_status();
         }
-
+        HibernateUtils.merge(this);
     }
 
     private BidStatus update_status() {
@@ -81,6 +101,7 @@ public class Bid implements iBid {
             if (!bid_answer.get_has_answer())
                 return open_waiting_for_answers;
         }
+        HibernateUtils.merge(this);
         return closed_confirm;
     }
 
@@ -96,19 +117,67 @@ public class Bid implements iBid {
             return this.offer_price;
     }
 
-    public Product get_product(){
-        return this.product;
+    public int getBid_id() {
+        return bid_id;
     }
 
-    public String get_buyer_email() {
-        return this.buyer_email;
+    public void setBid_id(int bid_id) {
+        this.bid_id = bid_id;
     }
 
-    public User get_buyer() {
-        return buyer;
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {
-        return this.quantity;
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getOffer_price() {
+        return offer_price;
+    }
+
+    public void setOffer_price(double offer_price) {
+        this.offer_price = offer_price;
+    }
+
+    public User getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
+    }
+
+    public double getNegotiation_price() {
+        return negotiation_price;
+    }
+
+    public void setNegotiation_price(double negotiation_price) {
+        this.negotiation_price = negotiation_price;
+    }
+
+    public Map<String, BidManagerAnswer> getManagersEmail_answers() {
+        return managersEmail_answers;
+    }
+
+    public void setManagersEmail_answers(Map<String, BidManagerAnswer> managersEmail_answers) {
+        this.managersEmail_answers = managersEmail_answers;
+    }
+
+    public BidStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BidStatus status) {
+        this.status = status;
     }
 }

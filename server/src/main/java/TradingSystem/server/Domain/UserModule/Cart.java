@@ -48,6 +48,7 @@ public class Cart {
     public void removeBasketIfNeeded(int storeID, Basket storeBasket) {
         if (storeBasket.isEmpty())
             baskets.remove(storeID);
+        HibernateUtils.merge(this);
     }
 
     public Map<Store, Basket> getBaskets() {
@@ -56,6 +57,7 @@ public class Cart {
 
     public void clear() {
         baskets.clear();
+        HibernateUtils.merge(this);
     }
 
     public void remove_product_from_cart(Store store, Product p) throws MarketException {
@@ -64,6 +66,7 @@ public class Cart {
         Basket basket = baskets.get(store);
         basket.removeProduct(p);
         if (basket.isEmpty()) baskets.remove(store);
+        HibernateUtils.merge(this);
     }
 
     /**
@@ -79,6 +82,7 @@ public class Cart {
         Basket basket = baskets.getOrDefault(store, new Basket(store.getStore_id(), email));
         basket.addProduct(p, quantity, price_per_unit);
         this.baskets.put(store, basket);
+        HibernateUtils.merge(this);
     }
 
     public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws MarketException {

@@ -14,6 +14,22 @@ public class ComplexDiscountComponent extends DiscountComponent {
     @ManyToOne
     Ipredict predict;
 
+    public DiscountComponent getRule() {
+        return rule;
+    }
+
+    public void setRule(DiscountComponent rule) {
+        this.rule = rule;
+    }
+
+    public Ipredict getPredict() {
+        return predict;
+    }
+
+    public void setPredict(Ipredict predict) {
+        this.predict = predict;
+    }
+
     public ComplexDiscountComponent(DiscountComponent rule, Ipredict predict) {
         this.predict = predict;
         this.rule = rule;

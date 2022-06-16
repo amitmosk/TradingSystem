@@ -12,6 +12,14 @@ public class SimplePurchaseRule extends PurchaseRule {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Predict predict;
 
+    public Predict getPredict() {
+        return predict;
+    }
+
+    public void setPredict(Predict predict) {
+        this.predict = predict;
+    }
+
     public SimplePurchaseRule(Predict predict) {
         this.predict = predict;
     }

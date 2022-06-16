@@ -1,5 +1,6 @@
 package TradingSystem.server.Service.ConfigurationTests;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternSystems.Proxy.PaymentAdapterTests;
 import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
@@ -8,10 +9,13 @@ import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import TradingSystem.server.Domain.Utils.Exception.ExternalServicesException;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Service.MarketSystem;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.test.context.event.annotation.AfterTestClass;
 
 import java.util.LinkedList;
 import java.util.stream.Stream;
@@ -49,6 +53,11 @@ class ConfigurationTests {
     private static final String wrong_order_test_path = "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\bad_instructions\\wrong_order_test_path.txt";
 
 
+
+    @AfterEach
+    void tearDown(){
+        HibernateUtils.set_tests_mode();
+    }
 
     /**
      * this test check that the system will not initialize data because there are:

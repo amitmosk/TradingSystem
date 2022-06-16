@@ -33,7 +33,6 @@ public class StorePurchase {
         return this.purchase_id;
     }
 
-
     public double getTotalPrice() {
         return purchase.getTotalPrice();
     }
