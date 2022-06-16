@@ -146,4 +146,12 @@ public class Basket implements Serializable {
     public Long getId() {
         return id;
     }
+
+    public void clear() {
+        for(Product p : products_and_quantities.keySet()){
+            products_and_quantities.remove(p);
+            products_and_price_per_unit.remove(p);
+        }
+        HibernateUtils.merge(this);
+    }
 }

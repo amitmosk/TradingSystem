@@ -57,10 +57,10 @@ public class Cart {
     }
 
     public void clear() {
-        for(Map.Entry entry : baskets.entrySet()){
+        for(Map.Entry<Store,Basket> entry : baskets.entrySet()){
+            entry.getValue().clear();
             baskets.remove(entry.getKey(),entry.getValue());
         }
-        HibernateUtils.merge(this);
     }
 
     public void remove_product_from_cart(Store store, Product p) throws MarketException {
@@ -90,9 +90,6 @@ public class Cart {
         HibernateUtils.beginTransaction();
         basket.addProduct(p, quantity, price_per_unit);
         this.baskets.put(store, basket);
-        if(!email.equals("guest")) {
-            HibernateUtils.merge(this);
-        }
     }
 
     public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws MarketException {

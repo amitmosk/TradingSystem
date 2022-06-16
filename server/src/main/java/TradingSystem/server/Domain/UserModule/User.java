@@ -158,8 +158,6 @@ public class User {
         this.state.addPurchase(purchase);
         //clear
         cart.clear();
-        if(!isGuest.get())
-            HibernateUtils.merge(cart);
         merge();
         return purchase;
     }
