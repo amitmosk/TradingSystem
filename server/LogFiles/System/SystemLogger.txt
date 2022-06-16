@@ -1,0 +1,26 @@
+Jun 16, 2022 12:17:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: WS : Configure Message Broker
+Jun 16, 2022 12:17:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 16, 2022 12:17:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\system_config.txt
+Jun 16, 2022 12:17:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Real External Services
+Jun 16, 2022 12:17:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 16, 2022 12:17:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Connected To The Payment System
+Jun 16, 2022 12:17:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= OK
+Jun 16, 2022 12:17:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Connected To The Supply System
+Jun 16, 2022 12:17:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= OK
+Jun 16, 2022 12:17:58 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data From Demo, Data File Path: ..\server\src\main\java\TradingSystem\server\Config\instructions_config.txt
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: New Admin In The Market: amit@walla.com
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Init Done.
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: WS : Register Stomp End Points

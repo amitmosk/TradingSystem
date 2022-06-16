@@ -1,0 +1,60 @@
+Jun 16, 2022 12:17:59 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: amit mosko has registered to the system
+Jun 16, 2022 12:17:59 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: amit@walla.com logged out from the system.
+Jun 16, 2022 12:17:59 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: rami gershon has registered to the system
+Jun 16, 2022 12:17:59 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u2@walla.com logged out from the system.
+Jun 16, 2022 12:17:59 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: dolev haziza has registered to the system
+Jun 16, 2022 12:17:59 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u3@walla.com logged out from the system.
+Jun 16, 2022 12:18:00 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: omer atzili has registered to the system
+Jun 16, 2022 12:18:00 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u4@walla.com logged out from the system.
+Jun 16, 2022 12:18:00 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: bogdan planic has registered to the system
+Jun 16, 2022 12:18:00 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u5@walla.com logged out from the system.
+Jun 16, 2022 12:18:00 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: neta lavi has registered to the system
+Jun 16, 2022 12:18:00 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u6@walla.com logged out from the system.
+Jun 16, 2022 12:18:01 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User amit@walla.com logged-in
+Jun 16, 2022 12:18:02 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User u2@walla.com logged-in
+Jun 16, 2022 12:18:02 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User u3@walla.com logged-in
+Jun 16, 2022 12:18:03 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User u4@walla.com logged-in
+Jun 16, 2022 12:18:04 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User u5@walla.com logged-in
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User u6@walla.com logged-in
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: New Admin In The Market: amit@walla.com
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: Store storeOne with id = 1opened successfully
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: New product (Bamba) added to store (1)
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User- u3@walla.com has been appointed by user- u2@walla.com to store (1) manager
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User- u4@walla.com has been appointed by user- u2@walla.com to store (1) owner
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User- u5@walla.com has been appointed by user- u2@walla.com to store (1) owner
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: amit@walla.com logged out from the system.
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u2@walla.com logged out from the system.
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u3@walla.com logged out from the system.
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u4@walla.com logged out from the system.
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u5@walla.com logged out from the system.
+Jun 16, 2022 12:18:05 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u6@walla.com logged out from the system.

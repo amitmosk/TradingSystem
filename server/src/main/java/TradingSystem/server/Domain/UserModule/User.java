@@ -289,6 +289,11 @@ public class User {
         return Period.between(LocalDate.parse(this.birth_date), LocalDate.now()).getYears();
     }
 
+    public void merge(){
+        User load = HibernateUtils.getEntityManager().find(this.getClass(),id);
+        HibernateUtils.getEntityManager().merge(load);
+    }
+
     //TODO: method for testing
     public boolean test_isRegistered() {
         return !isGuest.get();
