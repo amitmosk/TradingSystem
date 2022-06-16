@@ -3,6 +3,7 @@ package TradingSystem.server.Domain.Facade;
 import java.util.List;
 
 import TradingSystem.server.DAL.HibernateUtils;
+import TradingSystem.server.Domain.StoreModule.Appointment.AppointmentInformation;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
@@ -1454,9 +1455,9 @@ public class MarketFacade {
             User appointer = user_controller.get_user(loggedUser);
             User user_to_appoint = user_controller.get_user_by_email(user_email_to_appoint);
             this.store_controller.add_owner(appointer, user_to_appoint, store_id);
-            response = new Response<>(null, "Owner added successfully");
+            response = new Response<>(null, "Owner Candidates added successfully");
             HibernateUtils.commit();
-            market_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") owner");
+            market_logger.add_log("User- " + user_email_to_appoint + " has been candidates by user- " + user_email + " to store (" + store_id + ") for owner position");
         } catch (Exception e) {
             HibernateUtils.rollback();
             response = Utils.CreateResponse(e);
@@ -1512,9 +1513,9 @@ public class MarketFacade {
             User user_to_apoint = user_controller.get_user_by_email(user_email_to_appoint);
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.add_manager(appointer, user_to_apoint, store_id);
-            response = new Response<>(null, "Manager added successfully");
+            response = new Response<>(null, "Manager Candidates added successfully");
             HibernateUtils.commit();
-            market_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") manager");
+            market_logger.add_log("User- " + user_email_to_appoint + " has been candidates by user- " + user_email + " to store (" + store_id + ") for manager position");
         } catch (Exception e) {
             HibernateUtils.rollback();
             response = Utils.CreateResponse(e);
@@ -1913,6 +1914,48 @@ public class MarketFacade {
         }
         return response;
     }
+
+
+    /**
+     * Requirement 2.4.5 update
+     * @return
+     */
+    public Response manager_answer_appointment(int storeID, boolean manager_answer, String candidate_email) {
+        Response<String> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            User user = user_controller.get_user(loggedUser);
+            User candidate = user_controller.get_user_by_email(candidate_email);
+            this.store_controller.add_appointment_answer(storeID, user, manager_answer, candidate);
+            HibernateUtils.commit();
+            response = new Response<>("", "manager answer appointment successfully");
+            market_logger.add_log("manager answer appointment successfully");
+        } catch (Exception e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response view_appointments_status(int storeID) {
+        Response<String> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            User user = user_controller.get_user(loggedUser);
+            List<AppointmentInformation> answer = this.store_controller.view_appointments_status(storeID, user);
+            HibernateUtils.commit();
+            response = new Response(answer, "User view appointments successfully");
+            market_logger.add_log("User view appointments status successfully");
+        } catch (Exception e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
 
     public Response get_all_stores() {
         Response<List<StoreInformation>> response = null;

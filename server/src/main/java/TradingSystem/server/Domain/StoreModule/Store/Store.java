@@ -29,6 +29,7 @@ import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
+import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
 import TradingSystem.server.Domain.Utils.Observable;
 import TradingSystem.server.Domain.Utils.Utils;
 import org.springframework.expression.spel.ast.Assign;
@@ -1053,11 +1054,13 @@ public class Store implements Observable {
             if (appointment.getType() == StoreManagerType.store_owner){
                 candidate.add_owner(this, appointment);
                 this.set_manager_in_bids(0, candidate_email);
+                MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") owner");
                 this.send_message_to_the_store_stuff(candidate_email+" is a new owner in the store, confirm by all the managers.", "");
             }
             else if (appointment.getType() == StoreManagerType.store_manager){
                 candidate.add_manager(this, appointment);
                 this.set_manager_in_bids(0, candidate_email);
+                MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
                 this.send_message_to_the_store_stuff(candidate_email+" is a new manager in the store, confirm by all the managers.", "");
             }
         }

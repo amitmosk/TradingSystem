@@ -347,7 +347,6 @@ public class Appointment {
     }
 
     public AppointmentInformation get_appointment_information() {
-        //(String member_email, String appointer_email, String type, String status)
         return new AppointmentInformation(this.member.get_user_email(), this.appointer.get_user_email(), this.type.toString(), this.get_status().toString());
     }
 }

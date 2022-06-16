@@ -213,6 +213,23 @@ public class Service implements iService {
         return answer;
     }
 
+    @RequestMapping(value = "/manager_answer_appointment")
+    @CrossOrigin
+    @Override
+    public Response manager_answer_appointment(int storeID, boolean manager_answer, String candidate_email) {
+        Response answer = marketFacade.manager_answer_appointment(storeID, manager_answer, candidate_email);
+        return answer;
+    }
+
+    @RequestMapping(value = "/view_appointments_status")
+    @CrossOrigin
+    @Override
+    public Response view_appointments_status(int storeID) {
+        Response answer = marketFacade.view_appointments_status(storeID);
+        return answer;
+    }
+
+
     @RequestMapping(value = "/open_store")
     @CrossOrigin
     @Override
@@ -560,6 +577,7 @@ public class Service implements iService {
         Response answer = marketFacade.get_market_stats();
         return answer;
     }
+
 
     @RequestMapping(value = "/get_all_stores")
     @CrossOrigin

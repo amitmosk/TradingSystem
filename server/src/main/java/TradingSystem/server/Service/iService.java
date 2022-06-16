@@ -1,6 +1,8 @@
 package TradingSystem.server.Service;
 
 
+import TradingSystem.server.Domain.Utils.Response;
+
 public interface iService {
 
 
@@ -252,6 +254,9 @@ public interface iService {
      */
     TradingSystem.server.Domain.Utils.Response get_market_stats();
 
+    TradingSystem.server.Domain.Utils.Response manager_answer_appointment(int storeID, boolean manager_answer, String candidate_email);
+
+    TradingSystem.server.Domain.Utils.Response view_appointments_status(int storeID);
     // additional methods
 
     TradingSystem.server.Domain.Utils.Response get_products_by_store_id(int store_id);
