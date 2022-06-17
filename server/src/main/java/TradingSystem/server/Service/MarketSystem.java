@@ -170,8 +170,8 @@ public class MarketSystem {
             {
                 HibernateUtils.set_normal_use();
                 SystemLogger.getInstance().add_log("Init Data From Database");
-                UserController.load();
-                StoreController.load();
+                UserController.get_instance().load();
+                StoreController.get_instance().load();
             }
             catch (Exception e){
                 throw new ExitException("Cant Connect To Database.");

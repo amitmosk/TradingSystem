@@ -18,51 +18,57 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Entity
+//@Entity
 public class UserController {
-    // ------------------- fields -------------------------------------
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},orphanRemoval = true)
-//    @JoinTable(name = "all_users",
-//            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
-    @MapKeyColumn(name = "user_id") // the key column
+//    @Transient
+//    // ------------------- fields -------------------------------------
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+////    @JoinTable(name = "all_users",
+////            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
+//    @MapKeyColumn(name = "user_id") // the key column
     private Map<String, User> users;              // email,user
-    @Transient
+//    @Transient
     private Map<Integer, User> onlineUsers;       // id,user
     private AtomicInteger uc_id;
     private AtomicInteger purchaseID;
-    @Transient
+//    @Transient
     private Object usersLock;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StatisticsManager statisticsManager;
-    private static UserController instance = null;
-    @Id
-    @GeneratedValue
+//    private static UserController instance = null;
+//    @Id
+//    @GeneratedValue
     private Long id;
 
-
-    public static void load() {
-//        HibernateUtils.beginTransaction();
-//        get_instance();
-//        HibernateUtils.commit();
+    public void load() throws MarketException {
+        this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
+        this.purchaseID = new AtomicInteger(HibernateUtils.get_max_purchase());
+        this.users = new HashMap<>();
+        List<User> all_users = HibernateUtils.users();
+        try {
+            for (User u : all_users) {
+                this.users.put(u.user_email(), u);
+            }
+        } catch (Exception e) {
+            throw new MarketException("failed to load users from table");
+        }
+        this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
+        this.usersLock = new Object();
+        this.statisticsManager = HibernateUtils.getEntityManager().find(StatisticsManager.class, new Long(1));
         SystemLogger.getInstance().add_log("user controller load");
     }
 
-    @Transient
+//    @Transient
     public User get_user_for_tests(int id) {
         return onlineUsers.get(id);
     }
 
+    private static class SingletonHolder {
+        private static UserController instance = new UserController();
+    }
+
     public static UserController get_instance() {
-        UserController userController;
-        if (instance == null) {
-            userController = HibernateUtils.getEntityManager().find(UserController.class, new Long(1));
-            if (userController != null) {
-                instance = userController;
-            } else
-                instance = new UserController();
-            HibernateUtils.persist(instance);
-        }
-        return instance;
+        return SingletonHolder.instance;
     }
 
     // ------------------- constructors --------------------------------
@@ -348,7 +354,7 @@ public class UserController {
 
     public Statistic get_statistics(int logged_user) throws MarketException {
         check_admin_permission(logged_user);
-        return statisticsManager.get_system_statistics(users,onlineUsers);
+        return statisticsManager.get_system_statistics(users, onlineUsers);
     }
 
 
@@ -451,6 +457,7 @@ public class UserController {
     public boolean contains_user_email(String email) {
         return this.users.containsKey(email);
     }
+
     public void clear() {
         this.uc_id = new AtomicInteger(0);
         this.purchaseID = new AtomicInteger(0);
@@ -469,24 +476,24 @@ public class UserController {
     }
 
     public void remove_product_from_all_carts(Product product, Store store) throws MarketException {
-        for(User u : users.values()){
+        for (User u : users.values()) {
             try {
                 u.remove_product_from_cart(store, product);
-            }catch (Exception e){
+            } catch (Exception e) {
                 continue;
             }
         }
-        for(User u : onlineUsers.values()){
+        for (User u : onlineUsers.values()) {
             try {
                 u.remove_product_from_cart(store, product);
-            }catch (Exception e){
+            } catch (Exception e) {
                 continue;
             }
         }
     }
 
-    public void merge(){
-        UserController load = HibernateUtils.getEntityManager().find(this.getClass(),id);
-        HibernateUtils.getEntityManager().merge(load);
-    }
+//    public void merge() {
+//        UserController load = HibernateUtils.getEntityManager().find(this.getClass(), id);
+//        HibernateUtils.getEntityManager().merge(load);
+//    }
 }

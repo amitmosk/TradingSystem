@@ -42,7 +42,21 @@ public class QuestionController implements iQuestionController {
         this.buyer_to_store = new ConcurrentHashMap<>();
         this.user_to_admin = new ConcurrentHashMap<>();
         this.question_ids_counter = new AtomicInteger(1);
+    }
 
+    //TODO : not implemented yet !
+    public void load(){
+        List<BuyerQuestion> buyers = HibernateUtils.buyerquestions();
+        List<UserQuestion> userQuestions = HibernateUtils.userQuestions();
+        this.buyer_to_store = new ConcurrentHashMap<>();
+        this.user_to_admin = new ConcurrentHashMap<>();
+        for(BuyerQuestion b : buyers){
+            buyer_to_store.put(b.question_id,b);
+        }
+        for(UserQuestion u:userQuestions){
+            user_to_admin.put(u.question_id,u);
+        }
+        this.question_ids_counter = new AtomicInteger(HibernateUtils.get_max_question_id());
     }
 
     public static QuestionController getInstance(){

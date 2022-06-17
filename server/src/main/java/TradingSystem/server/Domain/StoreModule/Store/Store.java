@@ -109,7 +109,7 @@ public class Store implements Observable {
         this.predictList = new HashMap<>();
         this.bids = new HashMap<>();
 
-//        HibernateUtils.persist(this);
+        HibernateUtils.persist(this);
     }
 
     public Store() {
