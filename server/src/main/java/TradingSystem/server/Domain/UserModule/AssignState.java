@@ -113,4 +113,16 @@ public abstract class AssignState implements Observer{
     public Long getId() {
         return id;
     }
+
+    public boolean check_if_manager(){
+        return false;
+    }
+
+    public boolean check_if_owner(){
+        return false;
+    }
+
+    public boolean check_if_founder(){
+        return false;
+    }
 }
