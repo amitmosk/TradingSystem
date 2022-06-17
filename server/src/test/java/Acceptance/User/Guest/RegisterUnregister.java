@@ -1,4 +1,4 @@
-package Acceptance.User.Admin;
+package Acceptance.User.Guest;
 
 import TradingSystem.server.Domain.ExternalSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
@@ -8,15 +8,20 @@ import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Service.MarketSystem;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import static TradingSystem.server.Service.MarketSystem.tests_config_file_path;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class RemoveUser {
+class RegisterUnregister {
     private MarketFacade facade1;
     private MarketFacade facade2;
     private MarketFacade facade3;
@@ -41,7 +46,7 @@ class RemoveUser {
     private SupplyAdapter supplyAdapter;
     private String prodname = "";
 
-    public RemoveUser(){
+    public RegisterUnregister(){
         try{
             MarketSystem marketSystem = new MarketSystem(tests_config_file_path, "");
             this.paymentAdapter = marketSystem.getPayment_adapter();
@@ -133,58 +138,91 @@ class RemoveUser {
         return test_part + case_part;
     }
 
-    /**
-     * Cases checked:
-     * 1. no one is connected
-     * 2. user connected is not an admin
-     * 3. admin enters an email that doesn't exist
-     * 4. admin removes user
-     */
-    @Test
-    void remove_user(){
-        Response res;
-        String test_name = "remove_user";
-        boolean suppose_to_throw = true;
-        String message;
+    //------------------------------- User registration --------------------------------------------------------------------------
 
-        message = make_assert_exception_message(test_name, "no one is connected", suppose_to_throw);
-        res = facade1.remove_user(user_regular_email_1);  // no one is connected
-        assertTrue(check_was_exception(res), message);
-
-        message = make_assert_exception_message(test_name, "check if the user that we tried to delete can still login -> still exists", !suppose_to_throw);
-        res = facade2.login(user_regular_email_1, user_password); // check if user can still login -> still exists
-        assertFalse(res.WasException(), message);
-
-        facade2.logout();
-        facade1.login(user_premium_security_email, user_password);
-
-        message = make_assert_exception_message(test_name, "user connected is not an admin", suppose_to_throw);
-        res = facade1.remove_user(user_regular_email_1);  // user connected is not an admin
-        assertTrue(check_was_exception(res), message);
-
-        message = make_assert_exception_message(test_name, "check if the user that we tried to delete can still login -> still exists", !suppose_to_throw);
-        res = facade2.login(user_regular_email_1, user_password); // check if user can still login -> still exists
-        assertFalse(res.WasException(), message);
-
-        facade2.logout();
-        facade1.logout();
-        facade1.login(user_admin_email, user_password);
-
-        message = make_assert_exception_message(test_name, "admin enters an email that doesn't exist", suppose_to_throw);
-        res = facade1.remove_user("idontexist@email.com");  // admin enters an email that doesn't exist
-        assertTrue(check_was_exception(res), message);
-
-        message = make_assert_exception_message(test_name, "admin removes user", !suppose_to_throw);
-        res = facade1.remove_user(user_regular_email_1);  // admin removes user
-        assertFalse(check_was_exception(res), message);
-
-        message = make_assert_exception_message(test_name, "check if the user that we tried to delete can still login -> still exists", suppose_to_throw);
-        res = facade2.login(user_regular_email_1, user_password); // check if user can still login -> still exists
-        assertTrue(res.WasException(), message);
-
-        facade1.logout();
-        facade2.logout();
-
+    static Stream<Arguments> user_info_provider1() {
+        return Stream.of(
+                arguments("check1@email.com", "pass3Chec", "name", "last"),
+                arguments("check2@email.com", "pass1Chec", "name", "last"),
+                arguments("check3@email.com", "Ch3ckPsw0rd", "checker", "checkcheck")
+        );
     }
 
+    /**
+     * Cases checked:
+     * 1. regular register
+     * 2. register with registered user from different facade
+     * 3. register with registered user from same facade
+     * 4. register with registered user from same facade while logged in
+     */
+    @ParameterizedTest
+    @MethodSource("user_info_provider1")
+    void register(String email, String pw, String name, String lastName) {
+        Response res;
+        boolean suppose_to_throw = true;
+        String test_name = "register";
+        String message;
+        Response<String> user_email_res;
+
+        // case 1
+        message = make_assert_exception_message(test_name, "regular register", !suppose_to_throw);
+        res = facade1.register(email, pw, name, lastName, birth_date);
+        boolean was_exception = check_was_exception(res); // regular register
+        assertFalse(was_exception, message);
+        user_email_res = facade1.get_user_email();
+        assertEquals(user_email_res.getValue(),email,"case 1 - failed to add user to system , got different user"); // todo
+
+        //case 2
+        message = make_assert_exception_message(test_name, "register with registered user from different facade", suppose_to_throw);
+        was_exception = check_was_exception(facade2.register(email, pw, name, lastName, birth_date)); // register with registered user from different facade
+        assertTrue(was_exception, message);
+        facade1.logout();
+
+        //case 3
+        message = make_assert_exception_message(test_name, "register with registered user from same facade", suppose_to_throw);
+        was_exception = check_was_exception(facade1.register("check1@email.com", user_password, "name", "last", birth_date)); // register with registered user from same facade
+        assertTrue(was_exception, message);
+
+        //case 4
+        message = make_assert_exception_message(test_name, "register with registered user from same facade while logged in", suppose_to_throw);
+        facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date);
+        was_exception = check_was_exception(facade1.register("check12@email.com", "pass123Chec", "name", "last", birth_date)); // register with registered user from same facade while logged in
+        assertTrue(was_exception, message);
+
+        facade1.logout();
+    }
+
+
+
+
+    /*
+     * Cases checked:
+     * 1. unregister guest user
+     * 2. unregister assigned user
+     * 3. unregister guest user after assigned user unregistered
+     */
+    @Test
+    void unregister() {
+        boolean result;
+        boolean suppose_to_throw = true;
+        String test_name = "unregister";
+        String message;
+
+        message = make_assert_exception_message(test_name, "unregister guest user", suppose_to_throw);
+        result = check_was_exception(facade1.unregister(user_password)); // unregister guest user
+        assertTrue(result, message);
+
+        facade1.login(user_regular_email_1, user_password);
+
+        message = make_assert_exception_message(test_name, "unregister assigned user", !suppose_to_throw);
+        result = check_was_exception(facade1.unregister(user_password)); // unregister assigned user
+        assertFalse(result, message);
+
+        message = make_assert_exception_message(test_name, "unregister guest user after assigned user unregistered", suppose_to_throw);
+        result = check_was_exception(facade1.unregister(user_password)); // unregister guest user after assigned user unregistered
+        assertTrue(result, message);
+
+        facade1.register(user_regular_email_1, user_password, "name", "last", birth_date);
+        facade1.logout();
+    }
 }

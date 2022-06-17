@@ -101,21 +101,7 @@ class AddManager {
         assertTrue(was_exception, "manager cant appoint another manager");
     }
 
-    @Test
-    void delete_owner() {
-    }
 
-    @Test
-    void add_manager() {
-    }
-
-    @Test
-    void edit_manager_permissions() {
-    }
-
-    @Test
-    void delete_manager() {
-    }
 
 
 }

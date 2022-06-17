@@ -1,4 +1,4 @@
-package Acceptance.User.Admin;
+package Acceptance.User.AssignUser;
 
 import TradingSystem.server.Domain.ExternalSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
@@ -8,15 +8,20 @@ import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Service.MarketSystem;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import static TradingSystem.server.Service.MarketSystem.tests_config_file_path;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class RemoveUser {
+class LoginLogout {
     private MarketFacade facade1;
     private MarketFacade facade2;
     private MarketFacade facade3;
@@ -41,7 +46,7 @@ class RemoveUser {
     private SupplyAdapter supplyAdapter;
     private String prodname = "";
 
-    public RemoveUser(){
+    public LoginLogout(){
         try{
             MarketSystem marketSystem = new MarketSystem(tests_config_file_path, "");
             this.paymentAdapter = marketSystem.getPayment_adapter();
@@ -133,58 +138,79 @@ class RemoveUser {
         return test_part + case_part;
     }
 
+
+
     /**
      * Cases checked:
-     * 1. no one is connected
-     * 2. user connected is not an admin
-     * 3. admin enters an email that doesn't exist
-     * 4. admin removes user
+     * 1. regular login
+     * 2. login with connected user different facade
+     * 3. login with same facade different but user
      */
-    @Test
-    void remove_user(){
-        Response res;
-        String test_name = "remove_user";
+    static Stream<Arguments> user_info_provider2() {
+        return Stream.of(
+                arguments("check1@email.com", "pass3Chec"),
+                arguments("check2@email.com", "pass1Chec"),
+                arguments("check3@email.com", "Ch3ckPsw0rd")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("user_info_provider2")
+    void login(String email, String pw) {
+        boolean result;
         boolean suppose_to_throw = true;
+        String test_name = "login";
         String message;
 
-        message = make_assert_exception_message(test_name, "no one is connected", suppose_to_throw);
-        res = facade1.remove_user(user_regular_email_1);  // no one is connected
-        assertTrue(check_was_exception(res), message);
+        message = make_assert_exception_message(test_name, "regular login", !suppose_to_throw);
+        result = check_was_exception(facade1.login(email, pw)); // regular login
+        assertFalse(result, message);
 
-        message = make_assert_exception_message(test_name, "check if the user that we tried to delete can still login -> still exists", !suppose_to_throw);
-        res = facade2.login(user_regular_email_1, user_password); // check if user can still login -> still exists
-        assertFalse(res.WasException(), message);
+        message = make_assert_exception_message(test_name, "same user tries to login from different facade", suppose_to_throw);
+        result = check_was_exception(facade2.login(email, pw)); // same user different facade
+        assertTrue(result, message);
 
-        facade2.logout();
-        facade1.login(user_premium_security_email, user_password);
-
-        message = make_assert_exception_message(test_name, "user connected is not an admin", suppose_to_throw);
-        res = facade1.remove_user(user_regular_email_1);  // user connected is not an admin
-        assertTrue(check_was_exception(res), message);
-
-        message = make_assert_exception_message(test_name, "check if the user that we tried to delete can still login -> still exists", !suppose_to_throw);
-        res = facade2.login(user_regular_email_1, user_password); // check if user can still login -> still exists
-        assertFalse(res.WasException(), message);
-
-        facade2.logout();
-        facade1.logout();
-        facade1.login(user_admin_email, user_password);
-
-        message = make_assert_exception_message(test_name, "admin enters an email that doesn't exist", suppose_to_throw);
-        res = facade1.remove_user("idontexist@email.com");  // admin enters an email that doesn't exist
-        assertTrue(check_was_exception(res), message);
-
-        message = make_assert_exception_message(test_name, "admin removes user", !suppose_to_throw);
-        res = facade1.remove_user(user_regular_email_1);  // admin removes user
-        assertFalse(check_was_exception(res), message);
-
-        message = make_assert_exception_message(test_name, "check if the user that we tried to delete can still login -> still exists", suppose_to_throw);
-        res = facade2.login(user_regular_email_1, user_password); // check if user can still login -> still exists
-        assertTrue(res.WasException(), message);
+        message = make_assert_exception_message(test_name, "another user tries to login from on the same facade", suppose_to_throw);
+        result = check_was_exception(facade1.login("check1@email.com", user_password)); // same facade different user
+        assertTrue(result, message);
 
         facade1.logout();
-        facade2.logout();
+    }
 
+    /**
+     * Cases checked:
+     * 1. logout with no user connected
+     * 2. regular logout
+     * 3. logout second time in a row
+     * 4. logout after login failed
+     */
+    @Test
+    void logout() {
+        boolean result;
+
+        boolean suppose_to_throw = true;
+        String test_name = "logout";
+        String message;
+
+        message = make_assert_exception_message(test_name, "logout with no user connected", suppose_to_throw);
+        result = check_was_exception(facade1.logout()); // logout with no user connected
+        assertTrue(result, message);
+
+        facade1.login(user_founder_email, user_password);
+
+        message = make_assert_exception_message(test_name, "regular logout", !suppose_to_throw);
+        result = check_was_exception(facade1.logout()); // regular logout
+        assertFalse(result, message);
+        message = make_assert_exception_message(test_name, "logout second time in a row", suppose_to_throw);
+        result = check_was_exception(facade1.logout()); // logout second time in a row
+
+        assertTrue(result);
+
+        facade1.login("checrr@email.com", "pass3hec"); // login will fail
+
+        message = make_assert_exception_message(test_name, "logout after login failed", suppose_to_throw);
+        result = check_was_exception(facade1.logout()); // logout after login failed
+        assertTrue(result, message);
     }
 
 }

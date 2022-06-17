@@ -11,12 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddManager {
 
-    /**
-     * with no other managers in the store -> confirm automatically
-     * with more managers -> after everyone confirm the candidate become owner
-     * with more managers -> after one reject -> the candidate appointment closed.
-     */
 
+    // TODO: unify with Appointments
     @Test
     void happy_add_owner_appointment() {
         AssignUser founder = new AssignUser("founder@walla.com","12345678aA","founi","founder");
