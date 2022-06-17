@@ -68,7 +68,7 @@ export default class ViewAppointmentsStatus extends Component {
     }
 
     async componentDidMount() {
-        this.view_bids_status();
+        this.view_appointments_status();
     }
 
     render() {
