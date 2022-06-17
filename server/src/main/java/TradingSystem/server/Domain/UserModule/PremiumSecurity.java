@@ -1,6 +1,5 @@
 package TradingSystem.server.Domain.UserModule;
 
-import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.MarketSecuirtyException;
 
@@ -58,8 +57,8 @@ public class PremiumSecurity extends Security{
 
     public void check_improvable() throws MarketSecuirtyException { throw new MarketSecuirtyException("Cannot improve premium security");}
 
-    public void merge(){
-        PremiumSecurity load = HibernateUtils.getEntityManager().find(this.getClass(),getSecurity_id());
-        HibernateUtils.getEntityManager().merge(load);
-    }
+//    public void merge(){
+//        PremiumSecurity load = HibernateUtils.getEntityManager().find(this.getClass(),getSecurity_id());
+//        HibernateUtils.getEntityManager().merge(load);
+//    }
 }

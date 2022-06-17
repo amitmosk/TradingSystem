@@ -129,7 +129,7 @@ public class UserController {
             user = onlineUsers.get(ID);
             user.register(email, pw, name, lastName, birth_date);
             users.put(email, user);
-            HibernateUtils.merge(this);
+//            HibernateUtils.merge(this);
         }
         statisticsManager.inc_register_count();
         return user;

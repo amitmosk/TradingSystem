@@ -18,8 +18,9 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @MapKeyClass(value = Store.class)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "table_name",
+    @JoinTable(name = "cart_baskets",
             joinColumns = {@JoinColumn(name = "cart", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "basket", referencedColumnName = "id")})
     @MapKeyJoinColumn(name = "store")
@@ -56,8 +57,10 @@ public class Cart {
     }
 
     public void clear() {
-        baskets.clear();
-        HibernateUtils.merge(this);
+        for(Map.Entry<Store,Basket> entry : baskets.entrySet()){
+            entry.getValue().clear();
+            baskets.remove(entry.getKey(),entry.getValue());
+        }
     }
 
     public void remove_product_from_cart(Store store, Product p) throws MarketException {
@@ -66,7 +69,7 @@ public class Cart {
         Basket basket = baskets.get(store);
         basket.removeProduct(p);
         if (basket.isEmpty()) baskets.remove(store);
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     /**
@@ -80,15 +83,20 @@ public class Cart {
      */
     public void add_product_to_cart(Store store, Product p, int quantity, String email, double price_per_unit) throws MarketException {
         Basket basket = baskets.getOrDefault(store, new Basket(store.getStore_id(), email));
+        if(!email.equals("guest")) {
+            HibernateUtils.persist(basket);
+            HibernateUtils.commit();
+        }
+        HibernateUtils.beginTransaction();
         basket.addProduct(p, quantity, price_per_unit);
         this.baskets.put(store, basket);
-        HibernateUtils.merge(this);
     }
 
     public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws MarketException {
         if (!baskets.containsKey(store))
             throw new NoUserRegisterdException("user haven't bought product from this store.");
         baskets.get(store).changeQuantity(p, quantity);
+        HibernateUtils.merge(this);
     }
 
     public double check_cart_available_products_and_calc_price(int user_age) throws MarketException {
@@ -136,8 +144,8 @@ public class Cart {
         return id;
     }
 
-    public void merge(){
-        Cart load = HibernateUtils.getEntityManager().find(this.getClass(),id);
-        HibernateUtils.getEntityManager().merge(load);
-    }
+//    public void merge(){
+//        Cart load = HibernateUtils.getEntityManager().find(this.getClass(),id);
+//        HibernateUtils.getEntityManager().merge(load);
+//    }
 }
