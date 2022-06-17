@@ -1942,7 +1942,7 @@ public class MarketFacade {
             List<Product> products = store_controller.get_products_by_store_id(store_id);
             List<ProductInformation> products_information = new ArrayList<>();
             for (Product p : products) {
-                products_information.add(new ProductInformation(p, 0));
+                products_information.add(new ProductInformation(p, 0,p.getOriginal_price() ));
             }
             HibernateUtils.commit();
             response = new Response(products_information, "Received store products successfully");

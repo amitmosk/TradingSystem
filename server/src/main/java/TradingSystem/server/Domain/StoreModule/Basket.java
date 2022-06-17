@@ -117,7 +117,9 @@ public class Basket implements Serializable {
     public Map<Product, Integer> getProducts_and_quantities() {
         return products_and_quantities;
     }
-
+    public Map<Product, Double> getProducts_and_prices() {
+        return products_and_price_per_unit;
+    }
 
     public double getTotal_price() {
         double price=0;

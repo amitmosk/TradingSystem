@@ -37,7 +37,7 @@ public class StoreInformation {
     private void update_inv(Map<Product, Integer> prod_quantity){
         List<ProductInformation> lst = new ArrayList<>();
         for(Map.Entry<Product,Integer> en : prod_quantity.entrySet()){
-            lst.add(new ProductInformation(en.getKey(),en.getValue()));
+            lst.add(new ProductInformation(en.getKey(),en.getValue(), en.getKey().getOriginal_price()));
         }
         this.inventory = lst;
     }
