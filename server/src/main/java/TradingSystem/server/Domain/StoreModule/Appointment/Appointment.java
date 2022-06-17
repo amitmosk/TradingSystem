@@ -31,7 +31,13 @@ public class Appointment {
 
 
     // TODO : GAL HIBERNATE
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "managersEmail_AppointmentsAnswers",
+            joinColumns = {@JoinColumn(name = "appointment_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "manager_email") // the key column
     private Map<String, AppointmentAgreementManagerAnswer> managersEmail_answers;
+
+    @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
 
 

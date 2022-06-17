@@ -25,7 +25,7 @@ public class Bid implements iManagersConfirm {
     private double negotiation_price;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "managersEmail_answers",
+    @JoinTable(name = "managersEmail_BidAnswers",
         joinColumns = {@JoinColumn(name = "bid_id", referencedColumnName = "bid_id")})
     @MapKeyColumn(name = "manager_email") // the key column
     private Map<String, BidManagerAnswer> managersEmail_answers;
