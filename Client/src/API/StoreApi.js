@@ -6,7 +6,7 @@ import {CONNECTION_ERROR, CATCH, FIND_STORE_INFORMATION, OPEN_STORE, RATE_STORE,
       VIEW_STORE_MANAGEMENT_INFORMATION, MANAGER_ANSWER_QUESTION, VIEW_STORE_PURCHASES_HISTORY, 
       MANAGER_VIEW_STORE_QUESTIONS, EDIT_MANAGER_PERMISSIONS, 
       GET_PRODUCTS_BY_STORE_ID,GET_ALL_STORES, DELETE_PRODUCT_FROM_STORE,
-      GET_PERMISSIONS, ADD_BID, MANAGER_ANSWER_BID, VIEW_BIDS_STATUS, GET_ALL_CATEGORIES} from "./ApiPaths";
+      GET_PERMISSIONS, ADD_BID, MANAGER_ANSWER_BID, VIEW_BIDS_STATUS,VIEW_APPOINTMENTS_STATUS,MANAGER_ANSWER_APPOINTMENT, GET_ALL_CATEGORIES} from "./ApiPaths";
 import { Response } from "./Response";
 import { Store } from "../ServiceObjects/Store";
 import { Product } from "../ServiceObjects/Product";
@@ -358,8 +358,8 @@ export class StoreApi {
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
         }
 
- view_bids_status(storeID ){
-        return instance.get(VIEW_BIDS_STATUS,
+    view_appointments_status(storeID ){
+        return instance.get(VIEW_APPOINTMENTS_STATUS,
             {
                 params:{
                     storeID : storeID,
@@ -370,6 +370,34 @@ export class StoreApi {
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
         }
+
+    manager_answer_appointment(storeID, manager_answer, candidate_email){
+        return instance.get(MANAGER_ANSWER_APPOINTMENT,
+            {
+                params:{
+                    storeID : storeID,
+                    manager_answer : manager_answer,
+                    candidate_email : candidate_email,
+                    }
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+        }
+    
+     view_bids_status(storeID ){
+            return instance.get(VIEW_BIDS_STATUS,
+                {
+                    params:{
+                        storeID : storeID,
+                     }
+                })
+                .then(res => {
+                    return new Response(res.data)
+                })
+                .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            }
         get_all_categories(store_id ){
             return instance.get(GET_ALL_CATEGORIES,
                 {
