@@ -216,7 +216,7 @@ class ConfigurationTests {
         catch (Exception e1){
             answer = false;
         }
-        assertTrue(r.getMessage().equals("Buy Cart Failed : External Services Denied"));
+        assertTrue(r.getMessage().equals("buy Cart Failed : External Services Denied"));
 
 //        assertTrue(answer, "The Server is stop running after external services handshake denied.");
     }
