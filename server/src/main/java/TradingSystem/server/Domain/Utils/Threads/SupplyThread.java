@@ -1,9 +1,7 @@
 package TradingSystem.server.Domain.Utils.Threads;
 
-import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
-import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
-import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
-import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
+import Acceptance.System.ExternSystemsTests.SupplyAdapter;
+import Acceptance.System.ExternSystemsTests.SupplyInfo;
 
 public class SupplyThread implements Runnable {
 

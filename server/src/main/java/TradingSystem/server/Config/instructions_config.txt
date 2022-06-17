@@ -1,9 +1,9 @@
-register#amit@walla.com#12345678aA#amit#mosko#19-04-95
-register#u2@walla.com#12345678aA#rami#gershon#19-04-95
-register#u3@walla.com#12345678aA#dolev#haziza#19-04-95
-register#u4@walla.com#12345678aA#omer#atzili#19-04-95
-register#u5@walla.com#12345678aA#bogdan#planic#19-04-95
-register#u6@walla.com#12345678aA#neta#lavi#19-04-95
+register#amit@walla.com#12345678aA#amit#mosko#2022-05-04
+register#u2@walla.com#12345678aA#rami#gershon#2022-05-04
+register#u3@walla.com#12345678aA#dolev#haziza#2022-05-04
+register#u4@walla.com#12345678aA#omer#atzili#2022-05-04
+register#u5@walla.com#12345678aA#bogdan#planic#2022-05-04
+register#u6@walla.com#12345678aA#neta#lavi#2022-05-04
 login#amit@walla.com#12345678aA
 login#u2@walla.com#12345678aA
 login#u3@walla.com#12345678aA
@@ -12,6 +12,10 @@ login#u5@walla.com#12345678aA
 login#u6@walla.com#12345678aA
 add_admin#amit@walla.com
 open_store#u2@walla.com#storeOne
+add_product_to_store#u2@walla.com#1#20#Bamba#30#sweets#nicesweets
+add_manager#u2@walla.com#u3@walla.com#1
+add_owner#u2@walla.com#u4@walla.com#1
+add_owner#u2@walla.com#u5@walla.com#1
 logout#amit@walla.com#1
 logout#u2@walla.com#1
 logout#u3@walla.com#1
