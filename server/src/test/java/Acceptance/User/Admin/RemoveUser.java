@@ -133,6 +133,9 @@ class RemoveUser {
         return test_part + case_part;
     }
 
+
+    // --------- remove user
+
     /**
      * Cases checked:
      * 1. no one is connected
