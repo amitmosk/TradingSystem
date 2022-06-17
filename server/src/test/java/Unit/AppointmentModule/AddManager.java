@@ -7,7 +7,7 @@ class AddManager {
 
     @Test
     void add_owner() {
-        Store store = new Store()
+        Store store = new Store();
     }
 
     @Test

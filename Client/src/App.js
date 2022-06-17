@@ -185,6 +185,21 @@ export default function App() {
             element={<StoreManagmentNevigator />}
           ></Route>
           
+
+          {/* -------------------------------------- View Appoitment ---------------------------------- */}
+          <Route
+            path="/StorePage/:id/StoreManagment/ViewAppointmentsStatus"
+            element={<ViewAppointmentsStatusNevigator />}
+          ></Route>
+           <Route
+            path="/MyStores/StorePage/:id/StoreManagment/ViewAppointmentsStatus"
+            element={<ViewAppointmentsStatusNevigator />}
+          ></Route>
+          <Route
+            path="/AllStores/StorePage/:id/StoreManagment/ViewAppointmentsStatus"
+            element={<ViewAppointmentsStatusNevigator />}
+          ></Route>
+          
          
         
          {/* -------------------------------------- Store Policies---------------------------------- */}
@@ -275,10 +290,10 @@ export default function App() {
             path="/StorePage/:id/ViewBidsStatus"
             element={<ViewBidsStatusNevigator />}
           ></Route>
-          <Route
+          {/* <Route
             path="/StorePage/:id/ViewAppointmentsStatus"
             element={<ViewAppointmentsStatusNevigator />}
-          ></Route>
+          ></Route> */}
           <Route
             path="/AllStores"
             element={<AllStores/>}
