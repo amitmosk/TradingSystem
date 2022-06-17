@@ -187,42 +187,7 @@ class ConfigurationTests {
 
         assertTrue(answer, "The Server is stop running after external services handshake denied.");
     }
-
-    @Test
-    void buy_cart_denied(){
-        Response r = new Response();
-        boolean answer =  false;
-        try{
-
-            MarketSystem marketSystem = new MarketSystem(tests_external_services_path, empty_test_path);
-            marketSystem.set_external_services("external_services:fail_tests");
-            MarketFacade facade1 = new MarketFacade(marketSystem.getPayment_adapter(), marketSystem.getSupply_adapter());
-            MarketFacade facade2 = new MarketFacade(marketSystem.getPayment_adapter(), marketSystem.getSupply_adapter());
-            PaymentInfo paymentInfo = new PaymentInfo();
-            LinkedList<String> keywords = new LinkedList<>();
-            keywords.add("hasmal");
-            SupplyInfo supplyInfo = new SupplyInfo();
-            facade1.register("testts@gmail.com","12345678aA", "test", "tester", "19.04.95");
-            facade1.register("testts123213@gmail.com","12345678aA", "test", "tester", "19.04.95");
-            facade1.open_store("storeee");
-            facade1.add_product_to_store(1,50,"phone",250,"electronic",keywords);
-            facade2.add_product_to_cart(1, 1, 3);
-
-            r = facade2.buy_cart(paymentInfo, supplyInfo);
-        }
-//        catch (ExternalServicesException e){
-//            answer = true;
-//        }
-        catch (Exception e1){
-            answer = false;
-        }
-        assertTrue(r.getMessage().equals("Buy Cart Failed : External Services Denied"));
-
-//        assertTrue(answer, "The Server is stop running after external services handshake denied.");
-    }
-
-
-
+    
 
     @Test
     void read_config_file(){
