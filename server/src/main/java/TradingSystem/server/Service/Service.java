@@ -1,9 +1,9 @@
 package TradingSystem.server.Service;
 
-import Acceptance.System.ExternSystemsTests.PaymentAdapter;
-import Acceptance.System.ExternSystemsTests.PaymentInfo;
-import Acceptance.System.ExternSystemsTests.SupplyAdapter;
-import Acceptance.System.ExternSystemsTests.SupplyInfo;
+import TradingSystem.server.Domain.ExternalSystems.PaymentAdapter;
+import TradingSystem.server.Domain.ExternalSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternalSystems.SupplyAdapter;
+import TradingSystem.server.Domain.ExternalSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.Appointment.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;

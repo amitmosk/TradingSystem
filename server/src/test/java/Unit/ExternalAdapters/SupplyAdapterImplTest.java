@@ -1,5 +1,5 @@
 package Unit.ExternalAdapters;
-import Acceptance.System.ExternSystemsTests.SupplyAdapterImpl;
+import TradingSystem.server.Domain.ExternalSystems.SupplyAdapterImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

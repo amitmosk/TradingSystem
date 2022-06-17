@@ -6,8 +6,8 @@ import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Appointment.AppointmentInformation;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
-import Acceptance.System.ExternSystemsTests.PaymentInfo;
-import Acceptance.System.ExternSystemsTests.SupplyInfo;
+import TradingSystem.server.Domain.ExternalSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternalSystems.SupplyInfo;
 import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.Questions.QuestionController;
@@ -36,8 +36,8 @@ import TradingSystem.server.Domain.Utils.Threads.PaymentThread;
 import TradingSystem.server.Domain.Utils.Threads.SupplyThread;
 import TradingSystem.server.Domain.Utils.Utils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
-import Acceptance.System.ExternSystemsTests.PaymentAdapter;
-import Acceptance.System.ExternSystemsTests.SupplyAdapter;
+import TradingSystem.server.Domain.ExternalSystems.PaymentAdapter;
+import TradingSystem.server.Domain.ExternalSystems.SupplyAdapter;
 
 import java.util.*;
 

@@ -1,7 +1,7 @@
 package Unit.ExternalAdapters;
 
-import Acceptance.System.ExternSystemsTests.PaymentAdapterImpl;
-import Acceptance.System.ExternSystemsTests.ExternPaymentSystemProxy;
+import TradingSystem.server.Domain.ExternalSystems.PaymentAdapterImpl;
+import TradingSystem.server.Domain.ExternalSystems.ExternPaymentSystemProxy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

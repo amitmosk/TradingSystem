@@ -1,5 +1,7 @@
 package Acceptance.System.ExternSystemsTests;
 
+import TradingSystem.server.Domain.ExternalSystems.ExternPaymentSystemProxy;
+import TradingSystem.server.Domain.ExternalSystems.PaymentInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

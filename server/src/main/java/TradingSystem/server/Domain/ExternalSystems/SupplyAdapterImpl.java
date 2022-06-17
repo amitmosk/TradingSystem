@@ -1,4 +1,4 @@
-package Acceptance.System.ExternSystemsTests;
+package TradingSystem.server.Domain.ExternalSystems;
 
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 

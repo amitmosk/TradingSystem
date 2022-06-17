@@ -1,7 +1,7 @@
 package TradingSystem.server.Domain.Utils.Threads;
 
-import Acceptance.System.ExternSystemsTests.PaymentAdapter;
-import Acceptance.System.ExternSystemsTests.PaymentInfo;
+import TradingSystem.server.Domain.ExternalSystems.PaymentAdapter;
+import TradingSystem.server.Domain.ExternalSystems.PaymentInfo;
 
 public class PaymentThread implements Runnable {
 

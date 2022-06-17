@@ -1,8 +1,8 @@
 package Acceptance.System.ConfigurationTests;
 
 import TradingSystem.server.DAL.HibernateUtils;
-import Acceptance.System.ExternSystemsTests.PaymentInfo;
-import Acceptance.System.ExternSystemsTests.SupplyInfo;
+import TradingSystem.server.Domain.ExternalSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternalSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import TradingSystem.server.Domain.Utils.Response;

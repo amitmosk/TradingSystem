@@ -1,6 +1,6 @@
 package Acceptance;
 
-import Acceptance.System.ExternSystemsTests.*;
+import TradingSystem.server.Domain.ExternalSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;

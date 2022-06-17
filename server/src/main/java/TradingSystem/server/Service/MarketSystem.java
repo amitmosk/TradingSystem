@@ -1,9 +1,7 @@
 package TradingSystem.server.Service;
 
 import TradingSystem.server.DAL.HibernateUtils;
-import Acceptance.System.ExternSystemsTests.*;
-import Acceptance.System.ExternSystemsTests.PaymentAdapterTests;
-import Acceptance.System.ExternSystemsTests.SupplyAdapterTests;
+import TradingSystem.server.Domain.ExternalSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.UserModule.User;
