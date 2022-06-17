@@ -99,7 +99,22 @@ public class StatisticsManager implements iStatisticsManager {
         long connect_per_minutes = get_connect_system_statistics();
         long register_per_minutes = get_register_statistics();
         long buy_cart__per_minutes = get_buy_cart_statistics();
-        return new Statistic(init_system_time, login_per_minutes, logout_per_minutes, connect_per_minutes, register_per_minutes, buy_cart__per_minutes,users.size(),onlineUsers.size());
+        int num_of_guests = 0;
+        int num_of_non_managers_and_owners = 0;
+        int managers_but_not_owners_or_founders = 0;
+        int owners_or_founders = 0;
+        for(User u: onlineUsers.values()){
+            if(u.getIsGuest().get())
+                num_of_guests++;
+            if(!u.check_if_manager() && !u.check_if_owner() && !u.check_if_founder())
+                num_of_non_managers_and_owners++;
+            if(u.check_if_manager() && (!u.check_if_founder() && !u.check_if_owner()))
+                managers_but_not_owners_or_founders++;
+            if(u.check_if_owner() || u.check_if_founder())
+                owners_or_founders++;
+        }
+        return new Statistic(init_system_time, login_per_minutes, logout_per_minutes, connect_per_minutes, register_per_minutes, buy_cart__per_minutes,users.size(),onlineUsers.size(),
+                num_of_guests,num_of_non_managers_and_owners,managers_but_not_owners_or_founders,owners_or_founders);
     }
 
     public void setId(Long id) {

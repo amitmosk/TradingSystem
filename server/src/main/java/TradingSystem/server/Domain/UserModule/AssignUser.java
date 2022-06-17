@@ -261,6 +261,18 @@ public class AssignUser extends AssignState {
     }
 
 
+    public boolean check_if_manager(){
+        return this.manager.size() > 0;
+    }
+
+    public boolean check_if_owner(){
+        return this.owner.size() > 0;
+    }
+
+    public boolean check_if_founder(){
+        return this.founder.size() > 0;
+    }
+
     public void add_notification(String notification) {
         NotificationHandler.getInstance().add_notification(this.email, notification);
     }

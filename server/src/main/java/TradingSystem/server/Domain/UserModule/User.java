@@ -328,4 +328,16 @@ public class User {
     public Long getId() {
         return id;
     }
+
+    public boolean check_if_manager(){
+        return this.state.check_if_manager();
+    }
+
+    public boolean check_if_owner(){
+        return this.state.check_if_owner();
+    }
+
+    public boolean check_if_founder(){
+        return this.state.check_if_founder();
+    }
 }
