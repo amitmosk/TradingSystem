@@ -1052,7 +1052,7 @@ public class Store implements Observable {
     }
 
 
-    public void add_appointment_answer(AssignUser manager, AssignUser candidate , boolean manager_answer) throws Exception {
+    public boolean add_appointment_answer(AssignUser manager, AssignUser candidate , boolean manager_answer) throws Exception {
         // TODO : this lines could throw exceptions, ASK GAL about hibernate
         String manager_email = manager.get_user_email();
         String candidate_email = candidate.get_user_email();
@@ -1076,6 +1076,7 @@ public class Store implements Observable {
                 this.send_message_to_the_store_stuff(candidate_email+" is a new manager in the store, confirm by all the managers.", "");
             }
         }
+        return true;
     }
 
     public List<AppointmentInformation> view_waiting_appointments_status(AssignUser user) throws NoPremssionException {
