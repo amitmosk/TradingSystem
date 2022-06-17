@@ -38,11 +38,7 @@ export default class HomePage extends Component {
     console.log("in component did mount - user state = "+this.props.user.state);
   }
   async componentDidMount() {
-    // this.get_notifications(this.props.user.email);
-    // this.setState({
-    //   state : this.props.user.state,
-    //   username: this.props.user.name,
-    // });
+
   }
   async open_store(values) {
     const store_name = values[0];

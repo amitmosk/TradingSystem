@@ -905,7 +905,7 @@ public class Store implements Observable {
         Bid bid = new Bid(bid_id, quantity, offer_price, managers_emails, product, buyer);
         this.bids.put(bid_id, bid);
         this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName(), "");
-        HibernateUtils.persist(this);
+        HibernateUtils.merge(this);
         return bid_id;
     }
 

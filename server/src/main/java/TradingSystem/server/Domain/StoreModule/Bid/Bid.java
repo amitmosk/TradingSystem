@@ -1,5 +1,6 @@
 package TradingSystem.server.Domain.StoreModule.Bid;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.UserModule.User;
 
@@ -46,6 +47,7 @@ public class Bid implements iBid {
             BidManagerAnswer temp = new BidManagerAnswer();
             this.managersEmail_answers.put(manager_email, temp);
         }
+        HibernateUtils.persist(this);
 
     }
 

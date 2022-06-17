@@ -11,18 +11,26 @@ FormDialog.defaultProps = {
   title: "Submit",
   outlinedVar: "outlined",
   submit_button: "Submit",
+
 }
 
-export default function FormDialog({ fields, getValues, name, outlinedVar, title, submit_button , params}) {
+export default function FormDialog({ fields, getValues, name, outlinedVar, title, submit_button, cancel_button , params, to_open}) {
 
   // fields.map(f=> localStorage.setItem(f, undefined));
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(to_open);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    let ans = [];
+    if(cancel_button)
+    {
+      fields.map((f) => ans.push(localStorage.getItem(f)))
+      ans.push(0);
+    }
+    getValues(ans);
     setOpen(false);
   };
   const handleSumbit = event => {
@@ -34,6 +42,10 @@ export default function FormDialog({ fields, getValues, name, outlinedVar, title
       params.map((p)=>ans.push(p));
     }
     console.log(params);
+    if(cancel_button)
+    {
+      ans.push(1);
+    }
     getValues(ans);
     setOpen(false);
 
@@ -47,6 +59,7 @@ export default function FormDialog({ fields, getValues, name, outlinedVar, title
 
   return (
     <div>
+      
       <Button variant={outlinedVar} onClick={handleClickOpen}>
         {name}
       </Button>
@@ -76,7 +89,7 @@ export default function FormDialog({ fields, getValues, name, outlinedVar, title
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>{cancel_button ? cancel_button : "Cancel"}</Button>
           <Button onClick={handleSumbit}>{submit_button}</Button>
         </DialogActions>
       </Dialog>

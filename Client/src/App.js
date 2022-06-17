@@ -11,7 +11,6 @@ import Payment from "./components/PaymentPage";
 import Supply from "./components/SupplyPage";
 // import * as React from 'react';
 // import ReactDOM from 'react-dom';
-import Button from "@mui/material/Button";
 import StorePage from "./components/StorePage";
 import ShoppingCart from "./components/ShoppingCart";
 import AdminSendMessage from "./components/AdminSendMessage";
@@ -45,7 +44,6 @@ import AllStores from "./components/AllStores";
 import MyStores from "./components/MyStores";
 import BuyCart from "./components/BuyCart";
 import ManagerPermissions from "./components/ManagerPermissions";
-import ViewBidsStatusNevigator from "./components/ViewBidsStatusNevigator";
 import Notifications from "./components/Notifications";
 import { useEffect } from 'react';
 import {useState} from "react";
@@ -55,7 +53,7 @@ import CreatePredict from "./components/CreatePredict";
 import StorePolicies from "./components/StorePolicies";
 import AdminViewStorePurchaseHistory from "./components/AdminViewStorePurchaseHistory";
 import AdminViewUserPurchaseHistory from "./components/AdminViewUserPurchaseHistory";
-
+import ViewBidsStatus from "./components/ViewBidsStatus";
 
 
 
@@ -183,8 +181,22 @@ export default function App() {
             path="/AllStores/StorePage/:id/StoreManagment"
             element={<StoreManagmentNevigator />}
           ></Route>
+
+
+               {/* -------------------------------------- View Bids---------------------------------- */}
+               <Route
+            path="/StorePage/:id/StoreManagment/ViewBidsStatus"
+            element={<ViewBidsStatus />}
+          ></Route>
+           <Route
+            path="/MyStores/StorePage/:id/StoreManagment/ViewBidsStatus"
+            element={<ViewBidsStatus />}
+          ></Route>
+          <Route
+            path="/AllStores/StorePage/:id/StoreManagment/ViewBidsStatus"
+            element={<ViewBidsStatus />}
+          ></Route>
           
-         
         
          {/* -------------------------------------- Store Policies---------------------------------- */}
           <Route
@@ -270,10 +282,7 @@ export default function App() {
             path="/StorePage/:store_id/ProductPage/:product_id"
             element={<ProductPageNevigator />}
           ></Route>
-          <Route
-            path="/StorePage/:id/ViewBidsStatus"
-            element={<ViewBidsStatusNevigator />}
-          ></Route>
+         
           <Route
             path="/AllStores"
             element={<AllStores/>}
