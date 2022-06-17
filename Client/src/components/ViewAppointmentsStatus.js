@@ -36,6 +36,7 @@ export default class ViewAppointmentsStatus extends Component {
     }
 
     async view_appointments_status() {
+        console.log("hey amit");
         let response = await this.storeApi.view_appointments_status(this.state.store_id);
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });

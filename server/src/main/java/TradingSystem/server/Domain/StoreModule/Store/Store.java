@@ -693,7 +693,12 @@ public class Store implements Observable {
 
             Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner, get_managers_emails());
             this.stuffs_and_appointments.put(new_owner, appointment_to_add);
-
+            try{
+                this.add_appointment_answer(appointer, new_owner, true);
+            }
+            catch (Exception e){
+                // TODO : AMIT
+            }
             HibernateUtils.merge(this);
         }
     }
@@ -706,6 +711,13 @@ public class Store implements Observable {
                 throw new AppointmentException("User to appoint is already store member");
             Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager, get_managers_emails());
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
+            this.stuffs_and_appointments.put(new_manager, appointment_to_add);
+            try{
+                this.add_appointment_answer(appointer, new_manager, true);
+            }
+            catch (Exception e){
+                // TODO : AMIT
+            }
             HibernateUtils.merge(this);
         }
     }
