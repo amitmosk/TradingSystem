@@ -117,7 +117,8 @@ export default function ViewBidsStatus() {
             const response = await storeApi.manager_answer_bid(store_id, bidid, approve, negoprice);
             if (!response.was_exception) {
                 setSnackbar({ children: response.message, severity: 'success' });
-                window.location.reload();
+                //TODO - Tom - remove the reload from comment
+                // window.location.reload();
             }
             else {
                 setSnackbar({ children: response.message, severity: 'error' });
@@ -139,7 +140,7 @@ export default function ViewBidsStatus() {
             const response = await storeApi.manager_answer_bid(store_id, bidid, approve, negoprice);
             if (!response.was_exception) {
                 setSnackbar({ children: response.message, severity: 'success' });
-                window.location.reload();
+                // window.location.reload();
             }
             else {
                 setSnackbar({ children: response.message, severity: 'error' });
@@ -162,7 +163,7 @@ export default function ViewBidsStatus() {
         const response = await storeApi.manager_answer_bid(store_id, bidid, approve, negoprice);
         if (!response.was_exception) {
             setSnackbar({ children: response.message, severity: 'success' });
-            window.location.reload();
+            // window.location.reload();
         }
         else {
             setSnackbar({ children: response.message, severity: 'error' });
@@ -219,19 +220,19 @@ export default function ViewBidsStatus() {
 
                             <Grid container spacing={3} justifyContent="center" alignItems="center" paddingTop={8}> 
                             
-                            <Grid item>
-                            <Button onClick={is_answerd}>Answer Bid</Button>
+                            
+                            {bids.length!==0? <Button onClick={is_answerd}>Answer Bid</Button> : null}
                             </Grid>
-                            <Grid item>
+                            <Grid container spacing={3} justifyContent="center" alignItems="center" paddingTop={8}> 
                             {isanswer ? <ControlledRadioButtonsGroup list={bidids} name="Choose Bid ID to Answer" save={save_bid_id}></ControlledRadioButtonsGroup> : null}
                             </Grid>
-                            <Grid item>
+                            <Grid container spacing={3} justifyContent="center" alignItems="center" paddingTop={8}> 
                             {bidid!==null && !approve ? <FormDialog fields={[]} getValues={is_confirm}  name={`Answer Bid ${bidid}`} title="Approve this Bid?" submit_button="Yes" cancel_button={"No"} to_open={true}></FormDialog>:null}
                                     {approve && !nego ? <FormDialog fields={[]} getValues={is_add_nego}  name="Add Negotiation Price" title="Add A Negotioation Price?" submit_button="Yes" cancel_button={"No"} to_open={true}></FormDialog>:null}
                                     {nego ? <FormDialog fields={manager_answer_bid_fields} getValues={manager_answer_bid}  name="Add Negotiation Price" title="Add A Negotioation Price?" submit_button="Submit"  to_open={true}></FormDialog>:null}
 
 
-                            </Grid>
+                      
                             
                            
                             

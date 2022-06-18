@@ -101,6 +101,8 @@ export default function App() {
 
   return (
       <>
+      //TODO - Tom - add at the beggining of every page condition that if the user is guest - nevigate to HOME
+      //TODO - Tom - add acceptence tests for bad and sad cases of BID
           <BrowserRouter>
         <NavBar
           updateUserState={updateUserState}
