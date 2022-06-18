@@ -1,5 +1,7 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
+import TradingSystem.server.DAL.HibernateUtils;
+
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +13,7 @@ public class StorePurchaseHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long store_purchase_history;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "store_purchases",
             joinColumns = {@JoinColumn(name = "store_purchase_history", referencedColumnName = "store_purchase_history")})
     @MapKeyColumn(name = "purchase_id") // the key column
@@ -48,7 +50,6 @@ public class StorePurchaseHistory {
     public void insert(StorePurchase purchase)
     {
         this.purchaseID_purchases.put(purchase.getPurchase_id(), purchase);
-//        HibernateUtils.merge(this);
     }
 
     @Override

@@ -273,9 +273,9 @@ public class MarketFacade {
         Response<String> response = null;
         try {
             HibernateUtils.beginTransaction();
+            Product p = store_controller.getProduct_by_product_id(storeID, productID);
             Store store = store_controller.get_store(storeID);
             store_controller.checkAvailablityAndGet(storeID, productID, quantity);
-            Product p = store_controller.getProduct_by_product_id(storeID, productID);
             user_controller.add_product_to_cart(loggedUser, store, p, quantity);
             HibernateUtils.commit();
             response = new Response<>("", "product " + productID + " added to cart");
@@ -400,7 +400,6 @@ public class MarketFacade {
             this.supply_adapter.cancel_supply(supply_transaction_id);
             // TODO: rollback for buyCart > return the products to the store
             HibernateUtils.rollback();
-            HibernateUtils.getEntityManager().clear();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1922,17 +1921,17 @@ public class MarketFacade {
     public Response get_all_stores() {
         Response<List<StoreInformation>> response = null;
         try {
-            HibernateUtils.beginTransaction();
+//            HibernateUtils.beginTransaction();
             Map<Integer, Store> stores = store_controller.get_all_stores();
+//            HibernateUtils.commit();
             List<StoreInformation> map = new ArrayList<>();
             for (Map.Entry<Integer, Store> en : stores.entrySet()) {
                 map.add(new StoreInformation(en.getValue()));
             }
-            HibernateUtils.commit();
             response = new Response(map, "Received market stores successfully");
             market_logger.add_log("received market stores successfully.");
         } catch (Exception e) {
-            HibernateUtils.rollback();
+//            HibernateUtils.rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -2020,10 +2019,8 @@ public class MarketFacade {
     public Response online_user() {
         Response<UserInformation> response = null;
         try {
-            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             UserInformation userInformation = new UserInformation(user);
-            HibernateUtils.commit();
             response = new Response<>(userInformation, "");
         } catch (Exception e) {
             HibernateUtils.rollback();

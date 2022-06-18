@@ -132,7 +132,7 @@ public class UserController {
         synchronized (usersLock) {
             if (isRegistered(email))
                 throw new RegisterException("user email " + email + " already exists in the system");
-            user = onlineUsers.get(ID);
+            user = find_online_user(ID);
             user.register(email, pw, name, lastName, birth_date);
             users.put(email, user);
             HibernateUtils.persist(user);
@@ -151,7 +151,7 @@ public class UserController {
     public User login(int ID, String email, String password) throws MarketException {
         if (isRegistered(email)) {
             User cur_user = find_online_user(ID);
-            User user = users.get(email);
+            User user =find_reg_user(email);
             if (cur_user.test_isLogged())
                 throw new LoginException("cannot log in from logged in user");
             user.login(password); //verifies if the user is logged and password & changes state.
@@ -295,7 +295,7 @@ public class UserController {
         check_admin_permission(loggedUser);
         if (!isRegistered(email))
             throw new NoUserRegisterdException("user " + email + "is not registered to the system.");
-        User user = users.get(email);
+        User user =find_reg_user(email);
         return user.view_user_purchase_history();
     }
 
@@ -441,7 +441,7 @@ public class UserController {
     public User get_user_by_email(String email) throws MarketException {
         if (!users.containsKey(email))
             throw new ObjectDoesntExsitException("user does not exists in the system.");
-        return users.get(email);
+        return find_reg_user(email);
     }
 
     public List<Admin> get_admins() {
@@ -479,9 +479,18 @@ public class UserController {
     private User find_online_user(int id){
         User u = onlineUsers.get(id);
         u = u.merge();
-        HibernateUtils.commit();
-        HibernateUtils.beginTransaction();
+//        HibernateUtils.commit();
+//        HibernateUtils.beginTransaction();
         onlineUsers.put(id,u);
+        return u;
+    }
+
+    private User find_reg_user(String email){
+        User u = users.get(email);
+        u = u.merge();
+//        HibernateUtils.commit();
+//        HibernateUtils.beginTransaction();
+        users.put(email,u);
         return u;
     }
 

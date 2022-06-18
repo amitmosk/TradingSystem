@@ -165,6 +165,10 @@ public class MarketSystem {
             SystemLogger.getInstance().add_log("Init Data For Tests: Empty Database");
             HibernateUtils.set_tests_mode();
         }
+        else if (config.equals("database:load_tests")){
+                SystemLogger.getInstance().add_log("Init Data For load Tests: Empty Database");
+                HibernateUtils.set_load_tests_mode();
+        }
         else if (config.equals("database:real")){
             try
             {

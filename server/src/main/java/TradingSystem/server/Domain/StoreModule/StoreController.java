@@ -445,6 +445,8 @@ public class StoreController {
 
     public Product getProduct_by_product_id(int storeID, int productID) throws MarketException {
         Store store = this.get_store_by_store_id(storeID);
+//        return store.getProduct_by_product_id(productID);
+        //edited
         return HibernateUtils.merge(store.getProduct_by_product_id(productID));
     }
 
@@ -452,6 +454,7 @@ public class StoreController {
         if (!this.stores.containsKey(store_id))
             throw new ObjectDoesntExsitException("there is no such store");
         Store s = stores.get(store_id);
+        //edited
         s = HibernateUtils.merge(s);
         stores.put(store_id,s);
         return s;

@@ -6,6 +6,7 @@ import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
+import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.Utils.Exception.*;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class Cart {
     private Long id;
 
     @MapKeyClass(value = Store.class)
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE})
     @JoinTable(name = "cart_baskets",
             joinColumns = {@JoinColumn(name = "cart", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "basket", referencedColumnName = "id")})
@@ -60,7 +61,7 @@ public class Cart {
         for(Map.Entry<Store,Basket> entry : baskets.entrySet()){
             entry.getValue().clear();
             baskets.remove(entry.getKey(),entry.getValue());
-//            HibernateUtils.remove(entry.getValue());
+            HibernateUtils.remove(entry.getValue());
         }
     }
 
@@ -108,6 +109,7 @@ public class Cart {
         double cart_price = 0;
         for (Map.Entry<Store, Basket> entry : baskets.entrySet()) {
             Store store = entry.getKey();
+//            store = HibernateUtils.merge(store);
             Basket basket = entry.getValue();
             if (!store.is_active()) throw new PurchaseException("store " + store.getStore_id() + " is not active");
             double basket_price = store.check_available_products_and_calc_price(user_age, basket); // throw if not available
