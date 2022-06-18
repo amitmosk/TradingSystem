@@ -41,10 +41,6 @@ public class StorePurchaseHistory {
     // ------------------------------ setters ------------------------------
 
 
-    public void setPurchaseID_purchases(Map<Integer, StorePurchase> purchaseID_purchases) {
-        this.purchaseID_purchases = purchaseID_purchases;
-    }
-
     public void setStore_name(String store_name) {
         this.store_name = store_name;
     }
@@ -72,5 +68,9 @@ public class StorePurchaseHistory {
 
     public Long getStore_purchase_history() {
         return store_purchase_history;
+    }
+
+    public void setPurchaseID_purchases(Map<Integer, StorePurchase> purchaseID_purchases) {
+        this.purchaseID_purchases = purchaseID_purchases;
     }
 }

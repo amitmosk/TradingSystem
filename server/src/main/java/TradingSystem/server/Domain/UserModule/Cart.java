@@ -49,7 +49,7 @@ public class Cart {
     public void removeBasketIfNeeded(int storeID, Basket storeBasket) {
         if (storeBasket.isEmpty())
             baskets.remove(storeID);
-        HibernateUtils.merge(this);
+//        HibernateUtils.remove(storeBasket);
     }
 
     public Map<Store, Basket> getBaskets() {
@@ -60,6 +60,7 @@ public class Cart {
         for(Map.Entry<Store,Basket> entry : baskets.entrySet()){
             entry.getValue().clear();
             baskets.remove(entry.getKey(),entry.getValue());
+//            HibernateUtils.remove(entry.getValue());
         }
     }
 
@@ -68,12 +69,16 @@ public class Cart {
             throw new BasketException("user dont have item's from specified store");
         Basket basket = baskets.get(store);
         basket.removeProduct(p);
-        if (basket.isEmpty()) baskets.remove(store);
-//        HibernateUtils.merge(this);
+        if (basket.isEmpty()) {
+            baskets.remove(store);
+            HibernateUtils.remove(basket);
+//            HibernateUtils.remove(basket.getBasket_id());
+        }
     }
 
     /**
      * this method served both regular add product to cart & add product after confirm bid offer.
+     *
      * @param store
      * @param p
      * @param quantity
@@ -83,11 +88,11 @@ public class Cart {
      */
     public void add_product_to_cart(Store store, Product p, int quantity, String email, double price_per_unit) throws MarketException {
         Basket basket = baskets.getOrDefault(store, new Basket(store.getStore_id(), email));
-        if(!email.equals("guest")) {
-            HibernateUtils.persist(basket);
-            HibernateUtils.commit();
-        }
-        HibernateUtils.beginTransaction();
+//        if (!email.equals("guest")) {
+//            HibernateUtils.persist(basket);
+//            HibernateUtils.commit();
+//            HibernateUtils.beginTransaction();
+//        }
         basket.addProduct(p, quantity, price_per_unit);
         this.baskets.put(store, basket);
     }
@@ -96,7 +101,7 @@ public class Cart {
         if (!baskets.containsKey(store))
             throw new NoUserRegisterdException("user haven't bought product from this store.");
         baskets.get(store).changeQuantity(p, quantity);
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     public double check_cart_available_products_and_calc_price(int user_age) throws MarketException {
@@ -127,9 +132,9 @@ public class Cart {
             throw new BasketException("user try to buy empty cart");
     }
 
-    public CartInformation cartInformation(){
+    public CartInformation cartInformation() {
         HashMap<StoreInformation, Basket> answer = new HashMap<>();
-        for (Map.Entry<Store,Basket> entry : this.baskets.entrySet()){
+        for (Map.Entry<Store, Basket> entry : this.baskets.entrySet()) {
             StoreInformation temp = new StoreInformation(entry.getKey());
             answer.put(temp, entry.getValue());
         }
@@ -143,6 +148,7 @@ public class Cart {
     public Long getId() {
         return id;
     }
+
 
 //    public void merge(){
 //        Cart load = HibernateUtils.getEntityManager().find(this.getClass(),id);

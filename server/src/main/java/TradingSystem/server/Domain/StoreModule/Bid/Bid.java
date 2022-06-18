@@ -13,6 +13,8 @@ import static TradingSystem.server.Domain.StoreModule.Bid.BidStatus.*;
 @Entity
 public class Bid implements iBid {
     @Id
+    //generated
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int bid_id;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Product product;
@@ -61,13 +63,11 @@ public class Bid implements iBid {
     @Override
     public void add_manager_of_store(String manager_email){
         this.managersEmail_answers.put(manager_email, new BidManagerAnswer());
-//        HibernateUtils.merge(this);
     }
 
     @Override
     public void remove_manager(String email){
         this.managersEmail_answers.remove(email);
-//        HibernateUtils.merge(this);
     }
 
     @Override
@@ -88,7 +88,6 @@ public class Bid implements iBid {
             else
                 this.status = this.update_status();
         }
-//        HibernateUtils.merge(this);
     }
 
     private BidStatus update_status() {
@@ -100,7 +99,6 @@ public class Bid implements iBid {
             if (!bid_answer.get_has_answer())
                 return open_waiting_for_answers;
         }
-//        HibernateUtils.merge(this);
         return closed_confirm;
     }
 
@@ -179,4 +177,6 @@ public class Bid implements iBid {
     public void setStatus(BidStatus status) {
         this.status = status;
     }
+
+
 }

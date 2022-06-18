@@ -85,7 +85,6 @@ public class Appointment {
         this.permissions.put(answer_bid_offer, 0);
         this.permissions.put(view_bids_status, 0);
         this.permissions.put(answer_bid_offer_negotiate, 0);
-        HibernateUtils.merge(this);
     }
 
     private void set_owner_permissions() {
@@ -111,7 +110,6 @@ public class Appointment {
         this.permissions.put(answer_bid_offer, 1);
         this.permissions.put(view_bids_status, 1);
         this.permissions.put(answer_bid_offer_negotiate, 0);
-        HibernateUtils.merge(this);
     }
 
     private void set_founder_permissions() {
@@ -137,7 +135,6 @@ public class Appointment {
         this.permissions.put(answer_bid_offer, 1);
         this.permissions.put(view_bids_status, 1);
         this.permissions.put(answer_bid_offer_negotiate, 1);
-        HibernateUtils.merge(this);
     }
 
     // -- getters
@@ -169,7 +166,6 @@ public class Appointment {
             this.permissions.put(key, 1);
         else
             this.permissions.put(key, 0);
-        HibernateUtils.merge(this);
 
     }
 
@@ -211,7 +207,6 @@ public class Appointment {
         for (StorePermission myVar : permissions) {
             this.set_permission(myVar, true);
         }
-        HibernateUtils.merge(this);
     }
 
     public boolean is_owner() {

@@ -11,7 +11,7 @@ public class StorePurchase {
     private Long store_purchase_id;
     private int purchase_id;
     private String buyer_email;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne
     private Purchase purchase;
 
     // ------------------------------ constructors ------------------------------

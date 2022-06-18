@@ -128,11 +128,12 @@ public class HibernateUtils {
             getEntityManager().remove(obj);
     }
 
-    public static <T> void merge(T obj) {
+    public static <T> T merge(T obj) {
         if(allow_persist && begin_transaction) {
-//            T object = getEntityManager().find(obj.getClass(),id);
-            getEntityManager().merge(obj);
+            if(!getEntityManager().contains(obj))
+                return getEntityManager().merge(obj);
         }
+        return obj;
     }
 
     public static void setBegin_transaction(boolean begin_transaction) {

@@ -60,17 +60,17 @@ public class StoreController {
     }
 
     public void load() {
-        this.store_ids_counter = new AtomicInteger(HibernateUtils.get_sc());
-        this.purchase_ids_counter = new AtomicInteger(HibernateUtils.get_max_store_purchase_id());
-        this.bids_ids_counter = new AtomicInteger(HibernateUtils.get_max_bid_id());
-        this.stores = new HashMap<>();
-        List<Store> all_stores= HibernateUtils.stores();
-        for(Store s : all_stores){
-            stores.put(s.getStore_id(),s);
-        }
-        this.storesLock = new Object();
-        this.products_id = new AtomicInteger(HibernateUtils.get_max_product_id()+1);
-        SystemLogger.getInstance().add_log("store controller load");
+//        this.store_ids_counter = new AtomicInteger(HibernateUtils.get_sc());
+//        this.purchase_ids_counter = new AtomicInteger(HibernateUtils.get_max_store_purchase_id());
+//        this.bids_ids_counter = new AtomicInteger(HibernateUtils.get_max_bid_id());
+//        this.stores = new HashMap<>();
+//        List<Store> all_stores= HibernateUtils.stores();
+//        for(Store s : all_stores){
+//            stores.put(s.getStore_id(),s);
+//        }
+//        this.storesLock = new Object();
+//        this.products_id = new AtomicInteger(HibernateUtils.get_max_product_id()+1);
+//        SystemLogger.getInstance().add_log("store controller load");
     }
 
 
@@ -383,7 +383,7 @@ public class StoreController {
         Appointment appointment = store.appoint_founder();
         founder.add_founder(store, appointment);
         this.stores.put(store_id, store);
-        HibernateUtils.merge(this);
+//        HibernateUtils.persist(store);
         return store_id;
     }
 
@@ -445,13 +445,16 @@ public class StoreController {
 
     public Product getProduct_by_product_id(int storeID, int productID) throws MarketException {
         Store store = this.get_store_by_store_id(storeID);
-        return store.getProduct_by_product_id(productID);
+        return HibernateUtils.merge(store.getProduct_by_product_id(productID));
     }
 
     public Store get_store(int store_id) throws MarketException {
         if (!this.stores.containsKey(store_id))
             throw new ObjectDoesntExsitException("there is no such store");
-        return stores.get(store_id);
+        Store s = stores.get(store_id);
+        s = HibernateUtils.merge(s);
+        stores.put(store_id,s);
+        return s;
     }
 
     public void clear() {
@@ -460,7 +463,6 @@ public class StoreController {
         this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
-        HibernateUtils.merge(this);
     }
 
     public Map<Integer, Store> get_all_stores() {
@@ -548,7 +550,6 @@ public class StoreController {
         Store store = get_store_by_store_id(storeID);
         Product product = checkAvailablityAndGet(storeID, productID, quantity);
         int bid_id = this.bids_ids_counter.getAndIncrement();
-        HibernateUtils.merge(this);
         return store.add_bid_offer(bid_id, product, quantity, offer_price, buyer);
     }
 

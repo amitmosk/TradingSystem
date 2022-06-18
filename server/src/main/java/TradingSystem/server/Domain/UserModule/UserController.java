@@ -41,26 +41,26 @@ public class UserController {
     private Long id;
 
     public void load() throws MarketException {
-        this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
-        this.purchaseID = new AtomicInteger(HibernateUtils.get_max_purchase());
-        this.users = new HashMap<>();
-        List<User> all_users = HibernateUtils.users();
-        try {
-            for (User u : all_users) {
-                this.users.put(u.user_email(), u);
-            }
-        } catch (Exception e) {
-            throw new MarketException("failed to load users from table");
-        }
-        this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
-        this.usersLock = new Object();
-        this.statisticsManager = HibernateUtils.getEntityManager().find(StatisticsManager.class, new Long(1));
-        SystemLogger.getInstance().add_log("user controller load");
+//        this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
+//        this.purchaseID = new AtomicInteger(HibernateUtils.get_max_purchase());
+//        this.users = new HashMap<>();
+//        List<User> all_users = HibernateUtils.users();
+//        try {
+//            for (User u : all_users) {
+//                this.users.put(u.user_email(), u);
+//            }
+//        } catch (Exception e) {
+//            throw new MarketException("failed to load users from table");
+//        }
+//        this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
+//        this.usersLock = new Object();
+//        this.statisticsManager = HibernateUtils.getEntityManager().find(StatisticsManager.class, new Long(1));
+//        SystemLogger.getInstance().add_log("user controller load");
     }
 
 //    @Transient
     public User get_user_for_tests(int id) {
-        return onlineUsers.get(id);
+        return find_online_user(id);
     }
 
     private static class SingletonHolder {
@@ -135,6 +135,7 @@ public class UserController {
             user = onlineUsers.get(ID);
             user.register(email, pw, name, lastName, birth_date);
             users.put(email, user);
+            HibernateUtils.persist(user);
 //            HibernateUtils.merge(this);
         }
         statisticsManager.inc_register_count();
@@ -149,7 +150,7 @@ public class UserController {
      */
     public User login(int ID, String email, String password) throws MarketException {
         if (isRegistered(email)) {
-            User cur_user = onlineUsers.get(ID);
+            User cur_user = find_online_user(ID);
             User user = users.get(email);
             if (cur_user.test_isLogged())
                 throw new LoginException("cannot log in from logged in user");
@@ -166,7 +167,7 @@ public class UserController {
      * @param ID online user's id to logout
      */
     public User logout(int ID) throws MarketException {
-        User user = onlineUsers.get(ID);
+        User user = find_online_user(ID);
         user.logout();
         onlineUsers.put(ID, new User());
         statisticsManager.inc_logout_count();
@@ -178,7 +179,7 @@ public class UserController {
      * @return the user's cart
      */
     public Cart view_user_cart(int user) {
-        return onlineUsers.get(user).getCart();
+        return find_online_user(user).getCart();
     }
 
 
@@ -190,7 +191,7 @@ public class UserController {
      * @return the store basket from the user's cart
      */
     public Basket getBasketByStoreID(int userID, int storeID) {
-        User user = onlineUsers.get(userID);
+        User user = find_online_user(userID);
         return user.getBasketByStoreID(storeID);
     }
 
@@ -202,7 +203,7 @@ public class UserController {
      * @param basket
      *//*
     public void addBasket(int userID, int storeID, Basket basket) {
-        User user = onlineUsers.get(userID);
+        User user = find_online_user()(userID);
         user.addBasket(storeID,basket);
     }*/
 
@@ -214,7 +215,7 @@ public class UserController {
      * @param storeBasket
      */
     public void removeBasketIfNeeded(int loggedUser, int storeID, Basket storeBasket) {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.removeBasketIfNeeded(storeID, storeBasket);
     }
 
@@ -226,7 +227,7 @@ public class UserController {
      * @return cart's baskets
      */
     public Map<Store, Basket> getBaskets(int loggedUser) {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         return user.view_baskets();
     }
 
@@ -238,7 +239,7 @@ public class UserController {
      * @return the user's cart
      */
     public Cart getCart(int loggedUser) {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         return user.getCart();
     }
 
@@ -248,7 +249,7 @@ public class UserController {
      * @param loggedUser
      */
     public UserPurchase buyCart(int loggedUser) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         UserPurchase userPurchase = user.buyCart(purchaseID.getAndIncrement());
         statisticsManager.inc_buy_cart_count();
         return userPurchase;
@@ -256,37 +257,37 @@ public class UserController {
 
 
     public void check_if_user_buy_from_this_store(int loggedUser, int store_id) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.check_if_user_buy_from_this_store(store_id);
     }
 
     public void check_if_user_buy_this_product(int loggedUser, int productID, int storeID) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.check_if_user_buy_this_product(storeID, productID);
     }
 
     public UserPurchaseHistory view_user_purchase_history(int loggedUser) throws MarketException { //admin
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         return user.view_user_purchase_history();
     }
 
     public String get_user_name(int loggedUser) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         return user.user_name();
     }
 
     public String get_user_last_name(int loggedUser) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         return user.user_last_name();
     }
 
     public String get_email(int loggedUser) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         return user.user_email();
     }
 
     public void check_admin_permission(int loggedUser) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.check_admin_permission();
     }
 
@@ -325,7 +326,7 @@ public class UserController {
 
     public String unregister(int ID, String password) throws MarketException {
         String email = get_email(ID);
-        User user = onlineUsers.get(ID);
+        User user = find_online_user(ID);
         user.unregister(password);
         synchronized (usersLock) {
             users.remove(email);
@@ -335,19 +336,19 @@ public class UserController {
     }
 
     public String edit_name(int loggedUser, String new_name) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.edit_name(new_name);
         return get_email(loggedUser);
     }
 
     public String edit_password(int loggedUser, String old_password, String password) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.edit_password(old_password, password);
         return get_email(loggedUser);
     }
 
     public String edit_last_name(int loggedUser, String new_last_name) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.edit_last_name(new_last_name);
         return get_email(loggedUser);
     }
@@ -359,7 +360,7 @@ public class UserController {
 
 
     public void send_question_to_admin(int loggedUser, String question) throws NoUserRegisterdException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         AssignUser assignUser = user.state_if_assigned();
         QuestionController.getInstance().add_user_question(question, assignUser);
         List<Admin> adminsList = this.get_admins();
@@ -388,53 +389,53 @@ public class UserController {
     }
 
     public String get_user_security_question(int loggedUser) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         return user.user_security_question();
     }
 
     public String edit_name_premium(int loggedUser, String new_name, String answer) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.edit_name_premium(new_name, answer);
         return get_email(loggedUser);
     }
 
     public String edit_last_name_premium(int loggedUser, String new_last_name, String answer) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.edit_last_name_premium(new_last_name, answer);
         return get_email(loggedUser);
     }
 
     public String edit_password_premium(int loggedUser, String old_password, String new_password, String answer) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.edit_password_premium(old_password, new_password, answer);
         return get_email(loggedUser);
     }
 
     public String improve_security(int loggedUser, String password, String question, String answer) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.improve_security(password, question, answer);
         return get_email(loggedUser);
     }
 
     //TODO: new functions
     public void remove_product_from_cart(int loggedUser, Store store, Product p) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.remove_product_from_cart(store, p);
     }
 
 
     public void add_product_to_cart(int loggedUser, Store store, Product p, int quantity) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.add_product_to_cart(store, p, quantity);
     }
 
     public void edit_product_quantity_in_cart(int loggedUser, Store store, Product p, int quantity) throws MarketException {
-        User user = onlineUsers.get(loggedUser);
+        User user = find_online_user(loggedUser);
         user.edit_product_quantity_in_cart(store, p, quantity);
     }
 
     public User get_user(int loggedUser) {
-        return onlineUsers.get(loggedUser);
+        return find_online_user(loggedUser);
     }
 
     public User get_user_by_email(String email) throws MarketException {
@@ -473,6 +474,15 @@ public class UserController {
 
     public Long getId() {
         return id;
+    }
+
+    private User find_online_user(int id){
+        User u = onlineUsers.get(id);
+        u = u.merge();
+        HibernateUtils.commit();
+        HibernateUtils.beginTransaction();
+        onlineUsers.put(id,u);
+        return u;
     }
 
     public void remove_product_from_all_carts(Product product, Store store) throws MarketException {

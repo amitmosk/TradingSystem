@@ -72,4 +72,6 @@ public class StoreReview {
     public Long getId() {
         return id;
     }
+
+
 }

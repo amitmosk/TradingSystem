@@ -127,6 +127,7 @@ public class MarketFacade {
     public Response<UserInformation> login(String Email, String password) {
         Response<UserInformation> response = null;
         try {
+            HibernateUtils.beginTransaction();
             User user = user_controller.login(loggedUser, Email, password);
             String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
             isGuest = false;
@@ -274,7 +275,7 @@ public class MarketFacade {
             HibernateUtils.beginTransaction();
             Store store = store_controller.get_store(storeID);
             store_controller.checkAvailablityAndGet(storeID, productID, quantity);
-            Product p = store_controller.getProduct_by_product_id(storeID,productID);
+            Product p = store_controller.getProduct_by_product_id(storeID, productID);
             user_controller.add_product_to_cart(loggedUser, store, p, quantity);
             HibernateUtils.commit();
             response = new Response<>("", "product " + productID + " added to cart");
@@ -349,7 +350,9 @@ public class MarketFacade {
      * @return the user cart information
      */
     public Response<CartInformation> view_user_cart() {
+        HibernateUtils.beginTransaction();
         CartInformation cartInformation = user_controller.getCart(loggedUser).cartInformation();
+        HibernateUtils.commit();
         Response<CartInformation> response = new Response<>(cartInformation, "successfully received user's cart");
         market_logger.add_log("User viewed his cart successfully");
         return response;
@@ -397,6 +400,7 @@ public class MarketFacade {
             this.supply_adapter.cancel_supply(supply_transaction_id);
             // TODO: rollback for buyCart > return the products to the store
             HibernateUtils.rollback();
+            HibernateUtils.getEntityManager().clear();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -1318,8 +1322,8 @@ public class MarketFacade {
                 PurchaseRule = store.add_or_purchase_rule(nameOfrule, left, right);
             }
             HibernateUtils.commit();
-                response = new Response(PurchaseRule, "Store purchase rules added successfully");
-                market_logger.add_log("Store's (" + store_id + ") purchase rules have been added");
+            response = new Response(PurchaseRule, "Store purchase rules added successfully");
+            market_logger.add_log("Store's (" + store_id + ") purchase rules have been added");
         } catch (MarketException e) {
             HibernateUtils.rollback();
             response = Utils.CreateResponse(e);

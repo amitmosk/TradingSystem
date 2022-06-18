@@ -9,6 +9,8 @@ import java.util.List;
 @Entity
 public class Product {
     @Id
+    //generated
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int product_id;
     private String name;
     private String category;
@@ -85,12 +87,10 @@ public class Product {
     // -- Setters
     public void setProduct_id(int product_id) {
         this.product_id = product_id;
-        HibernateUtils.merge(this);
     }
 
     public void setOriginal_price(double original_price) {
         this.original_price = original_price;
-        HibernateUtils.merge(this);
     }
 
     public void setProductReview(ProductReview productReview) {
@@ -99,17 +99,14 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
-        HibernateUtils.merge(this);
     }
 
     public void setKey_words(List<String> key_words) {
         this.key_words = key_words;
-        HibernateUtils.merge(this);
     }
 
     public void setName(String name) {
         this.name = name;
-        HibernateUtils.merge(this);
     }
 
     public void remove() {

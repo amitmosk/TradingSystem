@@ -98,14 +98,12 @@ public class QuestionController implements iQuestionController {
         int question_id = this.question_ids_counter.getAndIncrement();
         BuyerQuestion question_to_add = new BuyerQuestion(question_id, message, sender, store_id);
         this.buyer_to_store.put(question_id, question_to_add);
-        HibernateUtils.merge(this);
     }
 
     public void add_user_question(String message, AssignUser sender){
         int question_id = this.question_ids_counter.getAndIncrement();
         UserQuestion question_to_add = new UserQuestion(question_id, message, sender);
         this.user_to_admin.put(question_id, question_to_add);
-        HibernateUtils.merge(this);
     }
 
     public void answer_buyer_question(int question_id, String answer) throws ObjectDoesntExsitException {
@@ -116,7 +114,6 @@ public class QuestionController implements iQuestionController {
         Question question = this.buyer_to_store.get(question_id);
         question.setAnswer(answer);
         question.getSender().add_notification("your question got answered");
-        HibernateUtils.merge(this);
     }
 
     public void answer_user_question(int question_id, String answer) throws ObjectDoesntExsitException {
