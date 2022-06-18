@@ -57,6 +57,7 @@ public class StoreController {
         this.stores = new HashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
+        load();
     }
 
     public void load() {

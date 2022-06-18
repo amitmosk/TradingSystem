@@ -12,6 +12,7 @@ import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.*;
 import java.util.*;
@@ -40,8 +41,11 @@ public class UserController {
 //    @GeneratedValue
     private Long id;
 
-    public void load() throws MarketException {
+    public void load(){
 //        this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
+//        MarketLogger.getInstance().add_log("----------------------------------");
+//        MarketLogger.getInstance().add_log(""+uc_id.get());
+//        MarketLogger.getInstance().add_log("----------------------------------");
 //        this.purchaseID = new AtomicInteger(HibernateUtils.get_max_purchase());
 //        this.users = new HashMap<>();
 //        List<User> all_users = HibernateUtils.users();
@@ -50,12 +54,12 @@ public class UserController {
 //                this.users.put(u.user_email(), u);
 //            }
 //        } catch (Exception e) {
-//            throw new MarketException("failed to load users from table");
+////            throw new MarketException("failed to load users from table");
 //        }
 //        this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
 //        this.usersLock = new Object();
 //        this.statisticsManager = HibernateUtils.getEntityManager().find(StatisticsManager.class, new Long(1));
-//        SystemLogger.getInstance().add_log("user controller load");
+        SystemLogger.getInstance().add_log("user controller load");
     }
 
 //    @Transient
@@ -68,6 +72,7 @@ public class UserController {
     }
 
     public static UserController get_instance() {
+        SingletonHolder.instance.load();
         return SingletonHolder.instance;
     }
 

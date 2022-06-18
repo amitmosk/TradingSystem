@@ -15,6 +15,7 @@ import java.util.List;
 public class HibernateUtils {
 
     private static EntityManagerFactory emf;
+    private static EntityManager em;
     private static ThreadLocal<EntityManager> threadLocal;
     private static String persistence_unit = "TradingSystem";
     private static boolean allow_persist = false;
@@ -23,6 +24,7 @@ public class HibernateUtils {
     static {
         emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
+//        em = emf.createEntityManager();
     }
 
     public static void setPersistence_unit(String persistence_unit) {
@@ -68,13 +70,13 @@ public class HibernateUtils {
         HibernateUtils.allow_persist = true;
     }
 
-    public static EntityManager getEntityManager() {
-        EntityManager em = threadLocal.get();
+    public static synchronized EntityManager getEntityManager() {
+//        EntityManager em = threadLocal.get();
 
         if (em == null) {
             em = emf.createEntityManager();
             // set your flush mode here
-            threadLocal.set(em);
+//            threadLocal.set(em);
         }
         return em;
     }
@@ -143,7 +145,7 @@ public class HibernateUtils {
     public static int get_uc() {
         if(allow_persist)
             return 0;
-        int uc = (int)getEntityManager().createQuery("SELECT COALESCE(MAX(id),0) as id FROM database.user").getSingleResult();
+        int uc = (int)getEntityManager().createQuery("SELECT COALESCE(MAX(id),1) as id FROM database.user").getSingleResult();
         return uc;
     }
 
