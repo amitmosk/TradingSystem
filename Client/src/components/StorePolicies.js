@@ -75,7 +75,7 @@ export default function StorePolicies() {
         if(!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' }); 
-            setPredicts(response.value);
+            setPurchases(response.value);
             
         }
         else{
