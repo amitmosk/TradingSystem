@@ -4,12 +4,18 @@ import TradingSystem.server.Domain.StoreModule.Appointment.StoreManagerType;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.UserModule.AssignUser;
+import TradingSystem.server.Service.NotificationHandler;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 class AddManager {
 
+    @BeforeEach
+    void reset(){
+        NotificationHandler.setTestsHandler();
+    }
 
     @Test
     void add_owner_appointment() {
@@ -18,6 +24,7 @@ class AddManager {
             AssignUser founder = new AssignUser("founder@walla.com","12345678aA","founi","founder");
             AssignUser owner = new AssignUser("owner@walla.com","12345678aA","owni","owner");
             Store store = new Store(1, "hanot", founder, new AtomicInteger(1));
+            store.appoint_founder();
             store.add_owner(founder, owner);
             assertEquals(store.getStuffs_and_appointments().get(owner).getType(), StoreManagerType.store_owner, "The owner is appointed successfully");
         }
@@ -34,8 +41,9 @@ class AddManager {
 
             AssignUser founder = new AssignUser("founder@walla.com","12345678aA","founi","founder");
             AssignUser owner1 = new AssignUser("owner@walla.com","12345678aA","owni","owner");
-            AssignUser owner2 = new AssignUser("owner@walla.com","12345678aA","owni","owner");
+            AssignUser owner2 = new AssignUser("owner12@walla.com","12345678aA","owni","owner");
             Store store = new Store(1, "hanot", founder, new AtomicInteger(1));
+            store.appoint_founder();
             store.add_owner(founder, owner1);
             store.add_owner(founder, owner2);
             boolean answer = store.add_appointment_answer(owner1, owner2, true);

@@ -70,6 +70,7 @@ class Bid {
     @Test
     void bid_without_nego_guest(){
         MarketFacade marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade1.register("buyer1@gmail.com","12345678aA","amit","mosko", birth_date);
         Response<Integer> response = marketFacade1.add_bid(1,1,3,80);
         int bid_id = response.getValue();
         marketFacade.manager_answer_bid(1, bid_id,true,-1);

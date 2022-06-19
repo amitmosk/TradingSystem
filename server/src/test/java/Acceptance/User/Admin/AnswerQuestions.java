@@ -42,6 +42,8 @@ class AnswerQuestions {
     private String user_regular_email_1;
     private String user_regular_email_2;
     private String user_admin_email;
+    private int store_id;
+    private int product_id;
     private SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
     private PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
     private PaymentAdapter paymentAdapter;
@@ -82,8 +84,8 @@ class AnswerQuestions {
             facade3.register(user_regular_email_1, user_password, first_name, last_name,birth_date);
             facade4.register(user_regular_email_2, user_password, first_name, last_name,birth_date);
 
-            int id = open_store_get_id("Checker Store") ;
-            add_prod_make_purchase_get_id(id);
+            store_id = open_store_get_id("Checker Store") ;
+            product_id = add_prod_make_purchase_get_id(store_id);
 
             facade1.logout();
             facade2.logout();
@@ -102,9 +104,11 @@ class AnswerQuestions {
             System.out.println(e.getMessage());
         }
     }
+
     private int open_store_get_id(String name){
-        facade1.open_store(name);
-        return num_of_stores();
+        Response<Integer> response = facade1.open_store(name);
+        return response.getValue();
+
     }
     private boolean check_if_purchase_exists(Response res, String email, int prod){
         boolean flag = false;
@@ -125,14 +129,6 @@ class AnswerQuestions {
             }
         }
         return flag;
-    }
-    private int num_of_stores(){
-        Response res = facade1.get_all_stores();
-        int stores_count = 0;
-        if(res.getValue().getClass() == (new ArrayList<StoreInformation>()).getClass()) {
-            stores_count = ((ArrayList<StoreInformation>) res.getValue()).size();
-        }
-        return stores_count;
     }
     private int add_prod_make_purchase_get_id(int sore_id){
         ArrayList<String> arraylist = new ArrayList<>();
@@ -173,7 +169,6 @@ class AnswerQuestions {
         message = "Test: " + test_case + "\nTest case: " + test_case + " failed\nMissing user's (" + email + ") purchase of product " + prod;
         assertTrue(check_if_purchase_exists(res, email, prod), message);
     }
-
     private void valid_questions(Response res, int num_of_question, String question, String email, boolean answered, String answer, String test_case, String test_name){
         Object res_val = res.getValue();
         String message = make_assert_exception_message(test_name, test_case, false);
@@ -372,23 +367,23 @@ class AnswerQuestions {
         String message;
 
         message = make_assert_exception_message(test_name, "no one is connected", suppose_to_throw);
-        res = facade1.admin_view_store_purchases_history(1); // no one is connected
+        res = facade1.admin_view_store_purchases_history(store_id); // no one is connected
         assertTrue(check_was_exception(res), message);
 
         facade1.login(user_buyer_email, user_password);
 
         message = make_assert_exception_message(test_name, "user connected is not an admin", suppose_to_throw);
-        res = facade1.admin_view_store_purchases_history(1); // user connected is not an admin
+        res = facade1.admin_view_store_purchases_history(store_id); // user connected is not an admin
         assertTrue(check_was_exception(res), message);
 
         facade2.login(user_admin_email, user_password);
 
         message = make_assert_exception_message(test_name, "admin enters a store id that does not exist", suppose_to_throw);
-        res = facade2.admin_view_store_purchases_history(num_of_stores() + 2); // admin enters a store id that does not exist
+        res = facade2.admin_view_store_purchases_history(store_id + 2); // admin enters a store id that does not exist
         assertTrue(check_was_exception(res), message);
 
-        res = facade2.admin_view_store_purchases_history(1); // admin views store's purchase history
-        valid_purchase_history(res, user_buyer_email, 1, test_name, "admin views store's purchase history");
+        res = facade2.admin_view_store_purchases_history(store_id); // admin views store's purchase history
+        valid_purchase_history(res, user_buyer_email, product_id, test_name, "admin views store's purchase history");
 
 
         facade1.logout();
@@ -437,8 +432,8 @@ class AnswerQuestions {
         assertFalse(check_was_exception(res));
         if(res.getValue().getClass() == UserPurchaseHistory.class){
             UserPurchaseHistory his = (UserPurchaseHistory)res.getValue();
-            assertTrue(his.check_if_user_buy_from_this_store(1)); // todo
-            assertTrue(his.check_if_user_buy_this_product(1, 1)); // todo
+            assertTrue(his.check_if_user_buy_from_this_store(store_id)); // todo
+            assertTrue(his.check_if_user_buy_this_product(store_id, product_id)); // todo
 
         }
         facade1.logout();

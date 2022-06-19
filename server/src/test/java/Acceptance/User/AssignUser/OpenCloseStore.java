@@ -44,6 +44,8 @@ class OpenCloseStore {
     private String email;
     private String password;
     private String birth_date;
+    private int store_id;
+    private int product_id;
     private final int num_of_threads = 100;
     private String user_premium_security_email;
     private String user_password;
@@ -96,8 +98,8 @@ class OpenCloseStore {
             facade3.register(user_regular_email_1, user_password, first_name, last_name,birth_date);
             facade4.register(user_regular_email_2, user_password, first_name, last_name,birth_date);
 
-            int id = open_store_get_id("Checker Store") ;
-            add_prod_make_purchase_get_id(id);
+            store_id = open_store_get_id("Checker Store") ;
+            product_id = add_prod_make_purchase_get_id(store_id);
 
             facade1.logout();
             facade2.logout();
@@ -207,6 +209,7 @@ class OpenCloseStore {
     }
     private int open_store_get_id(String name){
         facade1.open_store(name);
+
         return num_of_stores();
     }
     private int add_prod_make_purchase_get_id(int sore_id){
@@ -221,7 +224,6 @@ class OpenCloseStore {
 
         return prod_id;
     }
-
     private Response add_prod_make_purchase_closed_store(int sore_id){
         ArrayList<String> arraylist = new ArrayList<>();
         Response res;
@@ -233,7 +235,6 @@ class OpenCloseStore {
         assertTrue(check_was_exception(res), "User added products to cart from a temporarily \\ permanently closed store");
         return  facade2.buy_cart(payment_info, supplyInfo);
     }
-
     private boolean check_if_purchase_exists(Response res, String email, int prod){
         boolean flag = false;
 
@@ -254,7 +255,6 @@ class OpenCloseStore {
         }
         return flag;
     }
-
     private void valid_purchase_history(Response res, String email, int prod, String test_name, String test_case){
         String message = make_assert_exception_message(test_name, test_case, false);
         assertFalse(check_was_exception(res), message);
@@ -262,59 +262,6 @@ class OpenCloseStore {
         message = "Test: " + test_case + "\nTest case: " + test_case + " failed\nMissing user's (" + email + ") purchase of product " + prod;
         assertTrue(check_if_purchase_exists(res, email, prod), message);
     }
-
-    private void valid_questions(Response res, int num_of_question, String question, String email, boolean answered, String answer, String test_case, String test_name){
-        Object res_val = res.getValue();
-        String message = make_assert_exception_message(test_name, test_case, false);
-        assertFalse(check_was_exception(res), message);
-        assertEquals((new LinkedList<String>()).getClass(), res_val.getClass());
-        if(num_of_question == 0) {
-            assertTrue(((LinkedList<String>)res_val).isEmpty());
-        }
-        else{
-            if(res_val.getClass() == (new LinkedList<String>()).getClass()) {
-                System.out.println("\n\nNUM OF QUESTIONS = " + num_of_question + "\nSIZE OF LIST = " + ((LinkedList<String>)res_val).size() + "\n\n");
-                assertTrue(num_of_question == ((LinkedList<String>)res_val).size());
-                boolean flag = false;
-                for(String s : ((LinkedList<String>)res_val)){
-                    if(s.contains(question) && s.contains(email) && !answered){
-                        flag = true;
-                    }
-                    else if(s.contains(question) && s.contains(email) && s.contains(answer)){
-                        flag = true;
-                    }
-                }
-                assertTrue(flag);
-            }
-        }
-    }
-
-    private void valid_all_user_questions(List<String> questions, String test_case){
-        Response res = facade2.get_user_questions();
-        Object res_val = res.getValue();
-        int num_of_question = questions.size();
-        ArrayList<String> Qlist = null;
-        if(res_val.getClass() == (new ArrayList<String>()).getClass())
-            Qlist = (ArrayList<String>)res_val;
-
-        String message = make_assert_exception_message("get_user_questions", test_case, false);
-        assertFalse(check_was_exception(res), message);
-
-                assertTrue((Qlist == null && num_of_question == 0) || num_of_question == Qlist.size());
-                for(String question : questions)
-                {
-                    boolean flag = false;
-                    for(String q : Qlist)
-                        if(q.contains(question)){
-                            flag = true;
-                            break;
-                        }
-
-                    assertTrue(flag, "Test: get_user_questions\nTest case: " + test_case + "\nQuestion: " + question + " not found");
-
-                }
-        }
-
     private void founder_exist(String founder, int store_id) throws MarketException {
         boolean founder_exist = false;
         Store store = facade1.get_store(store_id);
@@ -327,7 +274,6 @@ class OpenCloseStore {
         }
         assertTrue(founder_exist, "founder "+ founder + " does not exist in store's " + store_id + " staff list");
     }
-
     private void owner_exist(String owner, int store_id, boolean should_appear, int staff_size) throws MarketException {
         boolean owner_exist = false;
         Store store = facade1.get_store(store_id);
@@ -346,7 +292,6 @@ class OpenCloseStore {
         int staff_actual_size = staff.size();
         assertTrue(staff_actual_size == staff_size, "staff size is " + staff_actual_size + " but supposed to be " + staff_size);
     }
-
     private void manager_exist(String manager, int store_id, boolean should_appear, int staff_size) throws MarketException {
         boolean manager_exist = false;
         Store store = facade1.get_store(store_id);
@@ -365,7 +310,6 @@ class OpenCloseStore {
         int staff_actual_size = staff.size();
         assertTrue(staff_actual_size == staff_size, "staff size is " + staff_actual_size + " but supposed to be " + staff_size);
     }
-
     private String make_assert_exception_message(String test, String test_case, boolean suppose_to_be_exception){
         String test_part = "Test: " + test + "\n";
         String case_part = "In test case: " + test_case + " ";
@@ -376,7 +320,6 @@ class OpenCloseStore {
 
         return test_part + case_part;
     }
-
     private String make_equal_assert_message(String test, String test_case, int actual, int expected, String val_name){
         String test_part = "Test: " + test + "\n";
         String case_part = "Test case: " + test_case + " failed, ";
@@ -384,7 +327,6 @@ class OpenCloseStore {
 
         return test_part + case_part + fail_explained;
     }
-
     private int open_store_helper(boolean success, int facade_num, String test_name, int store_counter, String test_case, String store_name, int stores_same_name) {
         String message;
         Response res;
@@ -425,7 +367,6 @@ class OpenCloseStore {
 
         return stores_in_market;
     }
-
     private int open_closed_store_helper(boolean success, int facade_num, String test_name, int store_counter, String test_case, String store_name, int stores_same_name, int store_id, boolean closed) {
         String message;
         Response res;
@@ -464,7 +405,6 @@ class OpenCloseStore {
 
         return stores_in_market;
     }
-
     private void close_store_permanently_helper(boolean success, int facade_num, String test_name, int store_counter, String test_case, int store_id, String store_name, int stores_same_name, boolean closed) {
         String message;
         Response res;
@@ -501,7 +441,6 @@ class OpenCloseStore {
                     "Test case: " + test_case + " failed, " +
                     "store (" + store_name + ") not found in system");
     }
-
     private void close_store_temporarily_helper(boolean no_success, int facade_num, String test_name, int store_counter, String test_case, int store_id, String store_name, int stores_same_name, boolean closed) {
         String message;
         Response res;
@@ -538,7 +477,6 @@ class OpenCloseStore {
                     "Test case: " + test_case + " failed, " +
                     "store (" + store_name + ") found inactive in system");
     }
-
     List<String> get_staff_names(Response res){
         List<String> staff = new ArrayList<>();
         if(res.getValue().getClass() == StoreManagersInfo.class){
@@ -550,14 +488,6 @@ class OpenCloseStore {
         return staff;
     }
 
-    private int num_of_questions(){
-            return QuestionController.getInstance().getQuestion_ids_counter();
-
-        }
-
-    private int num_of_admin_questions(){
-            return QuestionController.getInstance().view_users_to_admin_questions().size();
-        }
 
     //------------------------------- Testing functions --------------------------------------------------------------------------
 
@@ -860,6 +790,7 @@ class OpenCloseStore {
         // owner adds manager1 as store manager
         message = make_assert_exception_message(test_name, "owner adds manager1 as store manager", !suppose_to_throw);
         res = facade2.add_manager(manager1, store_id);
+        facade1.manager_answer_appointment(store_id, true, manager1);
         assertFalse(check_was_exception(res), message);
         staff_size++;
         founder_exist(founder, store_id);
@@ -880,6 +811,8 @@ class OpenCloseStore {
         // owner adds manager2 as store manager
         message = make_assert_exception_message(test_name, "owner adds manager2 as store manager", !suppose_to_throw);
         res = facade2.add_manager(manager2, store_id);
+        facade1.manager_answer_appointment(store_id, true, manager2);
+        facade3.manager_answer_appointment(store_id, true, manager2);
         assertFalse(check_was_exception(res), message);
         staff_size++;
         founder_exist(founder, store_id);
@@ -978,6 +911,7 @@ class OpenCloseStore {
         // owner1 adds owner2 as store owner
         message = make_assert_exception_message(test_name, "owner1 adds owner2 as store owner", !suppose_to_throw);
         res = facade2.add_owner(owner2, store_id);
+        facade1.manager_answer_appointment(store_id, true, owner2);
         assertFalse(check_was_exception(res), message);
         staff_size++;
         founder_exist(founder, store_id);
@@ -1028,31 +962,31 @@ class OpenCloseStore {
         String test_name = "view_store_purchases_history";
         String message = make_assert_exception_message(test_name, "guest tries to view store's purchase history list", suppose_to_throw);
 
-        res = facade2.view_store_purchases_history(1); // no one is connected
+        res = facade2.view_store_purchases_history(store_id); // no one is connected
         assertTrue(check_was_exception(res), message);
 
         message = make_assert_exception_message(test_name, "user (with no permissions) tries to view store's purchase history list", suppose_to_throw);
         facade2.login(user_buyer_email, user_password);
-        res = facade2.view_store_purchases_history(1); // user connected is not the store owner
+        res = facade2.view_store_purchases_history(store_id); // user connected is not the store owner
         assertTrue(check_was_exception(res), message);
 
         message = make_assert_exception_message(test_name, "user tries to view store's purchase history list with store id that does not exist", suppose_to_throw);
-        res = facade2.view_store_purchases_history(num_of_stores() + 2); // user enters a store id that does not exist
+        res = facade2.view_store_purchases_history(store_id + 2); // user enters a store id that does not exist
         assertTrue(check_was_exception(res), message);
 
 
         facade1.login(user_founder_email, user_password);
-        res = facade1.view_store_purchases_history(1); // store founder views store's purchase history
-        valid_purchase_history(res, user_buyer_email, 1, test_name, "store founder views store's purchase history");
+        res = facade1.view_store_purchases_history(store_id); // store founder views store's purchase history
+        valid_purchase_history(res, user_buyer_email, product_id, test_name, "store founder views store's purchase history");
 
         message = make_assert_exception_message(test_name, "store founder enters a store id that does not exist", suppose_to_throw);
-        res = facade1.view_store_purchases_history(num_of_stores() + 2); // store founder enters a store id that does not exist
+        res = facade1.view_store_purchases_history( store_id + 2); // store founder enters a store id that does not exist
         assertTrue(check_was_exception(res), message);
 
         int store_id = open_store_get_id("first store for this user"); // store founder opens first store
 
         message = make_assert_exception_message(test_name, "store founder enters a store id that didn't doesn't have permissions to see", suppose_to_throw);
-        res = facade1.view_store_purchases_history(num_of_stores() + 2); // store founder enters a store id that didn't doesn't have permissions to see
+        res = facade1.view_store_purchases_history(store_id + 2); // store founder enters a store id that didn't doesn't have permissions to see
         assertTrue(check_was_exception(res), message);
 
         message = make_assert_exception_message(test_name, "store founder views new store's empty purchase history", !suppose_to_throw);
@@ -1132,6 +1066,7 @@ class OpenCloseStore {
         // --------------------------- Owner appoints store manager ---------------------------
         message ="Owner (" + owner_email + ") add user (" + manager_email + ") as store (" + store_id + ") manager";
         res = facade2.add_manager(manager_email,store_id);
+        facade1.manager_answer_appointment(store_id, true, manager_email);
         assertFalse(check_was_exception(res), message);
         staff.add(manager_email);
         message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
