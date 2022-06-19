@@ -29,8 +29,8 @@ export default function AddPurchase() {
 
     // list of categories, Predicts, discounts
 
-    const [] =React.useState([]);
-    const [] =React.useState([]);
+    const [purchases,setPurchases] =React.useState([]);
+    const [predicts,setPredicts] =React.useState([]);
     const get_purchases_predict_lists = async () =>
     {
         const response = await policiesApi.send_predicts(store_id);
