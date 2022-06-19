@@ -61,6 +61,15 @@ public class NotificationHandler extends TextWebSocketHandler {
         return exception.getMessage();
     }
 
+    public List<String> get_user_notifications(String email){
+        if (users_notifications.containsKey(email))
+            return this.users_notifications.get(email);
+        return new LinkedList<>();
+    }
+
+    public void reset_notifications() {
+        this.users_notifications = new HashMap<>();
+    }
 
     // -----------------------------------------------------------------------------------------------------------
 

@@ -684,6 +684,8 @@ public class Store implements Observable {
     }
 
     public void add_owner(AssignUser appointer, AssignUser new_owner) throws MarketException {
+        String appointer_email = appointer.get_user_email();
+        String candidate_email = new_owner.get_user_email();
         this.check_permission(appointer, StorePermission.add_owner);
         synchronized (owners_lock) {
             Appointment appointment = this.stuffs_and_appointments.get(new_owner);
@@ -693,6 +695,8 @@ public class Store implements Observable {
 
             Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner, get_managers_emails());
             this.stuffs_and_appointments.put(new_owner, appointment_to_add);
+            this.send_message_to_the_store_stuff(candidate_email+" is a new owner-candidate in the store,appoint by: " +appointer_email,appointer_email);
+
             try{
                 this.add_appointment_answer(appointer, new_owner, true);
             }
@@ -705,13 +709,16 @@ public class Store implements Observable {
 
     public void add_manager(AssignUser appointer, AssignUser new_manager) throws MarketException {
         this.check_permission(appointer, StorePermission.add_manager);
+        String appointer_email = appointer.get_user_email();
+        String candidate_email = new_manager.get_user_email();
         synchronized (managers_lock) {
             Appointment appointment = this.stuffs_and_appointments.get(new_manager);
             if (appointment != null)
                 throw new AppointmentException("User to appoint is already store member");
             Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager, get_managers_emails());
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
-            this.stuffs_and_appointments.put(new_manager, appointment_to_add);
+            this.send_message_to_the_store_stuff(candidate_email+" is a new manager-candidate in the store,appoint by: " +appointer_email,appointer_email);
+
             try{
                 this.add_appointment_answer(appointer, new_manager, true);
             }
@@ -1006,24 +1013,26 @@ public class Store implements Observable {
                 throw new Exception("illegal price");
 
         }
+        if (!this.bids.containsKey(bidID))
+            throw new Exception("There Is No Bid With This ID");
         Bid bid = this.bids.get(bidID);
         bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
 
         User buyer = bid.getBuyer();
         if (bid.get_status() == BidStatus.closed_confirm) {
-            buyer.add_notification("Your bid is confirm by the store managers.");
+            buyer.state_if_assigned().add_notification("Your bid is confirm by the store managers.");
             Product product = bid.getProduct();
             buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
         }
 
         if (bid.get_status() == BidStatus.negotiation_mode) {
-            buyer.add_notification("Your bid has received a counter-bid.");
+            buyer.state_if_assigned().add_notification("Your bid has received a counter-bid.");
             Product product = bid.getProduct();
             buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
         }
 
         if (bid.get_status() == BidStatus.closed_denied)
-            buyer.add_notification("Your bid is denied by the store managers.");
+            buyer.state_if_assigned().add_notification("Your bid is denied by the store managers.");
 
 
     }

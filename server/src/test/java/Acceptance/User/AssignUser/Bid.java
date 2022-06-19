@@ -52,7 +52,7 @@ class Bid {
         manager.register(manager_email,password,name,last_name,birth_date);
         general_user.register("general@gmail.com",password,name,last_name,birth_date);
         marketFacade.open_store("amit store");
-        add_product();
+        productId = add_product();
         marketFacade.add_manager(manager_email,1);
     }
 

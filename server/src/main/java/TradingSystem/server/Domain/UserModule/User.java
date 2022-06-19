@@ -302,6 +302,7 @@ public class User {
     public boolean test_isLogged(){return this.isLogged.get();}
 
     public void add_notification(String notification) {
+
     }
 
     public UserState find_state() {
