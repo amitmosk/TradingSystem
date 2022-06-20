@@ -545,10 +545,10 @@ public class StoreController {
         return store.view_bids_status(user_state);
     }
 
-    public void manager_answer_bid(int storeID, User user, boolean manager_answer, int bidID,
+    public boolean manager_answer_bid(int storeID, User user, boolean manager_answer, int bidID,
                                    double negotiation_price) throws Exception {
         Store store = get_store_by_store_id(storeID);
-        store.add_bid_answer(user, manager_answer, bidID, negotiation_price);
+        return store.add_bid_answer(user, manager_answer, bidID, negotiation_price);
     }
 
 

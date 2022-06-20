@@ -79,7 +79,6 @@ export default function ViewBidsStatus() {
     const save_bid_id=(bid_id)=>
     {
         setBidid(bid_id);
-
     }
     const get_status = (enum_status) =>
     {
@@ -101,13 +100,12 @@ export default function ViewBidsStatus() {
     const is_answerd = ()=>
     {
         setIsanswer(!isanswer);
-
     }
     const is_confirm = async (values) => {
         console.log(values);
-        setApprove(values[0]);
+        values[0] == 0 ? setApprove(false) : setApprove(true);
         //Manager denied the bid
-        if(!approve)
+        if(!values[0])
         {
             console.log("Manager Answer Bid HTTP");
             console.log(`store_id is ${store_id}`);
@@ -116,7 +114,9 @@ export default function ViewBidsStatus() {
             console.log(`nego_price is ${negoprice}`);
             const response = await storeApi.manager_answer_bid(store_id, bidid, approve, negoprice);
             if (!response.was_exception) {
+                
                 setSnackbar({ children: response.message, severity: 'success' });
+                window.location.reload();
                 //TODO - Tom - remove the reload from comment
                 // window.location.reload();
             }
@@ -130,7 +130,7 @@ export default function ViewBidsStatus() {
     const is_add_nego =async (values) =>{
         console.log(values);
         setNego(values[0]);
-        if(!nego)
+        if(!values[0])
         {
             console.log("Manager Answer Bid HTTP");
             console.log(`store_id is ${store_id}`);
@@ -140,7 +140,7 @@ export default function ViewBidsStatus() {
             const response = await storeApi.manager_answer_bid(store_id, bidid, approve, negoprice);
             if (!response.was_exception) {
                 setSnackbar({ children: response.message, severity: 'success' });
-                // window.location.reload();
+                window.location.reload();
             }
             else {
                 setSnackbar({ children: response.message, severity: 'error' });
@@ -149,7 +149,7 @@ export default function ViewBidsStatus() {
     }
     const manager_answer_bid = async (values) => {
         setNegoprice(values[0]);
-        if(Utils.check_all_digits(negoprice) == 0 || Utils.check_not_empty(negoprice)==0)
+        if(Utils.check_all_digits(values[0]) == 0 || Utils.check_not_empty(values[0])==0)
         {
             setSnackbar({ children: "Illegal negotiation price", severity: 'error' });
             return ;
@@ -163,7 +163,7 @@ export default function ViewBidsStatus() {
         const response = await storeApi.manager_answer_bid(store_id, bidid, approve, negoprice);
         if (!response.was_exception) {
             setSnackbar({ children: response.message, severity: 'success' });
-            // window.location.reload();
+            window.location.reload();
         }
         else {
             setSnackbar({ children: response.message, severity: 'error' });
@@ -198,7 +198,7 @@ export default function ViewBidsStatus() {
                                                 </ListItemAvatar>
                                                 <ListItemText
                                                     
-                                                    primary={"Offered "  + bid.price +"$"+" for "+bid.quantity+" "+bid.product_info.name+" Products"  }
+                                                    primary={`Offered ${bid.price}$ for ${bid.quantity} ${bid.product_info.name} Products By ${bid.buyer_mail}`}
                                                     secondary={"bid status: "+get_status(bid.status)}
 
                                                 />
