@@ -97,7 +97,7 @@ public class User {
         isGuest.set(false);
 //        HibernateUtils.persist(this.cart);
 //        HibernateUtils.persist(this.state);
-//        HibernateUtils.persist(this);
+        HibernateUtils.persist(this);
     }
 
     public synchronized void login(String password) throws MarketException {
@@ -316,5 +316,15 @@ public class User {
         return id;
     }
 
+    public boolean check_if_manager(){
+        return this.state.check_if_manager();
+    }
 
+    public boolean check_if_owner(){
+        return this.state.check_if_owner();
+    }
+
+    public boolean check_if_founder(){
+        return this.state.check_if_founder();
+    }
 }
