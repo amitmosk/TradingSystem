@@ -1,6 +1,6 @@
 package TradingSystem.server.Domain.ExternalSystems;
 
-import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternalSystems.PaymentInfo;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import TradingSystem.server.Domain.Utils.Utils;
 

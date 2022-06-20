@@ -1,11 +1,11 @@
-package TradingSystem.server.Domain.ExternSystems.Proxy;
+package Acceptance.System.ExternSystemsTests;
 
-import TradingSystem.server.Domain.ExternSystems.*;
+import TradingSystem.server.Domain.ExternalSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.Questions.QuestionController;
-import TradingSystem.server.Domain.StoreModule.Appointment;
-import TradingSystem.server.Domain.StoreModule.AppointmentInformation;
+
 import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
@@ -18,6 +18,7 @@ import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Service.MarketSystem;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,32 +36,33 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class BuyCartExternalSystems {
-    private static final String external_services_path =  "..\\server\\src\\test\\java\\TradingSystem\\server\\Service\\ConfigurationTests\\external_services\\semi_external_services.txt";
-    private MarketFacade facade1;
-    private MarketFacade facade2;
-    private MarketFacade facade3;
-    private MarketFacade facade4;
-
+    private static final String external_services_path =  "..\\server\\src\\test\\java\\Acceptance\\System\\ConfigurationTests\\external_services\\semi_external_services.txt";
+    private static MarketFacade facade1;
+    private static MarketFacade facade2;
+    private static MarketFacade facade3;
+    private static MarketFacade facade4;
+    private static int store_id;
+    private static int product_id;
     private SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
     private PaymentInfo paymentInfo = new PaymentInfo("123","456","789","245","123","455");
-    private PaymentAdapter paymentAdapter;
-    private SupplyAdapter supplyAdapter;
-    private int products_counter;
+    private static PaymentAdapter paymentAdapter;
+    private static SupplyAdapter supplyAdapter;
 
     //------------------------- Initialization --------------------------------------------------------------------------
 
-
-
-    public BuyCartExternalSystems() {
-        try{
+    @BeforeAll
+    static void setUp() {
+        List<String> keywords = new ArrayList<>();
+        keywords.add("aaaa");
+        try {
             MarketSystem marketSystem = new MarketSystem(external_services_path, "");
-            this.paymentAdapter = marketSystem.getPayment_adapter();
-            this.supplyAdapter = marketSystem.getSupply_adapter();
+            paymentAdapter = marketSystem.getPayment_adapter();
+            supplyAdapter = marketSystem.getSupply_adapter();
 
-            this.facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
-            this.facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
-            this.facade3 = new MarketFacade(paymentAdapter, supplyAdapter);
-            this.facade4 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade3 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade4 = new MarketFacade(paymentAdapter, supplyAdapter);
 
 
 
@@ -78,29 +80,18 @@ class BuyCartExternalSystems {
             facade2.register(user_buyer_email, user_password, first_name, last_name,birth_date);
             facade3.register(user_regular_email_1, user_password, first_name, last_name,birth_date);
             facade4.register(user_regular_email_2, user_password, first_name, last_name,birth_date);
-            this.products_counter = 1;
-
-
+            Response<Integer> response1 = facade1.open_store("nikebike");
+            store_id = response1.getValue();
+            facade1.add_product_to_store(store_id,20,"kafa",19.5,"hh", keywords);
+            Response<List<ProductInformation>>response2 = facade1.get_products_by_store_id(store_id);
+            product_id = response2.getValue().get(0).getProduct_id();
 
         }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-    @BeforeEach
-    void setUp() throws MarketException {
-        List<String> keywords = new ArrayList<>();
-        keywords.add("aaaa");
-
-        Response<Integer> response1 = facade1.open_store("adidas");
-        int store_id = response1.getValue();
-        facade1.add_product_to_store(store_id,20,"kafa",19.5,"hh", keywords);
-        facade2.add_product_to_cart(store_id, this.products_counter++, 1);
-
-
-
+        catch (Exception e){}
 
     }
+
+
     @Test
     /**
      * CVV 986 - return string instead of integer.
@@ -115,6 +106,7 @@ class BuyCartExternalSystems {
     @ParameterizedTest
     @MethodSource("bad_demo_instructions")
     void buy_cart_bad_case(String cvv){
+        facade2.add_product_to_cart(store_id, product_id, 1);
         paymentInfo.setCcv(cvv);
         Response response34 = facade2.buy_cart(paymentInfo, supplyInfo);
         System.out.println(response34.getMessage());

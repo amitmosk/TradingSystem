@@ -962,9 +962,6 @@ public class Store implements Observable {
         return purchasePolicy;
     }
 
-    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
-        this.purchasePolicy = purchasePolicy;
-    }
 
     public Map<String, Ipredict> getPredictList() {
         return predictList;
@@ -1064,41 +1061,8 @@ public class Store implements Observable {
         HibernateUtils.persist(this);
     }
 
-    public List<String> get_permissions(String manager_email) throws AppointmentException {
-        List<String> permissions = new ArrayList<>();
-        boolean user_exist = false;
-        AssignUser user_get_permission = null;
-        for (AssignUser user : stuffs_and_appointments.keySet()) {
-            if (user.get_user_email().equals(manager_email)) {
-                user_exist = true;
-                user_get_permission = user;
-            }
-        }
-        if (!user_exist) {
-            throw new AppointmentException("This Store Stuff doesn't contains the user " + manager_email);
-        }
-        Appointment appointment = this.stuffs_and_appointments.get(user_get_permission);
-        Map<StorePermission, Integer> manager_permissions = appointment.getPermissions();
-        for (StorePermission s : manager_permissions.keySet()) {
-            if (manager_permissions.get(s) == 1) {
-                permissions.add(s.toString());
-            }
 
-        }
-        return permissions;
-    }
 
-    public List<String> get_all_categories() {
-        //  private Map<Product, Integer> inventory; // product & quantity
-        List<String> categories = new ArrayList<>();
-        for (Product p : inventory.keySet()) {
-            String cat = p.getCategory();
-            if (!categories.contains(cat)) {
-                categories.add(cat);
-            }
-        }
-        return categories;
-    }
 
     public List<AppointmentInformation> view_waiting_appointments_status(AssignUser user) throws NoPremssionException {
         this.check_permission(user, StorePermission.answer_appointment);

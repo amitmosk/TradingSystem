@@ -26,12 +26,29 @@ class ExternPaymentSystemProxyTest {
     }
 
     @Test
-    void payment(){
+    void payment_success(){
         this.externPaymentSystemProxy = new ExternPaymentSystemProxy();
-        PaymentInfo payment_info = new PaymentInfo("123","456","789","245","986","455");
+        PaymentInfo payment_info = new PaymentInfo("123","456","789","245","585","455");
         int answer3 = this.externPaymentSystemProxy.payment(500, payment_info);
         assertTrue(answer3-10000 > 0);
         assertTrue(answer3-100000 < 0);
+    }
+
+    @Test
+    void payment_fail1(){
+        this.externPaymentSystemProxy = new ExternPaymentSystemProxy();
+        PaymentInfo payment_info = new PaymentInfo("123","456","789","245","984","455");
+        int answer3 = this.externPaymentSystemProxy.payment(500, payment_info);
+        assertEquals(answer3, -2);
+    }
+
+    @Test
+    void payment_fail2(){
+        this.externPaymentSystemProxy = new ExternPaymentSystemProxy();
+        PaymentInfo payment_info = new PaymentInfo("123","456","789","245","986","455");
+        int answer3 = this.externPaymentSystemProxy.payment(500, payment_info);
+        assertEquals(answer3, -2);
+
     }
 
     static Stream<Arguments> cancel_payment_bad_provider() {
