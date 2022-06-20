@@ -206,7 +206,7 @@ public class Store implements Observable {
     public AndPurchaseRule add_and_purchase_rule(String nameOfRule, String left, String right) throws WrongPermterException {
         PurchaseRule purchaseright = purchasePolicy.getPolicy(left);
         PurchaseRule purchaseleft = purchasePolicy.getPolicy(right);
-        if (purchaseleft == purchaseleft)
+        if (purchaseleft == purchaseright)
             throw new WrongPermterException("the polices are the same");
         AndPurchaseRule and = new AndPurchaseRule(purchaseleft, purchaseright);
         purchasePolicy.addRule(nameOfRule, and);
