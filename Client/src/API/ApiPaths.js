@@ -61,6 +61,9 @@ export const GET_PERMISSIONS= API_PATH + '/get_permissions';
 export const ADD_BID= API_PATH + '/add_bid';
 export const MANAGER_ANSWER_BID= API_PATH + '/manager_answer_bid';
 export const VIEW_BIDS_STATUS= API_PATH + '/view_bids_status';
+
+export const MANAGER_ANSWER_APPOINTMENT= API_PATH + '/manager_answer_appointment';
+export const VIEW_APPOINTMENTS_STATUS= API_PATH + '/view_appointments_status';
 export const GET_ALL_CATEGORIES= API_PATH + '/get_all_categories';
 
 

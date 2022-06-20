@@ -46,6 +46,7 @@ import MyStores from "./components/MyStores";
 import BuyCart from "./components/BuyCart";
 import ManagerPermissions from "./components/ManagerPermissions";
 import ViewBidsStatusNevigator from "./components/ViewBidsStatusNevigator";
+import ViewAppointmentsStatusNevigator from "./components/ViewAppointmentsStatusNevigator";
 import Notifications from "./components/Notifications";
 import { useEffect } from 'react';
 import {useState} from "react";
@@ -184,6 +185,21 @@ export default function App() {
             element={<StoreManagmentNevigator />}
           ></Route>
           
+
+          {/* -------------------------------------- View Appoitment ---------------------------------- */}
+          <Route
+            path="/StorePage/:id/StoreManagment/ViewAppointmentsStatus"
+            element={<ViewAppointmentsStatusNevigator />}
+          ></Route>
+           <Route
+            path="/MyStores/StorePage/:id/StoreManagment/ViewAppointmentsStatus"
+            element={<ViewAppointmentsStatusNevigator />}
+          ></Route>
+          <Route
+            path="/AllStores/StorePage/:id/StoreManagment/ViewAppointmentsStatus"
+            element={<ViewAppointmentsStatusNevigator />}
+          ></Route>
+          
          
         
          {/* -------------------------------------- Store Policies---------------------------------- */}
@@ -274,6 +290,10 @@ export default function App() {
             path="/StorePage/:id/ViewBidsStatus"
             element={<ViewBidsStatusNevigator />}
           ></Route>
+          {/* <Route
+            path="/StorePage/:id/ViewAppointmentsStatus"
+            element={<ViewAppointmentsStatusNevigator />}
+          ></Route> */}
           <Route
             path="/AllStores"
             element={<AllStores/>}

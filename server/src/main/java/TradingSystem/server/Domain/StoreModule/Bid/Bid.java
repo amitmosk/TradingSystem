@@ -11,7 +11,7 @@ import java.util.Map;
 import static TradingSystem.server.Domain.StoreModule.Bid.BidStatus.*;
 
 @Entity
-public class Bid implements iBid {
+public class Bid implements iManagersConfirm {
     @Id
     public int bid_id;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -24,7 +24,7 @@ public class Bid implements iBid {
     private double negotiation_price;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "managersEmail_answers",
+    @JoinTable(name = "managersEmail_BidAnswers",
         joinColumns = {@JoinColumn(name = "bid_id", referencedColumnName = "bid_id")})
     @MapKeyColumn(name = "manager_email") // the key column
     private Map<String, BidManagerAnswer> managersEmail_answers;
