@@ -30,7 +30,7 @@ public class User {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Cart cart;
     private AtomicBoolean isGuest;
-//    @Transient
+    @Transient
     private AtomicBoolean isLogged;
     private String birth_date;
 

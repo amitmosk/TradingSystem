@@ -21,48 +21,48 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 //@Entity
 public class UserController {
-//    @Transient
+    //    @Transient
 //    // ------------------- fields -------------------------------------
 //    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
 ////    @JoinTable(name = "all_users",
 ////            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
 //    @MapKeyColumn(name = "user_id") // the key column
     private Map<String, User> users;              // email,user
-//    @Transient
+    //    @Transient
     private Map<Integer, User> onlineUsers;       // id,user
     private AtomicInteger uc_id;
     private AtomicInteger purchaseID;
-//    @Transient
+    //    @Transient
     private Object usersLock;
-//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    //    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StatisticsManager statisticsManager;
-//    private static UserController instance = null;
+    //    private static UserController instance = null;
 //    @Id
 //    @GeneratedValue
     private Long id;
 
-    public void load(){
-//        this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
-//        MarketLogger.getInstance().add_log("----------------------------------");
-//        MarketLogger.getInstance().add_log(""+uc_id.get());
-//        MarketLogger.getInstance().add_log("----------------------------------");
-//        this.purchaseID = new AtomicInteger(HibernateUtils.get_max_purchase());
-//        this.users = new HashMap<>();
-//        List<User> all_users = HibernateUtils.users();
-//        try {
-//            for (User u : all_users) {
-//                this.users.put(u.user_email(), u);
-//            }
-//        } catch (Exception e) {
-////            throw new MarketException("failed to load users from table");
-//        }
-//        this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
-//        this.usersLock = new Object();
+    public void load() {
+        this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
+        MarketLogger.getInstance().add_log("--------------uc_id-------------");
+        MarketLogger.getInstance().add_log("" + uc_id.get());
+        this.purchaseID = new AtomicInteger(HibernateUtils.get_max_purchase());
+        MarketLogger.getInstance().add_log("--------------purchase_id---------------");
+        MarketLogger.getInstance().add_log("" + purchaseID.get());
+        try {
+            Map<String, User> all_users = HibernateUtils.users();
+            this.users = all_users;
+        } catch (Exception e) {
+//            throw new MarketException("failed to load users from table");
+        }
+        MarketLogger.getInstance().add_log("--------------all_users---------------");
+        MarketLogger.getInstance().add_log(users.toString());
+        //TODO: change to read one
 //        this.statisticsManager = HibernateUtils.getEntityManager().find(StatisticsManager.class, new Long(1));
+        this.statisticsManager = new StatisticsManager();
         SystemLogger.getInstance().add_log("user controller load");
     }
 
-//    @Transient
+    //    @Transient
     public User get_user_for_tests(int id) {
         return find_online_user(id);
     }
@@ -84,6 +84,7 @@ public class UserController {
         this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
         this.usersLock = new Object();
         this.statisticsManager = new StatisticsManager();
+        HibernateUtils.persist(statisticsManager);
     }
 
 
@@ -156,7 +157,7 @@ public class UserController {
     public User login(int ID, String email, String password) throws MarketException {
         if (isRegistered(email)) {
             User cur_user = find_online_user(ID);
-            User user =find_reg_user(email);
+            User user = find_reg_user(email);
             if (cur_user.test_isLogged())
                 throw new LoginException("cannot log in from logged in user");
             user.login(password); //verifies if the user is logged and password & changes state.
@@ -300,7 +301,7 @@ public class UserController {
         check_admin_permission(loggedUser);
         if (!isRegistered(email))
             throw new NoUserRegisterdException("user " + email + "is not registered to the system.");
-        User user =find_reg_user(email);
+        User user = find_reg_user(email);
         return user.view_user_purchase_history();
     }
 
@@ -481,21 +482,21 @@ public class UserController {
         return id;
     }
 
-    private User find_online_user(int id){
+    private User find_online_user(int id) {
         User u = onlineUsers.get(id);
         u = u.merge();
 //        HibernateUtils.commit();
 //        HibernateUtils.beginTransaction();
-        onlineUsers.put(id,u);
+        onlineUsers.put(id, u);
         return u;
     }
 
-    private User find_reg_user(String email){
+    private User find_reg_user(String email) {
         User u = users.get(email);
         u = u.merge();
 //        HibernateUtils.commit();
 //        HibernateUtils.beginTransaction();
-        users.put(email,u);
+        users.put(email, u);
         return u;
     }
 

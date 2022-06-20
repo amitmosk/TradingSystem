@@ -174,6 +174,7 @@ public class MarketSystem {
             {
                 HibernateUtils.set_normal_use();
                 SystemLogger.getInstance().add_log("Init Data From Database");
+                StoreController.get_instance().load();
                 UserController.get_instance().load();
                 StoreController.get_instance().load();
             }
