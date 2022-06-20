@@ -19,7 +19,7 @@ public class Basket implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(orphanRemoval = true,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Pair basket_id; // <user_email, store_id>
 
     @ElementCollection
@@ -67,7 +67,7 @@ public class Basket implements Serializable {
             throw new BasketException("Basket.changeQuantity: Product isn't in the basket - product id: "+product.getProduct_id());
         }
         this.products_and_quantities.put(product, quantity);
-        HibernateUtils.merge(this);
+
     }
 
     public boolean isEmpty(){
@@ -81,7 +81,6 @@ public class Basket implements Serializable {
         }
         this.products_and_quantities.remove(product);
         this.products_and_price_per_unit.remove(product);
-        HibernateUtils.merge(this);
     }
 
     public void addProduct(Product p, int quantity, double price_per_unit) throws MarketException {
@@ -152,6 +151,15 @@ public class Basket implements Serializable {
             products_and_quantities.remove(p);
             products_and_price_per_unit.remove(p);
         }
-        HibernateUtils.merge(this);
+    }
+
+
+
+    public Map<Product, Double> getProducts_and_price_per_unit() {
+        return products_and_price_per_unit;
+    }
+
+    public void setProducts_and_price_per_unit(Map<Product, Double> products_and_price_per_unit) {
+        this.products_and_price_per_unit = products_and_price_per_unit;
     }
 }

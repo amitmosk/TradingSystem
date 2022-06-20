@@ -45,6 +45,8 @@ public class Store implements Observable {
 
     // -- fields
     @Id
+    //generated
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int store_id;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private AssignUser founder;
@@ -109,7 +111,7 @@ public class Store implements Observable {
         this.predictList = new HashMap<>();
         this.bids = new HashMap<>();
 
-//        HibernateUtils.persist(this);
+        HibernateUtils.persist(this);
     }
 
     public Store() {
@@ -242,7 +244,6 @@ public class Store implements Observable {
         Predict predict = new Predict(catgorey, product, above, equql, num, price, quantity, age, time, year, month, day);
         checkUniqName(name, this.predictList);
         predictList.put(name, predict);
-        HibernateUtils.merge(this);
         return predict;
     }
 
@@ -251,7 +252,6 @@ public class Store implements Observable {
         if (predictList.get(name) != null)
             predictList.remove(name);
         else throw new WrongPermterException("no predict with this name");
-        HibernateUtils.merge(this);
         return "predict " + name + "removed" + "from store";
     }
 
@@ -419,7 +419,6 @@ public class Store implements Observable {
         Appointment appointment = new Appointment(this.founder, this.founder, this, StoreManagerType.store_founder);
         this.stuffs_and_appointments.put(founder, appointment);
         this.founder.add_founder(this, appointment);
-        HibernateUtils.merge(this);
         return appointment;
     }
 
@@ -431,7 +430,6 @@ public class Store implements Observable {
             user.remove_appointment(this);
         }
         this.stuffs_and_appointments = null;
-        HibernateUtils.merge(this);
     }
 
 
@@ -441,7 +439,6 @@ public class Store implements Observable {
         String email = user.get_user_email();
         String message = "Store was closed close_store_temporarily at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, email);
-        HibernateUtils.merge(this);
     }
 
 
@@ -453,7 +450,6 @@ public class Store implements Observable {
         String email = user.get_user_email();
         String message = "Store was re-open by : " + email + " at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, email);
-        HibernateUtils.merge(this);
     }
 
     public StoreManagersInfo view_store_management_information(AssignUser user) throws MarketException {
@@ -562,7 +558,6 @@ public class Store implements Observable {
         int product_id = this.product_ids_counter.getAndIncrement();
         Product product = new Product(name, product_id, price, category, key_words, store_id);
         inventory.put(product, quantity);
-        HibernateUtils.merge(this);
         return inventory;
     }
 
@@ -584,7 +579,6 @@ public class Store implements Observable {
 //            if (entry.getValue().getProduct().getProduct_id() == product_id)
 //                predictList.remove(entry.getKey());
 //        }
-        HibernateUtils.merge(this);
         return inventory;
     }
 
@@ -677,7 +671,6 @@ public class Store implements Observable {
         StorePurchase purchase_to_add = new StorePurchase(purchase, buyer_email, purchase_id);
         this.purchases_history.insert(purchase_to_add);
         this.send_message_to_the_store_stuff("new purchase, with id : " + purchase_id, buyer_email);
-        HibernateUtils.merge(this);
         return purchase;
     }
 
@@ -694,7 +687,6 @@ public class Store implements Observable {
             new_owner.add_owner(this, appointment_to_add);
             this.set_manager_in_bids(0, new_owner.get_user_email());
             this.send_message_to_the_store_stuff(new_owner.get_user_email()+" is a new owner in the store", appointer.get_user_email());
-            HibernateUtils.merge(this);
         }
     }
 
@@ -709,7 +701,6 @@ public class Store implements Observable {
             new_manager.add_manager(this, appointment_to_add);
             this.set_manager_in_bids(0, new_manager.get_user_email());
             this.send_message_to_the_store_stuff(new_manager.get_user_email()+" is a new manager in the store", appointer.get_user_email());
-            HibernateUtils.merge(this);
         }
     }
 
@@ -732,7 +723,6 @@ public class Store implements Observable {
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
             this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from manage the store", remover.get_user_email());
             HibernateUtils.remove(appointment);
-            HibernateUtils.merge(this);
         }
     }
 
@@ -769,7 +759,6 @@ public class Store implements Observable {
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email());
             this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from owns the store", remover.get_user_email());
             HibernateUtils.remove(appointment);
-            HibernateUtils.merge(this);
         }
     }
 
@@ -830,13 +819,11 @@ public class Store implements Observable {
     public void setPurchasePolicy(AssignUser user, PurchasePolicy purchasePolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_purchase_policy);
         this.purchasePolicy = purchasePolicy;
-        HibernateUtils.merge(this);
     }
 
     public void setDiscountPolicy(AssignUser user, DiscountPolicy discountPolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_discount_policy);
         this.discountPolicy = discountPolicy;
-        HibernateUtils.merge(this);
     }
 
 
@@ -890,7 +877,6 @@ public class Store implements Observable {
             throw new WrongPermterException("quantity must be positive number");
         }
         this.inventory.put(to_edit, quantity);
-        HibernateUtils.merge(this);
     }
 
 
@@ -904,9 +890,9 @@ public class Store implements Observable {
             }
         }
         Bid bid = new Bid(bid_id, quantity, offer_price, managers_emails, product, buyer);
+        HibernateUtils.persist(bid);
         this.bids.put(bid_id, bid);
         this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName(), "");
-        HibernateUtils.persist(this);
         return bid_id;
     }
 
@@ -953,8 +939,6 @@ public class Store implements Observable {
 
         if (bid.get_status() == BidStatus.closed_denied)
             buyer.add_notification("Your bid is denied by the store managers.");
-
-        HibernateUtils.persist(this);
     }
 
     /**
@@ -968,7 +952,6 @@ public class Store implements Observable {
             if (i == 1)
                 bid.remove_manager(user_email);
         }
-        HibernateUtils.persist(this);
     }
 
     public List<String> get_permissions(String manager_email) throws AppointmentException {
@@ -1030,4 +1013,15 @@ public class Store implements Observable {
     public void setPredictList(Map<String, Ipredict> predictList) {
         this.predictList = predictList;
     }
+
+    public HashMap<Integer, Bid> getBids() {
+        return bids;
+    }
+
+    public void setBids(HashMap<Integer, Bid> bids) {
+        this.bids = bids;
+    }
+
+
+
 }

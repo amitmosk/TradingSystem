@@ -14,11 +14,11 @@ export default class PaymentPage extends Component {
         super(props);
         this.state = { 
             paymentError: undefined,
-            creditnumber: "",
-            month_year: "",
-            holder: "",
-            ccv: "",
-            id: "",
+            creditnumber: "1234567812345678",
+            month_year: "12/2024",
+            holder: "gal",
+            ccv: "888",
+            id: "316415553",
             snackbar: null,
         };
         this.handleInputChange = this.handleInputChange.bind(this);

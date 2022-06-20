@@ -9,9 +9,9 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("1")
 public class ComplexDiscountComponent extends DiscountComponent {
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     DiscountComponent rule;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Ipredict predict;
 
     public DiscountComponent getRule() {
