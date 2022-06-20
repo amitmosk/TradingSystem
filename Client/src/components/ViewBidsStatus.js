@@ -112,7 +112,7 @@ export default function ViewBidsStatus() {
             console.log(`bidid is ${bidid}`);
             console.log(`approve is ${approve}`);
             console.log(`nego_price is ${negoprice}`);
-            const response = await storeApi.manager_answer_bid(store_id, bidid, approve, negoprice);
+            const response = await storeApi.manager_answer_bid(store_id, bidid, values[0], -1);
             if (!response.was_exception) {
                 
                 setSnackbar({ children: response.message, severity: 'success' });
@@ -137,7 +137,7 @@ export default function ViewBidsStatus() {
             console.log(`bidid is ${bidid}`);
             console.log(`approve is ${approve}`);
             console.log(`nego_price is ${negoprice}`);
-            const response = await storeApi.manager_answer_bid(store_id, bidid, approve, negoprice);
+            const response = await storeApi.manager_answer_bid(store_id, bidid, approve, -1);
             if (!response.was_exception) {
                 setSnackbar({ children: response.message, severity: 'success' });
                 window.location.reload();
@@ -159,8 +159,8 @@ export default function ViewBidsStatus() {
         console.log(`store_id is ${store_id}`);
         console.log(`bidid is ${bidid}`);
         console.log(`approve is ${approve}`);
-        console.log(`nego_price is ${negoprice}`);
-        const response = await storeApi.manager_answer_bid(store_id, bidid, approve, negoprice);
+        console.log(`nego_price is ${values[0]}`);
+        const response = await storeApi.manager_answer_bid(store_id, bidid, approve, values[0]);
         if (!response.was_exception) {
             setSnackbar({ children: response.message, severity: 'success' });
             window.location.reload();
