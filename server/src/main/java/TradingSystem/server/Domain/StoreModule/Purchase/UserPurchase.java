@@ -10,7 +10,7 @@ public class UserPurchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_purchase_id;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_purchases",
             joinColumns = {@JoinColumn(name = "user_purchase_id", referencedColumnName = "user_purchase_id")})
     @MapKeyColumn(name = "purchase_id") // the key column
