@@ -1,7 +1,7 @@
 package TradingSystem.server.Domain.UserModule;
 
 import TradingSystem.server.DAL.HibernateUtils;
-import TradingSystem.server.Domain.StoreModule.Appointment;
+import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.Utils.Exception.AppointmentException;

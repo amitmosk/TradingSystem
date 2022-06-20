@@ -1,15 +1,11 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
-import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
-import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
-import TradingSystem.server.Domain.UserModule.AssignUser;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class StoreInformation {
     private int store_id;
