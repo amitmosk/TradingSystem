@@ -126,10 +126,10 @@ public class HibernateUtils {
     }
 
     public static <T> void merge(T obj) {
-//        if(allow_persist && begin_transaction) {
+        if(allow_persist && begin_transaction) {
 //            T object = getEntityManager().find(obj.getClass(),id);
-//            getEntityManager().merge(object);
-//        }
+            getEntityManager().merge(obj);
+        }
     }
 
     public static void setBegin_transaction(boolean begin_transaction) {

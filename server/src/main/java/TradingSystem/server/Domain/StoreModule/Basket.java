@@ -6,6 +6,7 @@ import TradingSystem.server.Domain.Utils.Exception.BasketException;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 import TradingSystem.server.Domain.Utils.Pair;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,8 +26,11 @@ public class Basket implements Serializable {
     @MapKeyJoinColumn(name = "product_id") // the key column
     @Column(name = "quantity")
     private Map<Product, Integer> products_and_quantities; //  product & quantity
-    //TODO:
-    @Transient
+
+    @ElementCollection
+    @MapKeyClass(value = Product.class)
+    @MapKeyJoinColumn(name = "product_id") // the key column
+    @Column(name = "price")
     private Map<Product, Double> products_and_price_per_unit; //  product & quantity
 
     // ------------------------------ constructors ------------------------------
@@ -91,7 +95,6 @@ public class Basket implements Serializable {
         }
         this.products_and_quantities.put(p, quantity);
         this.products_and_price_per_unit.put(p, price_per_unit);
-        HibernateUtils.merge(this);
     }
 
     //----------------------------------------Getters--------------------------------------------------
@@ -142,5 +145,13 @@ public class Basket implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public void clear() {
+        for(Product p : products_and_quantities.keySet()){
+            products_and_quantities.remove(p);
+            products_and_price_per_unit.remove(p);
+        }
+        HibernateUtils.merge(this);
     }
 }

@@ -1,6 +1,5 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
-import TradingSystem.server.DAL.HibernateUtils;
 
 import javax.persistence.*;
 import java.util.Map;
