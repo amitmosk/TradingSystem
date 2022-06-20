@@ -262,7 +262,7 @@ public class Store implements Observable {
     }
 
     public String remove_purchase_rule(String name) throws WrongPermterException {
-        discountPolicy.removeRule(name);
+        purchasePolicy.removeRule(name);
         return "the rule was removed";
     }
 
@@ -382,8 +382,9 @@ public class Store implements Observable {
         Ipredict predict = getPredictByName(nameOFPredict);
         DiscountComponent simpleDiscountComponent = discountPolicy.getDiscountCompnentByName(nameOfPolicy);
         if (!(simpleDiscountComponent instanceof simpleDiscountComponent))
-            throw new WrongPermterException("this polciy is not of type simple");
+            throw new WrongPermterException("this discount is not of type simple");
         ComplexDiscountComponent toreturn = new ComplexDiscountComponent(simpleDiscountComponent, predict);
+        discountPolicy.removeRule(nameOfPolicy);
         this.discountPolicy.addRule(name, toreturn);
         return toreturn;
 

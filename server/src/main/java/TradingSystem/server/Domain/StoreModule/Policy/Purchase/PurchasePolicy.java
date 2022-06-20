@@ -57,7 +57,7 @@ public class PurchasePolicy {
     }
 
     public void removeRule(String name) throws WrongPermterException {
-        PurchaseRule toRemove = policy.remove(policy.get(name));
+        PurchaseRule toRemove = policy.remove(name);
         if (toRemove == null)
             throw new WrongPermterException("there is no rule with this name");
     }

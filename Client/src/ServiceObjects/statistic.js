@@ -14,10 +14,10 @@ export class Statistic {
     this.buy_cart_per_minutes = data.buy_cart_per_minutes;
     this.num_of_users = data.num_of_users;
     this.num_of_onlines = data.num_of_onlines;
-    this.num_of_guests = num_of_guests;
-    this.num_of_non_managers_and_owners = num_of_non_managers_and_owners;
-    this.managers_but_not_owners_or_founders = managers_but_not_owners_or_founders;
-    this.owners_or_founders = owners_or_founders;
+    this.num_of_guests = data.num_of_guests;
+    this.num_of_non_managers_and_owners = data.num_of_non_managers_and_owners;
+    this.managers_but_not_owners_or_founders = data.managers_but_not_owners_or_founders;
+    this.owners_or_founders = data.owners_or_founders;
   }
 
   static create(
