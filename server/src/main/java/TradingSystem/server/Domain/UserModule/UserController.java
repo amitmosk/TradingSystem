@@ -42,23 +42,23 @@ public class UserController {
     private Long id;
 
     public void load() {
-        this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
-        MarketLogger.getInstance().add_log("--------------uc_id-------------");
-        MarketLogger.getInstance().add_log("" + uc_id.get());
-        this.purchaseID = new AtomicInteger(HibernateUtils.get_max_purchase());
-        MarketLogger.getInstance().add_log("--------------purchase_id---------------");
-        MarketLogger.getInstance().add_log("" + purchaseID.get());
-        try {
-            Map<String, User> all_users = HibernateUtils.users();
-            this.users = all_users;
-        } catch (Exception e) {
-//            throw new MarketException("failed to load users from table");
-        }
-        MarketLogger.getInstance().add_log("--------------all_users---------------");
-        MarketLogger.getInstance().add_log(users.toString());
-        //TODO: change to read one
-//        this.statisticsManager = HibernateUtils.getEntityManager().find(StatisticsManager.class, new Long(1));
-        this.statisticsManager = new StatisticsManager();
+//        this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
+//        MarketLogger.getInstance().add_log("--------------uc_id-------------");
+//        MarketLogger.getInstance().add_log("" + uc_id.get());
+//        this.purchaseID = new AtomicInteger(HibernateUtils.get_max_purchase());
+//        MarketLogger.getInstance().add_log("--------------purchase_id---------------");
+//        MarketLogger.getInstance().add_log("" + purchaseID.get());
+//        try {
+//            Map<String, User> all_users = HibernateUtils.users();
+//            this.users = all_users;
+//        } catch (Exception e) {
+////            throw new MarketException("failed to load users from table");
+//        }
+//        MarketLogger.getInstance().add_log("--------------all_users---------------");
+//        MarketLogger.getInstance().add_log(users.toString());
+//        //TODO: change to read one
+////        this.statisticsManager = HibernateUtils.getEntityManager().find(StatisticsManager.class, new Long(1));
+//        this.statisticsManager = new StatisticsManager();
         SystemLogger.getInstance().add_log("user controller load");
     }
 

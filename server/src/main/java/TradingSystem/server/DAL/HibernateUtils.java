@@ -22,7 +22,7 @@ public class HibernateUtils {
     private static EntityManagerFactory emf;
     private static EntityManager em;
     private static ThreadLocal<EntityManager> threadLocal;
-    private static String persistence_unit = "TradingSystem";
+    private static String persistence_unit = "TradingSystemTests";
     private static boolean allow_persist = false;
     private static boolean begin_transaction = true;
 
