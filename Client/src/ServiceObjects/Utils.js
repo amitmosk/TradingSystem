@@ -6,6 +6,20 @@ export class Utils  {
     
 
     // ----------------------------------- Payment -------------------------------------------------------
+    
+    static check_date(month, year)
+    {
+        if (year<2022)
+        {
+            return 0;
+        }
+        if (year === 2022 && month < 7)
+        {
+            return 0;
+        }
+        return 1;
+    }
+    
     static check_credit_number(credit_number){   
         if (this.check_all_digits(credit_number) == 0)
         {
@@ -53,6 +67,8 @@ export class Utils  {
         return 1;
     }
     static check_month(month){ 
+        
+        console.log("gggg");
         if(month>12 || month <1)
         {
             return 0;
@@ -60,6 +76,7 @@ export class Utils  {
         return 1;
     }
     static check_year_later(year){  
+        const curr_year = new Date().getFullYear();
         console.log(year)
         if (year <2022)
         {

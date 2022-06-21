@@ -66,6 +66,7 @@ export default class PaymentPage extends Component {
         let ccv = this.state.ccv;
         let holder = this.state.holder;
         let id = this.state.id;
+        console.log(this.state.month_year);
         const date = this.state.month_year.split('-');
         let month = date[1];
         let year = date[0];
@@ -75,19 +76,15 @@ export default class PaymentPage extends Component {
         console.log(holder)
         console.log(ccv)
         console.log(id)
+  
         if (Utils.check_credit_number(creditnumber) == 0)
         {
             this.setState({ snackbar: { children: "Illegal Card Number", severity: "error" } });
             return;
         }
-        if (Utils.check_month(month)== 0)
+        if(Utils.check_date(month, year) == 0)
         {
-            this.setState({ snackbar: { children: "Illegal month", severity: "error" } });
-            return;
-        }
-        if (Utils.check_year_later(year)== 0)
-        {
-            this.setState({ snackbar: { children: "Illegal Year", severity: "error" } });
+            this.setState({ snackbar: { children: "Illegal date", severity: "error" } });
             return;
         }
         if (Utils.check_holder(holder)== 0)
