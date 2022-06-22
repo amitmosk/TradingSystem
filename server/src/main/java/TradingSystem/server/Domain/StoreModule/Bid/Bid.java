@@ -159,7 +159,7 @@ public class Bid implements iManagersConfirm {
 
     @Override
     public BidStatus get_status(){
-        this.update_status();
+        this.status = this.update_status();
         return this.status;
     }
 
