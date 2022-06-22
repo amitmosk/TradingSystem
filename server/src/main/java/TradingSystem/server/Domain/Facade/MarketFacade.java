@@ -453,11 +453,6 @@ public class MarketFacade {
             response = new Response<>(userPurchase, "Purchase done successfully");
             market_logger.add_log("user purchase his cart successfully");
         }
-        catch (MarketException e){
-            HibernateUtils.commit();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
-        }
         catch (Exception e) {
             this.payment_adapter.cancel_pay(payment_transaction_id);
             this.supply_adapter.cancel_supply(supply_transaction_id);

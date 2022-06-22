@@ -86,7 +86,7 @@ public class HibernateUtils {
         return em;
     }
 
-    public static void closeEntityManager() {
+    public static synchronized void closeEntityManager() {
         EntityManager em = threadLocal.get();
         if (em != null) {
             em.close();
@@ -94,9 +94,9 @@ public class HibernateUtils {
         }
     }
 
-    public static void clear_db() {
-//        getEntityManager().createNativeQuery("DROP SCHEMA datatests").executeUpdate();
-//        getEntityManager().createNativeQuery("Create SCHEMA  datatests").executeUpdate();
+    public static synchronized void clear_db() {
+//        getEntityManager().createNativeQuery("DROP SCHEMA database").executeUpdate();
+//        getEntityManager().createNativeQuery("Create SCHEMA  database").executeUpdate();
         threadLocal.get().clear();
         threadLocal.get().close();
         emf = Persistence.createEntityManagerFactory(persistence_unit);
@@ -107,35 +107,38 @@ public class HibernateUtils {
         emf.close();
     }
 
-    public static void beginTransaction() {
+    public static synchronized void beginTransaction() {
         if (allow_persist && begin_transaction)
             if (!getEntityManager().getTransaction().isActive())
                 getEntityManager().getTransaction().begin();
 
     }
 
-    public static void rollback() {
-        if (allow_persist && begin_transaction)
+    public static synchronized void rollback() {
+        if (allow_persist && begin_transaction) {
             getEntityManager().getTransaction().rollback();
+            em.close();
+            em = emf.createEntityManager();
+        }
     }
 
-    public static void commit() {
+    public static synchronized void commit() {
         if (allow_persist && begin_transaction)
             if (getEntityManager().getTransaction().isActive())
                 getEntityManager().getTransaction().commit();
     }
 
-    public static <T> void persist(T obj) {
+    public static synchronized <T> void persist(T obj) {
         if (allow_persist)
             getEntityManager().persist(obj);
     }
 
-    public static <T> void remove(T obj) {
+    public static synchronized <T> void remove(T obj) {
         if (allow_persist)
             getEntityManager().remove(obj);
     }
 
-    public static <T> T merge(T obj) {
+    public static synchronized <T> T merge(T obj) {
         if (allow_persist && begin_transaction) {
             if (!getEntityManager().contains(obj))
                 return getEntityManager().merge(obj);
@@ -147,49 +150,49 @@ public class HibernateUtils {
         HibernateUtils.begin_transaction = begin_transaction;
     }
 
-    public static int get_uc() {
+    public static synchronized int get_uc() {
         if (!allow_persist)
             return 0;
         BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(id),0) as id FROM database.user").getSingleResult();
         return res.intValue() + 1;
     }
 
-    public static int get_max_purchase() {
+    public static synchronized int get_max_purchase() {
         if (!allow_persist)
             return 0;
         BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(purchase_id),0) as id FROM database.purchase").getSingleResult();
         return res.intValue() + 1;
     }
 
-    public static int get_sc() {
+    public static synchronized int get_sc() {
         if (!allow_persist)
             return 1;
         BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(store_id),1) as id FROM database.store").getSingleResult();
         return res.intValue() + 1;
     }
 
-    public static int get_max_store_purchase_id() {
+    public static synchronized int get_max_store_purchase_id() {
         if (!allow_persist)
             return 1;
         BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(store_purchase_id),1) as id FROM database.storepurchase").getSingleResult();
         return res.intValue() + 1;
     }
 
-    public static int get_max_product_id() {
+    public static synchronized int get_max_product_id() {
         if (!allow_persist)
             return 1;
         BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(product_id),1) as id FROM database.product").getSingleResult();
         return res.intValue() + 1;
     }
 
-    public static int get_max_bid_id() {
+    public static synchronized int get_max_bid_id() {
         if (!allow_persist)
             return 1;
         BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM database.bid").getSingleResult();
         return res.intValue() + 1;
     }
 
-    public static int get_max_question_id() {
+    public static synchronized int get_max_question_id() {
         if (!allow_persist)
             return 1;
         BigInteger bid = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM database.buyerquestion").getSingleResult();
@@ -197,7 +200,7 @@ public class HibernateUtils {
         return Math.max(bid.intValue(), uid.intValue()) + 1;
     }
 
-    public static Map<Integer ,Store> stores() {
+    public static synchronized Map<Integer ,Store> stores() {
         products();
         String query = "SELECT store_id FROM database.store";
         Map<Integer, Store> map = new HashMap<>();
@@ -214,7 +217,7 @@ public class HibernateUtils {
         return map;
     }
 
-    public static Map<Integer ,Product> products() {
+    public static synchronized Map<Integer ,Product> products() {
         String query = "SELECT product_id FROM database.product";
         Map<Integer, Product> map = new HashMap<>();
         try {
@@ -230,7 +233,7 @@ public class HibernateUtils {
         return map;
     }
 
-    public static Map<String , User> users() {
+    public static synchronized Map<String , User> users() {
         String query = "SELECT id FROM database.user";
         Map<String, User> map = new HashMap<>();
         try {
@@ -246,7 +249,7 @@ public class HibernateUtils {
         return map;
     }
 
-    public static List<BuyerQuestion> buyerquestions() {
+    public static synchronized List<BuyerQuestion> buyerquestions() {
         String query = "select u from database.buyerquestion u where u.id is not null";
         TypedQuery<BuyerQuestion> tq = getEntityManager().createQuery(query, BuyerQuestion.class);
         List<BuyerQuestion> list;
@@ -258,7 +261,7 @@ public class HibernateUtils {
         }
     }
 
-    public static List<UserQuestion> userQuestions() {
+    public static synchronized List<UserQuestion> userQuestions() {
         String query = "select u from database.userquestion u where u.id is not null";
         TypedQuery<UserQuestion> tq = getEntityManager().createQuery(query, UserQuestion.class);
         List<UserQuestion> list;
@@ -272,7 +275,7 @@ public class HibernateUtils {
 
 
     //   public static void main(String[] args) {
-//        HibernateUtils.clear_db("datatests")
+//        HibernateUtils.clear_db("database")
 // ;
 //    }
 }
