@@ -30,8 +30,6 @@ import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Observable;
 import TradingSystem.server.Domain.Utils.Utils;
-import org.hibernate.annotations.Cascade;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -204,8 +202,8 @@ public class Store implements Observable {
     }
 
     public AndPurchaseRule add_and_purchase_rule(String nameOfRule, String left, String right) throws WrongPermterException {
-        PurchaseRule purchaseright = purchasePolicy.getPolicy(left);
-        PurchaseRule purchaseleft = purchasePolicy.getPolicy(right);
+        PurchaseRule purchaseright = purchasePolicy.getRule(left);
+        PurchaseRule purchaseleft = purchasePolicy.getRule(right);
         if (purchaseleft == purchaseright)
             throw new WrongPermterException("the polices are the same");
         AndPurchaseRule and = new AndPurchaseRule(purchaseleft, purchaseright);
@@ -216,8 +214,8 @@ public class Store implements Observable {
     }
 
     public OrPurchaseRule add_or_purchase_rule(String name, String left, String right) throws WrongPermterException {
-        PurchaseRule purchaseRight = purchasePolicy.getPolicy(left);
-        PurchaseRule purchaseLeft = purchasePolicy.getPolicy(right);
+        PurchaseRule purchaseRight = purchasePolicy.getRule(left);
+        PurchaseRule purchaseLeft = purchasePolicy.getRule(right);
         if (purchaseLeft == purchaseRight)
             throw new WrongPermterException("the polices are the same");
         OrPurchaseRule or = new OrPurchaseRule(purchaseLeft, purchaseRight);

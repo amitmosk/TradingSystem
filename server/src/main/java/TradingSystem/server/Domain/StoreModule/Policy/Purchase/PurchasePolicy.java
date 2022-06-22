@@ -49,7 +49,7 @@ public class PurchasePolicy {
         return policy.keySet();
     }
 
-    public PurchaseRule getPolicy(String name) throws WrongPermterException {
+    public PurchaseRule getRule(String name) throws WrongPermterException {
         PurchaseRule rule = policy.get(name);
         if (rule == null)
             throw new WrongPermterException("no policy with this name");
@@ -79,7 +79,7 @@ public class PurchasePolicy {
         return id;
     }
 
-    public Map<String, PurchaseRule> getPolicy() {
+    public Map<String, PurchaseRule> getRule() {
         return policy;
     }
 

@@ -1,90 +1,60 @@
-Jun 20, 2022 2:57:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: WS : Configure Message Broker
-Jun 20, 2022 2:57:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: Start Init Market
-Jun 20, 2022 2:57:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\system_config.txt
-Jun 20, 2022 2:57:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: Set Real External Services
-Jun 20, 2022 2:57:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: System Start Connect To External Services
-Jun 20, 2022 2:57:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: System Connected To The Payment System
-Jun 20, 2022 2:57:07 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: HTTP POST On Success Response= OK
-Jun 20, 2022 2:57:07 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: System Connected To The Supply System
-Jun 20, 2022 2:57:07 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:10 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: HTTP POST On Success Response= OK
-Jun 20, 2022 2:57:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:42 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: Init Data From Demo, Data File Path: ..\server\src\main\java\TradingSystem\server\Config\instructions_config.txt
-Jun 20, 2022 2:57:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:42 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: user controller load
-Jun 20, 2022 2:57:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:42 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: user controller load
-Jun 20, 2022 2:57:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:42 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: user controller load
-Jun 20, 2022 2:57:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: user controller load
-Jun 20, 2022 2:57:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: user controller load
-Jun 20, 2022 2:57:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: user controller load
-Jun 20, 2022 2:57:27 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:45 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: user controller load
-Jun 20, 2022 2:57:27 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:45 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: New Admin In The Market: amit@walla.com
-Jun 20, 2022 2:57:27 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:46 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: user controller load
-Jun 20, 2022 2:57:27 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:46 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: System Init Done.
-Jun 20, 2022 2:57:27 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:46 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: WS : Register Stomp End Points
-Jun 20, 2022 3:00:53 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: WS Connect Event, Session ID: qllqlzl0Email: u2@walla.com
-Jun 20, 2022 3:01:36 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: WS Disconnect Event, Session ID: qllqlzl0Email: u2@walla.com
-Jun 20, 2022 3:02:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: Payment Of: 135.0
-Jun 20, 2022 3:02:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: HTTP POST On Success Response= 55258
-Jun 20, 2022 3:02:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: HTTP POST On Success Response= 18262
-Jun 20, 2022 3:04:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: store controller load
-Jun 20, 2022 3:04:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: user controller load
-Jun 20, 2022 3:04:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: store controller load
-Jun 20, 2022 3:04:21 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: store controller load
-Jun 20, 2022 3:04:21 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: user controller load
-Jun 20, 2022 3:04:21 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: store controller load
-Jun 20, 2022 3:04:50 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: Payment Of: 240.0
-Jun 20, 2022 3:04:50 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: HTTP POST On Success Response= 88491
-Jun 20, 2022 3:04:50 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: HTTP POST On Success Response= 57983
-Jun 20, 2022 3:07:32 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:31:50 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: WS Connect Event, Session ID: zvdlyo2lEmail: u2@walla.com
+Jun 22, 2022 7:33:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: WS Disconnect Event, Session ID: zvdlyo2lEmail: u2@walla.com
+Jun 22, 2022 7:35:36 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: Cancel Payment Of Transaction : -1
-Jun 20, 2022 3:07:32 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:35:37 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: HTTP POST On Success Response= 1
-Jun 20, 2022 3:07:32 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:35:37 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: Cancel Supply Of Transaction : -1
-Jun 20, 2022 3:07:32 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:35:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: HTTP POST On Success Response= 1
-Jun 20, 2022 3:07:32 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:35:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: store controller load
-Jun 20, 2022 3:07:32 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:35:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: user controller load
-Jun 20, 2022 3:07:32 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: store controller load
-Jun 20, 2022 3:07:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: store controller load
-Jun 20, 2022 3:07:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: user controller load
-Jun 20, 2022 3:07:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 22, 2022 7:35:38 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: store controller load
