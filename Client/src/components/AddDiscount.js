@@ -210,7 +210,8 @@ export default function AddDiscount() {
     const add_simple_discount_rule_for_store = async (values) => {
         const rule_name = values[0];
         const discount_precent = values[1];
-        const discount = discount_precent / 100;
+        console.log(discount_precent);
+        const discount =discount_precent / 100;
         if (Utils.check_rule_name(rule_name) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
@@ -218,7 +219,7 @@ export default function AddDiscount() {
         }
         if (Utils.check_precent(discount) == 0)
         {
-            setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
+            setSnackbar({ children: "Illegal percent", severity: 'error' });
             return;
         }
         
@@ -271,7 +272,7 @@ export default function AddDiscount() {
         }
         if (Utils.check_precent(precent) == 0)
         {
-            setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
+            setSnackbar({ children: "Illegal precent ", severity: 'error' });
             return;
         }
         //TODO: check if product id is legal
