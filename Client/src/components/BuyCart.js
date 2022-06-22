@@ -38,7 +38,8 @@ export default function BuyCart() {
         let response = await cartApi.buy_cart(payment_info,supply_info);
         if (!response.was_exception)
         {
-            setSnackbar({ children: response.message, severity: 'success' }); 
+            setSnackbar({ children: response.message, severity: 'success' });
+            window.location.href=`/`
         }  
         else
         {
@@ -66,13 +67,13 @@ export default function BuyCart() {
           <Grid container spacing={10} justifyContent="center" alignItems="center">
           
                         
-          <PaymentPage update={update_payment_info.bind(this)}></PaymentPage>  
-          <SupplyPage update={update_supply_info.bind(this)}></SupplyPage>                 
+          <PaymentPage update={update_payment_info}></PaymentPage>  
+          <SupplyPage update={update_supply_info}></SupplyPage>                 
           
           </Grid>
           <Grid container spacing={3} justifyContent="center" alignItems="center" paddingBottom={20}>
 
-          <Button onClick={() => buy_cart()} variant="contained" >Buy Cart </Button>   
+          <Button onClick={buy_cart} variant="contained" >Buy Cart </Button>   
         
 
 

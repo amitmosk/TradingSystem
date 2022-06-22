@@ -9,11 +9,15 @@ export class Utils  {
     
     static check_date(month, year)
     {
-        if (year<2022)
+        console.log(month);
+        console.log(year);
+        const month_int = parseInt(month);
+        const year_int = parseInt(year);
+        if (year_int<2022)
         {
             return 0;
         }
-        if (year === 2022 && month < 7)
+        if (year_int === 2022 && month_int < 7)
         {
             return 0;
         }
