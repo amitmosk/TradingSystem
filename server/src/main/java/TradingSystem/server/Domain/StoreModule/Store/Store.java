@@ -1038,7 +1038,7 @@ public class Store implements Observable {
         return bid_id;
     }
 
-    public List<BidInformation> view_bids_status(AssignUser user) throws NoPremssionException {
+    public List<BidInformation> view_bids_status(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.view_bids_status);
         List<BidInformation> answer = new ArrayList<>();
 
@@ -1164,13 +1164,13 @@ public class Store implements Observable {
         else if (appointment.get_status() == closed_confirm){
             if (appointment.getType() == StoreManagerType.store_owner){
                 candidate.add_owner(this, appointment);
-                this.set_manager_in_bids(0, candidate_email);
+                this.set_manager_in_bids(0, candidate_email, true);
                 MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") owner");
                 this.send_message_to_the_store_stuff(candidate_email+" is a new owner in the store, confirm by all the managers.", "");
             }
             else if (appointment.getType() == StoreManagerType.store_manager){
                 candidate.add_manager(this, appointment);
-                this.set_manager_in_bids(0, candidate_email);
+                this.set_manager_in_bids(0, candidate_email, false);
                 MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
                 this.send_message_to_the_store_stuff(candidate_email+" is a new manager in the store, confirm by all the managers.", "");
             }

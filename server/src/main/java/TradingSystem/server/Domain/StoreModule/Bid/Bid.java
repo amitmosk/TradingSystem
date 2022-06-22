@@ -1,9 +1,11 @@
 package TradingSystem.server.Domain.StoreModule.Bid;
 
 import TradingSystem.server.DAL.HibernateUtils;
-import TradingSystem.server.Domain.StoreModule.Appointment;
+
+import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
+import TradingSystem.server.Domain.StoreModule.Appointment.StorePermission;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
-import TradingSystem.server.Domain.StoreModule.StorePermission;
+
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
@@ -40,7 +42,7 @@ public class Bid implements iManagersConfirm {
     @Enumerated(EnumType.STRING)
     private BidStatus status; // 0 - waiting for answers, 1 - close & denied, 2 - close & confirm.
 
-    public Bid(int bid_id, int quantity, double offer_price, List<String> managers_emails, Product product, User buyer,AssignUser store_founder,  Map<AssignUser,Appointment> stuff_and_appoitments) {
+    public Bid(int bid_id, int quantity, double offer_price, List<String> managers_emails, Product product, User buyer,AssignUser store_founder,  Map<AssignUser, Appointment> stuff_and_appoitments) {
         this.status = open_waiting_for_answers;
 //        this.product = new ProductInformation(product, quantity);
         this.bid_id = bid_id;
@@ -89,14 +91,14 @@ public class Bid implements iManagersConfirm {
 
 
     @Override
-    public void add_manager_of_store(String manager_email, boolean owner) throws MarketException {
+    public void add_manager_of_store(String manager_email, boolean owner)  {
         this.managersEmail_answers.put(manager_email, new BidManagerAnswer(owner, owner));
 
     }
 
 
     @Override
-    public void remove_manager(String email) throws MarketException {
+    public void remove_manager(String email)  {
         this.managersEmail_answers.remove(email);
 
 
@@ -104,7 +106,7 @@ public class Bid implements iManagersConfirm {
     }
 
     @Override
-    public void add_manager_answer(String email, boolean answer, double negotiation_price, User buyer) throws NoPermissionException, MarketException {
+    public void add_manager_answer(String email, boolean answer, double negotiation_price) throws NoPermissionException, MarketException {
         if (!this.managersEmail_answers.containsKey(email)){
             throw new NoPermissionException(email + "is no a manager in the store");
         }
