@@ -2503,32 +2503,16 @@ class MarketFacadeTest {
     /**
      * Cases checked:
      * ADD BID-
-     * 1. add bid for product from store x by one of store x' managers/owners - should fail
-     * 2. add bid with higher price than original product price - check if needed
-     * 3. complicate uc1
+     * 1.not_founder_try_to_add_nego
+     * 2.manager_without_permissions_try_to_answer_bid
+     * 3.complicate uc1
      * 4.complicate uc2
      * 5.complicate uc3
      * 6.complicate uc4
-     * 7.
-     *
-     * MANAGER ANSWER BID-
-     * 1.
-     * 2.
-     * 3.
-     * VIEW BID STATUS
-     *
-     *
-     *
-     *
+     * 7.complicate uc5
+
+
      */
-
-
-//    public enum BidStatus {
-//        open_waiting_for_answers,
-//        closed_denied,
-//        closed_confirm,
-//        negotiation_mode,
-//    }
 
 
 
