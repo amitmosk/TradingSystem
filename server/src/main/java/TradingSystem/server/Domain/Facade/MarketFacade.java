@@ -38,6 +38,7 @@ import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 // TODO: when we leave the system - should call logout()
@@ -82,7 +83,13 @@ public class MarketFacade {
             UserInformation user_inform = new UserInformation(user);
             response = new Response(user_inform, "Logout Successfully");
             market_logger.add_log(user_inform.getEmail() + " logged out from the system.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e) {
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -109,7 +116,13 @@ public class MarketFacade {
             UserInformation userInformation = new UserInformation(user);
             response = new Response<>(userInformation, "Registration done successfully");
             market_logger.add_log(name + " " + lastName + " has registered to the system");
-        } catch (Exception e) {
+        }
+        catch (MarketException e) {
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -135,7 +148,13 @@ public class MarketFacade {
             UserInformation userInformation = new UserInformation(user);
             response = new Response<>(userInformation, "Hey " + user_name + ", Welcome to the trading system market!");
             market_logger.add_log("User " + Email + " logged-in");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(new LoginException(" "));
             error_logger.add_log(e);
@@ -158,7 +177,13 @@ public class MarketFacade {
             StoreInformation storeInformation = new StoreInformation(store);
             response = new Response<>(storeInformation, "Store information received successfully");
             market_logger.add_log("Store (" + store_id + ") information found successfully.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -181,7 +206,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(product, "Product information received successfully");
             market_logger.add_log("Product (" + product_id + " from store " + store_id + ") information found successfully.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -205,7 +236,8 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(products, "Product list received successfully");
             market_logger.add_log("List of product " + product_name + " found successfully.");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -228,7 +260,8 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(products, "Products received successfully");
             market_logger.add_log("List of products from category " + category + " found successfully.");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -251,7 +284,8 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(products, "Products received successfully");
             market_logger.add_log("List of products with key words- " + key_words + " found successfully.");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -280,7 +314,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>("", "product " + productID + " added to cart");
             market_logger.add_log("User added to cart " + quantity + " of product- " + productID + " from store- " + storeID);
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -308,7 +348,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>("", "product " + productID + " quantity has changed to " + quantity);
             market_logger.add_log("User quantity of product- " + productID + " from store- " + storeID + " in cart to " + quantity);
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -335,7 +381,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>("", "product " + productID + " has removed from cart");
             market_logger.add_log("User removed from cart product- " + productID + " from store- " + storeID);
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -368,13 +420,18 @@ public class MarketFacade {
      */
 
 
+    @Transactional
     public Response<UserPurchase> buy_cart(PaymentInfo paymentInfo, SupplyInfo supplyInfo) {
         Response<UserPurchase> response = null;
         int payment_transaction_id = -1;
         int supply_transaction_id = -1;
         UserPurchase userPurchase;
+        User u = user_controller.get_user(loggedUser);
+        boolean isGuest = u.getIsGuest().get();
+        CartInformation cart = u.getCart().cartInformation();
         try {
             HibernateUtils.beginTransaction();
+            // setting rollback options for guest.
             // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             synchronized (lock) {
                 userPurchase = this.user_controller.buyCart(this.loggedUser);
@@ -395,11 +452,23 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(userPurchase, "Purchase done successfully");
             market_logger.add_log("user purchase his cart successfully");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             this.payment_adapter.cancel_pay(payment_transaction_id);
             this.supply_adapter.cancel_supply(supply_transaction_id);
             // TODO: rollback for buyCart > return the products to the store
             rollback();
+            //rollback guest case
+            if(isGuest) {
+                for (ProductInformation p : cart.getProducts()) {
+                    add_product_to_cart(p.getStore_id(), p.getProduct_id(), p.getQuantity());
+                }
+            }
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
         }
@@ -423,7 +492,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(store_id, "Store opened successfully");
             market_logger.add_log("Store " + store_name + " with id = " + store_id + "opened successfully");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -450,7 +525,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(null, "Review added successfully");
             market_logger.add_log("New review added for product (" + product_id + ") form store (" + store_id + ") and user:" + user_email);
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -478,7 +559,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(null, "Rating added successfully to the product");
             market_logger.add_log("New rating (" + rate + ") added for product (" + product_id + ") form store (" + store_id + ")");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -505,7 +592,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(null, "Rating added successfully to the store");
             market_logger.add_log("New rating (" + rate + ") added for store (" + store_id + ") from user : " + user_email);
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -532,7 +625,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(null, "Question send to the store successfully");
             market_logger.add_log("New question sent to store (" + store_id + ")");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -555,7 +654,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(null, "Question send to the admin successfully");
             market_logger.add_log("New question sent to admin");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -577,7 +682,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(userPurchaseHistory, "successfully received user's product history");
             market_logger.add_log("User viewed his purchase history successfully");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -600,7 +711,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(email, "successfully received user's email");
             market_logger.add_log("Got user's email successfully");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -622,7 +739,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(name, "successfully received user's name");
             market_logger.add_log("Got user's name successfully");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -644,7 +767,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(last_name, "Last name received successfully");
             market_logger.add_log("Got user's last name successfully");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -669,7 +798,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(password, email + " password has been changed successfully");
             market_logger.add_log("User's (" + email + ")  password has been changed successfully.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -692,7 +827,13 @@ public class MarketFacade {
             response = new Response<>(new_name, email + " name changed to " + new_name);
             market_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -715,7 +856,13 @@ public class MarketFacade {
             response = new Response<>(new_last_name, email + " last name changed to " + new_last_name);
             market_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -742,7 +889,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(email, email + " unregistered successfully");
             market_logger.add_log("User (" + email + ") has been successfully unregistered from the system.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -768,7 +921,13 @@ public class MarketFacade {
             response = new Response<>(new_name, email + " name changed to " + new_name);
             market_logger.add_log("User's (" + email + ") name has been successfully changed to " + new_name + ".");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -793,7 +952,13 @@ public class MarketFacade {
             response = new Response<>(new_last_name, email + " last name changed to " + new_last_name);
             market_logger.add_log("User's (" + email + ") last name has been successfully changed to " + new_last_name + ".");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -819,7 +984,13 @@ public class MarketFacade {
             response = new Response<>(null, email + " password changed");
             market_logger.add_log("User's (" + email + ") password has been successfully changed.");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -841,7 +1012,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(question, "successfully received security question");
             market_logger.add_log("Got user's security question successfully");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -867,7 +1044,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(null, email + " improved security");
             market_logger.add_log("User's (" + email + ") security has been successfully improved.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -901,7 +1084,13 @@ public class MarketFacade {
             response = new Response<>(products, "Product added successfully");
             market_logger.add_log("New product (" + name + ") added to store (" + store_id + ")");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -932,7 +1121,13 @@ public class MarketFacade {
                 market_logger.add_log("Product (" + product_id + ") was deleted from store (" + store_id + ")");
             }
             HibernateUtils.commit();
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -958,7 +1153,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(predict, "predict added successfully");
             market_logger.add_log("predict added deleted successfully");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -976,7 +1177,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(policy, "purchase policy sent");
             market_logger.add_log("purchase policy sent to user");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -997,7 +1204,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(policy, "predicts sent");
             market_logger.add_log("predicts sent to user");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1018,7 +1231,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(policy, "discount policy sent");
             market_logger.add_log("composite discount deleted successfully");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1039,7 +1258,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(complex, "complex discount added successfully");
             market_logger.add_log("complex discount added successfully");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1060,7 +1285,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(simple, "simple category discount added successfully");
             market_logger.add_log("simple category discount added successfully");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1081,7 +1312,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(simple, "simple product discount added successfully");
             market_logger.add_log("simple product discount added successfully");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1102,7 +1339,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(simple, "store discount added successfully");
             market_logger.add_log("Store's (" + store_id + ")discount deleted successfully");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1122,7 +1365,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(discount, "Store discount and rule added successfully");
             market_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1142,7 +1391,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(discount, "Store discount or rule added successfully");
             market_logger.add_log("Store's (" + store_id + ") discount or rule have been added");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1162,7 +1417,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(discount, "Store discount max rule added successfully");
             market_logger.add_log("Store's (" + store_id + ") discount max rule have been added");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1182,7 +1443,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(discount, "Store discount plus rule added successfully");
             market_logger.add_log("Store's (" + store_id + ") discount plus rule have been added");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1202,7 +1469,13 @@ public class MarketFacade {
             response = new Response(discount, "Store discount and rule added successfully");
             market_logger.add_log("Store's (" + store_id + ") discount and rule have been added");
             HibernateUtils.commit();
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1222,7 +1495,13 @@ public class MarketFacade {
                 market_logger.add_log("Store's (" + store_id + ") discount removed successfully");
             }
             HibernateUtils.commit();
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1241,7 +1520,13 @@ public class MarketFacade {
                 market_logger.add_log("Store's (" + store_id + ") predict removed successfully");
             }
             HibernateUtils.commit();
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1260,7 +1545,13 @@ public class MarketFacade {
                 market_logger.add_log("Store's (" + store_id + ") purchase removed successfully");
             }
             HibernateUtils.commit();
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1281,7 +1572,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(purchaseRule, "simple purchase added successfully");
             market_logger.add_log("Store's (" + store_id + ") simple purchase added successfully");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1302,7 +1599,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(purchaseRule, "Store purchase and rule added successfully");
             market_logger.add_log("Store's (" + store_id + ") purchase and rule have been added");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1323,7 +1626,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(PurchaseRule, "Store purchase rules added successfully");
             market_logger.add_log("Store's (" + store_id + ") purchase rules have been added");
-        } catch (MarketException e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1351,7 +1660,13 @@ public class MarketFacade {
             response = new Response<>(null, "Product name edit successfully");
             HibernateUtils.commit();
             market_logger.add_log("Product (" + product_id + ") name has been changed to " + name + " in store (" + store_id + ")");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1379,7 +1694,13 @@ public class MarketFacade {
                 market_logger.add_log("Product (" + product_id + ") price has been changed to " + price + " in store (" + store_id + ")");
             }
             HibernateUtils.commit();
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1405,7 +1726,13 @@ public class MarketFacade {
             response = new Response<>(null, "Product category edit successfully");
             HibernateUtils.commit();
             market_logger.add_log("Product (" + product_id + ") category has been changed to " + category + " in store (" + store_id + ")");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1432,7 +1759,13 @@ public class MarketFacade {
             response = new Response<>(null, "Product key_words edit successfully");
             HibernateUtils.commit();
             market_logger.add_log("Product's (" + product_id + ") key words have been changed to " + key_words + " in store (" + store_id + ")");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1461,7 +1794,13 @@ public class MarketFacade {
             response = new Response<>(null, "Owner added successfully");
             HibernateUtils.commit();
             market_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") owner");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1490,7 +1829,13 @@ public class MarketFacade {
             response = new Response<>(null, "Owner removed successfully");
             HibernateUtils.commit();
             market_logger.add_log("User- " + user_email_to_delete_appointment + " has been unappointed by user- " + user_email + " from store (" + store_id + ") owner");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1519,7 +1864,13 @@ public class MarketFacade {
             response = new Response<>(null, "Manager added successfully");
             HibernateUtils.commit();
             market_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") manager");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1548,7 +1899,13 @@ public class MarketFacade {
             response = new Response<>(null, "Manager permission edit successfully");
             HibernateUtils.commit();
             market_logger.add_log("Manager's (" + manager_email + ") permissions have been updated by user - " + user_email + " in store (" + store_id + ")");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1577,7 +1934,13 @@ public class MarketFacade {
             response = new Response<>(null, "Manager removed successfully");
             HibernateUtils.commit();
             market_logger.add_log("User- " + user_email_to_delete_appointment + " has been unappointed by user- " + user_email + " from store (" + store_id + ") manager");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1605,7 +1968,13 @@ public class MarketFacade {
                 market_logger.add_log("Store (" + store_id + ") has been closed temporarily by user (" + user_email + ")");
             }
             HibernateUtils.commit();
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1631,7 +2000,13 @@ public class MarketFacade {
             response = new Response<>(null, "Store re-open successfully");
             HibernateUtils.commit();
             market_logger.add_log("Store (" + store_id + ") has been re-opened by user (" + user_email + ")");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1655,7 +2030,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(answer, "Store information received successfully");
             market_logger.add_log("Store's (" + store_id + ") management information has been viewed by user (" + user_email + ")");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1682,7 +2063,13 @@ public class MarketFacade {
             response = new Response<>(store_questions, "Store questions received successfully");
             market_logger.add_log("Store's (" + store_id + ") questions has been viewed by user (" + user_email + ")");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1709,7 +2096,13 @@ public class MarketFacade {
             response = new Response("", "manager answer the question successfully");
             HibernateUtils.commit();
             market_logger.add_log("Store (" + store_id + ") question (" + question_id + ") has been answered by user (" + user_email + ")");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1735,7 +2128,13 @@ public class MarketFacade {
             response = new Response<>(answer, "Store purchases history received successfully");
             market_logger.add_log("User received (" + user_email + ") store's (" + store_id + ") purchase history successfully.");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1763,7 +2162,13 @@ public class MarketFacade {
                 market_logger.add_log("Store (" + store_id + ") closed permanently.");
             }
             HibernateUtils.commit();
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1791,7 +2196,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(email, email + " Has been removed successfully from the system");
             market_logger.add_log("Removed user (" + email + ") from the system.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1814,7 +2225,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(users_questions, "Admin received users complains successfully.");
             market_logger.add_log("Admin viewed users complains successfully.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1840,7 +2257,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(null, "Admin answered user complaint successfully.");
             market_logger.add_log("Admin answered user's complaint successfully.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1865,7 +2288,13 @@ public class MarketFacade {
             response = new Response<>(answer, "Store purchases history received successfully");
             market_logger.add_log("Admin received store's (" + store_id + ") purchase history successfully.");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1888,7 +2317,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>(userPurchaseHistory, "received user's purchase history successfully");
             market_logger.add_log("Admin received user's (" + user_email + ") purchase history successfully.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1910,7 +2345,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(stats, "Received market statistics successfully");
             market_logger.add_log("Admin received market statistics successfully.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1930,7 +2371,8 @@ public class MarketFacade {
             }
             response = new Response(map, "Received market stores successfully");
             market_logger.add_log("received market stores successfully.");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
 //            rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1950,7 +2392,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(products_information, "Received store products successfully");
             market_logger.add_log("received market stores successfully.");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -1990,7 +2438,13 @@ public class MarketFacade {
             response = new Response<>(user_questions, "user questions received successfully");
             market_logger.add_log("User's (" + user_email + ") questions has been viewed.");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -2008,7 +2462,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             market_logger.add_log("Product (" + product_id + ") quantity has been changed to " + quantity + " in store (" + store_id + ")");
 
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -2022,7 +2482,13 @@ public class MarketFacade {
             User user = user_controller.get_user(loggedUser);
             UserInformation userInformation = new UserInformation(user);
             response = new Response<>(userInformation, "");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(new MarketException("failed to fetch user - connection error"));
             error_logger.add_log(e);
@@ -2040,7 +2506,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(bid_id, "adding bid offer for product");
             market_logger.add_log("User added bid offer for " + quantity + " of product- " + productID + " from store- " + storeID);
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -2058,7 +2530,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response<>("", "manager answer bid offer successfully");
             market_logger.add_log("manager answer bid offer successfully");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -2075,7 +2553,13 @@ public class MarketFacade {
             HibernateUtils.commit();
             response = new Response(answer, "User view bids status successfully");
             market_logger.add_log("User view bids status successfully");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
             error_logger.add_log(e);
@@ -2091,7 +2575,13 @@ public class MarketFacade {
             List<String> permissions = store_controller.get_permissions(manager_email, store_id);
             HibernateUtils.commit();
             response = new Response<>(permissions, "permissions of user " + manager_email);
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(new MarketException("failed to fetch permissions of user " + manager_email));
             error_logger.add_log(e);
@@ -2104,7 +2594,13 @@ public class MarketFacade {
         try {
             List<String> categories = store_controller.get_all_categories(store_id);
             response = new Response<>(categories, "categories of store " + store_id + " received successfully");
-        } catch (Exception e) {
+        }
+        catch (MarketException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        catch (Exception e) {
             response = Utils.CreateResponse(new MarketException("failed to fetch categories of store " + store_id));
             error_logger.add_log(e);
         }

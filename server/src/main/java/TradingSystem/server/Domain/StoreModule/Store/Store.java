@@ -666,7 +666,7 @@ public class Store implements Observable {
         Map<Integer, String> p_ids_name = basket.getProducts_and_names();
 
         Purchase purchase = new Purchase(p_ids_quantity, p_ids_price, p_ids_name);
-        HibernateUtils.persist(purchase);
+//        HibernateUtils.persist(purchase);
         StorePurchase purchase_to_add = new StorePurchase(purchase, buyer_email, purchase_id);
         this.purchases_history.insert(purchase_to_add);
         this.send_message_to_the_store_stuff("new purchase, with id : " + purchase_id, buyer_email);

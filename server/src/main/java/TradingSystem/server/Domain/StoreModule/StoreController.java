@@ -60,23 +60,23 @@ public class StoreController {
     }
 
     public void load() {
-//        this.store_ids_counter = new AtomicInteger(HibernateUtils.get_sc());
-//        this.purchase_ids_counter = new AtomicInteger(HibernateUtils.get_max_store_purchase_id());
-//        this.bids_ids_counter = new AtomicInteger(HibernateUtils.get_max_bid_id());
-//        this.stores = HibernateUtils.stores();
-//        this.storesLock = new Object();
-//        this.products_id = new AtomicInteger(HibernateUtils.get_max_product_id()+1);
-//        SystemLogger.getInstance().add_log("store controller load");
-//        MarketLogger.getInstance().add_log("-----------store counter-----------------");
-//        MarketLogger.getInstance().add_log(stores.toString());
-//        MarketLogger.getInstance().add_log("---------purchase_id_counter-----------------");
-//        MarketLogger.getInstance().add_log(purchase_ids_counter.toString());
-//        MarketLogger.getInstance().add_log("---------bids_id_counter-------------");
-//        MarketLogger.getInstance().add_log(bids_ids_counter.toString());
-//        MarketLogger.getInstance().add_log("----------stores-------------");
-//        MarketLogger.getInstance().add_log(stores.toString());
-//        MarketLogger.getInstance().add_log("----------product_id_counter-----------------");
-//        MarketLogger.getInstance().add_log(products_id.toString());
+        this.store_ids_counter = new AtomicInteger(HibernateUtils.get_sc());
+        this.purchase_ids_counter = new AtomicInteger(HibernateUtils.get_max_store_purchase_id());
+        this.bids_ids_counter = new AtomicInteger(HibernateUtils.get_max_bid_id());
+        this.stores = HibernateUtils.stores();
+        this.storesLock = new Object();
+        this.products_id = new AtomicInteger(HibernateUtils.get_max_product_id()+1);
+        SystemLogger.getInstance().add_log("store controller load");
+        MarketLogger.getInstance().add_log("-----------store counter-----------------");
+        MarketLogger.getInstance().add_log(stores.toString());
+        MarketLogger.getInstance().add_log("---------purchase_id_counter-----------------");
+        MarketLogger.getInstance().add_log(purchase_ids_counter.toString());
+        MarketLogger.getInstance().add_log("---------bids_id_counter-------------");
+        MarketLogger.getInstance().add_log(bids_ids_counter.toString());
+        MarketLogger.getInstance().add_log("----------stores-------------");
+        MarketLogger.getInstance().add_log(stores.toString());
+        MarketLogger.getInstance().add_log("----------product_id_counter-----------------");
+        MarketLogger.getInstance().add_log(products_id.toString());
     }
 
 
