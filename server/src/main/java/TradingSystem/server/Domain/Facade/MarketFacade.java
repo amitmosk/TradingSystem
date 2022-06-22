@@ -375,6 +375,7 @@ public class MarketFacade {
             HibernateUtils.beginTransaction();
             // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             synchronized (lock) {
+
                 userPurchase = this.user_controller.buyCart(this.loggedUser);
                 PaymentThread paymentThread = new PaymentThread(this.payment_adapter, paymentInfo, userPurchase.getTotal_price());
                 SupplyThread supplyThread = new SupplyThread(this.supply_adapter, supplyInfo);
@@ -386,11 +387,17 @@ public class MarketFacade {
                 t2.join();
                 payment_transaction_id = paymentThread.get_value();
                 supply_transaction_id = supplyThread.get_value();
+
                 // TODO: amit #113 detail exception message
-                if (payment_transaction_id == -2 || supply_transaction_id == -2)
-                    throw new ExternalServicesException("Buy Cart Failed: External Service Denied, Status -2");
-                if (payment_transaction_id == -1 || supply_transaction_id == -1)
-                    throw new ExternalServicesException("Buy Cart Failed: External Service Denied, Status -1");
+                if (payment_transaction_id == -2 )
+                    throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied, Status -2");
+                if (supply_transaction_id == -2)
+                    throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied, Status -2");
+
+                if (payment_transaction_id == -1 )
+                    throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied, Status -1");
+                if (supply_transaction_id == -1)
+                    throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied, Status -1");
             }
             HibernateUtils.commit();
             response = new Response<>(userPurchase, "Purchase Done Successfully");

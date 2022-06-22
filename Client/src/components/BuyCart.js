@@ -7,8 +7,12 @@ import Alert from "@mui/material/Alert";
 import { CartApi } from '../API/CartApi';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import LinearDeterminate from './LinearDeterminate';
 
 export default function BuyCart() {
+    const [loading, setLoading] = React.useState(false);
+
+
     const [payment, setPayment] = React.useState(null);
     const [supply, setSupply] = React.useState(null);
     const update_payment_info = (payment) => {
@@ -35,13 +39,19 @@ export default function BuyCart() {
         }
         const payment_info = JSON.stringify(payment);
         const supply_info = JSON.stringify(supply);
+        setLoading(true);
         let response = await cartApi.buy_cart(payment_info,supply_info);
         if (!response.was_exception)
         {
-            setSnackbar({ children: response.message, severity: 'success' }); 
+            setLoading(false);
+            setTimeout(() => {  console.log("World!"); }, 4000);
+            setSnackbar({ children: response.message, severity: 'success' });
+            window.location.href=`/`
         }  
         else
         {
+          setLoading(false);
+            setTimeout(() => {  console.log("World!"); }, 4000);
           setSnackbar({ children: response.message, severity: 'error' }); 
     
         }
@@ -49,7 +59,9 @@ export default function BuyCart() {
         };
     const [snackbar, setSnackbar] = React.useState(null);
     const handleCloseSnackbar = () => setSnackbar(null);
+    
     return (
+        !loading ?
         <main>
           <Box sx={{ flexGrow: 1 }}>
 
@@ -66,13 +78,13 @@ export default function BuyCart() {
           <Grid container spacing={10} justifyContent="center" alignItems="center">
           
                         
-          <PaymentPage update={update_payment_info.bind(this)}></PaymentPage>  
-          <SupplyPage update={update_supply_info.bind(this)}></SupplyPage>                 
+          <PaymentPage update={update_payment_info}></PaymentPage>  
+          <SupplyPage update={update_supply_info}></SupplyPage>                 
           
           </Grid>
           <Grid container spacing={3} justifyContent="center" alignItems="center" paddingBottom={20}>
 
-          <Button onClick={() => buy_cart()} variant="contained" >Buy Cart </Button>   
+          <Button onClick={buy_cart} variant="contained" >Buy Cart </Button>   
         
 
 
@@ -90,7 +102,13 @@ export default function BuyCart() {
           <Alert {...snackbar} onClose={handleCloseSnackbar} />
         </Snackbar>
       )}
-        </main>
-      );
+        </main> : <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}> 
+        <Grid container spacing={6} paddingRight={25} paddingLeft={50} paddingTop={10}> 
+
+          <h1> Connecting to external services</h1>
+        </Grid>
+        <LinearDeterminate></LinearDeterminate>
+        </Grid>
+      ); 
 }
     
