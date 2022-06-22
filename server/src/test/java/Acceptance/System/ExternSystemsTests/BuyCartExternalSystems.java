@@ -110,7 +110,7 @@ class BuyCartExternalSystems {
         paymentInfo.setCcv(cvv);
         Response response34 = facade2.buy_cart(paymentInfo, supplyInfo);
         System.out.println(response34.getMessage());
-        assertEquals(response34.getMessage(), "Buy Cart Failed: External Service Denied, Status -2");
+        assertEquals(response34.getMessage(), "Buy Cart Failed: Payment External Service Denied, Status -2");
 
     }
 }
