@@ -21,6 +21,8 @@ public class BidManagerAnswer {
     public BidManagerAnswer(boolean has_permission, boolean has_permission_nego) {
         this.has_permission = has_permission;
         this.has_permission_nego = has_permission_nego;
+        this.has_answer = false;
+        this.answer = false;
     }
 
     public boolean get_has_answer() {

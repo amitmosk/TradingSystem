@@ -32,7 +32,7 @@ public class Bid implements iBid {
     private double negotiation_price;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "managersEmail_answers",
+    @JoinTable(name = "managersEmail_BidAnswers",
         joinColumns = {@JoinColumn(name = "bid_id", referencedColumnName = "bid_id")})
     @MapKeyColumn(name = "manager_email") // the key column
     private Map<String, BidManagerAnswer> managersEmail_answers;
@@ -91,23 +91,14 @@ public class Bid implements iBid {
     @Override
     public void add_manager_of_store(String manager_email, boolean owner) throws MarketException {
         this.managersEmail_answers.put(manager_email, new BidManagerAnswer(owner, owner));
-        this.status = update_status();
-        if(status == closed_confirm)
-        {
-            this.buyer.add_notification("Your bid is confirm by the store managers.");
-        }
-//        HibernateUtils.merge(this);
+
     }
 
 
     @Override
     public void remove_manager(String email) throws MarketException {
         this.managersEmail_answers.remove(email);
-        this.status = update_status();
-        if(status == closed_confirm)
-        {
-            this.buyer.add_notification("Your bid is confirm by the store managers.");
-        }
+
 
 //        HibernateUtils.merge(this);
     }
@@ -146,7 +137,7 @@ public class Bid implements iBid {
         //        HibernateUtils.merge(this);
     }
 
-    private BidStatus update_status() throws MarketException {
+    private BidStatus update_status()  {
 
         if (this.status == closed_denied)
         {
@@ -157,7 +148,7 @@ public class Bid implements iBid {
             return negotiation_mode;
         for (String manger_email : this.managersEmail_answers.keySet()){
             BidManagerAnswer bid_answer = this.managersEmail_answers.get(manger_email);
-            if (!bid_answer.get_has_answer() && (bid_answer.isHas_permission() || bid_answer.isHas_permission_nego() ))
+            if (!bid_answer.get_has_answer() && bid_answer.isHas_permission())
                 return open_waiting_for_answers;
         }
 //        HibernateUtils.merge(this);
@@ -166,6 +157,7 @@ public class Bid implements iBid {
 
     @Override
     public BidStatus get_status(){
+        this.update_status();
         return this.status;
     }
 
