@@ -1,7 +1,7 @@
 package TradingSystem.server.Domain.UserModule;
 
 import TradingSystem.server.DAL.HibernateUtils;
-import TradingSystem.server.Domain.StoreModule.Appointment;
+import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
@@ -311,6 +311,7 @@ public class User {
     }
 
     public void add_notification(String notification) {
+
     }
 
     public UserState find_state() {
@@ -327,5 +328,17 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public boolean check_if_manager(){
+        return this.state.check_if_manager();
+    }
+
+    public boolean check_if_owner(){
+        return this.state.check_if_owner();
+    }
+
+    public boolean check_if_founder(){
+        return this.state.check_if_founder();
     }
 }

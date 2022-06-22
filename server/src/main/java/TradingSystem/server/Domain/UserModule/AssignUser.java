@@ -1,7 +1,7 @@
 package TradingSystem.server.Domain.UserModule;
 
 import TradingSystem.server.DAL.HibernateUtils;
-import TradingSystem.server.Domain.StoreModule.Appointment;
+import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.Utils.Exception.AppointmentException;
@@ -260,6 +260,18 @@ public class AssignUser extends AssignState {
         return answer;
     }
 
+
+    public boolean check_if_manager(){
+        return this.manager.size() > 0;
+    }
+
+    public boolean check_if_owner(){
+        return this.owner.size() > 0;
+    }
+
+    public boolean check_if_founder(){
+        return this.founder.size() > 0;
+    }
 
     public void add_notification(String notification) {
         NotificationHandler.getInstance().add_notification(this.email, notification);

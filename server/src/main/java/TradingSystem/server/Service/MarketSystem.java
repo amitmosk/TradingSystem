@@ -1,9 +1,7 @@
 package TradingSystem.server.Service;
 
 import TradingSystem.server.DAL.HibernateUtils;
-import TradingSystem.server.Domain.ExternSystems.*;
-import TradingSystem.server.Domain.ExternSystems.Proxy.PaymentAdapterTests;
-import TradingSystem.server.Domain.ExternSystems.Proxy.SupplyAdapterTests;
+import TradingSystem.server.Domain.ExternalSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.UserModule.User;
@@ -163,6 +161,7 @@ public class MarketSystem {
         // database:real/demo
         if (config.equals("database:tests")){
             SystemLogger.getInstance().add_log("Init Data For Tests: Empty Database");
+            NotificationHandler.setTestsHandler();
             HibernateUtils.set_tests_mode();
         }
         else if (config.equals("database:real")){

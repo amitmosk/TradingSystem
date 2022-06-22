@@ -3,6 +3,7 @@ package TradingSystem.server.Domain.StoreModule.Store;
 import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
+import TradingSystem.server.Domain.StoreModule.Appointment.*;
 import TradingSystem.server.Domain.StoreModule.Bid.Bid;
 import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Bid.BidManagerAnswer;
@@ -30,8 +31,10 @@ import TradingSystem.server.Domain.UserModule.AssignState;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.Utils.Exception.*;
+import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
 import TradingSystem.server.Domain.Utils.Observable;
 import TradingSystem.server.Domain.Utils.Utils;
+import org.springframework.expression.spel.ast.Assign;
 import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -42,6 +45,9 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.closed_confirm;
+import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.closed_denied;
 
 @Entity
 public class Store implements Observable {
@@ -230,7 +236,7 @@ public class Store implements Observable {
     }
 
     public void add_store_rating(AssignUser user, int rating) throws MarketException {
-        if (this.stuffs_and_appointments.containsKey(user))
+        if (this.stuffs_and_appointments.containsKey(user) && this.stuffs_and_appointments.get(user).getType() != StoreManagerType.candidate)
             throw new NoPremssionException("store members can't rate their store");
         this.storeReview.add_rating(user.get_user_email(), rating);
     }
@@ -419,7 +425,7 @@ public class Store implements Observable {
     }
 
     public Appointment appoint_founder() throws MarketException {
-        Appointment appointment = new Appointment(this.founder, this.founder, this, StoreManagerType.store_founder);
+        Appointment appointment = new Appointment(this.founder, this.founder, this, StoreManagerType.store_founder, this.get_managers_emails());
         this.stuffs_and_appointments.put(founder, appointment);
         this.founder.add_founder(this, appointment);
         HibernateUtils.merge(this);
@@ -461,12 +467,12 @@ public class Store implements Observable {
 
     public StoreManagersInfo view_store_management_information(AssignUser user) throws MarketException {
         this.check_permission(user, StorePermission.view_permissions);
-        //TODO: added parse to emails - appointment map
         List<AppointmentInformation> answer = new LinkedList<>();
         for (Appointment appointment : stuffs_and_appointments.values()) {
-            AppointmentInformation temp = new AppointmentInformation(appointment.getMember().get_user_email(), appointment.getAppointer().get_user_email(),
-                    appointment.getType().toString());
-            answer.add(temp);
+            if (appointment.getType() != StoreManagerType.candidate){
+                AppointmentInformation temp = appointment.get_appointment_information();
+                answer.add(temp);
+            }
         }
         //end
         return new StoreManagersInfo(this.name, answer);
@@ -729,6 +735,8 @@ public class Store implements Observable {
     }
 
     public void add_owner(AssignUser appointer, AssignUser new_owner) throws MarketException {
+        String appointer_email = appointer.get_user_email();
+        String candidate_email = new_owner.get_user_email();
         this.check_permission(appointer, StorePermission.add_owner);
         synchronized (owners_lock) {
             Appointment appointment = this.stuffs_and_appointments.get(new_owner);
@@ -736,26 +744,38 @@ public class Store implements Observable {
                 throw new AppointmentException("User to appoint is already store member");
             }
 
-            Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner);
+            Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner, get_managers_emails());
             this.stuffs_and_appointments.put(new_owner, appointment_to_add);
-            new_owner.add_owner(this, appointment_to_add);
-            this.set_manager_in_bids(0, new_owner.get_user_email(), true);
-            this.send_message_to_the_store_stuff(new_owner.get_user_email()+" is a new owner in the store", appointer.get_user_email());
+            this.send_message_to_the_store_stuff(candidate_email+" is a new owner-candidate in the store,appoint by: " +appointer_email,appointer_email);
+
+            try{
+                this.add_appointment_answer(appointer, new_owner, true);
+            }
+            catch (Exception e){
+                // TODO : AMIT
+            }
             HibernateUtils.merge(this);
         }
     }
 
     public void add_manager(AssignUser appointer, AssignUser new_manager) throws MarketException {
         this.check_permission(appointer, StorePermission.add_manager);
+        String appointer_email = appointer.get_user_email();
+        String candidate_email = new_manager.get_user_email();
         synchronized (managers_lock) {
             Appointment appointment = this.stuffs_and_appointments.get(new_manager);
             if (appointment != null)
                 throw new AppointmentException("User to appoint is already store member");
-            Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager);
+            Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager, get_managers_emails());
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
-            new_manager.add_manager(this, appointment_to_add);
-            this.set_manager_in_bids(0, new_manager.get_user_email(), false);
-            this.send_message_to_the_store_stuff(new_manager.get_user_email()+" is a new manager in the store", appointer.get_user_email());
+            this.send_message_to_the_store_stuff(candidate_email+" is a new manager-candidate in the store,appoint by: " +appointer_email,appointer_email);
+
+            try{
+                this.add_appointment_answer(appointer, new_manager, true);
+            }
+            catch (Exception e){
+                // TODO : AMIT
+            }
             HibernateUtils.merge(this);
         }
     }
@@ -777,7 +797,7 @@ public class Store implements Observable {
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email(), false);
-            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from manage the store", remover.get_user_email());
+            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removed from manage the store", remover.get_user_email());
             HibernateUtils.remove(appointment);
             HibernateUtils.merge(this);
         }
@@ -814,7 +834,7 @@ public class Store implements Observable {
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email(), false);
-            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removing from owns the store", remover.get_user_email());
+            this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removed from owns the store", remover.get_user_email());
             HibernateUtils.remove(appointment);
             HibernateUtils.merge(this);
         }
@@ -920,7 +940,9 @@ public class Store implements Observable {
 
     public void send_message_to_the_store_stuff(String message, String sender_email) {
         for (AssignUser stuff_member : this.stuffs_and_appointments.keySet()) {
-            if (!stuff_member.get_user_email().equals(sender_email))
+            // check for not send the message to the sender & to the store candidates
+            if (!stuff_member.get_user_email().equals(sender_email) &&
+                    this.stuffs_and_appointments.get(stuff_member).getType()!=StoreManagerType.candidate)
                 stuff_member.add_notification(message);
         }
     }
@@ -940,100 +962,6 @@ public class Store implements Observable {
         HibernateUtils.merge(this);
     }
 
-
-    // amit - bid
-
-    public int add_bid_offer(int bid_id, Product product, int quantity, double offer_price, User buyer) throws MarketException {
-
-        //Get all emails of managers who have permission to answer
-
-        List<String> managers_emails = new ArrayList<>();
-        for (Appointment appointment : this.stuffs_and_appointments.values()) {
-            if (appointment.has_permission(StorePermission.answer_bid_offer)) {
-                managers_emails.add(appointment.getMember().get_user_email());
-            }
-        }
-        Bid bid = new Bid(bid_id, quantity, offer_price, managers_emails, product, buyer,founder, this.stuffs_and_appointments);
-        this.bids.put(bid_id, bid);
-        this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName(), "");
-        HibernateUtils.merge(this);
-        return bid_id;
-    }
-
-    public List<BidInformation> view_bids_status(AssignUser user) throws MarketException {
-        this.check_permission(user, StorePermission.view_bids_status);
-        List<BidInformation> answer = new ArrayList<>();
-
-        for (Map.Entry<Integer, Bid> entry : this.bids.entrySet()){
-            BidInformation temp = entry.getValue().get_bid_information(entry.getKey());
-            answer.add(temp);
-        }
-        return answer;
-    }
-
-    public boolean add_bid_answer(User user, boolean manager_answer, int bidID,
-                               double negotiation_price) throws Exception {
-        AssignUser assignUser = user.state_if_assigned();
-        if (negotiation_price == -1) {
-            this.check_permission(assignUser, StorePermission.answer_bid_offer);
-
-        } else {
-            this.check_permission(assignUser, StorePermission.answer_bid_offer_negotiate);
-            if (!manager_answer)
-                throw new Exception("illegal combination - negative answer with negotiation offer");
-            if (negotiation_price < 0)
-                throw new Exception("illegal price");
-
-        }
-        Bid bid = this.bids.get(bidID);
-        bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price, bid.getBuyer());
-
-
-
-        HibernateUtils.persist(this);
-        return handle_updated_bid(bid);
-    }
-
-    private boolean handle_updated_bid(Bid bid) throws MarketException {
-        User buyer = bid.getBuyer();
-        if (bid.get_status() == BidStatus.closed_confirm) {
-
-            buyer.add_notification("Your bid is confirm by the store managers.");
-            Product product = bid.getProduct();
-            buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
-            return true;
-        }
-
-        if (bid.get_status() == BidStatus.negotiation_mode) {
-            buyer.add_notification("Your bid has received a counter-bid.");
-            Product product = bid.getProduct();
-            buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
-        }
-
-        if (bid.get_status() == BidStatus.closed_denied)
-            buyer.add_notification("Your bid is denied by the store managers.");
-        return false;
-
-    }
-
-    /**
-     * @param i          - 0 for add, 1 - for remove
-     * @param user_email - to set
-     */
-    private void set_manager_in_bids(int i, String user_email, boolean owner) throws MarketException {
-        for (Bid bid : this.bids.values()) {
-            if (i == 0)
-            {
-                bid.add_manager_of_store(user_email, owner);
-            }
-
-            if (i == 1) {
-                bid.remove_manager(user_email);
-                handle_updated_bid(bid);
-            }
-        }
-        HibernateUtils.persist(this);
-    }
 
     public List<String> get_permissions(String manager_email) throws AppointmentException {
         List<String> permissions = new ArrayList<>();
@@ -1083,9 +1011,6 @@ public class Store implements Observable {
         return purchasePolicy;
     }
 
-    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
-        this.purchasePolicy = purchasePolicy;
-    }
 
     public Map<String, Ipredict> getPredictList() {
         return predictList;
@@ -1093,5 +1018,163 @@ public class Store implements Observable {
 
     public void setPredictList(Map<String, Ipredict> predictList) {
         this.predictList = predictList;
+    }
+
+
+    // amit - bid
+
+    public int add_bid_offer(int bid_id, Product product, int quantity, double offer_price, User buyer) {
+        List<String> managers_emails = new ArrayList<>();
+        for (Appointment appointment : this.stuffs_and_appointments.values()) {
+            if (appointment.has_permission(StorePermission.answer_bid_offer)) {
+                managers_emails.add(appointment.getMember().get_user_email());
+            }
+        }
+        Bid bid = new Bid(bid_id, quantity, offer_price, managers_emails, product, buyer,founder, this.stuffs_and_appointments);
+        this.bids.put(bid_id, bid);
+        this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName(), "");
+        //TODO - ask Gal of merge instead persist
+        HibernateUtils.persist(this);
+        return bid_id;
+    }
+
+    public List<BidInformation> view_bids_status(AssignUser user) throws NoPremssionException {
+        this.check_permission(user, StorePermission.view_bids_status);
+        List<BidInformation> answer = new ArrayList<>();
+
+        for (Map.Entry<Integer, Bid> entry : this.bids.entrySet()){
+            BidInformation temp = entry.getValue().get_bid_information(entry.getKey());
+            answer.add(temp);
+        }
+        return answer;
+    }
+
+    public boolean add_bid_answer(User user, boolean manager_answer, int bidID,
+                               double negotiation_price) throws Exception {
+        AssignUser assignUser = user.state_if_assigned();
+        if (negotiation_price == -1) {
+            this.check_permission(assignUser, StorePermission.answer_bid_offer);
+
+        } else {
+            this.check_permission(assignUser, StorePermission.answer_bid_offer_negotiate);
+            if (!manager_answer)
+                throw new Exception("illegal combination - negative answer with negotiation offer");
+            if (negotiation_price < 0)
+                throw new Exception("illegal price");
+
+        }
+        if (!this.bids.containsKey(bidID))
+            throw new Exception("There Is No Bid With This ID");
+        Bid bid = this.bids.get(bidID);
+        bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
+
+
+        HibernateUtils.persist(this);
+        return handle_updated_bid(bid);
+    }
+
+    private boolean handle_updated_bid(Bid bid) throws MarketException {
+        User buyer = bid.getBuyer();
+        if (bid.get_status() == BidStatus.closed_confirm) {
+            buyer.state_if_assigned().add_notification("Your bid is confirm by the store managers.");
+            Product product = bid.getProduct();
+            buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
+            return true;
+        }
+
+        if (bid.get_status() == BidStatus.negotiation_mode) {
+            buyer.state_if_assigned().add_notification("Your bid has received a counter-bid.");
+            Product product = bid.getProduct();
+            buyer.add_product_to_cart_from_bid_offer(this, product, bid.getQuantity(), bid.get_offer_price());
+        }
+
+        if (bid.get_status() == BidStatus.closed_denied)
+            buyer.state_if_assigned().add_notification("Your bid is denied by the store managers.");
+        return false;
+
+
+    }
+
+    /**
+     * @param i - 0 for add, 1 - for remove
+     * @param user_email - to set
+     */
+    private void set_manager_in_bids(int i, String user_email, boolean owner) throws MarketException {
+        for (Bid bid : this.bids.values()) {
+            if (bid.get_status() == BidStatus.open_waiting_for_answers) {
+                if (i == 0)
+                    bid.add_manager_of_store(user_email, owner);
+                if (i == 1)
+                {
+                    bid.remove_manager(user_email);
+                    handle_updated_bid(bid);
+
+                }
+
+            }
+            HibernateUtils.persist(this);
+        }
+        for (Appointment appointment : this.stuffs_and_appointments.values()){
+            if (appointment.get_status() == AppointmentStatus.open_waiting_for_answers)
+                if (i == 0)
+                    appointment.add_manager_of_store(user_email);
+            if (i == 1)
+                appointment.remove_manager(user_email);
+        }
+        HibernateUtils.persist(this);
+    }
+
+
+
+
+    public List<AppointmentInformation> view_waiting_appointments_status(AssignUser user) throws NoPremssionException {
+        this.check_permission(user, StorePermission.answer_appointment);
+        List<AppointmentInformation> answer = new ArrayList<>();
+
+        for (Appointment appointment : this.stuffs_and_appointments.values()){
+            AppointmentInformation temp = appointment.get_appointment_information();
+            answer.add(temp);
+        }
+        return answer;
+    }
+
+    public void setPurchasePolicy(PurchasePolicy purchasePolicy) {
+        this.purchasePolicy = purchasePolicy;
+    }
+
+    private List<String> get_managers_emails(){
+        List<String> managers_emails = new ArrayList<>();
+        for (Appointment appointment : this.stuffs_and_appointments.values()) {
+            String email = appointment.getMember().get_user_email();
+            if (appointment.getType()!=StoreManagerType.candidate)
+                managers_emails.add(email);
+        }
+        return managers_emails;
+    }
+    public boolean add_appointment_answer(AssignUser manager, AssignUser candidate , boolean manager_answer) throws Exception {
+        // TODO : this lines could throw exceptions, ASK GAL about hibernate
+        String manager_email = manager.get_user_email();
+        String candidate_email = candidate.get_user_email();
+        this.check_permission(manager, StorePermission.answer_appointment);
+        Appointment appointment = this.stuffs_and_appointments.get(candidate);
+        appointment.add_manager_answer(manager_email, manager_answer);
+        if (appointment.get_status() == closed_denied){
+            this.send_message_to_the_store_stuff("Appointment of: " + candidate_email + " is denied by: "+manager_email,manager_email);
+        }
+        else if (appointment.get_status() == closed_confirm){
+            if (appointment.getType() == StoreManagerType.store_owner){
+                candidate.add_owner(this, appointment);
+                this.set_manager_in_bids(0, candidate_email);
+                MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") owner");
+                this.send_message_to_the_store_stuff(candidate_email+" is a new owner in the store, confirm by all the managers.", "");
+            }
+            else if (appointment.getType() == StoreManagerType.store_manager){
+                candidate.add_manager(this, appointment);
+                this.set_manager_in_bids(0, candidate_email);
+                MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
+                this.send_message_to_the_store_stuff(candidate_email+" is a new manager in the store, confirm by all the managers.", "");
+            }
+        }
+        return true;
     }
 }

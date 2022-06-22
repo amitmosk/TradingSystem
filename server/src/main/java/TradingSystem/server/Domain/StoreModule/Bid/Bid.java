@@ -19,7 +19,7 @@ import java.util.Map;
 import static TradingSystem.server.Domain.StoreModule.Bid.BidStatus.*;
 
 @Entity
-public class Bid implements iBid {
+public class Bid implements iManagersConfirm {
     @Id
     public int bid_id;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

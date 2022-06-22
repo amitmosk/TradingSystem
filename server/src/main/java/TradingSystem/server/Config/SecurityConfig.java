@@ -1,4 +1,4 @@
-//package TradingSystem.server.config;
+//package TradingSystem.server.Config;
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;

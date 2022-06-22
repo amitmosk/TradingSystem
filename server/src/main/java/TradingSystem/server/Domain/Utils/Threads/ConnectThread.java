@@ -53,6 +53,8 @@ public class ConnectThread implements Runnable {
             }
 
             HttpURLConnection urlConnection = (HttpURLConnection) new URL(url).openConnection();
+            urlConnection.setConnectTimeout(10000);
+            urlConnection.setReadTimeout(10000);
             urlConnection.setUseCaches(false);
             urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); // handle url encoded form data
             urlConnection.setRequestProperty("charset", "utf-8");
