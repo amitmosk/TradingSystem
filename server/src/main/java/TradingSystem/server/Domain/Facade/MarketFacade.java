@@ -1993,7 +1993,7 @@ public class MarketFacade {
             List<Product> products = store_controller.get_products_by_store_id(store_id);
             List<ProductInformation> products_information = new ArrayList<>();
             for (Product p : products) {
-                products_information.add(new ProductInformation(p, 0));
+                products_information.add(new ProductInformation(p, 0,p.getOriginal_price() ));
             }
             HibernateUtils.commit();
             response = new Response(products_information, "Received store products successfully");
@@ -2081,14 +2081,14 @@ public class MarketFacade {
     }
 
 
-    public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
-        Response<String> response = null;
+    public Response<Integer> add_bid(int storeID, int productID, int quantity, double offer_price) {
+        Response<Integer> response = null;
         try {
             HibernateUtils.beginTransaction();
             User buyer = user_controller.get_user(loggedUser);
             int bid_id = this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer);
             HibernateUtils.commit();
-            response = new Response(bid_id, "adding bid offer for product");
+            response = new Response(bid_id, "Adding bid offer for product");
             market_logger.add_log("User added bid offer for " + quantity + " of product- " + productID + " from store- " + storeID);
         } catch (Exception e) {
             HibernateUtils.rollback();
@@ -2099,15 +2099,14 @@ public class MarketFacade {
     }
 
     public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
-        // if that the last positive answer -> buy.
-        Response<String> response = null;
+        Response<Boolean> response = null;
         try {
             HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
-            this.store_controller.manager_answer_bid(storeID, user, manager_answer, bidID, negotiation_price);
+            boolean confirm = this.store_controller.manager_answer_bid(storeID, user, manager_answer, bidID, negotiation_price);
             HibernateUtils.commit();
-            response = new Response<>("", "manager answer bid offer successfully");
-            market_logger.add_log("manager answer bid offer successfully");
+            response = new Response<Boolean>(confirm, "manager answer bid offer successfully");
+            market_logger.add_log("manager "+user.user_email()+ " answer bid offer successfully");
         } catch (Exception e) {
             HibernateUtils.rollback();
             response = Utils.CreateResponse(e);
