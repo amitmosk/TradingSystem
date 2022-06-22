@@ -245,7 +245,7 @@ export default function AddDiscount() {
         }
         if (Utils.check_precent(discount) == 0)
         {
-            setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
+            setSnackbar({ children: "Illegal precent value", severity: 'error' });
             return;
         }
         const response = await policiesApi.add_simple_categorey_discount_rule(store_id, categoryChosen, discount, rule_name); 
