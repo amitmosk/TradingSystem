@@ -97,12 +97,14 @@ public class QuestionController implements iQuestionController {
     public void add_buyer_question(String message, AssignUser sender, int store_id){
         int question_id = this.question_ids_counter.getAndIncrement();
         BuyerQuestion question_to_add = new BuyerQuestion(question_id, message, sender, store_id);
+        HibernateUtils.persist(question_to_add);
         this.buyer_to_store.put(question_id, question_to_add);
     }
 
     public void add_user_question(String message, AssignUser sender){
         int question_id = this.question_ids_counter.getAndIncrement();
         UserQuestion question_to_add = new UserQuestion(question_id, message, sender);
+        HibernateUtils.persist(question_to_add);
         this.user_to_admin.put(question_id, question_to_add);
     }
 
