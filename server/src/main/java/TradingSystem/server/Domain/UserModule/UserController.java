@@ -59,6 +59,14 @@ public class UserController {
         //TODO: change to read one
 //        this.statisticsManager = HibernateUtils.getEntityManager().find(StatisticsManager.class, new Long(1));
         this.statisticsManager = new StatisticsManager();
+        for(Map.Entry<Integer,User> en: onlineUsers.entrySet()){
+            try {
+                onlineUsers.put(en.getKey(), users.get(en.getValue().user_email()));
+            }
+            catch (Exception e){
+
+            }
+        }
         SystemLogger.getInstance().add_log("user controller load");
     }
 
