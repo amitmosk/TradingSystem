@@ -1,24 +1,772 @@
-Jun 17, 2022 2:06:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: WS : Configure Message Broker
-Jun 17, 2022 2:06:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: Start Init Market
-Jun 17, 2022 2:06:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\system_config.txt
-Jun 17, 2022 2:06:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: Set Real External Services
-Jun 17, 2022 2:06:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: System Start Connect To External Services
-Jun 17, 2022 2:06:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: System Connected To The Payment System
-Jun 17, 2022 2:06:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: HTTP POST On Success Response= OK
-Jun 17, 2022 2:06:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 23, 2022 11:10:51 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: System Connected To The Supply System
-Jun 17, 2022 2:06:26 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 23, 2022 11:10:52 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: HTTP POST On Success Response= OK
-Jun 17, 2022 2:07:00 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: Init Data From Demo, Data File Path: ..\server\src\main\java\TradingSystem\server\Config\instructions_config.txt
-Jun 17, 2022 2:07:02 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: New Admin In The Market: amit@walla.com
-Jun 17, 2022 3:13:58 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: Init Data Demo Fail, The System Run With No Data :Error while committing the transaction
+Jun 23, 2022 11:11:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:19 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:21 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:21 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:21 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:21 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:21 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:24 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:24 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:24 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:24 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:24 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:34 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:34 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:34 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:34 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:34 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:43 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:44 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:44 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:44 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:44 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:44 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:11:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:11:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:11:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:11:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:11:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Cancel Payment Of Transaction : -1
+Jun 23, 2022 11:11:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:11:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Cancel Supply Of Transaction : -1
+Jun 23, 2022 11:11:55 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:11:56 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 39104
+Jun 23, 2022 11:11:56 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 93858
+Jun 23, 2022 11:11:57 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 68555
+Jun 23, 2022 11:11:57 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 29032
+Jun 23, 2022 11:11:57 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 94310
+Jun 23, 2022 11:11:57 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 38988
+Jun 23, 2022 11:11:57 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 19368
+Jun 23, 2022 11:11:57 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 55593
+Jun 23, 2022 11:11:58 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 20810
+Jun 23, 2022 11:11:58 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 48138
+Jun 23, 2022 11:11:58 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 77326
+Jun 23, 2022 11:11:58 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 62424
+Jun 23, 2022 11:11:58 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 34927
+Jun 23, 2022 11:11:58 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 61194
+Jun 23, 2022 11:11:59 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 52646
+Jun 23, 2022 11:11:59 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 11704
+Jun 23, 2022 11:11:59 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 65012
+Jun 23, 2022 11:11:59 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 82604
+Jun 23, 2022 11:11:59 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 10493
+Jun 23, 2022 11:11:59 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 32586
+Jun 23, 2022 11:11:59 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 91356
+Jun 23, 2022 11:12:00 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 78383
+Jun 23, 2022 11:12:00 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 60629
+Jun 23, 2022 11:12:00 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 22590
+Jun 23, 2022 11:12:00 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 36268
+Jun 23, 2022 11:12:00 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 70522
+Jun 23, 2022 11:12:00 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 69312
+Jun 23, 2022 11:12:01 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 87261
+Jun 23, 2022 11:12:01 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 26702
+Jun 23, 2022 11:12:01 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 71103
+Jun 23, 2022 11:12:01 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 36539
+Jun 23, 2022 11:12:01 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 13747
+Jun 23, 2022 11:12:01 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 17668
+Jun 23, 2022 11:12:02 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 49873
+Jun 23, 2022 11:12:02 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 85945
+Jun 23, 2022 11:12:02 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 68213
+Jun 23, 2022 11:12:02 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 72183
+Jun 23, 2022 11:12:02 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 81310
+Jun 23, 2022 11:12:02 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 92741
+Jun 23, 2022 11:12:02 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 57206
+Jun 23, 2022 11:12:03 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 19522
+Jun 23, 2022 11:12:03 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 52719
+Jun 23, 2022 11:12:03 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 27054
+Jun 23, 2022 11:12:03 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 15750
+Jun 23, 2022 11:12:03 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 37170
+Jun 23, 2022 11:12:03 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 11188
+Jun 23, 2022 11:12:04 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 88145
+Jun 23, 2022 11:12:04 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 56844
+Jun 23, 2022 11:12:04 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 15465
+Jun 23, 2022 11:12:04 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 85480
+Jun 23, 2022 11:12:04 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 39409
+Jun 23, 2022 11:12:04 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 26330
+Jun 23, 2022 11:12:05 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 93259
+Jun 23, 2022 11:12:05 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 23477
+Jun 23, 2022 11:12:05 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 29036
+Jun 23, 2022 11:12:05 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 73840
+Jun 23, 2022 11:12:05 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 61175
+Jun 23, 2022 11:12:05 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 87677
+Jun 23, 2022 11:12:05 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 96608
+Jun 23, 2022 11:12:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 59207
+Jun 23, 2022 11:12:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 15008
+Jun 23, 2022 11:12:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 69763
+Jun 23, 2022 11:12:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 23460
+Jun 23, 2022 11:12:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 71168
+Jun 23, 2022 11:12:06 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 70572
+Jun 23, 2022 11:12:07 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 86614
+Jun 23, 2022 11:12:07 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 41451
+Jun 23, 2022 11:12:07 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 31809
+Jun 23, 2022 11:12:07 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 10325
+Jun 23, 2022 11:12:07 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 50684
+Jun 23, 2022 11:12:07 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 37652
+Jun 23, 2022 11:12:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 94343
+Jun 23, 2022 11:12:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 73467
+Jun 23, 2022 11:12:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 65571
+Jun 23, 2022 11:12:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 76391
+Jun 23, 2022 11:12:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 30179
+Jun 23, 2022 11:12:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 32917
+Jun 23, 2022 11:12:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 82957
+Jun 23, 2022 11:12:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 12046
+Jun 23, 2022 11:12:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 18299
+Jun 23, 2022 11:12:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 23423
+Jun 23, 2022 11:12:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 64553
+Jun 23, 2022 11:12:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 95155
+Jun 23, 2022 11:12:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 48626
+Jun 23, 2022 11:12:10 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 16005
+Jun 23, 2022 11:12:10 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 46073
+Jun 23, 2022 11:12:10 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 51730
+Jun 23, 2022 11:12:10 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 73520
+Jun 23, 2022 11:12:10 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 19878
+Jun 23, 2022 11:12:10 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 64125
+Jun 23, 2022 11:12:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 44125
+Jun 23, 2022 11:12:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 30263
+Jun 23, 2022 11:12:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 97938
+Jun 23, 2022 11:12:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 52178
+Jun 23, 2022 11:12:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 23969
+Jun 23, 2022 11:12:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 51353
+Jun 23, 2022 11:12:11 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 32185
+Jun 23, 2022 11:12:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 91579
+Jun 23, 2022 11:12:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 14725
+Jun 23, 2022 11:12:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 97438
+Jun 23, 2022 11:12:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 67605
+Jun 23, 2022 11:12:12 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 21724
+Jun 23, 2022 11:12:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 40506
+Jun 23, 2022 11:12:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 60073
+Jun 23, 2022 11:12:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 25404
+Jun 23, 2022 11:12:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 26243
+Jun 23, 2022 11:12:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 72955
+Jun 23, 2022 11:12:13 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 44309
+Jun 23, 2022 11:12:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 16009
+Jun 23, 2022 11:12:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:14 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= OK
+Jun 23, 2022 11:12:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:15 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:16 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 49510
+Jun 23, 2022 11:12:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= OK
+Jun 23, 2022 11:12:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:17 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:18 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 1
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Error Status Code= 500 Message= Read timed out
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Payment External Service Fail: For input string: "Read timed out"
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= unexpected-output
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Payment External Service Fail: For input string: "unexpected-output"
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:30 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:31 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database
+Jun 23, 2022 11:12:40 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Start Init Market
+Jun 23, 2022 11:12:40 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\tests_config.txt
+Jun 23, 2022 11:12:40 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Set Tests External Services
+Jun 23, 2022 11:12:40 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: System Start Connect To External Services
+Jun 23, 2022 11:12:40 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data For Tests: Empty Database

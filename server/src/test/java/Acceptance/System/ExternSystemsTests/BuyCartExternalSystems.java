@@ -1,5 +1,6 @@
 package Acceptance.System.ExternSystemsTests;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.ExternalSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.Questions.QuestionController;
@@ -18,6 +19,7 @@ import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Service.MarketSystem;
+import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +54,7 @@ class BuyCartExternalSystems {
 
     @BeforeAll
     static void setUp() {
+        HibernateUtils.clear_db();
         List<String> keywords = new ArrayList<>();
         keywords.add("aaaa");
         try {

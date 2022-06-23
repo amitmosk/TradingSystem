@@ -97,10 +97,15 @@ public class HibernateUtils {
     public static synchronized void clear_db() {
 //        getEntityManager().createNativeQuery("DROP SCHEMA database").executeUpdate();
 //        getEntityManager().createNativeQuery("Create SCHEMA  database").executeUpdate();
-        threadLocal.get().clear();
-        threadLocal.get().close();
+//        threadLocal.get().clear();
+//        threadLocal.get().close();
+        getEntityManager().clear();
+        getEntityManager().close();
+//        em = null;
+        emf.close();
+        em = null;
         emf = Persistence.createEntityManagerFactory(persistence_unit);
-        threadLocal.set(null);
+//        threadLocal.set(null);
     }
 
     public static void closeEntityManagerFactory() {
