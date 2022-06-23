@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Question {
     @Id
+//    //generated
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int question_id;
     protected String message_date;
     protected String answer_date;
@@ -81,6 +83,17 @@ public abstract class Question {
 
     public abstract String toString_for_user();
 
+    public void setQuestion_id(int question_id) {
+        this.question_id = question_id;
+    }
+
+    public void setMessage_date(String message_date) {
+        this.message_date = message_date;
+    }
+
+    public void setSender(AssignUser sender) {
+        this.sender = sender;
+    }
 
 
 

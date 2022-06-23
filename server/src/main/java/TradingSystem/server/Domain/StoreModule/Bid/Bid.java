@@ -23,6 +23,8 @@ import static TradingSystem.server.Domain.StoreModule.Bid.BidStatus.*;
 @Entity
 public class Bid implements iManagersConfirm {
     @Id
+    //generated
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int bid_id;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Product product;
@@ -100,8 +102,6 @@ public class Bid implements iManagersConfirm {
     @Override
     public void remove_manager(String email)  {
         this.managersEmail_answers.remove(email);
-
-
 //        HibernateUtils.merge(this);
     }
 
@@ -135,8 +135,7 @@ public class Bid implements iManagersConfirm {
             else
                 this.status = this.update_status();
         }
-
-        //        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     private BidStatus update_status()  {
@@ -153,7 +152,6 @@ public class Bid implements iManagersConfirm {
             if (!bid_answer.get_has_answer() && bid_answer.isHas_permission())
                 return open_waiting_for_answers;
         }
-//        HibernateUtils.merge(this);
         return closed_confirm;
     }
 

@@ -42,7 +42,21 @@ public class QuestionController implements iQuestionController {
         this.buyer_to_store = new ConcurrentHashMap<>();
         this.user_to_admin = new ConcurrentHashMap<>();
         this.question_ids_counter = new AtomicInteger(1);
+    }
 
+    //TODO : not implemented yet !
+    public void load(){
+        List<BuyerQuestion> buyers = HibernateUtils.buyerquestions();
+        List<UserQuestion> userQuestions = HibernateUtils.userQuestions();
+        this.buyer_to_store = new ConcurrentHashMap<>();
+        this.user_to_admin = new ConcurrentHashMap<>();
+        for(BuyerQuestion b : buyers){
+            buyer_to_store.put(b.question_id,b);
+        }
+        for(UserQuestion u:userQuestions){
+            user_to_admin.put(u.question_id,u);
+        }
+        this.question_ids_counter = new AtomicInteger(HibernateUtils.get_max_question_id());
     }
 
     public static QuestionController getInstance(){
@@ -83,15 +97,15 @@ public class QuestionController implements iQuestionController {
     public void add_buyer_question(String message, AssignUser sender, int store_id){
         int question_id = this.question_ids_counter.getAndIncrement();
         BuyerQuestion question_to_add = new BuyerQuestion(question_id, message, sender, store_id);
+        HibernateUtils.persist(question_to_add);
         this.buyer_to_store.put(question_id, question_to_add);
-        HibernateUtils.merge(this);
     }
 
     public void add_user_question(String message, AssignUser sender){
         int question_id = this.question_ids_counter.getAndIncrement();
         UserQuestion question_to_add = new UserQuestion(question_id, message, sender);
+        HibernateUtils.persist(question_to_add);
         this.user_to_admin.put(question_id, question_to_add);
-        HibernateUtils.merge(this);
     }
 
     public void answer_buyer_question(int question_id, String answer) throws ObjectDoesntExsitException {
@@ -102,7 +116,6 @@ public class QuestionController implements iQuestionController {
         Question question = this.buyer_to_store.get(question_id);
         question.setAnswer(answer);
         question.getSender().add_notification("your question got answered");
-        HibernateUtils.merge(this);
     }
 
     public void answer_user_question(int question_id, String answer) throws ObjectDoesntExsitException {

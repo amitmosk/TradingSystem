@@ -164,13 +164,18 @@ public class MarketSystem {
             NotificationHandler.setTestsHandler();
             HibernateUtils.set_tests_mode();
         }
+        else if (config.equals("database:load_tests")){
+                SystemLogger.getInstance().add_log("Init Data For load Tests: Empty Database");
+                HibernateUtils.set_load_tests_mode();
+        }
         else if (config.equals("database:real")){
             try
             {
                 HibernateUtils.set_normal_use();
                 SystemLogger.getInstance().add_log("Init Data From Database");
-                UserController.load();
-                StoreController.load();
+                StoreController.get_instance().load();
+                UserController.get_instance().load();
+                StoreController.get_instance().load();
             }
             catch (Exception e){
                 throw new ExitException("Cant Connect To Database.");

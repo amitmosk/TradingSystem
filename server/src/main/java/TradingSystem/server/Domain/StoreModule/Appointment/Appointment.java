@@ -219,7 +219,6 @@ public class Appointment {
             this.permissions.put(key, 1);
         else
             this.permissions.put(key, 0);
-        HibernateUtils.merge(this);
 
     }
 
@@ -270,7 +269,6 @@ public class Appointment {
         for (StorePermission myVar : permissions) {
             this.set_permission(myVar, true);
         }
-        HibernateUtils.merge(this);
     }
 
     public boolean is_owner() {
