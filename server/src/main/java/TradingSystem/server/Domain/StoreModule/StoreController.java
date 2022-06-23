@@ -2,6 +2,9 @@ package TradingSystem.server.Domain.StoreModule;
 
 
 import TradingSystem.server.DAL.HibernateUtils;
+import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
+import TradingSystem.server.Domain.StoreModule.Appointment.AppointmentInformation;
+import TradingSystem.server.Domain.StoreModule.Appointment.StorePermission;
 import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
@@ -15,8 +18,8 @@ import TradingSystem.server.Domain.UserModule.Cart;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.*;
-import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
+import org.springframework.expression.spel.ast.Assign;
 
 import javax.persistence.*;
 import java.util.*;
@@ -541,27 +544,6 @@ public class StoreController {
         this.storesLock = storesLock;
     }
 
-    public List<BidInformation> view_bids_status(int store_id, User user) throws Exception {
-        AssignUser user_state = user.state_if_assigned();
-        Store store = this.get_store_by_store_id(store_id);
-        return store.view_bids_status(user_state);
-    }
-
-    public void manager_answer_bid(int storeID, User user, boolean manager_answer, int bidID,
-                                   double negotiation_price) throws Exception {
-        Store store = get_store_by_store_id(storeID);
-        store.add_bid_answer(user, manager_answer, bidID, negotiation_price);
-    }
-
-
-    public int add_bid_offer(int productID, int storeID, int quantity, double offer_price, User buyer)
-            throws Exception {
-        Store store = get_store_by_store_id(storeID);
-        Product product = checkAvailablityAndGet(storeID, productID, quantity);
-        int bid_id = this.bids_ids_counter.getAndIncrement();
-        return store.add_bid_offer(bid_id, product, quantity, offer_price, buyer);
-    }
-
     public List<String> get_permissions(String manager_email, int store_id) throws StoreException, AppointmentException {
         Store store = get_store_by_store_id(store_id); //trows exceptions
         return store.get_permissions(manager_email);
@@ -575,6 +557,48 @@ public class StoreController {
     public int getProduct_ids_counter() {
         return products_id.get();
     }
+
+
+
+
+
+
+    public List<BidInformation> view_bids_status(int store_id, User user) throws Exception {
+        AssignUser user_state = user.state_if_assigned();
+        Store store = this.get_store_by_store_id(store_id);
+        return store.view_bids_status(user_state);
+    }
+
+    public boolean manager_answer_bid(int storeID, User user, boolean manager_answer, int bidID,
+                                   double negotiation_price) throws Exception {
+        Store store = get_store_by_store_id(storeID);
+        return store.add_bid_answer(user, manager_answer, bidID, negotiation_price);
+    }
+
+
+    public int add_bid_offer(int productID, int storeID, int quantity, double offer_price, User buyer)
+            throws Exception {
+        Store store = get_store_by_store_id(storeID);
+        Product product = checkAvailablityAndGet(storeID, productID, quantity);
+        int bid_id = this.bids_ids_counter.getAndIncrement();
+        return store.add_bid_offer(bid_id, product, quantity, offer_price, buyer);
+    }
+
+    public List<AppointmentInformation> view_appointments_status(int store_id, User user) throws Exception {
+        AssignUser user_state = user.state_if_assigned();
+        Store store = this.get_store_by_store_id(store_id);
+        return store.view_waiting_appointments_status(user_state);
+    }
+
+    public void add_appointment_answer(int store_id, User user, boolean manager_answer, User candidate) throws Exception{
+        AssignUser manager = user.state_if_assigned();
+        AssignUser candidate1 = candidate.state_if_assigned();
+        Store store = get_store_by_store_id(store_id);
+        store.add_appointment_answer(manager, candidate1, manager_answer);
+
+    }
+
+
 
 }
 

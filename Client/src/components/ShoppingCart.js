@@ -132,6 +132,7 @@ export default class ShoppingCart extends Component {
       });
       let new_items = this.state.items.filter((i) => selected.id !== i.id);
       this.setState({ items: new_items, selected_item: [] });
+      window.location.reload();
     }
   };
 

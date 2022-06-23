@@ -4,3 +4,8 @@ server/ErrorLogger.txt
 server/SystemLogger.txt
 
 *.pack
+server/LogFiles/Market/MarketLogger.txt
+server/LogFiles/Market/MarketLogger.txt.lck
+server/LogFiles/System/SystemLogger.txt
+server/LogFiles/System/SystemLogger.txt.1
+server/LogFiles/System/SystemLogger.txt.lck

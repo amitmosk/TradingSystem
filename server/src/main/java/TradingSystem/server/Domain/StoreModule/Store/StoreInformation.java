@@ -1,15 +1,11 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
-import TradingSystem.server.Domain.StoreModule.Appointment;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
-import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
-import TradingSystem.server.Domain.UserModule.AssignUser;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class StoreInformation {
     private int store_id;
@@ -37,7 +33,7 @@ public class StoreInformation {
     private void update_inv(Map<Product, Integer> prod_quantity){
         List<ProductInformation> lst = new ArrayList<>();
         for(Map.Entry<Product,Integer> en : prod_quantity.entrySet()){
-            lst.add(new ProductInformation(en.getKey(),en.getValue()));
+            lst.add(new ProductInformation(en.getKey(),en.getValue(), en.getKey().getOriginal_price()));
         }
         this.inventory = lst;
     }
