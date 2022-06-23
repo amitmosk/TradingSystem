@@ -1,4 +1,4 @@
-export class Statistic {
+export class Statistics {
     // public String init_system_time;
     // private long login_per_minutes;
     // private long logout_per_minutes;
@@ -34,7 +34,7 @@ export class Statistic {
       managers_but_not_owners_or_founders,
       owners_or_founders
     ) {
-      return new Statistic({
+      return new Statistics({
         init_system_time: init_system_time,
         login_per_minutes: login_per_minutes,
         logout_per_minutes: logout_per_minutes,

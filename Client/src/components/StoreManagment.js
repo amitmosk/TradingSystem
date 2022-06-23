@@ -393,6 +393,7 @@ export default class StoreManagment extends Component {
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddPurchase` }} underline="hover" >{'Add Purchase Rule'}</Link></Item ></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`CreatePredict` }} underline="hover" >{'Create Predict'}</Link></Item ></Grid> */}
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`StorePolicies` }} underline="hover" >{'Store Policies'}</Link></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ViewBidsStatus` }}   underline="hover" >{"Store Bids"}</Link> </Item ></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ViewAppointmentsStatus` }}   underline="hover" >{"Show Store Appointments Agreements"}</Link> </Item ></Grid>
 
 

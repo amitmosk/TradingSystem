@@ -11,6 +11,9 @@ import AddShoppingCartOutlined from "@mui/icons-material/AddShoppingCartOutlined
 import Store from "@mui/icons-material/Store";
 import MonetizationOn from "@mui/icons-material/MonetizationOn";
 import FormDialog from './FormDialog';
+import { Utils } from '../ServiceObjects/Utils';
+
+
 
 export default class HomeProductsTable extends Component {
   constructor(props) {
@@ -65,14 +68,6 @@ export default class HomeProductsTable extends Component {
         // Important: passing id from customers state so I can delete or edit each user
         renderCell: (id) => (
           <>
-            {/* <IconButton
-              color="primary"
-              aria-label="store"
-              // onClick={() => this.go_to_store_page(id)}
-              onClick={() => this.go_to_store_page(id)}
-            >
-              <Store />
-            </IconButton> */}
               
              <Link to={{pathname:`StorePage/${this.state.items.find((i) => id.id === i.id).store}`}}   underline="hover" >{   <IconButton
               color="primary"
@@ -83,29 +78,25 @@ export default class HomeProductsTable extends Component {
           </>
         ),
       },
+      
       {
+        
         field: "add_bid",
         headerName: "ADD BID",
         width: 150,
         // Important: passing id from customers state so I can delete or edit each user
         renderCell: (id) => (
           <>
-
+            {!this.props.stores_managed.includes(this.state.items.find((i) => id.id === i.id).store) ?
             <FormDialog fields={this.state.add_bid_fields} getValues={this.add_bid.bind(this)} params={[this.state.items.find((i) => id.id === i.id).store,id.id]} name={   <IconButton
               color="primary"
               aria-label="store"
             >
               <MonetizationOn />
-            </IconButton>}></FormDialog>
-             {/* <Link to={{pathname:`StorePage/${this.state.items.find((i) => id.id === i.id).store}`}}   underline="hover" >{   <IconButton
-              color="primary"
-              aria-label="store"
-            >
-              <Store />
-            </IconButton>}</Link>  */}
-          </>
+            </IconButton>}></FormDialog>: null}
+          </> 
         ),
-      },
+      } 
     ];
   }
   async add_bid(values)
@@ -115,6 +106,16 @@ export default class HomeProductsTable extends Component {
     const price = values[1];
     const store_id = values[2];
     const product_id = values[3];
+    if (quantity == undefined || Utils.check_not_empty(quantity)==0 || Utils.check_all_digits(quantity)==0)
+    {
+      this.setState({ snackbar: { children: "Illegal quantity", severity: "error" } });
+      return;
+    }
+    if (price == undefined || Utils.check_not_empty(price)==0 || Utils.check_all_digits(price)==0)
+    {
+      this.setState({ snackbar: { children: "Illegal price", severity: "error" } });
+      return;
+    }
     console.log(values);
     console.log(quantity);
     console.log(price);
@@ -146,6 +147,7 @@ export default class HomeProductsTable extends Component {
         })
       )
     );
+    console.log(this.props.stores_managed);
     console.log("products = "+products_list);
     this.setState({
       items: products_list,
