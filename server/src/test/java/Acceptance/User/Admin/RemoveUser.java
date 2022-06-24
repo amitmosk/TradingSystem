@@ -145,6 +145,9 @@ class RemoveUser {
         boolean suppose_to_throw = true;
         String message;
         facade1.logout();
+        facade2.logout();
+        facade3.logout();
+        facade4.logout();
 
         message = make_assert_exception_message(test_name, "no one is connected", suppose_to_throw);
         res = facade1.remove_user(user_regular_email_1);  // no one is connected
