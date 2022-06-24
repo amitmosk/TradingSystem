@@ -12,6 +12,7 @@ import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Service.MarketSystem;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -24,42 +25,43 @@ import static TradingSystem.server.Service.MarketSystem.tests_config_file_path;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnswerQuestions {
-    private MarketFacade facade1;
-    private MarketFacade facade2;
-    private MarketFacade facade3;
-    private MarketFacade facade4;
-    private UserController uc;
-    private PaymentAdapter pa;
-    private SupplyAdapter sa;
-    private String email;
-    private String password;
-    private String birth_date;
+    private static MarketFacade facade1;
+    private static MarketFacade facade2;
+    private static MarketFacade facade3;
+    private static MarketFacade facade4;
+    private static UserController uc;
+    private static PaymentAdapter pa;
+    private static SupplyAdapter sa;
+    private static String email;
+    private static String password;
+    private static String birth_date;
     private final int num_of_threads = 100;
-    private String user_premium_security_email;
-    private String user_password;
-    private String user_founder_email;
-    private String user_buyer_email;
-    private String user_regular_email_1;
-    private String user_regular_email_2;
-    private String user_admin_email;
-    private int store_id;
-    private int product_id;
-    private SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
-    private PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
-    private PaymentAdapter paymentAdapter;
-    private SupplyAdapter supplyAdapter;
-    private String prodname = "";
+    private static String user_premium_security_email;
+    private static String user_password;
+    private static String user_founder_email;
+    private static String user_buyer_email;
+    private static String user_regular_email_1;
+    private static String user_regular_email_2;
+    private static String user_admin_email;
+    private static int store_id;
+    private static int product_id;
+    private static SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
+    private static PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
+    private static PaymentAdapter paymentAdapter;
+    private static SupplyAdapter supplyAdapter;
+    private static String prodname = "";
 
-    public AnswerQuestions(){
+    @BeforeAll
+    static void setUp(){
         try{
             MarketSystem marketSystem = new MarketSystem(tests_config_file_path, "");
-            this.paymentAdapter = marketSystem.getPayment_adapter();
-            this.supplyAdapter = marketSystem.getSupply_adapter();
+            paymentAdapter = marketSystem.getPayment_adapter();
+            supplyAdapter = marketSystem.getSupply_adapter();
 
-            this.facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
-            this.facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
-            this.facade3 = new MarketFacade(paymentAdapter, supplyAdapter);
-            this.facade4 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade3 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade4 = new MarketFacade(paymentAdapter, supplyAdapter);
 
             uc = UserController.get_instance();
             pa = new PaymentAdapterImpl();
@@ -105,7 +107,7 @@ class AnswerQuestions {
         }
     }
 
-    private int open_store_get_id(String name){
+    private static int open_store_get_id(String name){
         Response<Integer> response = facade1.open_store(name);
         return response.getValue();
 
@@ -130,7 +132,7 @@ class AnswerQuestions {
         }
         return flag;
     }
-    private int add_prod_make_purchase_get_id(int sore_id){
+    private static int add_prod_make_purchase_get_id(int sore_id){
         ArrayList<String> arraylist = new ArrayList<>();
         arraylist.add("\n\ncheck_check\n\n");
         prodname += "l";
