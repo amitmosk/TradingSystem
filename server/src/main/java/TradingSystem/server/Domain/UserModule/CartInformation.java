@@ -23,9 +23,10 @@ public class CartInformation {
     public CartInformation(HashMap<StoreInformation, Basket> basketHashMap, double discount) {
         this.price = 0;
         this.products = new ArrayList<>();
-        for (Map.Entry<StoreInformation, Basket> basket : basketHashMap.entrySet()) {
-            for (Map.Entry<Product, Integer> en : basket.getValue().getProducts_and_quantities().entrySet()) {
-                this.products.add(new ProductInformation(en.getKey(), en.getValue()));
+        for (Map.Entry<StoreInformation,Basket> basket: basketHashMap.entrySet()){
+            for(Map.Entry<Product,Integer> en : basket.getValue().getProducts_and_quantities().entrySet()){
+                double price = basket.getValue().getProducts_and_prices().get(en.getKey());
+                this.products.add(new ProductInformation(en.getKey(),en.getValue(), price));
             }
             this.price += basket.getValue().getTotal_price();
         }

@@ -15,17 +15,16 @@ public class ProductInformation {
     public ProductInformation() {
     }
 
-    public ProductInformation(Product prod, int quantity) {
+    public ProductInformation(Product prod, int quantity, double price) {
         this.product_id = prod.getProduct_id();
         this.name = prod.getName();
         this.category = prod.getCategory();
         this.key_words = prod.getKey_words();
-        this.price = prod.getOriginal_price();
+        this.price = price;
         this.productReview = prod.getProductReview();
         this.store_id = prod.getStore_id();
         this.quantity = quantity;
     }
-
     public int getProduct_id() {
         return product_id;
     }

@@ -1,10 +1,8 @@
 package TradingSystem.server.Domain.StoreModule.Store;
 
-import TradingSystem.server.Domain.StoreModule.Appointment;
-import TradingSystem.server.Domain.StoreModule.AppointmentInformation;
+import TradingSystem.server.Domain.StoreModule.Appointment.AppointmentInformation;
 
 
-import java.util.HashMap;
 import java.util.List;
 
 public class StoreManagersInfo {

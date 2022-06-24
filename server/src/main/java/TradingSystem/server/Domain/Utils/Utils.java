@@ -183,12 +183,7 @@ public class Utils {
 
     public static int string_to_int(String str){
         int number = -1;
-        try{
-            number = Integer.parseInt(str);
-        }
-        catch (NumberFormatException ex){
-            ex.printStackTrace();
-        }
+        number = Integer.parseInt(str);
         return number;
     }
 

@@ -3,10 +3,11 @@ package TradingSystem.server.Domain.Facade;
 import java.util.List;
 
 import TradingSystem.server.DAL.HibernateUtils;
+import TradingSystem.server.Domain.StoreModule.Appointment.AppointmentInformation;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountComponent;
 import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
-import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
-import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
+import TradingSystem.server.Domain.ExternalSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternalSystems.SupplyInfo;
 import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.Questions.QuestionController;
@@ -21,7 +22,7 @@ import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
-import TradingSystem.server.Domain.StoreModule.StorePermission;
+import TradingSystem.server.Domain.StoreModule.Appointment.StorePermission;
 import TradingSystem.server.Domain.UserModule.*;
 import TradingSystem.server.Domain.Utils.Logger.ErrorLogger;
 import TradingSystem.server.Domain.Utils.Exception.*;
@@ -35,8 +36,8 @@ import TradingSystem.server.Domain.Utils.Threads.PaymentThread;
 import TradingSystem.server.Domain.Utils.Threads.SupplyThread;
 import TradingSystem.server.Domain.Utils.Utils;
 import TradingSystem.server.Domain.StoreModule.StoreController;
-import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
-import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
+import TradingSystem.server.Domain.ExternalSystems.PaymentAdapter;
+import TradingSystem.server.Domain.ExternalSystems.SupplyAdapter;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -434,6 +435,7 @@ public class MarketFacade {
             // setting rollback options for guest.
             // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             synchronized (lock) {
+
                 userPurchase = this.user_controller.buyCart(this.loggedUser);
                 PaymentThread paymentThread = new PaymentThread(this.payment_adapter, paymentInfo, userPurchase.getTotal_price());
                 SupplyThread supplyThread = new SupplyThread(this.supply_adapter, supplyInfo);
@@ -445,9 +447,17 @@ public class MarketFacade {
                 t2.join();
                 payment_transaction_id = paymentThread.get_value();
                 supply_transaction_id = supplyThread.get_value();
+
                 // TODO: amit #113 detail exception message
-                if (payment_transaction_id == -1 || supply_transaction_id == -1)
-                    throw new ExternalServicesException("buy cart failed: External Service Denied");
+                if (payment_transaction_id == -2 )
+                    throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied, Status -2");
+                if (supply_transaction_id == -2)
+                    throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied, Status -2");
+
+                if (payment_transaction_id == -1 )
+                    throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied, Status -1");
+                if (supply_transaction_id == -1)
+                    throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied, Status -1");
             }
             HibernateUtils.commit();
             response = new Response<>(userPurchase, "Purchase done successfully");
@@ -1170,6 +1180,7 @@ public class MarketFacade {
             List<String> policy = store.getPurchasePolicyNames();
             response = new Response(policy, "purchase policy sent");
             market_logger.add_log("purchase policy sent to user");
+        }
         catch (Exception e) {
             rollback();
             response = Utils.CreateResponse(e);
@@ -1177,6 +1188,7 @@ public class MarketFacade {
         }
         return response;
     }
+
 
 
     public Response send_predicts(int store_id) {
@@ -1771,9 +1783,9 @@ public class MarketFacade {
             User appointer = user_controller.get_user(loggedUser);
             User user_to_appoint = user_controller.get_user_by_email(user_email_to_appoint);
             this.store_controller.add_owner(appointer, user_to_appoint, store_id);
-            response = new Response<>(null, "Owner added successfully");
+            response = new Response<>(null, "Owner Candidates added successfully");
             HibernateUtils.commit();
-            market_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") owner");
+            market_logger.add_log("User- " + user_email_to_appoint + " has been candidates by user- " + user_email + " to store (" + store_id + ") for owner position");
         }
         catch (MarketException e){
             HibernateUtils.commit();
@@ -1841,9 +1853,9 @@ public class MarketFacade {
             User user_to_apoint = user_controller.get_user_by_email(user_email_to_appoint);
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.add_manager(appointer, user_to_apoint, store_id);
-            response = new Response<>(null, "Manager added successfully");
+            response = new Response<>(null, "Manager Candidates added successfully");
             HibernateUtils.commit();
-            market_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") manager");
+            market_logger.add_log("User- " + user_email_to_appoint + " has been candidates by user- " + user_email + " to store (" + store_id + ") for manager position");
         }
         catch (MarketException e){
             HibernateUtils.commit();
@@ -2339,6 +2351,48 @@ public class MarketFacade {
         return response;
     }
 
+
+    /**
+     * Requirement 2.4.5 update
+     * @return
+     */
+    public Response manager_answer_appointment(int storeID, boolean manager_answer, String candidate_email) {
+        Response<String> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            User user = user_controller.get_user(loggedUser);
+            User candidate = user_controller.get_user_by_email(candidate_email);
+            this.store_controller.add_appointment_answer(storeID, user, manager_answer, candidate);
+            HibernateUtils.commit();
+            response = new Response<>("", "manager answer appointment successfully");
+            market_logger.add_log("manager answer appointment successfully");
+        } catch (Exception e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+    public Response view_appointments_status(int storeID) {
+        Response<String> response = null;
+        try {
+            HibernateUtils.beginTransaction();
+            User user = user_controller.get_user(loggedUser);
+            List<AppointmentInformation> answer = this.store_controller.view_appointments_status(storeID, user);
+            HibernateUtils.commit();
+            response = new Response(answer, "User view appointments successfully");
+            market_logger.add_log("User view appointments status successfully");
+        } catch (Exception e) {
+            HibernateUtils.rollback();
+            response = Utils.CreateResponse(e);
+            error_logger.add_log(e);
+        }
+        return response;
+    }
+
+
+
     public Response get_all_stores() {
         Response<List<StoreInformation>> response = null;
         try {
@@ -2367,7 +2421,7 @@ public class MarketFacade {
             List<Product> products = store_controller.get_products_by_store_id(store_id);
             List<ProductInformation> products_information = new ArrayList<>();
             for (Product p : products) {
-                products_information.add(new ProductInformation(p, 0));
+                products_information.add(new ProductInformation(p, 0,p.getOriginal_price() ));
             }
             HibernateUtils.commit();
             response = new Response(products_information, "Received store products successfully");
@@ -2477,14 +2531,14 @@ public class MarketFacade {
     }
 
 
-    public Response add_bid(int storeID, int productID, int quantity, double offer_price) {
-        Response<String> response = null;
+    public Response<Integer> add_bid(int storeID, int productID, int quantity, double offer_price) {
+        Response<Integer> response = null;
         try {
             HibernateUtils.beginTransaction();
             User buyer = user_controller.get_user(loggedUser);
             int bid_id = this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer);
             HibernateUtils.commit();
-            response = new Response(bid_id, "adding bid offer for product");
+            response = new Response(bid_id, "Adding bid offer for product");
             market_logger.add_log("User added bid offer for " + quantity + " of product- " + productID + " from store- " + storeID);
         }
         catch (MarketException e){
@@ -2501,15 +2555,14 @@ public class MarketFacade {
     }
 
     public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
-        // if that the last positive answer -> buy.
-        Response<String> response = null;
+        Response<Boolean> response = null;
         try {
             HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
-            this.store_controller.manager_answer_bid(storeID, user, manager_answer, bidID, negotiation_price);
+            boolean confirm = this.store_controller.manager_answer_bid(storeID, user, manager_answer, bidID, negotiation_price);
             HibernateUtils.commit();
-            response = new Response<>("", "manager answer bid offer successfully");
-            market_logger.add_log("manager answer bid offer successfully");
+            response = new Response<Boolean>(confirm, "manager answer bid offer successfully");
+            market_logger.add_log("manager "+user.user_email()+ " answer bid offer successfully");
         }
         catch (MarketException e){
             HibernateUtils.commit();

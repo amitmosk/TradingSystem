@@ -1,4 +1,4 @@
-//package TradingSystem.server.config;
+//package TradingSystem.server.Config;
 //
 //import org.apache.catalina.Context;
 //import org.apache.catalina.connector.Connector;

@@ -169,7 +169,6 @@ export default class StorePage extends Component {
           <StoreProductsTable
             store_id={this.state.store_id}
           ></StoreProductsTable>
-         {this.props.stores_managed.includes(parseInt(this.props.store_id)) ? <Link to={{pathname:`ViewBidsStatus` }}   underline="hover" >{"Show Store Bids"}</Link> : null}
           <Box sx={{ "& > legend": { mt: 2 } }}></Box>
           <List
             sx={{

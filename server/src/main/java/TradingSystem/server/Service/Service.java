@@ -1,11 +1,11 @@
 package TradingSystem.server.Service;
 
-import TradingSystem.server.Domain.ExternSystems.PaymentAdapter;
-import TradingSystem.server.Domain.ExternSystems.PaymentInfo;
-import TradingSystem.server.Domain.ExternSystems.SupplyAdapter;
-import TradingSystem.server.Domain.ExternSystems.SupplyInfo;
+import TradingSystem.server.Domain.ExternalSystems.PaymentAdapter;
+import TradingSystem.server.Domain.ExternalSystems.PaymentInfo;
+import TradingSystem.server.Domain.ExternalSystems.SupplyAdapter;
+import TradingSystem.server.Domain.ExternalSystems.SupplyInfo;
 import TradingSystem.server.Domain.Facade.MarketFacade;
-import TradingSystem.server.Domain.StoreModule.StorePermission;
+import TradingSystem.server.Domain.StoreModule.Appointment.StorePermission;
 import TradingSystem.server.Domain.Utils.Exception.ExitException;
 import TradingSystem.server.Domain.Utils.Utils;
 import com.google.gson.Gson;
@@ -211,6 +211,23 @@ public class Service implements iService {
         Response answer = marketFacade.view_bids_status(storeID);
         return answer;
     }
+
+    @RequestMapping(value = "/manager_answer_appointment")
+    @CrossOrigin
+    @Override
+    public Response manager_answer_appointment(int storeID, boolean manager_answer, String candidate_email) {
+        Response answer = marketFacade.manager_answer_appointment(storeID, manager_answer, candidate_email);
+        return answer;
+    }
+
+    @RequestMapping(value = "/view_appointments_status")
+    @CrossOrigin
+    @Override
+    public Response view_appointments_status(int storeID) {
+        Response answer = marketFacade.view_appointments_status(storeID);
+        return answer;
+    }
+
 
     @RequestMapping(value = "/open_store")
     @CrossOrigin
@@ -559,6 +576,7 @@ public class Service implements iService {
         Response answer = marketFacade.get_market_stats();
         return answer;
     }
+
 
     @RequestMapping(value = "/get_all_stores")
     @CrossOrigin
