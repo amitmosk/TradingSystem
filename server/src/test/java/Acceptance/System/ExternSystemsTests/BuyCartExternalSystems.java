@@ -56,7 +56,6 @@ class BuyCartExternalSystems {
     static void setUp() {
         MarketFacade mf = new MarketFacade(paymentAdapter,supplyAdapter);
         mf.clear();
-        HibernateUtils.clear_db();
         List<String> keywords = new ArrayList<>();
         keywords.add("aaaa");
         try {

@@ -57,7 +57,7 @@ public class StoreController {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
         this.bids_ids_counter = new AtomicInteger(1);
-        this.stores = new HashMap<>();
+        this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
     }

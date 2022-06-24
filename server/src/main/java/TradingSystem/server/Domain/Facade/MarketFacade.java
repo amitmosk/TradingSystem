@@ -2473,6 +2473,7 @@ public class MarketFacade {
     public void clear() {
         user_controller.clear();
         store_controller.clear();
+        HibernateUtils.clear_db();
     }
 
     public Response get_user_questions() {

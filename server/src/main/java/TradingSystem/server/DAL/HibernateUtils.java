@@ -13,9 +13,11 @@ import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HibernateUtils {
 
@@ -87,7 +89,7 @@ public class HibernateUtils {
     }
 
     public static synchronized void closeEntityManager() {
-        EntityManager em = threadLocal.get();
+//        EntityManager em = threadLocal.get();
         if (em != null) {
             em.close();
             threadLocal.set(null);
@@ -95,21 +97,20 @@ public class HibernateUtils {
     }
 
     public static synchronized void clear_db() {
-//        getEntityManager().createNativeQuery("DROP SCHEMA database").executeUpdate();
-//        getEntityManager().createNativeQuery("Create SCHEMA  database").executeUpdate();
-//        threadLocal.get().clear();
-//        threadLocal.get().close();
-        getEntityManager().clear();
-        getEntityManager().close();
-//        em = null;
-        emf.close();
-        em = null;
-        emf = Persistence.createEntityManagerFactory(persistence_unit);
+        if(allow_persist) {
+            closeEntityManager();
+            closeEntityManagerFactory();
+            em = null;
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
 //        threadLocal.set(null);
+        }
     }
 
     public static void closeEntityManagerFactory() {
-        emf.close();
+        if(emf!=null) {
+            emf.close();
+            emf = null;
+        }
     }
 
     public static synchronized void beginTransaction() {
@@ -139,7 +140,7 @@ public class HibernateUtils {
     }
 
     public static synchronized <T> void remove(T obj) {
-        if (allow_persist)
+        if (allow_persist && getEntityManager().getTransaction().isActive())
             getEntityManager().remove(obj);
     }
 
@@ -254,28 +255,36 @@ public class HibernateUtils {
         return map;
     }
 
-    public static synchronized List<BuyerQuestion> buyerquestions() {
-        String query = "select u from database.buyerquestion u where u.id is not null";
-        TypedQuery<BuyerQuestion> tq = getEntityManager().createQuery(query, BuyerQuestion.class);
-        List<BuyerQuestion> list;
+    public static synchronized Map<Integer, BuyerQuestion> buyerquestions() {
+        String query = "SELECT question_id FROM database.buyerquestion";
+        Map<Integer,BuyerQuestion> map = new ConcurrentHashMap<>();
         try {
-            list = tq.getResultList();
-            return list;
-        } catch (NoResultException e) {
+            List<BigInteger> lst = getEntityManager().createNativeQuery(query).getResultList();
+            for (BigInteger i : lst) {
+                BuyerQuestion u = em.find(BuyerQuestion.class, i.intValue());
+                map.put(i.intValue(),u);
+            }
+        } catch (Exception e) {
+            MarketLogger.getInstance().add_log(e.getMessage());
             throw new RuntimeException(e);
         }
+        return map;
     }
 
-    public static synchronized List<UserQuestion> userQuestions() {
-        String query = "select u from database.userquestion u where u.id is not null";
-        TypedQuery<UserQuestion> tq = getEntityManager().createQuery(query, UserQuestion.class);
-        List<UserQuestion> list;
+    public static synchronized Map<Integer, UserQuestion> userQuestions() {
+        String query = "SELECT question_id FROM database.userquestion";
+        Map<Integer,UserQuestion> map = new ConcurrentHashMap<>();
         try {
-            list = tq.getResultList();
-            return list;
-        } catch (NoResultException e) {
+            List<BigInteger> lst = getEntityManager().createNativeQuery(query).getResultList();
+            for (BigInteger i : lst) {
+                UserQuestion u = em.find(UserQuestion.class, i.intValue());
+                map.put(i.intValue(),u);
+            }
+        } catch (Exception e) {
+            MarketLogger.getInstance().add_log(e.getMessage());
             throw new RuntimeException(e);
         }
+        return map;
     }
 
 
