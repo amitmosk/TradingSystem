@@ -3,6 +3,7 @@ package TradingSystem.server.Service;
 import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.ExternalSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
+import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.UserModule.User;
 import TradingSystem.server.Domain.UserModule.UserController;
@@ -176,6 +177,7 @@ public class MarketSystem {
                 StoreController.get_instance().load();
                 UserController.get_instance().load();
                 StoreController.get_instance().load();
+                QuestionController.getInstance().load();
             }
             catch (Exception e){
                 throw new ExitException("Cant Connect To Database.");

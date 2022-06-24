@@ -2660,5 +2660,6 @@ public class MarketFacade {
         this.store_controller.load();
         this.user_controller.load();
         this.store_controller.load();
+        QuestionController.getInstance().load();
     }
 }

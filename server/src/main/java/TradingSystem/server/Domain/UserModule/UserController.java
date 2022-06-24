@@ -80,7 +80,6 @@ public class UserController {
     }
 
     public static UserController get_instance() {
-        SingletonHolder.instance.load();
         return SingletonHolder.instance;
     }
 

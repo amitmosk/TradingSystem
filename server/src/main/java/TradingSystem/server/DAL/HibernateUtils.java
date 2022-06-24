@@ -209,7 +209,7 @@ public class HibernateUtils {
     public static synchronized Map<Integer ,Store> stores() {
         products();
         String query = "SELECT store_id FROM database.store";
-        Map<Integer, Store> map = new HashMap<>();
+        Map<Integer, Store> map = new ConcurrentHashMap<>();
         try {
             List<Integer> lst = getEntityManager().createNativeQuery(query).getResultList();
             for (Integer i : lst) {
