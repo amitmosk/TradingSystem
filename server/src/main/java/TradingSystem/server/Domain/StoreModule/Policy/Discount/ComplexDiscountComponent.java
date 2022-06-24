@@ -7,7 +7,7 @@ import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("1")
+@DiscriminatorValue("ComplexDiscountComponent")
 public class ComplexDiscountComponent extends DiscountComponent {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     DiscountComponent rule;

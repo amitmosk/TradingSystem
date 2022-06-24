@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 public class PurchasePolicy {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

@@ -95,12 +95,15 @@ public class Store implements Observable {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "predicts",
-            joinColumns = {@JoinColumn(name = "predict_id", referencedColumnName = "store_id")})
+            joinColumns = {@JoinColumn(name = "store_id", referencedColumnName = "store_id")})
     @MapKeyColumn(name = "name") // the key column
     private Map<String, Ipredict> predictList;
 
-    @Transient
-    private HashMap<Integer, Bid> bids;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "store_bids_map",
+            joinColumns = {@JoinColumn(name = "store_id", referencedColumnName = "store_id")})
+    @MapKeyColumn(name = "bid_id") // the key column
+    private Map<Integer, Bid> bids;
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder, AtomicInteger ai) {
@@ -1163,11 +1166,11 @@ public class Store implements Observable {
         return true;
     }
 
-    public HashMap<Integer, Bid> getBids() {
+    public Map<Integer, Bid> getBids() {
         return bids;
     }
 
-    public void setBids(HashMap<Integer, Bid> bids) {
+    public void setBids(Map<Integer, Bid> bids) {
         this.bids = bids;
     }
 

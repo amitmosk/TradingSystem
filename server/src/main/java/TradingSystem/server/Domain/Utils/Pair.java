@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Set;
 
 // Pair class
-@Entity
-public class Pair implements Serializable
+@Embeddable
+public class Pair
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
     public String first;       // the first field of a pair
     public Integer second;      // the second field of a pair
 
@@ -39,13 +39,13 @@ public class Pair implements Serializable
         return second.equals(o.second);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public String getFirst() {
         return first;

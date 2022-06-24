@@ -8,7 +8,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("10")
+@DiscriminatorValue("simpleDiscountComponentByStore")
 public class simpleDiscountComponentByStore extends simpleDiscountComponent {
     public simpleDiscountComponentByStore(double PrecentOfDiscount) throws WrongPermterException {
         super(PrecentOfDiscount);
