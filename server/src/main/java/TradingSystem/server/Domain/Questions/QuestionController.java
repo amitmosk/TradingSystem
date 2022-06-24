@@ -13,22 +13,22 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Entity
+//@Entity
 public class QuestionController implements iQuestionController {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long question_controller_id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long question_controller_id;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "buyer_to_store",
-            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
-    @MapKeyColumn(name = "question_id") // the key column
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "buyer_to_store",
+//            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
+//    @MapKeyColumn(name = "question_id") // the key column
     private Map<Integer, BuyerQuestion> buyer_to_store;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_to_admin",
-            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
-    @MapKeyColumn(name = "question_id") // the key column
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "user_to_admin",
+//            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
+//    @MapKeyColumn(name = "question_id") // the key column
     private Map<Integer, UserQuestion> user_to_admin;
     private AtomicInteger question_ids_counter;
 
@@ -82,16 +82,6 @@ public class QuestionController implements iQuestionController {
         }
         return answer;
     }
-
-    public void setQuestion_controller_id(Long question_controller_id) {
-        this.question_controller_id = question_controller_id;
-    }
-
-
-    public Long getQuestion_controller_id() {
-        return question_controller_id;
-    }
-
 
     @Override
     public void add_buyer_question(String message, AssignUser sender, int store_id){
