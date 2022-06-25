@@ -4,6 +4,7 @@ import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.Statistics.Statistic;
 import TradingSystem.server.Domain.Statistics.StatisticsManager;
+import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
@@ -329,6 +330,13 @@ public class UserController {
         check_admin_permission(ID);
         if (!isRegistered(email))
             throw new NoUserRegisterdException("failed to remove due to the reason " + email + " is not registered in the system.");
+
+
+        Map<Store, Appointment> founder_map = this.get_user_by_email(email).state_if_assigned().getFounder();
+        for (Store store : founder_map.keySet()){
+            store.close_store_permanently();
+        }
+
         if (email.equals(get_email(ID)))
             throw new AdminException("failed to remove admin from the system.");
         remove_email_from_online_users(email);

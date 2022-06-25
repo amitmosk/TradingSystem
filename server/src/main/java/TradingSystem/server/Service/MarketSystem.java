@@ -390,6 +390,13 @@ public class MarketSystem {
                 throw new IllegalArgumentException("Add Owner Failed: " + answer.getMessage());
             }
         }
+        else if (instruction.equals("appointment_answer")){
+            Response answer = marketFacade.manager_answer_appointment(Integer.parseInt(instruction_params[2]),
+                    true, instruction_params[3]);
+            if (answer.WasException()){
+                throw new IllegalArgumentException("Add Owner Failed: " + answer.getMessage());
+            }
+        }
         else if (instruction.equals("delete_owner")){
             Response answer = marketFacade.delete_owner(instruction_params[2], Integer.parseInt(instruction_params[3]));
             if (answer.WasException()){

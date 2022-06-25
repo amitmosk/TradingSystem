@@ -437,7 +437,7 @@ public class Store implements Observable {
 
     public void close_store_permanently() throws MarketException {
         this.active = false;
-        String message = "Store was closed permanently at " + LocalDate.now().toString();
+        String message = this.name + "Store was closed permanently at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, "");
         for (AssignUser user : stuffs_and_appointments.keySet()) {
             user.remove_appointment(this);
@@ -450,7 +450,7 @@ public class Store implements Observable {
         this.check_permission(user, StorePermission.close_store_temporarily);
         this.active = false;
         String email = user.get_user_email();
-        String message = "Store was closed close_store_temporarily at " + LocalDate.now().toString();
+        String message = this.name + "Store was closed close_store_temporarily at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, email);
     }
 
