@@ -9,7 +9,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("2")
+@DiscriminatorValue("OrCompositePredict")
 public class OrCompositePredict extends CompositePredict  {
 
     public OrCompositePredict(Ipredict left, Ipredict right) {

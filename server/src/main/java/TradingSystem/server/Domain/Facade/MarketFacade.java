@@ -2460,6 +2460,7 @@ public class MarketFacade {
     public void clear() {
         user_controller.clear();
         store_controller.clear();
+        HibernateUtils.clear_db();
     }
 
     public Response get_user_questions() {
@@ -2646,5 +2647,6 @@ public class MarketFacade {
         this.store_controller.load();
         this.user_controller.load();
         this.store_controller.load();
+        QuestionController.getInstance().load();
     }
 }

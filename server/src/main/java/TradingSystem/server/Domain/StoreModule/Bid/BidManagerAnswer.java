@@ -25,6 +25,10 @@ public class BidManagerAnswer {
         this.answer = false;
     }
 
+    public BidManagerAnswer() {
+
+    }
+
     public boolean get_has_answer() {
         return has_answer;
     }

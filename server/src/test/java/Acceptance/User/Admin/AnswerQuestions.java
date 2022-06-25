@@ -58,6 +58,9 @@ class AnswerQuestions {
             paymentAdapter = marketSystem.getPayment_adapter();
             supplyAdapter = marketSystem.getSupply_adapter();
 
+            MarketFacade mf = new MarketFacade(paymentAdapter,supplyAdapter);
+            mf.clear();
+
             facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
             facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
             facade3 = new MarketFacade(paymentAdapter, supplyAdapter);

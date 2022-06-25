@@ -9,7 +9,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.Map;
 @Entity
-@DiscriminatorValue("8")
+@DiscriminatorValue("simpleDiscountComponentByCategory")
 public class simpleDiscountComponentByCategory extends simpleDiscountComponent {
     String CategoryOfDiscount = "";
 

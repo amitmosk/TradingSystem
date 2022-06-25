@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Entity
-@DiscriminatorValue("11")
+@DiscriminatorValue("Predict")
 public class Predict extends Ipredict {
     //on what
     private String category;

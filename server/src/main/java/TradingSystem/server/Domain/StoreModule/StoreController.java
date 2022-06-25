@@ -57,7 +57,7 @@ public class StoreController {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
         this.bids_ids_counter = new AtomicInteger(1);
-        this.stores = new HashMap<>();
+        this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
     }
@@ -69,7 +69,7 @@ public class StoreController {
 //        this.stores = HibernateUtils.stores();
 //        this.storesLock = new Object();
 //        this.products_id = new AtomicInteger(HibernateUtils.get_max_product_id()+1);
-//        SystemLogger.getInstance().add_log("store controller load");
+        SystemLogger.getInstance().add_log("store controller load");
 //        MarketLogger.getInstance().add_log("-----------store counter-----------------");
 //        MarketLogger.getInstance().add_log(stores.toString());
 //        MarketLogger.getInstance().add_log("---------purchase_id_counter-----------------");

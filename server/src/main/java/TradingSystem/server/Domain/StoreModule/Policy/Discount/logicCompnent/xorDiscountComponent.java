@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-@DiscriminatorValue("4")
+@DiscriminatorValue("xorDiscountComponent")
 public class xorDiscountComponent extends DiscountComponent {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     DiscountComponent left;
