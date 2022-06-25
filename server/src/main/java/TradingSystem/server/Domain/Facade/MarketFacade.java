@@ -2180,7 +2180,6 @@ public class MarketFacade {
         Response<String> response = null;
         try {
             HibernateUtils.beginTransaction();
-            // TODO: version 2
             // close store permanently
             user_controller.remove_user(loggedUser, email);
             // remove user from all owners and managers
