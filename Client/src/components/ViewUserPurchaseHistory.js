@@ -97,9 +97,7 @@ export default class UserPurchaseHistory extends Component {
         return (
 
             <>
-                <Link href="/">
-                    <HomeIcon></HomeIcon>
-                </Link>
+
                 <Box position='center' align='center'>
                     <Grid position='center' row-spacing={3}>
                         <Grid item>

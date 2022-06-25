@@ -2,9 +2,15 @@
 
 
 export class Utils  {
-    // Boolean -> return 0 for False, 1 for True
     
+    
+    //Sleep
+    static sleep (milliseconds) {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+      }
 
+
+    // Check Input - Boolean -> return 0 for False, 1 for True
     // ----------------------------------- Payment -------------------------------------------------------
     
     static check_date(month, year)
@@ -100,6 +106,8 @@ export class Utils  {
     }
     
     static check_not_empty(str){   
+        if( str === undefined || str ===null )
+            return 0;
         if (str.length == 0)
         {
             return 0;
@@ -133,6 +141,7 @@ export class Utils  {
     // ----------------------------------- Discount Policy -------------------------------------------------------
     static check_rule_name(rule_name)
     {
+        
         return this.check_not_empty(rule_name);
     }
     static check_precent()
@@ -158,8 +167,32 @@ export class Utils  {
 
 
 
+    //------------------------------------ Register---------------------------------------------------------
+    static check_birthdate(birthdate)
+    {
+        console.log(birthdate);
+        if(this.check_not_empty(birthdate) == 0)
+            return 0;
+        
+        const date = birthdate.split("-");
+        if(date.length != 3)
+            return 0;
+        const year = date[0];
+        const month = date[1];
+        const day = date[2];
+        console.log(date);
 
+        if (year<2022)
+            return 1;
+        if(year === 2022)
+        {
+            if(month<6)
+                return 1;
+        }
 
+        return 0;
+
+    }
 
 
 
@@ -171,7 +204,7 @@ export class Utils  {
     }
     
     
-    // ----------------------------------- Suuply -------------------------------------------------------
+    // ----------------------------------- Supply -------------------------------------------------------
     
     static check_address(address){   
         if (this.check_not_empty(address) == 0)

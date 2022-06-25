@@ -34,7 +34,21 @@ export default class EditProfileEditProfilePremium extends Component {
         const question = values[0];
         const answer = values[1];
         const password = values[2];
-
+        if (Utils.check_not_empty(question) == 0)
+        {
+            this.setState({ snackbar: { children: "Question can't be ampty", severity: "error" } });
+            return;
+        }
+        if (Utils.check_not_empty(answer) == 0)
+        {
+            this.setState({ snackbar: { children: "Answer can't be ampty", severity: "error" } });
+            return;
+        }
+        if(Utils.check_not_empty(password) == 0)
+        {
+            setSnackbar({ children: "Password can not be empty", severity: 'error' });
+            return;
+        }
         let response =  await this.userApi.improve_security(password, question, answer);
         // alert(response.message);
         if (!response.was_exception) {
@@ -131,9 +145,6 @@ export default class EditProfileEditProfilePremium extends Component {
     render() {
         return (<>
             <Box sx={{ flexGrow: 1 }}>
-                <Link href="/">
-                    <HomeIcon></HomeIcon>
-                </Link>
                 <h3 class="Header" align="center">
                     Edit Profile Premium
                 </h3>
