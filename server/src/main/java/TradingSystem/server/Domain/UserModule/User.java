@@ -317,6 +317,7 @@ public class User {
         return id;
     }
 
+
     public boolean check_if_manager(){
         return this.state.check_if_manager();
     }
@@ -328,4 +329,5 @@ public class User {
     public boolean check_if_founder(){
         return this.state.check_if_founder();
     }
+
 }

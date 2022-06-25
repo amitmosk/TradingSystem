@@ -1176,17 +1176,10 @@ public class MarketFacade {
     public Response get_purchase_policy(int store_id) {
         Response<List<String>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             Store store = store_controller.get_store(store_id);
             List<String> policy = store.getPurchasePolicyNames();
-            HibernateUtils.commit();
             response = new Response(policy, "purchase policy sent");
             market_logger.add_log("purchase policy sent to user");
-        }
-        catch (MarketException e){
-            HibernateUtils.commit();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
         }
         catch (Exception e) {
             rollback();
@@ -1195,6 +1188,7 @@ public class MarketFacade {
         }
         return response;
     }
+
 
 
     public Response send_predicts(int store_id) {
@@ -1228,19 +1222,12 @@ public class MarketFacade {
         Response<List<String>> response = null;
         List<String> policy;
         try {
-            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 policy = store.getDiscountPolicyNames();
             }
-            HibernateUtils.commit();
             response = new Response(policy, "discount policy sent");
             market_logger.add_log("composite discount deleted successfully");
-        }
-        catch (MarketException e){
-            HibernateUtils.commit();
-            response = Utils.CreateResponse(e);
-            error_logger.add_log(e);
         }
         catch (Exception e) {
             rollback();
@@ -1359,7 +1346,7 @@ public class MarketFacade {
     }
 
     public Response add_and_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<PurchaseRule> response = null;
+        Response response = null;
         Ipredict discount;
         try {
             HibernateUtils.beginTransaction();
@@ -1385,7 +1372,7 @@ public class MarketFacade {
     }
 
     public Response add_or_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<PurchaseRule> response = null;
+        Response response = null;
         Ipredict discount;
         try {
             HibernateUtils.beginTransaction();
@@ -1411,7 +1398,7 @@ public class MarketFacade {
     }
 
     public Response add_max_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<PurchaseRule> response = null;
+        Response response = null;
         DiscountComponent discount;
         try {
             HibernateUtils.beginTransaction();
@@ -1437,7 +1424,7 @@ public class MarketFacade {
     }
 
     public Response add_plus_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<PurchaseRule> response = null;
+        Response response = null;
         DiscountComponent discount;
         try {
             HibernateUtils.beginTransaction();
@@ -1463,7 +1450,7 @@ public class MarketFacade {
     }
 
     public Response add_xor_discount_rule(String left, String right, int store_id, String NameOfRule) {
-        Response<PurchaseRule> response = null;
+        Response response = null;
         DiscountComponent discount;
         try {
             HibernateUtils.beginTransaction();
@@ -1490,7 +1477,7 @@ public class MarketFacade {
 
 
     public Response remove_discount_rule(int store_id, String name) {
-        Response<SimplePurchaseRule> response = null;
+        Response response = null;
         try {
             HibernateUtils.beginTransaction();
             synchronized (lock) {
@@ -1565,8 +1552,8 @@ public class MarketFacade {
     }
 
 
-    public Response<SimplePurchaseRule> add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
-        Response<SimplePurchaseRule> response = null;
+    public Response add_simple_purchase_rule(String PredictName, String NameOfRule, int store_id) {
+        Response response = null;
         PurchaseRule purchaseRule;
         try {
             HibernateUtils.beginTransaction();

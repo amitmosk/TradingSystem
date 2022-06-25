@@ -2,6 +2,7 @@ package TradingSystem.server.Domain.UserModule;
 
 import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
@@ -20,7 +21,7 @@ public class Cart {
     private Long id;
 
     @MapKeyClass(value = Store.class)
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "cart_baskets",
             joinColumns = {@JoinColumn(name = "cart", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "basket", referencedColumnName = "id")})
@@ -58,9 +59,9 @@ public class Cart {
     }
 
     public void clear() {
-        for(Map.Entry<Store,Basket> entry : baskets.entrySet()){
+        for (Map.Entry<Store, Basket> entry : baskets.entrySet()) {
             entry.getValue().clear();
-            baskets.remove(entry.getKey(),entry.getValue());
+            baskets.remove(entry.getKey(), entry.getValue());
             HibernateUtils.remove(entry.getValue());
         }
     }
@@ -136,11 +137,15 @@ public class Cart {
 
     public CartInformation cartInformation() {
         HashMap<StoreInformation, Basket> answer = new HashMap<>();
+        DiscountPolicy discountPolicy;
+        double discount = 0;
         for (Map.Entry<Store, Basket> entry : this.baskets.entrySet()) {
+            discountPolicy = entry.getKey().getDiscountPolicy();
+            discount += discountPolicy.calculateDiscount(entry.getValue());
             StoreInformation temp = new StoreInformation(entry.getKey());
             answer.put(temp, entry.getValue());
         }
-        return new CartInformation(answer);
+        return new CartInformation(answer, discount);
     }
 
     public void setId(Long id) {

@@ -2,6 +2,7 @@ package Acceptance.System.NotificationsTests;
 
 import TradingSystem.server.Domain.ExternalSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
+import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Response;
@@ -31,12 +32,14 @@ class Notifications {
     private static SupplyAdapter supplyAdapter;
     private static SupplyInfo supplyInfo = new SupplyInfo("1", "2", "3", "4", "5");
     private static PaymentInfo payment_info = new PaymentInfo("123", "456", "789", "245", "123", "455");
+    private static String birth_date;
 
 
     @BeforeAll
     static void SetUp() {
         NotificationHandler.setTestsHandler();
-        String birth_date = LocalDate.now().minusYears(30).toString();
+
+        birth_date = LocalDate.now().minusYears(30).toString();
         List<String> keywords = new LinkedList<>();
         try
         {
@@ -136,7 +139,9 @@ class Notifications {
         assertTrue(manager_notifications_list.get(0).contains("candidate"));
     }
 
-
+    /**
+     * this test check that a buyer get a notification when his bid is confirmed by store managers.
+     */
     @Test
     void confirm_bid_offer_for_buyer(){
         MarketFacade marketfacade6 = new MarketFacade(paymentAdapter, supplyAdapter);
@@ -151,6 +156,9 @@ class Notifications {
         assertTrue(buyer_notifications_list.get(0).contains("bid"));
     }
 
+    /**
+     * this test check that all the store managers get notification when an admin close the store.
+     */
     @Test
     void close_store_for_managers_by_Admin(){
         admin_facade.close_store_permanently(store_id);
@@ -169,6 +177,9 @@ class Notifications {
 
     }
 
+    /**
+     * this test check that all the store managers get notification when the founder close the store.
+     */
     @Test
     void close_store_temp_by_founder_to_managers(){
         marketFacade1.close_store_temporarily(store_id);
@@ -187,6 +198,9 @@ class Notifications {
 
     }
 
+    /**
+     * this test check that all the store managers get notification when the founder re-open the store.
+     */
     @Test
     void open_close_store_by_founder_to_managers(){
         marketFacade1.close_store_temporarily(store_id);
@@ -212,6 +226,9 @@ class Notifications {
 
     }
 
+    /**
+     * this test check that the store managers get notification when a buyer send question to the store.
+     */
     @Test
     void add_question_to_managers(){
         marketFacade5.add_product_to_cart(store_id, product_id, 1);
@@ -229,5 +246,39 @@ class Notifications {
         assertEquals(owner2_notifications_list.size(), 1);
         assertEquals(manager_notifications_list.size(), 1);
         assertTrue(manager_notifications_list.get(0).contains("question"));
+    }
+
+    /**
+     * this test check that a buyer get notification when his question got answered by one of the store managers.
+     */
+    @Test
+    void answer_question_for_buyer(){
+        MarketFacade marketFacadeBuyer = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacadeBuyer.register("buyer123@walla.com","12345678aA", "buyer", "buyer", birth_date);
+        marketFacadeBuyer.add_product_to_cart(store_id, product_id, 1);
+        marketFacadeBuyer.buy_cart(payment_info, supplyInfo);
+        NotificationHandler.getInstance().reset_notifications();
+        marketFacadeBuyer.send_question_to_store(store_id, "why?");
+        int question_id = QuestionController.getInstance().getQuestion_ids_counter()-1;
+
+        List<String> buyer_notifications_list = NotificationHandler.getInstance().get_user_notifications("buyer123@walla.com");
+        List<String> founder_notifications_list = NotificationHandler.getInstance().get_user_notifications("founder@gmail.com");
+        List<String> owner1_notifications_list = NotificationHandler.getInstance().get_user_notifications("ownerOne@gmail.com");
+        List<String> owner2_notifications_list = NotificationHandler.getInstance().get_user_notifications("ownerTwo@gmail.com");
+        List<String> manager_notifications_list = NotificationHandler.getInstance().get_user_notifications("manager@gmail.com");
+
+        assertEquals(buyer_notifications_list.size(), 0);
+        assertEquals(founder_notifications_list.size(), 1);
+        assertEquals(owner1_notifications_list.size(), 1);
+        assertEquals(owner2_notifications_list.size(), 1);
+        assertEquals(manager_notifications_list.size(), 1);
+        assertTrue(manager_notifications_list.get(0).contains("question"));
+
+        marketFacade1.manager_answer_question(store_id, question_id, "like");
+        buyer_notifications_list = NotificationHandler.getInstance().get_user_notifications("buyer123@walla.com");
+        assertEquals(buyer_notifications_list.size(), 1);
+        assertTrue(buyer_notifications_list.get(0).contains("question"));
+
+
     }
 }

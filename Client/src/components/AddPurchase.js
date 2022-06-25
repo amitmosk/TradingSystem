@@ -29,16 +29,15 @@ export default function AddPurchase() {
 
     // list of categories, Predicts, discounts
 
-    const [predicts,setPredicts ] =React.useState(["predicts1", "predicts2", "Predicts3"]);
-    const [purchases,setPurchases ] =React.useState(["purchase1", "purchase2", "purchase3"]);
+    const [purchases,setPurchases] =React.useState([]);
+    const [predicts,setPredicts] =React.useState([]);
     const get_purchases_predict_lists = async () =>
     {
         const response = await policiesApi.send_predicts(store_id);
         if (!response.was_exception)
         {
             setSnackbar({ children: response.message, severity: 'success' });
-            if(response.value.length !== 0)
-                setPredicts(response.value);
+            setPredicts(response.value);
         }
         else
         {
@@ -49,7 +48,6 @@ export default function AddPurchase() {
         if (!response_purchases.was_exception)
         {
             setSnackbar({ children: response_purchases.message, severity: 'success' });
-            if(response_purchases.value.length !== 0)
                 setPurchases(response_purchases.value);
         }
         else
@@ -150,6 +148,7 @@ export default function AddPurchase() {
         const response = await policiesApi.add_simple_purchase_rule(predictChosen, rule_name, store_id); 
         if (!response.was_exception)
         {
+            window.location.reload();
             setSnackbar({ children: response.message, severity: 'success' });
         }
         else
@@ -169,6 +168,7 @@ export default function AddPurchase() {
         const response = await policiesApi.add_and_purchase_rule(policyChosenAnd1, policyChosenAnd2, store_id, rule_name); 
         if (!response.was_exception)
         {
+            window.location.reload();
             setSnackbar({ children: response.message, severity: 'success' });
         }
         else
@@ -186,6 +186,7 @@ export default function AddPurchase() {
         const response = await policiesApi.add_or_purchase_rule(policyChosenOr1, policyChosenOr2,store_id, rule_name); 
         if (!response.was_exception)
         {
+            window.location.reload();
             setSnackbar({ children: response.message, severity: 'success' });
         }
         else
