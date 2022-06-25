@@ -34,9 +34,11 @@ class Notifications {
     private static PaymentInfo payment_info = new PaymentInfo("123", "456", "789", "245", "123", "455");
     private static String birth_date;
 
+
     @BeforeAll
     static void SetUp() {
         NotificationHandler.setTestsHandler();
+
         birth_date = LocalDate.now().minusYears(30).toString();
         List<String> keywords = new LinkedList<>();
         try
@@ -117,6 +119,7 @@ class Notifications {
     /**
      * this test check that all the managers in the store (except the appointer) get a notification about a new candidate-manager.
      */
+
     @Test
     void appoint_candidate_notification_for_managers(){
         MarketFacade marketfacade6 = new MarketFacade(paymentAdapter, supplyAdapter);
@@ -152,6 +155,7 @@ class Notifications {
         assertEquals(buyer_notifications_list.size(), 1);
         assertTrue(buyer_notifications_list.get(0).contains("bid"));
     }
+
     /**
      * this test check that all the store managers get notification when an admin close the store.
      */
@@ -172,6 +176,7 @@ class Notifications {
         assertEquals(manager_notifications_list.size(), 1);
 
     }
+
     /**
      * this test check that all the store managers get notification when the founder close the store.
      */
@@ -192,6 +197,7 @@ class Notifications {
         assertTrue(owner2_notifications_list.get(0).contains("Store"));
 
     }
+
     /**
      * this test check that all the store managers get notification when the founder re-open the store.
      */
@@ -219,6 +225,7 @@ class Notifications {
         assertTrue(owner1_notifications_list.get(1).contains("open"));
 
     }
+
     /**
      * this test check that the store managers get notification when a buyer send question to the store.
      */
@@ -240,6 +247,7 @@ class Notifications {
         assertEquals(manager_notifications_list.size(), 1);
         assertTrue(manager_notifications_list.get(0).contains("question"));
     }
+
     /**
      * this test check that a buyer get notification when his question got answered by one of the store managers.
      */

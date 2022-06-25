@@ -214,9 +214,9 @@ public class Store implements Observable {
     }
 
     public AndPurchaseRule add_and_purchase_rule(String nameOfRule, String left, String right) throws WrongPermterException {
-        PurchaseRule purchaseright = purchasePolicy.getPolicy(left);
-        PurchaseRule purchaseleft = purchasePolicy.getPolicy(right);
-        if (purchaseleft == purchaseleft)
+        PurchaseRule purchaseright = purchasePolicy.getRule(left);
+        PurchaseRule purchaseleft = purchasePolicy.getRule(right);
+        if (purchaseleft == purchaseright)
             throw new WrongPermterException("the polices are the same");
         AndPurchaseRule and = new AndPurchaseRule(purchaseleft, purchaseright);
         purchasePolicy.addRule(nameOfRule, and);
@@ -226,8 +226,8 @@ public class Store implements Observable {
     }
 
     public OrPurchaseRule add_or_purchase_rule(String name, String left, String right) throws WrongPermterException {
-        PurchaseRule purchaseRight = purchasePolicy.getPolicy(left);
-        PurchaseRule purchaseLeft = purchasePolicy.getPolicy(right);
+        PurchaseRule purchaseRight = purchasePolicy.getRule(left);
+        PurchaseRule purchaseLeft = purchasePolicy.getRule(right);
         if (purchaseLeft == purchaseRight)
             throw new WrongPermterException("the polices are the same");
         OrPurchaseRule or = new OrPurchaseRule(purchaseLeft, purchaseRight);
@@ -272,7 +272,7 @@ public class Store implements Observable {
     }
 
     public String remove_purchase_rule(String name) throws WrongPermterException {
-        discountPolicy.removeRule(name);
+        purchasePolicy.removeRule(name);
         return "the rule was removed";
     }
 
@@ -392,8 +392,9 @@ public class Store implements Observable {
         Ipredict predict = getPredictByName(nameOFPredict);
         DiscountComponent simpleDiscountComponent = discountPolicy.getDiscountCompnentByName(nameOfPolicy);
         if (!(simpleDiscountComponent instanceof simpleDiscountComponent))
-            throw new WrongPermterException("this polciy is not of type simple");
+            throw new WrongPermterException("this discount is not of type simple");
         ComplexDiscountComponent toreturn = new ComplexDiscountComponent(simpleDiscountComponent, predict);
+        discountPolicy.removeRule(nameOfPolicy);
         this.discountPolicy.addRule(name, toreturn);
         return toreturn;
 

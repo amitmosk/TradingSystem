@@ -1,3 +1,4 @@
+
 package Acceptance.System.ConfigurationTests;
 
 import TradingSystem.server.DAL.HibernateUtils;

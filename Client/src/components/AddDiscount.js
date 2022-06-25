@@ -123,9 +123,9 @@ export default function AddDiscount() {
         console.log(perdict);
         setPredictChosenAnd1(perdict);
     }
-    const save_predictAnd2 = (discount_rule) =>{
-        console.log(discount_rule);
-        setPredictChosenAnd2(discount_rule);
+    const save_predictAnd2 = (perdict) =>{
+        console.log(perdict);
+        setPredictChosenAnd2(perdict);
     }
     //------------- complex or----------------------
 
@@ -210,7 +210,8 @@ export default function AddDiscount() {
     const add_simple_discount_rule_for_store = async (values) => {
         const rule_name = values[0];
         const discount_precent = values[1];
-        const discount = discount_precent / 100;
+        console.log(discount_precent);
+        const discount =discount_precent / 100;
         if (Utils.check_rule_name(rule_name) == 0)
         {
             setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
@@ -218,7 +219,7 @@ export default function AddDiscount() {
         }
         if (Utils.check_precent(discount) == 0)
         {
-            setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
+            setSnackbar({ children: "Illegal percent", severity: 'error' });
             return;
         }
         
@@ -245,7 +246,7 @@ export default function AddDiscount() {
         }
         if (Utils.check_precent(discount) == 0)
         {
-            setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
+            setSnackbar({ children: "Illegal precent value", severity: 'error' });
             return;
         }
         const response = await policiesApi.add_simple_categorey_discount_rule(store_id, categoryChosen, discount, rule_name); 
@@ -271,7 +272,7 @@ export default function AddDiscount() {
         }
         if (Utils.check_precent(precent) == 0)
         {
-            setSnackbar({ children: "Illegal Rule Name", severity: 'error' });
+            setSnackbar({ children: "Illegal precent ", severity: 'error' });
             return;
         }
         //TODO: check if product id is legal
@@ -516,7 +517,7 @@ export default function AddDiscount() {
                     
                 </Grid>
                 <Grid item>
-                    {option ==="Complex"  ? <ControlledRadioButtonsGroup list={predicts} name="Predicts" save={save_predict}></ControlledRadioButtonsGroup> : null}
+                    {option ==="Complex" ? <ControlledRadioButtonsGroup list={predicts} name="Predicts" save={save_predict}></ControlledRadioButtonsGroup> : null}
                     {option ==="Complex And"  ? <ControlledRadioButtonsGroup list={predicts} name="Predicts" save={save_predictAnd1}></ControlledRadioButtonsGroup> : null}
                     {option ==="Complex Or"  ? <ControlledRadioButtonsGroup list={predicts} name="Predicts" save={save_predictOr1}></ControlledRadioButtonsGroup> : null}
                     {option ==="Complex Xor"  ? <ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountXor1}></ControlledRadioButtonsGroup> : null}
@@ -524,9 +525,9 @@ export default function AddDiscount() {
                     {option ==="Complex Plus"  ? <ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountPlus1}></ControlledRadioButtonsGroup> : null}
                 </Grid>
                 <Grid item>
-                    {option ==="Complex"  ?<ControlledRadioButtonsGroup list={discounts} name="Discount Rules" save={save_discount_rule}></ControlledRadioButtonsGroup>: null}
-                    {option ==="Complex And"  ?<ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_predictAnd2}></ControlledRadioButtonsGroup>: null}
-                    {option ==="Complex Or"  ?<ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_predictOr2}></ControlledRadioButtonsGroup>: null}
+                    {option ==="Complex"  ?<ControlledRadioButtonsGroup list={discounts} name="Discount" save={save_discount_rule}></ControlledRadioButtonsGroup>: null}
+                    {option ==="Complex And"  ?<ControlledRadioButtonsGroup list={predicts} name="predicts" save={save_predictAnd2}></ControlledRadioButtonsGroup>: null}
+                    {option ==="Complex Or"  ?<ControlledRadioButtonsGroup list={predicts} name="predicts" save={save_predictOr2}></ControlledRadioButtonsGroup>: null}
                     {option ==="Complex Xor"  ?<ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountXor2}></ControlledRadioButtonsGroup>: null}
                     {option ==="Complex Max"  ?<ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountMax2}></ControlledRadioButtonsGroup>: null}
                     {option ==="Complex Plus"  ?<ControlledRadioButtonsGroup list={discounts} name="Discounts" save={save_discountPlus2}></ControlledRadioButtonsGroup>: null}

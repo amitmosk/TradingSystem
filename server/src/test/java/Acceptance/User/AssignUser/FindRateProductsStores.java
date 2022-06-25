@@ -1,5 +1,6 @@
 package Acceptance.User.AssignUser;
 
+
 import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.ExternalSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternalSystems.PaymentInfo;
@@ -43,6 +44,7 @@ class FindRateProductsStores {
     private PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
 
     public FindRateProductsStores() {
+
 //        HibernateUtils.clear_db();
 //        MarketFacade marketFacade1243 = new MarketFacade(paymentAdapter, supplyAdapter);
 //        marketFacade1243.clear();
