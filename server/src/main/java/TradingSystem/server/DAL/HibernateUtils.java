@@ -31,7 +31,7 @@ public class HibernateUtils {
     static {
         emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
-//        em = emf.createEntityManager();
+        em = getEntityManager();
     }
 
     public static void setPersistence_unit(String persistence_unit) {
@@ -43,7 +43,10 @@ public class HibernateUtils {
     public static void set_load_tests_mode() {
         if (!HibernateUtils.persistence_unit.equals("TradingSystemTests")) {
             HibernateUtils.persistence_unit = "TradingSystemTests";
+            closeEntityManager();
+            closeEntityManagerFactory();
             emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
             threadLocal.set(null);
         }
         HibernateUtils.allow_persist = true;
@@ -52,7 +55,10 @@ public class HibernateUtils {
     public static void set_tests_mode() {
         if (!HibernateUtils.persistence_unit.equals("TradingSystemTests")) {
             HibernateUtils.persistence_unit = "TradingSystemTests";
+            closeEntityManager();
+            closeEntityManagerFactory();
             emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
             threadLocal.set(null);
         }
         HibernateUtils.allow_persist = false;
@@ -62,7 +68,10 @@ public class HibernateUtils {
     public static void set_normal_use() {
         if (!HibernateUtils.persistence_unit.equals("TradingSystem")) {
             HibernateUtils.persistence_unit = "TradingSystem";
+            closeEntityManager();
+            closeEntityManagerFactory();
             emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
             threadLocal.set(null);
         }
         HibernateUtils.allow_persist = true;
@@ -71,7 +80,10 @@ public class HibernateUtils {
     public static void set_demo_use() {
         if (!HibernateUtils.persistence_unit.equals("demo")) {
             HibernateUtils.persistence_unit = "demo";
+            closeEntityManager();
+            closeEntityManagerFactory();
             emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
             threadLocal.set(null);
         }
         HibernateUtils.allow_persist = true;
@@ -93,6 +105,7 @@ public class HibernateUtils {
         if (em != null) {
             em.close();
             threadLocal.set(null);
+            em = null;
         }
     }
 
@@ -110,6 +123,7 @@ public class HibernateUtils {
         if(emf!=null) {
             emf.close();
             emf = null;
+            em = null;
         }
     }
 
@@ -159,56 +173,56 @@ public class HibernateUtils {
     public static synchronized int get_uc() {
         if (!allow_persist)
             return 0;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(id),0) as id FROM database.user").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(id),0) as id FROM sql4500923.user").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_max_purchase() {
         if (!allow_persist)
             return 0;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(purchase_id),0) as id FROM database.purchase").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(purchase_id),0) as id FROM sql4500923.purchase").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_sc() {
         if (!allow_persist)
             return 1;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(store_id),1) as id FROM database.store").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(store_id),1) as id FROM sql4500923.store").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_max_store_purchase_id() {
         if (!allow_persist)
             return 1;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(store_purchase_id),1) as id FROM database.storepurchase").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(store_purchase_id),1) as id FROM sql4500923.storepurchase").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_max_product_id() {
         if (!allow_persist)
             return 1;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(product_id),1) as id FROM database.product").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(product_id),1) as id FROM sql4500923.product").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_max_bid_id() {
         if (!allow_persist)
             return 1;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM database.bid").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM sql4500923.bid").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_max_question_id() {
         if (!allow_persist)
             return 1;
-        BigInteger bid = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM database.buyerquestion").getSingleResult();
-        BigInteger uid = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM database.userquestion").getSingleResult();
+        BigInteger bid = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM sql4500923.buyerquestion").getSingleResult();
+        BigInteger uid = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM sql4500923.userquestion").getSingleResult();
         return Math.max(bid.intValue(), uid.intValue()) + 1;
     }
 
     public static synchronized Map<Integer ,Store> stores() {
         products();
-        String query = "SELECT store_id FROM database.store";
+        String query = "SELECT store_id FROM sql4500923.store";
         Map<Integer, Store> map = new ConcurrentHashMap<>();
         try {
             List<Integer> lst = getEntityManager().createNativeQuery(query).getResultList();
@@ -224,7 +238,7 @@ public class HibernateUtils {
     }
 
     public static synchronized Map<Integer ,Product> products() {
-        String query = "SELECT product_id FROM database.product";
+        String query = "SELECT product_id FROM sql4500923.product";
         Map<Integer, Product> map = new HashMap<>();
         try {
             List<Integer> lst = getEntityManager().createNativeQuery(query).getResultList();
@@ -240,7 +254,7 @@ public class HibernateUtils {
     }
 
     public static synchronized Map<String , User> users() {
-        String query = "SELECT id FROM database.user";
+        String query = "SELECT id FROM sql4500923.user";
         Map<String, User> map = new HashMap<>();
         try {
             List<BigInteger> lst = getEntityManager().createNativeQuery(query).getResultList();
@@ -256,7 +270,7 @@ public class HibernateUtils {
     }
 
     public static synchronized Map<Integer, BuyerQuestion> buyerquestions() {
-        String query = "SELECT question_id FROM database.buyerquestion";
+        String query = "SELECT question_id FROM sql4500923.buyerquestion";
         Map<Integer,BuyerQuestion> map = new ConcurrentHashMap<>();
         try {
             List<BigInteger> lst = getEntityManager().createNativeQuery(query).getResultList();
@@ -272,7 +286,7 @@ public class HibernateUtils {
     }
 
     public static synchronized Map<Integer, UserQuestion> userQuestions() {
-        String query = "SELECT question_id FROM database.userquestion";
+        String query = "SELECT question_id FROM sql4500923.userquestion";
         Map<Integer,UserQuestion> map = new ConcurrentHashMap<>();
         try {
             List<BigInteger> lst = getEntityManager().createNativeQuery(query).getResultList();
@@ -289,7 +303,7 @@ public class HibernateUtils {
 
 
     //   public static void main(String[] args) {
-//        HibernateUtils.clear_db("database")
+//        HibernateUtils.clear_db("sql4500923")
 // ;
 //    }
 }
