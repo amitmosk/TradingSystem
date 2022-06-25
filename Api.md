@@ -23,6 +23,7 @@ Available functions (pay attention to copy the instruction name exactly) :
  3) Store Owner:
  * add_manager#<-appointer email>#<-to appint email>#<-store id>
  * add_owner#<-appointer email>#<-to appint email>#<-store id>
+ * appointment_answer#<-manager email>#<-store id>#<-candidate email>
  * remove_owner#<-remover email>#<-to remove email>#<-store id>
  * remove_manager#<-remover email>#<-to remove email>#<-store id>
  * close_store_temporarly#<-manager email>#<-store id>
