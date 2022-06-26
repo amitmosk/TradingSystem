@@ -10,6 +10,7 @@ Available functions (pay attention to copy the instruction name exactly) :
  * rate_product#<-email>#<-product id>#<-store id>#<-rate>
  * rate_store#<-email>#<-store id>#<-rate>
  * register#<-email>#<-password>#<-name>#<-username>#<-last name>#<-birth date>
+ * add_admin#<-email>#<-password>#<-name>#<-username>#<-last name>
 
  2) User:
  * login#<-email>#<-password>
@@ -18,7 +19,7 @@ Available functions (pay attention to copy the instruction name exactly) :
  * edit_password#<-email>#<-old password>#<-new password>
  * improve_security#<-email>#<-password>#<-question>#<-answer>
  * open_store#<-email>#<-store name>
- * add_admin#<-email>
+
  
  3) Store Owner:
  * add_manager#<-appointer email>#<-to appint email>#<-store id>
