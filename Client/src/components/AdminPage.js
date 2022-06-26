@@ -114,7 +114,7 @@ export default function AdminPage() {
         <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
             <Grid item xs={3}> <FormDialog fields={close_store_fields} getValues={close_store_permanently} name="Close Store"></FormDialog> </Grid>
             <Grid item xs={3}> <FormDialog fields={remove_user_fields} getValues={remove_user} name="Remove User"></FormDialog></Grid>
-            <Grid item xs={3}>  <Link href="/AdminViewUserQuestions" underline="hover"> {'View user questions'}</Link> </Grid>
+            <Grid item xs={3}>  <Link href="/AdminViewUserQuestions" underline="hover"> {'View users questions'}</Link> </Grid>
             <Grid item xs={3}>  <FormDialog fields={admin_view_user_purchases_history_fields} getValues={admin_view_user_purchases_history} name="View User Purchase History"></FormDialog></Grid>
             <Grid item xs={3}>  <FormDialog fields={admin_view_store_purchases_history_fields} getValues={admin_view_store_purchases_history} name="View Store Purchase History"></FormDialog></Grid>
             <Grid item xs={3}>  <Link href="/ViewStat" underline="hover"> {'Show Statistics'}</Link> </Grid>
