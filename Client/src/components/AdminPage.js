@@ -75,6 +75,11 @@ export default function AdminPage() {
     const close_store_permanently = async(values) => {
         console.log("in close store permanently \n");
         const store_id = values[0];
+		if(Utils.check_all_digits(store_id) == 0)
+        {
+            setSnackbar({ children: "Illegal Store ID", severity: 'error' });
+            return;
+        }
         const response = await adminApi.close_store_permanently(store_id);
         if (!response.was_exception) {
             setSnackbar({ children: response.message, severity: 'success' }); 
