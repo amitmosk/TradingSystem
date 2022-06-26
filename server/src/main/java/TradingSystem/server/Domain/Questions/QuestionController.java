@@ -45,9 +45,9 @@ public class QuestionController implements iQuestionController {
     }
 
     public void load(){
-//        this.buyer_to_store = HibernateUtils.buyerquestions();
-//        this.user_to_admin = HibernateUtils.userQuestions();
-//        this.question_ids_counter = new AtomicInteger(HibernateUtils.get_max_question_id());
+        this.buyer_to_store = HibernateUtils.buyerquestions();
+        this.user_to_admin = HibernateUtils.userQuestions();
+        this.question_ids_counter = new AtomicInteger(HibernateUtils.get_max_question_id());
     }
 
     public static QuestionController getInstance(){
