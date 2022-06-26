@@ -53,6 +53,11 @@ export default function AdminPage() {
     const remove_user = async(values)=> {
         console.log("in remove user!\n");
         const user_email = values[0];
+		if(Utils.check_email(user_email) == 0)
+        {
+            setSnackbar({ children: "Illegal Email", severity: 'error' });
+            return;
+        }
         const response = await adminApi.remove_user(user_email);
         // alert(response.message);
         
