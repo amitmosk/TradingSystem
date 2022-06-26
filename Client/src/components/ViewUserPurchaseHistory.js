@@ -41,12 +41,12 @@ export default class UserPurchaseHistory extends Component {
         // alert(response.message);
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
-          //get store
-          //reload store
+            //get store
+            //reload store
         } else {
             this.setState({ snackbar: { children: response.message, severity: "error" } });
         }
-      }
+    }
 
     async view_user_purchase_history(values) {
         console.log("in view_user_purchase_history!\n");
@@ -56,7 +56,7 @@ export default class UserPurchaseHistory extends Component {
 
         // alert(response.message);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            //    this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log(response.value);
             this.setState({ history: response.value.historyList });
             console.log("history: ");
@@ -70,22 +70,20 @@ export default class UserPurchaseHistory extends Component {
     }
     async rate_product(rating) {
         console.log("in rate Product");
-        console.log("rating is = "+rating);
-        let response = await this.productApi.rate_product(this.state.product_id, this.state.store_id,rating);
+        console.log("rating is = " + rating);
+        let response = await this.productApi.rate_product(this.state.product_id, this.state.store_id, rating);
         // alert(response.message);
-        if (!response.was_exception)
-        {
+        if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
-          //get product
-          //reload product
-          
+            //get product
+            //reload product
+
         }
-        else
-        {
+        else {
             this.setState({ snackbar: { children: response.message, severity: "error" } });
-    
+
         }
-        
+
     }
 
     async componentDidMount() {
@@ -127,7 +125,7 @@ export default class UserPurchaseHistory extends Component {
 
 
                                         </>
-                                        
+
 
 
                                     ))
@@ -137,24 +135,24 @@ export default class UserPurchaseHistory extends Component {
 
                                     }
                                 </List>
-                                
+
                             </Demo>
                         </Grid>
                     </Grid>
                 </Box>
                 {!!this.state.snackbar && (
-                        <Snackbar
+                    <Snackbar
                         open
                         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                         onClose={this.handleCloseSnackbar}
                         autoHideDuration={6000}
-                        >
+                    >
                         <Alert
                             {...this.state.snackbar}
                             onClose={this.handleCloseSnackbar}
                         />
-                        </Snackbar>
-                    )}
+                    </Snackbar>
+                )}
             </>
         );
 

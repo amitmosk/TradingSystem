@@ -36,7 +36,7 @@ public class Utils {
 //        if (e instanceof BasketException)
 //            return new Response<>("the system cant preform this action on the shopping basket.", e);
         if (e instanceof LoginException)
-            return new Response<>("the system cant preform login.", e);
+            return new Response<>("Login failed, wrong email or password", e);
         if (e instanceof NoPremssionException)
             return new Response<>("you dont have permission to do this action.", e);
         if (e instanceof NoUserRegisterdException)

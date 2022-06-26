@@ -127,7 +127,7 @@ public class StoreController {
     public void open_close_store(User user, int store_id) throws MarketException {
         AssignUser assignUser = user.state_if_assigned();
         if (!this.stores.containsKey(store_id)) {
-            throw new ObjectDoesntExsitException("The store is not exist - store id: " + store_id);
+            throw new ObjectDoesntExsitException("The store does not exist - store id: " + store_id);
         }
         Store store = this.stores.get(store_id);
         store.open_close_store(assignUser);
@@ -222,7 +222,7 @@ public class StoreController {
      */
     private Store get_store_by_store_id(int store_id) throws StoreException {
         if (!this.stores.containsKey(store_id)) {
-            throw new StoreException("The store is not exist - store id: " + store_id);
+            throw new StoreException("The store does not exist - store id: " + store_id);
         } else if (!this.stores.get(store_id).is_active()) {
             throw new StoreException("The store is not active - store id: " + store_id);
         }

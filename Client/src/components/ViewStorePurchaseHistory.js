@@ -15,7 +15,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import Link from '@mui/material/Button';
 import { StoreApi } from '../API/StoreApi';
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert"; 
+import Alert from "@mui/material/Alert";
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -28,7 +28,7 @@ export default class ViewStorePurchaseHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            store_id : this.props.store_id,
+            store_id: this.props.store_id,
             history: [],
             open: false,
             snackbar: null,
@@ -49,7 +49,7 @@ export default class ViewStorePurchaseHistory extends Component {
         const response = await this.storeApi.view_store_purchases_history(this.state.store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            //   this.setState({ snackbar: { children: response.message, severity: "success" } });
             let res = [];
             this.setState({ history: response.value });
             console.log("history: ");
@@ -61,7 +61,7 @@ export default class ViewStorePurchaseHistory extends Component {
 
         }
     }
-   
+
 
     async componentDidMount() {
         this.view_store_purchases_history();
@@ -136,18 +136,18 @@ export default class ViewStorePurchaseHistory extends Component {
                     </Grid>
                 </Box>
                 {!!this.state.snackbar && (
-                        <Snackbar
+                    <Snackbar
                         open
                         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                         onClose={this.handleCloseSnackbar}
                         autoHideDuration={6000}
-                        >
+                    >
                         <Alert
                             {...this.state.snackbar}
                             onClose={this.handleCloseSnackbar}
                         />
-                        </Snackbar>
-                    )}
+                    </Snackbar>
+                )}
             </>
         );
 
