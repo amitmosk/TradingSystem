@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import static TradingSystem.server.Service.MarketSystem.tests_config_file_path;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -192,5 +193,40 @@ class RemoveUser {
         facade2.logout();
 
     }
+
+//
+//    @Test
+//    void remove_founder(){
+//        MarketFacade founder_facade = new MarketFacade(paymentAdapter, supplyAdapter);
+//        MarketFacade admin_facade = new MarketFacade(paymentAdapter, supplyAdapter);
+//        admin_facade.login(user_admin_email, user_password);
+//        founder_facade.register("founderfoudner@walla.com", user_password, "foun", "er", birth_date);
+//        Response<Integer> res22 = founder_facade.open_store("foundistore");
+//        int store_id = res22.getValue();
+//        Response res = admin_facade.remove_user("founderfoudner@walla.com");
+//        assertFalse(res.WasException());
+//        List<String> keywords = new ArrayList<>();
+//        Response res1 = admin_facade.add_product_to_store(store_id, 1, "name", 19, "sw", keywords);
+//        assertTrue(res1.WasException());
+//    }
+//
+//    @Test
+//    void try_to_remove_admin(){
+//        MarketFacade admin_facade = new MarketFacade(paymentAdapter, supplyAdapter);
+//        admin_facade.login(user_admin_email, user_password);
+//        try {
+//            uc.add_admin("admin2@walla.com", user_password, "admin2", "admin2");
+//        }
+//        catch (Exception e){
+//
+//        }
+//        Response res = admin_facade.remove_user("admin2@walla.com");
+//        assertTrue(res.WasException(), "cant remove admin");
+//        Response res1 = admin_facade.remove_user("admin2@walla.com");
+//        assertTrue(res1.WasException(), "cant remove admin");
+//
+//
+//
+//    }
 
 }
