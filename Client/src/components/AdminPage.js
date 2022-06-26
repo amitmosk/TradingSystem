@@ -27,6 +27,11 @@ export default function AdminPage() {
     const admin_view_store_purchases_history = async (values) => {
         console.log("in admin view store purchases history\n");
         const store_id = values[0];
+		if(Utils.check_all_digits(store_id) == 0)
+        {
+            setSnackbar({ children: "Illegal Store ID", severity: 'error' });
+            return;
+        }
         window.location.href+=`/AdminViewStorePurchaseHistory/${store_id}`
         console.log("in admin view store purchases history - success!\n");
     }
