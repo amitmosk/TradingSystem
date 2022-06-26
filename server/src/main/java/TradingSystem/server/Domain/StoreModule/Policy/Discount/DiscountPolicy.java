@@ -25,7 +25,7 @@ public class DiscountPolicy {
 
     private void checkUniqName(String name, Map map) throws WrongPermterException {
         if (map.keySet().contains(name))
-            throw new WrongPermterException("there is a predict with this name in the store,please choose another name");
+            throw new WrongPermterException("There is a predict with this name in the store, please choose another name");
     }
 
     public void addRule(String name, DiscountComponent component) throws WrongPermterException {

@@ -75,14 +75,14 @@ export default function App() {
       if(!response.was_exception)
       {
         setUser(response.value);
-        setSnackbar({ children: response.message, severity: 'success' });
+      //  setSnackbar({ children: response.message, severity: 'success' });
 
       }
-      else
-      {
-        setSnackbar({ children: response.message, severity: 'error' });
+      // else
+      // {
+      //   setSnackbar({ children: response.message, severity: 'error' });
 
-      }
+      // }
       
   }
   const updateUserState = (user ) => {

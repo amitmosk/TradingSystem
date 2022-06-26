@@ -353,7 +353,7 @@ public class StoreController {
 
     public Product checkAvailablityAndGet(int store_id, int product_id, int quantity) throws MarketException {
         if (!stores.containsKey(store_id)) {
-            throw new StoreException("StoreController:checkAvailablityAndGet - Store does not exist , store id: " + store_id);
+            throw new StoreException("Store does not exist , store id: " + store_id);
         }
         return stores.get(store_id).checkAvailablityAndGet(product_id, quantity);
     }

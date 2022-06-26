@@ -113,7 +113,7 @@ export default class ShoppingCart extends Component {
         newRow.id,
         newRow.quantity
       );
-    
+
   };
 
   remove_products = async (id) => {
@@ -124,7 +124,7 @@ export default class ShoppingCart extends Component {
     );
     if (response.was_exception)
       this.setSnackbar({ children: response.message, severity: "error" });
-  
+
     else {
       this.setSnackbar({
         children: "product removed successfully",
@@ -149,7 +149,7 @@ export default class ShoppingCart extends Component {
       this.setSnackbar({ children: response.message, severity: "error" });
       return oldRow;
     }
-    this.setSnackbar({ children: response.message, severity: "success" });
+    // this.setSnackbar({ children: response.message, severity: "success" });
     let new_list = this.state.items.filter((p) => p.id !== newRow.id);
     new_list.push(newRow);
     new_list.sort((a, b) => a.id - b.id);
@@ -206,9 +206,9 @@ export default class ShoppingCart extends Component {
             alignItems="center"
           >
             <h4>cart total price {this.state.price}</h4>
-            
+
             <Button width="5" variant="contained" >
-            <Link to={{pathname:`BuyCart`}}   underline="hover" style={{ color: '#FFF' }} >{'Buy Cart'}</Link> 
+              <Link to={{ pathname: `BuyCart` }} underline="hover" style={{ color: '#FFF' }} >{'Buy Cart'}</Link>
             </Button>
           </Grid>
           {!!this.state.snackbar && (

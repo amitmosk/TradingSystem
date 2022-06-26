@@ -77,7 +77,7 @@ export default class ViewStat extends Component {
       console.log("in get market stats - success!\n");
       console.log(response);
       this.setState({
-        snackbar: { children: response.message, severity: "success" },
+        //snackbar: { children: response.message, severity: "success" },
         init_system_time: stats.init_system_time,
         login_per_minutes: stats.login_per_minutes,
         logout_per_minutes: stats.logout_per_minutes,

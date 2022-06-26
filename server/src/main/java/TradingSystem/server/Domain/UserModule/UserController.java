@@ -152,7 +152,7 @@ public class UserController {
             statisticsManager.inc_login_count();
             return user;
         } else
-            throw new LoginException("User email does not match to the password");
+            throw new LoginException("Wrong user email or password");
     }
 
 

@@ -11,7 +11,7 @@ import FormDialogPermissions from './FormDialogPermissions';
 import { StoreApi } from '../API/StoreApi';
 import StoreManagmentProductsTable from './StoreManagmentProductsTable';
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert"; 
+import Alert from "@mui/material/Alert";
 import { Utils } from '../ServiceObjects/Utils';
 import List from '@mui/material/List';
 import Card from '@mui/material/Card';
@@ -52,177 +52,171 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function StorePolicies() {
     const [snackbar, setSnackbar] = React.useState(null);
     const handleCloseSnackbar = () => setSnackbar(null);
-    const {id} = useParams();
-    const store_id=id;
+    const { id } = useParams();
+    const store_id = id;
     const policiesApi = new PoliciesApi();
 
 
     //Getters
-    const [purchases,setPurchases ] =React.useState(["purchase1", "purchase2", "purchase3"]);
-    const [predicts,setPredicts ] =React.useState(["predict1", "predict2", "predict3"]);
-    const [discounts,setDiscounts ] =React.useState(["discount1", "discount2", "discount3"]);
+    const [purchases, setPurchases] = React.useState(["purchase1", "purchase2", "purchase3"]);
+    const [predicts, setPredicts] = React.useState(["predict1", "predict2", "predict3"]);
+    const [discounts, setDiscounts] = React.useState(["discount1", "discount2", "discount3"]);
 
     //ADD
-    const [addDiscount,setAddDiscount ] =React.useState(false);
-    const [addPurchase,setAddPurchase ] =React.useState(false);
-    const [addPredict,setAddPredict ] =React.useState(false);
+    const [addDiscount, setAddDiscount] = React.useState(false);
+    const [addPurchase, setAddPurchase] = React.useState(false);
+    const [addPredict, setAddPredict] = React.useState(false);
 
 
 
 
     const get_purchase_policy = async () => {
         const response = await policiesApi.get_purchase_policy(id);
-        if(!response.was_exception)
-        {
-            setSnackbar({ children: response.message, severity: 'success' }); 
+        if (!response.was_exception) {
+            //    setSnackbar({ children: response.message, severity: 'success' }); 
             setPredicts(response.value);
-            
+
         }
-        else{
-            setSnackbar({ children: response.message, severity: 'error' }); 
+        else {
+            setSnackbar({ children: response.message, severity: 'error' });
         }
     }
     const send_predicts = async () => {
         const response = await policiesApi.send_predicts(id);
-        if(!response.was_exception)
-        {
-            setSnackbar({ children: response.message, severity: 'success' });    
+        if (!response.was_exception) {
+            setSnackbar({ children: response.message, severity: 'success' });
             setPredicts(response.value);
-         }
-        else{
-            setSnackbar({ children: response.message, severity: 'error' }); 
+        }
+        else {
+            setSnackbar({ children: response.message, severity: 'error' });
         }
     }
     const get_discount_policy = async () => {
         const response = await policiesApi.get_discount_policy(id);
-        if(!response.was_exception)
-        {
-            setSnackbar({ children: response.message, severity: 'success' });    
+        if (!response.was_exception) {
+            //   setSnackbar({ children: response.message, severity: 'success' });    
             console.log(response.value);
             setDiscounts(response.value);
         }
-        else{
-            setSnackbar({ children: response.message, severity: 'error' }); 
+        else {
+            setSnackbar({ children: response.message, severity: 'error' });
         }
     }
 
 
 
-    useEffect(()=>{get_purchase_policy()}, []);
-    useEffect(()=>{send_predicts()}, []);
-    useEffect(()=>{get_discount_policy()}, []);
+    useEffect(() => { get_purchase_policy() }, []);
+    useEffect(() => { send_predicts() }, []);
+    useEffect(() => { get_discount_policy() }, []);
 
-    const ShowAddPredict = ()=>{
+    const ShowAddPredict = () => {
         setAddPredict(!addPredict);
     }
-    const ShowAddDiscount = ()=>{
+    const ShowAddDiscount = () => {
         setAddDiscount(!addDiscount);
     }
-    const ShowAddPurchase = ()=>{
+    const ShowAddPurchase = () => {
         setAddPurchase(!addPurchase);
     }
 
-    
+
 
     //Functions to Server
-    const remove_predict = async (predict_name) =>{
+    const remove_predict = async (predict_name) => {
         console.log(predict_name);
         const response = await policiesApi.remove_predict(store_id, predict_name)
-        if (!response.was_exception)
-        {
+        if (!response.was_exception) {
             setSnackbar({ children: response.message, severity: 'success' });
             window.location.reload();
         }
-        else{
+        else {
             setSnackbar({ children: response.message, severity: 'error' });
 
         }
     }
-    const remove_discount_rule = async (discount_rule) =>{
+    const remove_discount_rule = async (discount_rule) => {
         console.log(discount_rule);
         const response = await policiesApi.remove_discount_rule(store_id, discount_rule)
-        if (!response.was_exception)
-        {
+        if (!response.was_exception) {
             setSnackbar({ children: response.message, severity: 'success' });
             window.location.reload();
 
         }
-        else{
+        else {
             setSnackbar({ children: response.message, severity: 'error' });
 
         }
     }
-    const remove_purchase_rule = async (purchase_rule) =>{
+    const remove_purchase_rule = async (purchase_rule) => {
         console.log(purchase_rule);
         const response = await policiesApi.remove_purchase_rule(store_id, purchase_rule)
-        if (!response.was_exception)
-        {
+        if (!response.was_exception) {
             setSnackbar({ children: response.message, severity: 'success' });
             window.location.reload();
         }
-        else{
+        else {
             setSnackbar({ children: response.message, severity: 'error' });
 
         }
     }
-        return (
+    return (
 
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={5} paddingRight={25} paddingLeft={25} paddingTop={10}>
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={5} paddingRight={25} paddingLeft={25} paddingTop={10}>
 
-                    
+
+            </Grid>
+            <h1 align="center">Store Policies</h1>
+            <Grid>
+            </Grid>
+            <Grid container spacing={5} paddingRight={25} paddingLeft={25} paddingTop={10}>
+                <Grid item xs={10}>  <Item>
+                    <InteractiveList name="predicts" list={predicts} icon={<QuestionMarkIcon></QuestionMarkIcon>} remove={remove_predict}></InteractiveList>
+                    <Button onClick={ShowAddPredict}><AddIcon></AddIcon></Button>
+                    {addPredict ? <CreatePredict></CreatePredict> : null}</Item>
                 </Grid>
-                <h1 align="center">Store Policies</h1>
-                <Grid>
-                </Grid>
-                <Grid container spacing={5} paddingRight={25} paddingLeft={25} paddingTop={10}>
-                    <Grid item xs={10}>  <Item> 
-                        <InteractiveList name="predicts" list={predicts} icon={<QuestionMarkIcon></QuestionMarkIcon>} remove={remove_predict}></InteractiveList>
-                        <Button onClick={ShowAddPredict}><AddIcon></AddIcon></Button> 
-                        {addPredict ? <CreatePredict></CreatePredict>:null}</Item>                    
-                    </Grid>
 
-                    <Grid item xs={10}>  <Item> 
+                <Grid item xs={10}>  <Item>
                     <InteractiveList name="Discount Rules" list={discounts} icon={<MoneyOffIcon></MoneyOffIcon>} remove={remove_discount_rule}></InteractiveList>
-                        <Button onClick={ShowAddDiscount}><AddIcon></AddIcon></Button> 
-                        {addDiscount ? <AddDiscount></AddDiscount>:null}</Item>                    
-                    </Grid>
-
-                    <Grid item xs={10}>  <Item> 
-                    <InteractiveList name="Purchase Rules" list={purchases} icon={<ShoppingCartIcon></ShoppingCartIcon>} remove={remove_purchase_rule}></InteractiveList>
-                        <Button onClick={ShowAddPurchase}><AddIcon></AddIcon></Button> 
-                        {addPurchase ? <AddPurchase></AddPurchase>:null}</Item>                    
-                    </Grid>
-
-
-
-                    <Grid item xs={10}>  <Item> </Item>                    </Grid>
-                    
-                    
-                    {/* <ControlledRadioButtonsGroup list={predicts} name="Predicts" save={save_predictOr1}></ControlledRadioButtonsGroup> */}
-
-
-
-
-
+                    <Button onClick={ShowAddDiscount}><AddIcon></AddIcon></Button>
+                    {addDiscount ? <AddDiscount></AddDiscount> : null}</Item>
                 </Grid>
 
-                {!!snackbar && (
-            <Snackbar
-            open
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            onClose={handleCloseSnackbar}
-            autoHideDuration={6000}
-            >
-            <Alert {...snackbar} onClose={handleCloseSnackbar} />
-            </Snackbar>
-        )}
-                <h3> </h3>
-            </Box>
+                <Grid item xs={10}>  <Item>
+                    <InteractiveList name="Purchase Rules" list={purchases} icon={<ShoppingCartIcon></ShoppingCartIcon>} remove={remove_purchase_rule}></InteractiveList>
+                    <Button onClick={ShowAddPurchase}><AddIcon></AddIcon></Button>
+                    {addPurchase ? <AddPurchase></AddPurchase> : null}</Item>
+                </Grid>
 
 
-        );
 
-    
+                <Grid item xs={10}>  <Item> </Item>                    </Grid>
+
+
+                {/* <ControlledRadioButtonsGroup list={predicts} name="Predicts" save={save_predictOr1}></ControlledRadioButtonsGroup> */}
+
+
+
+
+
+            </Grid>
+
+            {!!snackbar && (
+                <Snackbar
+                    open
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                    onClose={handleCloseSnackbar}
+                    autoHideDuration={6000}
+                >
+                    <Alert {...snackbar} onClose={handleCloseSnackbar} />
+                </Snackbar>
+            )}
+            <h3> </h3>
+        </Box>
+
+
+    );
+
+
 
 }

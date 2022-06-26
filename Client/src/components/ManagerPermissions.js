@@ -10,12 +10,12 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert"; 
+import Alert from "@mui/material/Alert";
 import { StoreApi } from '../API/StoreApi';
 import { useParams } from 'react-router-dom';
 import { Utils } from '../ServiceObjects/Utils';
 import { useEffect } from 'react';
-function not(a, b) {    
+function not(a, b) {
     return a.filter((value) => b.indexOf(value) === -1);
 }
 
@@ -28,46 +28,46 @@ function union(a, b) {
 }
 
 export default function ManagerPermissions() {
-    const current_permissions=[];
+    const current_permissions = [];
     const storeApi = new StoreApi();
     const [snackbar, setSnackbar] = React.useState(null);
     const handleCloseSnackbar = () => setSnackbar(null);
-    const {id, user_email} = useParams();
-    
-    const get_permissionss = async () =>{
+    const { id, user_email } = useParams();
+
+    const get_permissionss = async () => {
         const response = await storeApi.get_permissions(user_email, id);
         if (!response.was_exception) {
 
-            setSnackbar({ children: response.message, severity: 'success' });
+            //   setSnackbar({ children: response.message, severity: 'success' });
             console.log(response.value);
             // current_permissions = response.value;
             response.value.map((per) => {
-                let name =permissions_to_names(per);
+                let name = permissions_to_names(per);
                 if (!current_permissions.includes(name))
                     current_permissions.push(name)
             });
-           
+
 
         }
         else {
-            setSnackbar({ children: response.message, severity: 'error' });   
+            setSnackbar({ children: response.message, severity: 'error' });
 
         }
     }
-    useEffect(()=>{get_permissionss()}, []);
-    
+    useEffect(() => { get_permissionss() }, []);
+
     const [checked, setChecked] = React.useState([]);
     const [left, setLeft] = React.useState(["Add Item", "Remove Item", "Edit Item Name", "Edit Item Price",
         "Edit Item Category", "Edit Item Keywords", "View Permissions", "View User Questions",
         "Edit Store Policy", "Edit Discount Policy", "Edit Purchase Policy", "View Purchase History",
         "Close Store Temporarily", "Open Closed Store", "Add Manager", "Remove Manager",
-        "Add Owner", "Remove Owner", "Edit Permissions", "View Bids Status","Answer Bid Offer",
-        "Answer Bid Offer Negotiate",   ]);
+        "Add Owner", "Remove Owner", "Edit Permissions", "View Bids Status", "Answer Bid Offer",
+        "Answer Bid Offer Negotiate",]);
     const [right, setRight] = React.useState(current_permissions);
 
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
-    
+
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -94,61 +94,61 @@ export default function ManagerPermissions() {
 
     const handleCheckedRight = () => {
 
-        if (!right.includes(leftChecked[0]))
-        {
+        if (!right.includes(leftChecked[0])) {
             setRight(right.concat(leftChecked));
             setLeft(not(left, leftChecked));
-            
+
         }
         setChecked(not(checked, leftChecked));
     };
 
     const handleCheckedLeft = () => {
-        if (!left.includes(rightChecked[0]))
-        {
+        if (!left.includes(rightChecked[0])) {
             setLeft(left.concat(rightChecked));
             setRight(not(right, rightChecked));
-        } 
+        }
         setChecked(not(checked, rightChecked));
     };
-    const permissions_dict = {add_item :0,
-        remove_item:1,
-        edit_item_name:2,
-        edit_item_price:3,
-        edit_item_category:4,
-        edit_item_keywords:5,
-        edit_item_quantity:6,
-        view_permissions:7,
-        view_users_questions:8,
-        edit_store_policy:9,
-        edit_discount_policy:10,
-        edit_purchase_policy:11,
-        view_purchases_history:12,
-        close_store_temporarily:13,
-        open_close_store:14,
-        add_manager:15,
-        remove_manager:16,
-        add_owner:17,
-        remove_owner:18,
-        edit_permissions:19,
-        view_bids_status:20,
-        answer_bid_offer:21,
-        answer_bid_offer_negotiate:22,};
+    const permissions_dict = {
+        add_item: 0,
+        remove_item: 1,
+        edit_item_name: 2,
+        edit_item_price: 3,
+        edit_item_category: 4,
+        edit_item_keywords: 5,
+        edit_item_quantity: 6,
+        view_permissions: 7,
+        view_users_questions: 8,
+        edit_store_policy: 9,
+        edit_discount_policy: 10,
+        edit_purchase_policy: 11,
+        view_purchases_history: 12,
+        close_store_temporarily: 13,
+        open_close_store: 14,
+        add_manager: 15,
+        remove_manager: 16,
+        add_owner: 17,
+        remove_owner: 18,
+        edit_permissions: 19,
+        view_bids_status: 20,
+        answer_bid_offer: 21,
+        answer_bid_offer_negotiate: 22,
+    };
     const handleInputChange = event => {
         const name = event.target.name
         const value = event.target.value;
         console.log(value);
         console.log(name);
         localStorage.setItem(name, value);
-    
-        
-        };   
-        // const hadleSubmit = async () => {
-        //     return (<Button>fffff</Button>);
-        // }
-    const permissions_to_names = (per) =>{
+
+
+    };
+    // const hadleSubmit = async () => {
+    //     return (<Button>fffff</Button>);
+    // }
+    const permissions_to_names = (per) => {
         if (per === "add_item") {
-           return "Add Item";
+            return "Add Item";
         }
         else if (per === "remove_item") {
             return "Remove Item";
@@ -289,34 +289,33 @@ export default function ManagerPermissions() {
                 permissions.push("answer_bid_offer_negotiate");
             }
 
-    
+
 
 
         })
         console.log(permissions);
         let permissions_numbers = [];
-        permissions.map((p)=> permissions_numbers.push(permissions_dict[p]));
+        permissions.map((p) => permissions_numbers.push(permissions_dict[p]));
         console.log(permissions_numbers);
         console.log(id);
-        if (permissions_numbers.length == 0 )
-        {
-            setSnackbar({ children: "Have to choose al least one permission", severity: 'error' });   
+        if (permissions_numbers.length == 0) {
+            setSnackbar({ children: "Have to choose at least one permission", severity: 'error' });
             return;
         }
-        
+
         let permissions_str = "";
-        permissions_numbers.map((p)=>{
+        permissions_numbers.map((p) => {
             permissions_str = permissions_str.concat(p.toString()).concat("/")
         });
         console.log(permissions_str)
         // storeApi.edit_manager_permissions(user_email, store_id, permissions_numbers)
         const response = await storeApi.edit_manager_permissions(user_email, id, permissions_str);
         if (!response.was_exception) {
-            setSnackbar({ children: response.message, severity: 'success' });   
+            setSnackbar({ children: response.message, severity: 'success' });
             console.log("in edit_manager_permissions - success!\n");
         }
         else {
-            setSnackbar({ children: response.message, severity: 'error' });   
+            setSnackbar({ children: response.message, severity: 'error' });
 
         }
     };
@@ -386,11 +385,11 @@ export default function ManagerPermissions() {
 
     return (
         <>
-        <Grid container spacing={3} justifyContent="center" alignItems="center" paddingTop={10}>
-            <h3 align="center">Change Permissions Of User {user_email}</h3>      
+            <Grid container spacing={3} justifyContent="center" alignItems="center" paddingTop={10}>
+                <h3 align="center">Change Permissions Of User {user_email}</h3>
             </Grid>
             <Grid container spacing={3} justifyContent="center" alignItems="center">
-            
+
                 <Grid item>{customList('Permission Choices', left)}</Grid>
                 <Grid item>
                     <Grid container direction="column" alignItems="center">
@@ -415,27 +414,27 @@ export default function ManagerPermissions() {
                             &lt;
                         </Button>
                     </Grid>
-                    
+
                 </Grid>
                 <Grid item>{customList('Current Permissions', right)}</Grid>
                 <Grid container direction="column" alignItems="center">
-                <Grid item>
-                    
-                    <Button variant="contained" onClick={hadleSubmit} >Submit</Button>
+                    <Grid item>
+
+                        <Button variant="contained" onClick={hadleSubmit} >Submit</Button>
                     </Grid>
-                    </Grid>
+                </Grid>
             </Grid>
-            
+
             {!!snackbar && (
-            <Snackbar
-            open
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            onClose={handleCloseSnackbar}
-            autoHideDuration={6000}
-            >
-            <Alert {...snackbar} onClose={handleCloseSnackbar} />
-            </Snackbar>
-        )}
+                <Snackbar
+                    open
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                    onClose={handleCloseSnackbar}
+                    autoHideDuration={6000}
+                >
+                    <Alert {...snackbar} onClose={handleCloseSnackbar} />
+                </Snackbar>
+            )}
         </>
     );
 }
