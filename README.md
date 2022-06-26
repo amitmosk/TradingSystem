@@ -26,12 +26,16 @@ For real time, we will connect to the external systems.
 
 2) The database will contain one of the following values:
 * tests
-* real
-* demo
+* tests_init
+* tests_load  
+* real_init
+* real_load
 
-The demo option is for running the application and test it manually, the data will load from data configuration file(see up next).  
-The real option is for real-time use of the application, for loading the database.  
-The tests option is for clean database.
+The real_init option is for running the application with data that will load from the data configuration file(see up next about format).
+The real_load option is for real-time use of the application, for loading the database.  
+The tests option is for running tests with no database, and make no writes and reads to database.
+The tests option is for running tests with clean database. the tests will read and write to a demo database.
+The tests option is for running tests with loading from demo database. the tests will read and write to this demo database.
 
 The configuration file path should be:  
 ```diff
