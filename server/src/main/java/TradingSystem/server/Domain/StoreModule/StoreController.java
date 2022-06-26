@@ -493,7 +493,7 @@ public class StoreController {
                 toReturn.put(entry.getKey(), entry.getValue());
             }
         }
-        return this.stores;
+        return toReturn;
     }
 
     public List<Product> get_products_by_store_id(int store_id) throws MarketException {
