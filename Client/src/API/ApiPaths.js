@@ -2,7 +2,7 @@
 const API_PATH = "http://localhost:8080"
 
 export const EMPLOYEE_BASE_REST_API_URL = API_PATH + '/amit';
-export const CONNECTION_ERROR = "Connection Error";
+export const CONNECTION_ERROR = "The system is not available right now, come back later";
 export const CATCH = "CATCH";
 
 
