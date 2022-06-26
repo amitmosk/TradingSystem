@@ -207,9 +207,7 @@ public class User {
 
     public void set_admin(String email, String pw, String name, String lastName) throws MarketException {
         checkDetails(email, pw, name, lastName);
-        AssignState as = this.state;
         this.state = new Admin(email, pw, name, lastName);
-        HibernateUtils.remove(as);
     }
 
     public String user_security_question() throws MarketException {

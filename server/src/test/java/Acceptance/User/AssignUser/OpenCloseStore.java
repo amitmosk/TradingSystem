@@ -27,6 +27,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -240,18 +241,18 @@ class OpenCloseStore {
     private boolean check_if_purchase_exists(Response res, String email, int prod){
         boolean flag = false;
 
-        if(res.getValue().getClass() == (new ConcurrentHashMap<Integer, StorePurchase>()).values().getClass()){
+        if(res.getValue().getClass() == (new CopyOnWriteArrayList<StorePurchase>()).getClass()){
             Collection<StorePurchase> his = (Collection<StorePurchase>)res.getValue();
             for(StorePurchase p : his){
-                if(p.getBuyer_email() == email && p.getProduct_and_totalPrice().containsKey(prod))
+                if(p.getBuyer_email().equals(email) && p.getProduct_and_totalPrice().containsKey(prod))
                     flag = true;
             }
 
         }
         else if(res.getValue().getClass() == StorePurchaseHistory.class){
             StorePurchaseHistory his = (StorePurchaseHistory)res.getValue();
-            for(StorePurchase p : his.getPurchaseID_purchases().values()){
-                if(p.getBuyer_email() == email && p.getProduct_and_totalPrice().containsKey(prod))
+            for(StorePurchase p : his.getHistoryList()){
+                if(p.getBuyer_email().equals(email) && p.getProduct_and_totalPrice().containsKey(prod))
                     flag = true;
             }
         }

@@ -42,6 +42,8 @@ import TradingSystem.server.Domain.ExternalSystems.SupplyAdapter;
 import javax.transaction.Transactional;
 import java.util.*;
 
+import static TradingSystem.server.Service.MarketSystem.test_flag;
+
 // TODO: when we leave the system - should call logout()
 
 public class MarketFacade {
@@ -2115,7 +2117,7 @@ public class MarketFacade {
             HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
-            Collection<StorePurchase> answer = this.store_controller.view_store_purchases_history(user, store_id).getPurchaseID_purchases().values();
+            Collection<StorePurchase> answer = this.store_controller.view_store_purchases_history(user, store_id).getHistoryList();
             HibernateUtils.commit();
             response = new Response<>(answer, "Store purchases history received successfully");
             market_logger.add_log("User received (" + user_email + ") store's (" + store_id + ") purchase history successfully.");
@@ -2641,11 +2643,14 @@ public class MarketFacade {
     }
 
     public void rollback(){
-        HibernateUtils.rollback();
-        HibernateUtils.getEntityManager().clear();
-        this.store_controller.load();
-        this.user_controller.load();
-        this.store_controller.load();
-        QuestionController.getInstance().load();
+        if (!test_flag){
+            HibernateUtils.rollback();
+            HibernateUtils.getEntityManager().clear();
+            this.store_controller.load();
+            this.user_controller.load();
+            this.store_controller.load();
+            QuestionController.getInstance().load();
+
+        }
     }
 }
