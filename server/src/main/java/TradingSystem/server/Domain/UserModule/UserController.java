@@ -499,7 +499,7 @@ public class UserController {
 
     private User find_online_user(int id) {
         User u = onlineUsers.get(id);
-        u = u.merge();
+//        u = u.merge();
 //        HibernateUtils.commit();
 //        HibernateUtils.beginTransaction();
         onlineUsers.put(id, u);
@@ -508,7 +508,7 @@ public class UserController {
 
     private User find_reg_user(String email) {
         User u = users.get(email);
-        u = u.merge();
+//        u = u.merge();
 //        HibernateUtils.commit();
 //        HibernateUtils.beginTransaction();
         users.put(email, u);

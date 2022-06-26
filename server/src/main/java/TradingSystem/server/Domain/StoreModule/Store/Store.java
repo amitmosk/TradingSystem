@@ -751,7 +751,7 @@ public class Store implements Observable {
             catch (Exception e){
                 // TODO : AMIT
             }
-            HibernateUtils.merge(this);
+//            HibernateUtils.merge(this);
         }
     }
 
@@ -773,7 +773,7 @@ public class Store implements Observable {
             catch (Exception e){
                 // TODO : AMIT
             }
-            HibernateUtils.merge(this);
+//            HibernateUtils.merge(this);
         }
     }
 
@@ -1059,7 +1059,7 @@ public class Store implements Observable {
         bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
 
 
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
         return handle_updated_bid(bid);
     }
 
@@ -1110,7 +1110,7 @@ public class Store implements Observable {
             if (i == 1)
                 appointment.remove_manager(user_email);
         }
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
     }
 
 
