@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static TradingSystem.server.Service.MarketSystem.test_flag;
+
 //@Entity
 public class QuestionController implements iQuestionController {
 //    @Id
@@ -45,9 +47,11 @@ public class QuestionController implements iQuestionController {
     }
 
     public void load(){
-        this.buyer_to_store = HibernateUtils.buyerquestions();
-        this.user_to_admin = HibernateUtils.userQuestions();
-        this.question_ids_counter = new AtomicInteger(HibernateUtils.get_max_question_id());
+        if (!test_flag){
+            this.buyer_to_store = HibernateUtils.buyerquestions();
+            this.user_to_admin = HibernateUtils.userQuestions();
+            this.question_ids_counter = new AtomicInteger(HibernateUtils.get_max_question_id());
+        }
     }
 
     public static QuestionController getInstance(){

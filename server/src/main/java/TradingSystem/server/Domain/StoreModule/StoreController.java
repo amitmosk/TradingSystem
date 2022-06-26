@@ -26,6 +26,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static TradingSystem.server.Service.MarketSystem.test_flag;
+
 //@Entity
 public class StoreController {
 //    @Id
@@ -63,13 +65,16 @@ public class StoreController {
     }
 
     public void load() {
-        this.store_ids_counter = new AtomicInteger(HibernateUtils.get_sc());
-        this.purchase_ids_counter = new AtomicInteger(HibernateUtils.get_max_store_purchase_id());
-        this.bids_ids_counter = new AtomicInteger(HibernateUtils.get_max_bid_id());
-        this.stores = HibernateUtils.stores();
-        this.storesLock = new Object();
-        this.products_id = new AtomicInteger(HibernateUtils.get_max_product_id()+1);
-        SystemLogger.getInstance().add_log("store controller load");
+        if (!test_flag){
+            this.store_ids_counter = new AtomicInteger(HibernateUtils.get_sc());
+            this.purchase_ids_counter = new AtomicInteger(HibernateUtils.get_max_store_purchase_id());
+            this.bids_ids_counter = new AtomicInteger(HibernateUtils.get_max_bid_id());
+            this.stores = HibernateUtils.stores();
+            this.storesLock = new Object();
+            this.products_id = new AtomicInteger(HibernateUtils.get_max_product_id()+1);
+            SystemLogger.getInstance().add_log("store controller load");
+        }
+
 //        MarketLogger.getInstance().add_log("-----------store counter-----------------");
 //        MarketLogger.getInstance().add_log(stores.toString());
 //        MarketLogger.getInstance().add_log("---------purchase_id_counter-----------------");

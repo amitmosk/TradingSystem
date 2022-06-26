@@ -33,6 +33,8 @@ public class MarketSystem {
     private PaymentAdapter payment_adapter;
     private SupplyAdapter supply_adapter;
 
+    public static boolean test_flag = false;
+
 
     public MarketSystem(String system_config_path, String instructions_config_path1) throws ExitException {
         instructions_config_path = instructions_config_path1;
@@ -163,6 +165,7 @@ public class MarketSystem {
         if (config.equals("database:tests")){
             SystemLogger.getInstance().add_log("Init Data For Tests: Empty Database");
             NotificationHandler.setTestsHandler();
+            test_flag = true;
             HibernateUtils.set_tests_mode();
         }
         else if (config.equals("database:load_tests")){

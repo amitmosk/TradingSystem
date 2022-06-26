@@ -42,6 +42,8 @@ import TradingSystem.server.Domain.ExternalSystems.SupplyAdapter;
 import javax.transaction.Transactional;
 import java.util.*;
 
+import static TradingSystem.server.Service.MarketSystem.test_flag;
+
 // TODO: when we leave the system - should call logout()
 
 public class MarketFacade {
@@ -2641,11 +2643,14 @@ public class MarketFacade {
     }
 
     public void rollback(){
-        HibernateUtils.rollback();
-        HibernateUtils.getEntityManager().clear();
-        this.store_controller.load();
-        this.user_controller.load();
-        this.store_controller.load();
-        QuestionController.getInstance().load();
+        if (!test_flag){
+            HibernateUtils.rollback();
+            HibernateUtils.getEntityManager().clear();
+            this.store_controller.load();
+            this.user_controller.load();
+            this.store_controller.load();
+            QuestionController.getInstance().load();
+
+        }
     }
 }
