@@ -163,16 +163,27 @@ public class MarketSystem {
     private void set_database(String config) throws ExitException{
         // database:real/demo
         if (config.equals("database:tests")){
-            SystemLogger.getInstance().add_log("Init Data For Tests: Empty Database");
+            // no db
+            SystemLogger.getInstance().add_log("Init Data For Tests: No Database");
             NotificationHandler.setTestsHandler();
             test_flag = true;
             HibernateUtils.set_tests_mode();
         }
-        else if (config.equals("database:load_tests")){
-                SystemLogger.getInstance().add_log("Init Data For load Tests: Empty Database");
+        else if (config.equals("database:tests_load_and_drop")){
+            // load from test-db
+                SystemLogger.getInstance().add_log("Init & Drop Data For Tests From Exist Database");
                 HibernateUtils.set_load_tests_mode();
         }
-        else if (config.equals("database:real")){
+        else if (config.equals("database:tests_init")){
+            // for demo tests in configuration tests.
+            SystemLogger.getInstance().add_log("Init Data For Tests From Empty Database");
+            HibernateUtils.set_init_test_config();
+        }
+        else if (config.equals("database:tests_load")){
+            SystemLogger.getInstance().add_log("Init Data For Tests From Exist Database");
+            HibernateUtils.set_tests_load_config();
+        }
+        else if (config.equals("database:real_load")){
             try
             {
                 HibernateUtils.set_normal_use();
@@ -186,12 +197,10 @@ public class MarketSystem {
                 throw new ExitException("Cant Connect To Database.");
             }
         }
-        else if (config.equals(("database:demo"))){
+        else if (config.equals(("database:real_init"))){
             HibernateUtils.set_demo_use();
-            SystemLogger.getInstance().add_log("Init Data From Demo, Data File Path: "+instructions_config_path);
+            SystemLogger.getInstance().add_log("Init Data From Instructions File, Data File Path: " + instructions_config_path);
             init_data_to_market(instructions_config_path);
-//            this.add_admins();
-//            this.init_data_to_market_develop(payment_adapter, supply_adapter);
         }
         else {
             throw new ExitException("System Config File - Illegal Database Data.");
@@ -261,7 +270,7 @@ public class MarketSystem {
         }
         else if (instruction.equals("add_admin")){
             try{
-                this.add_admin(email);
+                this.add_admin(email, instruction_params[2], instruction_params[3], instruction_params[4]);
             }
             catch (Exception e){
                 throw new IllegalArgumentException("Add Admin Fail:" + e.getMessage());
@@ -474,13 +483,9 @@ public class MarketSystem {
     }
 
 
-    public void add_admin(String email) throws MarketException {
-        User user = UserController.get_instance().get_user_by_email(email);
-        String name = user.getState().get_user_name();
-        String last_name = user.getState().get_user_last_name();
+    public void add_admin(String email, String password, String name, String last_name) throws MarketException {
 
-        user.set_admin(user.user_email(), "12345678aA", name, last_name);
-        SystemLogger.getInstance().add_log("New Admin In The Market: "+email);
+        UserController.get_instance().add_admin(email, password, name, last_name);
         MarketLogger.getInstance().add_log("New Admin In The Market: "+email);
     }
 
@@ -546,11 +551,4 @@ public class MarketSystem {
         marketFacade5.logout();
     }
 
-    public void add_admins() throws MarketException {
-        HibernateUtils.beginTransaction();
-        UserController.get_instance().add_admin("admin@gmail.com", "12345678aA", "Barak", "Bahar");
-        HibernateUtils.commit();
-        SystemLogger.getInstance().add_log("admin added");
-        MarketLogger.getInstance().add_log("admin added");
-    }
 }

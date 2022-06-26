@@ -128,8 +128,8 @@ class AnswerQuestions {
         }
         else if(res.getValue().getClass() == StorePurchaseHistory.class){
             StorePurchaseHistory his = (StorePurchaseHistory)res.getValue();
-            for(StorePurchase p : his.getPurchaseID_purchases().values()){
-                if(p.getBuyer_email() == email && p.getProduct_and_totalPrice().containsKey(prod))
+            for(StorePurchase p : his.getHistoryList()){
+                if(p.getBuyer_email().equals(email) && p.getProduct_and_totalPrice().containsKey(prod))
                     flag = true;
             }
         }

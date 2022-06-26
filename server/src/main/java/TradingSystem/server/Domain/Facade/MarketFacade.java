@@ -2117,7 +2117,7 @@ public class MarketFacade {
             HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
-            Collection<StorePurchase> answer = this.store_controller.view_store_purchases_history(user, store_id).getPurchaseID_purchases().values();
+            Collection<StorePurchase> answer = this.store_controller.view_store_purchases_history(user, store_id).getHistoryList();
             HibernateUtils.commit();
             response = new Response<>(answer, "Store purchases history received successfully");
             market_logger.add_log("User received (" + user_email + ") store's (" + store_id + ") purchase history successfully.");

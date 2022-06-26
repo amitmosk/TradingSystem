@@ -40,54 +40,6 @@ public class HibernateUtils {
         threadLocal = new ThreadLocal<EntityManager>();
     }
 
-    public static void set_load_tests_mode() {
-        if (!HibernateUtils.persistence_unit.equals("TradingSystemTests")) {
-            HibernateUtils.persistence_unit = "TradingSystemTests";
-            closeEntityManager();
-            closeEntityManagerFactory();
-            emf = Persistence.createEntityManagerFactory(persistence_unit);
-            getEntityManager();
-            threadLocal.set(null);
-        }
-        HibernateUtils.allow_persist = true;
-    }
-
-    public static void set_tests_mode() {
-        if (!HibernateUtils.persistence_unit.equals("TradingSystemTests")) {
-            HibernateUtils.persistence_unit = "TradingSystemTests";
-            closeEntityManager();
-            closeEntityManagerFactory();
-            emf = Persistence.createEntityManagerFactory(persistence_unit);
-            getEntityManager();
-            threadLocal.set(null);
-        }
-        HibernateUtils.allow_persist = false;
-    }
-
-
-    public static void set_normal_use() {
-        if (!HibernateUtils.persistence_unit.equals("TradingSystem")) {
-            HibernateUtils.persistence_unit = "TradingSystem";
-            closeEntityManager();
-            closeEntityManagerFactory();
-            emf = Persistence.createEntityManagerFactory(persistence_unit);
-            getEntityManager();
-            threadLocal.set(null);
-        }
-        HibernateUtils.allow_persist = true;
-    }
-
-    public static void set_demo_use() {
-        if (!HibernateUtils.persistence_unit.equals("demo")) {
-            HibernateUtils.persistence_unit = "demo";
-            closeEntityManager();
-            closeEntityManagerFactory();
-            emf = Persistence.createEntityManagerFactory(persistence_unit);
-            getEntityManager();
-            threadLocal.set(null);
-        }
-        HibernateUtils.allow_persist = true;
-    }
 
     public static synchronized EntityManager getEntityManager() {
 //        EntityManager em = threadLocal.get();
@@ -301,9 +253,77 @@ public class HibernateUtils {
         return map;
     }
 
+    public static void set_load_tests_mode() {
+        if (!HibernateUtils.persistence_unit.equals("TradingSystemTests")) {
+            HibernateUtils.persistence_unit = "TradingSystemTests";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = true;
+    }
 
-    //   public static void main(String[] args) {
-//        HibernateUtils.clear_db("sql4500923")
-// ;
-//    }
+    public static void set_tests_mode() {
+        if (!HibernateUtils.persistence_unit.equals("TradingSystemTests")) {
+            HibernateUtils.persistence_unit = "TradingSystemTests";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = false;
+    }
+
+    public static void set_init_test_config() {
+        if (!HibernateUtils.persistence_unit.equals("tests_init")) {
+            HibernateUtils.persistence_unit = "tests_init";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = true;
+
+    }
+
+    public static void set_tests_load_config() {
+        if (!HibernateUtils.persistence_unit.equals("tests_load")) {
+            HibernateUtils.persistence_unit = "tests_load";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = true;
+    }
+
+    public static void set_normal_use() {
+        if (!HibernateUtils.persistence_unit.equals("TradingSystem")) {
+            HibernateUtils.persistence_unit = "TradingSystem";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = true;
+    }
+
+    public static void set_demo_use() {
+        if (!HibernateUtils.persistence_unit.equals("demo")) {
+            HibernateUtils.persistence_unit = "demo";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = true;
+    }
+
 }

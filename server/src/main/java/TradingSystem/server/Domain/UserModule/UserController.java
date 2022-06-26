@@ -411,6 +411,7 @@ public class UserController {
         synchronized (usersLock) {
             users.put(email, admin);
         }
+        HibernateUtils.persist(admin);
         return admin;
     }
 
