@@ -1,5 +1,4 @@
 package TradingSystem.server.Service;
-
 import TradingSystem.server.Domain.ExternalSystems.PaymentAdapter;
 import TradingSystem.server.Domain.ExternalSystems.PaymentInfo;
 import TradingSystem.server.Domain.ExternalSystems.SupplyAdapter;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
 //import com.google.gson.Gson;
 import java.util.List;
-
 import java.util.*;
 
 import static TradingSystem.server.Service.MarketSystem.*;
@@ -24,15 +22,14 @@ import static TradingSystem.server.Service.MarketSystem.*;
 @RestController
 public class Service implements iService {
 
-    private static Service service = null;
 
     private ThreadLocal<MarketFacade> marketFacadeThreadLocal;
     private List notifications = new ArrayList();
     private PaymentAdapter paymentAdapter;
     private SupplyAdapter supplyAdapter;
 
-
     public Service() {
+
         // -- Market init
         MarketSystem system;
         try
@@ -43,7 +40,6 @@ public class Service implements iService {
             //system.add_admins();
             //system.init_data_to_market_develop(paymentAdapter, supplyAdapter);
             this.marketFacadeThreadLocal = new ThreadLocal<>();
-            this.marketFacadeThreadLocal.set(null);
         }
         catch (ExitException e) {
             SystemLogger.getInstance().add_log("System Init Fail: "+e.getMessage());
@@ -80,7 +76,6 @@ public class Service implements iService {
         Response answer = get_market_facade().logout();
         return answer;
     }
-
 
 
     @RequestMapping(value = "/register")
