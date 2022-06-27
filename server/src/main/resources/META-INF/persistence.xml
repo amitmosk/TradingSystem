@@ -24,11 +24,11 @@ mapped to database tables. Database driver, location, userid and pw
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sql4.freemysqlhosting.net:3306/sql4500923" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/database" />
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="sql4500923" />
+            <property name="javax.persistence.jdbc.user" value="root" />
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="xxgHAtxlI8" />
+            <property name="javax.persistence.jdbc.password" value="1234578" />
             <!-- Drop and re-create the database schema on startup -->
         </properties>
     </persistence-unit>
@@ -50,11 +50,11 @@ mapped to database tables. Database driver, location, userid and pw
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sql4.freemysqlhosting.net:3306/sql4500923" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/database" />
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="sql4500923" />
+            <property name="javax.persistence.jdbc.user" value="root" />
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="xxgHAtxlI8" />
+            <property name="javax.persistence.jdbc.password" value="12345678" />
             <!-- Drop and re-create the database schema on startup -->
         </properties>
     </persistence-unit>
