@@ -31,6 +31,7 @@ export class CartApi {
             {
                 params:{ paymentInfo: payment_info,
                     supplyInfo: supply_info,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
+
             })
             .then(res => {
                 const user_purchase = new UserPurchase(res.data.value)

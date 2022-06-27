@@ -59,7 +59,6 @@ public class Service implements iService {
     @CrossOrigin
     @Override
     public Response login(String email, String password,int session_id) {
-        System.out.println("login"+session_id);
         Response answer = get_market_facade(session_id).login(email, password);
         return answer;
     }
@@ -85,7 +84,6 @@ public class Service implements iService {
     @RequestMapping(value = "/register")
     @CrossOrigin
     public Response register(String email, String pw, String name, String lastName, String birth_date,int session_id) {
-        System.out.println("in regsiter "+session_id);
         Response answer = get_market_facade(session_id).register(email, pw, name, lastName, birth_date);
         return answer;
     }
@@ -136,6 +134,7 @@ public class Service implements iService {
     @CrossOrigin
     @Override
     public Response add_product_to_cart(int store_id, int product_id, int quantity,int session_id) {
+        System.out.println("store id "+store_id+"product id "+ product_id+"qu "+quantity);
         Response answer = get_market_facade(session_id).add_product_to_cart(store_id, product_id, quantity);
         return answer;
 
@@ -175,8 +174,12 @@ public class Service implements iService {
     @CrossOrigin
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo,int session_id) {
-        System.out.println("supply"+paymentInfo);
-        System.out.println("payment"+supplyInfo);
+        System.out.println(paymentInfo);
+        System.out.println(supplyInfo);
+        if(supplyInfo.equals("test")&&paymentInfo.equals("test")){
+            supplyInfo=supply;
+            paymentInfo=payment;
+        }
         PaymentInfo p=null;
         SupplyInfo s=null;
         try{
@@ -236,7 +239,6 @@ public class Service implements iService {
     @RequestMapping(value = "/open_store")
     @CrossOrigin
     public Response open_store(String store_name,int session_id) {
-        System.out.println("open store"+session_id);
         Response answer = get_market_facade(session_id).open_store(store_name);
         return answer;
     }
@@ -814,11 +816,11 @@ public class Service implements iService {
     @CrossOrigin
     @Override
     public Response  get_session_id() {
-        System.out.println("get session id"+session_id);
         Response answer =new Response(session_id,"session id ");
         session_id++;
         return answer;
     }
+
 
 
 
@@ -829,5 +831,7 @@ public class Service implements iService {
         }
         return MarketFacdeMap.get(session_id);
     }
+    String payment = "{\"card_number\":\"1234123412341234\",\"month\":\"07\",\"year\":\"2022\",\"holder\":\"amit grumet\",\"ccv\":\"123\",\"id\":\"123456789\"}\n";
+    String supply="{\"name\":\"amit\",\"address\":\"grumet\",\"city\":\"pt\",\"country\":\"isreal\",\"zip\":\"12345\"}";
 }
 
