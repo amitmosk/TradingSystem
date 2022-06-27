@@ -36,14 +36,14 @@ public class DiscountPolicy {
     public void removeRule(String name) throws WrongPermterException {
         DiscountComponent toRemove = policy.remove(name);
         if (toRemove == null)
-            throw new WrongPermterException("there is no discount with this name");
+            throw new WrongPermterException("There is no discount with this name");
     }
 
 
     public DiscountComponent getDiscountCompnentByName(String name) throws WrongPermterException {
         DiscountComponent Toreturn = policy.get(name);
         if (Toreturn == null)
-            throw new WrongPermterException("there is no discount compnent with this name");
+            throw new WrongPermterException("There is no discount component with this name");
         return Toreturn;
     }
 

@@ -4,7 +4,7 @@ import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
 import TradingSystem.server.Domain.StoreModule.Appointment.*;
-import TradingSystem.server.Domain.StoreModule.Bid.Bid;
+import TradingSystem.server.Domain.StoreModule.Bid.*;
 import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Bid.BidManagerAnswer;
 import TradingSystem.server.Domain.StoreModule.Bid.BidStatus;
@@ -46,8 +46,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.closed_confirm;
-import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.closed_denied;
+import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.*;
 
 @Entity
 public class Store implements Observable {
@@ -765,15 +764,14 @@ public class Store implements Observable {
                 throw new AppointmentException("User to appoint is already store member");
             Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager, get_managers_emails());
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
-            this.send_message_to_the_store_stuff(candidate_email+" is a new manager-candidate in the store,appoint by: " +appointer_email,appointer_email);
+            new_manager.add_manager(this, appointment);
+            this.set_manager_in_bids(0, candidate_email, false);
+//            MarketLogger marketLogger = MarketLogger.getInstance();
+//            marketLogger.add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
+            this.send_message_to_the_store_stuff(candidate_email+"" +
+                    " is a new manager in the store", appointer_email);
 
-            try{
-                this.add_appointment_answer(appointer, new_manager, true);
-            }
-            catch (Exception e){
-                // TODO : AMIT
-            }
-//            HibernateUtils.merge(this);
+            HibernateUtils.merge(this);
         }
     }
 
