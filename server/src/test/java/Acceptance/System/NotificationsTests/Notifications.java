@@ -172,7 +172,7 @@ class Notifications {
         assertEquals(owner1_notifications_list.size(), 1);
         assertTrue(owner1_notifications_list.get(0).contains("permanently"));
         assertEquals(owner2_notifications_list.size(), 1);
-        assertTrue(owner2_notifications_list.get(0).contains("Store"));
+        assertTrue(owner2_notifications_list.get(0).contains("store"));
         assertEquals(manager_notifications_list.size(), 1);
 
     }
@@ -194,7 +194,7 @@ class Notifications {
         assertEquals(manager_notifications_list.size(), 1);
         assertTrue(manager_notifications_list.get(0).contains("close"));
         assertTrue(owner1_notifications_list.get(0).contains("temp"));
-        assertTrue(owner2_notifications_list.get(0).contains("Store"));
+        assertTrue(owner2_notifications_list.get(0).contains("store"));
 
     }
 
@@ -215,7 +215,7 @@ class Notifications {
         assertEquals(manager_notifications_list.size(), 1);
         assertTrue(manager_notifications_list.get(0).contains("close"));
         assertTrue(owner1_notifications_list.get(0).contains("temp"));
-        assertTrue(owner2_notifications_list.get(0).contains("Store"));
+        assertTrue(owner2_notifications_list.get(0).contains("store"));
 
         marketFacade1.open_close_store(store_id);
         assertEquals(founder_notifications_list.size(), 0);
