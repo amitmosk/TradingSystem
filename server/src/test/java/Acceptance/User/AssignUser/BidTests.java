@@ -24,7 +24,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class Bid {
+class BidTests {
 
     private final int num_of_products = 50;
     private final int price = 100;
