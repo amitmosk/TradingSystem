@@ -9,6 +9,7 @@ import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
@@ -496,13 +497,10 @@ public class StoreController {
         return toReturn;
     }
 
-    public List<Product> get_products_by_store_id(int store_id) throws MarketException {
+    public List<ProductInformation> get_products_by_store_id(int store_id) throws MarketException {
         Store store = this.get_store_by_store_id(store_id);
-        List<Product> to_return = new LinkedList<>();
-        for (Product p : store.getInventory().keySet()) {
-            to_return.add(p);
-        }
-        return to_return;
+        return store.get_products();
+
     }
 
     public void edit_product_quantity(User user, int product_id, int store_id, int quantity) throws MarketException {

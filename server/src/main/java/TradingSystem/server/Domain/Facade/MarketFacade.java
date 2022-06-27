@@ -2419,13 +2419,9 @@ public class MarketFacade {
         Response<List<ProductInformation>> response = null;
         try {
             HibernateUtils.beginTransaction();
-            List<Product> products = store_controller.get_products_by_store_id(store_id);
-            List<ProductInformation> products_information = new ArrayList<>();
-            for (Product p : products) {
-                products_information.add(new ProductInformation(p, 0,p.getOriginal_price() ));
-            }
+            List<ProductInformation> products = store_controller.get_products_by_store_id(store_id);
             HibernateUtils.commit();
-            response = new Response(products_information, "Received store products successfully");
+            response = new Response(products, "Received store products successfully");
             market_logger.add_log("received market stores successfully.");
         }
         catch (MarketException e){

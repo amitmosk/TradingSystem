@@ -29,9 +29,9 @@ export default class StoreManagmentProductsTable extends Component{
             { field: 'name', headerName: 'name', width: 150 , editable:true},
             { field: 'category', headerName: 'category', width: 150 ,editable:true},
             { field: 'price', headerName: 'price', type: 'double', width: 150,editable:true},
-            { field: 'quantity', headerName: 'quantity', type: 'number', width: 150, editable:true, hide:true},
+            { field: 'quantity', headerName: 'quantity', type: 'number', width: 150, editable:true },
             { field: 'store', headerName: 'store', width: 150, hide: true},
-            { field: 'key_words', headerName:'key words',  width: 150, hide:true},
+            { field: 'key_words', headerName:'key words',  width: 150},
             {
               field: "action",
               headerName: "Action",
@@ -47,10 +47,12 @@ export default class StoreManagmentProductsTable extends Component{
             
     }
     async componentDidMount() {
+
         let products = await this.storeApi.get_products_by_store_id(this.state.store_id); 
+        console.log(products);
         let products_list = []
         products.value.map(p=>products_list.push(
-        {id:p.product_id,name:p.name,category:p.category,price:p.price,quantity:3,store:p.store_id,key_words:p.key_words}
+        {id:p.product_id,name:p.name,category:p.category,price:p.price,quantity:p.quantity,store:p.store_id,key_words:p.key_words}
         ))
         this.setState({items:products_list,products: products_list, selected:undefined});}
                                     

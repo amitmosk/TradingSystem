@@ -6,7 +6,7 @@ export class Product  {
         this.name = data.name;
         this.category = data.category;
         this.key_words = data.key_words;
-        this.original_price = data.original_price;
+        this.price = data.price;
         this.productReview = data.productReview;
         this.quantity = data.quantity;
         this.store_id = data.store_id;
@@ -18,7 +18,7 @@ export class Product  {
             name: name,
             category:category,
             key_words:key_words,
-            original_price:price,
+            price:price,
             productReview:productReview,
             quantity:quantity,
             store_id:store_id,

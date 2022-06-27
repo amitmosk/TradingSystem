@@ -64,7 +64,7 @@ export default class ProductPage extends Component {
           name: product.name,
           category:product.category,
           key_words:product.key_words,
-          price:product.original_price,
+          price:product.price,
           reviews:reviews,
           ratings:ratings,
     });

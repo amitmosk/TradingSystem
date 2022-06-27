@@ -11,13 +11,13 @@ public class ProductReview {
     private Long product_review_id;
 
     @ElementCollection
-    @CollectionTable(name = "reviews")
+    @CollectionTable(name = "product_reviews")
     @MapKeyColumn(name="user_email")
     @Column(name="review")
     private Map<String, String> reviews; // user_email & review
 
     @ElementCollection
-    @CollectionTable(name = "ratings")
+    @CollectionTable(name = "product_ratings")
     @MapKeyColumn(name="user_email")
     @Column(name="rating")
     private Map<String, Integer> rating; // user_email & rating
