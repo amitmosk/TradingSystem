@@ -60,7 +60,11 @@ public class Appointment {
             this.status = closed_confirm;
             this.set_founder_permissions();
         }
-        else
+        else if (type == store_manager){
+            this.status = closed_confirm;
+            this.set_manager_permissions();
+        }
+        else if (type == store_owner)
         {
             for (String manager_email : managers_emails) {
                 AppointmentAgreementManagerAnswer temp = new AppointmentAgreementManagerAnswer();
@@ -100,7 +104,7 @@ public class Appointment {
         this.permissions.put(answer_bid_offer, 0);
         this.permissions.put(view_bids_status, 0);
         this.permissions.put(answer_bid_offer_negotiate, 0);
-        this.permissions.put(answer_appointment, 1);
+        this.permissions.put(answer_appointment, 0);
 //        HibernateUtils.merge(this);
     }
 

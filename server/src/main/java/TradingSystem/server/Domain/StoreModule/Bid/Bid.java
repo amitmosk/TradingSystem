@@ -21,7 +21,7 @@ import java.util.Map;
 import static TradingSystem.server.Domain.StoreModule.Bid.BidStatus.*;
 
 @Entity
-public class Bid implements iManagersConfirm {
+public class Bid {
     @Id
     //generated
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,20 +92,17 @@ public class Bid implements iManagersConfirm {
     }
 
 
-    @Override
     public void add_manager_of_store(String manager_email, boolean owner)  {
         this.managersEmail_answers.put(manager_email, new BidManagerAnswer(owner, owner));
 
     }
 
 
-    @Override
     public void remove_manager(String email)  {
         this.managersEmail_answers.remove(email);
 //        HibernateUtils.merge(this);
     }
 
-    @Override
     public void add_manager_answer(String email, boolean answer, double negotiation_price) throws NoPermissionException, MarketException {
         if (!this.managersEmail_answers.containsKey(email)){
             throw new NoPermissionException(email + "is no a manager in the store");
@@ -155,7 +152,6 @@ public class Bid implements iManagersConfirm {
         return closed_confirm;
     }
 
-    @Override
     public BidStatus get_status(){
         this.status = this.update_status();
         return this.status;
