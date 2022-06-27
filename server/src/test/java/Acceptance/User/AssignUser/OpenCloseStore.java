@@ -734,7 +734,7 @@ class OpenCloseStore {
         assertTrue(check_was_exception(res), message);
 
         message = make_assert_exception_message(test_name, "user tries to view store's purchase history list with store id that does not exist", suppose_to_throw);
-        res = facade2.view_store_purchases_history(store_id + 2); // user enters a store id that does not exist
+        res = facade2.view_store_purchases_history(store_id + 205); // user enters a store id that does not exist
         assertTrue(check_was_exception(res), message);
 
 
@@ -743,13 +743,13 @@ class OpenCloseStore {
         valid_purchase_history(res, user_buyer_email, product_id, test_name, "store founder views store's purchase history");
 
         message = make_assert_exception_message(test_name, "store founder enters a store id that does not exist", suppose_to_throw);
-        res = facade1.view_store_purchases_history( store_id + 2); // store founder enters a store id that does not exist
+        res = facade1.view_store_purchases_history( store_id + 205); // store founder enters a store id that does not exist
         assertTrue(check_was_exception(res), message);
 
         int store_id = open_store_get_id("first store for this user"); // store founder opens first store
 
         message = make_assert_exception_message(test_name, "store founder enters a store id that didn't doesn't have permissions to see", suppose_to_throw);
-        res = facade1.view_store_purchases_history(store_id + 2); // store founder enters a store id that didn't doesn't have permissions to see
+        res = facade1.view_store_purchases_history(store_id + 205); // store founder enters a store id that didn't doesn't have permissions to see
         assertTrue(check_was_exception(res), message);
 
         message = make_assert_exception_message(test_name, "store founder views new store's empty purchase history", !suppose_to_throw);

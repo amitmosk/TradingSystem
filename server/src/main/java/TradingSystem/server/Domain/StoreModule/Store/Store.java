@@ -767,7 +767,8 @@ public class Store implements Observable {
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
             new_manager.add_manager(this, appointment);
             this.set_manager_in_bids(0, candidate_email, false);
-            MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
+//            MarketLogger marketLogger = MarketLogger.getInstance();
+//            marketLogger.add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
             this.send_message_to_the_store_stuff(candidate_email+"" +
                     " is a new manager in the store", appointer_email);
 
