@@ -38,7 +38,7 @@ export class PoliciesApi {
                     year : year,
                     month : month,
                     day : day,
-                    name : name,
+                    name : name,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                     }
             })
             .then(res => {
@@ -51,7 +51,7 @@ export class PoliciesApi {
         return instance.get(GET_PURCHASE_POLICY,
             {
                 params:{
-                    store_id : store_id,
+                    store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))
 
                     }
             })
@@ -64,7 +64,7 @@ export class PoliciesApi {
         return instance.get(SEND_PREDDICTS,
             {
                 params:{
-                    store_id : store_id,
+                    store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))
 
                     }
             })
@@ -77,7 +77,7 @@ export class PoliciesApi {
         return instance.get(GET_DISCOUNT_POLICY,
             {
                 params:{
-                    store_id : store_id,
+                    store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                     }
             })
             .then(res => {
@@ -98,7 +98,7 @@ export class PoliciesApi {
                     store_id : store_id,
                     nameOfPredict : nameOfPredict,
                     nameOfComponent : nameOfComponent,
-                    nameOfRule : nameOfRule,
+                    nameOfRule : nameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                     }
             })
             .then(res => {
@@ -113,7 +113,7 @@ export class PoliciesApi {
                     store_id : store_id,
                     nameOfCategory : nameOfCategory,
                     percent : percent,
-                    nameOfRule : nameOfRule,
+                    nameOfRule : nameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                  }
             })
             .then(res => {
@@ -128,7 +128,7 @@ export class PoliciesApi {
                 store_id : store_id,
                 id : id,
                 percent : percent,
-                nameOfrule : nameOfrule,
+                nameOfrule : nameOfrule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
         })
         .then(res => {
@@ -143,7 +143,7 @@ export class PoliciesApi {
             params:{
                 store_id : store_id,
                 percent : percent,
-                nameOfRule : nameOfRule,
+                nameOfRule : nameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
         })
         .then(res => {
@@ -160,7 +160,7 @@ export class PoliciesApi {
                 left : left,
                 right : right,
                 store_id : store_id,
-                NameOfRule : NameOfRule,
+                NameOfRule : NameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
         })
         .then(res => {
@@ -176,7 +176,7 @@ export class PoliciesApi {
                 left : left,
                 right : right,
                 store_id : store_id,
-                NameOfRule : NameOfRule,
+                NameOfRule : NameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
         })
         .then(res => {
@@ -193,7 +193,7 @@ export class PoliciesApi {
                 left : left,
                 right : right,
                 store_id : store_id,
-                NameOfRule : NameOfRule,
+                NameOfRule : NameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
         })
         .then(res => {
@@ -209,7 +209,7 @@ export class PoliciesApi {
                 left : left,
                 right : right,
                 store_id : store_id,
-                NameOfRule : NameOfRule,
+                NameOfRule : NameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
         })
         .then(res => {
@@ -226,7 +226,7 @@ export class PoliciesApi {
                     left : left,
                     right : right,
                     store_id : store_id,
-                    NameOfRule : NameOfRule,
+                    NameOfRule : NameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                     }
             })
             .then(res => {
@@ -246,7 +246,7 @@ export class PoliciesApi {
             params:{
                 PredictName : PredictName,
                 NameOfRule : NameOfRule,
-                store_id : store_id,
+                store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
         })
         .then(res => {
@@ -262,7 +262,7 @@ export class PoliciesApi {
                     left : left,
                     right : right,
                     store_id : store_id,
-                    NameOfrule : NameOfrule,
+                    NameOfrule : NameOfrule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                     }
             })
             .then(res => {
@@ -277,7 +277,7 @@ export class PoliciesApi {
                 left : left,
                 right : right,
                 store_id : store_id,
-                NameOfrule : NameOfrule,
+                NameOfrule : NameOfrule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
         })
         .then(res => {
@@ -294,7 +294,7 @@ export class PoliciesApi {
             {
                 params:{
                     store_id : store_id,
-                    predict_name : predict_name,
+                    predict_name : predict_name,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                     }
             })
             .then(res => {
@@ -307,7 +307,7 @@ export class PoliciesApi {
             {
                 params:{
                     store_id : store_id,
-                    name : name,
+                    name : name,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                     }
             })
             .then(res => {
@@ -320,7 +320,7 @@ export class PoliciesApi {
             {
                 params:{
                     store_id : store_id,
-                    name : name,
+                    name : name, session_id:JSON.parse(sessionStorage.getItem("session_id"))
                     }
             })
             .then(res => {

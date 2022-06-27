@@ -19,7 +19,7 @@ export class ProductApi {
         return instance.get(FIND_PRODUCT_INFORMATION, 
             {
                 params:{product_id: product_id,
-                    store_id: store_id,}
+                    store_id: store_id, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 let response = res.data;
@@ -32,7 +32,7 @@ export class ProductApi {
         console.log("product name = "+product_name+"\n\n\n");
         return instance.get(FIND_PRODUCTS_BY_NAME,
             {
-                params:{product_name: product_name,}
+                params:{product_name: product_name, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -50,7 +50,7 @@ export class ProductApi {
         console.log("product category = "+product_category+"\n\n\n");
         return instance.get(FIND_PRODUCTS_BY_CATEGORY,
             {
-                params:{product_category: product_category,}
+                params:{product_category: product_category, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -66,7 +66,7 @@ export class ProductApi {
         console.log("product keywords = "+product_keywords+"\n\n\n");
         return instance.get(FIND_PRODUCTS_BY_KEYWORDS,
             {
-                params:{product_keywords: product_keywords,}
+                params:{product_keywords: product_keywords, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -86,7 +86,7 @@ export class ProductApi {
             {
                 params:{store_id: store_id,
                     product_id: product_id,
-                    quantity: quantity,}
+                    quantity: quantity, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -99,7 +99,7 @@ export class ProductApi {
             {
                 params:{store_id: store_id,
                     product_id: product_id,
-                    quantity: quantity,}
+                    quantity: quantity, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -112,7 +112,7 @@ export class ProductApi {
         return instance.get(REMOVE_PRODUCT_FROM_CART,
             {
                 params:{ store_id: store_id,
-                    product_id: product_id,}
+                    product_id: product_id, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                
             })
             .then(res => {
@@ -127,7 +127,7 @@ export class ProductApi {
             {
                 params:{  product_id: product_id,
                     store_id: store_id,
-                    review : review,}
+                    review : review, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                
             })
             .then(res => {
@@ -141,7 +141,7 @@ export class ProductApi {
             {
                 params:{ product_id: product_id,
                     store_id: store_id,
-                    rate : rate,}
+                    rate : rate, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -154,7 +154,7 @@ export class ProductApi {
             {
                 params:{product_id: product_id,
                     store_id: store_id,
-                    name : name,}
+                    name : name ,session_id:JSON.parse(sessionStorage.getItem("session_id")),}
                 
             })
             .then(res => {
@@ -168,7 +168,7 @@ export class ProductApi {
             {
                 params:{product_id: product_id,
                     store_id: store_id,
-                    price : price,}
+                    price : price, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -181,7 +181,7 @@ export class ProductApi {
             {
                 params:{product_id: product_id,
                     store_id: store_id,
-                    category : category,}
+                    category : category,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -194,7 +194,7 @@ export class ProductApi {
             {
                 params:{ product_id: product_id,
                     store_id: store_id,
-                    key_words : key_words,}
+                    key_words : key_words,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                
             })
             .then(res => {
@@ -207,7 +207,7 @@ export class ProductApi {
             {
                 params:{ product_id: product_id,
                     store_id: store_id,
-                    quantity : quantity,}
+                    quantity : quantity,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                
             })
             .then(res => {

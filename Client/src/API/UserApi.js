@@ -10,28 +10,37 @@ const instance = require('axios');
 export class UserApi {
 
     view_user_purchase_history() {
-        return instance.get(VIEW_USER_PURCHASE_HISTORY)
+        return instance.get(VIEW_USER_PURCHASE_HISTORY,
+            {
+                params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}
+            })
             .then(res => {
                 return new Response(res.data);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     get_user_email() {
-        return instance.get(GET_USER_EMAIL)
+        return instance.get(GET_USER_EMAIL,{
+            params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}
+        })
             .then(res => {
                 return new Response(res.data);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     get_user_name() {
-        return instance.get(GET_USER_NAME)
+        return instance.get(GET_USER_NAME,{
+            params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}
+        })
             .then(res => {
                 return new Response(res.data);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     get_user_last_name() {
-        return instance.get(GET_USER_LAST_NAME)
+        return instance.get(GET_USER_LAST_NAME,{
+            params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}
+        })
             .then(res => {
                 return new Response(res.data);
             })
@@ -41,7 +50,7 @@ export class UserApi {
         return instance.get(EDIT_PASSWORD,
             {
                 params:{ old_pw : old_password,
-                    password : password,}
+                    password : password,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                
             })
             .then(res => {
@@ -54,7 +63,7 @@ export class UserApi {
         return instance.get(EDIT_NAME,
             {
                 params:{
-                    new_name : new_name,}
+                    new_name : new_name,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -67,7 +76,7 @@ export class UserApi {
     edit_last_name(new_last_name) {
         return instance.get(EDIT_LAST_NAME,
             {
-                params:{new_last_name : new_last_name,}
+                params:{new_last_name : new_last_name,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -79,7 +88,7 @@ export class UserApi {
     unregister(password) {
         return instance.get(UNREGISTER,
             {
-                params:{password : password,}
+                params:{password : password,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -92,7 +101,7 @@ export class UserApi {
             {
                 params:{
                     new_name : new_name,
-                    answer : answer,
+                    answer : answer,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                                     }
                 
 
@@ -107,7 +116,7 @@ export class UserApi {
             {
                 params:{
                     new_last_name : new_last_name,
-                    answer : answer,
+                    answer : answer,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                                     }
                 
             })
@@ -121,7 +130,7 @@ export class UserApi {
             {
                 params:{old_password : old_password,
                     new_password : new_password,
-                    answer : answer,
+                    answer : answer,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                                     }
                 
             })
@@ -131,14 +140,14 @@ export class UserApi {
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     get_user_security_question() {
-        return instance.get(GET_USER_SECURITY_QUESTION)
+        return instance.get(GET_USER_SECURITY_QUESTION,{ params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}})
             .then(res => {
                 return new Response(res.data);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     get_user_questions() {
-        return instance.get(VIEW_USER_QUESTIONS)
+        return instance.get(VIEW_USER_QUESTIONS,{ params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}})
             .then(res => {
                 return new Response(res.data);
             })
@@ -150,7 +159,7 @@ export class UserApi {
             {
                 params:{password : password,
                     question : question,
-                    premAnswer : answer,
+                    premAnswer : answer,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                                     }
                 
             })
