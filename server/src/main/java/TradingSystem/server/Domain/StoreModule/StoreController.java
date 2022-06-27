@@ -16,6 +16,7 @@ import TradingSystem.server.Domain.StoreModule.Store.StoreManagersInfo;
 import TradingSystem.server.Domain.UserModule.AssignUser;
 import TradingSystem.server.Domain.UserModule.Cart;
 import TradingSystem.server.Domain.UserModule.User;
+import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 import org.springframework.expression.spel.ast.Assign;
@@ -25,56 +26,65 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Entity
+import static TradingSystem.server.Service.MarketSystem.test_flag;
+
+//@Entity
 public class StoreController {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(name = "all_stores",
-//            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
-    @MapKeyColumn(name = "store_id") // the key column
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+////    @JoinTable(name = "all_stores",
+////            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "id")})
+//    @MapKeyColumn(name = "store_id") // the key column
     private Map<Integer, Store> stores;
     private AtomicInteger store_ids_counter;
     private AtomicInteger purchase_ids_counter;
-    //TODO:
-    @Transient
+//    @Transient
     private AtomicInteger bids_ids_counter;
     private AtomicInteger products_id;
-    @Transient
+//    @Transient
     private Object storesLock;
 
-    @Transient
-    private static StoreController instance = null;
+    private static class SingletonHolder {
+        private static StoreController instance = new StoreController();
+    }
 
     public static StoreController get_instance() {
-        StoreController storeController;
-        if (instance == null) {
-            storeController = HibernateUtils.getEntityManager().find(StoreController.class, new Long(1));
-            if (storeController != null) {
-                instance = storeController;
-            } else
-                instance = new StoreController();
-            HibernateUtils.persist(instance);
-        }
-        return instance;
+        return StoreController.SingletonHolder.instance;
     }
 
     public StoreController() {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
         this.bids_ids_counter = new AtomicInteger(1);
-        this.stores = new HashMap<>();
+        this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
     }
 
-    public static void load() {
-//        HibernateUtils.beginTransaction();
-//        get_instance();
-//        HibernateUtils.commit();
-        SystemLogger.getInstance().add_log("store controller load");
+    public void load() {
+        if (!test_flag){
+            this.store_ids_counter = new AtomicInteger(HibernateUtils.get_sc());
+            this.purchase_ids_counter = new AtomicInteger(HibernateUtils.get_max_store_purchase_id());
+            this.bids_ids_counter = new AtomicInteger(HibernateUtils.get_max_bid_id());
+            this.stores = HibernateUtils.stores();
+            this.storesLock = new Object();
+            this.products_id = new AtomicInteger(HibernateUtils.get_max_product_id()+1);
+            SystemLogger.getInstance().add_log("store controller load");
+        }
+
+//        MarketLogger.getInstance().add_log("-----------store counter-----------------");
+//        MarketLogger.getInstance().add_log(stores.toString());
+//        MarketLogger.getInstance().add_log("---------purchase_id_counter-----------------");
+//        MarketLogger.getInstance().add_log(purchase_ids_counter.toString());
+//        MarketLogger.getInstance().add_log("---------bids_id_counter-------------");
+//        MarketLogger.getInstance().add_log(bids_ids_counter.toString());
+//        MarketLogger.getInstance().add_log("----------stores-------------");
+//        MarketLogger.getInstance().add_log(stores.toString());
+//        MarketLogger.getInstance().add_log("----------product_id_counter-----------------");
+//        MarketLogger.getInstance().add_log(products_id.toString());
     }
 
 
@@ -387,7 +397,7 @@ public class StoreController {
         Appointment appointment = store.appoint_founder();
         founder.add_founder(store, appointment);
         this.stores.put(store_id, store);
-        HibernateUtils.merge(this);
+//        HibernateUtils.persist(store);
         return store_id;
     }
 
@@ -450,12 +460,18 @@ public class StoreController {
     public Product getProduct_by_product_id(int storeID, int productID) throws MarketException {
         Store store = this.get_store_by_store_id(storeID);
         return store.getProduct_by_product_id(productID);
+        //edited
+//        return HibernateUtils.merge(store.getProduct_by_product_id(productID));
     }
 
     public Store get_store(int store_id) throws MarketException {
         if (!this.stores.containsKey(store_id))
             throw new ObjectDoesntExsitException("there is no such store");
-        return stores.get(store_id);
+        Store s = stores.get(store_id);
+        //edited
+//        s = HibernateUtils.merge(s);
+        stores.put(store_id,s);
+        return s;
     }
 
     public void clear() {
@@ -464,11 +480,20 @@ public class StoreController {
         this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
-        HibernateUtils.merge(this);
     }
 
+    /**
+     * this method return all active stores.
+     * @return
+     */
     public Map<Integer, Store> get_all_stores() {
-        return this.stores;
+        HashMap<Integer, Store> toReturn = new HashMap<>();
+        for (Map.Entry<Integer, Store> entry : this.stores.entrySet()){
+            if (entry.getValue().isActive()){
+                toReturn.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return toReturn;
     }
 
     public List<Product> get_products_by_store_id(int store_id) throws MarketException {
@@ -534,14 +559,6 @@ public class StoreController {
         this.storesLock = storesLock;
     }
 
-    public static StoreController getInstance() {
-        return instance;
-    }
-
-    public static void setInstance(StoreController instance) {
-        StoreController.instance = instance;
-    }
-
     public List<String> get_permissions(String manager_email, int store_id) throws StoreException, AppointmentException {
         Store store = get_store_by_store_id(store_id); //trows exceptions
         return store.get_permissions(manager_email);
@@ -579,7 +596,6 @@ public class StoreController {
         Store store = get_store_by_store_id(storeID);
         Product product = checkAvailablityAndGet(storeID, productID, quantity);
         int bid_id = this.bids_ids_counter.getAndIncrement();
-        HibernateUtils.merge(this);
         return store.add_bid_offer(bid_id, product, quantity, offer_price, buyer);
     }
 

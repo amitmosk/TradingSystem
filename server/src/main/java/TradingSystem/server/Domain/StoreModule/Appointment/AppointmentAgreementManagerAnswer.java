@@ -21,7 +21,7 @@ public class AppointmentAgreementManagerAnswer {
 
     public void setHas_answer(boolean has_answer) {
         this.has_answer = has_answer;
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     public boolean get_answer() {
@@ -30,7 +30,7 @@ public class AppointmentAgreementManagerAnswer {
 
     public void setAnswer(boolean answer) {
         this.answer = answer;
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     public void setId(Long id) {

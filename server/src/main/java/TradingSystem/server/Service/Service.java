@@ -21,7 +21,6 @@ import java.util.*;
 
 import static TradingSystem.server.Service.MarketSystem.*;
 
-
 @RestController
 public class Service implements iService {
 

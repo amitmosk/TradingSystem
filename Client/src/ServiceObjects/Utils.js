@@ -153,9 +153,17 @@ export class Utils  {
         
         return this.check_not_empty(rule_name);
     }
-    static check_precent()
+    static check_precent(number)
     {
-        return 1;
+        console.log(number);
+        if(number >= 0 && number <= 1){
+            console.log(1);
+            return 1;
+        }
+        else {
+            console.log(0);
+            return 0;
+        }
     }
     // ----------------------------------- Crete Predict -------------------------------------------------------
     static check_range(range)

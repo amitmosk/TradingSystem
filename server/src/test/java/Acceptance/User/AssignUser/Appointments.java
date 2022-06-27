@@ -18,6 +18,7 @@ import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Service.MarketSystem;
 import TradingSystem.server.Service.NotificationHandler;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,45 +33,45 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class Appointments {
-    private MarketFacade marketFacade;
-    private MarketFacade facade1;
-    private MarketFacade facade2;
-    private MarketFacade facade3;
-    private MarketFacade facade4;
-    private UserController uc;
-    private PaymentAdapter pa;
-    private SupplyAdapter sa;
-    private String email;
-    private String password;
-    private String birth_date;
-    private int store_id;
-    private int product_id;
-    private final int num_of_threads = 100;
-    private String user_premium_security_email;
-    private String user_password;
-    private String user_founder_email;
-    private String user_buyer_email;
-    private String user_regular_email_1;
-    private String user_regular_email_2;
-    private String user_admin_email;
-    private SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
-    private PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
-    private PaymentAdapter paymentAdapter;
-    private SupplyAdapter supplyAdapter;
-    private String prodname = "";
+    private static MarketFacade marketFacade;
+    private static MarketFacade facade1;
+    private static MarketFacade facade2;
+    private static MarketFacade facade3;
+    private static MarketFacade facade4;
+    private static UserController uc;
+    private static PaymentAdapter pa;
+    private static SupplyAdapter sa;
+    private static String email;
+    private static String password;
+    private static String birth_date;
+    private static int store_id;
+    private static int product_id;
+    private static final int num_of_threads = 100;
+    private static String user_premium_security_email;
+    private static String user_password;
+    private static String user_founder_email;
+    private static String user_buyer_email;
+    private static String user_regular_email_1;
+    private static String user_regular_email_2;
+    private static String user_admin_email;
+    private static SupplyInfo supplyInfo = new SupplyInfo("1","2","3","4","5");
+    private static PaymentInfo payment_info = new PaymentInfo("123","456","789","245","123","455");
+    private static PaymentAdapter paymentAdapter;
+    private static SupplyAdapter supplyAdapter;
+    private static String prodname = "";
 
-
-    public Appointments() {
+    @BeforeAll
+    static void setUp() {
         try{
             MarketSystem marketSystem = new MarketSystem(tests_config_file_path, "");
-            this.paymentAdapter = marketSystem.getPayment_adapter();
-            this.supplyAdapter = marketSystem.getSupply_adapter();
+            paymentAdapter = marketSystem.getPayment_adapter();
+            supplyAdapter = marketSystem.getSupply_adapter();
 
-            this.marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
-            this.facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
-            this.facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
-            this.facade3 = new MarketFacade(paymentAdapter, supplyAdapter);
-            this.facade4 = new MarketFacade(paymentAdapter, supplyAdapter);
+            marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade1 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade2 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade3 = new MarketFacade(paymentAdapter, supplyAdapter);
+            facade4 = new MarketFacade(paymentAdapter, supplyAdapter);
 
             uc = UserController.get_instance();
             pa = new PaymentAdapterImpl();
@@ -116,17 +117,13 @@ class Appointments {
         }
     }
     @BeforeEach
-    void setUp() throws MarketException {
-
-        // make sure no user is logged in
+    void reset() {
         facade1.logout();
         facade2.logout();
         facade3.logout();
         facade4.logout();
-
-
     }
-    private int open_store_get_id(String name){
+    private static int open_store_get_id(String name){
         Response<Integer> response = facade1.open_store(name);
         return response.getValue();
     }
@@ -138,7 +135,7 @@ class Appointments {
         }
         return stores_count;
     }
-    private int add_prod_make_purchase_get_id(int sore_id){
+    private static int add_prod_make_purchase_get_id(int sore_id){
         ArrayList<String> arraylist = new ArrayList<>();
         arraylist.add("\n\ncheck_check\n\n");
         prodname += "l";
@@ -284,7 +281,6 @@ class Appointments {
         // owner adds manager1 as store manager
         message = make_assert_exception_message(test_name, "owner adds manager1 as store manager", !suppose_to_throw);
         res = facade2.add_manager(manager1, store_id);
-        facade1.manager_answer_appointment(store_id, true, manager1);
         assertFalse(check_was_exception(res), message);
         staff_size++;
         founder_exist(founder, store_id);
@@ -305,8 +301,6 @@ class Appointments {
         // owner adds manager2 as store manager
         message = make_assert_exception_message(test_name, "owner adds manager2 as store manager", !suppose_to_throw);
         res = facade2.add_manager(manager2, store_id);
-        facade1.manager_answer_appointment(store_id, true, manager2);
-        facade3.manager_answer_appointment(store_id, true, manager2);
         assertFalse(check_was_exception(res), message);
         staff_size++;
         founder_exist(founder, store_id);
@@ -445,21 +439,33 @@ class Appointments {
         owner.register("amit1@gmail.com", password, "amit", "mosko", birth_date);
         MarketFacade manger = new MarketFacade(paymentAdapter, supplyAdapter);
         manger.register("amit2@gmail.com", password, "gal", "grumet", birth_date);
+        facade1.login(user_founder_email, user_password);
+        Response<Integer> res = facade1.open_store("golgol");
+        int store_id = res.getValue();
         facade1.add_owner("amit1@gmail.com", store_id);
 
         Response good = facade1.add_manager("amit2@gmail.com", store_id);
         Response bad = owner.add_manager("amit2@gmail.com", store_id);
         check_was_not_exception("Manager added successfully", good);
         check_was_exception(bad);
+        facade1.logout();
+
     }
 
     //----------------------- Concurrent -----------------------
 
     @Test
     void concurrent_add_new_owner(){
+        facade1.logout();
+        facade1.login(user_founder_email, user_password);
+        Response<Integer> res11 = facade1.open_store("puma");
+        int store_id = res11.getValue();
         List<MarketFacade> marketFacadeList = createUsers("newowner");
         for (int i = 0; i < num_of_threads; i++) { // make all users to owners
             Response res = facade1.add_owner("newowner"+i+"@gmail.com",store_id);
+            for (MarketFacade curr : marketFacadeList) {
+                curr.manager_answer_appointment(store_id, true, "newowner" + i + "@gmail.com");
+            }
             check_was_not_exception("problem with adding new owner.", res);
             //TODO: check add owner succeed
         }
@@ -484,14 +490,20 @@ class Appointments {
         assertTrue(num_of_exceptions.get() == num_of_threads-1,"concurency fail, fail count: "+num_of_exceptions.get());
         assertTrue(num_of_success.get() == 1,"concurency fail, success count: "+num_of_success.get());
         //TODO: check user is owner.
+        facade1.logout();
     }
 
     @Test
     void concurrent_add_new_manager(){
-        List<MarketFacade> marketFacadeList = createUsers("newowner");
+        facade1.logout();
+        facade1.login(user_founder_email, user_password);
+        Response<Integer> res11 = facade1.open_store("puma");
+        int store_id = res11.getValue();
+        List<MarketFacade> marketFacadeList = createUsers("newmanager");
         for (int i = 0; i < num_of_threads; i++) { // make all users to owners
-            Response res = facade1.add_owner("newowner"+i+"@gmail.com",store_id);
-            check_was_not_exception("problem with adding new owner.", res);
+            Response res = facade1.add_owner("newmanager"+i+"@gmail.com",store_id);
+
+            check_was_not_exception("problem with adding new manager.", res);
             //TODO: check add owner succeed
         }
         MarketFacade new_user = new MarketFacade(paymentAdapter,supplyAdapter);
@@ -515,6 +527,8 @@ class Appointments {
         assertTrue(num_of_exceptions.get() == num_of_threads-1,"concurency fail, fail count: "+num_of_exceptions.get());
         assertTrue(num_of_success.get() == 1,"concurency fail, success count: "+num_of_success.get());
         //TODO: check user is manager.
+        facade1.logout();
+
     }
 
     /**

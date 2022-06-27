@@ -16,7 +16,7 @@ import Alert from "@mui/material/Alert";
 import { propSatisfies } from "ramda";
 import Button from "@mui/material/Button";
 import { useEffect } from 'react';
-import { Utils } from "../ServiceObjects/Utils";
+import { Utils } from '../ServiceObjects/Utils';
 
 
 export default function HomePage({user}) {
@@ -38,8 +38,7 @@ console.log(user);
   const open_store = async (values) =>  {
     const storeApi = new StoreApi();
     const store_name = values[0];
-    console.log(store_name);
-    console.log(Utils.check_holder(store_name));
+
     if (Utils.check_holder(store_name) == 0)
     {
         setSnackbar({ children: "Illegal Store Name", severity: 'error' });

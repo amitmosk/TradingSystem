@@ -1,5 +1,6 @@
 package Acceptance.System.ExternSystemsTests;
 
+import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.ExternalSystems.*;
 import TradingSystem.server.Domain.Facade.MarketFacade;
 import TradingSystem.server.Domain.Questions.QuestionController;
@@ -18,6 +19,7 @@ import TradingSystem.server.Domain.UserModule.UserController;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Response;
 import TradingSystem.server.Service.MarketSystem;
+import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +54,8 @@ class BuyCartExternalSystems {
 
     @BeforeAll
     static void setUp() {
+        MarketFacade mf = new MarketFacade(paymentAdapter,supplyAdapter);
+        mf.clear();
         List<String> keywords = new ArrayList<>();
         keywords.add("aaaa");
         try {
@@ -111,6 +115,5 @@ class BuyCartExternalSystems {
         Response response34 = facade2.buy_cart(paymentInfo, supplyInfo);
         System.out.println(response34.getMessage());
         assertEquals(response34.getMessage(), "Buy Cart Failed: Payment External Service Denied, Status -2");
-
     }
 }

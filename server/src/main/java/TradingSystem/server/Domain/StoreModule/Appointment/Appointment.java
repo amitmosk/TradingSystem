@@ -60,7 +60,11 @@ public class Appointment {
             this.status = closed_confirm;
             this.set_founder_permissions();
         }
-        else
+        else if (type == store_manager){
+            this.status = closed_confirm;
+            this.set_manager_permissions();
+        }
+        else if (type == store_owner)
         {
             for (String manager_email : managers_emails) {
                 AppointmentAgreementManagerAnswer temp = new AppointmentAgreementManagerAnswer();
@@ -100,8 +104,8 @@ public class Appointment {
         this.permissions.put(answer_bid_offer, 0);
         this.permissions.put(view_bids_status, 0);
         this.permissions.put(answer_bid_offer_negotiate, 0);
-        this.permissions.put(answer_appointment, 1);
-        HibernateUtils.merge(this);
+        this.permissions.put(answer_appointment, 0);
+//        HibernateUtils.merge(this);
     }
 
     private void set_owner_permissions() {
@@ -128,7 +132,7 @@ public class Appointment {
         this.permissions.put(view_bids_status, 1);
         this.permissions.put(answer_bid_offer_negotiate, 0);
         this.permissions.put(answer_appointment, 1);
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     private void set_founder_permissions() {
@@ -155,7 +159,7 @@ public class Appointment {
         this.permissions.put(view_bids_status, 1);
         this.permissions.put(answer_bid_offer_negotiate, 1);
         this.permissions.put(answer_appointment, 1);
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     private void set_candidate_permissions(){
@@ -181,7 +185,7 @@ public class Appointment {
         this.permissions.put(answer_bid_offer, 0);
         this.permissions.put(view_bids_status, 0);
         this.permissions.put(answer_bid_offer_negotiate, 0);
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     // -- getters
@@ -219,7 +223,6 @@ public class Appointment {
             this.permissions.put(key, 1);
         else
             this.permissions.put(key, 0);
-        HibernateUtils.merge(this);
 
     }
 
@@ -270,7 +273,6 @@ public class Appointment {
         for (StorePermission myVar : permissions) {
             this.set_permission(myVar, true);
         }
-        HibernateUtils.merge(this);
     }
 
     public boolean is_owner() {
@@ -304,12 +306,12 @@ public class Appointment {
     // Appointment agreement
     public void add_manager_of_store(String manager_email) {
         this.managersEmail_answers.put(manager_email, new AppointmentAgreementManagerAnswer());
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     public void remove_manager(String email) {
         this.managersEmail_answers.remove(email);
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
     }
 
     public void add_manager_answer(String email, boolean answer) {
@@ -320,7 +322,7 @@ public class Appointment {
         else
             this.update_status();
 
-        HibernateUtils.merge(this);
+//        HibernateUtils.merge(this);
 
     }
 

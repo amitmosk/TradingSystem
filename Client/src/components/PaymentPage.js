@@ -20,7 +20,7 @@ export default function PaymentPage({update}) {
     const [id, setId] = React.useState("");
 
 
-    
+
 
 
     const  check_payment = async () =>{
@@ -33,7 +33,7 @@ export default function PaymentPage({update}) {
         console.log(holder)
         console.log(ccv)
         console.log(id)
-  
+
         if (Utils.check_credit_number(creditnumber) == 0)
         {
             setSnackbar({ children: "Illegal Card Number", severity: 'error' });
@@ -84,7 +84,7 @@ export default function PaymentPage({update}) {
                             <input type="id" name="id" onChange={e => setId(e.target.value)}
                                 placeholder="ID" required/>
                            
-                            
+
                             <div className="ConnectRegister">
                                 
                                 <Button onClick={check_payment} variant="contained">Confirm</Button>
@@ -98,13 +98,13 @@ export default function PaymentPage({update}) {
             >
             <Alert {...snackbar} onClose={handleCloseSnackbar} />
             </Snackbar>
-            
+
         )}
                         </form>
                     </div>
                 </main>
             );
-        
+
 }
 
 
@@ -119,7 +119,7 @@ export default function PaymentPage({update}) {
 // import Link from '@mui/material/Button';
 // import HomeIcon from '@mui/icons-material/Home';
 // import Snackbar from "@mui/material/Snackbar";
-// import Alert from "@mui/material/Alert"; 
+// import Alert from "@mui/material/Alert";
 // import { Utils } from '../ServiceObjects/Utils';
 // import { Payment } from '../ServiceObjects/Payment';
 // import { Supply } from '../ServiceObjects/Supply';
@@ -130,7 +130,7 @@ export default function PaymentPage({update}) {
 
 //     constructor(props) {
 //         super(props);
-//         this.state = { 
+//         this.state = {
 //             paymentError: undefined,
 //             creditnumber: "",
 //             month_year: "",
@@ -152,7 +152,7 @@ export default function PaymentPage({update}) {
 //         });
 //     }
 
-    
+
 //     async componentDidMount() {
 
 
@@ -173,7 +173,7 @@ export default function PaymentPage({update}) {
 //         console.log(holder)
 //         console.log(ccv)
 //         console.log(id)
-  
+
 //         if (Utils.check_credit_number(creditnumber) == 0)
 //         {
 //             this.setState({ snackbar: { children: "Illegal Card Number", severity: "error" } });
@@ -206,7 +206,7 @@ export default function PaymentPage({update}) {
 
 
 //     }
-    
+
 //     render() {
 //         const {redirectTo} = this.state
 //             return (
@@ -226,13 +226,13 @@ export default function PaymentPage({update}) {
 //                                 placeholder="CCV" required/>
 //                             <input type="id" name="id" value={this.state.id} onChange={this.handleInputChange}
 //                                 placeholder="ID" required/>
-                           
+
 //                             {/* <select name="role" value={this.state.role} required>
 //                                 <option value="member">Member</option>
 //                                 <option value="admin">Admin</option>
 //                             </select> */}
 //                             <div className="ConnectRegister">
-                                
+
 //                                 {/* <Link to="/register">Create new account</Link> */}
 //                                 <Button onClick={() => this.check_payment()} variant="contained">Confirm</Button>
 //                                 {/* <input class="action" type="submit" value="Login"/> */}
@@ -254,6 +254,6 @@ export default function PaymentPage({update}) {
 //                     </div>
 //                 </main>
 //             );
-        
+
 //     }
 // }

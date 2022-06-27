@@ -7,7 +7,7 @@ import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("14")
+@DiscriminatorValue("SimplePurchaseRule")
 public class SimplePurchaseRule extends PurchaseRule {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Predict predict;

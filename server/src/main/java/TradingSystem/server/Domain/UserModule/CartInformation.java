@@ -1,6 +1,7 @@
 package TradingSystem.server.Domain.UserModule;
 
 import TradingSystem.server.Domain.StoreModule.Basket;
+import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Store.StoreInformation;
@@ -13,11 +14,13 @@ import java.util.Map;
 public class CartInformation {
     private List<ProductInformation> products;
     private double price;
+    private double discount;
 
-    public CartInformation(){}
+    public CartInformation() {
+    }
 
 
-    public CartInformation(HashMap<StoreInformation, Basket> basketHashMap){
+    public CartInformation(HashMap<StoreInformation, Basket> basketHashMap, double discount) {
         this.price = 0;
         this.products = new ArrayList<>();
         for (Map.Entry<StoreInformation,Basket> basket: basketHashMap.entrySet()){
@@ -27,6 +30,7 @@ public class CartInformation {
             }
             this.price += basket.getValue().getTotal_price();
         }
+        this.price -= discount;
     }
 
     public List<ProductInformation> getProducts() {

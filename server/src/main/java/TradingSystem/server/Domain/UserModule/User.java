@@ -37,7 +37,7 @@ public class User {
     public User() { // new login guest
         this.state = new Guest();
         this.cart = new Cart();
-        isGuest = new AtomicBoolean(true);
+        this.isGuest = new AtomicBoolean(true);
         this.isLogged = new AtomicBoolean(false);
         this.birth_date = LocalDate.now().toString();
     }
@@ -97,7 +97,7 @@ public class User {
         isGuest.set(false);
 //        HibernateUtils.persist(this.cart);
 //        HibernateUtils.persist(this.state);
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
     }
 
     public synchronized void login(String password) throws MarketException {
@@ -108,7 +108,6 @@ public class User {
         this.isGuest.compareAndSet(true, false);
         if (!res)
             throw new LoginException("User already logged in - concurrency");
-        merge();
     }
 
     public void logout() throws MarketException {
@@ -116,7 +115,6 @@ public class User {
         if (!this.isLogged.compareAndSet(true, false))
             throw new NoUserRegisterdException("failed to logout user - concurrency problem");
         this.isGuest.compareAndSet(false, true);
-        merge();
     }
 
     public Cart getCart() {
@@ -138,7 +136,6 @@ public class User {
 
     public void removeBasketIfNeeded(int storeID, Basket storeBasket) {
         cart.removeBasketIfNeeded(storeID, storeBasket);
-        merge();
     }
 
     public Map<Store, Basket> view_baskets() {
@@ -158,7 +155,6 @@ public class User {
         this.state.addPurchase(purchase);
         //clear
         cart.clear();
-        merge();
         return purchase;
     }
 
@@ -197,19 +193,16 @@ public class User {
     public void edit_name(String new_name) throws MarketException {
         Utils.nameValidCheck(new_name);
         state.edit_name(new_name);
-        merge();
     }
 
     public void edit_password(String old_password, String password) throws MarketException {
         Utils.passwordValidCheck(password);
         state.edit_password(old_password, password);
-        merge();
     }
 
     public void edit_last_name(String new_last_name) throws MarketException {
         Utils.nameValidCheck(new_last_name);
         state.edit_last_name(new_last_name);
-        merge();
     }
 
     public void set_admin(String email, String pw, String name, String lastName) throws MarketException {
@@ -228,29 +221,24 @@ public class User {
     public void edit_name_premium(String new_name, String answer) throws MarketException {
         verify_answer(answer);
         edit_name(new_name);
-        merge();
     }
 
     public void edit_last_name_premium(String new_last_name, String answer) throws MarketException {
         verify_answer(answer);
         edit_last_name(new_last_name);
-        merge();
     }
 
     public void edit_password_premium(String old_password, String new_password, String answer) throws MarketException {
         verify_answer(answer);
         edit_password(old_password, new_password);
-        merge();
     }
 
     public void improve_security(String password, String question, String answer) throws MarketException {
         this.state.improve_security(password, question, answer);
-        merge();
     }
 
     public void remove_product_from_cart(Store store, Product p) throws MarketException {
         this.cart.remove_product_from_cart(store, p);
-        merge();
     }
 
     private String get_identifier_for_basket() {
@@ -270,17 +258,14 @@ public class User {
     public void add_product_to_cart_from_bid_offer(Store store, Product product, int quantity, double price_per_unit) throws MarketException {
         String basket_identifier = get_identifier_for_basket();
         this.cart.add_product_to_cart(store, product, quantity, basket_identifier, price_per_unit);
-        merge();
     }
 
     public void edit_product_quantity_in_cart(Store store, Product p, int quantity) throws MarketException {
         this.cart.edit_product_quantity_in_cart(store, p, quantity);
-        merge();
     }
 
     public void add_founder(Store store, Appointment appointment) throws MarketException {
         this.state.add_founder(store, appointment);
-        merge();
     }
 
     public AssignUser state_if_assigned() throws NoUserRegisterdException {
@@ -295,10 +280,10 @@ public class User {
         return Period.between(LocalDate.parse(this.birth_date), LocalDate.now()).getYears();
     }
 
-    public void merge() {
-//        User load = HibernateUtils.getEntityManager().find(this.getClass(),id);
+    public User merge() {
         if (!isGuest.get())
-            HibernateUtils.merge(this);
+            return HibernateUtils.merge(this);
+        return this;
     }
 
     //TODO: method for testing
@@ -330,6 +315,7 @@ public class User {
         return id;
     }
 
+
     public boolean check_if_manager(){
         return this.state.check_if_manager();
     }
@@ -341,4 +327,5 @@ public class User {
     public boolean check_if_founder(){
         return this.state.check_if_founder();
     }
+
 }

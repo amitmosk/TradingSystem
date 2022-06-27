@@ -10,7 +10,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.List;
 @Entity
-@DiscriminatorValue("3")
+@DiscriminatorValue("andCompsoitePredict")
 public class andCompsoitePredict extends CompositePredict {
 
     public andCompsoitePredict(Ipredict left, Ipredict right) {

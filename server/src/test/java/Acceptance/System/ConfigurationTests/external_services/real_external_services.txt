@@ -1,2 +1,2 @@
 external_services:real
-database:real
+database:tests_load

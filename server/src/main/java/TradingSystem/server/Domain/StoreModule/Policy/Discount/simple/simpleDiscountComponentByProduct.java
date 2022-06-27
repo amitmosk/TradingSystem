@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import java.util.Map;
 
 @Entity
-@DiscriminatorValue("9")
+@DiscriminatorValue("simpleDiscountComponentByProduct")
 public class simpleDiscountComponentByProduct extends simpleDiscountComponent {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     Product ProductToDiscount;

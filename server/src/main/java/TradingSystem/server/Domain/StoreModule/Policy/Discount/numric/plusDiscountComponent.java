@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-@DiscriminatorValue("6")
+@DiscriminatorValue("plusDiscountComponent")
 public class plusDiscountComponent extends DiscountComponent {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     DiscountComponent left;
