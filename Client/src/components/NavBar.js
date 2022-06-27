@@ -100,7 +100,7 @@ export default function NavBar({updateUserState, user}) {
 
 
 
-
+          {login_register()}
           <Link
             href="/"
             component="button"
@@ -113,7 +113,7 @@ export default function NavBar({updateUserState, user}) {
             <HomeIcon></HomeIcon>
             
           </Link>
-          {login_register()}
+          
           <AccountMenu log={logout} state={user.state} user={user}></AccountMenu>
         </Grid>
       </Toolbar>
