@@ -4,7 +4,7 @@ import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
 import TradingSystem.server.Domain.StoreModule.Appointment.*;
-import TradingSystem.server.Domain.StoreModule.Bid.Bid;
+import TradingSystem.server.Domain.StoreModule.Bid.*;
 import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Bid.BidManagerAnswer;
 import TradingSystem.server.Domain.StoreModule.Bid.BidStatus;
@@ -46,8 +46,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.closed_confirm;
-import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.closed_denied;
+import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.*;
 
 @Entity
 public class Store implements Observable {
@@ -763,17 +762,16 @@ public class Store implements Observable {
             Appointment appointment = this.stuffs_and_appointments.get(new_manager);
             if (appointment != null)
                 throw new AppointmentException("User to appoint is already store member");
+
             Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager, get_managers_emails());
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
-            this.send_message_to_the_store_stuff(candidate_email+" is a new manager-candidate in the store,appoint by: " +appointer_email,appointer_email);
+            new_manager.add_manager(this, appointment);
+            this.set_manager_in_bids(0, candidate_email, false);
+            MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
+            this.send_message_to_the_store_stuff(candidate_email+"" +
+                    " is a new manager in the store", appointer_email);
 
-            try{
-                this.add_appointment_answer(appointer, new_manager, true);
-            }
-            catch (Exception e){
-                // TODO : AMIT
-            }
-//            HibernateUtils.merge(this);
+            HibernateUtils.merge(this);
         }
     }
 
@@ -1104,11 +1102,14 @@ public class Store implements Observable {
             }
         }
         for (Appointment appointment : this.stuffs_and_appointments.values()){
-            if (appointment.get_status() == AppointmentStatus.open_waiting_for_answers)
-                if (i == 0)
-                    appointment.add_manager_of_store(user_email);
-            if (i == 1)
-                appointment.remove_manager(user_email);
+            if (appointment.get_status() == AppointmentStatus.open_waiting_for_answers) {
+                if (owner){
+                    if (i == 0)
+                        appointment.add_manager_of_store(user_email);
+                    if (i == 1)
+                        appointment.remove_manager(user_email);
+                }
+            }
         }
 //        HibernateUtils.persist(this);
     }
@@ -1141,30 +1142,34 @@ public class Store implements Observable {
         return managers_emails;
     }
     public boolean add_appointment_answer(AssignUser manager, AssignUser candidate , boolean manager_answer) throws Exception {
-        // TODO : this lines could throw exceptions, ASK GAL about hibernate
-        String manager_email = manager.get_user_email();
-        String candidate_email = candidate.get_user_email();
-        this.check_permission(manager, StorePermission.answer_appointment);
-        Appointment appointment = this.stuffs_and_appointments.get(candidate);
-        appointment.add_manager_answer(manager_email, manager_answer);
-        if (appointment.get_status() == closed_denied){
-            this.send_message_to_the_store_stuff("Appointment of: " + candidate_email + " is denied by: "+manager_email,manager_email);
-        }
-        else if (appointment.get_status() == closed_confirm){
-            if (appointment.getType() == StoreManagerType.store_owner){
+        try{
+            String manager_email = manager.get_user_email();
+            String candidate_email = candidate.get_user_email();
+            this.check_permission(manager, StorePermission.answer_appointment);
+            Appointment appointment = this.stuffs_and_appointments.get(candidate);
+            if (appointment.get_status() != open_waiting_for_answers){
+                throw new Exception("The Appointment is already close.");
+            }
+            if (appointment.getType() != StoreManagerType.candidate){
+                throw new Exception("The Candidate is not longer a candidate");
+            }
+            appointment.add_manager_answer(manager_email, manager_answer);
+            if (appointment.get_status() == closed_denied){
+                this.send_message_to_the_store_stuff("Appointment of: " + candidate_email + " is denied by: "+manager_email,manager_email);
+            }
+            else if (appointment.get_status() == closed_confirm){
                 candidate.add_owner(this, appointment);
                 this.set_manager_in_bids(0, candidate_email, true);
                 MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") owner");
                 this.send_message_to_the_store_stuff(candidate_email+" is a new owner in the store, confirm by all the managers.", "");
-            }
-            else if (appointment.getType() == StoreManagerType.store_manager){
-                candidate.add_manager(this, appointment);
-                this.set_manager_in_bids(0, candidate_email, false);
-                MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
-                this.send_message_to_the_store_stuff(candidate_email+" is a new manager in the store, confirm by all the managers.", "");
-            }
+                }
+            return true;
         }
-        return true;
+        catch (Exception e){
+            MarketLogger.getInstance().add_log(e.getMessage());
+            return false;
+        }
+
     }
 
     public Map<Integer, Bid> getBids() {

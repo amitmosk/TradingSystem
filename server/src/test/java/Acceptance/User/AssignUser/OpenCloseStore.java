@@ -829,7 +829,6 @@ class OpenCloseStore {
         // --------------------------- Owner appoints store manager ---------------------------
         message ="Owner (" + owner_email + ") add user (" + manager_email + ") as store (" + store_id + ") manager";
         res = facade2.add_manager(manager_email,store_id);
-        facade1.manager_answer_appointment(store_id, true, manager_email);
         assertFalse(check_was_exception(res), message);
         staff.add(manager_email);
         message = "Test: " + test_name + " failed\nIn test case: " + message + "\nEmployee: ";
