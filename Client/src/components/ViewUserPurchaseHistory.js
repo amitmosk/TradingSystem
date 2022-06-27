@@ -13,6 +13,8 @@ import { UserApi } from '../API/UserApi';
 import BasicRating from "./Rating";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { ProductApi } from '../API/ProductApi';
+import { StoreApi } from '../API/StoreApi';
 
 
 const Demo = styled('div')(({ theme }) => ({
@@ -26,18 +28,23 @@ export default class UserPurchaseHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            product_id:undefined, 
+            store_id:undefined,
             history: [],
             snackbar: null,
         };
         this.userApi = new UserApi();
+        this.productApi = new ProductApi();
+        this.storeApi= new StoreApi();
 
 
 
     }
-    async rate_store(rating) {
+    async rate_store(rating, store_id, product_id) {
         console.log("in rate store");
         console.log("rating is = " + rating);
-        let response = await this.storeApi.rate_store(this.state.store_id, rating);
+        console.log("store_id is = " + store_id);
+        let response = await this.storeApi.rate_store(parseInt(store_id), rating);
         // alert(response.message);
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
@@ -68,10 +75,12 @@ export default class UserPurchaseHistory extends Component {
 
         }
     }
-    async rate_product(rating) {
+    async rate_product(rating, store_id, product_id) {
         console.log("in rate Product");
         console.log("rating is = "+rating);
-        let response = await this.productApi.rate_product(this.state.product_id, this.state.store_id,rating);
+        console.log("store_id is = "+store_id);
+        console.log("product_id is = "+product_id);
+        let response = await this.productApi.rate_product(parseInt(product_id), parseInt(store_id),rating);
         // alert(response.message);
         if (!response.was_exception)
         {
@@ -110,17 +119,45 @@ export default class UserPurchaseHistory extends Component {
 
                             <Demo>
                                 <List>
-                                    {this.state.history.map((his) => (
+                                <h5 class="Header" align="center">
+                                </h5>
+                                    {this.state.history.length !==0 ?  this.state.history.map((his) => (
                                         <>
-                                            <ListItem>
-                                                {/* <CircleIcon fontSize='small' /> */}
-
+                                            <ListItem>                                                
                                                 <ListItemText
-                                                    primary={"Purchase ID: " + his.purchase_id}
-                                                    secondary={'Total price: ₪ ' + his.total_price}
+                                                    primary={<h3>Purchase ID: {his.user_purchase_id} , Total price: {his.total_price} $</h3>}
+                                                    secondary={
+                                                        <ListItemText
+                                                        primary={Object.keys(his.store_id_purchase).map((s)=>
+                                                            <ListItemText
+                                                            primary={<h4>store id: {s} Total price: {his.store_id_purchase[s].totalPrice} $</h4> }
+                                                            // secondary={<BasicRating to_rate="Store" rating={this.rate_store.bind(this)} />}
+                                                            secondary={Object.keys(his.store_id_purchase[s].product_and_quantity).map((p)=>
+                                                                <ListItemText 
+                                                                primary={`Product id: ${p} Quantity: ${his.store_id_purchase[s].product_and_quantity[p]} at ${his.store_id_purchase[s].transaction_date}`}
+                                                                secondary={<BasicRating to_rate="Product" params={[s,p]} rating={this.rate_product.bind(this)} color={"blue"}/>}
+                                                                >
+                                                                </ListItemText>
+                                                                
+                                                                )}
+                                                            
+                                                            >
+                                                            </ListItemText>
+                                                            
+                                                        )
+                                                        }
+
+                                                        secondary={<BasicRating to_rate="Store" params={["1", "-1"]} rating={this.rate_store.bind(this) } color={"red"}/>}
+                                                        
+                                                        >
+
+
+                                                        </ListItemText>
+                                                    }
+                                                                                  
                                                 />
-                                                <BasicRating to_rate="Product" rating={this.rate_product.bind(this)} />
-                                                <BasicRating to_rate="Store" rating={this.rate_store.bind(this)} />
+                                                
+                                            
                                             </ListItem>
 
 
@@ -128,7 +165,7 @@ export default class UserPurchaseHistory extends Component {
                                         
 
 
-                                    ))
+                                    )) : <h3 style={{ color: 'red' }}>No History To Show</h3>
 
 
 

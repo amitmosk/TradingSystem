@@ -36,11 +36,13 @@ export class ConnectApi {
     register(email, password, first_name, last_name, birthdate) {
         return instance.get(REGISTER_PATH,
             {
-                    params:{email: email,
-                    pw: password,
-                    name: first_name,
-                    lastName: last_name,
-                    birth_date : birthdate,}
+                    params:
+                    {
+                        email: email,
+                        pw: password,
+                        name: first_name,
+                        lastName: last_name,
+                        birth_date : birthdate,}
             })
             .then(res => {
                 console.log("user = " +res.data.value.storesManaged+"\n\n\n\n");

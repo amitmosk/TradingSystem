@@ -41,12 +41,12 @@ export default class Login extends Component {
         console.log("email is "+email+" , password is "+password+"\n");
         if(Utils.check_email(email) == 0)
         {
-            this.setState({ snackbar: { children: "Illegal Email", severity: "success" } });
+            this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
             return;
         }
         if(Utils.check_not_empty(password) == 0)
         {
-            this.setState({ snackbar: { children: "Illegal Password", severity: "success" } });
+            this.setState({ snackbar: { children: "Illegal Password", severity: "error" } });
             return;
         }
         let response = await this.connectApi.login(email, password);

@@ -41,7 +41,9 @@ export class Utils  {
         }
         return 1;
     }
-    static check_holder(name){   
+    static check_holder(name){ 
+        if (this.check_not_empty(name) === 0)
+            return 0;
         if (/^[a-zA-Z ]+$/.test(name))
         {
             return 1;
@@ -106,15 +108,22 @@ export class Utils  {
     }
     
     static check_not_empty(str){   
-        if( str === undefined || str ===null )
-            return 0;
-        if (str.length == 0)
+        console.log(str);
+        try{
+            if( str === undefined || str === null )
+                return 0;
+            if (str.length == 0)
+                return 0;
+        }
+        catch(error)
         {
             return 0;
         }
         return 1;
     }
-    static check_all_digits(str){   
+    static check_all_digits(str){  
+        if(this.check_not_empty(str) == 0)
+            return 0; 
         if (/^[0-9]+$/.test(str))
         {
             return 1;

@@ -41,26 +41,6 @@ export default class Register extends Component {
         });
     }
     
-    async handleSubmit(event){
-        event.preventDefault();
-        const {username, password, role} = this.state;
-        const loginRedirectAndRes = await this.authApi.Login(username, password, role);
-        if(loginRedirectAndRes) {
-            const loginRes = loginRedirectAndRes.data;
-
-            if (loginRes && loginRes.isSuccess) {
-                this.props.loginUpdateHandler(username, this.getUserRole(role))
-            } else {
-                this.setState({
-                    registerError: loginRes.error
-                })
-            }
-        } else {
-            this.setState({
-                registerError: "You need to be a guest"
-            })
-        }
-    }
 
     async componentDidMount() {
     }

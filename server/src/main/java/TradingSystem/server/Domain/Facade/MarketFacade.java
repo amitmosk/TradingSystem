@@ -581,7 +581,7 @@ public class MarketFacade {
             HibernateUtils.beginTransaction();
             UserPurchaseHistory userPurchaseHistory = user_controller.view_user_purchase_history(loggedUser);
             HibernateUtils.commit();
-            response = new Response<>(userPurchaseHistory, "successfully received user's product history");
+            response = new Response<>(userPurchaseHistory, "successfully received user's purchases history");
             market_logger.add_log("User viewed his purchase history successfully");
         } catch (Exception e) {
             HibernateUtils.rollback();

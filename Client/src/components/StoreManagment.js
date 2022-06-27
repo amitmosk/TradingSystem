@@ -88,12 +88,37 @@ export default class StoreManagment extends Component {
         const price = values[2];
         const category = values[3];
         const key_words = values[4];
-
+        if(Utils.check_all_digits(quantity) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Quantity", severity: "error" } });
+            return;
+        }
+        if(Utils.check_holder(name) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal name", severity: "error" } });
+            return;
+        }
+        if(Utils.check_all_digits(price) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal price", severity: "error" } });
+            return;
+        }
+        if(Utils.check_holder(category) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Category", severity: "error" } });
+            return;
+        }
+        if(Utils.check_holder(key_words) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Key Words", severity: "error" } });
+            return;
+        }
         const response = await this.storeApi.add_product_to_store(store_id, quantity, name, price, category, key_words);
         // alert(response.message);
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in add product - success!\n");
+            window.location.reload();
             //show history
         }
         else {
@@ -119,24 +144,7 @@ export default class StoreManagment extends Component {
 
         }
     }
-    async store_purchase_policies(values) {
-        console.log("in store_purchase_policies!\n");
-        console.log("in store_purchase_policies!\n");
-        const store_id = this.state.store_id;
-        const policy = values[0];
-
-        const response = await this.storeApi.puchase_policies_fields(store_id, policy);
-        // alert(response.message);
-        if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
-            console.log("in store_purchase_policies - success!\n");
-            //show history
-        }
-        else {
-            this.setState({ snackbar: { children: response.message, severity: "error" } });
-
-        }
-    }
+    
     async store_discount_policy(values) {
         console.log("in store_discount_policy!\n");
         const store_id = this.state.store_id;
@@ -159,7 +167,11 @@ export default class StoreManagment extends Component {
         console.log("in add_owner!\n");
         const user_email_to_appoint = values[0];
         const store_id = this.state.store_id;
-
+        if(Utils.check_email(user_email_to_appoint) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
+            return;
+        }
         const response = await this.storeApi.add_owner(user_email_to_appoint, store_id);
         // alert(response.message);
 
@@ -177,7 +189,11 @@ export default class StoreManagment extends Component {
         console.log("in delete_owner!\n");
         const user_email_to_delete_appointment = values[0];
         const store_id = this.state.store_id;
-
+        if(Utils.check_email(user_email_to_delete_appointment) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
+            return;
+        }
         const response = await this.storeApi.delete_owner(user_email_to_delete_appointment, store_id);
         // alert(response.message);
         if (!response.was_exception) {
@@ -195,7 +211,11 @@ export default class StoreManagment extends Component {
         const user_email_to_appoint = values[0];
         const store_id = this.state.store_id;
 
-
+        if(Utils.check_email(user_email_to_appoint) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
+            return;
+        }
         const response = await this.storeApi.add_manager(user_email_to_appoint, store_id);
         // alert(response.message);
         if (!response.was_exception) {
@@ -215,7 +235,11 @@ export default class StoreManagment extends Component {
 
         console.log(store_id);
 
-
+        if(Utils.check_email(user_email_to_delete_appointment) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
+            return;
+        }
         const response = await this.storeApi.delete_manager(user_email_to_delete_appointment, store_id);
         // alert(response.message);
         if (!response.was_exception) {
@@ -299,6 +323,16 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
         const question_id = values[0];
         const answer = values[1];
+        if(Utils.check_all_digits(question_id) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Question ID", severity: "error" } });
+            return;
+        }
+        if(Utils.check_not_empty(answer) == 0)
+        {
+            this.setState({ snackbar: { children: "Answer can't be empty ", severity: "error" } });
+            return;
+        }
 
 
         const response = await this.storeApi.manager_answer_question(store_id, question_id, answer);
@@ -363,7 +397,6 @@ export default class StoreManagment extends Component {
                 <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.add_product_fields} getValues={this.add_product.bind(this)} name="Add Product"></FormDialog></Item>                    </Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.delete_product_fields} getValues={this.delete_product.bind(this)} name="Delete Product"></FormDialog></Item></Grid>
-                    {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.purchase_policies_fields} getValues={this.store_purchase_policies.bind(this)} name="Store Purchase Policies"></FormDialog></Item></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.discount_policies_fields} getValues={this.store_discount_policy.bind(this)} name="Store Discount Policies"></FormDialog></Item></Grid > */}
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_manager_fields} getValues={this.add_manager.bind(this)} name="Add Manager"></FormDialog></Item></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.appoint_owner_fields} getValues={this.add_owner.bind(this)} name="Add Owner"></FormDialog></Item></Grid >

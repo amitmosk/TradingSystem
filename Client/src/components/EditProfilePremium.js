@@ -8,6 +8,7 @@ import { UserApi } from '../API/UserApi';
 import FormDialog from './FormDialog';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { Utils } from '../ServiceObjects/Utils';
 
 
 export default class EditProfileEditProfilePremium extends Component {
@@ -46,7 +47,7 @@ export default class EditProfileEditProfilePremium extends Component {
         }
         if(Utils.check_not_empty(password) == 0)
         {
-            setSnackbar({ children: "Password can not be empty", severity: 'error' });
+            this.setState({ snackbar: { children: "Password can not be empty", severity: "error" } });
             return;
         }
         let response =  await this.userApi.improve_security(password, question, answer);
@@ -63,6 +64,16 @@ export default class EditProfileEditProfilePremium extends Component {
         console.log("in handle name edit premium\n");
         const new_name = values[0];
         const answer = values[1];
+        if (Utils.check_holder(new_name) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal New Name", severity: "error" } });
+            return;
+        }
+        if (Utils.check_not_empty(answer) == 0)
+        {
+            this.setState({ snackbar: { children: "Answer can't be ampty", severity: "error" } });
+            return;
+        }
         let response = await this.userApi.edit_name_premium(new_name, answer);
         // alert(response.message);
         if (!response.was_exception) {
@@ -82,6 +93,16 @@ export default class EditProfileEditProfilePremium extends Component {
         console.log("in handle last name edit premium\n");
         const new_name = values[0];
         const answer = values[1];
+        if (Utils.check_holder(new_name) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal New Name", severity: "error" } });
+            return;
+        }
+        if (Utils.check_not_empty(answer) == 0)
+        {
+            this.setState({ snackbar: { children: "Answer can't be ampty", severity: "error" } });
+            return;
+        }
         let response = await this.userApi.edit_last_name_premium(new_name, answer);
         // alert(response.message);
         if (!response.was_exception) {
@@ -100,7 +121,26 @@ export default class EditProfileEditProfilePremium extends Component {
         let new_password =values[1];
         let new_password_check = values[2];
         let answer = values[3];
-        
+        if (Utils.check_not_empty(old_password) == 0)
+        {
+            this.setState({ snackbar: { children: "Password can't be empty", severity: "error" } });
+            return;
+        }
+        if (Utils.check_not_empty(new_password) == 0)
+        {
+            this.setState({ snackbar: { children: "Password can't be empty", severity: "error" } });
+            return;
+        }
+        if (Utils.check_not_empty(new_password_check) == 0)
+        {
+            this.setState({ snackbar: { children: "Password can't be empty", severity: "error" } });
+            return;
+        }
+        if (Utils.check_not_empty(answer) == 0)
+        {
+            this.setState({ snackbar: { children: "Answer can't be ampty", severity: "error" } });
+            return;
+        }
         if (new_password == new_password_check) {
             let response =  await this.userApi.edit_password_premium(old_password, new_password, answer);
             // alert(response.message);
@@ -121,6 +161,11 @@ export default class EditProfileEditProfilePremium extends Component {
 
     async unregister(values){
         const password = values[0];
+        if (Utils.check_not_empty(password) == 0)
+        {
+            this.setState({ snackbar: { children: "Password can't be empty", severity: "error" } });
+            return;
+        }
         let response = await this.userApi.unregister(password);
         // alert(response.message);
         if (!response.was_exception) {

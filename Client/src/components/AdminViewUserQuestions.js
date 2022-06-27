@@ -30,12 +30,12 @@ export default class AdminViewUserQuestions extends Component {
         const answer = values[1];
         if(Utils.check_not_empty(answer) == 0)
         {
-            setSnackbar({ children: "Answer cant be empty", severity: 'error' });
+            this.setState({ snackbar: { children: "Answer cant be empty", severity: "error" } });
             return;
         }
         if(Utils.check_all_digits(question_id) == 0 )
         {
-            setSnackbar({ children: "Illegal Question ID", severity: 'error' });
+            this.setState({ snackbar: { children: "Illegal Question ID", severity: "error" } });
             return;
         }
         const response = await this.adminApi.admin_answer_user_question(question_id, answer);
