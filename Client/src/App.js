@@ -140,7 +140,9 @@ export default function App() {
           ></Route>
           <Route
             path="/Register"
-            element={<Register updateUserState={updateUserState} />}
+            element={
+              <Register updateUserState={updateUserState} user={user}/>
+            }
           ></Route>
           <Route
             path="/EditProfile"

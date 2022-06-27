@@ -32,30 +32,7 @@ export default class AdminSendMessage extends Component {
         });
     }
     
-    async handleSubmit(event){
-        event.preventDefault();
-        const {username, password, role} = this.state;
-        const loginRedirectAndRes = await this.authApi.Login(username, password, role);
-        if(loginRedirectAndRes) {
-            const loginRes = loginRedirectAndRes.data;
-
-            if (loginRes && loginRes.isSuccess) {
-                this.props.loginUpdateHandler(username, this.getUserRole(role))
-            } else {
-                this.setState({
-                    loginError: loginRes.error
-                })
-            }
-        } else {
-            this.setState({
-                loginError: "You need to be a guest"
-            })
-        }
-    }
-   
-
-
-
+ 
     
     async componentDidMount() {
     }
@@ -86,7 +63,7 @@ export default class AdminSendMessage extends Component {
             return (
                 <main className="LoginMain">
                     <div className="LoginWindow">
-                    <Link href="/"><HomeIcon></HomeIcon></Link>
+
                         <h3>Send Messages - (Admin)</h3>
                         <form className="LoginForm" >
                             {this.state.loginError ?

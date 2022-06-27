@@ -13,9 +13,11 @@ import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HibernateUtils {
 
@@ -27,9 +29,9 @@ public class HibernateUtils {
     private static boolean begin_transaction = true;
 
     static {
-        emf = Persistence.createEntityManagerFactory(persistence_unit);
+//        emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
-//        em = emf.createEntityManager();
+//        em = getEntityManager();
     }
 
     public static void setPersistence_unit(String persistence_unit) {
@@ -38,42 +40,6 @@ public class HibernateUtils {
         threadLocal = new ThreadLocal<EntityManager>();
     }
 
-    public static void set_load_tests_mode() {
-        if (!HibernateUtils.persistence_unit.equals("TradingSystemTests")) {
-            HibernateUtils.persistence_unit = "TradingSystemTests";
-            emf = Persistence.createEntityManagerFactory(persistence_unit);
-            threadLocal.set(null);
-        }
-        HibernateUtils.allow_persist = true;
-    }
-
-    public static void set_tests_mode() {
-        if (!HibernateUtils.persistence_unit.equals("TradingSystemTests")) {
-            HibernateUtils.persistence_unit = "TradingSystemTests";
-            emf = Persistence.createEntityManagerFactory(persistence_unit);
-            threadLocal.set(null);
-        }
-        HibernateUtils.allow_persist = false;
-    }
-
-
-    public static void set_normal_use() {
-        if (!HibernateUtils.persistence_unit.equals("TradingSystem")) {
-            HibernateUtils.persistence_unit = "TradingSystem";
-            emf = Persistence.createEntityManagerFactory(persistence_unit);
-            threadLocal.set(null);
-        }
-        HibernateUtils.allow_persist = true;
-    }
-
-    public static void set_demo_use() {
-        if (!HibernateUtils.persistence_unit.equals("demo")) {
-            HibernateUtils.persistence_unit = "demo";
-            emf = Persistence.createEntityManagerFactory(persistence_unit);
-            threadLocal.set(null);
-        }
-        HibernateUtils.allow_persist = true;
-    }
 
     public static synchronized EntityManager getEntityManager() {
 //        EntityManager em = threadLocal.get();
@@ -87,29 +53,30 @@ public class HibernateUtils {
     }
 
     public static synchronized void closeEntityManager() {
-        EntityManager em = threadLocal.get();
+//        EntityManager em = threadLocal.get();
         if (em != null) {
             em.close();
             threadLocal.set(null);
+            em = null;
         }
     }
 
     public static synchronized void clear_db() {
-//        getEntityManager().createNativeQuery("DROP SCHEMA database").executeUpdate();
-//        getEntityManager().createNativeQuery("Create SCHEMA  database").executeUpdate();
-//        threadLocal.get().clear();
-//        threadLocal.get().close();
-        getEntityManager().clear();
-        getEntityManager().close();
-//        em = null;
-        emf.close();
-        em = null;
-        emf = Persistence.createEntityManagerFactory(persistence_unit);
+        if(allow_persist) {
+            closeEntityManager();
+            closeEntityManagerFactory();
+            em = null;
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
 //        threadLocal.set(null);
+        }
     }
 
     public static void closeEntityManagerFactory() {
-        emf.close();
+        if(emf!=null) {
+            emf.close();
+            emf = null;
+            em = null;
+        }
     }
 
     public static synchronized void beginTransaction() {
@@ -139,7 +106,7 @@ public class HibernateUtils {
     }
 
     public static synchronized <T> void remove(T obj) {
-        if (allow_persist)
+        if (allow_persist && getEntityManager().getTransaction().isActive())
             getEntityManager().remove(obj);
     }
 
@@ -158,57 +125,57 @@ public class HibernateUtils {
     public static synchronized int get_uc() {
         if (!allow_persist)
             return 0;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(id),0) as id FROM database.user").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(id),0) as id FROM sql8502569.User").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_max_purchase() {
         if (!allow_persist)
             return 0;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(purchase_id),0) as id FROM database.purchase").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(purchase_id),0) as id FROM sql8502569.Purchase").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_sc() {
         if (!allow_persist)
             return 1;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(store_id),1) as id FROM database.store").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(store_id),1) as id FROM sql8502569.Store").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_max_store_purchase_id() {
         if (!allow_persist)
             return 1;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(store_purchase_id),1) as id FROM database.storepurchase").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(store_purchase_id),1) as id FROM sql8502569.StorePurchase").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_max_product_id() {
         if (!allow_persist)
             return 1;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(product_id),1) as id FROM database.product").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(product_id),1) as id FROM sql8502569.Product").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_max_bid_id() {
         if (!allow_persist)
             return 1;
-        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM database.bid").getSingleResult();
+        BigInteger res = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM sql8502569.Bid").getSingleResult();
         return res.intValue() + 1;
     }
 
     public static synchronized int get_max_question_id() {
         if (!allow_persist)
             return 1;
-        BigInteger bid = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM database.buyerquestion").getSingleResult();
-        BigInteger uid = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(bid_id),1) as id FROM database.userquestion").getSingleResult();
+        BigInteger bid = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(question_id),1) as id FROM sql8502569.BuyerQuestion").getSingleResult();
+        BigInteger uid = (BigInteger) getEntityManager().createNativeQuery("SELECT COALESCE(MAX(question_id),1) as id FROM sql8502569.UserQuestion").getSingleResult();
         return Math.max(bid.intValue(), uid.intValue()) + 1;
     }
 
     public static synchronized Map<Integer ,Store> stores() {
         products();
-        String query = "SELECT store_id FROM database.store";
-        Map<Integer, Store> map = new HashMap<>();
+        String query = "SELECT store_id FROM sql8502569.Store";
+        Map<Integer, Store> map = new ConcurrentHashMap<>();
         try {
             List<Integer> lst = getEntityManager().createNativeQuery(query).getResultList();
             for (Integer i : lst) {
@@ -223,7 +190,7 @@ public class HibernateUtils {
     }
 
     public static synchronized Map<Integer ,Product> products() {
-        String query = "SELECT product_id FROM database.product";
+        String query = "SELECT product_id FROM sql8502569.Product";
         Map<Integer, Product> map = new HashMap<>();
         try {
             List<Integer> lst = getEntityManager().createNativeQuery(query).getResultList();
@@ -239,7 +206,7 @@ public class HibernateUtils {
     }
 
     public static synchronized Map<String , User> users() {
-        String query = "SELECT id FROM database.user";
+        String query = "SELECT id FROM sql8502569.User";
         Map<String, User> map = new HashMap<>();
         try {
             List<BigInteger> lst = getEntityManager().createNativeQuery(query).getResultList();
@@ -254,33 +221,109 @@ public class HibernateUtils {
         return map;
     }
 
-    public static synchronized List<BuyerQuestion> buyerquestions() {
-        String query = "select u from database.buyerquestion u where u.id is not null";
-        TypedQuery<BuyerQuestion> tq = getEntityManager().createQuery(query, BuyerQuestion.class);
-        List<BuyerQuestion> list;
+    public static synchronized Map<Integer, BuyerQuestion> buyerquestions() {
+        String query = "SELECT question_id FROM sql8502569.BuyerQuestion";
+        Map<Integer,BuyerQuestion> map = new ConcurrentHashMap<>();
         try {
-            list = tq.getResultList();
-            return list;
-        } catch (NoResultException e) {
+            List<BigInteger> lst = getEntityManager().createNativeQuery(query).getResultList();
+            for (BigInteger i : lst) {
+                BuyerQuestion u = em.find(BuyerQuestion.class, i.intValue());
+                map.put(i.intValue(),u);
+            }
+        } catch (Exception e) {
+            MarketLogger.getInstance().add_log(e.getMessage());
             throw new RuntimeException(e);
         }
+        return map;
     }
 
-    public static synchronized List<UserQuestion> userQuestions() {
-        String query = "select u from database.userquestion u where u.id is not null";
-        TypedQuery<UserQuestion> tq = getEntityManager().createQuery(query, UserQuestion.class);
-        List<UserQuestion> list;
+    public static synchronized Map<Integer, UserQuestion> userQuestions() {
+        String query = "SELECT question_id FROM sql8502569.UserQuestion";
+        Map<Integer,UserQuestion> map = new ConcurrentHashMap<>();
         try {
-            list = tq.getResultList();
-            return list;
-        } catch (NoResultException e) {
+            List<BigInteger> lst = getEntityManager().createNativeQuery(query).getResultList();
+            for (BigInteger i : lst) {
+                UserQuestion u = em.find(UserQuestion.class, i.intValue());
+                map.put(i.intValue(),u);
+            }
+        } catch (Exception e) {
+            MarketLogger.getInstance().add_log(e.getMessage());
             throw new RuntimeException(e);
         }
+        return map;
     }
 
+    public static void set_load_tests_mode() {
+        if (!HibernateUtils.persistence_unit.equals("TradingSystemTests")) {
+            HibernateUtils.persistence_unit = "TradingSystemTests";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = true;
+    }
 
-    //   public static void main(String[] args) {
-//        HibernateUtils.clear_db("database")
-// ;
-//    }
+    public static void set_tests_mode() {
+        if (!HibernateUtils.persistence_unit.equals("TradingSystemTests")) {
+            HibernateUtils.persistence_unit = "TradingSystemTests";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = false;
+    }
+
+    public static void set_init_test_config() {
+        if (!HibernateUtils.persistence_unit.equals("tests_init")) {
+            HibernateUtils.persistence_unit = "tests_init";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = true;
+
+    }
+
+    public static void set_tests_load_config() {
+        if (!HibernateUtils.persistence_unit.equals("tests_load")) {
+            HibernateUtils.persistence_unit = "tests_load";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = true;
+    }
+
+    public static void set_normal_use() {
+        if (!HibernateUtils.persistence_unit.equals("TradingSystem")) {
+            HibernateUtils.persistence_unit = "TradingSystem";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = true;
+    }
+
+    public static void set_demo_use() {
+        if (!HibernateUtils.persistence_unit.equals("demo")) {
+            HibernateUtils.persistence_unit = "demo";
+            closeEntityManager();
+            closeEntityManagerFactory();
+            emf = Persistence.createEntityManagerFactory(persistence_unit);
+            getEntityManager();
+            threadLocal.set(null);
+        }
+        HibernateUtils.allow_persist = true;
+    }
+
 }

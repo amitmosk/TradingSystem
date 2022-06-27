@@ -42,6 +42,8 @@ import TradingSystem.server.Domain.ExternalSystems.SupplyAdapter;
 import javax.transaction.Transactional;
 import java.util.*;
 
+import static TradingSystem.server.Service.MarketSystem.test_flag;
+
 // TODO: when we leave the system - should call logout()
 
 public class MarketFacade {
@@ -687,7 +689,7 @@ public class MarketFacade {
             HibernateUtils.beginTransaction();
             UserPurchaseHistory userPurchaseHistory = user_controller.view_user_purchase_history(loggedUser);
             HibernateUtils.commit();
-            response = new Response<>(userPurchaseHistory, "successfully received user's product history");
+            response = new Response<>(userPurchaseHistory, "successfully received user's purchases history");
             market_logger.add_log("User viewed his purchase history successfully");
         }
         catch (MarketException e){
@@ -2117,7 +2119,7 @@ public class MarketFacade {
             HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
-            Collection<StorePurchase> answer = this.store_controller.view_store_purchases_history(user, store_id).getPurchaseID_purchases().values();
+            Collection<StorePurchase> answer = this.store_controller.view_store_purchases_history(user, store_id).getHistoryList();
             HibernateUtils.commit();
             response = new Response<>(answer, "Store purchases history received successfully");
             market_logger.add_log("User received (" + user_email + ") store's (" + store_id + ") purchase history successfully.");
@@ -2182,7 +2184,6 @@ public class MarketFacade {
         Response<String> response = null;
         try {
             HibernateUtils.beginTransaction();
-            // TODO: version 2
             // close store permanently
             user_controller.remove_user(loggedUser, email);
             // remove user from all owners and managers
@@ -2420,13 +2421,9 @@ public class MarketFacade {
         Response<List<ProductInformation>> response = null;
         try {
             HibernateUtils.beginTransaction();
-            List<Product> products = store_controller.get_products_by_store_id(store_id);
-            List<ProductInformation> products_information = new ArrayList<>();
-            for (Product p : products) {
-                products_information.add(new ProductInformation(p, 0,p.getOriginal_price() ));
-            }
+            List<ProductInformation> products = store_controller.get_products_by_store_id(store_id);
             HibernateUtils.commit();
-            response = new Response(products_information, "Received store products successfully");
+            response = new Response(products, "Received store products successfully");
             market_logger.add_log("received market stores successfully.");
         }
         catch (MarketException e){
@@ -2462,6 +2459,7 @@ public class MarketFacade {
     public void clear() {
         user_controller.clear();
         store_controller.clear();
+        HibernateUtils.clear_db();
     }
 
     public Response get_user_questions() {
@@ -2643,10 +2641,14 @@ public class MarketFacade {
     }
 
     public void rollback(){
-        HibernateUtils.rollback();
-        HibernateUtils.getEntityManager().clear();
-        this.store_controller.load();
-        this.user_controller.load();
-        this.store_controller.load();
+        if (!test_flag){
+            HibernateUtils.rollback();
+            HibernateUtils.getEntityManager().clear();
+            this.store_controller.load();
+            this.user_controller.load();
+            this.store_controller.load();
+            QuestionController.getInstance().load();
+
+        }
     }
 }

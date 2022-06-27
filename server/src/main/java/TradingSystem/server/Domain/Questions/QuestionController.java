@@ -13,22 +13,24 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Entity
-public class QuestionController implements iQuestionController {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long question_controller_id;
+import static TradingSystem.server.Service.MarketSystem.test_flag;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "buyer_to_store",
-            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
-    @MapKeyColumn(name = "question_id") // the key column
+//@Entity
+public class QuestionController implements iQuestionController {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long question_controller_id;
+
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "buyer_to_store",
+//            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
+//    @MapKeyColumn(name = "question_id") // the key column
     private Map<Integer, BuyerQuestion> buyer_to_store;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_to_admin",
-            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
-    @MapKeyColumn(name = "question_id") // the key column
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "user_to_admin",
+//            joinColumns = {@JoinColumn(name = "controller", referencedColumnName = "question_controller_id")})
+//    @MapKeyColumn(name = "question_id") // the key column
     private Map<Integer, UserQuestion> user_to_admin;
     private AtomicInteger question_ids_counter;
 
@@ -44,19 +46,12 @@ public class QuestionController implements iQuestionController {
         this.question_ids_counter = new AtomicInteger(1);
     }
 
-    //TODO : not implemented yet !
     public void load(){
-        List<BuyerQuestion> buyers = HibernateUtils.buyerquestions();
-        List<UserQuestion> userQuestions = HibernateUtils.userQuestions();
-        this.buyer_to_store = new ConcurrentHashMap<>();
-        this.user_to_admin = new ConcurrentHashMap<>();
-        for(BuyerQuestion b : buyers){
-            buyer_to_store.put(b.question_id,b);
+        if (!test_flag){
+            this.buyer_to_store = HibernateUtils.buyerquestions();
+            this.user_to_admin = HibernateUtils.userQuestions();
+            this.question_ids_counter = new AtomicInteger(HibernateUtils.get_max_question_id());
         }
-        for(UserQuestion u:userQuestions){
-            user_to_admin.put(u.question_id,u);
-        }
-        this.question_ids_counter = new AtomicInteger(HibernateUtils.get_max_question_id());
     }
 
     public static QuestionController getInstance(){
@@ -82,16 +77,6 @@ public class QuestionController implements iQuestionController {
         }
         return answer;
     }
-
-    public void setQuestion_controller_id(Long question_controller_id) {
-        this.question_controller_id = question_controller_id;
-    }
-
-
-    public Long getQuestion_controller_id() {
-        return question_controller_id;
-    }
-
 
     @Override
     public void add_buyer_question(String message, AssignUser sender, int store_id){

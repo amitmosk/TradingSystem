@@ -21,7 +21,7 @@ export default function FormDialog({ fields, getValues, name, outlinedVar, title
   const handleClickOpen = () => {
     setOpen(true);
     //Initialize the text fields values
-    fields.map((f) => localStorage.setItem(f,undefined))
+    fields.map((f) => localStorage.setItem(f,""))
   };
 
   const handleClose = () => {

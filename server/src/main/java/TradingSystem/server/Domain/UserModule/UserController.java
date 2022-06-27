@@ -4,6 +4,7 @@ import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.Statistics.Statistic;
 import TradingSystem.server.Domain.Statistics.StatisticsManager;
+import TradingSystem.server.Domain.StoreModule.Appointment.Appointment;
 import TradingSystem.server.Domain.StoreModule.Basket;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
@@ -18,6 +19,8 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static TradingSystem.server.Service.MarketSystem.test_flag;
 
 //@Entity
 public class UserController {
@@ -42,32 +45,35 @@ public class UserController {
     private Long id;
 
     public void load() {
-//        this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
-//        MarketLogger.getInstance().add_log("--------------uc_id-------------");
-//        MarketLogger.getInstance().add_log("" + uc_id.get());
-//        this.purchaseID = new AtomicInteger(HibernateUtils.get_max_purchase());
-//        MarketLogger.getInstance().add_log("--------------purchase_id---------------");
-//        MarketLogger.getInstance().add_log("" + purchaseID.get());
-//        try {
-//            Map<String, User> all_users = HibernateUtils.users();
-//            this.users = all_users;
-//        } catch (Exception e) {
-////            throw new MarketException("failed to load users from table");
-//        }
-//        MarketLogger.getInstance().add_log("--------------all_users---------------");
-//        MarketLogger.getInstance().add_log(users.toString());
-//        //TODO: change to read one
-////        this.statisticsManager = HibernateUtils.getEntityManager().find(StatisticsManager.class, new Long(1));
-//        this.statisticsManager = new StatisticsManager();
-//        for(Map.Entry<Integer,User> en: onlineUsers.entrySet()){
-//            try {
-//                onlineUsers.put(en.getKey(), users.get(en.getValue().user_email()));
-//            }
-//            catch (Exception e){
-//
-//            }
-//        }
-//        SystemLogger.getInstance().add_log("user controller load");
+        if (!test_flag){
+            this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
+            MarketLogger.getInstance().add_log("--------------uc_id-------------");
+            MarketLogger.getInstance().add_log("" + uc_id.get());
+            this.purchaseID = new AtomicInteger(HibernateUtils.get_max_purchase());
+            MarketLogger.getInstance().add_log("--------------purchase_id---------------");
+            MarketLogger.getInstance().add_log("" + purchaseID.get());
+            try {
+                Map<String, User> all_users = HibernateUtils.users();
+                this.users = all_users;
+            } catch (Exception e) {
+//            throw new MarketException("failed to load users from table");
+            }
+            MarketLogger.getInstance().add_log("--------------all_users---------------");
+            MarketLogger.getInstance().add_log(users.toString());
+            //TODO: change to read one
+//        this.statisticsManager = HibernateUtils.getEntityManager().find(StatisticsManager.class, new Long(1));
+            this.statisticsManager = new StatisticsManager();
+            for(Map.Entry<Integer,User> en: onlineUsers.entrySet()){
+                try {
+                    onlineUsers.put(en.getKey(), users.get(en.getValue().user_email()));
+                }
+                catch (Exception e){
+
+                }
+            }
+            SystemLogger.getInstance().add_log("user controller load");
+        }
+
     }
 
     //    @Transient
@@ -80,7 +86,6 @@ public class UserController {
     }
 
     public static UserController get_instance() {
-        SingletonHolder.instance.load();
         return SingletonHolder.instance;
     }
 
@@ -330,6 +335,13 @@ public class UserController {
         check_admin_permission(ID);
         if (!isRegistered(email))
             throw new NoUserRegisterdException("failed to remove due to the reason " + email + " is not registered in the system.");
+
+
+        Map<Store, Appointment> founder_map = this.get_user_by_email(email).state_if_assigned().getFounder();
+        for (Store store : founder_map.keySet()){
+            store.close_store_permanently();
+        }
+
         if (email.equals(get_email(ID)))
             throw new AdminException("failed to remove admin from the system.");
         remove_email_from_online_users(email);
@@ -399,6 +411,7 @@ public class UserController {
         synchronized (usersLock) {
             users.put(email, admin);
         }
+        HibernateUtils.persist(admin);
         return admin;
     }
 
@@ -492,7 +505,7 @@ public class UserController {
 
     private User find_online_user(int id) {
         User u = onlineUsers.get(id);
-        u = u.merge();
+//        u = u.merge();
 //        HibernateUtils.commit();
 //        HibernateUtils.beginTransaction();
         onlineUsers.put(id, u);
@@ -501,7 +514,7 @@ public class UserController {
 
     private User find_reg_user(String email) {
         User u = users.get(email);
-        u = u.merge();
+//        u = u.merge();
 //        HibernateUtils.commit();
 //        HibernateUtils.beginTransaction();
         users.put(email, u);

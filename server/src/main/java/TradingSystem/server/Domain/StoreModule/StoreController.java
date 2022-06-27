@@ -9,6 +9,7 @@ import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Policy.Discount.DiscountPolicy;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.PurchasePolicy;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
@@ -25,6 +26,8 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static TradingSystem.server.Service.MarketSystem.test_flag;
 
 //@Entity
 public class StoreController {
@@ -57,19 +60,22 @@ public class StoreController {
         this.store_ids_counter = new AtomicInteger(1);
         this.purchase_ids_counter = new AtomicInteger(1);
         this.bids_ids_counter = new AtomicInteger(1);
-        this.stores = new HashMap<>();
+        this.stores = new ConcurrentHashMap<>();
         this.storesLock = new Object();
         this.products_id = new AtomicInteger(1);
     }
 
     public void load() {
-//        this.store_ids_counter = new AtomicInteger(HibernateUtils.get_sc());
-//        this.purchase_ids_counter = new AtomicInteger(HibernateUtils.get_max_store_purchase_id());
-//        this.bids_ids_counter = new AtomicInteger(HibernateUtils.get_max_bid_id());
-//        this.stores = HibernateUtils.stores();
-//        this.storesLock = new Object();
-//        this.products_id = new AtomicInteger(HibernateUtils.get_max_product_id()+1);
-//        SystemLogger.getInstance().add_log("store controller load");
+        if (!test_flag){
+            this.store_ids_counter = new AtomicInteger(HibernateUtils.get_sc());
+            this.purchase_ids_counter = new AtomicInteger(HibernateUtils.get_max_store_purchase_id());
+            this.bids_ids_counter = new AtomicInteger(HibernateUtils.get_max_bid_id());
+            this.stores = HibernateUtils.stores();
+            this.storesLock = new Object();
+            this.products_id = new AtomicInteger(HibernateUtils.get_max_product_id()+1);
+            SystemLogger.getInstance().add_log("store controller load");
+        }
+
 //        MarketLogger.getInstance().add_log("-----------store counter-----------------");
 //        MarketLogger.getInstance().add_log(stores.toString());
 //        MarketLogger.getInstance().add_log("---------purchase_id_counter-----------------");
@@ -454,9 +460,9 @@ public class StoreController {
 
     public Product getProduct_by_product_id(int storeID, int productID) throws MarketException {
         Store store = this.get_store_by_store_id(storeID);
-//        return store.getProduct_by_product_id(productID);
+        return store.getProduct_by_product_id(productID);
         //edited
-        return HibernateUtils.merge(store.getProduct_by_product_id(productID));
+//        return HibernateUtils.merge(store.getProduct_by_product_id(productID));
     }
 
     public Store get_store(int store_id) throws MarketException {
@@ -464,7 +470,7 @@ public class StoreController {
             throw new ObjectDoesntExsitException("there is no such store");
         Store s = stores.get(store_id);
         //edited
-        s = HibernateUtils.merge(s);
+//        s = HibernateUtils.merge(s);
         stores.put(store_id,s);
         return s;
     }
@@ -477,17 +483,24 @@ public class StoreController {
         this.products_id = new AtomicInteger(1);
     }
 
+    /**
+     * this method return all active stores.
+     * @return
+     */
     public Map<Integer, Store> get_all_stores() {
-        return this.stores;
+        HashMap<Integer, Store> toReturn = new HashMap<>();
+        for (Map.Entry<Integer, Store> entry : this.stores.entrySet()){
+            if (entry.getValue().isActive()){
+                toReturn.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return toReturn;
     }
 
-    public List<Product> get_products_by_store_id(int store_id) throws MarketException {
+    public List<ProductInformation> get_products_by_store_id(int store_id) throws MarketException {
         Store store = this.get_store_by_store_id(store_id);
-        List<Product> to_return = new LinkedList<>();
-        for (Product p : store.getInventory().keySet()) {
-            to_return.add(p);
-        }
-        return to_return;
+        return store.get_products();
+
     }
 
     public void edit_product_quantity(User user, int product_id, int store_id, int quantity) throws MarketException {

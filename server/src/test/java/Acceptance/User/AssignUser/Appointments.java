@@ -281,7 +281,6 @@ class Appointments {
         // owner adds manager1 as store manager
         message = make_assert_exception_message(test_name, "owner adds manager1 as store manager", !suppose_to_throw);
         res = facade2.add_manager(manager1, store_id);
-        facade1.manager_answer_appointment(store_id, true, manager1);
         assertFalse(check_was_exception(res), message);
         staff_size++;
         founder_exist(founder, store_id);
@@ -302,8 +301,6 @@ class Appointments {
         // owner adds manager2 as store manager
         message = make_assert_exception_message(test_name, "owner adds manager2 as store manager", !suppose_to_throw);
         res = facade2.add_manager(manager2, store_id);
-        facade1.manager_answer_appointment(store_id, true, manager2);
-        facade3.manager_answer_appointment(store_id, true, manager2);
         assertFalse(check_was_exception(res), message);
         staff_size++;
         founder_exist(founder, store_id);
@@ -505,9 +502,7 @@ class Appointments {
         List<MarketFacade> marketFacadeList = createUsers("newmanager");
         for (int i = 0; i < num_of_threads; i++) { // make all users to owners
             Response res = facade1.add_owner("newmanager"+i+"@gmail.com",store_id);
-            for (MarketFacade curr : marketFacadeList) {
-                curr.manager_answer_appointment(store_id, true, "newmanager" + i + "@gmail.com");
-            }
+
             check_was_not_exception("problem with adding new manager.", res);
             //TODO: check add owner succeed
         }

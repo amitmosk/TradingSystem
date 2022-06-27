@@ -4,7 +4,7 @@ import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.Questions.QuestionController;
 import TradingSystem.server.Domain.StoreModule.*;
 import TradingSystem.server.Domain.StoreModule.Appointment.*;
-import TradingSystem.server.Domain.StoreModule.Bid.Bid;
+import TradingSystem.server.Domain.StoreModule.Bid.*;
 import TradingSystem.server.Domain.StoreModule.Bid.BidInformation;
 import TradingSystem.server.Domain.StoreModule.Bid.BidManagerAnswer;
 import TradingSystem.server.Domain.StoreModule.Bid.BidStatus;
@@ -24,6 +24,7 @@ import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.*;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
@@ -46,8 +47,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.closed_confirm;
-import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.closed_denied;
+import static TradingSystem.server.Domain.StoreModule.Appointment.AppointmentStatus.*;
 
 @Entity
 public class Store implements Observable {
@@ -95,12 +95,15 @@ public class Store implements Observable {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "predicts",
-            joinColumns = {@JoinColumn(name = "predict_id", referencedColumnName = "store_id")})
+            joinColumns = {@JoinColumn(name = "store_id", referencedColumnName = "store_id")})
     @MapKeyColumn(name = "name") // the key column
     private Map<String, Ipredict> predictList;
 
-    @Transient
-    private HashMap<Integer, Bid> bids;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "store_bids_map",
+            joinColumns = {@JoinColumn(name = "store_id", referencedColumnName = "store_id")})
+    @MapKeyColumn(name = "bid_id") // the key column
+    private Map<Integer, Bid> bids;
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder, AtomicInteger ai) {
@@ -434,7 +437,7 @@ public class Store implements Observable {
 
     public void close_store_permanently() throws MarketException {
         this.active = false;
-        String message = "Store was closed permanently at " + LocalDate.now().toString();
+        String message = this.name + "Store was closed permanently at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, "");
         for (AssignUser user : stuffs_and_appointments.keySet()) {
             user.remove_appointment(this);
@@ -447,7 +450,7 @@ public class Store implements Observable {
         this.check_permission(user, StorePermission.close_store_temporarily);
         this.active = false;
         String email = user.get_user_email();
-        String message = "Store was closed close_store_temporarily at " + LocalDate.now().toString();
+        String message = this.name + "Store was closed close_store_temporarily at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, email);
     }
 
@@ -748,7 +751,7 @@ public class Store implements Observable {
             catch (Exception e){
                 // TODO : AMIT
             }
-            HibernateUtils.merge(this);
+//            HibernateUtils.merge(this);
         }
     }
 
@@ -760,17 +763,15 @@ public class Store implements Observable {
             Appointment appointment = this.stuffs_and_appointments.get(new_manager);
             if (appointment != null)
                 throw new AppointmentException("User to appoint is already store member");
+
             Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager, get_managers_emails());
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
-            this.send_message_to_the_store_stuff(candidate_email+" is a new manager-candidate in the store,appoint by: " +appointer_email,appointer_email);
-
-            try{
-                this.add_appointment_answer(appointer, new_manager, true);
-            }
-            catch (Exception e){
-                // TODO : AMIT
-            }
-            HibernateUtils.merge(this);
+            new_manager.add_manager(this, appointment);
+            this.set_manager_in_bids(0, candidate_email, false);
+//            MarketLogger marketLogger = MarketLogger.getInstance();
+//            marketLogger.add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
+            this.send_message_to_the_store_stuff(candidate_email+"" +
+                    " is a new manager in the store", appointer_email);
         }
     }
 
@@ -1056,7 +1057,7 @@ public class Store implements Observable {
         bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
 
 
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
         return handle_updated_bid(bid);
     }
 
@@ -1101,13 +1102,16 @@ public class Store implements Observable {
             }
         }
         for (Appointment appointment : this.stuffs_and_appointments.values()){
-            if (appointment.get_status() == AppointmentStatus.open_waiting_for_answers)
-                if (i == 0)
-                    appointment.add_manager_of_store(user_email);
-            if (i == 1)
-                appointment.remove_manager(user_email);
+            if (appointment.get_status() == AppointmentStatus.open_waiting_for_answers) {
+                if (owner){
+                    if (i == 0)
+                        appointment.add_manager_of_store(user_email);
+                    if (i == 1)
+                        appointment.remove_manager(user_email);
+                }
+            }
         }
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
     }
 
 
@@ -1138,40 +1142,51 @@ public class Store implements Observable {
         return managers_emails;
     }
     public boolean add_appointment_answer(AssignUser manager, AssignUser candidate , boolean manager_answer) throws Exception {
-        // TODO : this lines could throw exceptions, ASK GAL about hibernate
-        String manager_email = manager.get_user_email();
-        String candidate_email = candidate.get_user_email();
-        this.check_permission(manager, StorePermission.answer_appointment);
-        Appointment appointment = this.stuffs_and_appointments.get(candidate);
-        appointment.add_manager_answer(manager_email, manager_answer);
-        if (appointment.get_status() == closed_denied){
-            this.send_message_to_the_store_stuff("Appointment of: " + candidate_email + " is denied by: "+manager_email,manager_email);
-        }
-        else if (appointment.get_status() == closed_confirm){
-            if (appointment.getType() == StoreManagerType.store_owner){
+        try{
+            String manager_email = manager.get_user_email();
+            String candidate_email = candidate.get_user_email();
+            this.check_permission(manager, StorePermission.answer_appointment);
+            Appointment appointment = this.stuffs_and_appointments.get(candidate);
+            if (appointment.get_status() != open_waiting_for_answers){
+                throw new Exception("The Appointment is already close.");
+            }
+            if (appointment.getType() != StoreManagerType.candidate){
+                throw new Exception("The Candidate is not longer a candidate");
+            }
+            appointment.add_manager_answer(manager_email, manager_answer);
+            if (appointment.get_status() == closed_denied){
+                this.send_message_to_the_store_stuff("Appointment of: " + candidate_email + " is denied by: "+manager_email,manager_email);
+            }
+            else if (appointment.get_status() == closed_confirm){
                 candidate.add_owner(this, appointment);
                 this.set_manager_in_bids(0, candidate_email, true);
                 MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") owner");
                 this.send_message_to_the_store_stuff(candidate_email+" is a new owner in the store, confirm by all the managers.", "");
-            }
-            else if (appointment.getType() == StoreManagerType.store_manager){
-                candidate.add_manager(this, appointment);
-                this.set_manager_in_bids(0, candidate_email, false);
-                MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
-                this.send_message_to_the_store_stuff(candidate_email+" is a new manager in the store, confirm by all the managers.", "");
-            }
+                }
+            return true;
         }
-        return true;
+        catch (Exception e){
+            MarketLogger.getInstance().add_log(e.getMessage());
+            return false;
+        }
+
     }
 
-    public HashMap<Integer, Bid> getBids() {
+    public Map<Integer, Bid> getBids() {
         return bids;
     }
 
-    public void setBids(HashMap<Integer, Bid> bids) {
+    public void setBids(Map<Integer, Bid> bids) {
         this.bids = bids;
     }
 
 
-
+    public List<ProductInformation> get_products() {
+        List<ProductInformation> products = new ArrayList<>();
+        for(Product p: this.inventory.keySet())
+        {
+            products.add(new ProductInformation(p,inventory.get(p), p.getOriginal_price() ));
+        }
+        return products;
+    }
 }

@@ -7,6 +7,7 @@ import FormDialog from './FormDialog';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { Utils } from '../ServiceObjects/Utils';
+import { empty } from 'ramda';
 
 export default function AdminPage() {
 
@@ -27,6 +28,11 @@ export default function AdminPage() {
     const admin_view_store_purchases_history = async (values) => {
         console.log("in admin view store purchases history\n");
         const store_id = values[0];
+		if(Utils.check_all_digits(store_id) == 0)
+        {
+            setSnackbar({ children: "Illegal Store ID", severity: 'error' });
+            return;
+        }
         window.location.href+=`/AdminViewStorePurchaseHistory/${store_id}`
         console.log("in admin view store purchases history - success!\n");
     }
@@ -53,6 +59,11 @@ export default function AdminPage() {
     const remove_user = async(values)=> {
         console.log("in remove user!\n");
         const user_email = values[0];
+        if(Utils.check_email(user_email) == 0)
+        {
+            setSnackbar({ children: "Illegal Email", severity: 'error' });
+            return;
+        }
         const response = await adminApi.remove_user(user_email);
         // alert(response.message);
         
@@ -70,6 +81,11 @@ export default function AdminPage() {
     const close_store_permanently = async(values) => {
         console.log("in close store permanently \n");
         const store_id = values[0];
+		if(Utils.check_all_digits(store_id) == 0)
+        {
+            setSnackbar({ children: "Illegal Store ID", severity: 'error' });
+            return;
+        }
         const response = await adminApi.close_store_permanently(store_id);
         if (!response.was_exception) {
             setSnackbar({ children: response.message, severity: 'success' }); 
@@ -99,7 +115,7 @@ export default function AdminPage() {
         <Grid container spacing={6} paddingRight={25} paddingLeft={25} paddingTop={10}>
             <Grid item xs={3}> <FormDialog fields={close_store_fields} getValues={close_store_permanently} name="Close Store"></FormDialog> </Grid>
             <Grid item xs={3}> <FormDialog fields={remove_user_fields} getValues={remove_user} name="Remove User"></FormDialog></Grid>
-            <Grid item xs={3}>  <Link href="/AdminViewUserQuestions" underline="hover"> {'View user questions'}</Link> </Grid>
+            <Grid item xs={3}>  <Link href="/AdminViewUserQuestions" underline="hover"> {'View users questions'}</Link> </Grid>
             <Grid item xs={3}>  <FormDialog fields={admin_view_user_purchases_history_fields} getValues={admin_view_user_purchases_history} name="View User Purchase History"></FormDialog></Grid>
             <Grid item xs={3}>  <FormDialog fields={admin_view_store_purchases_history_fields} getValues={admin_view_store_purchases_history} name="View Store Purchase History"></FormDialog></Grid>
             <Grid item xs={3}>  <Link href="/ViewStat" underline="hover"> {'Show Statistics'}</Link> </Grid>

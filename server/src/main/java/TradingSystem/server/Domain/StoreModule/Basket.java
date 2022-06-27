@@ -14,12 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class Basket implements Serializable {
+public class Basket{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(orphanRemoval = true,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @Embedded
     private Pair basket_id; // <user_email, store_id>
 
     @ElementCollection
