@@ -31,7 +31,8 @@ export default class UserViewQuestions extends Component {
         console.log("questions = " + questions);
         // alert(response.message);
         if (!response.was_excecption) {
-            //       this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in UserViewQuestions - success!\n");
             console.log(response);
             const final_questions = [];

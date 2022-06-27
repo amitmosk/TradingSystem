@@ -52,7 +52,8 @@ export default class StorePage extends Component {
     // alert(store_res.message);
 
     if (!store_res.was_exception) {
-      // this.setState({ snackbar: { children: store_res.message, severity: "success" } });
+      if (store_res.message == "The system is not available right now, come back later")
+        this.setState({ snackbar: { children: store_res.message, severity: "success" } });
       console.log("in find store info success");
       this.setState({
 

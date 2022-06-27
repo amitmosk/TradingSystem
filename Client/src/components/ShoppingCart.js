@@ -149,7 +149,8 @@ export default class ShoppingCart extends Component {
       this.setSnackbar({ children: response.message, severity: "error" });
       return oldRow;
     }
-    // this.setSnackbar({ children: response.message, severity: "success" });
+    if (response.message == "The system is not available right now, come back later")
+      this.setSnackbar({ children: response.message, severity: "success" });
     let new_list = this.state.items.filter((p) => p.id !== newRow.id);
     new_list.push(newRow);
     new_list.sort((a, b) => a.id - b.id);

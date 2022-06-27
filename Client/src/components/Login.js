@@ -51,7 +51,8 @@ export default class Login extends Component {
             createSocket(user.email);
             // open seb socket
             // return to home page and update properties (change state of App to assign user).
-            // this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             return (<Navigate to="/" />)
         }
         else {

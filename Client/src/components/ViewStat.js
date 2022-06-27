@@ -76,6 +76,8 @@ export default class ViewStat extends Component {
     if (!response.was_excecption) {
       console.log("in get market stats - success!\n");
       console.log(response);
+      if (response.message == "The system is not available right now, come back later")
+        this.setState({ snackbar: { children: response.message, severity: "success" } });
       this.setState({
         //snackbar: { children: response.message, severity: "success" },
         init_system_time: stats.init_system_time,

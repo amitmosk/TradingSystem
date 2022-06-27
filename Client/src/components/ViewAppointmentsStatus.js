@@ -40,7 +40,8 @@ export default class ViewAppointmentsStatus extends Component {
         let response = await this.storeApi.view_appointments_status(this.state.store_id);
         if (!response.was_exception) {
             console.log(response);
-            //     this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             this.setState({ appointments_agreements: response.value });
         }
         else {

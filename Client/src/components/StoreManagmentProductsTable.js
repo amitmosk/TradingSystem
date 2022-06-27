@@ -90,7 +90,8 @@ export default class StoreManagmentProductsTable extends Component {
       new_list.push(newRow)
       new_list.sort((a, b) => (a.id - b.id));
       this.setState({ items: new_list })
-      // this.setSnackbar({ children: response.message, severity: 'success' });
+      if (response.message == "The system is not available right now, come back later")
+        this.setSnackbar({ children: response.message, severity: 'success' });
       return newRow;
     }
 

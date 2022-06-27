@@ -73,7 +73,8 @@ export default class MyStoresTable extends Component {
       // console.log(store_list_ids)
       response = await this.storeApi.get_all_stores();
       if (!response.was_exception) {
-        // this.setState({ snackbar: { children: response.message, severity: "success" } });
+        if (response.message == "The system is not available right now, come back later")
+          this.setState({ snackbar: { children: response.message, severity: "success" } });
         let all_stores = response.value;
         all_stores.map((st) => {
           if (store_list_ids.includes(st.store_id)) {
@@ -123,7 +124,8 @@ export default class MyStoresTable extends Component {
       // console.log(store_list_ids)
       response = await this.storeApi.get_all_stores();
       if (!response.was_exception) {
-        //this.setState({ snackbar: { children: response.message, severity: "success" } });
+        if (response.message == "The system is not available right now, come back later")
+          this.setState({ snackbar: { children: response.message, severity: "success" } });
         let all_stores = response.value;
         let my_stores = [];
         all_stores.map((st) => {

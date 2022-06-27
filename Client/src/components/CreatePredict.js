@@ -37,7 +37,8 @@ export default function CreatePredict() {
     const get_categories_of_stores = async () => {
         const response = await storeApi.get_all_categories(store_id);
         if (!response.was_exception) {
-            //      setSnackbar({ children: response.message, severity: 'success' });
+            if (response.message == "The system is not available right now, come back later")
+                setSnackbar({ children: response.message, severity: 'success' });
             if (response.value.length !== 0)
                 setCategories(response.value);
         }

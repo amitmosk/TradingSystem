@@ -56,7 +56,8 @@ export default class UserPurchaseHistory extends Component {
 
         // alert(response.message);
         if (!response.was_exception) {
-            //    this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log(response.value);
             this.setState({ history: response.value.historyList });
             console.log("history: ");

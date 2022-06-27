@@ -44,7 +44,8 @@ export default function ViewBidsStatus() {
     const [nego, setNego] = React.useState(false);
     const [snackbar, setSnackbar] = React.useState(null);
     const handleCloseSnackbar = () => setSnackbar(null);
-    //setSnackbar({ children: response.message, severity: 'success' });
+    // if (response.message == "The system is not available right now, come back later")
+    //     setSnackbar({ children: response.message, severity: 'success' });
     const is_confirm_fields = ["Bid ID"];
     const manager_answer_bid_fields = ["Negotiation Price"];
     const storeApi = new StoreApi();

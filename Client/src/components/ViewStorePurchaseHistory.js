@@ -49,7 +49,8 @@ export default class ViewStorePurchaseHistory extends Component {
         const response = await this.storeApi.view_store_purchases_history(this.state.store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            //   this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             let res = [];
             this.setState({ history: response.value });
             console.log("history: ");

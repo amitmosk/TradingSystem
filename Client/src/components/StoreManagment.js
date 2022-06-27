@@ -267,7 +267,8 @@ export default class StoreManagment extends Component {
         const response = await this.storeApi.view_store_management_information(store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            //this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in view_store_management_information - success!\n");
             return response.value;
             //show history
@@ -284,7 +285,8 @@ export default class StoreManagment extends Component {
         const response = await this.storeApi.manager_view_store_questions(store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            // this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in manager_view_store_questions - success!\n");
             //show history
         }

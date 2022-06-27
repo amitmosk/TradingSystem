@@ -38,7 +38,8 @@ export default function ManagerPermissions() {
         const response = await storeApi.get_permissions(user_email, id);
         if (!response.was_exception) {
 
-            //   setSnackbar({ children: response.message, severity: 'success' });
+            if (response.message == "The system is not available right now, come back later")
+                setSnackbar({ children: response.message, severity: 'success' });
             console.log(response.value);
             // current_permissions = response.value;
             response.value.map((per) => {

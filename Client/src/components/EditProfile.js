@@ -42,7 +42,8 @@ export default function EditProfile(props) {
         console.log(response.value);
         if (!response.was_exception) {
             setUser(response.value);
-            // setSnackbar({ children: response.message, severity: 'success' });
+            if (response.message == "The system is not available right now, come back later")
+                setSnackbar({ children: response.message, severity: 'success' });
 
         }
         else {

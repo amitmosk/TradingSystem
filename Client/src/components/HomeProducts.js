@@ -97,7 +97,8 @@ export default function HomeProducts() {
     (newRow, oldRow) => {
       // Make the HTTP request to save in the backend
       let response = edit_function(oldRow, newRow);
-      //   setSnackbar({ children: 'User successfully saved', severity: 'success' });
+      if (response.message == "The system is not available right now, come back later")
+        setSnackbar({ children: response.message, severity: 'success' });
       console.log(newRow)
       return response;
     },

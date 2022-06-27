@@ -33,7 +33,8 @@ export default function Notifications() {
         let response = await connectApi.get_notifications_list();
         if (!response.was_exception) {
             setNotifications(response.value);
-            //  setSnackbar({ children: response.message, severity: 'success' });
+            if (response.message == "The system is not available right now, come back later")
+                setSnackbar({ children: response.message, severity: 'success' });
         }
         else {
             setSnackbar({ children: response.message, severity: 'error' });

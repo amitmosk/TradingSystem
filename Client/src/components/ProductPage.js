@@ -47,7 +47,8 @@ export default class ProductPage extends Component {
     let product_res = await this.productApi.find_product_information(this.state.product_id, this.state.store_id);
     // alert(product_res.message);
     if (!product_res.was_exception) {
-      // this.setState({ snackbar: { children: product_res.message, severity: "success" } });
+      if (product_res.message == "The system is not available right now, come back later")
+        this.setState({ snackbar: { children: product_res.message, severity: "success" } });
       let product = product_res.value;
       const product_reviews_and_ratings = product.productReview;
       const rating_entries = Object.entries(product_reviews_and_ratings.rating);
@@ -107,7 +108,8 @@ export default class ProductPage extends Component {
     // alert(response.message);
     if (!response.was_exception) {
       console.log("in find_product_by_category- success");
-      //   this.setState({ snackbar: { children: response.message, severity: "success" } });
+      if (response.message == "The system is not available right now, come back later")
+        this.setState({ snackbar: { children: response.message, severity: "success" } });
     }
     else {
       console.log("in find_product_by_category - fail");

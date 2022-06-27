@@ -41,7 +41,8 @@ export default class ViewStaffInformation extends Component {
 
         let response = await this.storeApi.view_store_management_information(this.state.store_id);
         if (!response.was_exception) {
-            //  this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in get store staff info - success!\n");
             // return response.message;
             console.log(response.value.appointmentInformationList);

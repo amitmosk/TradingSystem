@@ -61,7 +61,8 @@ function Row(props) {
   const get_purchase_policy = async () => {
     const response = policiesApi.get_purchase_policy(id);
     if (!response.was_exception) {
-      //  setSnackbar({ children: response.message, severity: 'success' });     
+      if (response.message == "The system is not available right now, come back later")
+        setSnackbar({ children: response.message, severity: 'success' });
     }
     else {
       setSnackbar({ children: response.message, severity: 'error' });
@@ -79,7 +80,8 @@ function Row(props) {
   const get_discount_policy = async () => {
     const response = policiesApi.get_discount_policy(id);
     if (!response.was_exception) {
-      //  setSnackbar({ children: response.message, severity: 'success' });     
+      if (response.message == "The system is not available right now, come back later")
+        setSnackbar({ children: response.message, severity: 'success' });
     }
     else {
       setSnackbar({ children: response.message, severity: 'error' });
