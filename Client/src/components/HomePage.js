@@ -51,7 +51,7 @@ console.log(user);
     }
   }
   const send_question_to_admin = async (values)=> {
-    const adminApi = new adminApi();
+    const adminApi = new AdminApi();
     const question = values[0];
     let response = await adminApi.send_question_to_admin(question);
     // alert(response.message);

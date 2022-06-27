@@ -1,9 +1,13 @@
 package TradingSystem.server.Domain.StoreModule.Purchase;
 
+import TradingSystem.server.DAL.HibernateUtils;
+
 import javax.persistence.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
 public class StorePurchaseHistory {
@@ -12,16 +16,13 @@ public class StorePurchaseHistory {
     private Long store_purchase_history;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "store_purchases",
-            joinColumns = {@JoinColumn(name = "store_purchase_history", referencedColumnName = "store_purchase_history")})
-    @MapKeyColumn(name = "purchase_id") // the key column
-    private Map<Integer, StorePurchase> purchaseID_purchases;
+    private List<StorePurchase> historyList;
     private String store_name;
 
     // ------------------------------ constructors ------------------------------
     public StorePurchaseHistory(String store_name) {
         this.store_name = store_name;
-        this.purchaseID_purchases = new ConcurrentHashMap<>();
+        this.historyList = new CopyOnWriteArrayList<>();
     }
 
     public StorePurchaseHistory() {
@@ -30,8 +31,13 @@ public class StorePurchaseHistory {
     // ------------------------------ getters ------------------------------
 
 
-    public Map<Integer, StorePurchase> getPurchaseID_purchases() {
-        return purchaseID_purchases;
+
+    public List<StorePurchase> getHistoryList() {
+        return historyList;
+    }
+
+    public void setHistoryList(List<StorePurchase> historyList) {
+        this.historyList = historyList;
     }
 
     public String getStore_name() {
@@ -41,25 +47,21 @@ public class StorePurchaseHistory {
     // ------------------------------ setters ------------------------------
 
 
-    public void setPurchaseID_purchases(Map<Integer, StorePurchase> purchaseID_purchases) {
-        this.purchaseID_purchases = purchaseID_purchases;
-    }
-
     public void setStore_name(String store_name) {
         this.store_name = store_name;
     }
 
     public void insert(StorePurchase purchase)
     {
-        this.purchaseID_purchases.put(purchase.getPurchase_id(), purchase);
-//        HibernateUtils.merge(this);
+
+        this.historyList.add(purchase);
     }
 
     @Override
     public String toString() {
         StringBuilder ans = new StringBuilder();
         ans.append("Store " + store_name + " Purchase History:\n");
-        for (StorePurchase p : this.purchaseID_purchases.values())
+        for (StorePurchase p : this.historyList)
         {
             ans.append(p.toString());
         }
@@ -73,4 +75,5 @@ public class StorePurchaseHistory {
     public Long getStore_purchase_history() {
         return store_purchase_history;
     }
+
 }

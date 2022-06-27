@@ -55,6 +55,8 @@ public class Store implements Observable {
 
     // -- fields
     @Id
+    //generated
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int store_id;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private AssignUser founder;
@@ -93,12 +95,15 @@ public class Store implements Observable {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "predicts",
-            joinColumns = {@JoinColumn(name = "predict_id", referencedColumnName = "store_id")})
+            joinColumns = {@JoinColumn(name = "store_id", referencedColumnName = "store_id")})
     @MapKeyColumn(name = "name") // the key column
     private Map<String, Ipredict> predictList;
 
-    @Transient
-    private HashMap<Integer, Bid> bids;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "store_bids_map",
+            joinColumns = {@JoinColumn(name = "store_id", referencedColumnName = "store_id")})
+    @MapKeyColumn(name = "bid_id") // the key column
+    private Map<Integer, Bid> bids;
 
     // -- constructors
     public Store(int store_id, String name, AssignUser founder, AtomicInteger ai) {
@@ -119,7 +124,7 @@ public class Store implements Observable {
         this.predictList = new HashMap<>();
         this.bids = new HashMap<>();
 
-//        HibernateUtils.persist(this);
+        HibernateUtils.persist(this);
     }
 
     public Store() {
@@ -212,9 +217,9 @@ public class Store implements Observable {
     }
 
     public AndPurchaseRule add_and_purchase_rule(String nameOfRule, String left, String right) throws WrongPermterException {
-        PurchaseRule purchaseright = purchasePolicy.getPolicy(left);
-        PurchaseRule purchaseleft = purchasePolicy.getPolicy(right);
-        if (purchaseleft == purchaseleft)
+        PurchaseRule purchaseright = purchasePolicy.getRule(left);
+        PurchaseRule purchaseleft = purchasePolicy.getRule(right);
+        if (purchaseleft == purchaseright)
             throw new WrongPermterException("the polices are the same");
         AndPurchaseRule and = new AndPurchaseRule(purchaseleft, purchaseright);
         purchasePolicy.addRule(nameOfRule, and);
@@ -224,8 +229,8 @@ public class Store implements Observable {
     }
 
     public OrPurchaseRule add_or_purchase_rule(String name, String left, String right) throws WrongPermterException {
-        PurchaseRule purchaseRight = purchasePolicy.getPolicy(left);
-        PurchaseRule purchaseLeft = purchasePolicy.getPolicy(right);
+        PurchaseRule purchaseRight = purchasePolicy.getRule(left);
+        PurchaseRule purchaseLeft = purchasePolicy.getRule(right);
         if (purchaseLeft == purchaseRight)
             throw new WrongPermterException("the polices are the same");
         OrPurchaseRule or = new OrPurchaseRule(purchaseLeft, purchaseRight);
@@ -252,7 +257,6 @@ public class Store implements Observable {
         Predict predict = new Predict(catgorey, product, above, equql, num, price, quantity, age, time, year, month, day);
         checkUniqName(name, this.predictList);
         predictList.put(name, predict);
-        HibernateUtils.merge(this);
         return predict;
     }
 
@@ -261,7 +265,6 @@ public class Store implements Observable {
         if (predictList.get(name) != null)
             predictList.remove(name);
         else throw new WrongPermterException("no predict with this name");
-        HibernateUtils.merge(this);
         return "predict " + name + "removed" + "from store";
     }
 
@@ -272,7 +275,7 @@ public class Store implements Observable {
     }
 
     public String remove_purchase_rule(String name) throws WrongPermterException {
-        discountPolicy.removeRule(name);
+        purchasePolicy.removeRule(name);
         return "the rule was removed";
     }
 
@@ -392,8 +395,9 @@ public class Store implements Observable {
         Ipredict predict = getPredictByName(nameOFPredict);
         DiscountComponent simpleDiscountComponent = discountPolicy.getDiscountCompnentByName(nameOfPolicy);
         if (!(simpleDiscountComponent instanceof simpleDiscountComponent))
-            throw new WrongPermterException("This policy is not of type simple");
+            throw new WrongPermterException("This discount is not of type simple");
         ComplexDiscountComponent toreturn = new ComplexDiscountComponent(simpleDiscountComponent, predict);
+        discountPolicy.removeRule(nameOfPolicy);
         this.discountPolicy.addRule(name, toreturn);
         return toreturn;
 
@@ -428,19 +432,17 @@ public class Store implements Observable {
         Appointment appointment = new Appointment(this.founder, this.founder, this, StoreManagerType.store_founder, this.get_managers_emails());
         this.stuffs_and_appointments.put(founder, appointment);
         this.founder.add_founder(this, appointment);
-        HibernateUtils.merge(this);
         return appointment;
     }
 
     public void close_store_permanently() throws MarketException {
         this.active = false;
-        String message = "Store was closed permanently at " + LocalDate.now().toString();
+        String message = this.name + " store was closed permanently at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, "");
         for (AssignUser user : stuffs_and_appointments.keySet()) {
             user.remove_appointment(this);
         }
         this.stuffs_and_appointments = null;
-        HibernateUtils.merge(this);
     }
 
 
@@ -448,9 +450,8 @@ public class Store implements Observable {
         this.check_permission(user, StorePermission.close_store_temporarily);
         this.active = false;
         String email = user.get_user_email();
-        String message = "Store was closed close_store_temporarily at " + LocalDate.now().toString();
+        String message = this.name + " store was closed close_store_temporarily at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, email);
-        HibernateUtils.merge(this);
     }
 
 
@@ -462,7 +463,6 @@ public class Store implements Observable {
         String email = user.get_user_email();
         String message = "Store was re-opened by : " + email + " at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, email);
-        HibernateUtils.merge(this);
     }
 
     public StoreManagersInfo view_store_management_information(AssignUser user) throws MarketException {
@@ -615,7 +615,6 @@ public class Store implements Observable {
         int product_id = this.product_ids_counter.getAndIncrement();
         Product product = new Product(name, product_id, price, category, key_words, store_id);
         inventory.put(product, quantity);
-        HibernateUtils.merge(this);
         return inventory;
     }
 
@@ -637,7 +636,6 @@ public class Store implements Observable {
 //            if (entry.getValue().getProduct().getProduct_id() == product_id)
 //                predictList.remove(entry.getKey());
 //        }
-        HibernateUtils.merge(this);
         return inventory;
     }
 
@@ -686,7 +684,7 @@ public class Store implements Observable {
     public synchronized Product checkAvailablityAndGet(int product_id, int quantity) throws MarketException {
         Product p = this.getProduct_by_product_id(product_id);
         if (p == null) {
-            throw new ProductAddingException("Product is not exist");
+            throw new ProductAddingException("Product does not exist");
             //not suppose to happen
             //add to logger
         }
@@ -726,11 +724,10 @@ public class Store implements Observable {
         Map<Integer, String> p_ids_name = basket.getProducts_and_names();
 
         Purchase purchase = new Purchase(p_ids_quantity, p_ids_price, p_ids_name);
-        HibernateUtils.persist(purchase);
+//        HibernateUtils.persist(purchase);
         StorePurchase purchase_to_add = new StorePurchase(purchase, buyer_email, purchase_id);
         this.purchases_history.insert(purchase_to_add);
         this.send_message_to_the_store_stuff("new purchase, with id : " + purchase_id, buyer_email);
-        HibernateUtils.merge(this);
         return purchase;
     }
 
@@ -754,7 +751,7 @@ public class Store implements Observable {
             catch (Exception e){
                 // TODO : AMIT
             }
-            HibernateUtils.merge(this);
+//            HibernateUtils.merge(this);
         }
     }
 
@@ -776,7 +773,7 @@ public class Store implements Observable {
             catch (Exception e){
                 // TODO : AMIT
             }
-            HibernateUtils.merge(this);
+//            HibernateUtils.merge(this);
         }
     }
 
@@ -799,7 +796,6 @@ public class Store implements Observable {
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email(), false);
             this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removed from manage the store", remover.get_user_email());
             HibernateUtils.remove(appointment);
-            HibernateUtils.merge(this);
         }
     }
 
@@ -836,7 +832,6 @@ public class Store implements Observable {
             this.set_manager_in_bids(1, user_to_delete_appointment.get_user_email(), false);
             this.send_message_to_the_store_stuff(user_to_delete_appointment.get_user_email()+" is removed from owns the store", remover.get_user_email());
             HibernateUtils.remove(appointment);
-            HibernateUtils.merge(this);
         }
     }
 
@@ -897,13 +892,11 @@ public class Store implements Observable {
     public void setPurchasePolicy(AssignUser user, PurchasePolicy purchasePolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_purchase_policy);
         this.purchasePolicy = purchasePolicy;
-        HibernateUtils.merge(this);
     }
 
     public void setDiscountPolicy(AssignUser user, DiscountPolicy discountPolicy) throws NoPremssionException {
         check_permission(user, StorePermission.edit_discount_policy);
         this.discountPolicy = discountPolicy;
-        HibernateUtils.merge(this);
     }
 
 
@@ -959,7 +952,6 @@ public class Store implements Observable {
             throw new WrongPermterException("Quantity must be positive number");
         }
         this.inventory.put(to_edit, quantity);
-        HibernateUtils.merge(this);
     }
 
 
@@ -1033,8 +1025,6 @@ public class Store implements Observable {
         Bid bid = new Bid(bid_id, quantity, offer_price, managers_emails, product, buyer,founder, this.stuffs_and_appointments);
         this.bids.put(bid_id, bid);
         this.send_message_to_the_store_stuff("new bid offer for product :" + product.getName(), "");
-        //TODO - ask Gal of merge instead persist
-        HibernateUtils.persist(this);
         return bid_id;
     }
 
@@ -1069,7 +1059,7 @@ public class Store implements Observable {
         bid.add_manager_answer(assignUser.get_user_email(), manager_answer, negotiation_price);
 
 
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
         return handle_updated_bid(bid);
     }
 
@@ -1112,7 +1102,6 @@ public class Store implements Observable {
                 }
 
             }
-            HibernateUtils.persist(this);
         }
         for (Appointment appointment : this.stuffs_and_appointments.values()){
             if (appointment.get_status() == AppointmentStatus.open_waiting_for_answers)
@@ -1121,7 +1110,7 @@ public class Store implements Observable {
             if (i == 1)
                 appointment.remove_manager(user_email);
         }
-        HibernateUtils.persist(this);
+//        HibernateUtils.persist(this);
     }
 
 
@@ -1177,4 +1166,15 @@ public class Store implements Observable {
         }
         return true;
     }
+
+    public Map<Integer, Bid> getBids() {
+        return bids;
+    }
+
+    public void setBids(Map<Integer, Bid> bids) {
+        this.bids = bids;
+    }
+
+
+
 }

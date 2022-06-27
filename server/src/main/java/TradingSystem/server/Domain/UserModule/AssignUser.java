@@ -17,34 +17,35 @@ import java.util.Map;
 
 // TODO: everytime user creates/appoint a store make an appointment
 @Entity
-@DiscriminatorValue("1")
+@DiscriminatorValue("AssignUser")
 public class AssignUser extends AssignState {
-    private String email;
+    @Column(name = "email", nullable = false, unique = true)
+    protected String email;
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Security security;
-    private String name;
-    private String lastName;
+    protected Security security;
+    protected String name;
+    protected String lastName;
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private UserPurchaseHistory userPurchaseHistory;
+    protected UserPurchaseHistory userPurchaseHistory;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "founder_table",
             joinColumns = {@JoinColumn(name = "user", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "appointment_id", referencedColumnName = "id")})
     @MapKeyJoinColumn(name = "store_id")
-    private Map<Store, Appointment> founder;
+    protected Map<Store, Appointment> founder;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "owner_table",
             joinColumns = {@JoinColumn(name = "user", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "appointment_id", referencedColumnName = "id")})
     @MapKeyJoinColumn(name = "store_id")
-    private Map<Store, Appointment> owner;
+    protected Map<Store, Appointment> owner;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "manager_table",
             joinColumns = {@JoinColumn(name = "user", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "appointment_id", referencedColumnName = "id")})
     @MapKeyJoinColumn(name = "store_id")
-    private Map<Store,Appointment> manager;
+    protected Map<Store,Appointment> manager;
 
     // ------------------------------ constructors ------------------------------
     public AssignUser(String email, String pw, String name, String lastName) {

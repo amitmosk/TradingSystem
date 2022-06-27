@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 public class PurchasePolicy {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -49,7 +49,7 @@ public class PurchasePolicy {
         return policy.keySet();
     }
 
-    public PurchaseRule getPolicy(String name) throws WrongPermterException {
+    public PurchaseRule getRule(String name) throws WrongPermterException {
         PurchaseRule rule = policy.get(name);
         if (rule == null)
             throw new WrongPermterException("no policy with this name");
@@ -57,7 +57,7 @@ public class PurchasePolicy {
     }
 
     public void removeRule(String name) throws WrongPermterException {
-        PurchaseRule toRemove = policy.remove(policy.get(name));
+        PurchaseRule toRemove = policy.remove(name);
         if (toRemove == null)
             throw new WrongPermterException("there is no rule with this name");
     }
@@ -79,7 +79,7 @@ public class PurchasePolicy {
         return id;
     }
 
-    public Map<String, PurchaseRule> getPolicy() {
+    public Map<String, PurchaseRule> getRule() {
         return policy;
     }
 
