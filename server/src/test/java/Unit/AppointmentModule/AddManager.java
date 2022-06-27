@@ -110,6 +110,27 @@ class AddManager {
     }
 
 
+    @Test
+    void denied_appoint_owner(){
+        try{
+
+            AssignUser founder = new AssignUser("founder@walla.com","12345678aA","founi","founder");
+            AssignUser owner = new AssignUser("owner@walla.com","12345678aA","owni","owner");
+            AssignUser owner1 = new AssignUser("owner1@walla.com","12345678aA","owni","owner");
+            AssignUser owner2 = new AssignUser("owner1@walla.com","12345678aA","owni","owner");
+            Store store = new Store(1, "hanot", founder, new AtomicInteger(1));
+            store.appoint_founder();
+            store.add_owner(founder, owner);
+            store.add_owner(owner, owner1);
+            store.add_appointment_answer(founder, owner1, false);
+            assertFalse(owner1.check_if_owner(), "The Appointment denied by store member");
+        }
+        catch (Exception e){
+            fail("add owner fail.");
+        }
+    }
+
+
 
 
 }
