@@ -29,9 +29,9 @@ public class HibernateUtils {
     private static boolean begin_transaction = true;
 
     static {
-        emf = Persistence.createEntityManagerFactory(persistence_unit);
+//        emf = Persistence.createEntityManagerFactory(persistence_unit);
         threadLocal = new ThreadLocal<EntityManager>();
-        em = getEntityManager();
+//        em = getEntityManager();
     }
 
     public static void setPersistence_unit(String persistence_unit) {

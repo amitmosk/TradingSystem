@@ -119,6 +119,16 @@ export default class HomeProductsTable extends Component {
     console.log(values);
     console.log(quantity);
     console.log(price);
+    if(Utils.check_all_digits(quantity) == 0)
+    {
+        this.setState({ snackbar: { children: "Illegal Quantity", severity: "error" } });
+        return;
+    }
+    if(Utils.check_all_digits(price) == 0)
+    {
+        this.setState({ snackbar: { children: "Illegal Price", severity: "error" } });
+        return;
+    }
     const response = await storeApi.add_bid(store_id, product_id, quantity, price);
     if (!response.was_exception) {
       this.setState({ snackbar: { children: response.message, severity: "success" } });

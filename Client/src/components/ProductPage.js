@@ -48,6 +48,7 @@ export default class ProductPage extends Component {
       // alert(product_res.message);
       if (!product_res.was_exception)
       {
+        console.log(product_res.value);
         this.setState({ snackbar: { children: product_res.message, severity: "success" } });
         let product = product_res.value;
         const product_reviews_and_ratings = product.productReview;

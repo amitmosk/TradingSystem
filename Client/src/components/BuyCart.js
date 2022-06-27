@@ -8,6 +8,7 @@ import { CartApi } from '../API/CartApi';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LinearDeterminate from './LinearDeterminate';
+import { Utils } from '../ServiceObjects/Utils';
 
 export default function BuyCart() {
     const [loading, setLoading] = React.useState(false);
@@ -44,14 +45,13 @@ export default function BuyCart() {
         if (!response.was_exception)
         {
             setLoading(false);
-            setTimeout(() => {  console.log("World!"); }, 4000);
+            await Utils.sleep(2000)
             setSnackbar({ children: response.message, severity: 'success' });
             window.location.href=`/`
         }  
         else
         {
           setLoading(false);
-            setTimeout(() => {  console.log("World!"); }, 4000);
           setSnackbar({ children: response.message, severity: 'error' }); 
     
         }

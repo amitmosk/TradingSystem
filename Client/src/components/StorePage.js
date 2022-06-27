@@ -16,6 +16,7 @@ import StoreProductsTable from "./StoreProductsTable";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import IconButton from "@mui/material/IconButton";
 import { ConnectApi } from "../API/ConnectApi";
+import { Utils } from "../ServiceObjects/Utils";
 
 export default class StorePage extends Component {
   static displayName = StorePage.name;
@@ -101,6 +102,11 @@ export default class StorePage extends Component {
   async send_question_to_store(values) {
     const store_id = this.props.store_id;
     const question = values[0];
+    if(Utils.check_not_empty(question) == 0)
+    {
+        this.setState({ snackbar: { children: "Question can not be empty", severity: "error" } });
+        return;
+    }
     let response = await this.storeApi.send_question_to_store(store_id,question);
     if (!response.was_exception) {
       this.setState({ snackbar: { children: response.message, severity: "success" } });
@@ -109,22 +115,7 @@ export default class StorePage extends Component {
       this.setState({ snackbar: { children: response.message, severity: "error" } });
     }
   }
-  async rate_store(rating) {
-    console.log("in rate store");
-    console.log("rating is = " + rating);
-    let response = await this.storeApi.rate_store(this.state.store_id, rating);
-    // alert(response.message);
-    this.setState({ snackbar: { children: response.message, severity: "success" } });
-
-    if (!response.was_exception) {
-      this.setState({ snackbar: { children: response.message, severity: "success" } });
-      //get store
-      //reload store
-    } 
-    else {
-      this.setState({ snackbar: { children: response.message, severity: "error" } });
-    }
-  }
+ 
 
   render() {
     const ratings = this.state.ratings;
@@ -203,7 +194,6 @@ export default class StorePage extends Component {
               }
             ></MenuListComposition>{" "}
           </Grid>
-          <BasicRating to_rate="Store" rating={this.rate_store.bind(this)} />
               {!!this.state.snackbar && (
                 <Snackbar
                   open

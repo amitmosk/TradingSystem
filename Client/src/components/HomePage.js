@@ -38,7 +38,8 @@ console.log(user);
   const open_store = async (values) =>  {
     const storeApi = new StoreApi();
     const store_name = values[0];
-	if(Utils.check_all_english_letters(store_name) == 0)
+
+    if (Utils.check_holder(store_name) == 0)
     {
         setSnackbar({ children: "Illegal Store Name", severity: 'error' });
         return;
@@ -59,6 +60,11 @@ console.log(user);
   const send_question_to_admin = async (values)=> {
     const adminApi = new AdminApi();
     const question = values[0];
+    if (Utils.check_not_empty(question) == 0)
+    {
+        setSnackbar({ children: "Question cant be empty", severity: 'error' });
+        return;
+    }
     let response = await adminApi.send_question_to_admin(question);
     // alert(response.message);
     if (!response.was_exception) {

@@ -7,6 +7,7 @@ import Card from '@mui/material/Card';
 import { Question } from '../ServiceObjects/Question';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert"; 
+import { Utils } from '../ServiceObjects/Utils';
 
 
 export default class ManagerViewStoreQuestions extends Component {
@@ -77,7 +78,16 @@ export default class ManagerViewStoreQuestions extends Component {
         const question_id = values[0];
         const answer = values[1];
         console.log(store_id +" , "+question_id+" , "+answer);
-
+        if(Utils.check_all_digits(question_id) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Question ID", severity: "error" } });
+            return;
+        }
+        if(Utils.check_not_empty(answer) == 0)
+        {
+            this.setState({ snackbar: { children: "Answer cant be empty", severity: "error" } });
+            return;
+        }
         const response = await this.storeApi.manager_answer_question(store_id, question_id, answer);
         // alert(response.message);
         if (!response.was_execption) {

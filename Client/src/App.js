@@ -136,7 +136,7 @@ export default function App() {
           <Route
             path="/Register"
             element={
-              <Register updateUserState={updateUserState} />
+              <Register updateUserState={updateUserState} user={user}/>
             }
           ></Route>
           <Route

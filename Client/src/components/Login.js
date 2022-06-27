@@ -8,6 +8,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import "./Login.css";
 import SocketProvider from './SocketProvider';
+import { Utils } from '../ServiceObjects/Utils';
 
 export default class Login extends Component {
     static displayName = Login.name;
@@ -15,9 +16,8 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            loginError: undefined,
-            email: undefined,
-            password: undefined,
+            email: "",
+            password: "",
             snackbar: null,
         };
         this.connectApi = new ConnectApi(); 
@@ -39,11 +39,22 @@ export default class Login extends Component {
     async login(){
         const {email, password} = this.state;
         console.log("email is "+email+" , password is "+password+"\n");
+        if(Utils.check_email(email) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
+            return;
+        }
+        if(Utils.check_not_empty(password) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Password", severity: "error" } });
+            return;
+        }
         let response = await this.connectApi.login(email, password);
         // alert(response.message);
         if (!response.was_exception)
         {
-            
+            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            await Utils.sleep(2000)
             // login success
             const user = response.value;
             this.props.updateUserState(user);
@@ -52,8 +63,8 @@ export default class Login extends Component {
             createSocket(user.email);
             // open seb socket
             // return to home page and update properties (change state of App to assign user).
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
-            return (<Navigate to="/"/>)
+            
+
         }
         else{
             this.setState({ snackbar: { children: response.message, severity: "error" } });
@@ -79,8 +90,7 @@ export default class Login extends Component {
                     
                         <h3>Login</h3>
                         <form className="LoginForm" >
-                            {this.state.loginError ?
-                                <div className="CenterItemContainer"><label>{this.state.loginError}</label></div> : null}
+                           
                             <input type="text" name="email" value={this.state.email} onChange={this.handleInputChange}
                                     placeholder="Email" required/>
                             <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange}

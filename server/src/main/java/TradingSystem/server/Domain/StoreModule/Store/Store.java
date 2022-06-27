@@ -24,6 +24,7 @@ import TradingSystem.server.Domain.StoreModule.Policy.Ipredict;
 import TradingSystem.server.Domain.StoreModule.Policy.Predict;
 import TradingSystem.server.Domain.StoreModule.Policy.Purchase.*;
 import TradingSystem.server.Domain.StoreModule.Product.Product;
+import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.StoreModule.Purchase.Purchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.StorePurchaseHistory;
@@ -771,8 +772,6 @@ public class Store implements Observable {
 //            marketLogger.add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
             this.send_message_to_the_store_stuff(candidate_email+"" +
                     " is a new manager in the store", appointer_email);
-
-            HibernateUtils.merge(this);
         }
     }
 
@@ -1182,5 +1181,12 @@ public class Store implements Observable {
     }
 
 
-
+    public List<ProductInformation> get_products() {
+        List<ProductInformation> products = new ArrayList<>();
+        for(Product p: this.inventory.keySet())
+        {
+            products.add(new ProductInformation(p,inventory.get(p), p.getOriginal_price() ));
+        }
+        return products;
+    }
 }
