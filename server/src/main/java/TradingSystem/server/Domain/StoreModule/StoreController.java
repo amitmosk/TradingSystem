@@ -482,8 +482,18 @@ public class StoreController {
         this.products_id = new AtomicInteger(1);
     }
 
+    /**
+     * this method return all active stores.
+     * @return
+     */
     public Map<Integer, Store> get_all_stores() {
-        return this.stores;
+        HashMap<Integer, Store> toReturn = new HashMap<>();
+        for (Map.Entry<Integer, Store> entry : this.stores.entrySet()){
+            if (entry.getValue().isActive()){
+                toReturn.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return toReturn;
     }
 
     public List<Product> get_products_by_store_id(int store_id) throws MarketException {

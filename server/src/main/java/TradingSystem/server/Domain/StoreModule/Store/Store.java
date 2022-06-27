@@ -364,7 +364,7 @@ public class Store implements Observable {
         DiscountComponent rifhtdiscount = discountPolicy.getDiscountCompnentByName(right);
         plusDiscountComponent toreturn = new plusDiscountComponent(leftdiscount, rifhtdiscount);
         if (leftdiscount == rifhtdiscount)
-            throw new WrongPermterException("Both discounts are the same");
+            throw new WrongPermterException("the discounts are the same");
         discountPolicy.removeRule(left);
         discountPolicy.removeRule(right);
         discountPolicy.addRule(name, toreturn);
@@ -395,7 +395,7 @@ public class Store implements Observable {
         Ipredict predict = getPredictByName(nameOFPredict);
         DiscountComponent simpleDiscountComponent = discountPolicy.getDiscountCompnentByName(nameOfPolicy);
         if (!(simpleDiscountComponent instanceof simpleDiscountComponent))
-            throw new WrongPermterException("This discount is not of type simple");
+            throw new WrongPermterException("this discount is not of type simple");
         ComplexDiscountComponent toreturn = new ComplexDiscountComponent(simpleDiscountComponent, predict);
         discountPolicy.removeRule(nameOfPolicy);
         this.discountPolicy.addRule(name, toreturn);
@@ -411,15 +411,15 @@ public class Store implements Observable {
     private Predict getPredictByName(String name) throws WrongPermterException {
         Ipredict p = predictList.get(name);
         if (p == null)
-            throw new WrongPermterException("There is no predict with this name");
+            throw new WrongPermterException("no predict with this name");
         return (Predict) p;
     }
 
     public SimplePurchaseRule addsimplePorchaseRule(String nameOfrule, String NameOfPredict) throws WrongPermterException {
         Predict p = getPredictByName(NameOfPredict);
-        SimplePurchaseRule toReturn = new SimplePurchaseRule(p);
-        this.purchasePolicy.addRule(nameOfrule, toReturn);
-        return toReturn;
+        SimplePurchaseRule Toreturn = new SimplePurchaseRule(p);
+        this.purchasePolicy.addRule(nameOfrule, Toreturn);
+        return Toreturn;
     }
 
 
@@ -437,7 +437,7 @@ public class Store implements Observable {
 
     public void close_store_permanently() throws MarketException {
         this.active = false;
-        String message = this.name + " store was closed permanently at " + LocalDate.now().toString();
+        String message = this.name + "Store was closed permanently at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, "");
         for (AssignUser user : stuffs_and_appointments.keySet()) {
             user.remove_appointment(this);
@@ -450,7 +450,7 @@ public class Store implements Observable {
         this.check_permission(user, StorePermission.close_store_temporarily);
         this.active = false;
         String email = user.get_user_email();
-        String message = this.name + " store was closed close_store_temporarily at " + LocalDate.now().toString();
+        String message = this.name + "Store was closed close_store_temporarily at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, email);
     }
 
@@ -461,7 +461,7 @@ public class Store implements Observable {
             throw new StoreMethodException("The store is already open");
         this.active = true;
         String email = user.get_user_email();
-        String message = "Store was re-opened by : " + email + " at " + LocalDate.now().toString();
+        String message = "Store was re-open by : " + email + " at " + LocalDate.now().toString();
         this.send_message_to_the_store_stuff(message, email);
     }
 
@@ -487,10 +487,10 @@ public class Store implements Observable {
         // check that the manager appointed by the user
         this.check_permission(user_who_set_permission, StorePermission.edit_permissions);
         if (!this.get_appointer(manager).equals(user_who_set_permission))
-            throw new AppointmentException("The manager requested was appointed by a different user");
+            throw new AppointmentException("The manager is not appointed by user");
         // check that the user is not trying to change his permissions
         if (manager.equals(user_who_set_permission))
-            throw new NoPremssionException("User can't change his own permissions");
+            throw new NoPremssionException("User cant change himself permissions");
 
         Appointment manager_permission = this.stuffs_and_appointments.get(manager);
         manager_permission.set_permissions(permissions);
@@ -548,7 +548,7 @@ public class Store implements Observable {
 
     public void add_question(AssignUser sender, String question_message) {
         QuestionController.getInstance().add_buyer_question(question_message, sender, store_id);
-        this.send_message_to_the_store_stuff("New user question from :" + sender.get_user_email() + " in store " + name, sender.get_user_email());
+        this.send_message_to_the_store_stuff("new user question from :" + sender.get_user_email() + " in store " + name, sender.get_user_email());
     }
 
     public void answer_question(AssignUser user, int question_id, String answer) throws MarketException {
@@ -603,14 +603,14 @@ public class Store implements Observable {
     public Map<Product, Integer> add_product(AssignUser user, String name, double price, String category, List<String> key_words, int quantity) throws MarketException {
         this.check_permission(user, StorePermission.add_item);
         if (price <= 0)
-            throw new ProductAddingException("Price must be greater than zero");
+            throw new ProductAddingException("price must be more then zero");
         if (quantity < 1)
-            throw new ProductAddingException("Quantity must be greater than zero");
+            throw new ProductAddingException("quantity must be more then zero");
         Utils.nameValidCheck(name);
         Utils.nameValidCheck(category);
         for (Product p : inventory.keySet()) {
             if (p.getName().equals(name))
-                throw new ProductAddingException("Product already exists in the store");
+                throw new ProductAddingException("product already exists in the store");
         }
         int product_id = this.product_ids_counter.getAndIncrement();
         Product product = new Product(name, product_id, price, category, key_words, store_id);
@@ -684,7 +684,7 @@ public class Store implements Observable {
     public synchronized Product checkAvailablityAndGet(int product_id, int quantity) throws MarketException {
         Product p = this.getProduct_by_product_id(product_id);
         if (p == null) {
-            throw new ProductAddingException("Product does not exist");
+            throw new ProductAddingException("checkAvailablityAndGet: Product is not exist");
             //not suppose to happen
             //add to logger
         }
@@ -692,7 +692,7 @@ public class Store implements Observable {
         if (quantity <= product_quantity) {
             return p;
         }
-        throw new ProductAddingException("Product is not available");
+        throw new ProductAddingException("Store.checkAvailablityAndGet: Product is not available");
     }
 
     /**
@@ -707,7 +707,7 @@ public class Store implements Observable {
             int first_quantity = this.inventory.get(p);
             int quantity_to_remove = products_and_quantities.get(p);
             if (first_quantity - quantity_to_remove < 0)
-                throw new StoreMethodException("Pproduct quantity :" + quantity_to_remove + "" +
+                throw new StoreMethodException("Store.remove_basket_products_from_store: product quantity :" + quantity_to_remove + "" +
                         " is more then available for product id :" + p.getProduct_id());
         }
         for (Product p : products_and_quantities.keySet()) {
@@ -738,7 +738,7 @@ public class Store implements Observable {
         synchronized (owners_lock) {
             Appointment appointment = this.stuffs_and_appointments.get(new_owner);
             if (appointment != null) {
-                throw new AppointmentException("User to appoint is already a store member");
+                throw new AppointmentException("User to appoint is already store member");
             }
 
             Appointment appointment_to_add = new Appointment(new_owner, appointer, this, StoreManagerType.store_owner, get_managers_emails());
@@ -762,7 +762,7 @@ public class Store implements Observable {
         synchronized (managers_lock) {
             Appointment appointment = this.stuffs_and_appointments.get(new_manager);
             if (appointment != null)
-                throw new AppointmentException("User to appoint is already a store member");
+                throw new AppointmentException("User to appoint is already store member");
             Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager, get_managers_emails());
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
             this.send_message_to_the_store_stuff(candidate_email+" is a new manager-candidate in the store,appoint by: " +appointer_email,appointer_email);
@@ -783,13 +783,13 @@ public class Store implements Observable {
         synchronized (managers_lock) {
             Appointment appointment = this.stuffs_and_appointments.get(user_to_delete_appointment);
             if (appointment == null) {
-                throw new AppointmentException("The requested user is not a staff member of this store");
+                throw new AppointmentException("User to be removed is not stuff member of this store");
             }
             if (!appointment.is_manager()) {
-                throw new AppointmentException("The requested user is not an owner/founder");
+                throw new AppointmentException("User to be removed is not owner/founder");
             }
             if (!appointment.getAppointer().equals(remover)) {
-                throw new AppointmentException("User can not remove a staff member that is not appointed by him");
+                throw new AppointmentException("User can not remove stuff member that is not appoint by him");
             }
             this.stuffs_and_appointments.remove(user_to_delete_appointment);
             user_to_delete_appointment.remove_appointment(this);
@@ -815,15 +815,15 @@ public class Store implements Observable {
         synchronized (owners_lock) {
             Appointment appointment = this.stuffs_and_appointments.get(user_to_delete_appointment);
             if (appointment == null) {
-                throw new AppointmentException("The requested user is not a staff member of this store");
+                throw new AppointmentException("User to be removed is not stuff member of this store");
             }
 
             if (!appointment.is_owner()) {
-                throw new AppointmentException("The requested user not an owner");
+                throw new AppointmentException("User to be removed is not owner");
             }
 
             if (!appointment.getAppointer().equals(remover)) {
-                throw new AppointmentException("User can not remove a staff member that is not appointed by him");
+                throw new AppointmentException("User can not remove stuff member that is not appoint by him");
             }
 
             remove_all_appointments_by_user(user_to_delete_appointment);
@@ -841,7 +841,7 @@ public class Store implements Observable {
             if (product.getProduct_id() == product_id)
                 return product;
         }
-        throw new ObjectDoesntExsitException("Store: Product does not exist - product id: " + product_id);
+        throw new ObjectDoesntExsitException("Store: Product is not exist - product id: " + product_id);
     }
 
 
@@ -902,7 +902,7 @@ public class Store implements Observable {
 
     public void check_permission(AssignUser user, StorePermission permission) throws NoPremssionException {
         if (!this.stuffs_and_appointments.containsKey(user))
-            throw new NoPremssionException("User is not a store member");
+            throw new NoPremssionException("user is no a store member");
         boolean flag = this.stuffs_and_appointments.get(user).has_permission(permission);
         if (!flag)
             throw new NoPremssionException("User has no permissions!");
@@ -921,7 +921,7 @@ public class Store implements Observable {
     public AssignUser get_appointer(AssignUser manager) {
         Appointment appointment = this.stuffs_and_appointments.get(manager);
         if (appointment == null)
-            throw new IllegalArgumentException("User requested is not a manager");
+            throw new IllegalArgumentException("is not a manager");
         return this.stuffs_and_appointments.get(manager).getAppointer();
     }
 
@@ -949,7 +949,7 @@ public class Store implements Observable {
         Product to_edit = this.getProduct_by_product_id(product_id);
         this.check_permission(assignUser, StorePermission.edit_item_quantity);
         if (quantity < 1) {
-            throw new WrongPermterException("Quantity must be positive number");
+            throw new WrongPermterException("quantity must be positive number");
         }
         this.inventory.put(to_edit, quantity);
     }
@@ -1104,11 +1104,14 @@ public class Store implements Observable {
             }
         }
         for (Appointment appointment : this.stuffs_and_appointments.values()){
-            if (appointment.get_status() == AppointmentStatus.open_waiting_for_answers)
-                if (i == 0)
-                    appointment.add_manager_of_store(user_email);
-            if (i == 1)
-                appointment.remove_manager(user_email);
+            if (appointment.get_status() == AppointmentStatus.open_waiting_for_answers) {
+                if (owner){
+                    if (i == 0)
+                        appointment.add_manager_of_store(user_email);
+                    if (i == 1)
+                        appointment.remove_manager(user_email);
+                }
+            }
         }
 //        HibernateUtils.persist(this);
     }
@@ -1141,30 +1144,34 @@ public class Store implements Observable {
         return managers_emails;
     }
     public boolean add_appointment_answer(AssignUser manager, AssignUser candidate , boolean manager_answer) throws Exception {
-        // TODO : this lines could throw exceptions, ASK GAL about hibernate
-        String manager_email = manager.get_user_email();
-        String candidate_email = candidate.get_user_email();
-        this.check_permission(manager, StorePermission.answer_appointment);
-        Appointment appointment = this.stuffs_and_appointments.get(candidate);
-        appointment.add_manager_answer(manager_email, manager_answer);
-        if (appointment.get_status() == closed_denied){
-            this.send_message_to_the_store_stuff("Appointment of: " + candidate_email + " is denied by: "+manager_email,manager_email);
-        }
-        else if (appointment.get_status() == closed_confirm){
-            if (appointment.getType() == StoreManagerType.store_owner){
+        try{
+            String manager_email = manager.get_user_email();
+            String candidate_email = candidate.get_user_email();
+            this.check_permission(manager, StorePermission.answer_appointment);
+            Appointment appointment = this.stuffs_and_appointments.get(candidate);
+            if (appointment.get_status() != open_waiting_for_answers){
+                throw new Exception("The Appointment is already close.");
+            }
+            if (appointment.getType() != StoreManagerType.candidate){
+                throw new Exception("The Candidate is not longer a candidate");
+            }
+            appointment.add_manager_answer(manager_email, manager_answer);
+            if (appointment.get_status() == closed_denied){
+                this.send_message_to_the_store_stuff("Appointment of: " + candidate_email + " is denied by: "+manager_email,manager_email);
+            }
+            else if (appointment.get_status() == closed_confirm){
                 candidate.add_owner(this, appointment);
                 this.set_manager_in_bids(0, candidate_email, true);
                 MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") owner");
                 this.send_message_to_the_store_stuff(candidate_email+" is a new owner in the store, confirm by all the managers.", "");
-            }
-            else if (appointment.getType() == StoreManagerType.store_manager){
-                candidate.add_manager(this, appointment);
-                this.set_manager_in_bids(0, candidate_email, false);
-                MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") manager");
-                this.send_message_to_the_store_stuff(candidate_email+" is a new manager in the store, confirm by all the managers.", "");
-            }
+                }
+            return true;
         }
-        return true;
+        catch (Exception e){
+            MarketLogger.getInstance().add_log(e.getMessage());
+            return false;
+        }
+
     }
 
     public Map<Integer, Bid> getBids() {

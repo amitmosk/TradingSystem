@@ -70,8 +70,6 @@ class Notifications {
             marketFacade1.add_owner("ownerTwo@gmail.com", store_id);
             marketFacade2.manager_answer_appointment(store_id, true, "ownerTwo@gmail.com");
             marketFacade1.add_manager("manager@gmail.com", store_id);
-            marketFacade2.manager_answer_appointment(store_id, true, "manager@gmail.com");
-            marketFacade3.manager_answer_appointment(store_id, true, "manager@gmail.com");
             marketFacade1.add_product_to_store(store_id, 20, "ee", 19.5, "category", keywords);
             Response<List<ProductInformation>> response1 = marketFacade1.get_products_by_store_id(store_id);
             product_id = response1.getValue().get(0).getProduct_id();
@@ -124,7 +122,7 @@ class Notifications {
     void appoint_candidate_notification_for_managers(){
         MarketFacade marketfacade6 = new MarketFacade(paymentAdapter, supplyAdapter);
         marketfacade6.register("candidate@gmail.com", "12345678aA", "ma", "ma", "19-04-95");
-        marketFacade1.add_manager("candidate@gmail.com", store_id);
+        marketFacade1.add_owner("candidate@gmail.com", store_id);
         List<String> founder_notifications_list = NotificationHandler.getInstance().get_user_notifications("founder@gmail.com");
         List<String> owner1_notifications_list = NotificationHandler.getInstance().get_user_notifications("ownerOne@gmail.com");
         List<String> owner2_notifications_list = NotificationHandler.getInstance().get_user_notifications("ownerTwo@gmail.com");
