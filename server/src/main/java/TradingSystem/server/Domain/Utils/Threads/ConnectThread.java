@@ -97,7 +97,7 @@ public class ConnectThread implements Runnable {
             }
 
             urlConnection.disconnect(); // disconnect connection
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             if (callback != null) {
                 // callback error

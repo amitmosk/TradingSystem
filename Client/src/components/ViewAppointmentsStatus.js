@@ -12,7 +12,7 @@ import Link from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import { StoreApi } from '../API/StoreApi';
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert"; 
+import Alert from "@mui/material/Alert";
 import FormDialog from './FormDialog';
 import { Utils } from '../ServiceObjects/Utils';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -27,9 +27,9 @@ export default class ViewAppointmentsStatus extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            store_id:this.props.store_id,
+            store_id: this.props.store_id,
             appointments_agreements: [],
-            manager_answer_appointment_fields:["Candidate Email"],
+            manager_answer_appointment_fields: ["Candidate Email"],
             snackbar: null,
         };
         this.storeApi = new StoreApi();
@@ -40,7 +40,8 @@ export default class ViewAppointmentsStatus extends Component {
         let response = await this.storeApi.view_appointments_status(this.state.store_id);
         if (!response.was_exception) {
             console.log(response);
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             this.setState({ appointments_agreements: response.value });
         }
         else {
@@ -50,7 +51,7 @@ export default class ViewAppointmentsStatus extends Component {
         }
     }
     async manager_answer_appointment(values) {
-        const candidate_email = values[0]; 
+        const candidate_email = values[0];
         //This Will be true / false due to manager answer
         // the buttons will be Yes/or No after merge
         const manager_answer = values[1];
@@ -93,7 +94,7 @@ export default class ViewAppointmentsStatus extends Component {
                                             <ListItem>
                                                 <ListItemAvatar>
                                                     <Avatar>
-                                                    <ManageAccountsIcon></ManageAccountsIcon>
+                                                        <ManageAccountsIcon></ManageAccountsIcon>
                                                     </Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText
@@ -101,7 +102,7 @@ export default class ViewAppointmentsStatus extends Component {
                                                     secondary={`Appointment status: ${appointment.status}`}
                                                 />
                                             </ListItem>
-                                            
+
 
                                         ))
 
@@ -109,25 +110,25 @@ export default class ViewAppointmentsStatus extends Component {
 
 
                                     }
-                                    <FormDialog fields={this.state.manager_answer_appointment_fields} getValues={this.manager_answer_appointment.bind(this)}  name="Answer Appointment" title={"Approve the Appointment?"} submit_button="Yes" cancel_button="No"></FormDialog>
+                                    <FormDialog fields={this.state.manager_answer_appointment_fields} getValues={this.manager_answer_appointment.bind(this)} name="Answer Appointment" title={"Approve the Appointment?"} submit_button="Yes" cancel_button="No"></FormDialog>
                                 </List>
                             </Demo>
                         </Grid>
                     </Grid>
                 </Box>
                 {!!this.state.snackbar && (
-                        <Snackbar
+                    <Snackbar
                         open
                         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                         onClose={this.handleCloseSnackbar}
                         autoHideDuration={6000}
-                        >
+                    >
                         <Alert
                             {...this.state.snackbar}
                             onClose={this.handleCloseSnackbar}
                         />
-                        </Snackbar>
-                    )}
+                    </Snackbar>
+                )}
 
             </>
         );

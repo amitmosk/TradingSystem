@@ -44,10 +44,20 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        } 
-        
-    get_purchase_policy(store_id){
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
+
+    get_purchase_policy(store_id) {
         return instance.get(GET_PURCHASE_POLICY,
             {
                 params:{
@@ -58,9 +68,19 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        }  
-    send_predicts(store_id){
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
+    send_predicts(store_id) {
         return instance.get(SEND_PREDDICTS,
             {
                 params:{
@@ -71,9 +91,19 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        } 
-    get_discount_policy(store_id){
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
+    get_discount_policy(store_id) {
         return instance.get(GET_DISCOUNT_POLICY,
             {
                 params:{
@@ -83,15 +113,25 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        }
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
 
 
 
 
     //---------------------------------Discount Rules-------------------------------------
 
-    add_complex_discount_rule(store_id, nameOfPredict, nameOfComponent, nameOfRule){
+    add_complex_discount_rule(store_id, nameOfPredict, nameOfComponent, nameOfRule) {
         return instance.get(ADD_COMPLEX_DISCOUNT,
             {
                 params:{
@@ -104,9 +144,19 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        }
-    add_simple_categorey_discount_rule(store_id, nameOfCategory, percent, nameOfRule){
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
+    add_simple_categorey_discount_rule(store_id, nameOfCategory, percent, nameOfRule) {
         return instance.get(ADD_SIMPLE_CATEGORY_DISCOUNT,
             {
                 params:{
@@ -119,22 +169,42 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        }
-    add_simple_product_discount_rule(store_id, id, percent, nameOfrule){
-    return instance.get(ADD_SIMPLE_PRODUCT_DISCOUNT,
-        {
-            params:{
-                store_id : store_id,
-                id : id,
-                percent : percent,
-                nameOfrule : nameOfrule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
                 }
-        })
-        .then(res => {
-            return new Response(res.data)
-        })
-        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
+    add_simple_product_discount_rule(store_id, id, percent, nameOfrule) {
+        return instance.get(ADD_SIMPLE_PRODUCT_DISCOUNT,
+            {
+                params: {
+                    store_id: store_id,
+                    id: id,
+                    percent: percent,
+                    nameOfrule: nameOfrule, session_id:JSON.parse(sessionStorage.getItem("session_id"))
+                }
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     add_simple_store_discount_rule(store_id, percent, nameOfRule){
@@ -145,11 +215,21 @@ export class PoliciesApi {
                 percent : percent,
                 nameOfRule : nameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
-        })
-        .then(res => {
-            return new Response(res.data)
-        })
-        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     
@@ -162,11 +242,21 @@ export class PoliciesApi {
                 store_id : store_id,
                 NameOfRule : NameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
-        })
-        .then(res => {
-            return new Response(res.data)
-        })
-        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     add_or_discount_rule(left, right, store_id,  NameOfRule ){
@@ -178,11 +268,21 @@ export class PoliciesApi {
                 store_id : store_id,
                 NameOfRule : NameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
-        })
-        .then(res => {
-            return new Response(res.data)
-        })
-        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
 
@@ -195,11 +295,21 @@ export class PoliciesApi {
                 store_id : store_id,
                 NameOfRule : NameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
-        })
-        .then(res => {
-            return new Response(res.data)
-        })
-        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     add_plus_discount_rule(left, right, store_id,  NameOfRule ){
@@ -211,15 +321,25 @@ export class PoliciesApi {
                 store_id : store_id,
                 NameOfRule : NameOfRule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
-        })
-        .then(res => {
-            return new Response(res.data)
-        })
-        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
 
-    add_xor_discount_rule(left, right, store_id,  NameOfRule ){
+    add_xor_discount_rule(left, right, store_id, NameOfRule) {
         return instance.get(ADD_COMPLEX_XOR_DISCOUNT,
             {
                 params:{
@@ -232,8 +352,18 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        }
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
 
       
 
@@ -248,14 +378,24 @@ export class PoliciesApi {
                 NameOfRule : NameOfRule,
                 store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
-        })
-        .then(res => {
-            return new Response(res.data)
-        })
-        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
-    add_and_purchase_rule( left,  right,  store_id,  NameOfrule){
+    add_and_purchase_rule(left, right, store_id, NameOfrule) {
         return instance.get(ADD_AND_SIMPLE_PURCHASE,
             {
                 params:{
@@ -268,8 +408,18 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        }
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
     add_or_purchase_rule( left,  right,  store_id,  NameOfrule){
     return instance.get(ADD_OR_SIMPLE_PURCHASE,
         {
@@ -279,11 +429,21 @@ export class PoliciesApi {
                 store_id : store_id,
                 NameOfrule : NameOfrule,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                 }
-        })
-        .then(res => {
-            return new Response(res.data)
-        })
-        .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            })
+            .then(res => {
+                return new Response(res.data)
+            })
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     
 
@@ -300,9 +460,19 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        }
-    remove_discount_rule(store_id, name){
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
+    remove_discount_rule(store_id, name) {
         return instance.get(REMOVEֹֹֹ_DISCOUNTֹ_RULE,
             {
                 params:{
@@ -313,9 +483,19 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        } 
-    remove_purchase_rule(store_id, name){
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
+    remove_purchase_rule(store_id, name) {
         return instance.get(REMOVE_PURCHASE_RULE,
             {
                 params:{
@@ -326,8 +506,18 @@ export class PoliciesApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
-        }
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
+    }
 
 
         

@@ -78,21 +78,26 @@ export default class StoreProductsTable extends Component {
   }
   async componentDidMount() {
     console.log(this.props);
-    let products = await this.storeApi.get_products_by_store_id(
-      this.props.store_id
-    );
+    let response = await this.storeApi.find_store_information(this.props.store_id);
+    // let products = await this.storeApi.get_products_by_store_id(
+    //   this.props.store_id
+    // );
+    console.log(response.value);
+    let products = response.value.inventory;
     let products_list = [];
-    products.value.map((p) =>
+    products.map((p) =>{
+      console.log(products);
+      console.log(p);
       products_list.push({
         id: p.product_id,
         name: p.name,
         category: p.category,
         price: p.price,
-        quantity: 0,
+        quantity: p.quantity,
         store: p.store_id,
         key_words: p.key_words,
       })
-    );
+  });
     this.setState({
       items: products_list,
       products: products_list,

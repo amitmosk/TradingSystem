@@ -36,54 +36,53 @@ export default class AllStoresTable extends Component {
         // Important: passing id from customers state so I can delete or edit each user
         renderCell: (id) => (
           <>
-            
-              
-             <Link to={{pathname:`StorePage/${this.state.items.find((i) => id.id === i.id).id}`}}  underline="hover" >{   <IconButton
+
+
+            <Link to={{ pathname: `StorePage/${this.state.items.find((i) => id.id === i.id).id}` }} underline="hover" >{<IconButton
               color="primary"
               aria-label="store"
             >
               <Store />
-            </IconButton>}</Link> 
+            </IconButton>}</Link>
           </>
         ),
       },
-     
-     
-     
+
+
+
     ];
   }
 
   async componentDidMount() {
     const response = await this.storeApi.get_all_stores();
-    if (!response.was_exception)
-    {
-        this.setState({ snackbar: { children: response.message, severity: "success" } });
-        let stores = response.value;
-        console.log("stores = "+stores);
-        let stores_list=[]
-        stores.map((st) =>
-            stores_list.push({
-              id: st.store_id,
-              name: st.name,
-              founder: st.founder_email,
-              foundation_date:st.foundation_date
-            
-            
-            })
-        
-            );
-        this.setState({
+    if (!response.was_exception) {
+      //  this.setState({ snackbar: { children: response.message, severity: "success" } });
+      let stores = response.value;
+      console.log("stores = " + stores);
+      let stores_list = []
+      stores.map((st) =>
+        stores_list.push({
+          id: st.store_id,
+          name: st.name,
+          founder: st.founder_email,
+          foundation_date: st.foundation_date
+
+
+        })
+
+      );
+      this.setState({
         items: stores_list,
         stores: stores_list,
         selected: undefined,
-        });
+      });
 
     }
-    else{
-        this.setState({ snackbar: { children: response.message, severity: "error" } });
+    else {
+      this.setState({ snackbar: { children: response.message, severity: "error" } });
 
     }
-    
+
   }
 
   setSnackbar = (val) => {
@@ -106,10 +105,10 @@ export default class AllStoresTable extends Component {
     console.log("in go to store id")
     let selected = this.state.items.find((i) => id.id === i.id); // represents selected row
     let selected_store_id = selected.store; // required store_id
-    return selected_store_id; 
+    return selected_store_id;
   };
 
-  
+
   handleCloseSnackbar = () => this.setSnackbar(null);
 
   processRowUpdate = (newRow, oldRow) => {
@@ -152,20 +151,20 @@ export default class AllStoresTable extends Component {
           ></DataGrid>
 
 
-         
+
           {!!this.state.snackbar && (
-          <Snackbar
-            open
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            onClose={this.handleCloseSnackbar}
-            autoHideDuration={6000}
-          >
-            <Alert
-              {...this.state.snackbar}
+            <Snackbar
+              open
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
               onClose={this.handleCloseSnackbar}
-            />
-          </Snackbar>
-        )}
+              autoHideDuration={6000}
+            >
+              <Alert
+                {...this.state.snackbar}
+                onClose={this.handleCloseSnackbar}
+              />
+            </Snackbar>
+          )}
 
         </div>
       </main>

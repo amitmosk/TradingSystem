@@ -89,6 +89,7 @@ public class StoreController {
     }
 
 
+
     /**
      * @param user     to check if the user allowed to change policiy
      * @param store_id id for the store
@@ -138,7 +139,7 @@ public class StoreController {
     public void open_close_store(User user, int store_id) throws MarketException {
         AssignUser assignUser = user.state_if_assigned();
         if (!this.stores.containsKey(store_id)) {
-            throw new ObjectDoesntExsitException("The store is not exist - store id: " + store_id);
+            throw new ObjectDoesntExsitException("The store does not exist - store id: " + store_id);
         }
         Store store = this.stores.get(store_id);
         store.open_close_store(assignUser);
@@ -233,7 +234,7 @@ public class StoreController {
      */
     private Store get_store_by_store_id(int store_id) throws StoreException {
         if (!this.stores.containsKey(store_id)) {
-            throw new StoreException("The store is not exist - store id: " + store_id);
+            throw new StoreException("The store does not exist - store id: " + store_id);
         } else if (!this.stores.get(store_id).is_active()) {
             throw new StoreException("The store is not active - store id: " + store_id);
         }
@@ -364,7 +365,7 @@ public class StoreController {
 
     public Product checkAvailablityAndGet(int store_id, int product_id, int quantity) throws MarketException {
         if (!stores.containsKey(store_id)) {
-            throw new StoreException("StoreController:checkAvailablityAndGet - Store does not exist , store id: " + store_id);
+            throw new StoreException("Store does not exist , store id: " + store_id);
         }
         return stores.get(store_id).checkAvailablityAndGet(product_id, quantity);
     }
@@ -611,7 +612,9 @@ public class StoreController {
 
     }
 
-
+public int get_last_store_id(){
+        return store_ids_counter.get()-1;
+}
 
 }
 

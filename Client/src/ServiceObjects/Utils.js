@@ -123,8 +123,14 @@ export class Utils  {
     }
     static check_all_digits(str){  
         if(this.check_not_empty(str) == 0)
+        {
+            console.log("fuckkkkkkkk");
             return 0; 
-        if (/^[0-9]+$/.test(str))
+
+        }
+            
+        console.log(str);
+        if (/^[0-9]*\.?[0-9]*$/.test(str))
         {
             return 1;
         }

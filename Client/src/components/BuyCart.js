@@ -48,7 +48,7 @@ export default function BuyCart() {
             await Utils.sleep(2000)
             setSnackbar({ children: response.message, severity: 'success' });
             window.location.href=`/`
-        }  
+        }
         else
         {
           setLoading(false);

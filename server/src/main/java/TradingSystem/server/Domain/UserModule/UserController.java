@@ -10,6 +10,7 @@ import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
+import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
@@ -76,6 +77,7 @@ public class UserController {
             }
             SystemLogger.getInstance().add_log("user controller load");
         }
+        StoreController.get_instance().load();
 
     }
 
@@ -188,7 +190,7 @@ public class UserController {
             statisticsManager.inc_login_count();
             return user;
         } else
-            throw new LoginException("User email does not match to the password");
+            throw new LoginException("User email does not match the password");
     }
 
 
@@ -365,6 +367,10 @@ public class UserController {
     public String unregister(int ID, String password) throws MarketException {
         String email = get_email(ID);
         User user = find_online_user(ID);
+        for (Store store : user.state_if_assigned().getFounder().keySet()){
+            store.close_store_temporarily(user.state_if_assigned());
+        }
+
         user.unregister(password);
         synchronized (usersLock) {
             users.remove(email);
