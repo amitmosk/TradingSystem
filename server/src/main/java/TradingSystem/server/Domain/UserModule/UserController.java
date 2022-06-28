@@ -10,6 +10,7 @@ import TradingSystem.server.Domain.StoreModule.Product.Product;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchase;
 import TradingSystem.server.Domain.StoreModule.Purchase.UserPurchaseHistory;
 import TradingSystem.server.Domain.StoreModule.Store.Store;
+import TradingSystem.server.Domain.StoreModule.StoreController;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Logger.MarketLogger;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
@@ -73,6 +74,7 @@ public class UserController {
             }
             SystemLogger.getInstance().add_log("user controller load");
         }
+        StoreController.get_instance().load();
 
     }
 

@@ -190,7 +190,6 @@ public class MarketSystem {
                 SystemLogger.getInstance().add_log("Init Data From Database");
                 StoreController.get_instance().load();
                 UserController.get_instance().load();
-                StoreController.get_instance().load();
                 QuestionController.getInstance().load();
             }
             catch (Exception e){
