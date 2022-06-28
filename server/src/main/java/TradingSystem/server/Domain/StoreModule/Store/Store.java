@@ -1121,7 +1121,7 @@ public class Store implements Observable {
         List<AppointmentInformation> answer = new ArrayList<>();
 
         for (Appointment appointment : this.stuffs_and_appointments.values()){
-            if (appointment.getType() != StoreManagerType.store_founder){
+            if (appointment.getType() == StoreManagerType.candidate){
                 AppointmentInformation temp = appointment.get_appointment_information();
                 answer.add(temp);
             }
@@ -1137,7 +1137,7 @@ public class Store implements Observable {
         List<String> managers_emails = new ArrayList<>();
         for (Appointment appointment : this.stuffs_and_appointments.values()) {
             String email = appointment.getMember().get_user_email();
-            if (appointment.getType()!=StoreManagerType.candidate)
+            if (appointment.getType()!=StoreManagerType.candidate && appointment.getType()!=StoreManagerType.store_manager)
                 managers_emails.add(email);
         }
         return managers_emails;

@@ -448,15 +448,23 @@ public class MarketFacade {
                     t2.join();
                     payment_transaction_id = paymentThread.get_value();
                     supply_transaction_id = supplyThread.get_value();
-                    if (payment_transaction_id == -2)
-                        throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied, Status -2");
-                    if (supply_transaction_id == -2)
-                        throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied, Status -2");
+                    if (payment_transaction_id == -2){
+                        market_logger.add_log("Buy Cart Failed: Payment External Service Denied, Status -2");
+                        throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied");
+                    }
+                    if (supply_transaction_id == -2){
+                        market_logger.add_log("Buy Cart Failed: Supply External Service Denied, Status -2");
+                        throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied");
+                    }
 
-                    if (payment_transaction_id == -1)
-                        throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied, Status -1");
-                    if (supply_transaction_id == -1)
-                        throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied, Status -1");
+                    if (payment_transaction_id == -1){
+                        market_logger.add_log("Buy Cart Failed: Payment External Service Denied, Status -2");
+                        throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied");
+                    }
+                    if (supply_transaction_id == -1){
+                        market_logger.add_log("Buy Cart Failed: Supply External Service Denied, Status -2");
+                        throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied");
+                    }
             }
             HibernateUtils.commit();
             response = new Response<>(userPurchase, "Purchase done successfully");
@@ -1864,7 +1872,7 @@ public class MarketFacade {
             this.store_controller.add_manager(appointer, user_to_apoint, store_id);
             response = new Response<>(null, "Manager Candidates added successfully");
             HibernateUtils.commit();
-            market_logger.add_log("User- " + user_email_to_appoint + " has been candidates by user- " + user_email + " to store (" + store_id + ") for manager position");
+            market_logger.add_log("User- " + user_email_to_appoint + " has been appointed by user- " + user_email + " to store (" + store_id + ") for manager position");
         }
         catch (MarketException e){
             HibernateUtils.commit();
