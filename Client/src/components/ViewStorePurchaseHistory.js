@@ -4,18 +4,19 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import IconButton from '@mui/material/IconButton';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ListItemButton from '@mui/material/ListItemButton';
+
 import Grid from '@mui/material/Grid';
 import HomeIcon from '@mui/icons-material/Home';
 import Link from '@mui/material/Button';
 import { UserApi } from '../API/UserApi';
 import BasicRating from "./Rating";
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import { ProductApi } from '../API/ProductApi';
-import { StoreApi } from '../API/StoreApi';
-
+import Alert from "@mui/material/Alert"; 
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -28,9 +29,10 @@ export default class UserPurchaseHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            product_id:undefined, 
+            product_id:undefined,
             store_id:this.props.store_id,
             history: [],
+            open: false,
             snackbar: null,
         };
         this.userApi = new UserApi();
@@ -61,7 +63,8 @@ export default class UserPurchaseHistory extends Component {
         const response = await this.storeApi.view_store_purchases_history(this.state.store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             let res = [];
             this.setState({ history: response.value });
             console.log("history: ");
@@ -86,14 +89,14 @@ export default class UserPurchaseHistory extends Component {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
           //get product
           //reload product
-          
+
         }
         else
         {
             this.setState({ snackbar: { children: response.message, severity: "error" } });
-    
+
         }
-        
+
     }
 
     async componentDidMount() {
@@ -122,7 +125,7 @@ export default class UserPurchaseHistory extends Component {
                                 </h5>
                                     {this.state.history.length !==0 ?  this.state.history.map((his) => (
                                         <>
-                                            <ListItem>                                                
+                                            <ListItem>
                                                 <ListItemText
                                                     primary={<h3>Purchase ID: {his.purchase_id} , Total price: {his.totalPrice} $ at {his.transaction_date}</h3>}
                                                     secondary={
@@ -133,26 +136,26 @@ export default class UserPurchaseHistory extends Component {
                                                            secondary={<BasicRating to_rate="Product" params={[this.props.store_id, s]} rating={this.rate_product.bind(this) } color={"blue"}/>}
                                                            >
                                                             </ListItemText>
-                                                            
+
                                                         )
                                                         }
 
                                                         secondary={""}
-                                                        
+
                                                         >
 
 
                                                         </ListItemText>
                                                     }
-                                                                                  
+
                                                 />
-                                                
+
                                             </ListItem>
                                             {<BasicRating to_rate="Store" params={[this.props.store_id, "-1"]} rating={this.rate_store.bind(this) } color={"red"}/>}
 
 
                                         </>
-                                        
+
 
 
                                     )) : <h3 style={{ color: 'red' }}>No History To Show</h3>
@@ -162,7 +165,7 @@ export default class UserPurchaseHistory extends Component {
 
                                     }
                                 </List>
-                                
+
                             </Demo>
                         </Grid>
                     </Grid>
@@ -209,7 +212,7 @@ export default class UserPurchaseHistory extends Component {
 // import Link from '@mui/material/Button';
 // import { StoreApi } from '../API/StoreApi';
 // import Snackbar from "@mui/material/Snackbar";
-// import Alert from "@mui/material/Alert"; 
+// import Alert from "@mui/material/Alert";
 
 // const Demo = styled('div')(({ theme }) => ({
 //     backgroundColor: theme.palette.background.paper,
@@ -255,7 +258,7 @@ export default class UserPurchaseHistory extends Component {
 
     //     }
     // }
-   
+
 
 //     async componentDidMount() {
 //         this.view_store_purchases_history();

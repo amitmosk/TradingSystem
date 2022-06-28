@@ -38,17 +38,17 @@ export default class StoreManagmentProductsTable extends Component{
               width: 250,
               // Important: passing id from customers state so I can delete or edit each user
               renderCell: (id) => (
-                <>                
+                <>
                 <IconButton aria-label="delete" onClick={() => this.remove_products(id)}>
                   <DeleteIcon />
                 </IconButton>
                 </>)
             },];
-            
+
     }
     async componentDidMount() {
 
-        let products = await this.storeApi.get_products_by_store_id(this.state.store_id); 
+        let products = await this.storeApi.get_products_by_store_id(this.state.store_id);
         console.log(products);
         let products_list = []
         products.value.map(p=>products_list.push(
@@ -72,73 +72,76 @@ export default class StoreManagmentProductsTable extends Component{
     else if(oldRow.category !== newRow.category)
       return await this.productApi.edit_product_category(newRow.id,newRow.store,newRow.category);
   }
-  
+
   handleCloseSnackbar = () => this.setSnackbar(null);
 
-  processRowUpdate = 
-    (newRow,oldRow) => {
-        if(newRow.quantity < 1){
-            this.setSnackbar({ children: 'item quantity must be above 0', severity: 'error' });
-            return oldRow;
-        }
-      let response = this.edit_function(oldRow,newRow)
-      console.log(response)
-    if(response.was_exception){
-    this.setSnackbar({ children: response.message, severity: 'error' });
-    return oldRow
-    }
-    let new_list = this.state.items.filter(p=>p.id !== newRow.id)
-    new_list.push(newRow) 
-    new_list.sort((a,b)=>(a.id-b.id));
-    this.setState({items:new_list})
-    this.setSnackbar({ children: response.message, severity: 'success' });
-    return newRow;
-    }
-
-
-    remove_products = async (id) => {
-      let selected = this.state.items.find(i=> id.id===i.id)
-          let response = await this.storeApi.delete_product_from_store(selected.id,this.state.store_id);
-          if(response.was_exception)
-              this.setSnackbar({ children: response.message, severity: 'error' });
-          else{
-              this.setSnackbar({ children: 'product removed successfully', severity: 'success' });
-              let new_items = this.state.items.filter(i=> selected.id!==i.id)
-              this.setState({items:new_items,selected_item:[]})
-        }
+  processRowUpdate =
+    (newRow, oldRow) => {
+      if (newRow.quantity < 1) {
+        this.setSnackbar({ children: 'item quantity must be above 0', severity: 'error' });
+        return oldRow;
       }
+      let response = this.edit_function(oldRow, newRow)
+      console.log(response)
+      if (response.was_exception) {
+        this.setSnackbar({ children: response.message, severity: 'error' });
+        return oldRow
+      }
+      let new_list = this.state.items.filter(p => p.id !== newRow.id)
+      new_list.push(newRow)
+      new_list.sort((a, b) => (a.id - b.id));
+      this.setState({ items: new_list })
+      if (response.message == "The system is not available right now, come back later")
+        this.setSnackbar({ children: response.message, severity: 'success' });
+      return newRow;
+    }
 
-  handleProcessRowUpdateError = (error) => {
-    this.setState({snackbar:{ children: error.message, severity: 'error' }});
+
+  remove_products = async (id) => {
+    let selected = this.state.items.find(i => id.id === i.id)
+    let response = await this.storeApi.delete_product_from_store(selected.id, this.state.store_id);
+    if (response.was_exception)
+      this.setSnackbar({ children: response.message, severity: 'error' });
+    else {
+      this.setSnackbar({ children: 'product removed successfully', severity: 'success' });
+      let new_items = this.state.items.filter(i => selected.id !== i.id)
+      this.setState({ items: new_items, selected_item: [] })
+    }
   }
 
-  render(){
-  return (
+  handleProcessRowUpdateError = (error) => {
+    this.setState({ snackbar: { children: error.message, severity: 'error' } });
+  }
+
+  render() {
+    return (
       <main>
-    <div style={{ height: 400, width: '100%' }}>
-    <h1 style={{color: "white"}}>---------------------------------------------------------</h1>
-          <DataGrid rows={this.state.items} columns={this.columns}         
-                            editMode='row'
-                                            //   checkboxSelection
-                            onSelectionModelChange={(newSelectionModel) => {
-                            this.set_row_selected(newSelectionModel);}}
-                            processRowUpdate={this.processRowUpdate}
-                            onProcessRowUpdateError={this.handleProcessRowUpdateError}
-                            experimentalFeatures={{ newEditingApi: true }}
-        >
+        <div style={{ height: 400, width: '100%' }}>
+          <h1 style={{ color: "white" }}>---------------------------------------------------------</h1>
+          <DataGrid rows={this.state.items} columns={this.columns}
+            editMode='row'
+            //   checkboxSelection
+            onSelectionModelChange={(newSelectionModel) => {
+              this.set_row_selected(newSelectionModel);
+            }}
+            processRowUpdate={this.processRowUpdate}
+            onProcessRowUpdateError={this.handleProcessRowUpdateError}
+            experimentalFeatures={{ newEditingApi: true }}
+          >
           </DataGrid>
           {!!this.state.snackbar && (
-        <Snackbar
-          open
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          onClose={this.handleCloseSnackbar}
-          autoHideDuration={6000}
-        >
-          <Alert {...this.state.snackbar} onClose={this.handleCloseSnackbar} />
-        </Snackbar>
-      )}
-    </div>
-    
-    </main>
-  );}
-          }
+            <Snackbar
+              open
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+              onClose={this.handleCloseSnackbar}
+              autoHideDuration={6000}
+            >
+              <Alert {...this.state.snackbar} onClose={this.handleCloseSnackbar} />
+            </Snackbar>
+          )}
+        </div>
+
+      </main>
+    );
+  }
+}

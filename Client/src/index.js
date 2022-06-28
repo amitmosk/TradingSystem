@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import { User } from './ServiceObjects/User';
 import { ConnectApi } from './API/ConnectApi';
 const connectApi = new ConnectApi();
-const get_online_user  = async () => {
+const get_online_user = async () => {
   let response = await connectApi.get_online_user();
   console.log("the online userrr");
   console.log(response.value);
@@ -18,7 +18,7 @@ const get_online_user  = async () => {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App user={get_online_user.bind(this)}/>
+    <App user={get_online_user.bind(this)} />
   </React.StrictMode>
 );
 

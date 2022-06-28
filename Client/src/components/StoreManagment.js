@@ -11,7 +11,7 @@ import FormDialogPermissions from './FormDialogPermissions';
 import { StoreApi } from '../API/StoreApi';
 import StoreManagmentProductsTable from './StoreManagmentProductsTable';
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert"; 
+import Alert from "@mui/material/Alert";
 import { Utils } from '../ServiceObjects/Utils';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -59,11 +59,11 @@ export default class StoreManagment extends Component {
             snackbar: null,
 
         };
-      
+
         this.adminApi = new AdminApi();
         this.storeApi = new StoreApi();
         this.handleInputChange = this.handleInputChange.bind(this);
-        console.log("in store managemrnt , store page = "+this.props.store_id);
+        console.log("in store managemrnt , store page = " + this.props.store_id);
 
 
     }
@@ -291,7 +291,8 @@ export default class StoreManagment extends Component {
         const response = await this.storeApi.view_store_management_information(store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in view_store_management_information - success!\n");
             return response.value;
             //show history
@@ -308,7 +309,8 @@ export default class StoreManagment extends Component {
         const response = await this.storeApi.manager_view_store_questions(store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in manager_view_store_questions - success!\n");
             //show history
         }
@@ -353,7 +355,7 @@ export default class StoreManagment extends Component {
         const response = await this.storeApi.view_store_purchases_history(store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            // this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in view_store_purchases_history - success!\n");
             //show history
         }
@@ -364,8 +366,7 @@ export default class StoreManagment extends Component {
     }
     async edit_manager_permissions(values) {
         const user_email = values[0];
-        if (Utils.check_email(user_email)== 0)
-        {
+        if (Utils.check_email(user_email) == 0) {
             this.setState({ snackbar: { children: "Illegal email", severity: "error" } });
             return;
 
@@ -384,6 +385,7 @@ export default class StoreManagment extends Component {
 
     render() {
         const { redirectTo } = this.state
+        // { this.state.redirect ? (<Redirect push to="/"/>) : null }
 
         return (
 

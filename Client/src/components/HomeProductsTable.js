@@ -26,7 +26,7 @@ export default class HomeProductsTable extends Component {
       selected_item: [],
       selected_row: [],
       edited: null,
-      add_bid_fields:["Quantity", "Price"],
+      add_bid_fields: ["Quantity", "Price"],
     };
     this.productApi = new ProductApi();
     this.storeApi = new StoreApi();
@@ -68,19 +68,19 @@ export default class HomeProductsTable extends Component {
         // Important: passing id from customers state so I can delete or edit each user
         renderCell: (id) => (
           <>
-              
-             <Link to={{pathname:`StorePage/${this.state.items.find((i) => id.id === i.id).store}`}}   underline="hover" >{   <IconButton
+
+            <Link to={{ pathname: `StorePage/${this.state.items.find((i) => id.id === i.id).store}` }} underline="hover" >{<IconButton
               color="primary"
               aria-label="store"
             >
               <Store />
-            </IconButton>}</Link> 
+            </IconButton>}</Link>
           </>
         ),
       },
-      
+
       {
-        
+
         field: "add_bid",
         headerName: "ADD BID",
         width: 150,
@@ -88,31 +88,28 @@ export default class HomeProductsTable extends Component {
         renderCell: (id) => (
           <>
             {!this.props.stores_managed.includes(this.state.items.find((i) => id.id === i.id).store) ?
-            <FormDialog fields={this.state.add_bid_fields} getValues={this.add_bid.bind(this)} params={[this.state.items.find((i) => id.id === i.id).store,id.id]} name={   <IconButton
-              color="primary"
-              aria-label="store"
-            >
-              <MonetizationOn />
-            </IconButton>}></FormDialog>: null}
-          </> 
+              <FormDialog fields={this.state.add_bid_fields} getValues={this.add_bid.bind(this)} params={[this.state.items.find((i) => id.id === i.id).store, id.id]} name={<IconButton
+                color="primary"
+                aria-label="store"
+              >
+                <MonetizationOn />
+              </IconButton>}></FormDialog> : null}
+          </>
         ),
-      } 
+      }
     ];
   }
-  async add_bid(values)
-  {
+  async add_bid(values) {
     const storeApi = new StoreApi();
     const quantity = values[0];
     const price = values[1];
     const store_id = values[2];
     const product_id = values[3];
-    if (quantity == undefined || Utils.check_not_empty(quantity)==0 || Utils.check_all_digits(quantity)==0)
-    {
+    if (quantity == undefined || Utils.check_not_empty(quantity) == 0 || Utils.check_all_digits(quantity) == 0) {
       this.setState({ snackbar: { children: "Illegal quantity", severity: "error" } });
       return;
     }
-    if (price == undefined || Utils.check_not_empty(price)==0 || Utils.check_all_digits(price)==0)
-    {
+    if (price == undefined || Utils.check_not_empty(price) == 0 || Utils.check_all_digits(price) == 0) {
       this.setState({ snackbar: { children: "Illegal price", severity: "error" } });
       return;
     }
@@ -158,7 +155,7 @@ export default class HomeProductsTable extends Component {
       )
     );
     console.log(this.props.stores_managed);
-    console.log("products = "+products_list);
+    console.log("products = " + products_list);
     this.setState({
       items: products_list,
       products: products_list,
@@ -186,7 +183,7 @@ export default class HomeProductsTable extends Component {
     console.log("in go to store id")
     let selected = this.state.items.find((i) => id.id === i.id); // represents selected row
     let selected_store_id = selected.store; // required store_id
-    return selected_store_id; 
+    return selected_store_id;
   };
 
   add_to_cart = async (id) => {
@@ -259,18 +256,18 @@ export default class HomeProductsTable extends Component {
             </Snackbar>
           )}
           {!!this.state.snackbar && (
-          <Snackbar
-            open
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            onClose={this.handleCloseSnackbar}
-            autoHideDuration={6000}
-          >
-            <Alert
-              {...this.state.snackbar}
+            <Snackbar
+              open
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
               onClose={this.handleCloseSnackbar}
-            />
-          </Snackbar>
-        )}
+              autoHideDuration={6000}
+            >
+              <Alert
+                {...this.state.snackbar}
+                onClose={this.handleCloseSnackbar}
+              />
+            </Snackbar>
+          )}
 
         </div>
       </main>

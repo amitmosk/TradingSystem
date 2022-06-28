@@ -48,8 +48,9 @@ export default function AdminPage() {
         // const response = await adminApi.admin_view_user_purchases_history(user_email);
         // if (!response.was_exception) {
         //     console.log("in admin view user purchases history - success!\n");
-            //show history
-            // setSnackbar({ children: response.message, severity: 'success' }); 
+        //show history
+        // if (response.message == "The system is not available right now, come back later")
+        //     setSnackbar({ children: response.message, severity: 'success' });
         // }
         // else {
         //     setSnackbar({ children: response.message, severity: 'errot' }); 

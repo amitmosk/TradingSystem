@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { StoreApi } from "../API/StoreApi";
 import { Component } from "react";
 import IconButton from "@mui/material/IconButton";
-import { Navigate } from 'react-router-dom'; 
+import { Navigate } from 'react-router-dom';
 import Store from "@mui/icons-material/Store";
 import { FaceRetouchingOffSharp } from "@mui/icons-material";
 import { ConnectApi } from "../API/ConnectApi";
@@ -19,8 +19,8 @@ export default class MyStoresTable extends Component {
       selected_item: [],
       selected_row: [],
       edited: null,
-      my_stores:[],
-      stores:[],
+      my_stores: [],
+      stores: [],
 
     };
     this.productApi = new ProductApi();
@@ -46,137 +46,129 @@ export default class MyStoresTable extends Component {
             >
               <Store />
             </IconButton> */}
-              
-             <Link to={{pathname:`StorePage/${id.id}`}}  underline="hover" >{   <IconButton
+
+            <Link to={{ pathname: `StorePage/${id.id}` }} underline="hover" >{<IconButton
               color="primary"
               aria-label="store"
             >
               <Store />
-            </IconButton>}</Link> 
+            </IconButton>}</Link>
           </>
         ),
       },
-     
-     
-     
+
+
+
     ];
-    
-    
-    
+
+
+
   }
-  async componentDidMount()
-  {
+  async componentDidMount() {
     const my_stores = [];
     let response = await this.connectApi.get_online_user();
-    if (!response.was_exception)
-    {
+    if (!response.was_exception) {
       const user = response.value;
-      const store_list_ids = user.storesManaged; 
+      const store_list_ids = user.storesManaged;
       // console.log(store_list_ids)
       response = await this.storeApi.get_all_stores();
-      if (!response.was_exception)
-      {
+      if (!response.was_exception) {
+        if (response.message == "The system is not available right now, come back later")
           this.setState({ snackbar: { children: response.message, severity: "success" } });
-          let all_stores = response.value;
-          all_stores.map((st)=> 
-          {
-            if (store_list_ids.includes(st.store_id))
-            {
-              // console.log(st)
-              my_stores.push(st);
-            }
-
+        let all_stores = response.value;
+        all_stores.map((st) => {
+          if (store_list_ids.includes(st.store_id)) {
+            // console.log(st)
+            my_stores.push(st);
           }
-          )
-          console.log(my_stores);
-          this.setState({my_stores : my_stores})
-          console.log(this.state.my_stores);
+
+        }
+        )
+        console.log(my_stores);
+        this.setState({ my_stores: my_stores })
+        console.log(this.state.my_stores);
       }
-      else{
-          this.setState({ snackbar: { children: response.message, severity: "error" } });
+      else {
+        this.setState({ snackbar: { children: response.message, severity: "error" } });
       }
 
     }
-    else{
+    else {
       this.setState({ snackbar: { children: response.message, severity: "error" } });
-      return (<Navigate to="/"/>)
+      return (<Navigate to="/" />)
     }
-    console.log(my_stores); 
-    let stores_list=[]
-    my_stores.map((st) =>{
-            stores_list.push({
-                id: st.store_id,
-                name: st.name,
-                founder: st.founder_email,
-                foundation_date:st.foundation_date         
-              })    
+    console.log(my_stores);
+    let stores_list = []
+    my_stores.map((st) => {
+      stores_list.push({
+        id: st.store_id,
+        name: st.name,
+        founder: st.founder_email,
+        foundation_date: st.foundation_date
+      })
     });
     console.log(stores_list);
     this.setState({
-    stores: stores_list,
-    selected: undefined,
-    });   
-    
+      stores: stores_list,
+      selected: undefined,
+    });
+
 
   }
 
-  async get_my_stores()
-  {
+  async get_my_stores() {
     let response = await this.connectApi.get_online_user();
-    if (!response.was_exception)
-    {
+    if (!response.was_exception) {
       const user = response.value
-      const store_list_ids = user.storesManaged; 
+      const store_list_ids = user.storesManaged;
       // console.log(store_list_ids)
       response = await this.storeApi.get_all_stores();
-      if (!response.was_exception)
-      {
+      if (!response.was_exception) {
+        if (response.message == "The system is not available right now, come back later")
           this.setState({ snackbar: { children: response.message, severity: "success" } });
-          let all_stores = response.value;
-          let my_stores = [];
-          all_stores.map((st)=> 
-          {
-            if (store_list_ids.includes(st.store_id))
-            {
-              // console.log(st)
-              my_stores.push(st);
-            }
-
+        let all_stores = response.value;
+        let my_stores = [];
+        all_stores.map((st) => {
+          if (store_list_ids.includes(st.store_id)) {
+            // console.log(st)
+            my_stores.push(st);
           }
-          )
-          console.log(my_stores);
-          this.setState({my_stores : my_stores})
-          console.log(this.state.my_stores);
+
+        }
+        )
+        console.log(my_stores);
+        this.setState({ my_stores: my_stores })
+        console.log(this.state.my_stores);
       }
-      else{
-          this.setState({ snackbar: { children: response.message, severity: "error" } });
+      else {
+        this.setState({ snackbar: { children: response.message, severity: "error" } });
       }
 
     }
-    else{
+    else {
       this.setState({ snackbar: { children: response.message, severity: "error" } });
-      return (<Navigate to="/"/>)
+      return (<Navigate to="/" />)
     }
-    
+
   }
 
   async a() {
     // this.get_my_stores();
-    console.log(this.state.my_stores); 
-    let stores_list=[]
-    this.state.my_stores.map((st) =>{
-            stores_list.push({
-                id: st.store_id,
-                name: st.name,
-                founder: st.founder_email,
-                foundation_date:st.foundation_date         
-              })    
+    console.log(this.state.my_stores);
+    let stores_list = []
+    this.state.my_stores.map((st) => {
+      stores_list.push({
+        id: st.store_id,
+        name: st.name,
+        founder: st.founder_email,
+        foundation_date: st.foundation_date
+      })
     });
     console.log(stores_list);
     this.setState({
-    stores: stores_list,
-    selected: undefined,
-    });    
+      stores: stores_list,
+      selected: undefined,
+    });
   }
 
   setSnackbar = (val) => {
@@ -213,20 +205,20 @@ export default class MyStoresTable extends Component {
           ></DataGrid>
 
 
-         
+
           {!!this.state.snackbar && (
-          <Snackbar
-            open
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            onClose={this.handleCloseSnackbar}
-            autoHideDuration={6000}
-          >
-            <Alert
-              {...this.state.snackbar}
+            <Snackbar
+              open
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
               onClose={this.handleCloseSnackbar}
-            />
-          </Snackbar>
-        )}
+              autoHideDuration={6000}
+            >
+              <Alert
+                {...this.state.snackbar}
+                onClose={this.handleCloseSnackbar}
+              />
+            </Snackbar>
+          )}
 
         </div>
       </main>

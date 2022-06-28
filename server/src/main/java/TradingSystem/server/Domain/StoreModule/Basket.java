@@ -61,10 +61,10 @@ public class Basket{
 
     public void changeQuantity(Product product, int quantity) throws MarketException {
         if (quantity < 1)
-            throw new BasketException("Basket.changeQuantity: the quantity less then 1. quantity = "+quantity);
+            throw new BasketException("the quantity less then 1, quantity = "+quantity);
         if(!this.products_and_quantities.containsKey(product))
         {
-            throw new BasketException("Basket.changeQuantity: Product isn't in the basket - product id: "+product.getProduct_id());
+            throw new BasketException("Product isn't in the basket - product id: "+product.getProduct_id());
         }
         this.products_and_quantities.put(product, quantity);
 
@@ -77,7 +77,7 @@ public class Basket{
     public void removeProduct(Product product) throws MarketException {
         if(!this.products_and_quantities.containsKey(product) || !this.products_and_price_per_unit.containsKey(product))
         {
-            throw new BasketException("Basket.removeProduct: Product isn't in the basket - product id: "+product.getProduct_id());
+            throw new BasketException("Product isn't in the basket - product id: "+product.getProduct_id());
         }
         this.products_and_quantities.remove(product);
         this.products_and_price_per_unit.remove(product);
