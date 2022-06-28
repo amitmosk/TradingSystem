@@ -15,6 +15,7 @@ import TradingSystem.server.Service.NotificationHandler;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.yaml.snakeyaml.error.Mark;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -103,7 +104,6 @@ class StatisticsTests {
             NotificationHandler.getInstance().reset_notifications();
 
 
-
         }
         catch (Exception e){
 
@@ -141,30 +141,73 @@ class StatisticsTests {
     }
 
     @Test
-    void bid_offer_for_managers(){
-
+    void online_users(){
         Response<Statistic> statisticResponse = admin_facade.get_market_stats();
         int online_users = statisticResponse.getValue().getNum_of_onlines();
+        assertEquals(online_users, expected_num_of_online_users, "num of online users");
+        marketFacade1.logout();
+//        expected_num_of_online_users--;
+        statisticResponse = admin_facade.get_market_stats();
+        online_users = statisticResponse.getValue().getNum_of_onlines();
+        assertEquals(online_users, expected_num_of_online_users, "num of online users");
+        marketFacade1.login("founder@gmail.com", "12345678aaA");
+        expected_num_of_online_users++;
+
+
+    }
+
+    @Test
+    void num_of_users(){
+        Response<Statistic> statisticResponse = admin_facade.get_market_stats();
+        int num_of_users = statisticResponse.getValue().getNum_of_users();
+        assertEquals(num_of_users, expected_num_of_users, "num of registered users");
+        MarketFacade facade = new MarketFacade(paymentAdapter, supplyAdapter);
+        facade.register("amitamit@walla.com","12345678aA","amit","amit",birth_date);
+        expected_num_of_users++;
+        expected_num_of_online_users++;
+        statisticResponse = admin_facade.get_market_stats();
+        num_of_users = statisticResponse.getValue().getNum_of_users();
+        assertEquals(num_of_users, expected_num_of_users, "num of registered users");
+
+
+    }
+
+    @Test
+    void num_of_founders(){
+        Response<Statistic> statisticResponse = admin_facade.get_market_stats();
+        int num_of_founders = statisticResponse.getValue().getOwners_or_founders();
+        assertEquals(num_of_founders, expected_num_of_owners_founders, "num of registered users");
+        MarketFacade marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
+        marketFacade.register("amitamitamit@walla.com", "13245678aA", "amit", "amit", birth_date);
+        marketFacade.open_store("ststa");
+        expected_num_of_owners_founders++;
+        expected_num_of_online_users++;
+        expected_num_of_users++;
+        statisticResponse = admin_facade.get_market_stats();
+        num_of_founders = statisticResponse.getValue().getOwners_or_founders();
+        assertEquals(num_of_founders, expected_num_of_owners_founders, "num of registered users");
+
+
+    }
+    @Test
+    void num_of_guests(){
+
+        Response<Statistic> statisticResponse = admin_facade.get_market_stats();
 
         int num_of_guests =statisticResponse.getValue().getNum_of_guests();
-        int num_of_users = statisticResponse.getValue().getNum_of_users();
-        int num_of_founders = statisticResponse.getValue().getOwners_or_founders();
-        long register_per_minutes = statisticResponse.getValue().getRegister_per_minutes();
-        System.out.println(num_of_guests);
-        System.out.println(num_of_users);
-        System.out.println(num_of_founders);
-        System.out.println(register_per_minutes);
 
-        assertEquals(online_users, expected_num_of_online_users, "num of registered users");
-        assertEquals(num_of_users, expected_num_of_users, "num of registered users");
-        assertEquals(num_of_founders, expected_num_of_owners_founders, "num of registered users");
+
         assertEquals(num_of_guests ,expected_num_of_guests);
 
         marketFacade1.logout();
+        expected_num_of_online_users--;
         expected_num_of_guests++;
         Response<Statistic> statisticResponse2 = admin_facade.get_market_stats();
         int num_of_guests1 = statisticResponse2.getValue().getNum_of_guests();
         assertEquals(num_of_guests1 ,expected_num_of_guests);
+        marketFacade1.login("founder@gmail.com", "12345678aaA");
+        expected_num_of_online_users++;
+
     }
 
 
