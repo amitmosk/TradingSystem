@@ -23,8 +23,9 @@ export class ProductApi {
             })
             .then(res => {
                 let response = res.data;
-                let product_info = new Product(response.value);
-                return Response.create(product_info, response.was_exception, response.message);
+                // let product_info = new Product(response.value);
+                // return Response.create(product_info, response.was_exception, response.message);
+                return new Response(response);
             })
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
