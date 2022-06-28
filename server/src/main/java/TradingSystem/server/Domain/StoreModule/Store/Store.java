@@ -900,7 +900,8 @@ public class Store implements Observable {
     public void check_permission(AssignUser user, StorePermission permission) throws NoPremssionException {
         if (!this.stuffs_and_appointments.containsKey(user))
             throw new NoPremssionException("user is no a store member");
-        boolean flag = this.stuffs_and_appointments.get(user).has_permission(permission);
+        Appointment appointment = this.stuffs_and_appointments.get(user);
+        boolean flag = appointment.has_permission(permission);
         if (!flag)
             throw new NoPremssionException("User has no permissions!");
     }
@@ -944,7 +945,7 @@ public class Store implements Observable {
 
     public void edit_product_quantity(AssignUser assignUser, int product_id, int quantity) throws MarketException {
         Product to_edit = this.getProduct_by_product_id(product_id);
-        this.check_permission(assignUser, StorePermission.edit_item_quantity);
+//        this.check_permission(assignUser, StorePermission.edit_item_quantity);
         if (quantity < 1) {
             throw new WrongPermterException("quantity must be positive number");
         }
