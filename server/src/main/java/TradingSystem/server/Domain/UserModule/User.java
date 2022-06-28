@@ -30,15 +30,15 @@ public class User {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Cart cart;
     private AtomicBoolean isGuest;
-    @Transient
-    private AtomicBoolean isLogged;
+//    @Transient
+//    private AtomicBoolean isLogged;
     private String birth_date;
 
     public User() { // new login guest
         this.state = new Guest();
         this.cart = new Cart();
         this.isGuest = new AtomicBoolean(true);
-        this.isLogged = new AtomicBoolean(false);
+//        this.isLogged = new AtomicBoolean(false);
         this.birth_date = LocalDate.now().toString();
     }
 
@@ -50,9 +50,9 @@ public class User {
         return isGuest;
     }
 
-    public AtomicBoolean getIsLogged() {
-        return isLogged;
-    }
+//    public AtomicBoolean getIsLogged() {
+//        return isLogged;
+//    }
 
     public String getBirth_date() {
         return birth_date;
@@ -70,9 +70,9 @@ public class User {
         this.isGuest = isGuest;
     }
 
-    public void setIsLogged(AtomicBoolean isLogged) {
-        this.isLogged = isLogged;
-    }
+//    public void setIsLogged(AtomicBoolean isLogged) {
+//        this.isLogged = isLogged;
+//    }
 
     public void setBirth_date(String birth_date) {
         this.birth_date = birth_date;
@@ -89,9 +89,9 @@ public class User {
         if (!isGuest.get())
             throw new AlreadyRegisterdException("Assigned User cannot register");
         checkDetails(email, pw, name, lastName);
-        boolean res = this.isLogged.compareAndSet(false, true);
-        if (!res)
-            throw new AlreadyRegisterdException("concurrency problem - register method");
+//        boolean res = this.isLogged.compareAndSet(false, true);
+//        if (!res)
+//            throw new AlreadyRegisterdException("concurrency problem - register method");
         this.state = new AssignUser(email, pw, name, lastName);
         this.birth_date = birth_date;
         isGuest.set(false);
@@ -101,19 +101,19 @@ public class User {
     }
 
     public synchronized void login(String password) throws MarketException {
-        if (isLogged.get())
-            throw new LoginException("User already logged in.");
+//        if (isLogged.get())
+//            throw new LoginException("User already logged in.");
         this.state.login(password); //verifies password
-        boolean res = this.isLogged.compareAndSet(false, true);
+//        boolean res = this.isLogged.compareAndSet(false, true);
         this.isGuest.compareAndSet(true, false);
-        if (!res)
-            throw new LoginException("User already logged in - concurrency");
+//        if (!res)
+//            throw new LoginException("User already logged in - concurrency");
     }
 
     public void logout() throws MarketException {
         if (isGuest.get()) throw new NoUserRegisterdException("failed to logout from guest");
-        if (!this.isLogged.compareAndSet(true, false))
-            throw new NoUserRegisterdException("failed to logout user - concurrency problem");
+//        if (!this.isLogged.compareAndSet(true, false))
+//            throw new NoUserRegisterdException("failed to logout user - concurrency problem");
         this.isGuest.compareAndSet(false, true);
     }
 
@@ -291,9 +291,9 @@ public class User {
         return !isGuest.get();
     }
 
-    public boolean test_isLogged() {
-        return this.isLogged.get();
-    }
+//    public boolean test_isLogged() {
+//        return this.isLogged.get();
+//    }
 
     public void add_notification(String notification) {
 

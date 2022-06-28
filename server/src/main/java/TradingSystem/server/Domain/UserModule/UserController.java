@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static TradingSystem.server.Service.MarketSystem.test_flag;
@@ -37,12 +38,14 @@ public class UserController {
     private AtomicInteger purchaseID;
     //    @Transient
     private Object usersLock;
+    private Object online_users_lock;
     //    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StatisticsManager statisticsManager;
     //    private static UserController instance = null;
 //    @Id
 //    @GeneratedValue
     private Long id;
+    private Set<String> online_emails;
 
     public void load() {
         if (!test_flag){
@@ -97,6 +100,8 @@ public class UserController {
         this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
         this.usersLock = new Object();
         this.statisticsManager = new StatisticsManager();
+        this.online_emails = new HashSet<>();
+        this.online_users_lock = new Object();
         HibernateUtils.persist(statisticsManager);
     }
 
@@ -153,6 +158,7 @@ public class UserController {
                 throw new RegisterException("user email " + email + " already exists in the system");
             user = find_online_user(ID);
             user.register(email, pw, name, lastName, birth_date);
+            add_to_online(email);
             users.put(email, user);
             HibernateUtils.persist(user);
 //            HibernateUtils.merge(this);
@@ -171,9 +177,13 @@ public class UserController {
         if (isRegistered(email)) {
             User cur_user = find_online_user(ID);
             User user = find_reg_user(email);
-            if (cur_user.test_isLogged())
+            if(!cur_user.getIsGuest().get())
                 throw new LoginException("cannot log in from logged in user");
+//            if (cur_user.test_isLogged())
+//                throw new LoginException("cannot log in from logged in user");
             user.login(password); //verifies if the user is logged and password & changes state.
+            if(!add_to_online(email))
+                throw new LoginException("user already logged in to the system.");
             onlineUsers.put(ID, user);
             statisticsManager.inc_login_count();
             return user;
@@ -188,6 +198,8 @@ public class UserController {
     public User logout(int ID) throws MarketException {
         User user = find_online_user(ID);
         user.logout();
+        if(!remove_from_online(user.user_email()))
+            throw new LoginException("user is not logged in to the system.");
         onlineUsers.put(ID, new User());
         statisticsManager.inc_logout_count();
         return user;
@@ -493,6 +505,8 @@ public class UserController {
         this.onlineUsers = new ConcurrentHashMap<>();  //thread safe
         this.usersLock = new Object();
         this.statisticsManager = new StatisticsManager();
+        this.usersLock = new Object();
+        this.online_emails = new HashSet<>();
     }
 
     public void setId(Long id) {
@@ -538,8 +552,25 @@ public class UserController {
         }
     }
 
-//    public void merge() {
-//        UserController load = HibernateUtils.getEntityManager().find(this.getClass(), id);
-//        HibernateUtils.getEntityManager().merge(load);
-//    }
+    private boolean add_to_online(String email){
+        boolean res = false;
+        synchronized (online_users_lock){
+            if(!online_emails.contains(email)){
+                online_emails.add(email);
+                res = true;
+            }
+        }
+        return res;
+    }
+
+    private boolean remove_from_online(String email){
+        boolean res = false;
+        synchronized (online_users_lock){
+            if(online_emails.contains(email)){
+                online_emails.remove(email);
+                res = true;
+            }
+        }
+        return res;
+    }
 }

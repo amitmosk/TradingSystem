@@ -102,22 +102,24 @@ class UserTest {
         assertEquals(false, result);
     }
 
-
-    @Test
-    void login() {
-
-        try{
-            user.login("pssw0rD");
-            assertTrue(user.test_isLogged(),"user should be logged in");
-            user.logout();
-            user.login("pssw02rD");
-            assertFalse(user.test_isLogged(),"logged in with invalid password");
-            user.login("pssw0rD");
-            assertTrue(user.test_isLogged(),"failed to log in offline user with his password");
-        }
-        catch (Exception e){}
-
-    }
+//
+//    @Test
+//    void login() {
+//
+//        try{
+//            user.login("pssw0rD");
+////            assertTrue(user.test_isLogged(),"user should be logged in");
+//            user.logout();
+//            user.login("pssw02rD");
+//            assertFalse(user.test_isLogged(),"logged in with invalid password");
+//            user.login("pssw0rD");
+//            assertTrue(user.test_isLogged(),"failed to log in offline user with his password");
+//        }
+//        catch (Exception e){
+//
+//        }
+//
+//    }
 
     @Test
     void edit_name(){
