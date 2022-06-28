@@ -353,6 +353,10 @@ public class UserController {
     public String unregister(int ID, String password) throws MarketException {
         String email = get_email(ID);
         User user = find_online_user(ID);
+        for (Store store : user.state_if_assigned().getFounder().keySet()){
+            store.close_store_temporarily(user.state_if_assigned());
+        }
+
         user.unregister(password);
         synchronized (usersLock) {
             users.remove(email);
