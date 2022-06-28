@@ -1824,6 +1824,11 @@ public class MarketFacade {
             HibernateUtils.commit();
             market_logger.add_log("User- " + user_email_to_delete_appointment + " has been unappointed by user- " + user_email + " from store (" + store_id + ") owner");
         }
+        catch(ObjectDoesntExsitException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(new ObjectDoesntExsitException(user_email_to_delete_appointment + " is not a store owner"));
+            error_logger.add_log(e);
+        }
         catch (MarketException e){
             HibernateUtils.commit();
             response = Utils.CreateResponse(e);
@@ -1894,6 +1899,11 @@ public class MarketFacade {
             HibernateUtils.commit();
             market_logger.add_log("Manager's (" + manager_email + ") permissions have been updated by user - " + user_email + " in store (" + store_id + ")");
         }
+        catch(ObjectDoesntExsitException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(new ObjectDoesntExsitException(manager_email + " is not a store manager"));
+            error_logger.add_log(e);
+        }
         catch (MarketException e){
             HibernateUtils.commit();
             response = Utils.CreateResponse(e);
@@ -1928,6 +1938,11 @@ public class MarketFacade {
             response = new Response<>(null, "Manager removed successfully");
             HibernateUtils.commit();
             market_logger.add_log("User- " + user_email_to_delete_appointment + " has been unappointed by user- " + user_email + " from store (" + store_id + ") manager");
+        }
+        catch(ObjectDoesntExsitException e){
+            HibernateUtils.commit();
+            response = Utils.CreateResponse(new ObjectDoesntExsitException(user_email_to_delete_appointment + " is not a store manager"));
+            error_logger.add_log(e);
         }
         catch (MarketException e){
             HibernateUtils.commit();
