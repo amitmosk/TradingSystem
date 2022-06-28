@@ -1122,8 +1122,10 @@ public class Store implements Observable {
         List<AppointmentInformation> answer = new ArrayList<>();
 
         for (Appointment appointment : this.stuffs_and_appointments.values()){
-            AppointmentInformation temp = appointment.get_appointment_information();
-            answer.add(temp);
+            if (appointment.getType() != StoreManagerType.store_founder){
+                AppointmentInformation temp = appointment.get_appointment_information();
+                answer.add(temp);
+            }
         }
         return answer;
     }
@@ -1142,33 +1144,31 @@ public class Store implements Observable {
         return managers_emails;
     }
     public boolean add_appointment_answer(AssignUser manager, AssignUser candidate , boolean manager_answer) throws Exception {
-        try{
-            String manager_email = manager.get_user_email();
-            String candidate_email = candidate.get_user_email();
-            this.check_permission(manager, StorePermission.answer_appointment);
-            Appointment appointment = this.stuffs_and_appointments.get(candidate);
-            if (appointment.get_status() != open_waiting_for_answers){
-                throw new Exception("The Appointment is already close.");
-            }
-            if (appointment.getType() != StoreManagerType.candidate){
-                throw new Exception("The Candidate is not longer a candidate");
-            }
-            appointment.add_manager_answer(manager_email, manager_answer);
-            if (appointment.get_status() == closed_denied){
-                this.send_message_to_the_store_stuff("Appointment of: " + candidate_email + " is denied by: "+manager_email,manager_email);
-            }
-            else if (appointment.get_status() == closed_confirm){
-                candidate.add_owner(this, appointment);
-                this.set_manager_in_bids(0, candidate_email, true);
-                MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") owner");
-                this.send_message_to_the_store_stuff(candidate_email+" is a new owner in the store, confirm by all the managers.", "");
-                }
-            return true;
+        String manager_email = manager.get_user_email();
+        String candidate_email = candidate.get_user_email();
+        this.check_permission(manager, StorePermission.answer_appointment);
+        Appointment appointment = this.stuffs_and_appointments.get(candidate);
+        if (appointment == null){
+            throw new Exception("The User is not a candidate for this store");
         }
-        catch (Exception e){
-            MarketLogger.getInstance().add_log(e.getMessage());
-            return false;
+        if (appointment.get_status() != open_waiting_for_answers){
+            throw new Exception("The Appointment is already close.");
         }
+        if (appointment.getType() != StoreManagerType.candidate){
+            throw new Exception("The Candidate is not longer a candidate");
+        }
+        appointment.add_manager_answer(manager_email, manager_answer);
+        if (appointment.get_status() == closed_denied){
+            this.send_message_to_the_store_stuff("Appointment of: " + candidate_email + " is denied by: "+manager_email,manager_email);
+        }
+        else if (appointment.get_status() == closed_confirm){
+            candidate.add_owner(this, appointment);
+            this.set_manager_in_bids(0, candidate_email, true);
+            MarketLogger.getInstance().add_log("User- " + candidate_email + " has been appointed by user- " + appointment.getAppointer().get_user_email() + " to store (" + store_id + ") owner");
+            this.send_message_to_the_store_stuff(candidate_email+" is a new owner in the store, confirm by all the managers.", "");
+            }
+
+    return true;
 
     }
 
