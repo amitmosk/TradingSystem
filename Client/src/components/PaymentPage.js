@@ -75,7 +75,8 @@ export default function PaymentPage({update}) {
                             <input type="creditnumber" name="creditnumber" onChange={e => setCreditnumber(e.target.value)}
                                     placeholder="Credit Number" required/>
                             <input type="month" name="month_year" onChange={e => setMonth_year(e.target.value)}
-                                    placeholder="mm/yyyy" required/>
+                                    value="2022-07" min="2022-07" required/>
+                                    
                             <input type="holder" name="holder" onChange={e => setHolder(e.target.value)}
                                 placeholder="Holder" required/>
                             <input type="ccv" name="ccv" onChange={e => setCcv(e.target.value)}

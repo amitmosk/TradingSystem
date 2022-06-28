@@ -10,6 +10,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { Utils } from '../ServiceObjects/Utils';
 
 export default class Register extends Component {
     static displayName = Register.name;
@@ -18,12 +19,11 @@ export default class Register extends Component {
         super(props);
         this.state = { 
             registerError: undefined,
-            email: undefined,
-            password: undefined,
-            firstname: undefined,
-            lastname: undefined,
-            birthdate: undefined,
-            b_d : new Date(),
+            email: "",
+            password: "",
+            firstname: "",
+            lastname: "",
+            birthdate : "1996-12-15",
             snackbar: null,
         };
         this.connectApi = new ConnectApi(); 
@@ -41,40 +41,43 @@ export default class Register extends Component {
         });
     }
     
-    async handleSubmit(event){
-        event.preventDefault();
-        const {username, password, role} = this.state;
-        const loginRedirectAndRes = await this.authApi.Login(username, password, role);
-        if(loginRedirectAndRes) {
-            const loginRes = loginRedirectAndRes.data;
-
-            if (loginRes && loginRes.isSuccess) {
-                this.props.loginUpdateHandler(username, this.getUserRole(role))
-            } else {
-                this.setState({
-                    registerError: loginRes.error
-                })
-            }
-        } else {
-            this.setState({
-                registerError: "You need to be a guest"
-            })
-        }
-    }
 
     async componentDidMount() {
     }
+    
 
     async register(event){
         const {email, password, firstname, lastname, birthdate} = this.state;
         console.log("email is "+email+" , password is "+password+" firstname is "+firstname+" lastname is "+lastname+" birthdate is "+birthdate+"\n");
+        if(Utils.check_email(email) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Email", severity: "success" } });
+            return;
+        }
+        if(Utils.check_holder(firstname) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal First Name", severity: "success" } });
+            return;
+        }
+        if(Utils.check_holder(lastname) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Last Name", severity: "success" } });
+            return;
+        }
+        // if(Utils.check_birthdate(birthdate) == 0)
+        // {
+        //     this.setState({ snackbar: { children: "Illegal Birth Date", severity: "success" } });
+        //     return;
+        // }
         let response = await this.connectApi.register(email, password, firstname, lastname, birthdate);
         // alert(response.message);
         if (!response.was_exception)
         {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
+            await Utils.sleep(2000)
             const user = response.value;
             this.props.updateUserState(user);
+    
             return (<Navigate to="/"/>)
         }
         else{
@@ -93,11 +96,10 @@ export default class Register extends Component {
     }
     
     render() {
-        const {redirectTo} = this.state
-            return (
+        
+            return (this.props.user.state == 0 ? 
                 <main className="LoginMain">
                     <div className="LoginWindow">
-                        <Link href="/"><HomeIcon></HomeIcon></Link>
                         <h3>Register</h3>
                         <form className="LoginForm" >
                             {this.state.registerError ?
@@ -110,11 +112,13 @@ export default class Register extends Component {
                                     placeholder="First name" required/>
                             <input type="lastname" name="lastname" value={this.state.lastname} onChange={this.handleInputChange}
                                     placeholder="Last name" required/>
-                            {/* <input type="birthdate" name="birthdate" value={this.state.birthdate} onChange={this.handleInputChange}
+                            {/* <input type="date" name="birthdate" value={this.state.birthdate} onChange={this.handleInputChange}
                                     placeholder="Birth date - yyyy-mm-dd" required/>  */}
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DesktopDatePicker label="Birth date" value={this.state.b_d} minDate={new Date('1900-01-01')} onChange={(newValue) => {this.parse_date(newValue);}} renderInput={(params) => <TextField {...params} />}/>   
-                            </LocalizationProvider>
+                            <input type="date" placeholder="Birth date" name="birthdate" value={this.state.birthdate} onChange={this.handleInputChange}
+                                min="1900-01-01" max="2022-06-29"></input>
+                            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DesktopDatePicker label="Birth date" value={this.state.b_d} minDate={new Date('1900-01-01')} maxDate={new Date('2022-026-06')} onChange={(newValue) => {this.parse_date(newValue);}} renderInput={(params) => <TextField {...params} />}/>   
+                            </LocalizationProvider> */}
                             {/* <select name="role" value={this.state.role} required>
                                 <option value="member">Member</option>
                                 <option value="admin">Admin</option>
@@ -142,8 +146,9 @@ export default class Register extends Component {
                         </Snackbar>
                     )}
                     </div>
-                </main>
-            );
+                </main> : 
+                <Navigate to="/"/>
+            ) ; 
         
     }
 }

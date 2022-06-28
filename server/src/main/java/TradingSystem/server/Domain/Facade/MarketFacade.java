@@ -437,29 +437,26 @@ public class MarketFacade {
             // setting rollback options for guest.
             // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             synchronized (lock) {
+                    userPurchase = this.user_controller.buyCart(this.loggedUser);
+                    PaymentThread paymentThread = new PaymentThread(this.payment_adapter, paymentInfo, userPurchase.getTotal_price());
+                    SupplyThread supplyThread = new SupplyThread(this.supply_adapter, supplyInfo);
+                    Thread t1 = new Thread(paymentThread);
+                    Thread t2 = new Thread(supplyThread);
+                    t1.start();
+                    t2.start();
+                    t1.join();
+                    t2.join();
+                    payment_transaction_id = paymentThread.get_value();
+                    supply_transaction_id = supplyThread.get_value();
+                    if (payment_transaction_id == -2)
+                        throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied, Status -2");
+                    if (supply_transaction_id == -2)
+                        throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied, Status -2");
 
-                userPurchase = this.user_controller.buyCart(this.loggedUser);
-                PaymentThread paymentThread = new PaymentThread(this.payment_adapter, paymentInfo, userPurchase.getTotal_price());
-                SupplyThread supplyThread = new SupplyThread(this.supply_adapter, supplyInfo);
-                Thread t1 = new Thread(paymentThread);
-                Thread t2 = new Thread(supplyThread);
-                t1.start();
-                t2.start();
-                t1.join();
-                t2.join();
-                payment_transaction_id = paymentThread.get_value();
-                supply_transaction_id = supplyThread.get_value();
-
-                // TODO: amit #113 detail exception message
-                if (payment_transaction_id == -2 )
-                    throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied, Status -2");
-                if (supply_transaction_id == -2)
-                    throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied, Status -2");
-
-                if (payment_transaction_id == -1 )
-                    throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied, Status -1");
-                if (supply_transaction_id == -1)
-                    throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied, Status -1");
+                    if (payment_transaction_id == -1)
+                        throw new ExternalServicesException("Buy Cart Failed: Payment External Service Denied, Status -1");
+                    if (supply_transaction_id == -1)
+                        throw new ExternalServicesException("Buy Cart Failed: Supply External Service Denied, Status -1");
             }
             HibernateUtils.commit();
             response = new Response<>(userPurchase, "Purchase done successfully");
@@ -481,6 +478,11 @@ public class MarketFacade {
         }
         return response;
     }
+
+
+
+
+
 
     /**
      * Requirement 2.3.2
@@ -687,7 +689,7 @@ public class MarketFacade {
             HibernateUtils.beginTransaction();
             UserPurchaseHistory userPurchaseHistory = user_controller.view_user_purchase_history(loggedUser);
             HibernateUtils.commit();
-            response = new Response<>(userPurchaseHistory, "successfully received user's product history");
+            response = new Response<>(userPurchaseHistory, "successfully received user's purchases history");
             market_logger.add_log("User viewed his purchase history successfully");
         }
         catch (MarketException e){
@@ -2434,13 +2436,9 @@ public class MarketFacade {
         Response<List<ProductInformation>> response = null;
         try {
             HibernateUtils.beginTransaction();
-            List<Product> products = store_controller.get_products_by_store_id(store_id);
-            List<ProductInformation> products_information = new ArrayList<>();
-            for (Product p : products) {
-                products_information.add(new ProductInformation(p, 0,p.getOriginal_price() ));
-            }
+            List<ProductInformation> products = store_controller.get_products_by_store_id(store_id);
             HibernateUtils.commit();
-            response = new Response(products_information, "Received store products successfully");
+            response = new Response(products, "Received store products successfully");
             market_logger.add_log("received market stores successfully.");
         }
         catch (MarketException e){

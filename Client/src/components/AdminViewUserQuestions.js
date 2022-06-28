@@ -6,6 +6,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import BasicTable from './BasicTable';
 import Grid from '@mui/material/Grid';
+import { Utils } from '../ServiceObjects/Utils';
 
 
 export default class AdminViewUserQuestions extends Component {
@@ -27,6 +28,16 @@ export default class AdminViewUserQuestions extends Component {
         console.log("in admin answer user question user!\n");
         const question_id = values[0];
         const answer = values[1];
+        if(Utils.check_not_empty(answer) == 0)
+        {
+            this.setState({ snackbar: { children: "Answer cant be empty", severity: "error" } });
+            return;
+        }
+        if(Utils.check_all_digits(question_id) == 0 )
+        {
+            this.setState({ snackbar: { children: "Illegal Question ID", severity: "error" } });
+            return;
+        }
         const response = await this.adminApi.admin_answer_user_question(question_id, answer);
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });

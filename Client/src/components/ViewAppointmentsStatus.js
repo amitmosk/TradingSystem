@@ -56,11 +56,11 @@ export default class ViewAppointmentsStatus extends Component {
         // the buttons will be Yes/or No after merge
         const manager_answer = values[1];
         console.log(values);
-        // if(Utils.check_email(candidate_email) == 0)
-        // {
-        //     this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
-        //     return;
-        // }
+        if(Utils.check_email(candidate_email) == 0)
+        {
+            this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
+            return;
+        }
         let response = await this.storeApi.manager_answer_appointment(this.state.store_id, manager_answer, candidate_email);
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });

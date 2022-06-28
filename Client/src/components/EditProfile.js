@@ -49,9 +49,9 @@ export default function EditProfile(props) {
         else {
             setSnackbar({ children: response.message, severity: 'error' });
 
-        }
-
     }
+    
+}
     const name = user.name;
     const lastName = user.lastName;
     const security_question = user.security_question;
@@ -96,6 +96,11 @@ export default function EditProfile(props) {
     //Functions To Server
     const handle_name_edit = async () => {
         console.log(newname);
+        if(Utils.check_holder(newname) == 0)
+        {
+            setSnackbar({ children: "Illegal Name", severity: 'error' });
+            return;
+        }
         let response = await userApi.edit_name(newname);
         if (!response.was_exception) {
             setSnackbar({ children: response.message, severity: 'success' });
@@ -107,7 +112,12 @@ export default function EditProfile(props) {
     }
     const handle_last_name_edit = async () => {
 
-        let response = await userApi.edit_last_name(newlastname);
+        if(Utils.check_holder(newlastname) == 0)
+        {
+            setSnackbar({ children: "Illegal Last Name", severity: 'error' });
+            return;
+        }
+        let response =  await userApi.edit_last_name(newlastname);
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
         }
@@ -118,11 +128,18 @@ export default function EditProfile(props) {
     }
     const unregister = async (values) => {
         const password = values[0];
+        if(Utils.check_not_empty(password) == 0)
+        {
+            setSnackbar({ children: "Password can not be empty", severity: 'error' });
+            return;
+        }
         let response = await userApi.unregister(password);
         if (!response.was_exception) {
             this.setState({ snackbar: { children: response.message, severity: "success" } });
+            await Utils.sleep(2000);
             props.updateUserState(User.guest());
-            window.location.href = `/`
+
+            window.location.href=`/`
         }
         else {
             this.setState({ snackbar: { children: response.message, severity: "error" } });
@@ -153,7 +170,6 @@ export default function EditProfile(props) {
     }
     const handle_password_edit = async () => {
         console.log("in handle password edit\n");
-
         if (newpassword == reEnterpassword) {
             let response = await this.userApi.edit_password(oldpassword, newpassword);
             if (!response.was_exception) {

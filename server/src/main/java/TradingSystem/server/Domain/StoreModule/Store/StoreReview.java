@@ -13,7 +13,7 @@ public class StoreReview {
     private Long id;
 
     @ElementCollection
-    @CollectionTable(name = "ratings")
+    @CollectionTable(name = "store_ratings")
     @MapKeyColumn(name="user_email")
     @Column(name="rating")
     private Map<String, Integer> rating; // user_email & rating
