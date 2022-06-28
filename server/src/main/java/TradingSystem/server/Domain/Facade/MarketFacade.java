@@ -2669,7 +2669,7 @@ public class MarketFacade {
             HibernateUtils.getEntityManager().clear();
             this.store_controller.load();
             this.user_controller.load();
-            this.store_controller.load();
+
             QuestionController.getInstance().load();
 
         }
