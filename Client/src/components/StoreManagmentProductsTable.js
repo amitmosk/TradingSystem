@@ -29,7 +29,7 @@ export default class StoreManagmentProductsTable extends Component{
             { field: 'name', headerName: 'name', width: 150 , editable:true},
             { field: 'category', headerName: 'category', width: 150 ,editable:true},
             { field: 'price', headerName: 'price', type: 'double', width: 150,editable:true},
-            { field: 'quantity', headerName: 'quantity', type: 'number', width: 150, editable:true },
+            { field: 'quantity', headerName: 'quantity', type: 'number', width: 150, editable:false },
             { field: 'store', headerName: 'store', width: 150, hide: true},
             { field: 'key_words', headerName:'key words',  width: 150},
             {

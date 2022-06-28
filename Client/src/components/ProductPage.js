@@ -57,17 +57,17 @@ export default class ProductPage extends Component {
       rating_entries.map((e) => ratings.push("User - " + e[0] + " rate is " + e[1]))
 
 
-      const reviews_entries = Object.entries(product_reviews_and_ratings.reviews);
-      const reviews = []
-      reviews_entries.map((e) => reviews.push("User - " + e[0] + " review is " + e[1]))
-      this.setState({
-        name: product.name,
-        category: product.category,
-        key_words: product.key_words,
-        price: product.price,
-        reviews: reviews,
-        ratings: ratings,
-      });
+        const reviews_entries = Object.entries(product_reviews_and_ratings.reviews);
+        const reviews = []
+        reviews_entries.map((e) => reviews.push("User - "+e[0]+" review is "+e[1]))
+        this.setState({
+          name: product.name,
+          category:product.category,
+          key_words:product.key_words,
+          price:product.original_price,
+          reviews:reviews,
+          ratings:ratings,
+    });
 
     }
     else {
