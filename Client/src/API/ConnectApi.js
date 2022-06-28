@@ -5,16 +5,17 @@ import { Response } from "./Response";
 import { User } from "../ServiceObjects/User";
 
 const instance = require('axios');
-
+// const sessionStorage.getItem("session_id")=sessionStorage.getItem("session_id");
 export class ConnectApi {
 
     
     login(email, password) {
+        console.log("login"+sessionStorage.getItem("session_id"));
         return instance.get(LOGIN_PATH,
             {
                 params:{ email: email,
-                    password: password,}
-                
+                    password: password,
+                    session_id:sessionStorage.getItem("session_id")}
             })
             .then(res => {
                 console.log("user = " +res.data.value.storesManaged+"\n\n\n\n");
@@ -25,7 +26,9 @@ export class ConnectApi {
     }
 
     logout() {
-        return instance.get(LOGOUT_PATH)
+        return instance.get(LOGOUT_PATH,{params:{
+            session_id:JSON.parse(sessionStorage.getItem("session_id"))
+         }})
             .then(res => {
                 const user_guest = User.guest()
                 return Response.create(user_guest,res.data.was_exception,res.data.message);
@@ -34,15 +37,15 @@ export class ConnectApi {
     }
     
     register(email, password, first_name, last_name, birthdate) {
+        console.log("register"+sessionStorage.getItem("session_id"));
         return instance.get(REGISTER_PATH,
             {
-                    params:
-                    {
-                        email: email,
-                        pw: password,
-                        name: first_name,
-                        lastName: last_name,
-                        birth_date : birthdate,}
+                    params:{email: email,
+                    pw: password,
+                    name: first_name,
+                    lastName: last_name,
+                    birth_date : birthdate,
+                session_id:sessionStorage.getItem("session_id")}
             })
             .then(res => {
                 console.log("user = " +res.data.value.storesManaged+"\n\n\n\n");
@@ -52,7 +55,9 @@ export class ConnectApi {
             .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
     }
     get_online_user() {
-        return instance.get(ONLINE_USER_PATH)
+        return instance.get(ONLINE_USER_PATH,{
+            params:{session_id:sessionStorage.getItem("session_id")}
+        })
             .then(res => {
                 const user_guest = new User(res.data.value);
                 return Response.create(user_guest,res.data.was_exception,res.data.message);
@@ -62,7 +67,7 @@ export class ConnectApi {
     get_notifications(email) {
         return instance.get(NOTIFICATIONS_PATH,
             {
-                params:{ email: email,
+                params:{ email: email,session_id:sessionStorage.getItem("session_id")
                     }
                 
             })
@@ -75,7 +80,7 @@ export class ConnectApi {
     save_notifications(notification) {
         return instance.get(SAVE_NOTIFICATIONS,
             {
-                params:{ notification: notification,
+                params:{ notification: notification,session_id:sessionStorage.getItem("session_id")
                     }
                 
             })
@@ -88,8 +93,8 @@ export class ConnectApi {
     get_notifications_list() {
         return instance.get(GET_NOTIFICATIONS_LIST,
             {
-                
-                
+                params:{session_id:sessionStorage.getItem("session_id")
+                    }
             })
             .then(res => {
                 return new Response(res.data);

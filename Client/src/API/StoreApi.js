@@ -15,13 +15,14 @@ import { Product } from "../ServiceObjects/Product";
 // );
 var qs = require('qs');
 const instance = require('axios');
+const SESSION_ID=JSON.parse(sessionStorage.getItem("session_id"));
 
 export class StoreApi {
     find_store_information(store_id) {
         console.log("in find store information -> dtore id = "+store_id);
         return instance.get(FIND_STORE_INFORMATION,
             {
-                params:{ store_id : store_id,}
+                params:{ store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 let response = res.data;
@@ -33,7 +34,7 @@ export class StoreApi {
     open_store(store_name)    {
         return instance.get(OPEN_STORE,
             {
-                params:{store_name : store_name,}
+                params:{store_name : store_name,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -46,7 +47,7 @@ export class StoreApi {
         return instance.get(RATE_STORE,
             {
                 params:{store_id: store_id,
-                    rate : rate,}
+                    rate : rate,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -59,7 +60,7 @@ export class StoreApi {
         return instance.get(SEND_QUESTION_TO_STORE,
             {
                 params:{store_id: store_id,
-                    question : question,}
+                    question : question,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -76,7 +77,7 @@ export class StoreApi {
                     name : name,
                     price : price,
                     category : category,
-                    key_words : key_words,}
+                    key_words : key_words,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -88,7 +89,7 @@ export class StoreApi {
         return instance.get(DELETE_PRODUCT_FROM_STORE,
             {
                 params:{product_id : product_id,
-                    store_id : store_id,}
+                    store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
                 
             })
@@ -102,7 +103,7 @@ export class StoreApi {
         return instance.get(SET_STORE_PURCHASE_POLICY,
             {
                 params:{store_id : store_id,
-                    policy : policy,}
+                    policy : policy,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
                 
             })
@@ -116,7 +117,7 @@ export class StoreApi {
         return instance.get(SET_STORE_DISCOUNT_POLICY,
             {
                 params:{store_id : store_id,
-                    policy : policy,}
+                    policy : policy,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
                 
             })
@@ -129,9 +130,7 @@ export class StoreApi {
         return instance.get(SET_STORE_PURCHASE_RULES,
             {
                 params:{store_id : store_id,
-                    rule : rule,}
-                
-                
+                    rule : rule,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -143,9 +142,7 @@ export class StoreApi {
         return instance.get(ADD_OWNER,
             {
                 params:{user_email_to_appoint : user_email_to_appoint,
-                    store_id : store_id,}
-                
-                
+                    store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -157,9 +154,7 @@ export class StoreApi {
         return instance.get(DELETE_OWNER,
             {
                 params:{user_email_to_delete_appointment : user_email_to_delete_appointment,
-                    store_id : store_id,}
-                
-                
+                    store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -172,9 +167,7 @@ export class StoreApi {
         return instance.get(ADD_MANAGER,
             {
                 params:{user_email_to_appoint : user_email_to_appoint,
-                    store_id : store_id,}
-                
-                
+                    store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -187,9 +180,7 @@ export class StoreApi {
             return instance.get(DELETE_MANAGER,
                 {
                     params:{user_email_to_delete_appointment : user_email_to_delete_appointment,
-                        store_id : store_id,}
-                    
-                    
+                        store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 })
                 .then(res => {
                     return new Response(res.data)
@@ -199,9 +190,7 @@ export class StoreApi {
     close_store_temporarily(store_id){
         return instance.get(CLOSE_STORE_TEMPORARILY,
             {
-                params:{store_id : store_id,}
-                
-                
+                params:{store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -211,9 +200,7 @@ export class StoreApi {
     open_close_store(store_id){
         return instance.get(OPEN_CLOSE_STORE,
             {
-                params:{store_id : store_id,}
-                
-                
+                params:{store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -223,9 +210,7 @@ export class StoreApi {
     view_store_management_information(store_id){
         return instance.get(VIEW_STORE_MANAGEMENT_INFORMATION,
             {
-                params:{store_id : store_id,}
-                
-                
+                params:{store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data) //value is string answer
@@ -235,8 +220,7 @@ export class StoreApi {
     manager_view_store_questions(store_id){ // value is list of strings
         return instance.get(MANAGER_VIEW_STORE_QUESTIONS,
             {
-                params:{store_id : store_id,}
-
+                params:{store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -248,9 +232,7 @@ export class StoreApi {
             {
                 params:{store_id : store_id,
                     question_id : question_id,
-                    managerAnswer : answer,}
-                
-
+                    managerAnswer : answer,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -260,9 +242,7 @@ export class StoreApi {
     view_store_purchases_history(store_id){ // value is string of the purchases history
         return instance.get(VIEW_STORE_PURCHASES_HISTORY,
             {
-                params:{store_id : store_id,}
-                
-
+                params:{store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -279,7 +259,7 @@ export class StoreApi {
             {
                 params:{manager_email : manager_email,
                     store_id : store_id,
-                    permissions : permissions},
+                    permissions : permissions,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -289,7 +269,7 @@ export class StoreApi {
     get_products_by_store_id(store_id){
         return instance.get(GET_PRODUCTS_BY_STORE_ID,
             {
-                params:{store_id : store_id}
+                params:{store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 let response = res.data;
@@ -304,6 +284,7 @@ export class StoreApi {
     get_all_stores(){
         return instance.get(GET_ALL_STORES,
             {
+                params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 let response = res.data;
@@ -320,7 +301,7 @@ export class StoreApi {
             {
                 params:{
                     manager_email : manager_email,
-                    store_id : store_id,}
+                    store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -334,7 +315,7 @@ export class StoreApi {
                 storeID : storeID,
                 productID : productID,
                 quantity : quantity,
-                offer_price : offer_price,
+                offer_price : offer_price,session_id:JSON.parse(sessionStorage.getItem("session_id"))
             }
         })
         .then(res => {
@@ -349,7 +330,7 @@ export class StoreApi {
                     storeID : storeID,
                     bidID : bidID,
                     manager_answer : manager_answer,
-                    negotiation_price : negotiation_price,
+                    negotiation_price : negotiation_price,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                     }
             })
             .then(res => {
@@ -362,7 +343,7 @@ export class StoreApi {
         return instance.get(VIEW_APPOINTMENTS_STATUS,
             {
                 params:{
-                    storeID : storeID,
+                    storeID : storeID,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                  }
             })
             .then(res => {
@@ -377,7 +358,7 @@ export class StoreApi {
                 params:{
                     storeID : storeID,
                     manager_answer : manager_answer,
-                    candidate_email : candidate_email,
+                    candidate_email : candidate_email,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                     }
             })
             .then(res => {
@@ -390,7 +371,7 @@ export class StoreApi {
             return instance.get(VIEW_BIDS_STATUS,
                 {
                     params:{
-                        storeID : storeID,
+                        storeID : storeID,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                      }
                 })
                 .then(res => {
@@ -402,7 +383,7 @@ export class StoreApi {
             return instance.get(GET_ALL_CATEGORIES,
                 {
                     params:{
-                        store_id : store_id,
+                        store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))
                      }
                 })
                 .then(res => {
@@ -410,13 +391,6 @@ export class StoreApi {
                 })
                 .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
             }
-    
-
-        
-
-
-        
-    
 
     
 }

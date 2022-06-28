@@ -17,7 +17,7 @@ export class AdminApi {
     send_question_to_admin(question) {
         return instance.get(SEND_QUESTION_TO_ADMIN,
             {
-                params:{question : question,}
+                params:{question : question,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
             })
             .then(res => {
@@ -28,9 +28,7 @@ export class AdminApi {
     close_store_permanently(store_id){
         return instance.get(CLOSE_STORE_PERMANENTLY,
             {
-                params:{ store_id : store_id,}
-               
-                
+                params:{ store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -40,9 +38,7 @@ export class AdminApi {
     remove_user(email){
         return instance.get(REMOVE_USER,
             {
-                params:{email : email,}
-                
-                
+                params:{email : email,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -51,7 +47,10 @@ export class AdminApi {
     }
 
     admin_view_users_questions() {
-        return instance.get(ADMIN_VIEW_USERS_QUESTION)
+        return instance.get(ADMIN_VIEW_USERS_QUESTION,
+        {
+            params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}
+        })
             .then(res => {
                 return new Response(res.data);
             })
@@ -62,7 +61,7 @@ export class AdminApi {
         return instance.get(ADMIN_ANSWER_USERS_QUESTION,
             {
                 params:{question_id : question_id,
-                    adminAnswer : adminAnswer,}
+                    adminAnswer : adminAnswer,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -73,7 +72,7 @@ export class AdminApi {
     admin_view_store_purchases_history(store_id){
         return instance.get(ADMIN_VIEW_STORE_PURCHASES_HISTORY,
             {
-                params:{store_id : store_id,}
+                params:{store_id : store_id,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
                 
                 
             })
@@ -86,7 +85,7 @@ export class AdminApi {
     admin_view_user_purchases_history(user_email){
         return instance.get(ADMIN_VIEW_USER_PURCHASES_HISTORY,
             {
-                params:{user_email : user_email,}
+                params:{user_email : user_email,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
             })
             .then(res => {
                 return new Response(res.data)
@@ -95,7 +94,7 @@ export class AdminApi {
     }
     
     get_market_stats() {
-        return instance.get(GET_MARKET_STATS)
+        return instance.get(GET_MARKET_STATS,{parmas:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}})
             .then(res => {
                 const stats = new Statistics(res.data.value);
                 return Response.create(stats, res.data.was_exception, res.data.message);

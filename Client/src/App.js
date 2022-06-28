@@ -47,8 +47,8 @@ import BuyCart from "./components/BuyCart";
 import ManagerPermissions from "./components/ManagerPermissions";
 import ViewAppointmentsStatusNevigator from "./components/ViewAppointmentsStatusNevigator";
 import Notifications from "./components/Notifications";
-import { useEffect } from 'react';
-import {useState} from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import ViewRules from "./components/ViewRules";
 import AddPurchase from "./components/AddPurchase";
 import CreatePredict from "./components/CreatePredict";
@@ -57,71 +57,76 @@ import AdminViewStorePurchaseHistory from "./components/AdminViewStorePurchaseHi
 import AdminViewUserPurchaseHistory from "./components/AdminViewUserPurchaseHistory";
 import ViewBidsStatus from "./components/ViewBidsStatus";
 
+export function get_user_id() {
+  let url = "http://localhost:8080/get_session_id";
 
+  alert("called it")
 
-
+  return fetch(url, {
+    method: "GET",
+    mode: "cors",
+    headers: { "Content-Type": "application/json" },
+  }).then(async (response) => {
+    const data = await response.json();
+    if (!response.ok) {
+      return Promise.reject(data.error);
+    }
+    return Promise.resolve(data.value);
+  });
+}
 export default function App() {
-
-
+  useEffect(() => {
+    const session_id = sessionStorage.getItem("session_id");
+    if (session_id === null) {
+      get_user_id().then((userId) =>
+        sessionStorage.setItem("session_id", userId)
+      );
+    }
+  }, []);
   const [snackbar, setSnackbar] = useState(null);
   const handleCloseSnackbar = () => setSnackbar(null);
   const [user, setUser] = useState(User.guest());
-  useEffect(()=>{get_online_user()}, []);
+  useEffect(() => {
+    get_online_user();
+  }, []);
 
   const connectApi = new ConnectApi();
   const get_online_user = async () => {
-      let response = await connectApi.get_online_user();
-      console.log(response.value);
-      if(!response.was_exception)
-      {
-        setUser(response.value);
-        setSnackbar({ children: response.message, severity: 'success' });
-
-      }
-      else
-      {
-        setSnackbar({ children: response.message, severity: 'error' });
-
-      }
-      
-  }
-  const updateUserState = (user ) => {
+    let response = await connectApi.get_online_user();
+    console.log(response.value);
+    if (!response.was_exception) {
+      setUser(response.value);
+      setSnackbar({ children: response.message, severity: "success" });
+    } else {
+      setSnackbar({ children: response.message, severity: "error" });
+    }
+  };
+  const updateUserState = (user) => {
     console.log("in updateUserState\n\n\n\n\n");
     console.log(user);
     setUser(user);
-  }
-  const get_state=() => {
+  };
+  const get_state = () => {
     return user;
-  }
+  };
   const [notifications, setNotifications] = useState(["Shit"]);
-    const save_notification = (notification) =>{
-        console.log(notification+"\n\n\n\n\n\n\n");
-        notifications.push(notification)
-        setNotifications(notifications);
-    }
-
+  const save_notification = (notification) => {
+    console.log(notification + "\n\n\n\n\n\n\n");
+    notifications.push(notification);
+    setNotifications(notifications);
+  };
 
   return (
-      <>
-          <BrowserRouter>
-        <NavBar
-          updateUserState={updateUserState}
-          user = {user}
-          
-        ></NavBar>
+    <>
+      <BrowserRouter>
+        <NavBar updateUserState={updateUserState} user={user}></NavBar>
 
-
-          {/* --------------------------------------From Home Page---------------------------------- */}
+        {/* --------------------------------------From Home Page---------------------------------- */}
 
         <Routes>
           <Route
             path="/"
-            element={
-              <HomePage
-                user={user}
-                updateUserState={updateUserState}
-              />
-            }
+            element={<HomePage user={user} updateUserState={updateUserState} />}
           ></Route>
           <Route
             path="/Login"
@@ -129,7 +134,7 @@ export default function App() {
               <Login
                 updateUserState={updateUserState}
                 user={user}
-                save = {save_notification}
+                save={save_notification}
               />
             }
           ></Route>
@@ -141,18 +146,31 @@ export default function App() {
           ></Route>
           <Route
             path="/EditProfile"
-            element={<EditProfile user={user} updateUserState={updateUserState}/>}
+            element={
+              <EditProfile user={user} updateUserState={updateUserState} />
+            }
           ></Route>
           <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
-          <Route path="/UserViewQuestions" element={<UserViewQuestions />}></Route>
-          <Route path="/Notifications" element={<Notifications notifications={notifications} />}></Route>
+          <Route
+            path="/UserViewQuestions"
+            element={<UserViewQuestions />}
+          ></Route>
+          <Route
+            path="/Notifications"
+            element={<Notifications notifications={notifications} />}
+          ></Route>
 
           {/* --------------------------------------Store Page---------------------------------- */}
 
-
           <Route path="/StorePage/:id" element={<StorePageNevigator />}></Route>
-          <Route path="MyStores/StorePage/:id" element={<StorePageNevigator />}></Route>
-          <Route path="/AllStores/StorePage/:id" element={<StorePageNevigator />}></Route>
+          <Route
+            path="MyStores/StorePage/:id"
+            element={<StorePageNevigator />}
+          ></Route>
+          <Route
+            path="/AllStores/StorePage/:id"
+            element={<StorePageNevigator />}
+          ></Route>
           {/* <Route
             path="/AdminSendMessage"
             element={<AdminSendMessage />}
@@ -169,13 +187,13 @@ export default function App() {
             path="/AdminPage/AdminViewUserPurchaseHistory/:user_email"
             element={<AdminViewUserPurchaseHistory />}
           ></Route>
-          
+
           {/* -------------------------------------- Store Managment---------------------------------- */}
           <Route
             path="/StorePage/:id/StoreManagment"
             element={<StoreManagmentNevigator />}
           ></Route>
-           <Route
+          <Route
             path="/MyStores/StorePage/:id/StoreManagment"
             element={<StoreManagmentNevigator />}
           ></Route>
@@ -184,13 +202,12 @@ export default function App() {
             element={<StoreManagmentNevigator />}
           ></Route>
 
-
-               {/* -------------------------------------- View Bids---------------------------------- */}
-               <Route
+          {/* -------------------------------------- View Bids---------------------------------- */}
+          <Route
             path="/StorePage/:id/StoreManagment/ViewBidsStatus"
             element={<ViewBidsStatus />}
           ></Route>
-           <Route
+          <Route
             path="/MyStores/StorePage/:id/StoreManagment/ViewBidsStatus"
             element={<ViewBidsStatus />}
           ></Route>
@@ -199,13 +216,12 @@ export default function App() {
             element={<ViewBidsStatus />}
           ></Route>
 
-
           {/* -------------------------------------- View Appoitment ---------------------------------- */}
           <Route
             path="/StorePage/:id/StoreManagment/ViewAppointmentsStatus"
             element={<ViewAppointmentsStatusNevigator />}
           ></Route>
-           <Route
+          <Route
             path="/MyStores/StorePage/:id/StoreManagment/ViewAppointmentsStatus"
             element={<ViewAppointmentsStatusNevigator />}
           ></Route>
@@ -214,36 +230,34 @@ export default function App() {
             element={<ViewAppointmentsStatusNevigator />}
           ></Route>
 
-         
-        
-         {/* -------------------------------------- Store Policies---------------------------------- */}
+          {/* -------------------------------------- Store Policies---------------------------------- */}
           <Route
             path="/StorePage/:id/StoreManagment/StorePolicies"
-            element={<StorePolicies/>} 
+            element={<StorePolicies />}
           ></Route>
-            <Route
+          <Route
             path="/AllStores/StorePage/:id/StoreManagment/StorePolicies"
-            element={<StorePolicies/>} 
+            element={<StorePolicies />}
           ></Route>
-            <Route
+          <Route
             path="/MyStores/StorePage/:id/StoreManagment/StorePolicies"
-            element={<StorePolicies/>} 
+            element={<StorePolicies />}
           ></Route>
 
- {/* -------------------------------------- Manager View Store Questions---------------------------------- */}
+          {/* -------------------------------------- Manager View Store Questions---------------------------------- */}
           <Route
             path="/StorePage/:id/StoreManagment/ManagerViewStoreQuestions"
             element={<MangerViewStoreQuestionsNevigator />}
           ></Route>
-           <Route
+          <Route
             path="MyStores/StorePage/:id/StoreManagment/ManagerViewStoreQuestions"
             element={<MangerViewStoreQuestionsNevigator />}
           ></Route>
-           <Route
+          <Route
             path="AllStores/StorePage/:id/StoreManagment/ManagerViewStoreQuestions"
             element={<MangerViewStoreQuestionsNevigator />}
           ></Route>
-    {/* -------------------------------------- View Staff Information---------------------------------- */}
+          {/* -------------------------------------- View Staff Information---------------------------------- */}
 
           <Route
             path="/StorePage/:id/StoreManagment/ViewStaffInformation"
@@ -258,7 +272,7 @@ export default function App() {
             element={<ViewStaffInformationNevigator />}
           ></Route>
 
- {/* -------------------------------------- Manager Permissions---------------------------------- */}
+          {/* -------------------------------------- Manager Permissions---------------------------------- */}
           <Route
             path="/StorePage/:id/StoreManagment/ManagerPermissions/:user_email"
             element={<ManagerPermissions />}
@@ -271,8 +285,7 @@ export default function App() {
             path="AllStores/StorePage/:id/StoreManagment/ManagerPermissions/:user_email"
             element={<ManagerPermissions />}
           ></Route>
- {/* -------------------------------------- View Store Purchase History---------------------------------- */}
-
+          {/* -------------------------------------- View Store Purchase History---------------------------------- */}
 
           <Route
             path="/StorePage/:id/StoreManagment/ViewStorePurchaseHistory"
@@ -287,28 +300,19 @@ export default function App() {
             element={<ViewStorePurchaseHistoryNevigator />}
           ></Route>
 
- {/* -------------------------------------- End --- Policies---------------------------------- */}
+          {/* -------------------------------------- End --- Policies---------------------------------- */}
 
-          
           <Route
             path="/EditProfilePremium"
-            element={
-              <EditProfilePremium get_state={get_state} />
-            }
+            element={<EditProfilePremium get_state={get_state} />}
           ></Route>
           <Route
             path="/StorePage/:store_id/ProductPage/:product_id"
             element={<ProductPageNevigator />}
           ></Route>
 
-          <Route
-            path="/AllStores"
-            element={<AllStores/>}
-          ></Route>
-          <Route
-            path="/MyStores"
-            element={<MyStores/>}
-          ></Route>
+          <Route path="/AllStores" element={<AllStores />}></Route>
+          <Route path="/MyStores" element={<MyStores />}></Route>
 
           <Route path="/ProductPage" element={<ProductPage />}></Route>
           {/* <Route exact path="/home/:amit" element={<ProductPage product_id={1} store_id={1}/>}></Route> */}
@@ -317,39 +321,34 @@ export default function App() {
             path="/AdminViewUserQuestions"
             element={<AdminViewUserQuestions />}
           ></Route>
-         
-          <Route path="/ShoppingCart/BuyCart" element={<BuyCart/>}></Route>
+
+          <Route path="/ShoppingCart/BuyCart" element={<BuyCart />}></Route>
           {/* <Route path="/Payment" element={<PaymentPage/>}></Route>
           <Route path="/Supply" element={<SupplyPage/>}></Route> */}
           <Route
             path="/ViewUserPurchaseHistory"
             element={<ViewUserPurchaseHistory />}
           ></Route>
-          
 
-         
-          
           {/* <Route path="/UserPurchaseHistory" element={<UserPurchaseHistory />}></Route> */}
           {/* <Route path="/UserQuestions" element={<?? />}></Route>
           // notificans
           <Route path="/Notifications" element={<?? />}></Route> } */}
         </Routes>
-
-        
       </BrowserRouter>
-          {!!snackbar && (
-          <Snackbar
+      {!!snackbar && (
+        <Snackbar
           open
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           onClose={handleCloseSnackbar}
           autoHideDuration={6000}
-          >
+        >
           <Alert {...snackbar} onClose={handleCloseSnackbar} />
-          </Snackbar>
+        </Snackbar>
       )}
-      </>
+    </>
   );
-};
+}
 
 // /////////////////////////////////////////////////////////////////////////
 // export default class App extends Component {
@@ -368,14 +367,14 @@ export default function App() {
 //     //   this.setState({
 //     //     // Important: read `state` instead of `this.state` when updating.
 //     //     user: User.guest(),
-       
+
 //     //   });
 //     // }
 //     this.connectApi = new ConnectApi();
 //     this.updateUserState = this.updateUserState.bind(this);
 //     this.get_online_user();
 //     // const user = React.createContext('user');
-      
+
 //   }
 //   async componentDidMount() {
 //     this.get_online_user();
@@ -385,22 +384,21 @@ export default function App() {
 //     //   this.setState({
 //     //     // Important: read `state` instead of `this.state` when updating.
 //     //     user: User.guest(),
-       
+
 //     //   });
 //     // }
 //     console.log("in component did mount - home page");
 //   }
 
-  //  updateUserState(user) {
-  //   console.log("in updateUserState\n\n\n\n\n");
-  //   console.log(user);
-  //   console.log(this.state.user);
-  //   this.setState({
-  //     // Important: read `state` instead of `this.state` when updating.
-  //     user: user,
-     
-  //   });
-    
+//  updateUserState(user) {
+//   console.log("in updateUserState\n\n\n\n\n");
+//   console.log(user);
+//   console.log(this.state.user);
+//   this.setState({
+//     // Important: read `state` instead of `this.state` when updating.
+//     user: user,
+
+//   });
 
 //     console.log(this.state.user);
 //   }
@@ -411,7 +409,6 @@ export default function App() {
 
 //   }
 
-
 //   // async updateUserStateName(name) {
 //   //   console.log("in set UserState - name\n\n\n\n\n");
 //   //   this.setState({
@@ -419,15 +416,14 @@ export default function App() {
 //   //     })
 //   //   }
 
-  // get_state() {
-  //   return this.state.user;
-  // }
+// get_state() {
+//   return this.state.user;
+// }
 
 //   async get_online_user(){
 //       let response = await this.connectApi.get_online_user()
 //       this.setState({user : response.value})
 //   }
-  
 
 //   render() {
 //     return (
@@ -435,7 +431,7 @@ export default function App() {
 //         <NavBar
 //           updateUserState={this.updateUserState.bind(this)}
 //           user = {this.state.user}
-          
+
 //         ></NavBar>
 
 //         <Routes>
@@ -474,7 +470,7 @@ export default function App() {
 //             element={<AdminSendMessage />}
 //           ></Route>
 //           <Route path="/AdminPage" element={<AdminPage />}></Route>
-          // <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
+// <Route path="/ShoppingCart" element={<ShoppingCart />}></Route>
 //           <Route
 //             path="/StorePage/:id/StoreManagment"
 //             element={<StoreManagmentNevigator />}
@@ -566,7 +562,6 @@ export default function App() {
 //           </Snackbar>
 //         )}
 //       </BrowserRouter>
-
 
 //     );
 //   }

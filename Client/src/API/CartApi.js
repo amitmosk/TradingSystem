@@ -13,7 +13,9 @@ const instance = require('axios');
 export class CartApi {
 
     view_user_cart() {
-        return instance.get(VIEW_USER_CART)
+        return instance.get(VIEW_USER_CART,{params:{
+            session_id:JSON.parse(sessionStorage.getItem("session_id"))
+        }})
             .then(res => {
                 let response = res.data;
                 console.log(response)
@@ -28,8 +30,8 @@ export class CartApi {
         return instance.get(BUY_CART,
             {
                 params:{ paymentInfo: payment_info,
-                    supplyInfo: supply_info,}
-               
+                    supplyInfo: supply_info,session_id:JSON.parse(sessionStorage.getItem("session_id"))}
+
             })
             .then(res => {
                 const user_purchase = new UserPurchase(res.data.value)
