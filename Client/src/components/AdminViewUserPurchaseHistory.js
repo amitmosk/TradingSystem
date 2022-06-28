@@ -35,17 +35,23 @@ export default function AdminViewUserPurchaseHistory() {
     useEffect(()=>{admin_view_user_purchases_history()}, []);
     const adminApi = new AdminApi();
     const admin_view_user_purchases_history = async () =>{
-        // const response = await adminApi.admin_view_user_purchases_history(user_email);
-        // if(!response.was_exception)
-        // {
-        //     setSnackbar({ children: response.message, severity: 'success' });
-        //     console.log(response.value);
-        //     setPurchaseHistory(response.value);
-        // }
-        // else{
-        //     setSnackbar({ children: response.message, severity: 'error' });
+        const response = await adminApi.admin_view_user_purchases_history(user_email);
+        if(!response.was_exception)
+        {
+            setSnackbar({ children: response.message, severity: 'success' });
+            console.log(response.value);
+            setPurchaseHistory(response.value.historyList);
+            console.log(response.value.historyList);
+            response.value.historyList.map(a=> console.log(a)) ;
+            response.value.historyList.map(a=> console.log( response.value.historyList[a])) ;
+            console.log(response.value.historyList);
+            // setPurchaseHistory(Object.keys(response.value));
+            Object.values(response.value).map(a=>console.log(response.value[a]));
+        }
+        else{
+            setSnackbar({ children: response.message, severity: 'error' });
 
-        // }
+        }
     }
     return (
         <>
@@ -61,7 +67,7 @@ export default function AdminViewUserPurchaseHistory() {
 
                             <Demo>
                                 <List>
-                                    {purchaseHistory.length!==0 ? purchaseHistory.map((staf) => (
+                                    {purchaseHistory.length!==0 ? purchaseHistory.map((his) => (
                                             <ListItem>
                                                 <ListItemAvatar>
                                                     <Avatar>
@@ -69,8 +75,21 @@ export default function AdminViewUserPurchaseHistory() {
                                                     </Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText
-                                                    primary={"ffff"}
-                                                    secondary={"fffffff"}
+                                                    primary={<h2>Total Price : {his.total_price} $</h2>}
+                                                    secondary={Object.keys(his.store_id_purchase).map((id)=>
+                                                        <ListItemText
+                                                        primary={<h3>Store Id: {id}</h3>}
+                                                        secondary={Object.keys(his.store_id_purchase[id].product_and_totalPrice).map(p_id =>
+                                                            <ListItemText
+                                                            primary={<h5> Product Price: {his.store_id_purchase[id].product_and_totalPrice[p_id]}</h5>}
+                                                            secondary={<h5>Product Name: {his.store_id_purchase[id].product_and_name[p_id]}</h5>}
+                                                            >
+                                                                </ListItemText>
+                                                            
+                                                            )}
+                                                            >
+                                                        </ListItemText>
+                                                    )}
                                                 // primary='fsdf'
                                                 />
                                             </ListItem>
