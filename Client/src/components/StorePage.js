@@ -74,7 +74,8 @@ export default class StorePage extends Component {
       let products = products_res.value;
       // alert(products_res.message);
       if (!products_res.was_exception) {
-        this.setState({ snackbar: { children: products_res.message, severity: "success" } });
+        if (products_res.message == "The system is not available right now, come back later")
+          this.setState({ snackbar: { children: products_res.message, severity: "success" } });
         this.setState({
           products: products,
           ratings: ratings,

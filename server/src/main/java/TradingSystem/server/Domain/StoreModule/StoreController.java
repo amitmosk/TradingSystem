@@ -88,6 +88,7 @@ public class StoreController {
     }
 
 
+
     /**
      * @param user     to check if the user allowed to change policiy
      * @param store_id id for the store
@@ -613,7 +614,9 @@ public class StoreController {
 
     }
 
-
+public int get_last_store_id(){
+        return store_ids_counter.get()-1;
+}
 
 }
 
