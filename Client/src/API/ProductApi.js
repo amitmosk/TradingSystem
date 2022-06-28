@@ -26,7 +26,17 @@ export class ProductApi {
                 let product_info = new Product(response.value);
                 return Response.create(product_info, response.was_exception, response.message);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     find_products_by_name(product_name) {
         console.log("product name = "+product_name+"\n\n\n");
@@ -41,13 +51,23 @@ export class ProductApi {
                 //create response with the list of products
                 const arr = [];
                 res.data.value.map(p => arr.push(new Product(p)));
-                return Response.create(arr,res.data.was_exception,res.data.message);
+                return Response.create(arr, res.data.was_exception, res.data.message);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     find_products_by_category(product_category) {
-        console.log("product category = "+product_category+"\n\n\n");
+        console.log("product category = " + product_category + "\n\n\n");
         return instance.get(FIND_PRODUCTS_BY_CATEGORY,
             {
                 params:{product_category: product_category, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
@@ -58,12 +78,22 @@ export class ProductApi {
                 //create response with the list of products
                 const arr = [];
                 res.data.value.map(p => arr.push(new Product(p)));
-                return Response.create(arr,res.data.was_exception,res.data.message);
+                return Response.create(arr, res.data.was_exception, res.data.message);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     find_products_by_keywords(product_keywords) {
-        console.log("product keywords = "+product_keywords+"\n\n\n");
+        console.log("product keywords = " + product_keywords + "\n\n\n");
         return instance.get(FIND_PRODUCTS_BY_KEYWORDS,
             {
                 params:{product_keywords: product_keywords, session_id:JSON.parse(sessionStorage.getItem("session_id"))}
@@ -74,9 +104,19 @@ export class ProductApi {
                 //create response with the list of products
                 const arr = [];
                 res.data.value.map(p => arr.push(new Product(p)));
-                return Response.create(arr,res.data.was_exception,res.data.message);
+                return Response.create(arr, res.data.was_exception, res.data.message);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     add_product_to_cart(store_id, product_id, quantity) {
@@ -91,7 +131,17 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     edit_product_quantity_in_cart(store_id, product_id, quantity) {
@@ -105,7 +155,17 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     remove_product_from_cart(store_id, product_id) {
@@ -118,7 +178,17 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     
 
@@ -133,7 +203,17 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     rate_product(product_id, store_id, rate) {
@@ -146,7 +226,17 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     edit_product_name(product_id, store_id, name) {
@@ -160,7 +250,17 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     edit_product_price(product_id, store_id, price) {
@@ -174,7 +274,17 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     edit_product_category(product_id, store_id, category) {
         return instance.get(EDIT_PRODUCT_CATEGORY,
@@ -187,7 +297,17 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     edit_product_key_words(product_id, store_id, key_words) {
         return instance.get(EDIT_PRODUCT_KEY_WORDS,
@@ -200,7 +320,17 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     edit_product_quantity(product_id, store_id, quantity) {
         return instance.get(EDIT_PRODUCT_QUANTITY,
@@ -213,6 +343,16 @@ export class ProductApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 }

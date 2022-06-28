@@ -39,42 +39,41 @@ export default class ProductPage extends Component {
         });
     }   
 
-    
-    
-    
-    async componentDidMount() {
-        console.log("product id = "+this.state.product_id);
-      let product_res =  await this.productApi.find_product_information(this.state.product_id, this.state.store_id) ;
-      // alert(product_res.message);
-      if (!product_res.was_exception)
-      {
+
+
+
+  async componentDidMount() {
+    console.log("product id = " + this.state.product_id);
+    let product_res = await this.productApi.find_product_information(this.state.product_id, this.state.store_id);
+    // alert(product_res.message);
+    if (!product_res.was_exception) {
         console.log(product_res.value);
+        if (product_res.message == "The system is not available right now, come back later")
         this.setState({ snackbar: { children: product_res.message, severity: "success" } });
-        let product = product_res.value;
-        const product_reviews_and_ratings = product.productReview;
-        const rating_entries = Object.entries(product_reviews_and_ratings.rating);
-        const ratings = []
-        rating_entries.map((e) => ratings.push("User - "+e[0]+" rate is "+e[1]))
+      let product = product_res.value;
+      const product_reviews_and_ratings = product.productReview;
+      const rating_entries = Object.entries(product_reviews_and_ratings.rating);
+      const ratings = []
+      rating_entries.map((e) => ratings.push("User - " + e[0] + " rate is " + e[1]))
 
 
-        const reviews_entries = Object.entries(product_reviews_and_ratings.reviews);
-        const reviews = []
-        reviews_entries.map((e) => reviews.push("User - "+e[0]+" review is "+e[1]))
-        this.setState({
-          name: product.name,
-          category:product.category,
-          key_words:product.key_words,
-          price:product.price,
-          reviews:reviews,
-          ratings:ratings,
-    });
+      const reviews_entries = Object.entries(product_reviews_and_ratings.reviews);
+      const reviews = []
+      reviews_entries.map((e) => reviews.push("User - " + e[0] + " review is " + e[1]))
+      this.setState({
+        name: product.name,
+        category: product.category,
+        key_words: product.key_words,
+        price: product.price,
+        reviews: reviews,
+        ratings: ratings,
+      });
 
-      }
-      else
-      {
-        this.setState({ snackbar: { children: product_res.message, severity: "error" } });
-      }
-      
+    }
+    else {
+      this.setState({ snackbar: { children: product_res.message, severity: "error" } });
+    }
+
 
 
       
@@ -84,42 +83,41 @@ export default class ProductPage extends Component {
     
   async rate_product(rating) {
     console.log("in rate Product");
-    console.log("rating is = "+rating);
-    let response = await this.productApi.rate_product(this.state.product_id, this.state.store_id,rating);
+    console.log("rating is = " + rating);
+    let response = await this.productApi.rate_product(this.state.product_id, this.state.store_id, rating);
     // alert(response.message);
-    if (!response.was_exception)
-    {
+    if (!response.was_exception) {
       this.setState({ snackbar: { children: response.message, severity: "success" } });
       //get product
       //reload product
-      
+
     }
-    else
-    {
+    else {
       this.setState({ snackbar: { children: response.message, severity: "error" } });
 
     }
-    
-}
+
+  }
 
 
 
 
 
-async find_product_by_category(val) {
+  async find_product_by_category(val) {
     console.log("in find_product_by_category");
     let response = await this.productApi.find_product_by_category(val);
     // alert(response.message);
-        if (!response.was_exception) {
-            console.log("in find_product_by_category- success");
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
-        }
-        else {
-            console.log("in find_product_by_category - fail");
-            this.setState({ snackbar: { children: response.message, severity: "error" } });
-        }
-    
-}
+    if (!response.was_exception) {
+      console.log("in find_product_by_category- success");
+      if (response.message == "The system is not available right now, come back later")
+        this.setState({ snackbar: { children: response.message, severity: "success" } });
+    }
+    else {
+      console.log("in find_product_by_category - fail");
+      this.setState({ snackbar: { children: response.message, severity: "error" } });
+    }
+
+  }
 
 
 
@@ -164,9 +162,9 @@ async find_product_by_category(val) {
                         <div> Category: {this.state.category}</div>
                         <div> Price: {this.state.price}</div>
                         <h5 style={{ color: 'blue' }}>Ratings</h5>
-                        {ratings.length !== 0 ? <div> {ratings.map((r)=><div>{r}</div>)}</div>: <h5 style={{ color: 'red' }}> No Rating for this product</h5>} 
+                        {ratings.length !== 0 ? <div> {ratings.map((r)=><div>{r}</div>)}</div>: <h5 style={{ color: 'red' }}> No Rating for this product</h5>}
                         <h5 style={{ color: 'blue' }}>Reviews</h5>
-                        {reviews.length !== 0 ? <div> {reviews.map((r)=><div>{r}</div>)}</div>: <h5 style={{ color: 'red' }}> No Reviews for this product</h5>} 
+                        {reviews.length !== 0 ? <div> {reviews.map((r)=><div>{r}</div>)}</div>: <h5 style={{ color: 'red' }}> No Reviews for this product</h5>}
 
               </Typography>
             </Paper>

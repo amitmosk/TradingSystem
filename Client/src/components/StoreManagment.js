@@ -11,7 +11,7 @@ import FormDialogPermissions from './FormDialogPermissions';
 import { StoreApi } from '../API/StoreApi';
 import StoreManagmentProductsTable from './StoreManagmentProductsTable';
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert"; 
+import Alert from "@mui/material/Alert";
 import { Utils } from '../ServiceObjects/Utils';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -59,11 +59,11 @@ export default class StoreManagment extends Component {
             snackbar: null,
 
         };
-      
+
         this.adminApi = new AdminApi();
         this.storeApi = new StoreApi();
         this.handleInputChange = this.handleInputChange.bind(this);
-        console.log("in store managemrnt , store page = "+this.props.store_id);
+        console.log("in store managemrnt , store page = " + this.props.store_id);
 
 
     }
@@ -291,7 +291,8 @@ export default class StoreManagment extends Component {
         const response = await this.storeApi.view_store_management_information(store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in view_store_management_information - success!\n");
             return response.value;
             //show history
@@ -308,7 +309,8 @@ export default class StoreManagment extends Component {
         const response = await this.storeApi.manager_view_store_questions(store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in manager_view_store_questions - success!\n");
             //show history
         }
@@ -353,7 +355,7 @@ export default class StoreManagment extends Component {
         const response = await this.storeApi.view_store_purchases_history(store_id);
         // alert(response.message);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            // this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in view_store_purchases_history - success!\n");
             //show history
         }
@@ -364,21 +366,20 @@ export default class StoreManagment extends Component {
     }
     async edit_manager_permissions(values) {
         const user_email = values[0];
-        if (Utils.check_email(user_email)== 0)
-        {
+        if (Utils.check_email(user_email) == 0) {
             this.setState({ snackbar: { children: "Illegal email", severity: "error" } });
             return;
 
         }
         console.log(user_email);
-        window.location.href+=`/ManagerPermissions/${user_email}`
+        window.location.href += `/ManagerPermissions/${user_email}`
         console.log("in edit_manager_permissions!\n");
-        
+
     }
 
 
 
-    
+
 
 
 
@@ -389,7 +390,7 @@ export default class StoreManagment extends Component {
         return (
 
             <Box sx={{ flexGrow: 1 }}>
-                
+
                 <h2 align="center">Store Managment</h2>
                 <Grid>
                     <StoreManagmentProductsTable store_id={this.state.store_id}></StoreManagmentProductsTable>
@@ -405,7 +406,7 @@ export default class StoreManagment extends Component {
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions"></FormDialog></Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialogPermissions outlinedVar="text" fields={this.state.change_manager_permissions_fields} getValues={this.edit_manager_permissions.bind(this)} name="Change Manager Permissions "></FormDialogPermissions></Item ></Grid > */}
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link to = {`ManagerViewStoreQuestions/${id}`} query={{store:1}}>Bid Item</Link></Item ></Grid >         */}
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ManagerViewStoreQuestions` }}   underline="hover" >{'View User Questions'}</Link>   </Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{ pathname: `ManagerViewStoreQuestions` }} underline="hover" >{'View User Questions'}</Link>   </Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ManagerPermissions` }}   underline="hover" >{'Change Manager Permissions111'}</Link>   </Item ></Grid > */}
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link href="/ViewStorePurchaseHistory"  underline="hover" >{'View Store Purchase History'}</Link>   </Item ></Grid > */}
 
@@ -413,21 +414,21 @@ export default class StoreManagment extends Component {
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.open_closed_store_fields} getValues={this.open_closed_store.bind(this)} name="Open Closed Store"></FormDialog></Item ></Grid > */}
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.user_massages_fields} getValues={this.manager_view_store_questions.bind(this)} name="View User Questions"></FormDialog></Item ></Grid > */}
 
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ViewStorePurchaseHistory` }} underline="hover" >{'View Store Purchase History'}</Link></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{ pathname: `ViewStorePurchaseHistory` }} underline="hover" >{'View Store Purchase History'}</Link></Item ></Grid>
 
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.store_purchase_history_fields} getValues={this.view_store_purchases_history.bind(this)} name="View Store Purchase History"></FormDialog></Item ></Grid > */}
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.close_store_temp_fields} getValues={this.close_store_temporarily.bind(this)} name="Close Store Temporarily" title="Confirm to Close Store Temporarily" submit_button="Confirm"></FormDialog></Item ></Grid >
                     <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.open_closed_store_fields} getValues={this.open_closed_store.bind(this)} name="Open Closed Store" title="Confirm to Open Closed Store" submit_button="Confirm"></FormDialog></Item ></Grid >
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.staff_information_fields} getValues={this.view_store_management_information.bind(this)} name="View Staff Information"></FormDialog></Item ></Grid > */}
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link outlinedVar="text" to={{pathname:`ViewStaffInformation` }} >{'View Staff Information'}</Link></Item ></Grid >
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link outlinedVar="text" to={{ pathname: `ViewStaffInformation` }} >{'View Staff Information'}</Link></Item ></Grid >
 
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <FormDialog outlinedVar="text" fields={this.state.answer_user_questions_fields} getValues={this.manager_answer_question.bind(this)} name="Answer Users Questions"></FormDialog></Item ></Grid> */}
                     {/* <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddDiscount` }} underline="hover" >{'Add Discount Rule'}</Link></Item ></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`AddPurchase` }} underline="hover" >{'Add Purchase Rule'}</Link></Item ></Grid>
                     <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`CreatePredict` }} underline="hover" >{'Create Predict'}</Link></Item ></Grid> */}
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`StorePolicies` }} underline="hover" >{'Store Policies'}</Link></Item ></Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ViewBidsStatus` }}   underline="hover" >{"Store Bids"}</Link> </Item ></Grid>
-                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{pathname:`ViewAppointmentsStatus` }}   underline="hover" >{"Show Store Appointments Agreements"}</Link> </Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{ pathname: `StorePolicies` }} underline="hover" >{'Store Policies'}</Link></Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{ pathname: `ViewBidsStatus` }} underline="hover" >{"Store Bids"}</Link> </Item ></Grid>
+                    <Grid item xs={3}>  <Item variant="outlined"> <Link to={{ pathname: `ViewAppointmentsStatus` }} underline="hover" >{"Show Store Appointments Agreements"}</Link> </Item ></Grid>
 
 
 
@@ -436,18 +437,18 @@ export default class StoreManagment extends Component {
                 </Grid>
 
                 {!!this.state.snackbar && (
-                        <Snackbar
+                    <Snackbar
                         open
                         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                         onClose={this.handleCloseSnackbar}
                         autoHideDuration={6000}
-                        >
+                    >
                         <Alert
                             {...this.state.snackbar}
                             onClose={this.handleCloseSnackbar}
                         />
-                        </Snackbar>
-                    )}
+                    </Snackbar>
+                )}
                 <h3> </h3>
             </Box>
 

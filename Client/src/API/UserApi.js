@@ -17,7 +17,17 @@ export class UserApi {
             .then(res => {
                 return new Response(res.data);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     get_user_email() {
         return instance.get(GET_USER_EMAIL,{
@@ -26,7 +36,17 @@ export class UserApi {
             .then(res => {
                 return new Response(res.data);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     get_user_name() {
         return instance.get(GET_USER_NAME,{
@@ -35,7 +55,17 @@ export class UserApi {
             .then(res => {
                 return new Response(res.data);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     get_user_last_name() {
         return instance.get(GET_USER_LAST_NAME,{
@@ -44,7 +74,17 @@ export class UserApi {
             .then(res => {
                 return new Response(res.data);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     edit_password(old_password, password) {
         return instance.get(EDIT_PASSWORD,
@@ -56,7 +96,17 @@ export class UserApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     edit_name(new_name) {
         console.log("edit name welcome user api");
@@ -70,7 +120,17 @@ export class UserApi {
                 console.log("edit name user API thennn");
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     edit_last_name(new_last_name) {
@@ -82,7 +142,17 @@ export class UserApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     unregister(password) {
@@ -94,7 +164,17 @@ export class UserApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     edit_name_premium(new_name, answer) {
         return instance.get(EDIT_NAME_PREMIUM,
@@ -109,7 +189,17 @@ export class UserApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     edit_last_name_premium(new_last_name, answer) {
         return instance.get(EDIT_LAST_NAME_PREMIUM,
@@ -123,7 +213,17 @@ export class UserApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     edit_password_premium(old_password, new_password, answer) {
         return instance.get(EDIT_PASSWORD_PREMIUM,
@@ -137,21 +237,51 @@ export class UserApi {
             .then(res => {
                 return new Response(res.data)
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     get_user_security_question() {
         return instance.get(GET_USER_SECURITY_QUESTION,{ params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}})
             .then(res => {
                 return new Response(res.data);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
     get_user_questions() {
         return instance.get(VIEW_USER_QUESTIONS,{ params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}})
             .then(res => {
                 return new Response(res.data);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     improve_security(password, question, answer) {
@@ -164,9 +294,19 @@ export class UserApi {
                 
             })
             .then(res => {
-                return Response.create(null,res.data.was_exception,res.data.message);
+                return Response.create(null, res.data.was_exception, res.data.message);
             })
-            .catch(res => Response.create(CATCH,true, CONNECTION_ERROR ));
+            .catch(function (res) {
+                if (res.message == "Network Error") {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, CONNECTION_ERROR)
+
+                }
+                else {
+                    console.log(res.message)
+                    return Response.create(CATCH, true, res.message)
+                }
+            });
     }
 
     

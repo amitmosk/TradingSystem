@@ -52,10 +52,10 @@ export default class StorePage extends Component {
     let store = store_res.value;
     console.log("store foundation_date = "+store.foundation_date);
     // alert(store_res.message);
-    
-    if (!store_res.was_exception)
-    {
-      this.setState({ snackbar: { children: store_res.message, severity: "success" } });
+
+    if (!store_res.was_exception) {
+      if (store_res.message == "The system is not available right now, come back later")
+        this.setState({ snackbar: { children: store_res.message, severity: "success" } });
       console.log("in find store info success");
       this.setState({
 
@@ -75,9 +75,9 @@ export default class StorePage extends Component {
       let products_res = await this.storeApi.get_products_by_store_id(this.state.store_id);
       let products = products_res.value;
       // alert(products_res.message);
-      if (!products_res.was_exception)
-      {
-        this.setState({ snackbar: { children: products_res.message, severity: "success" } });
+      if (!products_res.was_exception) {
+        if (products_res.message == "The system is not available right now, come back later")
+          this.setState({ snackbar: { children: products_res.message, severity: "success" } });
         this.setState({
           products: products,
           ratings: ratings,
@@ -115,7 +115,7 @@ export default class StorePage extends Component {
       this.setState({ snackbar: { children: response.message, severity: "error" } });
     }
   }
- 
+
 
   render() {
     const ratings = this.state.ratings;

@@ -28,7 +28,7 @@ export default class UserPurchaseHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            product_id:undefined, 
+            product_id:undefined,
             store_id:undefined,
             history: [],
             snackbar: null,
@@ -63,7 +63,8 @@ export default class UserPurchaseHistory extends Component {
 
         // alert(response.message);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log(response.value);
             this.setState({ history: response.value.historyList });
             console.log("history: ");
@@ -123,7 +124,7 @@ export default class UserPurchaseHistory extends Component {
                                 </h5>
                                     {this.state.history.length !==0 ?  this.state.history.map((his) => (
                                         <>
-                                            <ListItem>                                                
+                                            <ListItem>
                                                 <ListItemText
                                                     primary={<h3>Purchase ID: {his.user_purchase_id} , Total price: {his.total_price} $</h3>}
                                                     secondary={
@@ -133,31 +134,31 @@ export default class UserPurchaseHistory extends Component {
                                                             primary={<h4>store id: {s} Total price: {his.store_id_purchase[s].totalPrice} $</h4> }
                                                             // secondary={<BasicRating to_rate="Store" rating={this.rate_store.bind(this)} />}
                                                             secondary={Object.keys(his.store_id_purchase[s].product_and_quantity).map((p)=>
-                                                                <ListItemText 
+                                                                <ListItemText
                                                                 primary={`Product id: ${p} Quantity: ${his.store_id_purchase[s].product_and_quantity[p]} at ${his.store_id_purchase[s].transaction_date}`}
                                                                 secondary={<BasicRating to_rate="Product" params={[s,p]} rating={this.rate_product.bind(this)} color={"blue"}/>}
                                                                 >
                                                                 </ListItemText>
-                                                                
+
                                                                 )}
-                                                            
+
                                                             >
                                                             </ListItemText>
-                                                            
+
                                                         )
                                                         }
 
                                                         secondary={<BasicRating to_rate="Store" params={["1", "-1"]} rating={this.rate_store.bind(this) } color={"red"}/>}
-                                                        
+
                                                         >
 
 
                                                         </ListItemText>
                                                     }
-                                                                                  
+
                                                 />
-                                                
-                                            
+
+
                                             </ListItem>
 
 

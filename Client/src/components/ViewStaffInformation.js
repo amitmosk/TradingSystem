@@ -12,7 +12,7 @@ import Link from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
 import { StoreApi } from '../API/StoreApi';
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert"; 
+import Alert from "@mui/material/Alert";
 import HomeIcon from '@mui/icons-material/Home';
 
 const Demo = styled('div')(({ theme }) => ({
@@ -25,12 +25,12 @@ export default class ViewStaffInformation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            store_id:this.props.store_id,
+            store_id: this.props.store_id,
             staff: [],
             snackbar: null,
         };
         this.storeApi = new StoreApi();
-        console.log("in view stuff information, id = "+this.props.store_id);
+        console.log("in view stuff information, id = " + this.props.store_id);
 
 
 
@@ -41,7 +41,8 @@ export default class ViewStaffInformation extends Component {
 
         let response = await this.storeApi.view_store_management_information(this.state.store_id);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in get store staff info - success!\n");
             // return response.message;
             console.log(response.value.appointmentInformationList);
@@ -64,7 +65,7 @@ export default class ViewStaffInformation extends Component {
         return (
 
             <>
-       
+
                 <Box position='center' align='center'>
                     <Grid position='center' row-spacing={3}>
                         <Grid item>
@@ -105,18 +106,18 @@ export default class ViewStaffInformation extends Component {
                     </Grid>
                 </Box>
                 {!!this.state.snackbar && (
-                        <Snackbar
+                    <Snackbar
                         open
                         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                         onClose={this.handleCloseSnackbar}
                         autoHideDuration={6000}
-                        >
+                    >
                         <Alert
                             {...this.state.snackbar}
                             onClose={this.handleCloseSnackbar}
                         />
-                        </Snackbar>
-                    )}
+                    </Snackbar>
+                )}
 
             </>
         );

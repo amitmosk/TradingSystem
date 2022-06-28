@@ -63,8 +63,9 @@ export default class Login extends Component {
             createSocket(user.email);
             // open seb socket
             // return to home page and update properties (change state of App to assign user).
-            
-
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
+            return (<Navigate to="/" />)
         }
         else{
             this.setState({ snackbar: { children: response.message, severity: "error" } });
@@ -90,7 +91,7 @@ export default class Login extends Component {
                     
                         <h3>Login</h3>
                         <form className="LoginForm" >
-                           
+
                             <input type="text" name="email" value={this.state.email} onChange={this.handleInputChange}
                                     placeholder="Email" required/>
                             <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange}

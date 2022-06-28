@@ -74,7 +74,7 @@ export default function StorePolicies() {
         const response = await policiesApi.get_purchase_policy(id);
         if(!response.was_exception)
         {
-            setSnackbar({ children: response.message, severity: 'success' }); 
+           // setSnackbar({ children: response.message, severity: 'success' });
             setPurchases(response.value);
             
         }
@@ -97,7 +97,7 @@ export default function StorePolicies() {
         const response = await policiesApi.get_discount_policy(id);
         if(!response.was_exception)
         {
-            setSnackbar({ children: response.message, severity: 'success' });    
+          //  setSnackbar({ children: response.message, severity: 'success' });
             console.log(response.value);
             setDiscounts(response.value);
         }

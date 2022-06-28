@@ -763,7 +763,6 @@ public class Store implements Observable {
             Appointment appointment = this.stuffs_and_appointments.get(new_manager);
             if (appointment != null)
                 throw new AppointmentException("User to appoint is already store member");
-
             Appointment appointment_to_add = new Appointment(new_manager, appointer, this, StoreManagerType.store_manager, get_managers_emails());
             this.stuffs_and_appointments.put(new_manager, appointment_to_add);
             new_manager.add_manager(this, appointment);
@@ -1046,9 +1045,9 @@ public class Store implements Observable {
         } else {
             this.check_permission(assignUser, StorePermission.answer_bid_offer_negotiate);
             if (!manager_answer)
-                throw new Exception("illegal combination - negative answer with negotiation offer");
+                throw new Exception("Illegal combination - negative answer with negotiation offer");
             if (negotiation_price < 0)
-                throw new Exception("illegal price");
+                throw new Exception("Illegal price");
 
         }
         if (!this.bids.containsKey(bidID))

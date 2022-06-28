@@ -2,8 +2,8 @@
 const API_PATH = "http://localhost:8080"
 
 export const EMPLOYEE_BASE_REST_API_URL = API_PATH + '/amit';
-export const CONNECTION_ERROR="Connection Error";
-export const CATCH="CATCH";
+export const CONNECTION_ERROR = "The system is not available right now, come back later";
+export const CATCH = "CATCH";
 
 
 // ========= Connect ========== //
@@ -32,39 +32,39 @@ export const SET_STORE_PURCHASE_POLICY = API_PATH + '/set_store_purchase_policy'
 
 export const SET_STORE_DISCOUNT_POLICY = API_PATH + '/set_store_discount_policy';
 
-export const SET_STORE_PURCHASE_RULES= API_PATH + '/set_store_purchase_rules';
+export const SET_STORE_PURCHASE_RULES = API_PATH + '/set_store_purchase_rules';
 
-export const ADD_OWNER= API_PATH + '/add_owner';
+export const ADD_OWNER = API_PATH + '/add_owner';
 
-export const DELETE_OWNER= API_PATH + '/delete_owner';
+export const DELETE_OWNER = API_PATH + '/delete_owner';
 
-export const ADD_MANAGER= API_PATH + '/add_manager';
-export const EDIT_MANAGER_PERMISSIONS= API_PATH + '/edit_manager_permissions';
+export const ADD_MANAGER = API_PATH + '/add_manager';
+export const EDIT_MANAGER_PERMISSIONS = API_PATH + '/edit_manager_permissions';
 
-export const DELETE_MANAGER= API_PATH + '/delete_manager';
+export const DELETE_MANAGER = API_PATH + '/delete_manager';
 
-export const CLOSE_STORE_TEMPORARILY= API_PATH + '/close_store_temporarily';
+export const CLOSE_STORE_TEMPORARILY = API_PATH + '/close_store_temporarily';
 
 
-export const OPEN_CLOSE_STORE= API_PATH + '/open_close_store';
+export const OPEN_CLOSE_STORE = API_PATH + '/open_close_store';
 
-export const VIEW_STORE_MANAGEMENT_INFORMATION= API_PATH + '/view_store_management_information';
-export const MANAGER_VIEW_STORE_QUESTIONS= API_PATH + '/manager_view_store_questions';
+export const VIEW_STORE_MANAGEMENT_INFORMATION = API_PATH + '/view_store_management_information';
+export const MANAGER_VIEW_STORE_QUESTIONS = API_PATH + '/manager_view_store_questions';
 
-export const MANAGER_ANSWER_QUESTION= API_PATH + '/manager_answer_question';
+export const MANAGER_ANSWER_QUESTION = API_PATH + '/manager_answer_question';
 
-export const VIEW_STORE_PURCHASES_HISTORY= API_PATH + '/view_store_purchases_history';
-export const CLOSE_STORE_PERMANENTLY= API_PATH + '/close_store_permanently';
-export const GET_PRODUCTS_BY_STORE_ID= API_PATH + '/get_products_by_store_id';
-export const GET_ALL_STORES= API_PATH + '/get_all_stores';
-export const GET_PERMISSIONS= API_PATH + '/get_permissions';
-export const ADD_BID= API_PATH + '/add_bid';
-export const MANAGER_ANSWER_BID= API_PATH + '/manager_answer_bid';
-export const VIEW_BIDS_STATUS= API_PATH + '/view_bids_status';
+export const VIEW_STORE_PURCHASES_HISTORY = API_PATH + '/view_store_purchases_history';
+export const CLOSE_STORE_PERMANENTLY = API_PATH + '/close_store_permanently';
+export const GET_PRODUCTS_BY_STORE_ID = API_PATH + '/get_products_by_store_id';
+export const GET_ALL_STORES = API_PATH + '/get_all_stores';
+export const GET_PERMISSIONS = API_PATH + '/get_permissions';
+export const ADD_BID = API_PATH + '/add_bid';
+export const MANAGER_ANSWER_BID = API_PATH + '/manager_answer_bid';
+export const VIEW_BIDS_STATUS = API_PATH + '/view_bids_status';
 
-export const MANAGER_ANSWER_APPOINTMENT= API_PATH + '/manager_answer_appointment';
-export const VIEW_APPOINTMENTS_STATUS= API_PATH + '/view_appointments_status';
-export const GET_ALL_CATEGORIES= API_PATH + '/get_all_categories';
+export const MANAGER_ANSWER_APPOINTMENT = API_PATH + '/manager_answer_appointment';
+export const VIEW_APPOINTMENTS_STATUS = API_PATH + '/view_appointments_status';
+export const GET_ALL_CATEGORIES = API_PATH + '/get_all_categories';
 
 
 

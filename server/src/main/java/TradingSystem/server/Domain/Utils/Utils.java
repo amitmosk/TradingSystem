@@ -32,11 +32,11 @@ public class Utils {
         if (e instanceof AlreadyRegisterdException)
             return new Response<>("there is a user who is register to the system from this network right now.", e);
         if (e instanceof AppointmentException)
-            return new Response<>("this action wont work because of appointment rules", e);
+            return new Response<>(e.getMessage(), e);
 //        if (e instanceof BasketException)
 //            return new Response<>("the system cant preform this action on the shopping basket.", e);
         if (e instanceof LoginException)
-            return new Response<>("the system cant preform login.", e);
+            return new Response<>("Login failed, wrong email or password", e);
         if (e instanceof NoPremssionException)
             return new Response<>("you dont have permission to do this action.", e);
         if (e instanceof NoUserRegisterdException)
@@ -56,7 +56,7 @@ public class Utils {
 //        if (e instanceof ShippingException)
 //            return new Response<>("cant ship to the desired address", e);
         if (e instanceof StoreException)
-            return new Response<>("this action wont work because of appointment rules", e);
+            return new Response<>("Store not found", e);
         if (e instanceof StoreMethodException)
             return new Response<>("this action wont work because of store rules", e);
 //        if (e instanceof UserExcpetion)

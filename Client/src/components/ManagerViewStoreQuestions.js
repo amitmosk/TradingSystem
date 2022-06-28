@@ -6,7 +6,7 @@ import FormDialog from './FormDialog';
 import Card from '@mui/material/Card';
 import { Question } from '../ServiceObjects/Question';
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert"; 
+import Alert from "@mui/material/Alert";
 import { Utils } from '../ServiceObjects/Utils';
 
 
@@ -42,7 +42,8 @@ export default class ManagerViewStoreQuestions extends Component {
         console.log("questions = "+questions);
         // alert(response.message);
         if (!response.was_excecption) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            if (response.message == "The system is not available right now, come back later")
+                this.setState({ snackbar: { children: response.message, severity: "success" } });
             console.log("in UserViewQuestions - success!\n");
             console.log(response.value);
             

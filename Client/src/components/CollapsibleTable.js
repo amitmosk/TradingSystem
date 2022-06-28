@@ -17,7 +17,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { PoliciesApi } from '../API/PoliciesApi';
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert"; 
+import Alert from "@mui/material/Alert";
 
 function createData(name, calories, fat, carbs, protein, price) {
   return {
@@ -46,48 +46,50 @@ function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const policiesApi = new PoliciesApi();
-const {id} = useParams();
-//SnackBar
-const [snackbar, setSnackbar] = React.useState(null);
-const handleCloseSnackbar = () => setSnackbar(null);
+  const { id } = useParams();
+  //SnackBar
+  const [snackbar, setSnackbar] = React.useState(null);
+  const handleCloseSnackbar = () => setSnackbar(null);
 
 
 
-//Getters
-const [purchases,setPurchases ] =React.useState(["purchase1", "purchase2", "purchase3"]);
-const [predicts,setPredicts ] =React.useState(["predict1", "predict2", "predict3"]);
-const [discounts,setDiscounts ] =React.useState(["discount1", "discount2", "discount3"]);
+  //Getters
+  const [purchases, setPurchases] = React.useState(["purchase1", "purchase2", "purchase3"]);
+  const [predicts, setPredicts] = React.useState(["predict1", "predict2", "predict3"]);
+  const [discounts, setDiscounts] = React.useState(["discount1", "discount2", "discount3"]);
 
-const get_purchase_policy = async () => {
+  const get_purchase_policy = async () => {
     const response = policiesApi.get_purchase_policy(id);
-    if(!response.was_exception)
-    {
-        setSnackbar({ children: response.message, severity: 'success' });     }
-    else{
-        setSnackbar({ children: response.message, severity: 'error' }); 
+    if (!response.was_exception) {
+      if (response.message == "The system is not available right now, come back later")
+        setSnackbar({ children: response.message, severity: 'success' });
     }
-}
-const send_predicts = async () => {
+    else {
+      setSnackbar({ children: response.message, severity: 'error' });
+    }
+  }
+  const send_predicts = async () => {
     const response = policiesApi.send_predicts(id);
-    if(!response.was_exception)
-    {
-        setSnackbar({ children: response.message, severity: 'success' });     }
-    else{
-        setSnackbar({ children: response.message, severity: 'error' }); 
+    if (!response.was_exception) {
+      setSnackbar({ children: response.message, severity: 'success' });
     }
-}
-const get_discount_policy = async () => {
+    else {
+      setSnackbar({ children: response.message, severity: 'error' });
+    }
+  }
+  const get_discount_policy = async () => {
     const response = policiesApi.get_discount_policy(id);
-    if(!response.was_exception)
-    {
-        setSnackbar({ children: response.message, severity: 'success' });     }
-    else{
-        setSnackbar({ children: response.message, severity: 'error' }); 
+    if (!response.was_exception) {
+      if (response.message == "The system is not available right now, come back later")
+        setSnackbar({ children: response.message, severity: 'success' });
     }
-}
-useEffect(()=>{get_purchase_policy()}, []);
-useEffect(()=>{send_predicts()}, []);
-useEffect(()=>{get_discount_policy()}, []);
+    else {
+      setSnackbar({ children: response.message, severity: 'error' });
+    }
+  }
+  useEffect(() => { get_purchase_policy() }, []);
+  useEffect(() => { send_predicts() }, []);
+  useEffect(() => { get_discount_policy() }, []);
 
 
 
@@ -146,18 +148,18 @@ useEffect(()=>{get_discount_policy()}, []);
           </Collapse>
         </TableCell>
         {!!snackbar && (
-        <Snackbar
-        open
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        onClose={handleCloseSnackbar}
-        autoHideDuration={6000}
-        >
-        <Alert {...snackbar} onClose={handleCloseSnackbar} />
-        </Snackbar>
-    )}
+          <Snackbar
+            open
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            onClose={handleCloseSnackbar}
+            autoHideDuration={6000}
+          >
+            <Alert {...snackbar} onClose={handleCloseSnackbar} />
+          </Snackbar>
+        )}
       </TableRow>
     </React.Fragment>
- 
+
   );
 }
 
