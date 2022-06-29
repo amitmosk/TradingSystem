@@ -1,4 +1,4 @@
-package Acceptance.Store;
+package Acceptance.User.AssignUser;
 
 import TradingSystem.server.DAL.HibernateUtils;
 import TradingSystem.server.Domain.ExternalSystems.PaymentAdapterImpl;
@@ -26,6 +26,7 @@ import TradingSystem.server.Domain.StoreModule.Product.ProductInformation;
 import TradingSystem.server.Domain.Utils.Exception.MarketException;
 import TradingSystem.server.Domain.Utils.Exception.WrongPermterException;
 import TradingSystem.server.Domain.Utils.Response;
+import TradingSystem.server.Service.MarketSystem;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static TradingSystem.server.Service.MarketSystem.tests_config_file_path;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -51,6 +53,14 @@ public class policyTestingAccptence {
 
     @BeforeEach
     void SetUp() throws MarketException {
+        try
+        {
+            MarketSystem marketSystem = new MarketSystem(tests_config_file_path, "");
+
+
+        }
+        catch (Exception e){
+        }
         HibernateUtils.set_tests_mode();
         marketFacade = new MarketFacade(new PaymentAdapterTests(), new SupplyAdapterTests());
         marketFacade.register("amitgrumet" + userid + "@gmail.com", "12345678aA", "amit", "grumet", LocalDate.now().minusYears(30).toString());
