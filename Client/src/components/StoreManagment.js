@@ -88,28 +88,23 @@ export default class StoreManagment extends Component {
         const price = values[2];
         const category = values[3];
         const key_words = values[4];
-        if(Utils.check_all_digits(quantity) == 0)
-        {
+        if (Utils.check_all_digits(quantity) == 0) {
             this.setState({ snackbar: { children: "Illegal Quantity", severity: "error" } });
             return;
         }
-        if(Utils.check_holder(name) == 0)
-        {
+        if (Utils.check_holder(name) == 0) {
             this.setState({ snackbar: { children: "Illegal name", severity: "error" } });
             return;
         }
-        if(Utils.check_all_digits(price) == 0)
-        {
+        if (Utils.check_all_digits(price) == 0) {
             this.setState({ snackbar: { children: "Illegal price", severity: "error" } });
             return;
         }
-        if(Utils.check_holder(category) == 0)
-        {
+        if (Utils.check_holder(category) == 0) {
             this.setState({ snackbar: { children: "Illegal Category", severity: "error" } });
             return;
         }
-        if(Utils.check_holder(key_words) == 0)
-        {
+        if (Utils.check_holder(key_words) == 0) {
             this.setState({ snackbar: { children: "Illegal Key Words", severity: "error" } });
             return;
         }
@@ -131,7 +126,10 @@ export default class StoreManagment extends Component {
         console.log("in delete product!\n");
         const product_id = values[0];
         const store_id = this.state.store_id;
-
+        if (Utils.check_all_digits(product_id) == 0) {
+            this.setState({ snackbar: { children: "Illegal Product id", severity: "error" } });
+            return;
+        }
         const response = await this.storeApi.delete_product_from_store(product_id, store_id);
         // alert(response.message);
         if (!response.was_exception) {
@@ -144,7 +142,7 @@ export default class StoreManagment extends Component {
 
         }
     }
-    
+
     async store_discount_policy(values) {
         console.log("in store_discount_policy!\n");
         const store_id = this.state.store_id;
@@ -167,8 +165,7 @@ export default class StoreManagment extends Component {
         console.log("in add_owner!\n");
         const user_email_to_appoint = values[0];
         const store_id = this.state.store_id;
-        if(Utils.check_email(user_email_to_appoint) == 0)
-        {
+        if (Utils.check_email(user_email_to_appoint) == 0) {
             this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
             return;
         }
@@ -189,8 +186,7 @@ export default class StoreManagment extends Component {
         console.log("in delete_owner!\n");
         const user_email_to_delete_appointment = values[0];
         const store_id = this.state.store_id;
-        if(Utils.check_email(user_email_to_delete_appointment) == 0)
-        {
+        if (Utils.check_email(user_email_to_delete_appointment) == 0) {
             this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
             return;
         }
@@ -211,8 +207,7 @@ export default class StoreManagment extends Component {
         const user_email_to_appoint = values[0];
         const store_id = this.state.store_id;
 
-        if(Utils.check_email(user_email_to_appoint) == 0)
-        {
+        if (Utils.check_email(user_email_to_appoint) == 0) {
             this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
             return;
         }
@@ -235,8 +230,7 @@ export default class StoreManagment extends Component {
 
         console.log(store_id);
 
-        if(Utils.check_email(user_email_to_delete_appointment) == 0)
-        {
+        if (Utils.check_email(user_email_to_delete_appointment) == 0) {
             this.setState({ snackbar: { children: "Illegal Email", severity: "error" } });
             return;
         }
@@ -325,13 +319,11 @@ export default class StoreManagment extends Component {
         const store_id = this.state.store_id;
         const question_id = values[0];
         const answer = values[1];
-        if(Utils.check_all_digits(question_id) == 0)
-        {
+        if (Utils.check_all_digits(question_id) == 0) {
             this.setState({ snackbar: { children: "Illegal Question ID", severity: "error" } });
             return;
         }
-        if(Utils.check_not_empty(answer) == 0)
-        {
+        if (Utils.check_not_empty(answer) == 0) {
             this.setState({ snackbar: { children: "Answer can't be empty ", severity: "error" } });
             return;
         }
