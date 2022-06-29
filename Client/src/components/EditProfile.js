@@ -49,9 +49,9 @@ export default function EditProfile(props) {
         else {
             setSnackbar({ children: response.message, severity: 'error' });
 
+        }
+
     }
-    
-}
     const name = user.name;
     const lastName = user.lastName;
     const security_question = user.security_question;
@@ -93,11 +93,11 @@ export default function EditProfile(props) {
     const [newpassword, setNewpassword] = useState(null);
     const [reEnterpassword, setReEnterpassword] = useState(null);
 
+
     //Functions To Server
     const handle_name_edit = async () => {
         console.log(newname);
-        if(Utils.check_holder(newname) == 0)
-        {
+        if (Utils.check_holder(newname) == 0) {
             setSnackbar({ children: "Illegal Name", severity: 'error' });
             return;
         }
@@ -112,37 +112,35 @@ export default function EditProfile(props) {
     }
     const handle_last_name_edit = async () => {
 
-        if(Utils.check_holder(newlastname) == 0)
-        {
+        if (Utils.check_holder(newlastname) == 0) {
             setSnackbar({ children: "Illegal Last Name", severity: 'error' });
             return;
         }
-        let response =  await userApi.edit_last_name(newlastname);
+        let response = await userApi.edit_last_name(newlastname);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            setSnackbar({ children: response.message, severity: 'success' });
         }
         else {
-            this.setState({ snackbar: { children: response.message, severity: "error" } });
+            setSnackbar({ children: response.message, severity: 'error' });
         }
 
     }
     const unregister = async (values) => {
         const password = values[0];
-        if(Utils.check_not_empty(password) == 0)
-        {
+        if (Utils.check_not_empty(password) == 0) {
             setSnackbar({ children: "Password can not be empty", severity: 'error' });
             return;
         }
         let response = await userApi.unregister(password);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            setSnackbar({ children: response.message, severity: 'success' });
             await Utils.sleep(2000);
             props.updateUserState(User.guest());
 
-            window.location.href=`/`
+            window.location.href = `/`
         }
         else {
-            this.setState({ snackbar: { children: response.message, severity: "error" } });
+            setSnackbar({ children: response.message, severity: 'error' });
         }
 
     }
@@ -151,20 +149,22 @@ export default function EditProfile(props) {
         const answer = values[1];
         const password = values[2];
         if (Utils.check_not_empty(question) == 0) {
-            this.setState({ snackbar: { children: "Question can't be ampty", severity: "error" } });
+            setSnackbar({ children: "Question can't be ampty", severity: 'error' });
+
             return;
         }
         if (Utils.check_not_empty(answer) == 0) {
-            this.setState({ snackbar: { children: "Answer can't be ampty", severity: "error" } });
+            setSnackbar({ children: "Answer can't be ampty", severity: 'error' });
+
             return;
         }
 
         let response = await userApi.improve_security(password, question, answer);
         if (!response.was_exception) {
-            this.setState({ snackbar: { children: response.message, severity: "success" } });
+            setSnackbar({ children: response.message, severity: 'success' });
         }
         else {
-            this.setState({ snackbar: { children: response.message, severity: "error" } });
+            setSnackbar({ children: response.message, severity: 'error' });
         }
 
     }
@@ -173,16 +173,18 @@ export default function EditProfile(props) {
         if (newpassword == reEnterpassword) {
             let response = await this.userApi.edit_password(oldpassword, newpassword);
             if (!response.was_exception) {
-                this.setState({ snackbar: { children: response.message, severity: "success" } });
+                setSnackbar({ children: response.message, severity: 'success' });
 
             }
             else {
-                this.setState({ snackbar: { children: response.message, severity: "error" } });
+                setSnackbar({ children: response.message, severity: 'error' });
 
             }
 
         }
         else {
+            //   setSnackbar({ children: "Passwords Does Not Match", severity: 'error' });
+
             this.setState({ snackbar: { children: "Passwords Does Not Match", severity: "error" } });
             console.log("in edit password - NOT THE SAME!\n");
 
