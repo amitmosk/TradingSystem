@@ -224,10 +224,10 @@ public class HibernateUtils {
         String query = "SELECT question_id FROM "+getDatabaseName()+".BuyerQuestion";
         Map<Integer,BuyerQuestion> map = new ConcurrentHashMap<>();
         try {
-            List<BigInteger> lst = getEntityManager().createNativeQuery(query).getResultList();
-            for (BigInteger i : lst) {
-                BuyerQuestion u = em.find(BuyerQuestion.class, i.intValue());
-                map.put(i.intValue(),u);
+            List<Integer> lst = getEntityManager().createNativeQuery(query).getResultList();
+            for (int i : lst) {
+                BuyerQuestion u = em.find(BuyerQuestion.class, i);
+                map.put(i,u);
             }
         } catch (Exception e) {
             MarketLogger.getInstance().add_log(e.getMessage());
@@ -240,10 +240,10 @@ public class HibernateUtils {
         String query = "SELECT question_id FROM "+getDatabaseName()+".UserQuestion";
         Map<Integer,UserQuestion> map = new ConcurrentHashMap<>();
         try {
-            List<BigInteger> lst = getEntityManager().createNativeQuery(query).getResultList();
-            for (BigInteger i : lst) {
-                UserQuestion u = em.find(UserQuestion.class, i.intValue());
-                map.put(i.intValue(),u);
+            List<Integer> lst = getEntityManager().createNativeQuery(query).getResultList();
+            for (int i : lst) {
+                UserQuestion u = em.find(UserQuestion.class, i);
+                map.put(i,u);
             }
         } catch (Exception e) {
             MarketLogger.getInstance().add_log(e.getMessage());
