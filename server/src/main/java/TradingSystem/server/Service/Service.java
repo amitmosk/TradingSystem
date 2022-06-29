@@ -174,12 +174,6 @@ public class Service implements iService {
     @CrossOrigin
     @Override
     public Response buy_cart(String paymentInfo, String supplyInfo,int session_id) {
-        System.out.println(paymentInfo);
-        System.out.println(supplyInfo);
-        if(supplyInfo.equals("test")&&paymentInfo.equals("test")){
-            supplyInfo=supply;
-            paymentInfo=payment;
-        }
         PaymentInfo p=null;
         SupplyInfo s=null;
         try{
@@ -587,6 +581,7 @@ public class Service implements iService {
     @RequestMapping(value = "/get_all_stores")
     @CrossOrigin
     public Response get_all_stores(int session_id) {
+
         Response answer = get_market_facade(session_id).get_all_stores();
         return answer;
     }
@@ -825,13 +820,12 @@ public class Service implements iService {
 
 
 
-    private MarketFacade get_market_facade(int session_id){
-        if(this.MarketFacdeMap.get(session_id) == null){
+    private MarketFacade get_market_facade(Integer session_id){
+        if(!this.MarketFacdeMap.containsKey(session_id)){
             this.MarketFacdeMap.put(session_id,new MarketFacade(paymentAdapter,supplyAdapter));
         }
         return MarketFacdeMap.get(session_id);
     }
-    String payment = "{\"card_number\":\"1234123412341234\",\"month\":\"07\",\"year\":\"2022\",\"holder\":\"amit grumet\",\"ccv\":\"123\",\"id\":\"123456789\"}\n";
-    String supply="{\"name\":\"amit\",\"address\":\"grumet\",\"city\":\"pt\",\"country\":\"isreal\",\"zip\":\"12345\"}";
+
 }
 

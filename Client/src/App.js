@@ -57,31 +57,24 @@ import AdminViewStorePurchaseHistory from "./components/AdminViewStorePurchaseHi
 import AdminViewUserPurchaseHistory from "./components/AdminViewUserPurchaseHistory";
 import ViewBidsStatus from "./components/ViewBidsStatus";
 
-export function get_user_id() {
-  let url = "http://localhost:8080/get_session_id";
+// export function get_user_id() {
+//   let url = "http://localhost:8080/get_session_id";
 
 
-  return fetch(url, {
-    method: "GET",
-    mode: "cors",
-    headers: { "Content-Type": "application/json" },
-  }).then(async (response) => {
-    const data = await response.json();
-    if (!response.ok) {
-      return Promise.reject(data.error);
-    }
-    return Promise.resolve(data.value);
-  });
-}
+//   return fetch(url, {
+//     method: "GET",
+//     mode: "cors",
+//     headers: { "Content-Type": "application/json" },
+//   }).then(async (response) => {
+//     const data = await response.json();
+//     if (!response.ok) {
+//       return Promise.reject(data.error);
+//     }
+//     return Promise.resolve(data.value);
+//   });
+// }
 export default function App() {
-  useEffect(() => {
-    const session_id = sessionStorage.getItem("session_id");
-    if (session_id === null) {
-      get_user_id().then((userId) =>
-        sessionStorage.setItem("session_id", userId)
-      );
-    }
-  }, []);
+  
   const [snackbar, setSnackbar] = useState(null);
   const handleCloseSnackbar = () => setSnackbar(null);
   const [user, setUser] = useState(User.guest());
@@ -125,7 +118,7 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={<HomePage user={user} updateUserState={updateUserState} />}
+            element={<HomePage user={user} updateUserState={updateUserState} session_id ={sessionStorage.getItem("session_id")} />}
           ></Route>
           <Route
             path="/Login"
