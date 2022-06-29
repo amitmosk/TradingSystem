@@ -45,6 +45,9 @@
 //        }
 //    }
 //
+//    /**
+//     * for this test you should open your DB connection.
+//     */
 //    @Test
 //    void open_connection(){
 //        marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
