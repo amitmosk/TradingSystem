@@ -66,7 +66,7 @@ export default class UserViewQuestions extends Component {
             return (
                 <main class="LoginMain">
                     <div class="LoginWindow">
-                        <row><h1>User Questions (User)</h1></row>
+                        <row><h1>User Questions</h1></row>
                         {/* {[0,1,2,3,4,5,6,7].map((item) => (
                             <Card >
                             {item}
