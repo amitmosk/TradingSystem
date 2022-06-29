@@ -56,7 +56,7 @@ public class MarketFacade {
     private SupplyAdapter supply_adapter;
     private ErrorLogger error_logger;
     private MarketLogger market_logger;
-
+    private boolean rollback_flag ;
     public MarketFacade(PaymentAdapter payment_adapter, SupplyAdapter supply_adapter) {
         this.isGuest = true;
         this.user_controller = UserController.get_instance();
@@ -67,6 +67,11 @@ public class MarketFacade {
         this.supply_adapter = supply_adapter;
         this.error_logger = ErrorLogger.getInstance();
         this.market_logger = MarketLogger.getInstance();
+        this.rollback_flag =false;
+    }
+
+    public void setRollback_flag(boolean rollback_flag) {
+        this.rollback_flag = rollback_flag;
     }
 
     /**
@@ -2664,11 +2669,10 @@ public class MarketFacade {
     }
 
     public void rollback(){
-        if (!test_flag){
+        if (!test_flag || rollback_flag){
             HibernateUtils.rollback();
-            HibernateUtils.getEntityManager().clear();
-            this.store_controller.load();
-            this.user_controller.load();
+            this.store_controller.load(rollback_flag);
+            this.user_controller.load(rollback_flag);
 
             QuestionController.getInstance().load();
 

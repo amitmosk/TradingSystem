@@ -163,8 +163,8 @@ export default class ProductPage extends Component {
                         <div> Price: {this.state.price}</div>
                         <h5 style={{ color: 'blue' }}>Ratings</h5>
                         {ratings.length !== 0 ? <div> {ratings.map((r)=><div>{r}</div>)}</div>: <h5 style={{ color: 'red' }}> No Rating for this product</h5>}
-                        <h5 style={{ color: 'blue' }}>Reviews</h5>
-                        {reviews.length !== 0 ? <div> {reviews.map((r)=><div>{r}</div>)}</div>: <h5 style={{ color: 'red' }}> No Reviews for this product</h5>}
+                        {/* <h5 style={{ color: 'blue' }}>Reviews</h5>
+                        {reviews.length !== 0 ? <div> {reviews.map((r)=><div>{r}</div>)}</div>: <h5 style={{ color: 'red' }}> No Reviews for this product</h5>} */}
 
               </Typography>
             </Paper>

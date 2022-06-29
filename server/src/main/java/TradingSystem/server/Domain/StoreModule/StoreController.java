@@ -65,8 +65,8 @@ public class StoreController {
         this.products_id = new AtomicInteger(1);
     }
 
-    public void load() {
-        if (!test_flag){
+    public void load(boolean rollback_flag) {
+        if (!test_flag || rollback_flag){
             this.store_ids_counter = new AtomicInteger(HibernateUtils.get_sc());
             this.purchase_ids_counter = new AtomicInteger(HibernateUtils.get_max_store_purchase_id());
             this.bids_ids_counter = new AtomicInteger(HibernateUtils.get_max_bid_id());

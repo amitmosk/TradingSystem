@@ -48,8 +48,8 @@ public class UserController {
     private Long id;
     private Set<String> online_emails;
 
-    public void load() {
-        if (!test_flag){
+    public void load(boolean rollback_flag) {
+        if (!test_flag || rollback_flag){
             this.uc_id = new AtomicInteger(HibernateUtils.get_uc());
             MarketLogger.getInstance().add_log("--------------uc_id-------------");
             MarketLogger.getInstance().add_log("" + uc_id.get());
@@ -77,7 +77,7 @@ public class UserController {
             }
             SystemLogger.getInstance().add_log("user controller load");
         }
-        StoreController.get_instance().load();
+        StoreController.get_instance().load(rollback_flag);
 
     }
 

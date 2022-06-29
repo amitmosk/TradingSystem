@@ -60,7 +60,6 @@ import ViewBidsStatus from "./components/ViewBidsStatus";
 export function get_user_id() {
   let url = "http://localhost:8080/get_session_id";
 
-  alert("called it")
 
   return fetch(url, {
     method: "GET",
