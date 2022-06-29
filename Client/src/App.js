@@ -95,7 +95,7 @@ export default function App() {
     console.log(response.value);
     if (!response.was_exception) {
       setUser(response.value);
-      setSnackbar({ children: response.message, severity: "success" });
+      // setSnackbar({ children: response.message, severity: "success" });
     } else {
       setSnackbar({ children: response.message, severity: "error" });
     }
@@ -140,7 +140,7 @@ export default function App() {
           <Route
             path="/Register"
             element={
-              <Register updateUserState={updateUserState} user={user}/>
+              <Register updateUserState={updateUserState} user={user} />
             }
           ></Route>
           <Route
