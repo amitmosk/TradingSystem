@@ -22,8 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static TradingSystem.server.Service.MarketSystem.tests_config_file_path;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StatisticsTests {
     private static MarketSystem marketSystem;
@@ -45,7 +44,8 @@ class StatisticsTests {
     private static int expected_num_of_guests = 0;
     private static int expected_num_of_online_users = 0;
     private static int expected_num_of_owners_founders = 0;
-
+    private static String tests_config_path = "server\\src\\test\\java\\Acceptance\\System\\ConfigurationTests\\external_services\\" +
+            "demo_external_services.txt";
 
 
     @BeforeAll
@@ -57,15 +57,24 @@ class StatisticsTests {
         List<String> keywords = new LinkedList<>();
         try
         {
-            marketSystem = new MarketSystem(tests_config_file_path, "");
+            marketSystem = new MarketSystem(tests_config_path, "");
             paymentAdapter = marketSystem.getPayment_adapter();
             supplyAdapter = marketSystem.getSupply_adapter();
 
         }
         catch (Exception e){
         }
+    }
+
+    @BeforeEach
+    void init_system(){
+        expected_num_of_users = 0;
+        expected_num_of_guests = 0;
+        expected_num_of_online_users = 0;
+        expected_num_of_owners_founders = 0;
         marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         marketFacade1.clear();
+        marketFacade1 = new MarketFacade(paymentAdapter, supplyAdapter);
         marketFacade2 = new MarketFacade(paymentAdapter, supplyAdapter);
         marketFacade3 = new MarketFacade(paymentAdapter, supplyAdapter);
         marketFacade4 = new MarketFacade(paymentAdapter, supplyAdapter);
@@ -73,60 +82,44 @@ class StatisticsTests {
         admin_facade = new MarketFacade(paymentAdapter, supplyAdapter);
         try{
             UserController.get_instance().add_admin("admin@gmail.com", "12345678aaA", "admin", "admin");
-//            expected_num_of_users++;
-//            expected_num_of_online_users++;
-            admin_facade.login("admin@gmail.com", "12345678aaA");
-            marketFacade1.register("founder@gmail.com", "12345678aaA", "founder", "founder", birth_date);
-            expected_num_of_users++;
-            expected_num_of_online_users++;
-            marketFacade2.register("ownerOne@gmail.com", "12345678aaA", "ownerOne", "ownerOne", birth_date);
-            expected_num_of_users++;
-            expected_num_of_online_users++;
-            marketFacade3.register("ownerTwo@gmail.com", "12345678aaA", "ownerTwo", "ownerTwo", birth_date);
-            expected_num_of_users++;
-            expected_num_of_online_users++;
-            marketFacade4.register("manager@gmail.com", "12345678aaA", "manager", "manager", birth_date);
-            expected_num_of_users++;
-            expected_num_of_online_users++;
-            marketFacade5.register("buyer@gmail.com", "12345678aaA", "buyer", "buyer", birth_date);
-            expected_num_of_users++;
-            expected_num_of_online_users++;
-            Response<Integer> response = marketFacade1.open_store("storeForTest");
-            expected_num_of_owners_founders++;
-            store_id = response.getValue();
-            marketFacade1.add_owner("ownerOne@gmail.com", store_id);
-            expected_num_of_owners_founders++;
-            marketFacade1.add_owner("ownerTwo@gmail.com", store_id);
-            marketFacade2.manager_answer_appointment(store_id, true, "ownerTwo@gmail.com");
-            expected_num_of_owners_founders++;
-            marketFacade1.add_manager("manager@gmail.com", store_id);
-            marketFacade1.add_product_to_store(store_id, 20, "ee", 19.5, "category", keywords);
-            Response<List<ProductInformation>> response1 = marketFacade1.get_products_by_store_id(store_id);
-            product_id = response1.getValue().get(0).getProduct_id();
-            NotificationHandler.getInstance().reset_notifications();
-
-
         }
         catch (Exception e){
-
+            fail("cant add admin");
         }
-
-    }
-
-    @BeforeEach
-    void reset(){
-        try {
-            marketFacade1.open_close_store(store_id);
-        }
-        catch (Exception e){}
-        NotificationHandler.getInstance().reset_notifications();
+        expected_num_of_users++;
+        expected_num_of_online_users++;
+        admin_facade.login("admin@gmail.com", "12345678aaA");
+        marketFacade1.register("founder@gmail.com", "12345678aaA", "founder", "founder", birth_date);
+        expected_num_of_users++;
+        expected_num_of_online_users++;
+        marketFacade2.register("ownerOne@gmail.com", "12345678aaA", "ownerOne", "ownerOne", birth_date);
+        expected_num_of_users++;
+        expected_num_of_online_users++;
+        marketFacade3.register("ownerTwo@gmail.com", "12345678aaA", "ownerTwo", "ownerTwo", birth_date);
+        expected_num_of_users++;
+        expected_num_of_online_users++;
+        marketFacade4.register("manager@gmail.com", "12345678aaA", "manager", "manager", birth_date);
+        expected_num_of_users++;
+        expected_num_of_online_users++;
+        marketFacade5.register("buyer@gmail.com", "12345678aaA", "buyer", "buyer", birth_date);
+        expected_num_of_users++;
+        expected_num_of_online_users++;
+        Response<Integer> response = marketFacade1.open_store("storeForTest");
+        expected_num_of_owners_founders++;
+        store_id = response.getValue();
+        marketFacade1.add_owner("ownerOne@gmail.com", store_id);
+        expected_num_of_owners_founders++;
+        marketFacade1.add_owner("ownerTwo@gmail.com", store_id);
+        marketFacade2.manager_answer_appointment(store_id, true, "ownerTwo@gmail.com");
+        expected_num_of_owners_founders++;
+        marketFacade1.add_manager("manager@gmail.com", store_id);
     }
 
     // --------
 
 
     /**
-     * this test should fail because user has no permission to view market stats.
+     * this test check that there is a failure when a user has no permission to view market stats.
      */
     @Test
     void user_try_to_view_stats(){
@@ -146,7 +139,7 @@ class StatisticsTests {
     void online_users(){
         Response<Statistic> statisticResponse = admin_facade.get_market_stats();
         int online_users = statisticResponse.getValue().getNum_of_onlines();
-        assertEquals(expected_num_of_online_users, expected_num_of_online_users, "num of online users");
+        assertEquals(online_users, expected_num_of_online_users, "num of online users");
         marketFacade1.logout();
 //        expected_num_of_online_users--;
         statisticResponse = admin_facade.get_market_stats();
@@ -178,7 +171,7 @@ class StatisticsTests {
     void num_of_founders(){
         Response<Statistic> statisticResponse = admin_facade.get_market_stats();
         int num_of_founders = statisticResponse.getValue().getOwners_or_founders();
-        assertEquals(expected_num_of_owners_founders, expected_num_of_owners_founders, "num of registered users");
+        assertEquals(num_of_founders, expected_num_of_owners_founders, "num of registered users");
         MarketFacade marketFacade = new MarketFacade(paymentAdapter, supplyAdapter);
         marketFacade.register("amitamitamit@walla.com", "13245678aA", "amit", "amit", birth_date);
         marketFacade.open_store("ststa");
@@ -187,20 +180,15 @@ class StatisticsTests {
         expected_num_of_users++;
         statisticResponse = admin_facade.get_market_stats();
         num_of_founders = statisticResponse.getValue().getOwners_or_founders();
-        assertEquals(expected_num_of_owners_founders, expected_num_of_owners_founders, "num of registered users");
+        assertEquals(num_of_founders, expected_num_of_owners_founders, "num of registered users");
 
 
     }
     @Test
     void num_of_guests(){
-
         Response<Statistic> statisticResponse = admin_facade.get_market_stats();
-
         int num_of_guests =statisticResponse.getValue().getNum_of_guests();
-
-
         assertEquals(num_of_guests ,expected_num_of_guests);
-
         marketFacade1.logout();
         expected_num_of_online_users--;
         expected_num_of_guests++;
