@@ -94,7 +94,7 @@ export class AdminApi {
     }
     
     get_market_stats() {
-        return instance.get(GET_MARKET_STATS,{parmas:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}})
+        return instance.get(GET_MARKET_STATS,{params:{session_id:JSON.parse(sessionStorage.getItem("session_id"))}})
             .then(res => {
                 const stats = new Statistics(res.data.value);
                 return Response.create(stats, res.data.was_exception, res.data.message);

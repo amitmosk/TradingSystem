@@ -93,7 +93,7 @@ export default class StoreProductsTable extends Component {
         name: p.name,
         category: p.category,
         price: p.price,
-        quantity: p.quantity,
+        quantity: 0,
         store: p.store_id,
         key_words: p.key_words,
       })
