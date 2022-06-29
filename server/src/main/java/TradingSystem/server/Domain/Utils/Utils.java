@@ -4,6 +4,7 @@ package TradingSystem.server.Domain.Utils;
 import TradingSystem.server.Domain.Utils.Exception.*;
 import TradingSystem.server.Domain.Utils.Logger.SystemLogger;
 
+import javax.persistence.PersistenceException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -25,6 +26,9 @@ public class Utils {
     }
 
     public static Response CreateResponse(Exception e) {
+        if (e instanceof DatabaseConnectionException){
+            return new Response<>("The System is not available right now, please try again later.", e);
+        }
         if (e instanceof AdminException)
             return new Response<>("this action wont work because of admin rules.", e);
         if (e instanceof PurchasePolicyException)
