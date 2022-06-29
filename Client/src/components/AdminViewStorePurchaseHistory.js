@@ -35,22 +35,22 @@ export default function AdminViewStorePurchaseHistory() {
     useEffect(()=>{admin_view_store_purchases_history()}, []);
     const adminApi = new AdminApi();
     const admin_view_store_purchases_history = async () =>{
-        // const response = await adminApi.admin_view_store_purchases_history(id);
-        // if(!response.was_exception)
-        // {
-        //     setSnackbar({ children: response.message, severity: 'success' });
-        //     console.log(response.value);
-        //     setPurchaseHistory(response.value);
-        // }
-        // else{
-        //     setSnackbar({ children: response.message, severity: 'error' });
+        const response = await adminApi.admin_view_store_purchases_history(id);
+        if(!response.was_exception)
+        {
+            setSnackbar({ children: response.message, severity: 'success' });
+            console.log(response.value.historyList);
+            setPurchaseHistory(response.value.historyList);
+        }
+        else{
+            setSnackbar({ children: response.message, severity: 'error' });
 
-        // }
+        }
     }
     return (
         <>
         <Grid container spacing={3} justifyContent="center" alignItems="center" paddingTop={10}>
-            <h3 align="center">Purchase History - Store {id}</h3>      
+            <h1 align="center">Store History - Store ID: {id}</h1>      
             </Grid>
 
             <Box position='center' align='center'>
@@ -61,7 +61,7 @@ export default function AdminViewStorePurchaseHistory() {
 
                             <Demo>
                                 <List>
-                                    {purchaseHistory.length!==0 ? purchaseHistory.map((staf) => (
+                                    {purchaseHistory.length!==0 ? purchaseHistory.map((his) => (
                                             <ListItem>
                                                 <ListItemAvatar>
                                                     <Avatar>
@@ -69,8 +69,14 @@ export default function AdminViewStorePurchaseHistory() {
                                                     </Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText
-                                                    primary={"ffff"}
-                                                    secondary={"fffffff"}
+                                                    primary={<h2>Buyer : {his.buyer_email} , Purchase ID : {his.purchase_id}</h2>}
+                                                    secondary={Object.keys(his.purchase.product_and_quantity).map((p_id)=>
+                                                        <ListItemText
+                                                        primary={<h3>{his.purchase.product_and_quantity[p_id]} {his.purchase.product_and_name[p_id]} </h3>}
+                                                        secondary={<h3>Price :{his.purchase.product_and_totalPrice[p_id]}$</h3>}
+                                                            >
+                                                        </ListItemText>
+                                                    )}
                                                 // primary='fsdf'
                                                 />
                                             </ListItem>
@@ -99,3 +105,55 @@ export default function AdminViewStorePurchaseHistory() {
         </>
     );
 }
+//     return (
+//         <>
+//         <Grid container spacing={3} justifyContent="center" alignItems="center" paddingTop={10}>
+//             <h3 align="center">Purchase History - Store {id}</h3>      
+//             </Grid>
+
+//             <Box position='center' align='center'>
+//                     <Grid position='center' row-spacing={3}>
+                  
+
+//                         <Grid position='center' align='center'>
+
+//                             <Demo>
+//                                 <List>
+//                                     {purchaseHistory.length!==0 ? purchaseHistory.map((staf) => (
+//                                             <ListItem>
+//                                                 <ListItemAvatar>
+//                                                     <Avatar>
+//                                                         <PersonIcon />
+//                                                     </Avatar>
+//                                                 </ListItemAvatar>
+//                                                 <ListItemText
+//                                                     primary={"ffff"}
+//                                                     secondary={"fffffff"}
+//                                                 // primary='fsdf'
+//                                                 />
+//                                             </ListItem>
+
+//                                         )) : <h3 style={{ color: 'red' }}>No Purchase History</h3>
+
+
+
+
+//                                     }
+//                                 </List>
+//                             </Demo>
+//                         </Grid>
+//                     </Grid>
+//                 </Box>
+//             {!!snackbar && (
+//             <Snackbar
+//             open
+//             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+//             onClose={handleCloseSnackbar}
+//             autoHideDuration={6000}
+//             >
+//             <Alert {...snackbar} onClose={handleCloseSnackbar} />
+//             </Snackbar>
+//         )}
+//         </>
+//     );
+// }
