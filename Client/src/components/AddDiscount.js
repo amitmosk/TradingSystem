@@ -34,7 +34,7 @@ export default function AddDiscount() {
 
     // list of categories, Predicts, discounts
 
-    const [categories, setCategories] = React.useState(["cat1", "cat2", "cat3"]);
+    const [categories, setCategories] = React.useState([]);
     // const [predicts,setPredicts ] =React.useState(["predicts1", "predicts2", "Predicts3"]);
     const [predicts, setPredicts] = React.useState([]);
     // const [discounts,setDiscounts ] =React.useState(["discount1", "discount2", "discount3"]);
