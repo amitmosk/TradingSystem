@@ -33,6 +33,7 @@ Available functions (pay attention to copy the instruction name exactly) :
  * edit_product_name#<-product id>#<-store id>#<-name>
  * open_close_store#<-email>#<-store id>
  * manager_answer_question#<-manager email>#<-store id>#<-question id>#<-email>
+ * appointment_answer#<-email>#<-store id>#<-answer(true or false)><-candidate email>
  
  4) Admin:
  * close_store_permanently#<-admin email>#<-store id>
