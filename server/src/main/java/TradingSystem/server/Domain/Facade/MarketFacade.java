@@ -84,8 +84,8 @@ public class MarketFacade {
     public Response<UserInformation> logout() {
         Response<UserInformation> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.logout(loggedUser);
             HibernateUtils.commit();
             this.isGuest = true;
@@ -119,8 +119,8 @@ public class MarketFacade {
     public Response<UserInformation> register(String Email, String pw, String name, String lastName, String birth_date) {
         Response<UserInformation> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.register(loggedUser, Email, pw, name, lastName, birth_date);
             this.isGuest = false;
             HibernateUtils.commit();
@@ -152,8 +152,8 @@ public class MarketFacade {
     public Response<UserInformation> login(String Email, String password) {
         Response<UserInformation> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.login(loggedUser, Email, password);
             String user_name = this.user_controller.get_user_name(loggedUser) + " " + this.user_controller.get_user_last_name(loggedUser);
             isGuest = false;
@@ -185,8 +185,8 @@ public class MarketFacade {
     public Response<StoreInformation> find_store_information(int store_id) {
         Response<StoreInformation> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             Store store = this.store_controller.find_store_information(store_id);
             HibernateUtils.commit();
             StoreInformation storeInformation = new StoreInformation(store);
@@ -217,8 +217,8 @@ public class MarketFacade {
     public Response<Product> find_product_information(int product_id, int store_id) {
         Response<Product> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             Product product = this.store_controller.find_product_information(product_id, store_id);
             HibernateUtils.commit();
             response = new Response<>(product, "Product information received successfully");
@@ -249,8 +249,8 @@ public class MarketFacade {
     public Response<List<Product>> find_products_by_name(String product_name) {
         Response<List<Product>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             List<Product> products = this.store_controller.find_products_by_name(product_name);
             HibernateUtils.commit();
             response = new Response<>(products, "Product list received successfully");
@@ -275,8 +275,8 @@ public class MarketFacade {
     public Response<List<Product>> find_products_by_category(String category) {
         Response<List<Product>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             List<Product> products = this.store_controller.find_products_by_category(category);
             HibernateUtils.commit();
             response = new Response<>(products, "Products received successfully");
@@ -301,8 +301,8 @@ public class MarketFacade {
     public Response<List<Product>> find_products_by_keywords(String key_words) {
         Response<List<Product>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             List<Product> products = this.store_controller.find_products_by_key_words(key_words);
             HibernateUtils.commit();
             response = new Response<>(products, "Products received successfully");
@@ -330,8 +330,8 @@ public class MarketFacade {
     public Response<String> add_product_to_cart(int storeID, int productID, int quantity) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             Product p = store_controller.getProduct_by_product_id(storeID, productID);
             Store store = store_controller.get_store(storeID);
             store_controller.checkAvailablityAndGet(storeID, productID, quantity);
@@ -367,8 +367,8 @@ public class MarketFacade {
     public Response<String> edit_product_quantity_in_cart(int storeID, int productID, int quantity) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             Store store = store_controller.get_store(storeID);
             Product p = store_controller.checkAvailablityAndGet(storeID, productID, quantity);
             user_controller.edit_product_quantity_in_cart(loggedUser, store, p, quantity);
@@ -402,8 +402,8 @@ public class MarketFacade {
     public Response<String> remove_product_from_cart(int storeID, int productID) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             Product p = store_controller.getProduct_by_product_id(storeID, productID);
             Store store = store_controller.get_store(storeID);
             user_controller.remove_product_from_cart(loggedUser, store, p);
@@ -434,8 +434,8 @@ public class MarketFacade {
     public Response<CartInformation> view_user_cart() {
         try{
 
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             CartInformation cartInformation = user_controller.getCart(loggedUser).cartInformation();
             HibernateUtils.commit();
             Response<CartInformation> response = new Response<>(cartInformation, "successfully received user's cart");
@@ -469,8 +469,8 @@ public class MarketFacade {
         boolean isGuest = u.getIsGuest().get();
         CartInformation cart = u.getCart().cartInformation();
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             // setting rollback options for guest.
             // acquire lock of : edit/delete product, both close_store, discount & purchase policy, delete user from system.
             synchronized (lock) {
@@ -541,8 +541,8 @@ public class MarketFacade {
     public Response<Integer> open_store(String store_name) {
         Response<Integer> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User online_user = user_controller.get_user(loggedUser);
             int store_id = this.store_controller.open_store(online_user, store_name);
             HibernateUtils.commit();
@@ -575,8 +575,8 @@ public class MarketFacade {
     public Response<String> add_product_review(int product_id, int store_id, String review) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             this.user_controller.check_if_user_buy_this_product(this.loggedUser, product_id, store_id);
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.add_review(user_email, product_id, store_id, review);
@@ -611,8 +611,8 @@ public class MarketFacade {
     public Response<String> rate_product(int product_id, int store_id, int rate) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             this.user_controller.check_if_user_buy_this_product(this.loggedUser, product_id, store_id);
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.rate_product(user_email, product_id, store_id, rate);
@@ -645,8 +645,8 @@ public class MarketFacade {
     public Response<String> rate_store(int store_id, int rate) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             this.user_controller.check_if_user_buy_from_this_store(this.loggedUser, store_id);
             String user_email = this.user_controller.get_email(this.loggedUser);
             User user = user_controller.get_user(loggedUser);
@@ -681,8 +681,8 @@ public class MarketFacade {
     public Response<String> send_question_to_store(int store_id, String question) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = this.user_controller.get_user(this.loggedUser);
             this.user_controller.check_if_user_buy_from_this_store(this.loggedUser, store_id);
             this.store_controller.add_question(user, store_id, question);
@@ -714,8 +714,8 @@ public class MarketFacade {
     public Response send_question_to_admin(String question) {
         Response response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             this.user_controller.send_question_to_admin(loggedUser, question);
             HibernateUtils.commit();
             response = new Response<>(null, "Question send to the admin successfully");
@@ -744,8 +744,8 @@ public class MarketFacade {
     public Response<UserPurchaseHistory> view_user_purchase_history() {
         Response<UserPurchaseHistory> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             UserPurchaseHistory userPurchaseHistory = user_controller.view_user_purchase_history(loggedUser);
             HibernateUtils.commit();
             response = new Response<>(userPurchaseHistory, "successfully received user's purchases history");
@@ -775,8 +775,8 @@ public class MarketFacade {
     public Response<String> get_user_email() {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String email = user_controller.get_email(loggedUser);
             HibernateUtils.commit();
             response = new Response<>(email, "successfully received user's email");
@@ -805,8 +805,8 @@ public class MarketFacade {
     public Response<String> get_user_name() {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String name = user_controller.get_user_name(loggedUser);
             HibernateUtils.commit();
             response = new Response<>(name, "successfully received user's name");
@@ -835,8 +835,8 @@ public class MarketFacade {
     public Response<String> get_user_last_name() {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String last_name = this.user_controller.get_user_last_name(loggedUser);
             HibernateUtils.commit();
             response = new Response<>(last_name, "Last name received successfully");
@@ -868,8 +868,8 @@ public class MarketFacade {
     public Response<String> edit_password(String old_password, String password) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String email = user_controller.edit_password(loggedUser, old_password, password);
             HibernateUtils.commit();
             response = new Response<>(password, email + " password has been changed successfully");
@@ -898,8 +898,8 @@ public class MarketFacade {
     public Response<String> edit_name(String new_name) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String email = user_controller.edit_name(loggedUser, new_name);
             HibernateUtils.commit();
             response = new Response<>(new_name, email + " name changed to " + new_name);
@@ -929,8 +929,8 @@ public class MarketFacade {
     public Response<String> edit_last_name(String new_last_name) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String email = user_controller.edit_last_name(loggedUser, new_last_name);
             HibernateUtils.commit();
             response = new Response<>(new_last_name, email + " last name changed to " + new_last_name);
@@ -961,8 +961,8 @@ public class MarketFacade {
     public Response<String> unregister(String password) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             // TODO: version 2
             // close stores permanently
             String email = user_controller.unregister(loggedUser, password);
@@ -998,8 +998,8 @@ public class MarketFacade {
     public Response<String> edit_name_premium(String new_name, String answer) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String email = user_controller.edit_name_premium(loggedUser, new_name, answer);
             HibernateUtils.commit();
             response = new Response<>(new_name, email + " name changed to " + new_name);
@@ -1031,8 +1031,8 @@ public class MarketFacade {
     public Response<String> edit_last_name_premium(String new_last_name, String answer) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String email = user_controller.edit_last_name_premium(loggedUser, new_last_name, answer);
             HibernateUtils.commit();
             response = new Response<>(new_last_name, email + " last name changed to " + new_last_name);
@@ -1065,8 +1065,8 @@ public class MarketFacade {
     public Response<String> edit_password_premium(String old_password, String new_password, String answer) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String email = user_controller.edit_password_premium(loggedUser, old_password, new_password, answer);
             HibernateUtils.commit();
             response = new Response<>(null, email + " password changed");
@@ -1096,8 +1096,8 @@ public class MarketFacade {
     public Response<String> get_user_security_question() {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String question = user_controller.get_user_security_question(loggedUser);
             HibernateUtils.commit();
             response = new Response<>(question, "successfully received security question");
@@ -1130,8 +1130,8 @@ public class MarketFacade {
     public Response<String> improve_security(String password, String question, String answer) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String email = user_controller.improve_security(loggedUser, password, question, answer);
             HibernateUtils.commit();
             response = new Response<>(null, email + " improved security");
@@ -1169,8 +1169,8 @@ public class MarketFacade {
                                                                 String name, double price, String category, List<String> key_words) {
         Response<Map<Product, Integer>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
             Map<Product, Integer> products = store_controller.add_product_to_store(user, store_id, quantity, name, price, category, key_words);
@@ -1204,8 +1204,8 @@ public class MarketFacade {
     public Response<Map<Product, Integer>> delete_product_from_store(int product_id, int store_id) {
         Response<Map<Product, Integer>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 User user = user_controller.get_user(loggedUser);
                 String user_email = this.user_controller.get_email(this.loggedUser);
@@ -1242,8 +1242,8 @@ public class MarketFacade {
         Response<Predict> response = null;
         Predict predict;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 predict = store.addPredict(category, product_id, above, equel, num, price, quantity, age, time, year, month, day, name);
@@ -1290,8 +1290,8 @@ public class MarketFacade {
         Response<List<String>> response = null;
         List<String> policy;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 policy = store.getPredicts();
@@ -1340,8 +1340,8 @@ public class MarketFacade {
         Response<String> response = null;
         ComplexDiscountComponent complex;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 complex = store.add_complex_discount(nameOfRule, nameOfPredict, nameOfComponent);
@@ -1369,8 +1369,8 @@ public class MarketFacade {
         Response<String> response = null;
         simpleDiscountComponent simple;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 simple = store.add_simple_discount(nameOfRule, "c", percent, nameOfCategory);
@@ -1398,8 +1398,8 @@ public class MarketFacade {
         Response<String> response = null;
         simpleDiscountComponent simple;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 simple = store.add_simple_product_discount(nameOfrule, id, percent);
@@ -1427,8 +1427,8 @@ public class MarketFacade {
         Response<String> response = null;
         simpleDiscountComponent simple;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 simple = store.add_simple_discount(nameOfRule, "store", percent, "");
@@ -1455,8 +1455,8 @@ public class MarketFacade {
         Response response = null;
         Ipredict discount;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 discount = store.CreateAndDisocuntCompnent(NameOfRule, left, right);
@@ -1483,8 +1483,8 @@ public class MarketFacade {
         Response response = null;
         Ipredict discount;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 discount = store.CreateOrDisocuntCompnent(NameOfRule, left, right);
@@ -1511,8 +1511,8 @@ public class MarketFacade {
         Response response = null;
         DiscountComponent discount;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 discount = store.CreateMaxDisocuntCompnent(NameOfRule, left, right);
@@ -1539,8 +1539,8 @@ public class MarketFacade {
         Response response = null;
         DiscountComponent discount;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 discount = store.CreateplusDisocuntCompnent(NameOfRule, left, right);
@@ -1567,8 +1567,8 @@ public class MarketFacade {
         Response response = null;
         DiscountComponent discount;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 discount = store.CreateXorDisocuntCompnent(NameOfRule, left, right);
@@ -1595,8 +1595,8 @@ public class MarketFacade {
     public Response remove_discount_rule(int store_id, String name) {
         Response response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 String res = store.remove_discount_rule(name);
@@ -1622,8 +1622,8 @@ public class MarketFacade {
     public Response remove_predict(int store_id, String name) {
         Response response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 String res = store.remove_predict(name);
@@ -1649,8 +1649,8 @@ public class MarketFacade {
     public Response remove_purchase_rule(int store_id, String name) {
         Response<SimplePurchaseRule> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 String res = store.remove_purchase_rule(name);
@@ -1678,8 +1678,8 @@ public class MarketFacade {
         Response response = null;
         PurchaseRule purchaseRule;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 purchaseRule = store.addsimplePorchaseRule(NameOfRule, PredictName);
@@ -1707,8 +1707,8 @@ public class MarketFacade {
         Response<PurchaseRule> response = null;
         PurchaseRule purchaseRule;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 purchaseRule = store.add_and_purchase_rule(NameOfrule, left, right);
@@ -1736,8 +1736,8 @@ public class MarketFacade {
         Response<PurchaseRule> response = null;
         PurchaseRule PurchaseRule;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 Store store = store_controller.get_store(store_id);
                 PurchaseRule = store.add_or_purchase_rule(nameOfrule, left, right);
@@ -1773,8 +1773,8 @@ public class MarketFacade {
     public Response<String> edit_product_name(int product_id, int store_id, String name) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.edit_product_name(user, product_id, store_id, name);
@@ -1808,8 +1808,8 @@ public class MarketFacade {
     public Response<String> edit_product_price(int product_id, int store_id, double price) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 User user = user_controller.get_user(loggedUser);
                 this.store_controller.edit_product_price(user, product_id, store_id, price);
@@ -1844,8 +1844,8 @@ public class MarketFacade {
     public Response<String> edit_product_category(int product_id, int store_id, String category) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             this.store_controller.edit_product_category(user, product_id, store_id, category);
             response = new Response<>(null, "Product category edit successfully");
@@ -1879,8 +1879,8 @@ public class MarketFacade {
     public Response<String> edit_product_key_words(int product_id, int store_id, List<String> key_words) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             this.store_controller.edit_product_key_words(user, product_id, store_id, key_words);
             response = new Response<>(null, "Product key_words edit successfully");
@@ -1914,8 +1914,8 @@ public class MarketFacade {
     public Response<String> add_owner(String user_email_to_appoint, int store_id) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String user_email = this.user_controller.get_email(this.loggedUser);
             User appointer = user_controller.get_user(loggedUser);
             User user_to_appoint = user_controller.get_user_by_email(user_email_to_appoint);
@@ -1951,8 +1951,8 @@ public class MarketFacade {
     public Response delete_owner(String user_email_to_delete_appointment, int store_id) {
         Response response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String user_email = user_controller.get_email(loggedUser);
             User deleter = user_controller.get_user(loggedUser);
             User to_delete = user_controller.get_user_by_email(user_email_to_delete_appointment);
@@ -1993,8 +1993,8 @@ public class MarketFacade {
     public Response add_manager(String user_email_to_appoint, int store_id) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User appointer = user_controller.get_user(loggedUser);
             User user_to_apoint = user_controller.get_user_by_email(user_email_to_appoint);
             String user_email = this.user_controller.get_email(this.loggedUser);
@@ -2030,8 +2030,8 @@ public class MarketFacade {
     public Response<String> edit_manager_permissions(String manager_email, int store_id, List<StorePermission> permissions) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User appointer = user_controller.get_user(loggedUser);
             User manager = user_controller.get_user_by_email(manager_email);
             String user_email = this.user_controller.get_email(this.loggedUser);
@@ -2072,8 +2072,8 @@ public class MarketFacade {
     public Response<String> delete_manager(String user_email_to_delete_appointment, int store_id) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User appointer = user_controller.get_user(loggedUser);
             User manager = user_controller.get_user_by_email(user_email_to_delete_appointment);
             String user_email = this.user_controller.get_email(this.loggedUser);
@@ -2112,8 +2112,8 @@ public class MarketFacade {
     public Response<String> close_store_temporarily(int store_id) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 User user = user_controller.get_user(loggedUser);
                 String user_email = this.user_controller.get_email(this.loggedUser);
@@ -2148,8 +2148,8 @@ public class MarketFacade {
     public Response<String> open_close_store(int store_id) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.open_close_store(user, store_id);
@@ -2180,8 +2180,8 @@ public class MarketFacade {
     public Response<StoreManagersInfo> view_store_management_information(int store_id) {
         Response<StoreManagersInfo> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
             StoreManagersInfo answer = this.store_controller.view_store_management_information(user, store_id);
@@ -2214,8 +2214,8 @@ public class MarketFacade {
     public Response<List<String>> manager_view_store_questions(int store_id) {
         Response<List<String>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String user_email = this.user_controller.get_email(this.loggedUser);
             User user = user_controller.get_user(loggedUser);
             List<String> store_questions = this.store_controller.view_store_questions(user, store_id);
@@ -2250,8 +2250,8 @@ public class MarketFacade {
     public Response<String> manager_answer_question(int store_id, int question_id, String answer) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
             this.store_controller.answer_question(user, store_id, question_id, answer);
@@ -2283,8 +2283,8 @@ public class MarketFacade {
     public Response<Collection<StorePurchase>> view_store_purchases_history(int store_id) {
         Response<Collection<StorePurchase>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             String user_email = this.user_controller.get_email(this.loggedUser);
             Collection<StorePurchase> answer = this.store_controller.view_store_purchases_history(user, store_id).getHistoryList();
@@ -2319,8 +2319,8 @@ public class MarketFacade {
     public Response<String> close_store_permanently(int store_id) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             synchronized (lock) {
                 user_controller.check_admin_permission(loggedUser); // throws
                 this.store_controller.close_store_permanently(store_id);
@@ -2354,8 +2354,8 @@ public class MarketFacade {
     public Response<String> remove_user(String email) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             // close store permanently
             user_controller.remove_user(loggedUser, email);
             // remove user from all owners and managers
@@ -2387,8 +2387,8 @@ public class MarketFacade {
     public Response<List<String>> admin_view_users_questions() {
         Response<List<String>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             this.user_controller.view_users_questions(loggedUser);
             List<String> users_questions = this.user_controller.view_users_questions(loggedUser);
             HibernateUtils.commit();
@@ -2421,8 +2421,8 @@ public class MarketFacade {
     public Response<String> admin_answer_user_question(int question_id, String answer) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             user_controller.check_admin_permission(loggedUser); // throws
             this.user_controller.answer_user_question(loggedUser, question_id, answer);
             HibernateUtils.commit();
@@ -2453,8 +2453,8 @@ public class MarketFacade {
     public Response<StorePurchaseHistory> admin_view_store_purchases_history(int store_id) {
         Response<StorePurchaseHistory> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             user_controller.check_admin_permission(loggedUser); // throws
             StorePurchaseHistory answer = this.store_controller.admin_view_store_purchases_history(store_id);
             HibernateUtils.commit();
@@ -2486,8 +2486,8 @@ public class MarketFacade {
     public Response<UserPurchaseHistory> admin_view_user_purchases_history(String user_email) {
         Response<UserPurchaseHistory> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             UserPurchaseHistory userPurchaseHistory = user_controller.admin_view_user_purchase_history(loggedUser, user_email);
             HibernateUtils.commit();
             response = new Response<>(userPurchaseHistory, "received user's purchase history successfully");
@@ -2516,8 +2516,8 @@ public class MarketFacade {
     public Response<Statistic> get_market_stats() {
         Response<Statistic> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             Statistic stats = user_controller.get_statistics(loggedUser);
             HibernateUtils.commit();
             response = new Response(stats, "Received market statistics successfully");
@@ -2545,8 +2545,8 @@ public class MarketFacade {
     public Response manager_answer_appointment(int storeID, boolean manager_answer, String candidate_email) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             User candidate = user_controller.get_user_by_email(candidate_email);
             this.store_controller.add_appointment_answer(storeID, user, manager_answer, candidate);
@@ -2565,8 +2565,8 @@ public class MarketFacade {
     public Response view_appointments_status(int storeID) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             List<AppointmentInformation> answer = this.store_controller.view_appointments_status(storeID, user);
             HibernateUtils.commit();
@@ -2585,8 +2585,8 @@ public class MarketFacade {
     public Response get_all_stores() {
         Response<List<StoreInformation>> response = null;
         try {
-//            HibernateUtils.beginTransaction();
-            this.check_database_connection();
+//            this.check_database_connection();
+            HibernateUtils.beginTransaction();
             Map<Integer, Store> stores = store_controller.get_all_stores();
 //            HibernateUtils.commit();
             List<StoreInformation> map = new ArrayList<>();
@@ -2607,8 +2607,8 @@ public class MarketFacade {
     public Response get_products_by_store_id(int store_id) {
         Response<List<ProductInformation>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             List<ProductInformation> products = store_controller.get_products_by_store_id(store_id);
             HibernateUtils.commit();
             response = new Response(products, "Received store products successfully");
@@ -2654,8 +2654,8 @@ public class MarketFacade {
     public Response get_user_questions() {
         Response<List<String>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             String user_email = this.user_controller.get_email(this.loggedUser);
             List<String> user_questions = QuestionController.getInstance().get_all_user_questions(user_email);
             HibernateUtils.commit();
@@ -2680,8 +2680,8 @@ public class MarketFacade {
     public Response edit_product_quantity(int product_id, int store_id, int quantity) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             this.store_controller.edit_product_quantity(user, product_id, store_id, quantity);
             response = new Response<>(null, "Product quantity edit successfully");
@@ -2728,8 +2728,8 @@ public class MarketFacade {
     public Response<Integer> add_bid(int storeID, int productID, int quantity, double offer_price) {
         Response<Integer> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User buyer = user_controller.get_user(loggedUser);
             int bid_id = this.store_controller.add_bid_offer(productID, storeID, quantity, offer_price, buyer);
             HibernateUtils.commit();
@@ -2753,8 +2753,8 @@ public class MarketFacade {
     public Response manager_answer_bid(int storeID, int bidID, boolean manager_answer, double negotiation_price) {
         Response<Boolean> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             boolean confirm = this.store_controller.manager_answer_bid(storeID, user, manager_answer, bidID, negotiation_price);
             HibernateUtils.commit();
@@ -2778,8 +2778,8 @@ public class MarketFacade {
     public Response view_bids_status(int storeID) {
         Response<String> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             User user = user_controller.get_user(loggedUser);
             List<BidInformation> answer = this.store_controller.view_bids_status(storeID, user);
             HibernateUtils.commit();
@@ -2803,8 +2803,8 @@ public class MarketFacade {
     public Response<List<String>> get_permissions(String manager_email, int store_id) {
         Response<List<String>> response = null;
         try {
-            HibernateUtils.beginTransaction();
             this.check_database_connection();
+            HibernateUtils.beginTransaction();
             List<String> permissions = store_controller.get_permissions(manager_email, store_id);
             HibernateUtils.commit();
             response = new Response<>(permissions, "permissions of user " + manager_email);

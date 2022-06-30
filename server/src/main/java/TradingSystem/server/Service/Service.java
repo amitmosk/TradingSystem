@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import TradingSystem.server.Domain.Utils.Response;
-//import com.google.gson.Gson;
+import com.google.gson.Gson;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.*;

@@ -1,2 +1,2 @@
 external_services:real
-database:real_load
+database:real_init

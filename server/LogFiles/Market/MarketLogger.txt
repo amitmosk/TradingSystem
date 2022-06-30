@@ -1,0 +1,58 @@
+Jun 30, 2022 2:19:53 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: New Admin In The Market: amit@walla.com
+Jun 30, 2022 2:19:53 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: rami gershon has registered to the system
+Jun 30, 2022 2:19:53 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u2@walla.com logged out from the system.
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: dolev haziza has registered to the system
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u3@walla.com logged out from the system.
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: omer atzili has registered to the system
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u4@walla.com logged out from the system.
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User amit@walla.com logged-in
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User u2@walla.com logged-in
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User u3@walla.com logged-in
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User u4@walla.com logged-in
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: Store storeOne with id = 1opened successfully
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: New product (Bamba) added to store (1)
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User- u3@walla.com has been appointed by user- u2@walla.com to store (1) for manager position
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: amit@walla.com logged out from the system.
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u2@walla.com logged out from the system.
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u3@walla.com logged out from the system.
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: u4@walla.com logged out from the system.
+Jun 30, 2022 2:20:06 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: received market stores successfully.
+Jun 30, 2022 2:20:06 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: received market stores successfully.
+Jun 30, 2022 2:20:17 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User amit@walla.com logged-in
+Jun 30, 2022 2:20:19 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: received market stores successfully.
+Jun 30, 2022 2:20:19 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: received market stores successfully.
+Jun 30, 2022 2:20:28 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User added to cart 3 of product- 1 from store- 1
+Jun 30, 2022 2:20:34 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User viewed his cart successfully
+Jun 30, 2022 2:20:34 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: User viewed his cart successfully
+Jun 30, 2022 2:20:50 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: user purchase his cart successfully
+Jun 30, 2022 2:20:53 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: received market stores successfully.
+Jun 30, 2022 2:20:53 PM TradingSystem.server.Domain.Utils.Logger.MarketLogger add_log
+INFO: received market stores successfully.

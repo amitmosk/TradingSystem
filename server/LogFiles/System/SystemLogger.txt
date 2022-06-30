@@ -1,26 +1,34 @@
-Jun 27, 2022 9:40:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:33 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: WS : Configure Message Broker
-Jun 27, 2022 9:40:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:33 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: Start Init Market
-Jun 27, 2022 9:40:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:33 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: Configuration File Path: ..\server\src\main\java\TradingSystem\server\Config\system_config.txt
-Jun 27, 2022 9:40:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:33 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: Set Real External Services
-Jun 27, 2022 9:40:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:33 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: System Start Connect To External Services
-Jun 27, 2022 9:40:08 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:33 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: System Connected To The Payment System
-Jun 27, 2022 9:40:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:34 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: HTTP POST On Success Response= OK
-Jun 27, 2022 9:40:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:34 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: System Connected To The Supply System
-Jun 27, 2022 9:40:09 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:34 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: HTTP POST On Success Response= OK
-Jun 27, 2022 9:40:28 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: Init Data From Demo, Data File Path: ..\server\src\main\java\TradingSystem\server\Config\instructions_config.txt
-Jun 27, 2022 9:40:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
-INFO: New Admin In The Market: amit@walla.com
-Jun 27, 2022 9:40:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:53 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Init Data From Instructions File, Data File Path: ..\server\src\main\java\TradingSystem\server\Config\instructions_config.txt
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: System Init Done.
-Jun 27, 2022 9:40:29 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+Jun 30, 2022 2:19:54 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
 INFO: WS : Register Stomp End Points
+Jun 30, 2022 2:20:20 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: WS Connect Event, Session ID: fp3xjppuEmail: amit@walla.com
+Jun 30, 2022 2:20:50 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: Payment Of: 90.0
+Jun 30, 2022 2:20:50 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 59745
+Jun 30, 2022 2:20:50 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: HTTP POST On Success Response= 11134
+Jun 30, 2022 2:20:53 PM TradingSystem.server.Domain.Utils.Logger.SystemLogger add_log
+INFO: WS Disconnect Event, Session ID: fp3xjppuEmail: amit@walla.com
